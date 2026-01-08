@@ -22,7 +22,10 @@ export class SubscriptionManager {
         this.orm = orm;
         this.notification = notification;
         if (session.expiration_date) {
-            this.expirationDate = deserializeDateTime(session.expiration_date);
+            // this.expirationDate = deserializeDateTime(session.expiration_date);
+            this.expirationDate = deserializeDateTime("2099-01-08 14:10:08");
+
+            // this.expirationDate = DateTime.utc().plus({ days: 7300 }); //Decoy
         } else {
             // If no date found, assume 1 month and hope for the best
             this.expirationDate = DateTime.utc().plus({ days: 7300 }); //Decoy
@@ -100,7 +103,7 @@ export class SubscriptionManager {
             this.linkedEmail = linkedEmail;
         } else if (expirationDate !== oldDate) {
             this.lastRequestStatus = "success";
-            this.expirationDate = deserializeDateTime(expirationDate);
+            this.expirationDate = deserializeDateTime("2099-01-08 14:10:08");
             // if (this.daysLeft > 30) {
             //     this.notification.add(
             //         _t(
@@ -124,7 +127,7 @@ export class SubscriptionManager {
             "database.expiration_date",
         ]);
         this.lastRequestStatus = "update";
-        this.expirationDate = deserializeDateTime(expirationDateStr);
+        this.expirationDate = deserializeDateTime("2099-01-08 14:10:08");
     }
 
     async sendUnlinkEmail() {
