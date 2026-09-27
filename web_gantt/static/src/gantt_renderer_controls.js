@@ -1,10 +1,11 @@
-import { Component, useState } from "@odoo/owl";
+import { Component, proxy } from "@odoo/owl";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { formatDate } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
 import { pick } from "@web/core/utils/objects";
 import { debounce } from "@web/core/utils/timing";
+import { useService } from "@web/core/utils/hooks";
 import { diffColumn } from "./gantt_helpers";
 import { GanttScaleSelector } from "./gantt_scale_selector";
 
@@ -30,9 +31,14 @@ export class GanttRendererControls extends Component {
     static rangeMenuTemplate = "web_gantt.GanttRendererControls.RangeMenu";
 
     setup() {
+        this.ui = useService("ui");
         this.model = this.props.model;
         this.updateMetaData = debounce(() => this.model.fetchData(this.makeParams()), 500);
-        this.state = useState(pick(this.model.metaData, ...KEYS));
+        this.state = proxy(pick(this.model.metaData, ...KEYS));
+    }
+
+    get isSmall() {
+        return this.ui.isSmall;
     }
 
     getGanttScaleSelectorProps() {
@@ -125,7 +131,7 @@ export class GanttRendererControls extends Component {
 
     get displayRescheduleMethods() {
         return (
-            this.model.metaData.dependencyEnabled && !this.model.useSampleModel && !this.env.isSmall
+            this.model.metaData.dependencyEnabled && !this.model.useSampleModel && !this.isSmall
         );
     }
 

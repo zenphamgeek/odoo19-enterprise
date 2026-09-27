@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Root Menu -->
+        <menuitem id="menu_hse_compliance_root"
+                  name="HSE &amp; Compliance"
+                  web_icon="insilos_hse_compliance,static/description/icon.svg"
+                  sequence="75"/>
+
+        <!-- 0. Onboarding & Hub -->
+        <menuitem id="menu_hse_onboarding_hub_item"
+                  name="Dashboard &amp; Onboarding"
+                  parent="menu_hse_compliance_root"
+                  action="action_is_hse_onboarding_hub"
+                  sequence="1"/>
+
+        <!-- 1. Legal Registers & Laws -->
+        <menuitem id="menu_hse_legal_root"
+                  name="Legal &amp; Standards"
+                  parent="menu_hse_compliance_root"
+                  sequence="10"/>
+
+        <menuitem id="menu_hse_legal_register_item"
+                  name="Facility Legal Registers"
+                  parent="menu_hse_legal_root"
+                  action="action_is_hse_legal_register"
+                  sequence="10"/>
+
+        <menuitem id="menu_hse_legal_document_item"
+                  name="Legal Documents &amp; QCVN"
+                  parent="menu_hse_legal_root"
+                  action="action_is_hse_legal_document"
+                  sequence="20"/>
+
+        <menuitem id="menu_hse_obligation_item"
+                  name="Compliance Obligations"
+                  parent="menu_hse_legal_root"
+                  action="action_is_hse_obligation"
+                  sequence="30"/>
+
+        <!-- 2. Facilities & Operations -->
+        <menuitem id="menu_hse_facility_root"
+                  name="Facilities &amp; Sites"
+                  parent="menu_hse_compliance_root"
+                  sequence="20"/>
+
+        <menuitem id="menu_hse_facility_item"
+                  name="Facilities &amp; Plants"
+                  parent="menu_hse_facility_root"
+                  action="action_is_hse_facility"
+                  sequence="10"/>
+
+        <!-- 3. Chemical Safety & SDS -->
+        <menuitem id="menu_hse_chemical_root"
+                  name="Chemicals &amp; SDS"
+                  parent="menu_hse_compliance_root"
+                  sequence="30"/>
+
+        <menuitem id="menu_hse_chemical_substance_item"
+                  name="Chemical Substances Master"
+                  parent="menu_hse_chemical_root"
+                  action="action_is_hse_chemical_substance"
+                  sequence="10"/>
+
+        <menuitem id="menu_hse_sds_item"
+                  name="Safety Data Sheets (SDS)"
+                  parent="menu_hse_chemical_root"
+                  action="action_is_hse_sds"
+                  sequence="20"/>
+
+        <menuitem id="menu_hse_product_permit_item"
+                  name="Product Permits &amp; Licenses"
+                  parent="menu_hse_chemical_root"
+                  action="action_is_hse_product_permit"
+                  sequence="30"/>
+
+        <!-- 4. Events & Sync Logs -->
+        <menuitem id="menu_hse_events_root"
+                  name="Events &amp; Audits"
+                  parent="menu_hse_compliance_root"
+                  sequence="40"/>
+
+        <menuitem id="menu_hse_compliance_event_item"
+                  name="Compliance Events"
+                  parent="menu_hse_events_root"
+                  action="action_is_hse_compliance_event"
+                  sequence="10"/>
+
+        <menuitem id="menu_hse_sync_log_item"
+                  name="Synchronization Logs"
+                  parent="menu_hse_events_root"
+                  action="action_is_hse_sync_log"
+                  sequence="20"/>
+
+        <!-- 5. Configuration -->
+        <menuitem id="menu_hse_config_root"
+                  name="Configuration"
+                  parent="menu_hse_compliance_root"
+                  groups="group_hse_manager"
+                  sequence="90"/>
+
+        <menuitem id="menu_hse_settings_item"
+                  name="Settings"
+                  parent="menu_hse_config_root"
+                  action="action_hse_compliance_config_settings"
+                  sequence="10"/>
+    </data>
+</odoo>

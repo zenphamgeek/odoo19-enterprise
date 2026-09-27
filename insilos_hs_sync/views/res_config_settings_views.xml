@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_hs_sync" model="ir.ui.view">
+        <field name="name">rs.config.settings.view.form.inherit.hs.sync</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block name="integration" position="inside">
+                <setting id="hermes_api_endpoint_setting" string="Hermes Engine API" help="FastAPI endpoint for live HS code search and classification">
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <label for="hermes_hs_api_url" string="API Base URL:" class="col-lg-3 w_light_label"/>
+                            <field name="hermes_hs_api_url" placeholder="http://127.0.0.1:8000"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting id="hermes_webhook_secret_setting" string="Hermes Webhook Security" help="Shared secret key to verify HMAC-SHA256 signatures for /insilos/webhooks/hs-events">
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <label for="hermes_hs_webhook_secret" string="Webhook Secret:" class="col-lg-3 w_light_label"/>
+                            <field name="hermes_hs_webhook_secret" password="True" placeholder="Enter secret key..."/>
+                        </div>
+                        <div class="text-muted mt8">
+                            Inbound URL: <code>/insilos/webhooks/hs-events</code>
+                        </div>
+                    </div>
+                </setting>
+                <setting id="hermes_auto_update_setting" string="Product Catalog Automation" help="Automatically update matching Product Templates when a tariff update event is received">
+                    <field name="hermes_hs_auto_update_products"/>
+                </setting>
+            </block>
+        </field>
+    </record>
+
+    <record id="action_is_hs_sync_config_settings" model="ir.actions.act_window">
+        <field name="name">HS &amp; Customs Settings</field>
+        <field name="path">hs-sync-settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module': 'insilos_hs_sync'}</field>
+    </record>
+</odoo>

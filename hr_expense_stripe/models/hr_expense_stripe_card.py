@@ -11,9 +11,9 @@ from odoo.addons.hr_expense_stripe.utils import STRIPE_CURRENCY_MINOR_UNITS, mak
 _logger = logging.getLogger(__name__)
 
 # So it can be translated in the database, and sent to Transifex. And manually updated in IAP
-_lt("The code to access your Odoo Expense Card is: %(code)s")
+_lt("The code to access your Insilos Expense Card is: %(code)s")
 _lt(
-    "The phone number associated with your Odoo Expense card(s) has been updated. "
+    "The phone number associated with your Insilos Expense card(s) has been updated. "
     "If it was not requested by you, please contact your administrator."
 )
 

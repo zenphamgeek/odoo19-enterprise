@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============================================================ -->
+        <!-- 1. CRM TAG ĐỊNH DANH CHIẾN DỊCH 3D SHOWCASE                   -->
+        <!-- ============================================================ -->
+        <record id="crm_tag_3d_showcase" model="crm.tag">
+            <field name="name">3D Showcase</field>
+            <field name="color">4</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 2. EMAIL MARKETING TEMPLATES (MAILING.MAILING)               -->
+        <!-- ============================================================ -->
+
+        <!-- Template Tầng 1: Gửi ngay Video 4K & Hồ sơ Kỹ thuật KCN -->
+        <record id="mailing_insilos_tier1_doc" model="mailing.mailing">
+            <field name="subject">[Insilos Enterprise] Hồ Sơ Thiết Kế KCN &amp; Trọn Bộ Video 4K Khảo Sát Nghiệp Vụ</field>
+            <field name="mailing_type">mail</field>
+            <field name="reply_to_mode">update</field>
+            <field name="mailing_model_id" ref="crm.model_crm_lead"/>
+            <field name="use_in_marketing_automation">True</field>
+            <field name="body_html"><![CDATA[
+<div style="background-color: #070B14; color: #E2E8F0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; padding: 40px 20px; line-height: 1.6;">
+    <div style="max-width: 640px; margin: 0 auto; background: #0B132B; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
+        <!-- Header -->
+        <div style="padding: 32px 32px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); background: linear-gradient(180deg, rgba(20,30,55,0.8) 0%, rgba(11,19,43,0.8) 100%);">
+            <span style="display: inline-block; padding: 4px 12px; background: rgba(0,210,255,0.15); border: 1px solid rgba(0,210,255,0.3); border-radius: 9999px; color: #00D2FF; font-size: 11px; font-weight: 600; font-family: monospace; letter-spacing: 1px;">
+                INSILOS ENTERPRISE PLATFORM // TẦNG 1 KÍCH HOẠT
+            </span>
+            <h1 style="color: #FFFFFF; font-size: 24px; font-weight: 700; margin: 16px 0 8px; line-height: 1.3;">
+                Chào mừng Quý Doanh nghiệp đến với Hệ Điều Hành Sản Xuất &amp; Tiếp Vận Insilos
+            </h1>
+            <p style="color: #94A3B8; font-size: 14px; margin: 0;">
+                Tài liệu thiết kế kiến trúc KCN &amp; Video Cinematic 4K "Từ Bản Vẽ Đến Hải Cảng" đã sẵn sàng phục vụ Quý vị.
+            </p>
+        </div>
+
+        <!-- Body Content -->
+        <div style="padding: 32px;">
+            <p style="font-size: 15px; color: #CBD5E1; margin-bottom: 20px;">
+                Kính gửi <strong>Quý Ban Lãnh đạo</strong>,
+            </p>
+            <p style="font-size: 14px; color: #94A3B8; margin-bottom: 24px;">
+                Cảm ơn Quý vị đã quan tâm tới giải pháp công nghiệp của <strong>Insilos Enterprise</strong>. Để hỗ trợ Quý vị đánh giá năng lực số hóa toàn diện từ nhà xưởng đến cảng biển, chúng tôi trân trọng gửi tới Quý vị trọn bộ tài liệu:
+            </p>
+
+            <!-- Feature Box -->
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; margin-bottom: 28px;">
+                <div style="margin-bottom: 12px;">
+                    <strong style="color: #00D2FF; font-size: 14px;">1. Video Master 4K Cinematic (105s):</strong>
+                    <div style="color: #94A3B8; font-size: 13px;">Khảo sát thực địa Phân xưởng Laser CNC 12kW, Robot hàn Yaskawa, Lắp ráp Pin LFP và Đội xe container Cát Lái.</div>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong style="color: #10B981; font-size: 14px;">2. Bản Vẽ Thiết Kế Kỹ Thuật &amp; BOM Đa Tầng:</strong>
+                    <div style="color: #94A3B8; font-size: 13px;">Định mức chi tiết cho dòng Xe kéo điện V-LIFT 2500E và Sơ mi rơ moóc CIMC 40HC.</div>
+                </div>
+                <div>
+                    <strong style="color: #F59E0B; font-size: 14px;">3. Bản Đối Soát Sổ Cái Tài Chính Thông Tư 200:</strong>
+                    <div style="color: #94A3B8; font-size: 13px;">Hạch toán tự động công nợ 131/331 và bảo toàn số dư đa tệ 25.400 VND/USD.</div>
+                </div>
+            </div>
+
+            <!-- CTA Button -->
+            <div style="text-align: center; margin: 32px 0;">
+                <a href="https://insilos.ai/showcase-3d" style="display: inline-block; background: #0066FF; color: #FFFFFF; font-size: 15px; font-weight: 600; padding: 14px 32px; border-radius: 9999px; text-decoration: none; box-shadow: 0 10px 20px rgba(0,102,255,0.4);">
+                    Xem Trực Tiếp Video 4K &amp; Tải Hồ Sơ Kỹ Thuật
+                </a>
+            </div>
+
+            <p style="font-size: 13px; color: #64748B; margin-top: 24px;">
+                Trong 48 giờ tới, chuyên viên giải pháp phụ trách cụm KCN của Insilos sẽ gửi tiếp Case Study đo lường chỉ số ROI thực tế đến Quý vị.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 20px 32px; border-top: 1px solid rgba(255,255,255,0.08); background: #070B14; font-size: 12px; color: #64748B; text-align: center;">
+            Insilos Enterprise Platform · Tinh Hoa Quản Trị Chuỗi Cung Ứng &amp; Chế Tạo Việt Nam<br/>
+            Hệ thống tuân thủ nghiêm ngặt bảo mật dữ liệu Sovereign &amp; Thông tư 200/2014/TT-BTC.
+        </div>
+    </div>
+</div>
+            ]]></field>
+        </record>
+
+        <!-- Template Tầng 2: Gửi Case Study MRP & Đội xe Cát Lái -->
+        <record id="mailing_insilos_tier2_mrp_fleet" model="mailing.mailing">
+            <field name="subject">[Case Study Insilos] Tối Ưu Lệnh Sản Xuất &amp; Điều Phối Đội Xe Cát Lái</field>
+            <field name="mailing_type">mail</field>
+            <field name="reply_to_mode">update</field>
+            <field name="mailing_model_id" ref="crm.model_crm_lead"/>
+            <field name="use_in_marketing_automation">True</field>
+            <field name="body_html"><![CDATA[
+<div style="background-color: #070B14; color: #E2E8F0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; padding: 40px 20px; line-height: 1.6;">
+    <div style="max-width: 640px; margin: 0 auto; background: #0B132B; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
+        <!-- Header -->
+        <div style="padding: 32px 32px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); background: linear-gradient(180deg, rgba(20,30,55,0.8) 0%, rgba(11,19,43,0.8) 100%);">
+            <span style="display: inline-block; padding: 4px 12px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); border-radius: 9999px; color: #10B981; font-size: 11px; font-weight: 600; font-family: monospace; letter-spacing: 1px;">
+                CASE STUDY BÁO CÁO THỰC THI // ROI METRICS
+            </span>
+            <h1 style="color: #FFFFFF; font-size: 24px; font-weight: 700; margin: 16px 0 8px; line-height: 1.3;">
+                Cách Doanh Nghiệp Cắt Giảm 18.4% Chi Phí Nhiên Liệu &amp; Đạt OEE 92.5% Cùng Insilos
+            </h1>
+            <p style="color: #94A3B8; font-size: 14px; margin: 0;">
+                Dữ liệu đo lường thực tế từ tuyến KCN VSIP - Cảng Tân Cảng Cát Lái.
+            </p>
+        </div>
+
+        <!-- Body Content -->
+        <div style="padding: 32px;">
+            <p style="font-size: 14px; color: #CBD5E1; margin-bottom: 20px;">
+                Kính gửi <strong>Quý Lãnh đạo</strong>,
+            </p>
+            <p style="font-size: 14px; color: #94A3B8; margin-bottom: 24px;">
+                Sau 2 ngày Quý vị tiếp cận bản thiết kế kỹ thuật, Insilos xin gửi đến Quý vị bản phân tích chuyên sâu về 2 bài toán vận hành lớn nhất tại các KCN:
+            </p>
+
+            <div style="border-left: 3px solid #00D2FF; padding-left: 16px; margin-bottom: 20px;">
+                <h3 style="color: #FFFFFF; font-size: 15px; margin: 0 0 6px;">1. Xóa Bỏ Giấy Tờ Tại Phân Xưởng Cơ Khí (Shop Floor Tablet):</h3>
+                <p style="color: #94A3B8; font-size: 13px; margin: 0;">
+                    Chuyển đổi hoàn toàn 6 công đoạn từ Cắt CNC, Chấn dập, Hàn robot đến Trạm Dyno lên máy tính bảng công nghiệp. OEE tăng vọt từ 76% lên 92.5%, giảm 40% thời gian chờ cấp phát phôi thép SS400.
+                </p>
+            </div>
+
+            <div style="border-left: 3px solid #10B981; padding-left: 16px; margin-bottom: 24px;">
+                <h3 style="color: #FFFFFF; font-size: 15px; margin: 0 0 6px;">2. Kiểm Soát ODO &amp; Định Mức Dầu Đội Xe Tải Nặng (Smart Fleet):</h3>
+                <p style="color: #94A3B8; font-size: 13px; margin: 0;">
+                    Kết nối đồng bộ nhật trình GPS đoàn xe Hyundai Xcient GT biển số 51C-982.45, kiểm soát mức tiêu hao 34L/100km dầu DO 0.05S, chấm dứt hoàn toàn tình trạng thất thoát nhiên liệu trên đường vận chuyển cảng.
+                </p>
+            </div>
+
+            <div style="text-align: center; margin: 32px 0;">
+                <a href="https://insilos.ai/showcase-3d#insilos-feature-breakdown" style="display: inline-block; background: #10B981; color: #FFFFFF; font-size: 15px; font-weight: 600; padding: 14px 32px; border-radius: 9999px; text-decoration: none; box-shadow: 0 10px 20px rgba(16,185,129,0.4);">
+                    Xem Trực Tiếp 4 Đoạn Phim Cắt Ngắn (Feature Cutdowns)
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 20px 32px; border-top: 1px solid rgba(255,255,255,0.08); background: #070B14; font-size: 12px; color: #64748B; text-align: center;">
+            Insilos Enterprise Platform · Đồng hành cùng các tập đoàn công nghiệp hàng đầu Việt Nam
+        </div>
+    </div>
+</div>
+            ]]></field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 3. SERVER ACTION TẦNG 3: TỰ ĐỘNG LÊN LỊCH GỌI DEMO TRÊN CRM  -->
+        <!-- ============================================================ -->
+        <record id="action_insilos_schedule_executive_demo" model="ir.actions.server">
+            <field name="name">Insilos: Tự Động Lên Lịch Demo &amp; Nâng Hạng Tiềm Năng (Tầng 3)</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for lead in records:
+    # 1. Lên lịch hoạt động Cuộc gọi Tư vấn Cấp cao
+    lead.activity_schedule(
+        'mail.mail_activity_data_call',
+        summary='Tư vấn Chuyên sâu Giải pháp Insilos 3D (KCN)',
+        note='Khách hàng đã xem Video 4K và nghiên cứu Case Study MRP & Fleet. Đã đủ điều kiện tư vấn chuyên sâu kiến trúc hệ thống Insilos.',
+        user_id=lead.user_id.id or env.uid,
+    )
+    # 2. Ghi chú Chatter xác nhận hoàn tất phễu tự động
+    lead.message_post(body="<p><strong>[Marketing Automation]</strong> Khách hàng đã hoàn thành phễu 3 tầng 3D Showcase. Đã tự động tạo hoạt động gọi tư vấn chuyên sâu cho giám đốc phụ trách KCN.</p>")
+            ]]></field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 4. CHIẾN DỊCH MARKETING AUTOMATION                           -->
+        <!-- ============================================================ -->
+        <record id="campaign_insilos_industrial_nurturing" model="marketing.campaign">
+            <field name="name">Chiến Dịch Nuôi Dưỡng Khách Hàng Công Nghiệp &amp; Vận Tải (Insilos 3D Showcase)</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="domain">[('type', '=', 'opportunity'), ('tag_ids.name', 'ilike', '3D Showcase')]</field>
+        </record>
+
+        <!-- Hoạt động Tầng 1: Gửi ngay tức thì (0 Giờ) -->
+        <record id="activity_insilos_tier1_instant" model="marketing.activity">
+            <field name="name">Tầng 1: Gửi Trọn Bộ Video 4K &amp; Hồ Sơ Thiết Kế KCN (Tức thì)</field>
+            <field name="campaign_id" ref="campaign_insilos_industrial_nurturing"/>
+            <field name="activity_type">email</field>
+            <field name="mass_mailing_id" ref="mailing_insilos_tier1_doc"/>
+            <field name="trigger_type">begin</field>
+            <field name="interval_number">0</field>
+            <field name="interval_type">hours</field>
+        </record>
+
+        <!-- Hoạt động Tầng 2: Gửi Case Study MRP & Fleet sau 2 Ngày -->
+        <record id="activity_insilos_tier2_casestudy" model="marketing.activity">
+            <field name="name">Tầng 2: Gửi Case Study MRP &amp; Đội Xe Cát Lái (Sau 2 ngày)</field>
+            <field name="campaign_id" ref="campaign_insilos_industrial_nurturing"/>
+            <field name="parent_id" ref="activity_insilos_tier1_instant"/>
+            <field name="activity_type">email</field>
+            <field name="mass_mailing_id" ref="mailing_insilos_tier2_mrp_fleet"/>
+            <field name="trigger_type">activity</field>
+            <field name="interval_number">2</field>
+            <field name="interval_type">days</field>
+        </record>
+
+        <!-- Hoạt động Tầng 3: Tự động Lên Lịch Gọi Tư Vấn Chuyên Sâu sau thêm 2 Ngày -->
+        <record id="activity_insilos_tier3_crm_schedule" model="marketing.activity">
+            <field name="name">Tầng 3: Tự Động Lên Lịch Gọi Tư Vấn Chuyên Sâu Trên CRM (Sau 4 ngày)</field>
+            <field name="campaign_id" ref="campaign_insilos_industrial_nurturing"/>
+            <field name="parent_id" ref="activity_insilos_tier2_casestudy"/>
+            <field name="activity_type">action</field>
+            <field name="server_action_id" ref="action_insilos_schedule_executive_demo"/>
+            <field name="trigger_type">activity</field>
+            <field name="interval_number">2</field>
+            <field name="interval_type">days</field>
+        </record>
+
+        <!-- Kích hoạt khởi chạy chiến dịch sau khi các activities đã gắn đầy đủ -->
+        <function model="marketing.campaign" name="action_start_campaign">
+            <value eval="[ref('campaign_insilos_industrial_nurturing')]"/>
+        </function>
+
+        <!-- ============================================================ -->
+        <!-- 5. CƠ HỘI CRM MẪU THAM GIA PHỄU 3D SHOWCASE                  -->
+        <!-- ============================================================ -->
+        <record id="crm_lead_demo_showcase_vinfast" model="crm.lead">
+            <field name="name">Yêu cầu Tư vấn 3D Showcase — VinFast Cát Hải</field>
+            <field name="contact_name">Nguyễn Văn An (Trưởng ban Công nghệ)</field>
+            <field name="email_from">an.nguyen@vinfast.vn</field>
+            <field name="phone">0918 123 456</field>
+            <field name="partner_name">Tổ hợp Sản xuất Ô tô VinFast Cát Hải - Hải Phòng</field>
+            <field name="type">opportunity</field>
+            <field name="expected_revenue">378900.0</field>
+            <field name="tag_ids" eval="[Command.link(ref('crm_tag_3d_showcase'))]"/>
+            <field name="description">Quan tâm: Lắp ráp Xe kéo điện V-LIFT và Trạm sạc DC 60kW. Đã xem Video Master 4K.</field>
+        </record>
+
+        <record id="crm_lead_demo_showcase_thaco" model="crm.lead">
+            <field name="name">Yêu cầu Tư vấn 3D Showcase — THACO Chu Lai</field>
+            <field name="contact_name">Phạm Thanh Bình (Phó TGĐ Cơ khí)</field>
+            <field name="email_from">binh.pham@thaco.com.vn</field>
+            <field name="phone">0903 889 900</field>
+            <field name="partner_name">Khu Phức hợp Cơ khí Ô tô Chu Lai - Quảng Nam</field>
+            <field name="type">opportunity</field>
+            <field name="expected_revenue">330700.0</field>
+            <field name="tag_ids" eval="[Command.link(ref('crm_tag_3d_showcase'))]"/>
+            <field name="description">Quan tâm: Cắt Laser CNC 12kW, Robot hàn Yaskawa và Quản lý OEE Shop Floor.</field>
+        </record>
+
+    </data>
+</odoo>

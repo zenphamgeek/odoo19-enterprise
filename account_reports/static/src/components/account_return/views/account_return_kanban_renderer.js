@@ -8,10 +8,6 @@ import { AccountReturnBaseKanbanRenderer } from "./account_return_base_kanban_re
 export class AccountReturnKanbanRenderer extends AccountReturnBaseKanbanRenderer {
     static template="account_reports.account_return_kanban_renderer";
 
-    static props = [
-        ...KanbanRenderer.props,
-    ]
-
     static components = {
         ...KanbanRenderer.components,
         AccountReturnKanbanRecord

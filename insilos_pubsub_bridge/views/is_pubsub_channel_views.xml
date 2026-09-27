@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pubsub_channel_list" model="ir.ui.view">
+        <field name="name">is.pubsub.channel.list</field>
+        <field name="model">is.pubsub.channel</field>
+        <field name="arch" type="xml">
+            <list string="Pub/Sub Event Channels &amp; Subscriptions" decoration-success="state == 'active'" decoration-warning="state == 'paused'" decoration-danger="state == 'error'">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="channel_type"/>
+                <field name="topic_name"/>
+                <field name="subscription_name"/>
+                <field name="monitored_email"/>
+                <field name="last_heartbeat" string="Last Active"/>
+                <field name="event_count" string="Events"/>
+                <field name="forward_count" string="Forwards"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pubsub_channel_search" model="ir.ui.view">
+        <field name="name">is.pubsub.channel.search</field>
+        <field name="model">is.pubsub.channel</field>
+        <field name="arch" type="xml">
+            <search><field name="name"/><field name="topic_name"/></search>
+        </field>
+    </record>
+
+    <record id="view_pubsub_channel_kanban" model="ir.ui.view">
+        <field name="name">is.pubsub.channel.kanban</field>
+        <field name="model">is.pubsub.channel</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard" sample="1">
+                <field name="name"/>
+                <field name="channel_type"/>
+                <field name="topic_name"/>
+                <field name="monitored_email"/>
+                <field name="state"/>
+                <field name="event_count"/>
+                <field name="forward_count"/>
+                <field name="last_heartbeat"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex flex-column h-100 p-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <strong class="fs-5 text-primary"><field name="name"/></strong>
+                                <field name="state" widget="badge" decoration-success="state == 'active'" decoration-warning="state == 'paused'" decoration-danger="state == 'error'"/>
+                            </div>
+                            <div class="text-muted small mb-2">
+                                <div><strong>Topic:</strong> <field name="topic_name"/></div>
+                                <div><strong>Email:</strong> <field name="monitored_email"/></div>
+                                <div><strong>Last Heartbeat:</strong> <field name="last_heartbeat"/></div>
+                            </div>
+                            <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="badge rounded-pill text-bg-light me-1"><field name="event_count"/> Events</span>
+                                    <span class="badge rounded-pill text-bg-light"><field name="forward_count"/> Forwards</span>
+                                </div>
+                                <button name="action_test_ping" type="object" class="btn btn-sm btn-outline-primary">
+                                    Ping
+                                </button>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_pubsub_channel_form" model="ir.ui.view">
+        <field name="name">is.pubsub.channel.form</field>
+        <field name="model">is.pubsub.channel</field>
+        <field name="arch" type="xml">
+            <form string="Pub/Sub Channel Configuration">
+                <header>
+                    <button name="action_test_ping" type="object" string="Test Ping / Health Check" class="btn-primary"/>
+                    <button name="action_renew_watch" type="object" string="Renew Gmail Watch (7-Day)" class="btn-secondary" invisible="channel_type != 'gmail_push'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="active,paused,error"/>
+                </header>
+                <sheet>
+                    <div class="w_button_box" name="button_box">
+                        <button name="action_view_events" type="object" class="w_stat_button" icon="fa-bolt">
+                            <field name="event_count" widget="statinfo" string="Inbound Events"/>
+                        </button>
+                    </div>
+                    <div class="w_title">
+                        <label for="name" string="Channel Name"/>
+                        <h1><field name="name" placeholder="e.g. Gmail Real-time Notifications Hub"/></h1>
+                    </div>
+                    <group>
+                        <group string="Channel Type &amp; GCP Identity">
+                            <field name="channel_type"/>
+                            <field name="gcp_project_id"/>
+                            <field name="topic_name"/>
+                            <field name="subscription_name"/>
+                        </group>
+                        <group string="Ingestion Endpoint &amp; Security">
+                            <field name="monitored_email"/>
+                            <field name="endpoint_url" readonly="1" widget="CopyClipboardChar"/>
+                            <field name="webhook_secret" password="True"/>
+                            <field name="auto_renew_watch" invisible="channel_type != 'gmail_push'"/>
+                        </group>
+                    </group>
+                    <group string="Health &amp; Heartbeat Diagnostic">
+                        <field name="last_heartbeat" readonly="1"/>
+                        <field name="last_status_message" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pubsub_channel" model="ir.actions.act_window">
+        <field name="name">Pub/Sub Channels &amp; Topics</field>
+        <field name="res_model">is.pubsub.channel</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register your first Google Cloud Pub/Sub channel.
+            </p>
+            <p>
+                Connect Gmail push notifications, Hermes AI Event Bus, or outbound event topics to automate business flows.
+            </p>
+        </field>
+    </record>
+</odoo>

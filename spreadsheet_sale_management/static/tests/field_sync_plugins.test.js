@@ -3,7 +3,7 @@ import { animationFrame } from "@odoo/hoot-mock";
 
 import { Model } from "@odoo/o-spreadsheet";
 
-import { x2ManyCommands } from "@web/core/orm_service";
+import { x2ManyCommands } from "@web/core/orm_plugin";
 
 import {
     addColumns,

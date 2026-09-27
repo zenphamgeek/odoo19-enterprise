@@ -100,7 +100,7 @@ class ResConfigSettings(models.TransientModel):
         client = self.env['account.external.tax.mixin']._get_client(self.company_id)
         response = client.list_entity_use_codes()
         error = self.env['account.external.tax.mixin']._handle_response(response, _(
-            "Odoo could not fetch the exemption codes of %(company)s",
+            "Insilos could not fetch the exemption codes of %(company)s",
             company=self.company_id.display_name,
         ))
         if error:

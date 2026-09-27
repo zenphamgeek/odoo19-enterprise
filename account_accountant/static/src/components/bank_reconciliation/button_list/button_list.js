@@ -28,9 +28,6 @@ export class BankRecButtonList extends Component {
         reconcileModels: Array,
         preSelectedReconciliationModel: { type: Object, optional: true },
     };
-    static defaultProps = {
-        reconcileLineCount: 0,
-    };
 
     setup() {
         this.action = useService("action");

@@ -17,12 +17,12 @@ class ResCompany(models.Model):
         string="EDI environment",
         default="demo",
         help="UCFE environment to generate EDI invoices, if Demo is selected it will not connect to a webservice and"
-        " it will do a dummy validation only in Odoo of the CFE")
+        " it will do a dummy validation only in Insilos of the CFE")
     l10n_uy_edi_ucfe_password = fields.Char(
         "UCFE Provider WS Password",
         groups="base.group_system",
         help="This password is used exclusively for accessing UCFE webservices, enabling communication and data"
-        " exchange between Odoo and UCFE. It is distinct from the password used to log in to UCFE's portal.")
+        " exchange between Insilos and UCFE. It is distinct from the password used to log in to UCFE's portal.")
     l10n_uy_edi_ucfe_commerce_code = fields.Char("UCFE Provider Commerce code", groups="base.group_system")
     l10n_uy_edi_ucfe_terminal_code = fields.Char("UCFE Provider Terminal code", groups="base.group_system")
 

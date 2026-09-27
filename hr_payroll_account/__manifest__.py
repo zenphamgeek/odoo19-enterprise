@@ -10,7 +10,7 @@ Generic Payroll system Integrated with Accounting.
     * Payment Encoding
     * Company Contribution Management
     """,
-    'depends': ['hr_payroll', 'accountant', 'base_iban'],
+    'depends': ['hr_payroll', 'accountant', 'account'],
     'data': [
         'data/hr_salary_rule_data.xml',
         'views/hr_payslip_run_views.xml',

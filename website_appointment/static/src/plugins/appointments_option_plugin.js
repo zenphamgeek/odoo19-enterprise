@@ -12,7 +12,7 @@ class AppointmentsOptionPlugin extends Plugin {
     ];
     modelNameFilter = "appointment.type";
     resources = {
-        builder_options: withSequence(DYNAMIC_SNIPPET, AppointmentsOption),
+        builder_options: withSequence(DYNAMIC_SNIPPET ?? 50, AppointmentsOption),
         on_snippet_dropped_handlers: this.onSnippetDropped.bind(this),
     };
     getModelNameFilter() {

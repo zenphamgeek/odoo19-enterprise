@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============================================================ -->
+        <!-- CÁC TRUNG TÂM LÀM VIỆC NHÀ MÁY CHẾ TẠO CƠ KHÍ (WORKCENTERS)   -->
+        <!-- ============================================================ -->
+
+        <record id="mrp_workcenter_laser_cnc" model="mrp.workcenter">
+            <field name="name">Phân xưởng Cắt Fiber Laser &amp; Đột dập CNC</field>
+            <field name="code">WC-CUT-01</field>
+            <field name="resource_calendar_id" ref="mrp.mrp_workcenter_calendar"/>
+            <field name="costs_hour">450000</field>
+            <field name="oee_target">88.0</field>
+            <field name="time_efficiency">100.0</field>
+            <field name="note">Trang bị hệ thống máy cắt Laser sợi quang Bystronic 12kW và máy đột liên hoàn CNC, độ chính xác ±0.05mm.</field>
+        </record>
+
+        <record id="mrp_workcenter_bending_cnc" model="mrp.workcenter">
+            <field name="name">Phân xưởng Chấn gấp định hình CNC</field>
+            <field name="code">WC-BEND-01</field>
+            <field name="resource_calendar_id" ref="mrp.mrp_workcenter_calendar"/>
+            <field name="costs_hour">380000</field>
+            <field name="oee_target">85.0</field>
+            <field name="time_efficiency">100.0</field>
+            <field name="note">Máy chấn gấp thủy lực CNC Trumpf lực ép 250 tấn, chiều dài bàn chấn 4.200mm, bù võng tự động.</field>
+        </record>
+
+        <record id="mrp_workcenter_robot_weld" model="mrp.workcenter">
+            <field name="name">Phân xưởng Hàn Robot tự động Yaskawa</field>
+            <field name="code">WC-WELD-01</field>
+            <field name="resource_calendar_id" ref="mrp.mrp_workcenter_calendar"/>
+            <field name="costs_hour">520000</field>
+            <field name="oee_target">92.0</field>
+            <field name="time_efficiency">100.0</field>
+            <field name="note">Trạm Robot hàn công nghiệp Yaskawa Motoman 6 trục tích hợp nguồn hàn số Fronius TPS/i 500A hàn MAG/MIG kết cấu thép dầm xe.</field>
+        </record>
+
+        <record id="mrp_workcenter_powder_coat" model="mrp.workcenter">
+            <field name="name">Dây chuyền Xử lý bề mặt &amp; Sơn sấy tĩnh điện tự động</field>
+            <field name="code">WC-PAINT-01</field>
+            <field name="resource_calendar_id" ref="mrp.mrp_workcenter_calendar"/>
+            <field name="costs_hour">600000</field>
+            <field name="oee_target">90.0</field>
+            <field name="time_efficiency">100.0</field>
+            <field name="note">Bao gồm hầm tẩy dầu 7 bể phốt phát hóa nano, súng phun sơn tự động Nordson và buồng sấy nhiệt hồng ngoại 200°C.</field>
+        </record>
+
+        <record id="mrp_workcenter_assembly" model="mrp.workcenter">
+            <field name="name">Dây chuyền Lắp ráp hoàn thiện Cơ điện &amp; Thủy lực</field>
+            <field name="code">WC-ASM-01</field>
+            <field name="resource_calendar_id" ref="mrp.mrp_workcenter_calendar"/>
+            <field name="costs_hour">350000</field>
+            <field name="oee_target">85.0</field>
+            <field name="time_efficiency">100.0</field>
+            <field name="note">Băng chuyền trượt lắp ráp cụm động cơ điện AC, lắp đặt pack pin Lithium, đấu nối bo mạch điều khiển và hệ thống thủy lực.</field>
+        </record>
+
+        <record id="mrp_workcenter_pdi_test" model="mrp.workcenter">
+            <field name="name">Trạm Kiểm chuẩn Chất lượng PDI &amp; Thử tải động</field>
+            <field name="code">WC-TEST-01</field>
+            <field name="resource_calendar_id" ref="mrp.mrp_workcenter_calendar"/>
+            <field name="costs_hour">400000</field>
+            <field name="oee_target">95.0</field>
+            <field name="time_efficiency">100.0</field>
+            <field name="note">Trạm kiểm tra phanh con lăn điện tử, thử tải kéo kéo động 2.500kg, đo dòng rò cách điện cao áp và cấp biên bản nghiệm thu PDI xuất xưởng.</field>
+        </record>
+
+    </data>
+</odoo>

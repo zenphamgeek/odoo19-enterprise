@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Demo Facility -->
+        <record id="demo_esg_facility_dinh_vu" model="is.hse.facility">
+            <field name="name">Dinh Vu Chemical &amp; Petrochemical Industrial Complex</field>
+            <field name="code">FAC-HP-01</field>
+            <field name="industry_type">chemical</field>
+            <field name="worker_count">350</field>
+            <field name="wastewater_capacity_m3_day">450.0</field>
+            <field name="emission_classification">group_1</field>
+            <field name="environmental_permit_code">GPMT-2024-BCT-HP-089</field>
+            <field name="has_hazardous_chemicals">1</field>
+        </record>
+
+        <!-- Demo Facility ESG Scorecard for Hai Phong Plant -->
+        <record id="demo_esg_scorecard_hp01" model="is.esg.facility.scorecard">
+            <field name="facility_id" ref="demo_esg_facility_dinh_vu"/>
+            <field name="reporting_year">2026</field>
+            <field name="reporting_period">annual</field>
+            <field name="scope1_direct_co2e">485.60</field>
+            <field name="scope2_indirect_co2e">1240.20</field>
+            <field name="cems_so2_emissions_kg">125.40</field>
+            <field name="cems_nox_emissions_kg">340.80</field>
+            <field name="cems_tsp_dust_kg">42.10</field>
+            <field name="wastewater_discharged_m3">14500.0</field>
+            <field name="wastewater_cod_kg">1200.0</field>
+            <field name="wastewater_bod_kg">450.0</field>
+            <field name="wastewater_compliance_pct">98.5</field>
+            <field name="hazardous_waste_generated_ton">12.4</field>
+            <field name="recycled_waste_percentage">72.0</field>
+            <field name="ltifr_safety_rate">0.0</field>
+            <field name="notes">Nhà máy Đình Vũ đạt chuẩn QCVN 19/2024/BCT và QCVN 40:2011/BTNMT Cột A. Tỷ lệ tái chế chất thải đạt 72%.</field>
+        </record>
+    </data>
+</odoo>

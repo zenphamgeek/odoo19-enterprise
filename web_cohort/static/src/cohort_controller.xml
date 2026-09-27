@@ -7,13 +7,13 @@
     <t t-name="web_cohort.CohortView">
         <div t-att-class="props.className" t-ref="root">
             <Layout className="model.useSampleModel ? 'o_view_sample_data' : ''" display="props.display">
-                <t t-set-slot="layout-buttons">
+                <t t-set-slot="control-panel-buttons">
                     <t t-call="{{ props.buttonTemplate }}"/>
                 </t>
                 <t t-set-slot="control-panel-additional-actions">
                     <CogMenu/>
                 </t>
-                <t t-set-slot="layout-actions">
+                <t t-set-slot="control-panel-actions">
                     <SearchBar/>
                 </t>
                 <t t-set="displayNoContent" t-value="

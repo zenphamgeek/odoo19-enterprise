@@ -34,7 +34,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
 
     zip_file = fields.Binary('File', required=True)
     only_open = fields.Boolean('Import only open years', help="Years closed in Winbooks are likely to have incomplete data. The counter part of incomplete entries will be set in a suspense account", default=True)
-    suspense_code = fields.Char(string="Suspense Account Code", help="This is the code of the account in which you want to put the counterpart of unbalanced moves. This might be an account from your Winbooks data, or an account that you created in Odoo before the import.")
+    suspense_code = fields.Char(string="Suspense Account Code", help="This is the code of the account in which you want to put the counterpart of unbalanced moves. This might be an account from your Winbooks data, or an account that you created in Insilos before the import.")
 
     def _import_partner_info(self, dbf_records):
         """Import partner category information from *_table*.dbf files.

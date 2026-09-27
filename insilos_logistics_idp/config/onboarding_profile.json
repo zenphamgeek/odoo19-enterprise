@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "adapter_type": "generic_inbound",
+  "allowed_operations": ["import"],
+  "validation_mode": "fail_to_review",
+  "mes_mode": "inbound_read_only",
+  "profiles": [
+    {"code":"SUP-STD-DRAFT","draft_policy":"required"},
+    {"code":"SUP-MAIN-ONLY","draft_policy":"skipped","invoice_types":["main_vat_invoice"]},
+    {"code":"SUP-SALES","draft_policy":"skipped","invoice_types":["sales_invoice"]},
+    {"code":"SUP-COMMERCIAL","draft_policy":"skipped","invoice_types":["commercial_invoice"]},
+    {"code":"SUP-NOMAT-E13","no_material_behavior":"custom_code","allowed_regimes":["E13"]},
+    {"code":"SUP-GROUPED","grouped_line_strategy":"identity_aggregate"},
+    {"code":"SUP-PER1000","price_per":1000},
+    {"code":"SUP-ROUND2","precision":2,"rounding":"ROUND_HALF_UP"},
+    {"code":"SUP-GATEPASS","gate_pass_enabled":true},
+    {"code":"SUP-EXT-SAP","field_authority":"sap_erp"},
+    {"code":"SUP-MES-REF","mes_mode":"inbound_read_only"}
+  ],
+  "profile_defaults": {
+    "matching_cascade":["material_code","single_item","custom_code","unit_price_per","description_candidate"],
+    "description_similarity":{"enabled":false,"threshold":0.50},
+    "sequence_policy":"warn",
+    "grouped_line_strategy":"identity_aggregate",
+    "no_material_behavior":"review",
+    "broker_inclusion":[],
+    "broker_exclusion":[],
+    "quantity_tolerance":"0",
+    "price_tolerance":"0",
+    "precision":2
+  },
+  "governance": {
+    "version":"2026.1",
+    "effective_from":"2026-01-01",
+    "source_citation":"Meeting INNORIA - SWAROVSKI / Test Data",
+    "immutable_decision_snapshot":true,
+    "blocking_activation_four_eyes":true
+  }
+}

@@ -18,7 +18,7 @@
     </template>
 
     <template id="sepa_state_header" inherit_id="payment_custom.custom_state_header">
-        <xpath expr="//div[@id='o_payment_status_message_details']" position="inside">
+        <xpath expr="//div[@id='o_payment_status_message']" position="inside">
             <div t-if="tx.provider_id.sudo().custom_mode == 'sepa_direct_debit'">
                 <strong>Amount: </strong><span t-out="tx.amount"/> €
             </div>

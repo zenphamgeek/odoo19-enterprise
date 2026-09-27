@@ -57,7 +57,7 @@ class ResConfigSettings(models.TransientModel):
                     "user_email": self.env.user.email,  # to be used as the email contact in test mode
                 })
             if res.get("success") is not True:
-                error = self.env._("Error connection to Odoo IAP to create UCFE Provider account")
+                error = self.env._("Error connection to Insilos IAP to create UCFE Provider account")
                 error_code = res.get('error')
                 if error_code == 'error_invalid_dbuuid':
                     error = self.env._('Make sure you have a valid enterprise contract in this database. '

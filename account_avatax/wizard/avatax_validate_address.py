@@ -48,7 +48,7 @@ class AvataxValidateAddress(models.TransientModel):
                 'textCase': 'Mixed',
             })
             error = self.env['account.external.tax.mixin']._handle_response(response, _(
-                "Odoo could not validate the address of %(partner)s with Avalara.",
+                "Insilos could not validate the address of %(partner)s with Avalara.",
                 partner=wizard.partner_id.display_name,
             ))
             if error:

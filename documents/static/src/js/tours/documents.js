@@ -8,7 +8,7 @@ registry.category("web_tour.tours").add("documents_tour", {
         {
             trigger: '.o_app[data-menu-xmlid="documents.menu_root"]',
             content: markup(
-                _t("Want to become a <b>paperless company</b>? Let's discover Odoo Documents.")
+                _t("Want to become a <b>paperless company</b>? Let's discover Insilos Documents.")
             ),
             tooltipPosition: "bottom",
             run: "click",

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- List View: CBAM Advisor -->
+        <record id="view_is_esg_cbam_advisor_tree" model="ir.ui.view">
+            <field name="name">is.esg.cbam.advisor.list</field>
+            <field name="model">is.esg.cbam.advisor</field>
+            <field name="arch" type="xml">
+                <list string="Internal CBAM Estimate Advisor" decoration-danger="is_cbam_applicable">
+                    <field name="name"/>
+                    <field name="hs_code"/>
+                    <field name="description_vi"/>
+                    <field name="cbam_sector" widget="badge"/>
+                    <field name="total_embedded_emissions_t_per_t" string="Embedded Carbon (tCO₂e/t)"/>
+                    <field name="estimated_cbam_cost_per_ton_eur" string="CBAM Cost (€/t)" class="fw-bold text-danger"/>
+                    <field name="potential_savings_per_ton_eur" string="DPPA Savings (€/t)" class="fw-bold text-success"/>
+                    <field name="reporting_frequency" widget="badge"/>
+                    <field name="is_cbam_applicable" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View: CBAM Advisor -->
+        <record id="view_is_esg_cbam_advisor_form" model="ir.ui.view">
+            <field name="name">is.esg.cbam.advisor.form</field>
+            <field name="model">is.esg.cbam.advisor</field>
+            <field name="arch" type="xml">
+                <form string="Internal CBAM Estimate Advisor">
+                    <sheet>
+                        <widget name="web_ribbon" title="INTERNAL CBAM SCREENING FLAG" bg_color="bg-danger" invisible="not is_cbam_applicable"/>
+                        <div class="w_title">
+                            <label for="name" string="Internal CBAM Estimate Reference"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="1. Internal HS Classification Input">
+                                <field name="hs_tariff_id"/>
+                                <field name="hs_code"/>
+                                <field name="description_vi"/>
+                            </group>
+                            <group string="2. Configured Internal Scope Scenario">
+                                <field name="is_cbam_applicable" widget="boolean_toggle"/>
+                                <field name="cbam_sector"/>
+                                <field name="reporting_frequency"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group string="3. Internal Embedded Carbon Assumptions">
+                                <field name="direct_embedded_emissions_t_per_t"/>
+                                <field name="indirect_embedded_emissions_t_per_t"/>
+                                <field name="total_embedded_emissions_t_per_t" class="fw-bold fs-5 text-primary"/>
+                            </group>
+                            <group string="4. Internal Carbon Cost Scenario">
+                                <field name="eu_carbon_certificate_price_eur"/>
+                                <field name="estimated_cbam_cost_per_ton_eur" class="fw-bold fs-4 text-danger"/>
+                            </group>
+                        </group>
+
+                        <group string="5. Internal Renewable-Energy Scenario" invisible="not is_cbam_applicable">
+                            <group>
+                                <field name="renewable_energy_share_pct" widget="percentage"/>
+                                <field name="annual_export_volume_tons"/>
+                            </group>
+                            <group>
+                                <field name="mitigated_total_emissions" string="Scenario Intensity (tCO₂e/t)"/>
+                                <field name="projected_cbam_cost_after_mitigation_eur" class="text-primary"/>
+                                <field name="potential_savings_per_ton_eur" class="fw-bold text-success"/>
+                                <field name="total_annual_cbam_savings_eur" class="fw-bold fs-4 text-success"/>
+                            </group>
+                        </group>
+
+                        <group string="6. Internal Scenario Notes">
+                            <field name="action_recommendation" placeholder="Recommendations for supplier factory decarbonization, renewable PPA purchase, and direct emissions MRV audit..."/>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_is_esg_cbam_advisor_search" model="ir.ui.view">
+            <field name="name">is.esg.cbam.advisor.search</field>
+            <field name="model">is.esg.cbam.advisor</field>
+            <field name="arch" type="xml">
+            <search><field name="name"/><field name="hs_code"/><field name="cbam_sector"/></search></field>
+        </record>
+
+        <!-- Action Window: CBAM Advisor -->
+        <record id="action_is_esg_cbam_advisor" model="ir.actions.act_window">
+            <field name="name">CBAM Carbon Tariff Advisor</field>
+            <field name="res_model">is.esg.cbam.advisor</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>

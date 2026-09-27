@@ -1412,7 +1412,7 @@ services reception has been received as well.
             self.message_post(
                 body=Markup("<strong> %s </strong> %s") % (
                         _("Warning:"),
-                        _("The total amount of the DTE\'s XML is %(xml_amount)s and the total amount calculated by Odoo is %(move_amount)s. Typically this is caused by additional lines in the detail or by unidentified taxes, please check if a manual correction is needed.",
+                        _("The total amount of the DTE\'s XML is %(xml_amount)s and the total amount calculated by Insilos is %(move_amount)s. Typically this is caused by additional lines in the detail or by unidentified taxes, please check if a manual correction is needed.",
                             xml_amount=formatLang(self.env, xml_total_amount, currency_obj=self.currency_id),
                             move_amount=formatLang(self.env, self.amount_total, currency_obj=self.currency_id)
                         )

@@ -50,11 +50,12 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         });
     }
 
-    /**
-     * @override
-     */
     getRecordClasses() {
-        let result = super.getRecordClasses();
+        return this.getCardClasses();
+    }
+
+    getCardClasses() {
+        let result = super.getCardClasses ? super.getCardClasses() : (super.getRecordClasses ? super.getRecordClasses() : "");
         if (this.props.record.selected) {
             result += " o_record_selected";
         }

@@ -1,4 +1,4 @@
-import { Component, useRef } from "@odoo/owl";
+import { Component, signal } from "@odoo/owl";
 import { Record } from "@web/model/record";
 import { ViewButton } from "@web/views/view_button/view_button";
 import { useViewButtons } from "@web/views/view_button/view_button_hook";
@@ -24,8 +24,12 @@ export class GanttPopover extends Component {
         "actionContext?",
     ];
 
+    rootRef = signal.ref();
+    get root() {
+        return this.rootRef;
+    }
+
     setup() {
-        this.rootRef = useRef("root");
 
         this.templates = {};
         const toCompile = {};

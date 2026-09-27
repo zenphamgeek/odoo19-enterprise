@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ESG Sustainability Radar Guided Onboarding Hub View -->
+    <record id="view_is_esg_onboarding_form" model="ir.ui.view">
+        <field name="name">is.esg.onboarding.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form string="ESG &amp; Carbon Accounting Onboarding Hub" create="false" edit="false">
+                <sheet class="w-100">
+                    <!-- Header Banner -->
+                    <div class="p-4 mb-4 rounded bg-success text-white shadow-sm w-100">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-12 col-md-9">
+                                <h2 class="fw-bold text-white mb-2">🌿 Trung tâm Quản trị Phát triển Bền vững &amp; Kế toán Carbon (ESG Sustainability Radar)</h2>
+                                <p class="mb-0 text-white-50 small">
+                                    Hợp nhất dữ liệu quan trắc khí thải CEMS, kiểm kê phát thải Phạm vi 1-2-3 (Scope 1, 2, 3), tính toán thuế carbon biên giới EU CBAM và cấp chứng chỉ số phát triển bền vững nhà máy.
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-3 text-md-end">
+                                <span class="badge bg-light text-success px-3 py-2 fw-bold">ESG Radar L5 Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4-Step Interactive Onboarding Cards -->
+                    <h4 class="fw-bold mb-3 text-success">Quy trình 4 Bước Kiểm kê Phát thải &amp; Tuân thủ Môi trường ESG:</h4>
+                    <div class="row g-3 mb-4 w-100">
+                        <!-- Step 1: Facility & Baselines -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-success me-2">1</span>
+                                        <h5 class="card-title fw-bold mb-0 text-success">Thẻ Điểm Nhà Máy</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Thiết lập hồ sơ cơ sở công nghiệp, định mức tiêu thụ điện năng Scope 2 và đo đếm phát thải đốt trực tiếp Scope 1.
+                                    </p>
+                                    <button name="%(action_is_esg_facility_scorecard)d" string="Scorecards" type="action" class="btn btn-outline-success w-100 mt-auto"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: CBAM Tariff Advisor -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-primary me-2">2</span>
+                                        <h5 class="card-title fw-bold mb-0 text-primary">Cố Vấn Thuế CBAM</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Tra cứu nghĩa vụ chứng chỉ carbon EU ETS trên 8 số mã HS (Sắt thép, Nhôm, Xi măng, Phân bón, Hóa chất Hydro).
+                                    </p>
+                                    <button name="%(action_is_esg_cbam_advisor)d" string="CBAM Advisor" type="action" class="btn btn-outline-primary w-100 mt-auto"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Scope 3 Freight Carbon -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-info text-dark me-2">3</span>
+                                        <h5 class="card-title fw-bold mb-0 text-info">Carbon Logistics</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Tính toán phát thải vận chuyển đường biển, hàng không, đường bộ GLEC từ chứng từ B/L và định lượng bù trừ số hóa IDP.
+                                    </p>
+                                    <button name="%(action_is_esg_freight_carbon)d" string="Freight Carbon" type="action" class="btn btn-outline-info w-100 mt-auto text-dark"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: CEMS Sensors & Chemical Footprint -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-warning text-dark me-2">4</span>
+                                        <h5 class="card-title fw-bold mb-0 text-warning">Khí Thải CEMS &amp; VOC</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Giám sát online ống khói CEMS (SO2, NOx, Bụi TSP) và theo dõi bay hơi hóa chất hữu cơ dễ bay hơi VOC GHS09.
+                                    </p>
+                                    <button name="%(action_is_esg_chemical_impact)d" string="Chemical Impact" type="action" class="btn btn-outline-warning w-100 mt-auto text-dark"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Standards & Regulation Reference -->
+                    <div class="card border shadow-sm rounded p-4 mb-4">
+                        <h4 class="fw-bold mb-3 text-success">Khung Tiêu Chuẩn &amp; Quy Chuẩn Kỹ Thuật Quốc Gia:</h4>
+                        <div class="row g-3 text-muted small">
+                            <div class="col-12 col-md-4">
+                                <div class="p-3 bg-light rounded border h-100">
+                                    <h6 class="fw-bold text-dark mb-2">1. GHG Protocol &amp; ISO 14064</h6>
+                                    <p class="mb-0">
+                                        Kiểm kê phát thải nhà kính 3 phạm vi Scope 1 (Trực tiếp), Scope 2 (Điện năng), Scope 3 (Chuỗi cung ứng &amp; Logistics).
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="p-3 bg-light rounded border h-100">
+                                    <h6 class="fw-bold text-dark mb-2">2. QCVN 19/2024 &amp; QCVN 40</h6>
+                                    <p class="mb-0">
+                                        Quy chuẩn kỹ thuật quốc gia về khí thải công nghiệp CEMS và nước thải công nghiệp trước khi xả thải ra môi trường.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="p-3 bg-light rounded border h-100">
+                                    <h6 class="fw-bold text-dark mb-2">3. EU Regulation 2023/956 (CBAM)</h6>
+                                    <p class="mb-0">
+                                        Cơ chế điều chỉnh carbon biên giới của Liên minh Châu Âu và nghĩa vụ khai báo chuyển tiếp hàng quý cho doanh nghiệp xuất khẩu.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for ESG Onboarding Hub -->
+    <record id="action_is_esg_onboarding_hub" model="ir.actions.act_window">
+        <field name="name">ESG Onboarding Hub</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="path">esg-onboarding</field>
+        <field name="view_id" ref="view_is_esg_onboarding_form"/>
+    </record>
+
+    <!-- Top Menu for ESG Onboarding Hub -->
+    <menuitem id="menu_esg_onboarding_hub"
+              name="Onboarding Hub"
+              parent="menu_is_esg_bridge_root"
+              action="action_is_esg_onboarding_hub"
+              sequence="5"/>
+</odoo>

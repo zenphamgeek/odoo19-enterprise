@@ -110,14 +110,26 @@
         </field>
     </record>
 
+    <record id="view_task_card_inherited_project_enterprise" model="ir.ui.view">
+        <field name="name">project.task.card.project.enterprise</field>
+        <field name="model">project.task</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="project.view_task_card"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-if='record.project_id.raw_value and record.subtask_count.raw_value']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
     <record id="view_task_kanban_inherited_project_enterprise" model="ir.ui.view">
         <field name="name">project.task.kanban.project.enterprise</field>
         <field name="model">project.task</field>
         <field name="mode">primary</field>
         <field name="inherit_id" ref="project.view_task_kanban"/>
         <field name="arch" type="xml">
-            <xpath expr="//t[@t-if='record.project_id.raw_value and record.subtask_count.raw_value']" position="attributes">
-                <attribute name="invisible">1</attribute>
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="card_id">%(view_task_card_inherited_project_enterprise)d</attribute>
             </xpath>
         </field>
     </record>
@@ -385,11 +397,6 @@
         <field name="view_id" ref="project_task_view_gantt_res_partner"/>
     </record>
 
-    <record id="project_milestone_action_view_tasks_gantt" model="ir.actions.act_window.view">
-        <field name="act_window_id" ref="project.project_milestone_action_view_tasks"/>
-        <field name="sequence" eval="50"/>
-        <field name="view_mode">gantt</field>
-        <field name="view_id" ref="project_task_gantt_view_project_milestone"/>
-    </record>
+
 
 </odoo>

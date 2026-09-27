@@ -40,9 +40,9 @@
                                 <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
                                     <tr><td valign="top" style="font-size: 13px;">
                                         <div>
-                                            Hello <t t-out="object.requestee_partner_id.name or ''">OdooBot</t>,
+                                            Hello <t t-out="object.requestee_partner_id.name or ''">InsilosBot</t>,
                                             <br/><br/>
-                                            <t t-out="object.create_uid.name or ''">OdooBot</t> (<t t-out="object.create_uid.email or ''">odoobot@example.com</t>) asks you to provide the following document:
+                                            <t t-out="object.create_uid.name or ''">InsilosBot</t> (<t t-out="object.create_uid.email or ''">insilosbot@example.com</t>) asks you to provide the following document:
                                             <br/><br/>
                                             <center>
                                                 <div>
@@ -58,7 +58,7 @@
                                                 <br/>
                                                 <div style="margin: 16px 0px 16px 0px;">
                                                     <a t-att-href="object.access_url"
-                                                        t-attf-style="background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; padding: 20px 30px 20px 30px; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;">
+                                                        t-attf-style="background-color: {{user.company_id.email_secondary_color or '#004455'}}; padding: 20px 30px 20px 30px; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;">
                                                         Upload the requested document
                                                     </a>
                                                 </div>
@@ -103,7 +103,7 @@
                     <tr><td align="center" style="min-width: 590px;">
                         <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
                           <tr><td style="text-align: center; font-size: 13px;">
-                            Powered by <a target="_blank" href="https://www.odoo.com/app/documents" t-attf-style="color: {{user.company_id.email_secondary_color or '#875A7B'}};">Odoo Documents</a>
+                            Powered by <a target="_blank" href="https://insilos.com" t-attf-style="color: {{user.company_id.email_secondary_color or '#004455'}};">Insilos Documents</a>
                           </td></tr>
                         </table>
                     </td></tr>
@@ -153,7 +153,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
                                     <tr><td valign="top" style="font-size: 13px;">
                                         <div>
-                                            Hello <t t-out="object.requestee_partner_id.name or ''">OdooBot</t>,
+                                            Hello <t t-out="object.requestee_partner_id.name or ''">InsilosBot</t>,
                                             <br/><br/>
                                             This is a friendly reminder to upload your requested document:
                                             <br/><br/>
@@ -171,7 +171,7 @@
                                                 <br/>
                                                 <div style="margin: 16px 0px 16px 0px;">
                                                     <a t-att-href="object.access_url"
-                                                        t-attf-style="background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; padding: 20px 30px 20px 30px; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;">
+                                                        t-attf-style="background-color: {{user.company_id.email_secondary_color or '#004455'}}; padding: 20px 30px 20px 30px; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;">
                                                         Upload the requested document
                                                     </a>
                                                 </div>
@@ -218,7 +218,7 @@
                     <tr><td align="center" style="min-width: 590px;">
                         <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
                           <tr><td style="text-align: center; font-size: 13px;">
-                            Powered by <a target="_blank" href="https://www.odoo.com/app/documents" t-attf-style="color: {{user.company_id.email_secondary_color or '#875A7B'}};">Odoo Documents</a>
+                            Powered by <a target="_blank" href="https://insilos.com" t-attf-style="color: {{user.company_id.email_secondary_color or '#004455'}};">Insilos Documents</a>
                           </td></tr>
                         </table>
                     </td></tr>
@@ -280,7 +280,7 @@
                                                 <t t-elif="'folder' not in document_types" t-set="share_message">shared the following documents with you</t>
                                                 <t t-else="" t-set="share_message">shared the following documents/folders with you</t>
                                             </t>
-                                            <t t-out="user.name or ''">OdooBot</t> (<t t-out="user.email or ''">odoobot@example.com</t>) <t t-out="share_message"/>:
+                                            <t t-out="user.name or ''">InsilosBot</t> (<t t-out="user.email or ''">insilosbot@example.com</t>) <t t-out="share_message"/>:
                                             <br/><br/>
                                             <center t-if="len(documents) &lt;= 1">
                                                 <div t-if="len(documents) == 1">
@@ -292,7 +292,7 @@
                                                 <br/>
                                                 <div style="margin: 16px 0px 16px 0px;">
                                                     <a t-att-href="documents.access_url"
-                                                        t-attf-style="background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; padding: 20px 30px 20px 30px; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;">
+                                                        t-attf-style="background-color: {{user.company_id.email_secondary_color or '#004455'}}; padding: 20px 30px 20px 30px; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;">
                                                         <b>Get your files</b>
                                                     </a>
                                                 </div>
@@ -304,7 +304,7 @@
                                                 <ul>
                                                     <li t-foreach="documents" t-as="document">
                                                         <a t-att-href="document.access_url"
-                                                           t-attf-style="color: {{user.company_id.email_secondary_color or '#875A7B'}}; font-size:13px;">
+                                                           t-attf-style="color: {{user.company_id.email_secondary_color or '#004455'}}; font-size:13px;">
                                                             <b>Get <t t-out="document.name"/></b>
                                                         </a>
                                                     </li>
@@ -351,7 +351,7 @@
                     <tr><td align="center" style="min-width: 590px;">
                         <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
                           <tr><td style="text-align: center; font-size: 13px;">
-                            Powered by <a target="_blank" href="https://www.odoo.com/app/documents" t-attf-style="color: {{user.company_id.email_secondary_color or '#875A7B'}};">Odoo Documents</a>
+                            Powered by <a target="_blank" href="https://insilos.com" t-attf-style="color: {{user.company_id.email_secondary_color or '#004455'}};">Insilos Documents</a>
                           </td></tr>
                         </table>
                     </td></tr>

@@ -327,7 +327,7 @@ class WhatsappTemplate(models.Model):
         for template in self:
             template.warning_message = ''
             if template.button_ids.filtered(lambda button: button.button_type == 'url' and button.website_url.startswith('/')):
-                template.warning_message += _('- Button URL will be modified to include the domain. (e.g., "/my_path" will be "https://mydomain.odoo.com/my_path")\n')
+                template.warning_message += _('- Button URL will be modified to include the domain. (e.g., "/my_path" will be "https://mydomain.insilos.com/my_path")\n')
             if any(template.button_ids.mapped('has_invalid_number')):
                 template.warning_message += _('- The phone number set in "Buttons" does not look correct.')
 

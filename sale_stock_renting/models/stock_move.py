@@ -92,16 +92,17 @@ class StockMove(models.Model):
     def _compute_location_dest_id(self):
         moves_to_super = self.env['stock.move']
         for move in self:
+            loc_final = getattr(move, 'location_final_id', False)
             if (
                 move.location_dest_id
-                and move.location_final_id
+                and loc_final
                 and move.sale_line_id
                 and not move.sale_line_id.is_rental
                 and move.sale_line_id.order_id.is_rental_order
                 and move.picking_type_id.code == 'outgoing'
-                and move.location_final_id._child_of(move.location_dest_id)
+                and loc_final._child_of(move.location_dest_id)
             ):
-                move.location_dest_id = move.location_final_id
+                move.location_dest_id = loc_final
             else:
                 moves_to_super |= move
 

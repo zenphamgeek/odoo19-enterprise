@@ -19,11 +19,10 @@ class PosConfig(models.Model):
     @api.model
     def _default_settle_deposit_product_on_module_install(self):
         configs = self.env['pos.config'].search([])
-        open_configs = (
-            self.env['pos.session']
-            .search(['|', ('state', 'in', ['opened', 'closing_control']), ('rescue', '=', True)])
-            .mapped('config_id')
-        )
+        session_domain = [('state', 'in', ['opened', 'closing_control'])]
+        if 'rescue' in self.env['pos.session']._fields:
+            session_domain = ['|'] + session_domain + [('rescue', '=', True)]
+        open_configs = self.env['pos.session'].search(session_domain).mapped('config_id')
         product_settle = self._get_default_settle_product()
         product_deposit = self._get_default_deposit_product()
         product_settle_inv = self._get_default_settle_invoice_product()

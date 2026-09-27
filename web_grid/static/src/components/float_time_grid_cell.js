@@ -4,7 +4,7 @@ import { formatFloatTime } from "@web/views/fields/formatters";
 import { GridCell } from "./grid_cell";
 
 function formatter(value, options = {}) {
-    return formatFloatTime(value, { ...options, noLeadingZeroHour: true });
+    return formatFloatTime(value, { numeric: true, ...options, noLeadingZeroHour: true });
 }
 
 export class FloatTimeGridCell extends GridCell {

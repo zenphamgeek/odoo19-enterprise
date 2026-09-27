@@ -132,11 +132,10 @@ class SaleCommissionReport(models.Model):
         return True
 
     @property
-    def _table_query(self):
+    def _table_sql(self) -> SQL:
         # Deactivate the jit for this transaction
         query = self._query()
-        table_query = SQL(query)
-        return table_query
+        return SQL("(%s)", SQL(query))
 
     def _query(self):
         users = self.env.context.get('commission_user_ids', [])

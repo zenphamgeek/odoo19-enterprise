@@ -133,8 +133,8 @@ class ResCompany(models.Model):
         self.ensure_one()
         return {
             'account': self.stripe_id,
-            'refresh_url': f"{self.get_base_url()}/odoo/settings#hr_expense",
-            'return_url': f"{self.get_base_url()}/odoo/settings#hr_expense",
+            'refresh_url': f"{self.get_base_url()}/insilos/settings#hr_expense",
+            'return_url': f"{self.get_base_url()}/insilos/settings#hr_expense",
         }
 
     def _get_stripe_webhook_url(self, uuid=None):

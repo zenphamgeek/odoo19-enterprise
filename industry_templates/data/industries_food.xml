@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+    
+    <record id="industry_restaurant" model="insilos.industry.template">
+        <field name="name">Restaurant</field>
+        <field name="description">Full-service dining, dine-in restaurant</field>
+        <field name="icon">ph-duotone ph-fork-knife</field>
+        <field name="category_id" ref="industry_cat_food" />
+        <field name="sequence">10</field>
+        <field name="synonyms">restaurant,dining,eatery,dine-in,food service</field>
+        <field name="module_names">point_of_sale,pos_restaurant,purchase,stock</field>
+        <field name="hero_image_url">/web/static/src/img/banners/restaurant.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/restaurant.webp</field>
+        <field name="intro_text">Restaurant POS &amp; Kitchen Operations ERP</field>
+        <field name="contact_email">contact@restaurant.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0036</field>
+        <field name="contact_address">Insilos Gourmet Plaza, District 1, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Restaurant Enterprise Powered by Insilos Hard-Fork Platform. Restaurant POS &amp; Kitchen Operations ERP.", "email": "contact@restaurant.insilos.com", "phone": "+84 (0) 28 7300 0036", "address": "Insilos Gourmet Plaza, District 1, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Restaurant."}</field>
+    </record>
+
+    <record id="industry_cafe" model="insilos.industry.template">
+        <field name="name">Café / Coffee Shop</field>
+        <field name="description">Coffee shop, tea house, and light refreshments</field>
+        <field name="icon">ph-duotone ph-coffee</field>
+        <field name="category_id" ref="industry_cat_food" />
+        <field name="sequence">20</field>
+        <field name="synonyms">cafe,coffee,tea,barista,coffeehouse,espresso</field>
+        <field name="module_names">point_of_sale,purchase,stock</field>
+        <field name="hero_image_url">/web/static/src/img/banners/cafe.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/cafe.webp</field>
+        <field name="intro_text">Coffee Shop &amp; Cafe Point-of-Sale System</field>
+        <field name="contact_email">contact@cafe.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0037</field>
+        <field name="contact_address">Insilos Coffee House, District 3, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Caf\u00e9 / Coffee Shop Enterprise Powered by Insilos Hard-Fork Platform. Coffee Shop &amp; Cafe Point-of-Sale System.", "email": "contact@cafe.insilos.com", "phone": "+84 (0) 28 7300 0037", "address": "Insilos Coffee House, District 3, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Caf\u00e9 / Coffee Shop."}</field>
+    </record>
+
+    <record id="industry_bakery" model="insilos.industry.template">
+        <field name="name">Bakery / Pastry Shop</field>
+        <field name="description">Bread, pastries, cakes, and baked goods</field>
+        <field name="icon">ph-duotone ph-bread</field>
+        <field name="category_id" ref="industry_cat_food" />
+        <field name="sequence">30</field>
+        <field name="synonyms">bakery,pastry,bread,cakes,patisserie,baking</field>
+        <field name="module_names">point_of_sale,purchase,stock,mrp</field>
+        <field name="hero_image_url">/web/static/src/img/banners/bakery.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/bakery.webp</field>
+        <field name="intro_text">Pastry Bakery &amp; Batch Production ERP</field>
+        <field name="contact_email">contact@bakery.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0038</field>
+        <field name="contact_address">Insilos Artisan Bakery, District 1, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Bakery / Pastry Shop Enterprise Powered by Insilos Hard-Fork Platform. Pastry Bakery &amp; Batch Production ERP.", "email": "contact@bakery.insilos.com", "phone": "+84 (0) 28 7300 0038", "address": "Insilos Artisan Bakery, District 1, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Bakery / Pastry Shop."}</field>
+    </record>
+
+    <record id="industry_hotel" model="insilos.industry.template">
+        <field name="name">Hotel / Resort</field>
+        <field name="description">Accommodation, lodging, and hospitality</field>
+        <field name="icon">ph-duotone ph-bed</field>
+        <field name="category_id" ref="industry_cat_food" />
+        <field name="sequence">40</field>
+        <field name="synonyms">hotel,resort,lodging,accommodation,motel,inn,hospitality</field>
+        <field name="module_names">sale,purchase,stock,point_of_sale,website,frontdesk</field>
+        <field name="hero_image_url">/web/static/src/img/banners/hotel.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/hotel.webp</field>
+        <field name="intro_text">Hotel &amp; Hospitality Management ERP</field>
+        <field name="contact_email">contact@hotel.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0039</field>
+        <field name="contact_address">Insilos Resort &amp; Hotel Center, District 1, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Hotel / Resort Enterprise Powered by Insilos Hard-Fork Platform. Hotel &amp; Hospitality Management ERP.", "email": "contact@hotel.insilos.com", "phone": "+84 (0) 28 7300 0039", "address": "Insilos Resort &amp; Hotel Center, District 1, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Hotel / Resort."}</field>
+    </record>
+
+    <record id="industry_catering" model="insilos.industry.template">
+        <field name="name">Catering Service</field>
+        <field name="description">Event catering, meal prep, and food delivery</field>
+        <field name="icon">ph-duotone ph-cooking-pot</field>
+        <field name="category_id" ref="industry_cat_food" />
+        <field name="sequence">50</field>
+        <field name="synonyms">catering,event food,meal prep,food delivery,banquet</field>
+        <field name="module_names">sale,purchase,stock,project</field>
+        <field name="hero_image_url">/web/static/src/img/banners/catering.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/catering.webp</field>
+        <field name="intro_text">Event Catering &amp; Food Service Operations</field>
+        <field name="contact_email">contact@catering.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0040</field>
+        <field name="contact_address">Insilos Catering Kitchens, District 2, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Catering Service Enterprise Powered by Insilos Hard-Fork Platform. Event Catering &amp; Food Service Operations.", "email": "contact@catering.insilos.com", "phone": "+84 (0) 28 7300 0040", "address": "Insilos Catering Kitchens, District 2, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Catering Service."}</field>
+    </record>
+
+    <record id="industry_fast_food" model="insilos.industry.template">
+        <field name="name">Fast Food / Quick Service</field>
+        <field name="description">Quick-service restaurants, takeaway, and fast food</field>
+        <field name="icon">ph-duotone ph-hamburger</field>
+        <field name="category_id" ref="industry_cat_food" />
+        <field name="sequence">60</field>
+        <field name="synonyms">fast food,takeaway,quick service,takeout,burger,pizza</field>
+        <field name="module_names">point_of_sale,pos_restaurant,purchase,stock</field>
+        <field name="hero_image_url">/web/static/src/img/banners/fast_food.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/fast_food.webp</field>
+        <field name="intro_text">Quick Service &amp; Fast Food POS System</field>
+        <field name="contact_email">contact@fast_food.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0041</field>
+        <field name="contact_address">Insilos Express Dining Hub, District 10, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Fast Food / Quick Service Enterprise Powered by Insilos Hard-Fork Platform. Quick Service &amp; Fast Food POS System.", "email": "contact@fast_food.insilos.com", "phone": "+84 (0) 28 7300 0041", "address": "Insilos Express Dining Hub, District 10, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Fast Food / Quick Service."}</field>
+    </record>
+
+    <record id="industry_bar" model="insilos.industry.template">
+        <field name="name">Bar / Pub / Nightclub</field>
+        <field name="description">Bars, pubs, nightclubs, and lounges</field>
+        <field name="icon">ph-duotone ph-beer-stein</field>
+        <field name="category_id" ref="industry_cat_food" />
+        <field name="sequence">70</field>
+        <field name="synonyms">bar,pub,nightclub,lounge,cocktail,brewery,tavern</field>
+        <field name="module_names">point_of_sale,pos_restaurant,purchase,stock</field>
+        <field name="hero_image_url">/web/static/src/img/banners/bar.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/bar.webp</field>
+        <field name="intro_text">Bar, Pub &amp; Nightlife Operations Management</field>
+        <field name="contact_email">contact@bar.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0042</field>
+        <field name="contact_address">Insilos Nightlife Hub, District 1, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Bar / Pub / Nightclub Enterprise Powered by Insilos Hard-Fork Platform. Bar, Pub &amp; Nightlife Operations Management.", "email": "contact@bar.insilos.com", "phone": "+84 (0) 28 7300 0042", "address": "Insilos Nightlife Hub, District 1, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Bar / Pub / Nightclub."}</field>
+    </record>
+
+    <record id="industry_food_truck" model="insilos.industry.template">
+        <field name="name">Food Truck</field>
+        <field name="description">Mobile food service and street food</field>
+        <field name="icon">ph-duotone ph-van</field>
+        <field name="category_id" ref="industry_cat_food" />
+        <field name="sequence">80</field>
+        <field name="synonyms">food truck,street food,mobile kitchen,food cart</field>
+        <field name="module_names">point_of_sale,purchase,stock</field>
+        <field name="hero_image_url">/web/static/src/img/banners/food_truck.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/food_truck.webp</field>
+        <field name="intro_text">Mobile Food Truck &amp; POS Management</field>
+        <field name="contact_email">contact@food_truck.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0043</field>
+        <field name="contact_address">Insilos Mobile Dining, District 4, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Food Truck Enterprise Powered by Insilos Hard-Fork Platform. Mobile Food Truck &amp; POS Management.", "email": "contact@food_truck.insilos.com", "phone": "+84 (0) 28 7300 0043", "address": "Insilos Mobile Dining, District 4, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Food Truck."}</field>
+    </record>
+</odoo>

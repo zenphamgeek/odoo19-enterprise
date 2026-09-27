@@ -35,6 +35,7 @@ $o-web-grid-cell-minwidth: 10ch;
 
     .o_grid_column_title {
         @include o-grid-zindex(interact);
+        white-space: pre-line;
 
         > .o_grid_cell_overlay_today {
             --bg-opacity: .5;
@@ -42,6 +43,14 @@ $o-web-grid-cell-minwidth: 10ch;
 
         span {
             white-space: pre-line;
+        }
+    }
+
+    .o_grid_navigation_buttons {
+        .oi-arrow-left, .oi-arrow-right {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
         }
     }
 

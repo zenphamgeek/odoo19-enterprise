@@ -4,10 +4,10 @@
 {
     'name': 'Mobile',
     'category': 'Hidden',
-    'summary': 'Odoo Mobile Core module',
+    'summary': 'Insilos Mobile Core module',
     'version': '1.0',
     'description': """
-This module provides the core of the Odoo Mobile App.
+This module provides the core of the Insilos Mobile App.
         """,
     'depends': [
         'web_enterprise',

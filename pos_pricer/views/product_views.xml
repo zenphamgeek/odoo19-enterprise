@@ -17,7 +17,7 @@
                 </group>
             </xpath>
 
-            <xpath expr="//label[@id='standard_price_label']" position="before">
+            <xpath expr="//label[@for='standard_price']" position="before">
                 <field name="on_sale_price" invisible="not pricer_sale_pricelist_id" widget="monetary" readonly="1"/>
                 <field name="pricer_sale_pricelist_id" widget="many2one" options="{'no_create':True}"/>
             </xpath>

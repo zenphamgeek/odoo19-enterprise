@@ -8,7 +8,7 @@
             <xpath expr="//block[@id='invoicing_settings']" position="after">
                 <!-- TODO: invisible="country_code != 'PE'" ??? -->
                 <block title="Peruvian Electronic Invoicing" id="invoicing_peruvian_settings" invisible="country_code != 'PE'">
-                    <setting help="Operator that will sign your invoices (by default IAP, Odoo take care of this process and give you for free the first 1000 declarations) as part of the enterprise licence.">
+                    <setting help="Operator that will sign your invoices (by default IAP, Insilos take care of this process and give you for free the first 1000 declarations) as part of the enterprise licence.">
                         <field name="l10n_pe_edi_provider" widget="radio"/>
                     </setting>
                     <setting help="In order to avoid sign invoices on your test environment set as true when you do not need the invoices to be really signed (it is blocked after several attempts to avoid abuse, please ensure just use it for testing purposes).">

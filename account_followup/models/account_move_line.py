@@ -8,12 +8,12 @@ class AccountMoveLine(models.Model):
     followup_line_id = fields.Many2one('account_followup.followup.line', 'Follow-up Level', copy=False)
     invoice_origin = fields.Char(related='move_id.invoice_origin')
 
-    def _read_group_groupby(self, alias: str, groupby_spec: str, query: Query) -> SQL:
+    def _read_group_groupby(self, table, groupby_spec: str) -> SQL:
         if groupby_spec != 'followup_overdue':
-            return super()._read_group_groupby(alias, groupby_spec, query)
+            return super()._read_group_groupby(table, groupby_spec)
         return SQL(
             "%(date_maturity)s IS NOT NULL AND %(date_maturity)s < %(current_date)s",
-            date_maturity=self._field_to_sql(self._table, 'date_maturity', query),
+            date_maturity=self._field_to_sql(table._alias, 'date_maturity', table._query),
             current_date=fields.Date.context_today(self),
         )
 

@@ -22,7 +22,6 @@
             'html_editor/static/src/others/dynamic_placeholder_plugin.js',
             'html_editor/static/src/main/placeholder_plugin.js',
             'html_editor/static/src/backend/**/*',
-            ("remove", "html_editor/static/src/utils/regex.js"),
             'html_editor/static/src/fields/html_field*',
 
             'web/static/lib/dompurify/DOMpurify.js',
@@ -44,7 +43,6 @@
         ],
         'web.assets_unit_tests_setup': [
             # Adding error handler back since they are removed in the prod bundle
-            'html_editor/static/src/utils/regex.js',
             'web_gantt/static/src/**/*.dark.scss'
         ],
         'web.assets_unit_tests': [

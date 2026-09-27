@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tenant_operation_kanban" model="ir.ui.view"><field name="name">insilos.tenant.operation.kanban</field><field name="model">insilos.tenant.operation</field><field name="arch" type="xml">
+            <kanban default_group_by="state" class="w_kanban_small_column"><field name="tenant_id"/><field name="operation_type"/><field name="state"/><field name="requested_by"/><field name="k8s_job_name"/><templates><t t-name="card"><div class="w_kanban_record"><strong><field name="tenant_id"/></strong><div><field name="operation_type"/></div><div><field name="requested_by"/></div><span class="badge text-bg-secondary"><field name="state"/></span></div></t></templates></kanban></field></record>
+    <record id="view_template_release_kanban" model="ir.ui.view"><field name="name">insilos.template.release.kanban</field><field name="model">insilos.template.release</field><field name="arch" type="xml">
+            <kanban default_group_by="state" class="w_kanban_small_column"><field name="name"/><field name="template_id"/><field name="app_version"/><field name="state"/><templates><t t-name="card"><div class="w_kanban_record"><strong><field name="name"/></strong><div><field name="template_id"/></div><div><field name="app_version"/></div><span class="badge text-bg-secondary"><field name="state"/></span></div></t></templates></kanban></field></record>
+</odoo>

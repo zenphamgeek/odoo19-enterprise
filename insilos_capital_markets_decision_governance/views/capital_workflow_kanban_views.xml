@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_capital_corporate_action_kanban" model="ir.ui.view"><field name="name">capital.corporate.action.kanban</field><field name="model">capital.corporate.action</field><field name="arch" type="xml">
+            <kanban default_group_by="state" class="w_kanban_small_column"><field name="name"/><field name="instrument_id"/><field name="action_type"/><field name="effective_date"/><field name="state"/><templates><t t-name="card"><div class="w_kanban_record"><strong><field name="name"/></strong><div><field name="instrument_id"/></div><div><field name="action_type"/> · <field name="effective_date"/></div><span class="badge text-bg-secondary"><field name="state"/></span></div></t></templates></kanban></field></record>
+    <record id="view_capital_reconciliation_import_kanban" model="ir.ui.view"><field name="name">capital.reconciliation.import.kanban</field><field name="model">capital.reconciliation.import</field><field name="arch" type="xml">
+            <kanban default_group_by="state" class="w_kanban_small_column"><field name="name"/><field name="portfolio_id"/><field name="broker"/><field name="as_of"/><field name="state"/><templates><t t-name="card"><div class="w_kanban_record"><strong><field name="name"/></strong><div><field name="portfolio_id"/></div><div><field name="broker"/> · <field name="as_of"/></div><span class="badge text-bg-secondary"><field name="state"/></span></div></t></templates></kanban></field></record>
+</odoo>

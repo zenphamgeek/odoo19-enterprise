@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============================================================ -->
+        <!-- HÃNG XE & DÒNG XE VẬN TẢI CÔNG NGHIỆP                        -->
+        <!-- ============================================================ -->
+
+        <record id="brand_hino" model="fleet.vehicle.model.brand">
+            <field name="name">Hino Motors</field>
+        </record>
+
+        <record id="brand_cimc" model="fleet.vehicle.model.brand">
+            <field name="name">CIMC Trailers</field>
+        </record>
+
+        <!-- Dòng xe: Xe đầu kéo Hyundai Xcient GT 440PS -->
+        <record id="model_hyundai_xcient" model="fleet.vehicle.model">
+            <field name="name">Xcient GT 440PS Prime Mover (Đầu kéo 6x4)</field>
+            <field name="brand_id" ref="fleet.brand_hyundai"/>
+            <field name="vehicle_type">other</field>
+        </record>
+
+        <!-- Dòng xe: Sơ mi rơ moóc xương 40ft CIMC -->
+        <record id="model_cimc_trailer" model="fleet.vehicle.model">
+            <field name="name">Sơ mi rơ moóc xương 3 trục 40ft (Container Chassis)</field>
+            <field name="brand_id" ref="brand_cimc"/>
+            <field name="vehicle_type">other</field>
+        </record>
+
+        <!-- Dòng xe: Xe tải nặng 15T Hino 500 Series -->
+        <record id="model_hino_500" model="fleet.vehicle.model">
+            <field name="name">Hino 500 Series FL8JT7A (15 Tấn Mui Bạt)</field>
+            <field name="brand_id" ref="brand_hino"/>
+            <field name="vehicle_type">other</field>
+        </record>
+
+        <!-- Dòng xe: Xe tải đông lạnh Isuzu Forward FVR 8T -->
+        <record id="model_isuzu_fvr" model="fleet.vehicle.model">
+            <field name="name">Isuzu Forward FVR34SE4 (8 Tấn Thùng Lạnh -20°C)</field>
+            <field name="brand_id" ref="fleet.brand_isuzu"/>
+            <field name="vehicle_type">other</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- LOẠI DỊCH VỤ & BẢO TRÌ ĐỘI XE                                -->
+        <!-- ============================================================ -->
+
+        <record id="service_type_maintenance_vn" model="fleet.service.type">
+            <field name="name">Bảo dưỡng định kỳ động cơ &amp; gầm bệ</field>
+            <field name="category">service</field>
+        </record>
+
+        <record id="service_type_inspection_vn" model="fleet.service.type">
+            <field name="name">Đăng kiểm &amp; Kiểm định kỹ thuật xe cơ giới</field>
+            <field name="category">service</field>
+        </record>
+
+        <record id="service_type_fuel_vn" model="fleet.service.type">
+            <field name="name">Tiếp nhiên liệu Dầu DO 0.05S (Petrolimex / PVOIL)</field>
+            <field name="category">service</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- ĐỘI XE VẬN TẢI CONTAINER & HÀNG NẶNG (VEHICLES)              -->
+        <!-- ============================================================ -->
+
+        <!-- Xe 1: Xe đầu kéo Cát Lái 51C-982.45 -->
+        <record id="vehicle_vn_tractor_1" model="fleet.vehicle">
+            <field name="license_plate">51C-982.45</field>
+            <field name="vin_sn">KMHFB18WPMA012456</field>
+            <field name="model_id" ref="model_hyundai_xcient"/>
+            <field name="color">Trắng / Xanh NAVITRANS</field>
+            <field name="location">Depot Cảng Cát Lái, TP. Thủ Đức, TP.HCM</field>
+            <field name="driver_id" ref="res_partner_customer_vn_4"/>
+            <field name="acquisition_date" eval="(DateTime.now() - timedelta(days=450)).strftime('%Y-%m-%d')"/>
+            <field name="state_id" ref="fleet.fleet_vehicle_state_registered"/>
+            <field name="odometer_unit">kilometers</field>
+            <field name="car_value">2150000000</field>
+            <field name="seats">2</field>
+            <field name="doors">2</field>
+            <field name="model_year">2024</field>
+            <field name="fuel_type">diesel</field>
+            <field name="horsepower">440</field>
+            <field name="transmission">manual</field>
+        </record>
+
+        <!-- Xe 2: Xe đầu kéo Hải Phòng 15C-456.78 -->
+        <record id="vehicle_vn_tractor_2" model="fleet.vehicle">
+            <field name="license_plate">15C-456.78</field>
+            <field name="vin_sn">KMHFB18WPMA012789</field>
+            <field name="model_id" ref="model_hyundai_xcient"/>
+            <field name="color">Trắng NAVITRANS</field>
+            <field name="location">Depot Cảng Đình Vũ, Hải Phòng</field>
+            <field name="driver_id" ref="res_partner_customer_vn_1"/>
+            <field name="acquisition_date" eval="(DateTime.now() - timedelta(days=280)).strftime('%Y-%m-%d')"/>
+            <field name="state_id" ref="fleet.fleet_vehicle_state_registered"/>
+            <field name="odometer_unit">kilometers</field>
+            <field name="car_value">2150000000</field>
+            <field name="seats">2</field>
+            <field name="doors">2</field>
+            <field name="model_year">2024</field>
+            <field name="fuel_type">diesel</field>
+            <field name="horsepower">440</field>
+            <field name="transmission">manual</field>
+        </record>
+
+        <!-- Xe 3: Sơ mi rơ moóc 40ft chở container 51R-089.34 -->
+        <record id="vehicle_vn_trailer_1" model="fleet.vehicle">
+            <field name="license_plate">51R-089.34</field>
+            <field name="vin_sn">CIMC40HC20240981</field>
+            <field name="model_id" ref="model_cimc_trailer"/>
+            <field name="color">Đỏ Công Nghiệp</field>
+            <field name="location">Depot ICD Tân Cảng - Long Bình, Đồng Nai</field>
+            <field name="acquisition_date" eval="(DateTime.now() - timedelta(days=320)).strftime('%Y-%m-%d')"/>
+            <field name="state_id" ref="fleet.fleet_vehicle_state_registered"/>
+            <field name="car_value">420000000</field>
+            <field name="model_year">2024</field>
+        </record>
+
+        <!-- Xe 4: Xe tải 15 Tấn Bắc - Nam 50H-123.89 -->
+        <record id="vehicle_vn_truck_hino" model="fleet.vehicle">
+            <field name="license_plate">50H-123.89</field>
+            <field name="vin_sn">JHD500FL80034125</field>
+            <field name="model_id" ref="model_hino_500"/>
+            <field name="color">Trắng / Bạt Xanh</field>
+            <field name="location">Tổng kho KCN Sóng Thần 1, Bình Dương</field>
+            <field name="driver_id" ref="res_partner_customer_vn_5"/>
+            <field name="acquisition_date" eval="(DateTime.now() - timedelta(days=365)).strftime('%Y-%m-%d')"/>
+            <field name="state_id" ref="fleet.fleet_vehicle_state_registered"/>
+            <field name="odometer_unit">kilometers</field>
+            <field name="car_value">1750000000</field>
+            <field name="seats">3</field>
+            <field name="doors">2</field>
+            <field name="model_year">2023</field>
+            <field name="fuel_type">diesel</field>
+            <field name="horsepower">280</field>
+            <field name="transmission">manual</field>
+        </record>
+
+        <!-- Xe 5: Xe tải lạnh Isuzu 8T chuyên dụng 51D-678.90 -->
+        <record id="vehicle_vn_truck_isuzu" model="fleet.vehicle">
+            <field name="license_plate">51D-678.90</field>
+            <field name="vin_sn">MP2FVR3400561234</field>
+            <field name="model_id" ref="model_isuzu_fvr"/>
+            <field name="color">Trắng Composite Thermal</field>
+            <field name="location">Kho lạnh KCN VSIP II, Bình Dương</field>
+            <field name="driver_id" ref="res_partner_customer_vn_6"/>
+            <field name="acquisition_date" eval="(DateTime.now() - timedelta(days=210)).strftime('%Y-%m-%d')"/>
+            <field name="state_id" ref="fleet.fleet_vehicle_state_registered"/>
+            <field name="odometer_unit">kilometers</field>
+            <field name="car_value">1480000000</field>
+            <field name="seats">3</field>
+            <field name="doors">2</field>
+            <field name="model_year">2024</field>
+            <field name="fuel_type">diesel</field>
+            <field name="horsepower">240</field>
+            <field name="transmission">manual</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- NHẬT KÝ CÔNG TƠ MÉT (ODOMETER LOGS)                          -->
+        <!-- ============================================================ -->
+
+        <record id="odometer_tractor_1_init" model="fleet.vehicle.odometer">
+            <field name="vehicle_id" ref="vehicle_vn_tractor_1"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=120)).strftime('%Y-%m-%d')"/>
+            <field name="value">118000</field>
+        </record>
+
+        <record id="odometer_tractor_1_cur" model="fleet.vehicle.odometer">
+            <field name="vehicle_id" ref="vehicle_vn_tractor_1"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=2)).strftime('%Y-%m-%d')"/>
+            <field name="value">142500</field>
+        </record>
+
+        <record id="odometer_tractor_2_cur" model="fleet.vehicle.odometer">
+            <field name="vehicle_id" ref="vehicle_vn_tractor_2"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=3)).strftime('%Y-%m-%d')"/>
+            <field name="value">98200</field>
+        </record>
+
+        <record id="odometer_truck_hino_cur" model="fleet.vehicle.odometer">
+            <field name="vehicle_id" ref="vehicle_vn_truck_hino"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="value">76400</field>
+        </record>
+
+        <record id="odometer_truck_isuzu_cur" model="fleet.vehicle.odometer">
+            <field name="vehicle_id" ref="vehicle_vn_truck_isuzu"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="value">54100</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- NHẬT KÝ DỊCH VỤ, BẢO DƯỠNG & NHIÊN LIỆU (SERVICE LOGS)       -->
+        <!-- ============================================================ -->
+
+        <!-- Bảo dưỡng xe đầu kéo 51C-982.45 -->
+        <record id="log_service_tractor_1_maint" model="fleet.vehicle.log.services">
+            <field name="vehicle_id" ref="vehicle_vn_tractor_1"/>
+            <field name="service_type_id" ref="service_type_maintenance_vn"/>
+            <field name="amount">6800000</field>
+            <field name="date_from" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="vendor_id" ref="res_partner_supplier_vn_4"/>
+            <field name="inv_ref">HD-BD-2026-0982</field>
+            <field name="notes">Bảo dưỡng định kỳ cấp 100.000km: Thay nhớt động cơ Mobil Delvac 15W-40 (36L), thay lọc nhớt, lọc nhiên liệu tách nước, căn chỉnh góc đặt bánh xe.</field>
+            <field name="state">done</field>
+        </record>
+
+        <!-- Tiếp nhiên liệu xe đầu kéo 51C-982.45 -->
+        <record id="log_fuel_tractor_1" model="fleet.vehicle.log.services">
+            <field name="vehicle_id" ref="vehicle_vn_tractor_1"/>
+            <field name="service_type_id" ref="service_type_fuel_vn"/>
+            <field name="amount">7525000</field>
+            <field name="date_from" eval="(DateTime.now() - timedelta(days=3)).strftime('%Y-%m-%d')"/>
+            <field name="vendor_id" ref="res_partner_supplier_vn_4"/>
+            <field name="inv_ref">PTX-CL-98245-01</field>
+            <field name="notes">Đổ 350 Lít Dầu DO 0.05S tại Cây xăng Petrolimex Cửa Đông Cảng Cát Lái (Đơn giá 21.500 ₫/Lít).</field>
+            <field name="state">done</field>
+        </record>
+
+        <!-- Đăng kiểm xe tải Hino 15T 50H-123.89 -->
+        <record id="log_service_hino_inspection" model="fleet.vehicle.log.services">
+            <field name="vehicle_id" ref="vehicle_vn_truck_hino"/>
+            <field name="service_type_id" ref="service_type_inspection_vn"/>
+            <field name="amount">560000</field>
+            <field name="date_from" eval="(DateTime.now() - timedelta(days=40)).strftime('%Y-%m-%d')"/>
+            <field name="vendor_id" ref="res_partner_customer_vn_4"/>
+            <field name="inv_ref">DK-5002S-12389</field>
+            <field name="notes">Kiểm định an toàn kỹ thuật và bảo vệ môi trường xe cơ giới tại Trung tâm Đăng kiểm 50-02S, hiệu lực tem 12 tháng.</field>
+            <field name="state">done</field>
+        </record>
+
+    </data>
+</odoo>

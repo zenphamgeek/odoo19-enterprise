@@ -149,7 +149,7 @@
                 </div>
             </div>
         </xpath>
-        <div id="product_documents" position="before">
+        <xpath expr="//t[@t-call='website_sale.documents']" position="before">
             <t
                 t-if="combination_info.get('is_rental')
                     and (not website.prevent_zero_price_sale or combination_info['current_rental_price'])
@@ -160,7 +160,7 @@
                     <t t-call="website_sale_renting.rental_pricing_table"/>
                 </div>
             </t>
-        </div>
+        </xpath>
     </template>
 
     <template id="accordion_rental_item" name="Rental Accordion Item" inherit_id="website_sale.product_accordion">

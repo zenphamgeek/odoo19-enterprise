@@ -2,13 +2,13 @@
     'name': 'Databases',
     'version': '1.0',
     'category': 'Services/Databases',
-    'summary': 'Manage a fleet of Odoo databases',
+    'summary': 'Manage a fleet of Insilos databases',
     'description': """
 Connect and manage all your client databases
 ============================================
 
 The Databases app lets you connect and manage all your client databases from a
-single Odoo workspace. Whether you are an accounting firm or an Odoo partner,
+single Insilos workspace. Whether you are an accounting firm or an Insilos partner,
 you can easily track who manages each database, follow up on timesheets, tasks
 and more.
 """,

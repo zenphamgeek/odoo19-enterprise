@@ -31,7 +31,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         incorrect_code_accounts = accounts.filtered('l10n_mx_is_sat_invalid')
         if incorrect_code_accounts:
             account_names = '\n'.join(_('\t- %(name)s', name=account.name) for account in incorrect_code_accounts)
-            error_msg = _("Some of your accounts do not respect Odoo's code guidelines.\n\n%(account_names)s", account_names=account_names),
+            error_msg = _("Some of your accounts do not respect Insilos's code guidelines.\n\n%(account_names)s", account_names=account_names),
             action_vals = report.export_file({**options, 'l10n_mx_sat_ignore_errors': True}, report_action)
             raise RedirectWarning(error_msg, action_vals, _("Generate report"))
 

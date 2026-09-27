@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============================================================ -->
+        <!-- 1. THÀNH PHẨM CƠ KHÍ & XE CÔNG NGHIỆP (FINISHED GOODS - FG)  -->
+        <!-- ============================================================ -->
+
+        <record id="product_vn_1" model="product.product">
+            <field name="name">Xe kéo hàng điện nhà xưởng V-LIFT 2500E</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">serial</field>
+            <field name="categ_id" ref="product_category_machinery"/>
+            <field name="list_price">385000000</field>
+            <field name="standard_price">265000000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">EQ-VLIFT-2500E</field>
+            <field name="description">Xe kéo hàng điện công nghiệp V-LIFT sức kéo 2.500 kg, pin Lithium LiFePO4 48V-400Ah, động cơ AC không chổi than, phù hợp nhà máy và kho vận logistics.</field>
+        </record>
+
+        <record id="product_vn_2" model="product.product">
+            <field name="name">Sơ mi rơ moóc tải nặng chuyên dụng chở container 40ft VT-SEMITRAIL 40</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">serial</field>
+            <field name="categ_id" ref="product_category_machinery"/>
+            <field name="list_price">420000000</field>
+            <field name="standard_price">295000000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">TR-TRAIL-40HC</field>
+            <field name="description">Sơ mi rơ moóc 3 trục xương chở container 40ft/45ft tải trọng 32.5 tấn, thép cường lực SS400, trục Fuwa 13 tấn, phanh khí nén WABCO.</field>
+        </record>
+
+        <record id="product_vn_3" model="product.product">
+            <field name="name">Trạm sạc nhanh DC 60kW công nghiệp V-CHARGE 60</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">serial</field>
+            <field name="categ_id" ref="product_category_machinery"/>
+            <field name="list_price">185000000</field>
+            <field name="standard_price">120000000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">EV-CHG-60KW</field>
+            <field name="description">Trạm sạc nhanh một chiều DC 60kW tiêu chuẩn CCS2 / GB-T dành cho xe nâng điện, xe đầu kéo nội bộ và xe tải thương mại.</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 2. BÁN THÀNH PHẨM CƠ ĐIỆN (SEMI-FINISHED GOODS - SFG)         -->
+        <!-- ============================================================ -->
+
+        <record id="product_vn_4" model="product.product">
+            <field name="name">Cụm Khung gầm Chassis hàn gia công (V-LIFT Frame)</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">lot</field>
+            <field name="categ_id" ref="product_category_subassemblies"/>
+            <field name="list_price">75000000</field>
+            <field name="standard_price">55000000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">SF-CHASSIS-25E</field>
+            <field name="description">Cụm kết cấu khung xe hàn robot tự động, xử lý chống gỉ và sơn tĩnh điện Epoxy Jotun bảo vệ bề mặt.</field>
+        </record>
+
+        <record id="product_vn_5" model="product.product">
+            <field name="name">Cụm Cầu truyền động &amp; Động cơ điện xoay chiều AC 48V-10kW</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">lot</field>
+            <field name="categ_id" ref="product_category_subassemblies"/>
+            <field name="list_price">88000000</field>
+            <field name="standard_price">68000000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">SF-DRIVE-AC48V</field>
+            <field name="description">Module cầu chủ động tích hợp động cơ điện cảm ứng AC 48V công suất 10kW, phanh đĩa điện từ hồi năng lượng regenerative braking.</field>
+        </record>
+
+        <record id="product_vn_6" model="product.product">
+            <field name="name">Cụm Bộ nguồn Pin Lithium LiFePO4 48V-400Ah tích hợp Smart BMS</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">serial</field>
+            <field name="categ_id" ref="product_category_subassemblies"/>
+            <field name="list_price">98000000</field>
+            <field name="standard_price">78000000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">SF-BATTPACK-400AH</field>
+            <field name="description">Pack pin lưu trữ năng lượng dung lượng cao 19.2kWh, 16S cell EVE LiFePO4, tích hợp bo mạch BMS giám sát nhiệt độ và cân bằng cell CAN-bus.</field>
+        </record>
+
+        <record id="product_vn_7" model="product.product">
+            <field name="name">Cụm Trụ nâng thủy lực 3 tầng Mast 4.5m</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">lot</field>
+            <field name="categ_id" ref="product_category_subassemblies"/>
+            <field name="list_price">58000000</field>
+            <field name="standard_price">42000000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">SF-HYD-MAST45</field>
+            <field name="description">Khung nâng thủy lực 3 tầng hạ tự do (Triplex full free lift), xi-lanh thủy lực mạ crom kép, chiều cao nâng tối đa 4.500mm.</field>
+        </record>
+
+        <record id="product_vn_8" model="product.product">
+            <field name="name">Cụm Trục cân bằng &amp; Chân chống rơ-moóc 28 tấn (Landing Gear)</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">lot</field>
+            <field name="categ_id" ref="product_category_subassemblies"/>
+            <field name="list_price">85000000</field>
+            <field name="standard_price">65000000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">SF-GEAR-28T</field>
+            <field name="description">Cụm 3 trục treo đùm rơ-moóc tải trọng thiết kế 13T/trục kết hợp bộ chân chống cơ khí dẫn động 2 tốc độ chịu tải tĩnh 28 tấn.</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 3. NGUYÊN VẬT LIỆU CÔNG NGHIỆP & LINH KIỆN (RAW MATERIALS)    -->
+        <!-- ============================================================ -->
+
+        <record id="product_vn_9" model="product.product">
+            <field name="name">Thép tấm cán nóng kết cấu SS400 (Dày 12mm)</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">lot</field>
+            <field name="categ_id" ref="product_category_raw_materials"/>
+            <field name="list_price">26500</field>
+            <field name="standard_price">19500</field>
+            <field name="uom_id" ref="uom.product_uom_kgm"/>
+            <field name="default_code">RM-STEEL-SS400-12</field>
+            <field name="description">Thép tấm cán nóng mác SS400 sản xuất theo tiêu chuẩn JIS G3101, bề mặt sáng, độ dẻo và tính hàn cao.</field>
+        </record>
+
+        <record id="product_vn_10" model="product.product">
+            <field name="name">Thép hộp mạ kẽm nhúng nóng 100x100x4.0mm (Cây 6m)</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">lot</field>
+            <field name="categ_id" ref="product_category_raw_materials"/>
+            <field name="list_price">310000</field>
+            <field name="standard_price">245000</field>
+            <field name="uom_id" ref="uom.product_uom_meter"/>
+            <field name="default_code">RM-STEEL-BOX100</field>
+            <field name="description">Thép hộp mạ kẽm chuyên dùng cho kết cấu giằng phụ và khung bảo hộ xe cơ giới công nghiệp.</field>
+        </record>
+
+        <record id="product_vn_11" model="product.product">
+            <field name="name">Sơn sấy tĩnh điện công nghiệp Epoxy Jotun (Màu Vàng / Xám)</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">lot</field>
+            <field name="categ_id" ref="product_category_raw_materials"/>
+            <field name="list_price">175000</field>
+            <field name="standard_price">135000</field>
+            <field name="uom_id" ref="uom.product_uom_kgm"/>
+            <field name="default_code">RM-PAINT-JOTUN-EP</field>
+            <field name="description">Bột sơn tĩnh điện gốc nhựa Epoxy chống ăn mòn hóa chất, chống tia UV và chịu va đập cơ học cao.</field>
+        </record>
+
+        <record id="product_vn_12" model="product.product">
+            <field name="name">Dây cáp điện đồng mềm CADIVI 3 pha 3x16+1x10mm²</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="categ_id" ref="product_category_raw_materials"/>
+            <field name="list_price">185000</field>
+            <field name="standard_price">145000</field>
+            <field name="uom_id" ref="uom.product_uom_meter"/>
+            <field name="default_code">RM-CABLE-CADIVI</field>
+            <field name="description">Cáp điện lực hạ thế ruột đồng ép chặt cách điện XLPE, vỏ bọc PVC chống cháy lan tiêu chuẩn IEC 60502-1.</field>
+        </record>
+
+        <record id="product_vn_13" model="product.product">
+            <field name="name">Cell Pin Lithium LiFePO4 EVE 3.2V - 100Ah (Grade A)</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">lot</field>
+            <field name="categ_id" ref="product_category_raw_materials"/>
+            <field name="list_price">950000</field>
+            <field name="standard_price">720000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">RM-LFP-CELL-100AH</field>
+            <field name="description">Cell pin LFP hình lăng trụ vỏ nhôm, chu kỳ sạc xả trên 4.000 lần, an toàn nhiệt độ cao, dùng đóng cụm pack xe điện.</field>
+        </record>
+
+        <record id="product_vn_14" model="product.product">
+            <field name="name">Bo mạch điều khiển vi xử lý ARM Cortex-M4 (SMT PCB)</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">serial</field>
+            <field name="categ_id" ref="product_category_raw_materials"/>
+            <field name="list_price">4800000</field>
+            <field name="standard_price">320000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">RM-PCB-CONTROLLER</field>
+            <field name="description">Mạch nhúng điều khiển trung tâm công nghiệp gắn linh kiện SMT, giao tiếp chuẩn CAN bus 2.0B và RS485 Modbus.</field>
+        </record>
+
+        <record id="product_vn_15" model="product.product">
+            <field name="name">Bộ khóa gù Container xoay Twist-Lock chuẩn ISO</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="categ_id" ref="product_category_spare_parts"/>
+            <field name="list_price">1650000</field>
+            <field name="standard_price">1150000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">RM-TWISTLOCK-ISO</field>
+            <field name="description">Gù xoay đúc thép chịu lực định vị góc container ISO 1161 trên sơ mi rơ moóc vận tải.</field>
+        </record>
+
+        <record id="product_vn_16" model="product.product">
+            <field name="name">Lốp xe tải nặng Bridgestone R150 11R22.5 (16PR)</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">serial</field>
+            <field name="categ_id" ref="product_category_spare_parts"/>
+            <field name="list_price">8500000</field>
+            <field name="standard_price">6800000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">RM-TYRE-BRIDGESTONE</field>
+            <field name="description">Lốp xe tải nặng bố thép không săm chuyên dùng cho trục xe đầu kéo container và rơ moóc đường dài.</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 4. DỊCH VỤ VẬN TẢI & LOGISTICS TIẾP VẬN (SERVICES)            -->
+        <!-- ============================================================ -->
+
+        <record id="product_vn_17" model="product.product">
+            <field name="name">Dịch vụ Kéo Container 40ft Tuyến Cát Lái - VSIP Bình Dương (Drayage)</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_logistics_services"/>
+            <field name="list_price">3850000</field>
+            <field name="standard_price">2450000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">SRV-TRUCK-CL-VSIP</field>
+            <field name="description">Vận chuyển container 40ft từ Cảng Cát Lái đến các nhà máy KCN VSIP 1 &amp; 2 Bình Dương, bao gồm phí cầu đường.</field>
+        </record>
+
+        <record id="product_vn_18" model="product.product">
+            <field name="name">Dịch vụ Vận tải Container Đường bộ Bắc - Nam (Hải Phòng - TP.HCM)</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_logistics_services"/>
+            <field name="list_price">32500000</field>
+            <field name="standard_price">23800000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">SRV-TRUCK-HP-SG</field>
+            <field name="description">Dịch vụ vận chuyển hàng hóa nguyên container FCL trục Bắc Nam dọc Quốc lộ 1A và cao tốc Bắc Nam, thời gian 54-60 giờ.</field>
+        </record>
+
+        <record id="product_vn_19" model="product.product">
+            <field name="name">Dịch vụ Nâng hạ &amp; Lưu bãi Container ICD (Lift-on / Lift-off &amp; Yard)</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_logistics_services"/>
+            <field name="list_price">850000</field>
+            <field name="standard_price">350000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">SRV-LOLO-DEPOT</field>
+            <field name="description">Dịch vụ cẩu nâng hạ container rỗng / đầy hàng tại bãi depot cảng cạn ICD và cấp phiếu EIR điện tử.</field>
+        </record>
+
+        <record id="product_vn_20" model="product.product">
+            <field name="name">Dịch vụ Vận chuyển Hàng lạnh chuyên dụng (-20°C Reefer Trucking)</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_logistics_services"/>
+            <field name="list_price">6500000</field>
+            <field name="standard_price">4100000</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">SRV-COLD-REEFER</field>
+            <field name="description">Vận tải xe tải lạnh chuyên dụng duy trì nhiệt độ âm sâu từ -18°C đến -22°C có giám sát GPS và nhiệt độ theo thời gian thực.</field>
+        </record>
+
+    </data>
+</odoo>

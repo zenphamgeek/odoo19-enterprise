@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- All inactive until a tenant canary verifies sources and operating ownership. -->
+    <record id="cron_fx_exposure" model="ir.cron"><field name="name">Treasury: FX exposure refresh</field><field name="model_id" ref="model_treasury_market_risk_service"/><field name="state">code</field><field name="code">model._cron_fx_exposure()</field><field name="interval_number">1</field><field name="interval_type">days</field><field name="active" eval="False"/></record>
+    <record id="cron_liquidity_projection" model="ir.cron"><field name="name">Treasury: liquidity projection</field><field name="model_id" ref="model_treasury_market_risk_service"/><field name="state">code</field><field name="code">model._cron_liquidity_projection()</field><field name="interval_number">1</field><field name="interval_type">days</field><field name="active" eval="False"/></record>
+    <record id="cron_portfolio_risk" model="ir.cron"><field name="name">Treasury: portfolio risk</field><field name="model_id" ref="model_treasury_market_risk_service"/><field name="state">code</field><field name="code">model._cron_portfolio_risk()</field><field name="interval_number">1</field><field name="interval_type">days</field><field name="active" eval="False"/></record>
+    <record id="cron_limit_scan" model="ir.cron"><field name="name">Treasury: limit scan</field><field name="model_id" ref="model_treasury_market_risk_service"/><field name="state">code</field><field name="code">model._cron_limit_scan()</field><field name="interval_number">1</field><field name="interval_type">days</field><field name="active" eval="False"/></record>
+</odoo>

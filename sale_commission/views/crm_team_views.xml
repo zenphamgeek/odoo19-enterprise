@@ -6,13 +6,7 @@
         <field name="priority">9</field>
         <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
         <field name="arch" type="xml">
-            <label for="invoiced_target" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </label>
-
-            <div id="invoiced_target" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </div>
+            <xpath expr="//sheet" position="inside"/>
         </field>
     </record>
 </odoo>

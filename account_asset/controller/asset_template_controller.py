@@ -89,7 +89,7 @@ class AssetTemplateController(http.Controller):
             ('name', _('Asset Name'), True, _('Mandatory column. This is the name of the asset.')),
             ('original_value', _('Original Value'), True, _('The amount will be considered in company currency.')),
             ('acquisition_date', _('Acquisition Date'), True, _('e.g. 01-27-2025 (format: MM-DD-YYYY)')),
-            ('asset_group_id', _('Asset Group'), False, _('Optional. The name or external ID of the asset group. Must exist in Odoo (e.g., Office Equipment, Vehicles, Machinery).')),
+            ('asset_group_id', _('Asset Group'), False, _('Optional. The name or external ID of the asset group. Must exist in Insilos (e.g., Office Equipment, Vehicles, Machinery).')),
             ('method', _('Method'), True, _('e.g. Straight Line, Declining Balance. Determines how depreciation is calculated.')),
             ('method_number', _('Duration'), True, _('e.g. 3 for 3 years, or 12 for 12 months. It must be an integer representing the total number of periods.')),
             ('method_period', _('Months/Years'), True, _('Either "Months" or "Years" (case-insensitive). Specifies the unit of duration.')),
@@ -99,10 +99,10 @@ class AssetTemplateController(http.Controller):
             ('already_depreciated_amount_import', _('Depreciated Amount'), False, _('The total amount of depreciation already recorded for the asset before import. This amount will be considered in company currency.')),
             ('salvage_value', _('Not Depreciable Value'), False, _('The estimated residual value of the asset at the end of its useful life. This amount will not be depreciated. Considered in company currency.')),
             ('company_id', _('Company'), True, _("Must match the selected company during import. Use the company's display name.")),
-            ('account_asset_id', _('Fixed Asset Account'), True, _('The balance sheet account for the asset itself (e.g., "151000 Fixed Asset"). Must exist in Odoo and be of "Fixed Asset" or "Non-current Assets" type.')),
-            ('account_depreciation_id', _('Depreciation Account'), True, _('The accumulated depreciation account (contra-asset account). Must exist in Odoo and be of "Fixed Asset" or "Non-current Assets" type.')),
-            ('account_depreciation_expense_id', _('Expense Account'), True, _('The expense account for posting periodic depreciation entries (e.g., "630000 Depreciation Expenses"). Must exist in Odoo and be of "Depreciation" or "Expense" type.')),
-            ('journal_id', _('Journal'), True, _('The code or name of the associated journal in Odoo for depreciation entries (e.g., MISC - Miscellaneous Operations, INV - Customer Invoices, BILL - Vendor Bills).')),
+            ('account_asset_id', _('Fixed Asset Account'), True, _('The balance sheet account for the asset itself (e.g., "151000 Fixed Asset"). Must exist in Insilos and be of "Fixed Asset" or "Non-current Assets" type.')),
+            ('account_depreciation_id', _('Depreciation Account'), True, _('The accumulated depreciation account (contra-asset account). Must exist in Insilos and be of "Fixed Asset" or "Non-current Assets" type.')),
+            ('account_depreciation_expense_id', _('Expense Account'), True, _('The expense account for posting periodic depreciation entries (e.g., "630000 Depreciation Expenses"). Must exist in Insilos and be of "Depreciation" or "Expense" type.')),
+            ('journal_id', _('Journal'), True, _('The code or name of the associated journal in Insilos for depreciation entries (e.g., MISC - Miscellaneous Operations, INV - Customer Invoices, BILL - Vendor Bills).')),
         ]
 
     def _write_asset_sheet(self, workbook, headers, all_example_rows):

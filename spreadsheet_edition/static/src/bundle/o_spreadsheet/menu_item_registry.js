@@ -14,7 +14,7 @@ const { HighlightStore } = stores;
 // Spreadsheet context menu items
 //--------------------------------------------------------------------------
 
-topbarMenuRegistry.addChild("new_sheet", ["file"], {
+topbarMenuRegistry.replaceChild("new_sheet", ["file"], {
     name: _t("New"),
     sequence: 10,
     isVisible: (env) => env.newSpreadsheet,
@@ -22,7 +22,7 @@ topbarMenuRegistry.addChild("new_sheet", ["file"], {
     icon: "o-spreadsheet-Icon.NEW",
 });
 
-topbarMenuRegistry.addChild("make_copy", ["file"], {
+topbarMenuRegistry.replaceChild("make_copy", ["file"], {
     name: _t("Make a copy"),
     sequence: 20,
     isVisible: (env) => env.makeCopy,
@@ -31,7 +31,7 @@ topbarMenuRegistry.addChild("make_copy", ["file"], {
     icon: "o-spreadsheet-Icon.COPY_FILE",
 });
 
-topbarMenuRegistry.addChild("download", ["file"], {
+topbarMenuRegistry.replaceChild("download", ["file"], {
     name: _t("Download"),
     sequence: 40,
     isVisible: (env) => env.download,
@@ -40,7 +40,7 @@ topbarMenuRegistry.addChild("download", ["file"], {
     icon: "o-spreadsheet-Icon.DOWNLOAD",
 });
 
-topbarMenuRegistry.addChild("download_as_json", ["file"], {
+topbarMenuRegistry.replaceChild("download_as_json", ["file"], {
     name: _t("Download as JSON"),
     sequence: 50,
     isVisible: (env) => env.debug && env.downloadAsJson,
@@ -49,7 +49,7 @@ topbarMenuRegistry.addChild("download_as_json", ["file"], {
     icon: "o-spreadsheet-Icon.DOWNLOAD_AS_JSON",
 });
 
-topbarMenuRegistry.addChild("print", ["file"], {
+topbarMenuRegistry.replaceChild("print", ["file"], {
     name: _t("Print"),
     sequence: 60,
     separator: true,
@@ -58,7 +58,7 @@ topbarMenuRegistry.addChild("print", ["file"], {
     icon: "o-spreadsheet-Icon.PRINT",
 });
 
-topbarMenuRegistry.addChild("save_as_template", ["file"], {
+topbarMenuRegistry.replaceChild("save_as_template", ["file"], {
     name: _t("Save as template"),
     sequence: 70,
     isVisible: (env) => env.saveAsTemplate,
@@ -66,7 +66,7 @@ topbarMenuRegistry.addChild("save_as_template", ["file"], {
     icon: "o-spreadsheet-Icon.SAVE",
 });
 
-topbarMenuRegistry.addChild("list_data_sources", ["data"], (env) => {
+topbarMenuRegistry.replaceChild("list_data_sources", ["data"], (env) => {
     const sequence = 53;
     const numberOfLists = env.model.getters.getListIds().length;
     return env.model.getters.getListIds().map((listId, index) => {
@@ -96,7 +96,7 @@ topbarMenuRegistry.addChild("list_data_sources", ["data"], (env) => {
     });
 });
 
-topbarMenuRegistry.addChild("chart_data_sources", ["data"], (env) => {
+topbarMenuRegistry.replaceChild("chart_data_sources", ["data"], (env) => {
     const sequence = 56;
     const numberOfCharts = env.model.getters.getOdooChartIds().length;
     return env.model.getters.getOdooChartIds().map((chartId, index) => ({
@@ -115,7 +115,7 @@ topbarMenuRegistry.addChild("chart_data_sources", ["data"], (env) => {
     }));
 });
 
-topbarMenuRegistry.addChild("refresh_data_sources", ["data"], {
+topbarMenuRegistry.replaceChild("refresh_data_sources", ["data"], {
     id: "refresh_all_data",
     name: _t("Refresh all data"),
     sequence: 58,
@@ -186,7 +186,7 @@ const insertPivotMenu = {
         },
         {
             id: "insert_pivot_from_odoo_model",
-            name: _t("From Odoo data"),
+            name: _t("From Insilos data"),
             sequence: 2,
             execute: (env) => {
                 env.openSidePanel("NewOdooPivotSidePanel");
@@ -197,8 +197,8 @@ const insertPivotMenu = {
     isVisible: (env) => !env.isSmall,
 };
 
-topbarMenuRegistry.addChild("reinsert_list", ["data"], reInsertListMenu);
+topbarMenuRegistry.replaceChild("reinsert_list", ["data"], reInsertListMenu);
 topbarMenuRegistry.replaceChild("reinsert_dynamic_pivot", ["data"], reinsertDynamicPivotMenu);
 topbarMenuRegistry.replaceChild("reinsert_static_pivot", ["data"], reinsertStaticPivotMenu);
 topbarMenuRegistry.replaceChild("insert_pivot", ["insert"], insertPivotMenu);
-topbarMenuRegistry.addChild("reinsert_pivot_cell", ["data"], reinsertPivotCell);
+topbarMenuRegistry.replaceChild("reinsert_pivot_cell", ["data"], reinsertPivotCell);

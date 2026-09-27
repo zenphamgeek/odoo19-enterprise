@@ -1,25 +1,34 @@
-import { onWillUpdateProps, useState } from "@odoo/owl";
+import { onWillUpdateProps, proxy, useProps, t, signal } from "@odoo/owl";
 import { useDateTimePicker } from "@web/core/datetime/datetime_picker_hook";
 import { useDropdownState } from "@web/core/dropdown/dropdown_hooks";
 import { formatDate } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
-import { ViewScaleSelector } from "@web/views/view_components/view_scale_selector";
+import { ViewScaleSelector, viewScaleSelectorProps } from "@web/views/view_components/view_scale_selector";
 import { useGanttResponsivePopover } from "./gantt_helpers";
 
 const { DateTime } = luxon;
 
 export class GanttScaleSelector extends ViewScaleSelector {
     static template = "web_gantt.GanttScaleSelector";
-    static props = {
-        ...ViewScaleSelector.props,
-        startDate: DateTime,
-        stopDate: DateTime,
-        selectCustomRange: Function,
-    };
+    props = useProps({
+        ...viewScaleSelectorProps,
+        startDate: t.any(),
+        stopDate: t.any(),
+        selectCustomRange: t.function(),
+    });
+
+    startPickerRef = signal.ref();
+    stopPickerRef = signal.ref();
+    get "start-picker"() {
+        return this.startPickerRef;
+    }
+    get "stop-picker"() {
+        return this.stopPickerRef;
+    }
 
     setup() {
         super.setup();
-        this.pickerValues = useState({
+        this.pickerValues = proxy({
             startDate: this.props.startDate,
             stopDate: this.props.stopDate,
         });
@@ -31,7 +40,7 @@ export class GanttScaleSelector extends ViewScaleSelector {
 
         const getPickerProps = (key) => ({ type: "date", value: this.pickerValues[key] });
         this.startPicker = useDateTimePicker({
-            target: "start-picker",
+            target: this.startPickerRef,
             onApply: (date) => {
                 this.pickerValues.startDate = date;
                 if (this.pickerValues.stopDate < date) {
@@ -47,7 +56,7 @@ export class GanttScaleSelector extends ViewScaleSelector {
             ensureVisibility: () => false,
         });
         this.stopPicker = useDateTimePicker({
-            target: "stop-picker",
+            target: this.stopPickerRef,
             onApply: (date) => {
                 this.pickerValues.stopDate = date;
                 if (date < this.pickerValues.startDate) {

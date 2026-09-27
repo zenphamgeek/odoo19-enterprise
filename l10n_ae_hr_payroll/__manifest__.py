@@ -21,7 +21,7 @@ United Arab Emirates Payroll and End of Service rules.
 - Master payroll export
 - WPS
     """,
-    'depends': ['hr_payroll', 'hr_work_entry_holidays'],
+    'depends': ['hr_payroll', 'hr_payroll_holidays'],
     'auto_install': ['hr_payroll'],
     'data': [
         'views/hr_payroll_report.xml',

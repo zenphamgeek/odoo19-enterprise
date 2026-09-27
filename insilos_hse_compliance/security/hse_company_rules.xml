@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_hse_facility_company" model="ir.rule">
+        <field name="name">HSE facility company isolation</field>
+        <field name="model_id" ref="model_is_hse_facility"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_hse_legal_register_company" model="ir.rule">
+        <field name="name">HSE legal register company isolation</field>
+        <field name="model_id" ref="model_is_hse_legal_register"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_hse_obligation_company" model="ir.rule">
+        <field name="name">HSE obligation company isolation</field>
+        <field name="model_id" ref="model_is_hse_obligation"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_hse_product_permit_company" model="ir.rule">
+        <field name="name">HSE product permit company isolation</field>
+        <field name="model_id" ref="model_is_hse_product_permit"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_hse_compliance_event_company" model="ir.rule">
+        <field name="name">HSE compliance event company isolation</field>
+        <field name="model_id" ref="model_is_hse_compliance_event"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

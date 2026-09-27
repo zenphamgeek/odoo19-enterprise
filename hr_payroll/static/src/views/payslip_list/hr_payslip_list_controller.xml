@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="hr_payroll.PayslipListView" t-inherit="web.ListView" t-inherit-mode="primary">
-        <xpath expr="//Layout//t[@t-component='props.Renderer']" position="before">
+        <xpath expr="//Layout//t[@t-component='this.props.Renderer' or @t-component='props.Renderer']" position="before">
             <Record t-if="payrunId"
                     t-props="recordComponentProps"
                     t-slot-scope="recordScope"
@@ -9,7 +9,7 @@
                 <PayRunCard t-if="recordScope.record" record="recordScope.record"/>
             </Record>
         </xpath>
-        <xpath expr="//Layout//t[@t-component='props.Renderer']" position="attributes">
+        <xpath expr="//Layout//t[@t-component='this.props.Renderer' or @t-component='props.Renderer']" position="attributes">
             <attribute name="onGenerate.bind">selectEmployees</attribute>
             <attribute name="payRunInfo">state.payRunInfo</attribute>
         </xpath>

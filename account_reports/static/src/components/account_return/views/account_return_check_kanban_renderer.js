@@ -10,7 +10,7 @@ import {extractFieldsFromArchInfo, getFieldsSpec} from "@web/model/relational_mo
 import {RelationalModel} from "@web/model/relational_model/relational_model";
 import {isNull} from "@web/views/utils";
 import {AccountReturnKanbanRecord} from "./account_return_kanban_record";
-import {Chatter} from "@mail/chatter/web_portal/chatter";
+import {Chatter} from "@mail/chatter/web_portal_project/chatter";
 
 
 const viewRegistry = registry.category("views");

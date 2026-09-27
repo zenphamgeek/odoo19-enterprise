@@ -99,7 +99,7 @@ class AmazonAccount(models.Model):
     )
     last_orders_sync = fields.Datetime(
         help="The last synchronization date for orders placed on this account. Orders whose status"
-             " has not changed since this date will not be created nor updated in Odoo.",
+             " has not changed since this date will not be created nor updated in Insilos.",
         default=fields.Datetime.now,
         required=True,
     )
@@ -209,10 +209,10 @@ class AmazonAccount(models.Model):
                     'title': _("Warning"),
                     'message': _("If the date is set in the past, orders placed on this Amazon "
                                  "Account before the first synchronization of the module might be "
-                                 "synchronized with Odoo.\n"
+                                 "synchronized with Insilos.\n"
                                  "If the date is set in the future, orders placed on this Amazon "
                                  "Account between the previous and the new date will not be "
-                                 "synchronized with Odoo.")
+                                 "synchronized with Insilos.")
                 }
             }
 

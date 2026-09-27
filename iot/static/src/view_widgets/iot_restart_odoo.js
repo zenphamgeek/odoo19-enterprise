@@ -22,7 +22,7 @@ export class IoTRestartOdoo extends Component {
 
     async onClick() {
         this.dialog.add(ConfirmationDialog, {
-            body: _t("Are you sure you want to restart Odoo on the IoT Box?"),
+            body: _t("Are you sure you want to restart Insilos on the IoT Box?"),
             confirm: this.restartOdoo.bind(this),
             cancel: () => {},
         });

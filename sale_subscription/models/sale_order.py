@@ -95,6 +95,26 @@ class SaleOrder(models.Model):
     currency_id = fields.Many2one(tracking=True)
     last_reminder_date = fields.Date(help="Last time when we sent a payment reminder")
     user_pause_start = fields.Date()
+    require_payment = fields.Boolean(
+        string="Online payment",
+        compute='_compute_require_payment',
+        inverse='_inverse_require_payment',
+        store=True,
+        readonly=False,
+        help="Request an online payment from the customer to confirm the order. For a subscription, a payment will be required also before each renewal",
+    )
+
+    @api.depends('prepayment_percent')
+    def _compute_require_payment(self):
+        for order in self:
+            order.require_payment = (order.prepayment_percent or 0.0) > 0
+
+    def _inverse_require_payment(self):
+        for order in self:
+            if order.require_payment and not order.prepayment_percent:
+                order.prepayment_percent = 1.0
+            elif not order.require_payment:
+                order.prepayment_percent = 0.0
 
     ###################
     # KPI / reporting #

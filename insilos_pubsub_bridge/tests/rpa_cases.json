@@ -1,0 +1,36 @@
+[
+  {
+    "case_id": "RPA-PUBSUB-WORKFLOW-001",
+    "module_set": ["insilos_pubsub_bridge", "crm"],
+    "archetype": "integration_admin_console",
+    "risk": "critical",
+    "roles": ["pubsub_manager"],
+    "company_mode": "current_company",
+    "seed": "synthetic_general_event_v1",
+    "entry": {
+      "menu_xmlid": "insilos_pubsub_bridge.menu_pubsub_event_log",
+      "action_xmlid": "insilos_pubsub_bridge.action_pubsub_event_log"
+    },
+    "steps": ["seed_received_event", "open_event_log", "open_seeded_event", "verify_workflow_state"],
+    "oracles": ["ui", "rpc", "deep_link_reload_history", "accessibility", "db_no_unexpected_mutation"],
+    "cleanup": "fixture_owned_records",
+    "selectors": ["changed:insilos_pubsub_bridge", "changed:crm", "nightly:critical", "rc:critical"]
+  },
+  {
+    "case_id": "RPA-PUBSUB-NOTIFICATION-001",
+    "module_set": ["insilos_pubsub_bridge", "mail"],
+    "archetype": "integration_admin_console",
+    "risk": "critical",
+    "roles": ["pubsub_manager"],
+    "company_mode": "current_company",
+    "seed": "synthetic_action_required_event_v1",
+    "entry": {
+      "menu_xmlid": "insilos_pubsub_bridge.menu_pubsub_event_log",
+      "action_xmlid": "insilos_pubsub_bridge.action_pubsub_event_log"
+    },
+    "steps": ["seed_action_required_event", "open_event_log", "verify_durable_event", "verify_bus_is_not_completion_oracle"],
+    "oracles": ["ui", "rpc", "deep_link_reload_history", "accessibility", "durable_notification_truth", "db_no_unexpected_mutation"],
+    "cleanup": "fixture_owned_records",
+    "selectors": ["changed:insilos_pubsub_bridge", "changed:mail", "nightly:critical", "rc:critical"]
+  }
+]

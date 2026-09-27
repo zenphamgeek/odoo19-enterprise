@@ -7,6 +7,7 @@ class HrEmployeePublic(models.Model):
     _inherit = 'hr.employee.public'
 
     has_slots = fields.Boolean(compute='_compute_has_slots')
+    is_flexible = fields.Boolean(string='Flexible Hours', related='employee_id.is_flexible')
 
     def _compute_has_slots(self):
         self._compute_from_employee('has_slots')

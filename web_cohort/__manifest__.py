@@ -3,7 +3,7 @@
 
 {
     'name': 'Cohort View',
-    'summary': 'Basic Cohort view for odoo',
+    'summary': 'Basic Cohort view for Insilos',
     'category': 'Hidden',
     'depends': ['web'],
     'assets': {

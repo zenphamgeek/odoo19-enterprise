@@ -13,7 +13,7 @@ class L10n_AuStpSubmit(models.TransientModel):
         'l10n_au.stp', string='STP Report', required=True)
     stp_terms = fields.Boolean(
         string="I have read and accepted the T&C above, and "
-        "I authorise Odoo to send compliant payroll data to the ATO on my behalf.",
+        "I authorise Insilos to send compliant payroll data to the ATO on my behalf.",
         default=False)
     terms_header = fields.Html(compute="_compute_terms")
     terms = fields.Html(compute="_compute_terms")

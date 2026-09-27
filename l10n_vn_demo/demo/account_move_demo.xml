@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================================ -->
+        <!-- 1. KÍCH HOẠT TIỀN TỆ ĐỒNG VIỆT NAM (VND)                     -->
+        <!-- ============================================================ -->
+
+        <function model="res.currency" name="write">
+            <value eval="[ref('base.VND')]"/>
+            <value eval="{'active': True}"/>
+        </function>
+
+        <record id="rate_vn_vnd" model="res.currency.rate">
+            <field name="name" eval="(DateTime.today() - relativedelta(years=1)).strftime('%Y-01-01')"/>
+            <field name="rate">25400.0</field>
+            <field name="currency_id" ref="base.VND"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 2. HỆ THỐNG TÀI KHOẢN KẾ TOÁN VIỆT NAM (THÔNG TƯ 200/2014)   -->
+        <!-- ============================================================ -->
+
+        <!-- Tài khoản 131: Phải thu của khách hàng -->
+        <record id="account_vn_131" model="account.account">
+            <field name="code">131</field>
+            <field name="name">131 - Phải thu của khách hàng</field>
+            <field name="account_type">asset_receivable</field>
+            <field name="reconcile" eval="True"/>
+        </record>
+
+        <!-- Tài khoản 331: Phải trả cho người bán -->
+        <record id="account_vn_331" model="account.account">
+            <field name="code">331</field>
+            <field name="name">331 - Phải trả cho người bán</field>
+            <field name="account_type">liability_payable</field>
+            <field name="reconcile" eval="True"/>
+        </record>
+
+        <!-- Tài khoản 1121: Tiền gửi ngân hàng (VND) -->
+        <record id="account_vn_1121" model="account.account">
+            <field name="code">1121</field>
+            <field name="name">1121 - Tiền gửi ngân hàng (VND)</field>
+            <field name="account_type">asset_cash</field>
+        </record>
+
+        <!-- Tài khoản 152: Nguyên liệu, vật liệu -->
+        <record id="account_vn_152" model="account.account">
+            <field name="code">152</field>
+            <field name="name">152 - Nguyên liệu, vật liệu</field>
+            <field name="account_type">asset_current</field>
+        </record>
+
+        <!-- Tài khoản 155: Thành phẩm chế tạo -->
+        <record id="account_vn_155" model="account.account">
+            <field name="code">155</field>
+            <field name="name">155 - Thành phẩm chế tạo</field>
+            <field name="account_type">asset_current</field>
+        </record>
+
+        <!-- Tài khoản 156: Hàng hóa thương mại -->
+        <record id="account_vn_156" model="account.account">
+            <field name="code">156</field>
+            <field name="name">156 - Hàng hóa</field>
+            <field name="account_type">asset_current</field>
+        </record>
+
+        <!-- Tài khoản 1331: Thuế GTGT được khấu trừ của HHDV -->
+        <record id="account_vn_1331" model="account.account">
+            <field name="code">1331</field>
+            <field name="name">1331 - Thuế GTGT được khấu trừ</field>
+            <field name="account_type">asset_current</field>
+        </record>
+
+        <!-- Tài khoản 33311: Thuế GTGT đầu ra phải nộp -->
+        <record id="account_vn_33311" model="account.account">
+            <field name="code">33311</field>
+            <field name="name">33311 - Thuế GTGT đầu ra phải nộp</field>
+            <field name="account_type">liability_current</field>
+        </record>
+
+        <!-- Tài khoản 5111: Doanh thu bán hàng hóa -->
+        <record id="account_vn_5111" model="account.account">
+            <field name="code">5111</field>
+            <field name="name">5111 - Doanh thu bán hàng hóa</field>
+            <field name="account_type">income</field>
+        </record>
+
+        <!-- Tài khoản 5112: Doanh thu bán các thành phẩm chế tạo -->
+        <record id="account_vn_5112" model="account.account">
+            <field name="code">5112</field>
+            <field name="name">5112 - Doanh thu bán thành phẩm</field>
+            <field name="account_type">income</field>
+        </record>
+
+        <!-- Tài khoản 5113: Doanh thu cung cấp dịch vụ vận tải -->
+        <record id="account_vn_5113" model="account.account">
+            <field name="code">5113</field>
+            <field name="name">5113 - Doanh thu cung cấp dịch vụ</field>
+            <field name="account_type">income</field>
+        </record>
+
+        <!-- Tài khoản 632: Giá vốn hàng bán -->
+        <record id="account_vn_632" model="account.account">
+            <field name="code">632</field>
+            <field name="name">632 - Giá vốn hàng bán</field>
+            <field name="account_type">expense_direct_cost</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 3. GÁN TÀI KHOẢN CÔNG NỢ CHUẨN THÔNG TƯ 200 CHO ĐỐI TÁC      -->
+        <!-- ============================================================ -->
+
+        <record id="res_partner_customer_vn_1" model="res.partner">
+            <field name="property_account_receivable_id" ref="account_vn_131"/>
+        </record>
+        <record id="res_partner_customer_vn_2" model="res.partner">
+            <field name="property_account_receivable_id" ref="account_vn_131"/>
+        </record>
+        <record id="res_partner_customer_vn_3" model="res.partner">
+            <field name="property_account_receivable_id" ref="account_vn_131"/>
+        </record>
+        <record id="res_partner_customer_vn_4" model="res.partner">
+            <field name="property_account_receivable_id" ref="account_vn_131"/>
+        </record>
+        <record id="res_partner_customer_vn_5" model="res.partner">
+            <field name="property_account_receivable_id" ref="account_vn_131"/>
+        </record>
+        <record id="res_partner_customer_vn_6" model="res.partner">
+            <field name="property_account_receivable_id" ref="account_vn_131"/>
+        </record>
+
+        <record id="res_partner_supplier_vn_1" model="res.partner">
+            <field name="property_account_payable_id" ref="account_vn_331"/>
+        </record>
+        <record id="res_partner_supplier_vn_2" model="res.partner">
+            <field name="property_account_payable_id" ref="account_vn_331"/>
+        </record>
+        <record id="res_partner_supplier_vn_3" model="res.partner">
+            <field name="property_account_payable_id" ref="account_vn_331"/>
+        </record>
+        <record id="res_partner_supplier_vn_4" model="res.partner">
+            <field name="property_account_payable_id" ref="account_vn_331"/>
+        </record>
+        <record id="res_partner_supplier_vn_5" model="res.partner">
+            <field name="property_account_payable_id" ref="account_vn_331"/>
+        </record>
+        <record id="res_partner_supplier_vn_6" model="res.partner">
+            <field name="property_account_payable_id" ref="account_vn_331"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 4. THUẾ GIÁ TRỊ GIA TĂNG VIỆT NAM (VAT 10%)                  -->
+        <!-- ============================================================ -->
+
+        <!-- Thuế GTGT đầu ra 10% (Bán hàng) -->
+        <record id="tax_vn_sale_vat10" model="account.tax">
+            <field name="name">Thuế GTGT đầu ra 10% (Bán hàng)</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">percent</field>
+            <field name="amount">10.0</field>
+            <field name="invoice_repartition_line_ids" eval="[
+                Command.create({'repartition_type': 'base'}),
+                Command.create({'repartition_type': 'tax', 'account_id': ref('account_vn_33311')}),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[
+                Command.create({'repartition_type': 'base'}),
+                Command.create({'repartition_type': 'tax', 'account_id': ref('account_vn_33311')}),
+            ]"/>
+        </record>
+
+        <!-- Thuế GTGT được khấu trừ 10% (Mua hàng) -->
+        <record id="tax_vn_purchase_vat10" model="account.tax">
+            <field name="name">Thuế GTGT được khấu trừ 10% (Mua hàng)</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">percent</field>
+            <field name="amount">10.0</field>
+            <field name="invoice_repartition_line_ids" eval="[
+                Command.create({'repartition_type': 'base'}),
+                Command.create({'repartition_type': 'tax', 'account_id': ref('account_vn_1331')}),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[
+                Command.create({'repartition_type': 'base'}),
+                Command.create({'repartition_type': 'tax', 'account_id': ref('account_vn_1331')}),
+            ]"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 5. HÓA ĐƠN BÁN HÀNG TIỀN ĐỒNG (CUSTOMER INVOICES - OUT)      -->
+        <!-- ============================================================ -->
+
+        <!-- Hóa đơn 1: Tân Cảng Sài Gòn (Xe kéo điện V-LIFT & Trạm sạc) -->
+        <record id="invoice_vn_customer_1" model="account.move">
+            <field name="move_type">out_invoice</field>
+            <field name="partner_id" ref="res_partner_customer_vn_4"/>
+            <field name="currency_id" ref="base.VND"/>
+            <field name="invoice_currency_rate">25400.0</field>
+            <field name="invoice_date" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+            <field name="date" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+            <field name="invoice_line_ids" eval="[
+                Command.create({
+                    'product_id': ref('product_vn_1'),
+                    'name': 'Xe kéo hàng điện nhà xưởng V-LIFT 2500E (Pin LFP 48V-400Ah)',
+                    'quantity': 2.0,
+                    'price_unit': 385000000.0,
+                    'account_id': ref('account_vn_5112'),
+                    'tax_ids': [Command.set([ref('tax_vn_sale_vat10')])],
+                }),
+                Command.create({
+                    'product_id': ref('product_vn_3'),
+                    'name': 'Trạm sạc nhanh DC 60kW công nghiệp V-CHARGE 60',
+                    'quantity': 1.0,
+                    'price_unit': 185000000.0,
+                    'account_id': ref('account_vn_5112'),
+                    'tax_ids': [Command.set([ref('tax_vn_sale_vat10')])],
+                }),
+            ]"/>
+        </record>
+
+        <!-- Hóa đơn 2: Gemadept Logistics (Sơ mi rơ moóc & Cước vận tải) -->
+        <record id="invoice_vn_customer_2" model="account.move">
+            <field name="move_type">out_invoice</field>
+            <field name="partner_id" ref="res_partner_customer_vn_5"/>
+            <field name="currency_id" ref="base.VND"/>
+            <field name="invoice_currency_rate">25400.0</field>
+            <field name="invoice_date" eval="(DateTime.today() - relativedelta(days=2)).strftime('%Y-%m-%d')"/>
+            <field name="date" eval="(DateTime.today() - relativedelta(days=2)).strftime('%Y-%m-%d')"/>
+            <field name="invoice_line_ids" eval="[
+                Command.create({
+                    'product_id': ref('product_vn_2'),
+                    'name': 'Sơ mi rơ moóc tải nặng chuyên dụng chở container 40ft VT-SEMITRAIL 40',
+                    'quantity': 1.0,
+                    'price_unit': 420000000.0,
+                    'account_id': ref('account_vn_5112'),
+                    'tax_ids': [Command.set([ref('tax_vn_sale_vat10')])],
+                }),
+                Command.create({
+                    'product_id': ref('product_vn_17'),
+                    'name': 'Dịch vụ Kéo Container 40ft Tuyến Cát Lái - VSIP Bình Dương (30 Chuyến)',
+                    'quantity': 30.0,
+                    'price_unit': 3850000.0,
+                    'account_id': ref('account_vn_5113'),
+                    'tax_ids': [Command.set([ref('tax_vn_sale_vat10')])],
+                }),
+            ]"/>
+        </record>
+
+        <!-- Hóa đơn 3: VinFast Cát Hải (Trạm sạc nhanh công nghiệp) -->
+        <record id="invoice_vn_customer_3" model="account.move">
+            <field name="move_type">out_invoice</field>
+            <field name="partner_id" ref="res_partner_customer_vn_1"/>
+            <field name="currency_id" ref="base.VND"/>
+            <field name="invoice_currency_rate">25400.0</field>
+            <field name="invoice_date" eval="(DateTime.today() - relativedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="date" eval="(DateTime.today() - relativedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="invoice_line_ids" eval="[
+                Command.create({
+                    'product_id': ref('product_vn_3'),
+                    'name': 'Trạm sạc nhanh DC 60kW công nghiệp V-CHARGE 60 (Lô dự án)',
+                    'quantity': 2.0,
+                    'price_unit': 185000000.0,
+                    'account_id': ref('account_vn_5112'),
+                    'tax_ids': [Command.set([ref('tax_vn_sale_vat10')])],
+                }),
+            ]"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 6. HÓA ĐƠN NHÀ CUNG CẤP TIỀN ĐỒNG (VENDOR BILLS - IN)        -->
+        <!-- ============================================================ -->
+
+        <!-- Hóa đơn NCC 1: Tập đoàn Hòa Phát (Thép tấm SS400 & Thép hộp) -->
+        <record id="invoice_vn_supplier_1" model="account.move">
+            <field name="move_type">in_invoice</field>
+            <field name="partner_id" ref="res_partner_supplier_vn_1"/>
+            <field name="currency_id" ref="base.VND"/>
+            <field name="invoice_currency_rate">25400.0</field>
+            <field name="invoice_date" eval="(DateTime.today() - relativedelta(days=10)).strftime('%Y-%m-%d')"/>
+            <field name="date" eval="(DateTime.today() - relativedelta(days=10)).strftime('%Y-%m-%d')"/>
+            <field name="invoice_line_ids" eval="[
+                Command.create({
+                    'product_id': ref('product_vn_9'),
+                    'name': 'Thép tấm cán nóng kết cấu SS400 (Dày 12mm x Khổ 1.5m x 6m)',
+                    'quantity': 15000.0,
+                    'price_unit': 19500.0,
+                    'account_id': ref('account_vn_152'),
+                    'tax_ids': [Command.set([ref('tax_vn_purchase_vat10')])],
+                }),
+                Command.create({
+                    'product_id': ref('product_vn_10'),
+                    'name': 'Thép hộp mạ kẽm nhúng nóng 100x100x4.0mm (Cây 6m)',
+                    'quantity': 400.0,
+                    'price_unit': 245000.0,
+                    'account_id': ref('account_vn_152'),
+                    'tax_ids': [Command.set([ref('tax_vn_purchase_vat10')])],
+                }),
+            ]"/>
+        </record>
+
+        <!-- Hóa đơn NCC 2: Công ty Dây cáp điện CADIVI (Cáp điện 3 pha) -->
+        <record id="invoice_vn_supplier_2" model="account.move">
+            <field name="move_type">in_invoice</field>
+            <field name="partner_id" ref="res_partner_supplier_vn_2"/>
+            <field name="currency_id" ref="base.VND"/>
+            <field name="invoice_currency_rate">25400.0</field>
+            <field name="invoice_date" eval="(DateTime.today() - relativedelta(days=7)).strftime('%Y-%m-%d')"/>
+            <field name="date" eval="(DateTime.today() - relativedelta(days=7)).strftime('%Y-%m-%d')"/>
+            <field name="invoice_line_ids" eval="[
+                Command.create({
+                    'product_id': ref('product_vn_12'),
+                    'name': 'Dây cáp điện đồng mềm CADIVI 3 pha 3x16+1x10mm²',
+                    'quantity': 800.0,
+                    'price_unit': 145000.0,
+                    'account_id': ref('account_vn_152'),
+                    'tax_ids': [Command.set([ref('tax_vn_purchase_vat10')])],
+                }),
+            ]"/>
+        </record>
+
+        <!-- Hóa đơn NCC 3: Bridgestone Việt Nam (Lốp xe tải nặng R150) -->
+        <record id="invoice_vn_supplier_3" model="account.move">
+            <field name="move_type">in_invoice</field>
+            <field name="partner_id" ref="res_partner_supplier_vn_6"/>
+            <field name="currency_id" ref="base.VND"/>
+            <field name="invoice_currency_rate">25400.0</field>
+            <field name="invoice_date" eval="(DateTime.today() - relativedelta(days=4)).strftime('%Y-%m-%d')"/>
+            <field name="date" eval="(DateTime.today() - relativedelta(days=4)).strftime('%Y-%m-%d')"/>
+            <field name="invoice_line_ids" eval="[
+                Command.create({
+                    'product_id': ref('product_vn_16'),
+                    'name': 'Lốp xe tải nặng Bridgestone R150 11R22.5 (16PR không săm)',
+                    'quantity': 16.0,
+                    'price_unit': 6800000.0,
+                    'account_id': ref('account_vn_152'),
+                    'tax_ids': [Command.set([ref('tax_vn_purchase_vat10')])],
+                }),
+            ]"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 7. VÀO SỔ HẠCH TOÁN KẾ TOÁN (POST JOURNAL ENTRIES)           -->
+        <!-- ============================================================ -->
+
+        <function model="account.move" name="action_post">
+            <value eval="[
+                ref('invoice_vn_customer_1'),
+                ref('invoice_vn_customer_2'),
+                ref('invoice_vn_customer_3'),
+                ref('invoice_vn_supplier_1'),
+                ref('invoice_vn_supplier_2'),
+                ref('invoice_vn_supplier_3'),
+            ]"/>
+        </function>
+
+        <!-- ============================================================ -->
+        <!-- 8. ĐỒNG BỘ KẾ TOÁN & CÂN BẰNG TỶ GIÁ TIỀN ĐỒNG THỰC TẾ        -->
+        <!-- ============================================================ -->
+
+        <function model="account.move" name="_l10n_vn_demo_sync_demo_accounting"/>
+
+    </data>
+</odoo>

@@ -26,7 +26,7 @@ class SIE4ImportWizard(models.TransientModel):
     )
     import_opening_balance = fields.Boolean(
         string="Import account opening balances",
-        help="Compare opening balance information from Odoo with the file and create a move with the difference found.",
+        help="Compare opening balance information from Insilos with the file and create a move with the difference found.",
     )
 
     # --------------------------------------------------------------------------

@@ -156,7 +156,7 @@ class AccountEdiFormat(models.Model):
                        "1. Linked Estela (formerly Digiflow) as OSE.\n"
                        "2. Authorize Estela (formerly Digiflow) as PSE.\n"
                        "Reference: \n"
-                       "https://www.odoo.com/documentation/latest/applications/finance/accounting/fiscal_localizations/localizations/peru.html#what-do-you-need-to-do"),
+                       "https://www.insilos.com/documentation/latest/applications/finance/accounting/fiscal_localizations/localizations/peru.html#what-do-you-need-to-do"),
             '98': _lt("The cancellation request has not yet finished processing by SUNAT. Please retry in a few minutes."),
             '2640': _lt("The tax application is incorrect for free invoice."),
             '3020': _lt("Verify that the taxes are configured correctly: for free invoice, make sure to include "

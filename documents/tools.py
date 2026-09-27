@@ -20,10 +20,9 @@ def attachment_read(attachment, size=4096):
     attachment.ensure_one()
     if not attachment:
         return None
-    if attachment.store_fname:
-        return attachment._file_read(attachment.store_fname, size=size)
-    if attachment.db_datas:
-        return attachment.raw if size is None else attachment.raw[:size]
+    if attachment.raw:
+        with attachment.raw.open() as f:
+            return f.read(size) if size is not None else f.read()
     if attachment.url and (static_path := root.get_static_file(
         attachment.url,
         host=request.httprequest.environ.get('HTTP_HOST', '')

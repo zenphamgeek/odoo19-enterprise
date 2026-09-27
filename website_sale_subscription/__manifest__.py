@@ -21,7 +21,7 @@ appropriate views and selling choices.
         'web.assets_frontend': [
             'sale_subscription/static/src/js/combo_configurator_dialog/*',
             'sale_subscription/static/src/js/product_configurator_dialog/*',
-            ('before', 'website_sale/static/src/interactions/website_sale.js', 'website_sale_subscription/static/src/js/variant_mixin.js'),
+            'website_sale_subscription/static/src/js/variant_mixin.js',
             'website_sale_subscription/static/src/interactions/*',
             'website_sale_subscription/static/src/xml/pricing_view.xml',
         ],

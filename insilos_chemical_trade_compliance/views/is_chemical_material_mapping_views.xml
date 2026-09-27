@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_is_chemical_material_mapping_tree" model="ir.ui.view">
+        <field name="name">is.chemical.material.mapping.tree</field>
+        <field name="model">is.chemical.material.mapping</field>
+        <field name="arch" type="xml">
+            <list string="Material-Chemical Mappings" sample="1">
+                <field name="product_tmpl_id"/>
+                <field name="default_code"/>
+                <field name="commercial_name"/>
+                <field name="chemical_substance_id"/>
+                <field name="cas_number"/>
+                <field name="concentration_percentage"/>
+                <field name="purpose_of_use_id"/>
+                <field name="uom_id"/>
+                <field name="uom_to_kg_ratio"/>
+                <field name="is_verified" widget="boolean_toggle"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_is_chemical_material_mapping_form" model="ir.ui.view">
+        <field name="name">is.chemical.material.mapping.form</field>
+        <field name="model">is.chemical.material.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Material to Chemical &amp; Regulatory Mapping">
+                <header>
+                    <button name="action_verify_mapping" string="Complete Internal Mapping Review" type="object" class="btn-primary" invisible="is_verified"/>
+                    <field name="is_verified" widget="boolean_toggle" invisible="1"/>
+                </header>
+                <sheet>
+                    <div class="w_button_box" name="button_box"/>
+                    <div class="w_title">
+                        <label for="product_tmpl_id" string="Material"/>
+                        <h1>
+                            <field name="product_tmpl_id" placeholder="Select ERP Material..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Operational Material Details">
+                            <field name="default_code"/>
+                            <field name="commercial_name"/>
+                            <field name="uom_id"/>
+                            <field name="uom_to_kg_ratio"/>
+                            <field name="concentration_percentage"/>
+                        </group>
+                        <group string="Chemical Master &amp; Regulatory Link">
+                            <field name="chemical_substance_id"/>
+                            <field name="cas_number"/>
+                            <field name="purpose_of_use_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Applicable 2026 Regulatory Rules" name="rules">
+                            <field name="regulatory_rule_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="rule_category"/>
+                                    <field name="required_permit_type"/>
+                                    <field name="legal_basis"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Verification &amp; Notes" name="verification">
+                            <group>
+                                <group string="Compliance Audit">
+                                    <field name="is_verified" readonly="1"/>
+                                    <field name="verified_by" readonly="1"/>
+                                    <field name="verified_date" readonly="1"/>
+                                </group>
+                            </group>
+                            <field name="notes" placeholder="Notes on chemical formulation, additives, concentration..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_is_chemical_material_mapping_search" model="ir.ui.view">
+        <field name="name">is.chemical.material.mapping.search</field>
+        <field name="model">is.chemical.material.mapping</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_tmpl_id"/>
+                <field name="default_code"/>
+                <field name="commercial_name"/>
+                <field name="chemical_substance_id"/>
+                <field name="cas_number"/>
+                <filter name="filter_verified" string="Verified" domain="[('is_verified', '=', True)]"/>
+                <filter name="filter_unverified" string="Unverified" domain="[('is_verified', '=', False)]"/>
+                <group>
+                    <filter name="group_chemical" string="Chemical Substance" context="{'group_by': 'chemical_substance_id'}"/>
+                    <filter name="group_purpose" string="Purpose of Use" context="{'group_by': 'purpose_of_use_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_is_chemical_material_mapping" model="ir.actions.act_window">
+        <field name="name">Manage Material Chemical Classifications</field>
+        <field name="path">chemical-material-mappings</field>
+        <field name="res_model">is.chemical.material.mapping</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_is_chemical_material_mapping_search"/>
+        <field name="help" type="html">
+            <p class="w_view_nocontent_smiling_face">
+                Map ERP Material Codes with Chemical Substance Masters, Purpose of Use and UoM conversion ratios.
+            </p>
+        </field>
+    </record>
+</odoo>

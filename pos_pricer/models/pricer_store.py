@@ -30,7 +30,7 @@ class PricerStore(models.Model):
     # The name of the Pricer store in Odoo
     name = fields.Char(
         string='Store Name',
-        help='Pricer Store name in Odoo database',
+        help='Pricer Store name in Insilos database',
         required=True
     )
 

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradPlat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#02132b"/>
+      <stop offset="50%" stop-color="#0B2E64"/>
+      <stop offset="100%" stop-color="#010a17"/>
+    </linearGradient>
+    <linearGradient id="cyanGradPlat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <filter id="glowEffectPlat" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="800" height="600" rx="16" fill="url(#bgGradPlat)"/>
+
+  <!-- Grid lines -->
+  <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+    <line x1="0" y1="120" x2="800" y2="120"/>
+    <line x1="0" y1="240" x2="800" y2="240"/>
+    <line x1="0" y1="360" x2="800" y2="360"/>
+    <line x1="0" y1="480" x2="800" y2="480"/>
+    <line x1="160" y1="0" x2="160" y2="600"/>
+    <line x1="320" y1="0" x2="320" y2="600"/>
+    <line x1="480" y1="0" x2="480" y2="600"/>
+    <line x1="640" y1="0" x2="640" y2="600"/>
+  </g>
+
+  <!-- Title Header -->
+  <g transform="translate(400, 45)">
+    <text text-anchor="middle" fill="#ffffff" font-family="system-ui, sans-serif" font-weight="bold" font-size="16">INSILOS SOVEREIGN ENTERPRISE AI ARCHITECTURE</text>
+    <text text-anchor="middle" y="20" fill="#38bdf8" font-family="system-ui, sans-serif" font-weight="600" font-size="12">Anti-Scanner Security · Hybrid Multi-Tenant · Real-Time IAP Ledger</text>
+  </g>
+
+  <!-- Layer 1: Security Shield (Top) -->
+  <g transform="translate(400, 130)">
+    <rect x="-340" y="-35" width="680" height="70" rx="12" fill="#082046" stroke="#38bdf8" stroke-width="1.8" filter="url(#glowEffectPlat)"/>
+    <text text-anchor="middle" y="-10" fill="#38bdf8" font-family="system-ui, sans-serif" font-weight="bold" font-size="13">LAYER 1 · ANTI-SCANNER &amp; ZERO-FINGERPRINT SHIELD</text>
+    <text text-anchor="middle" y="12" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11">WAF &amp; Rate Limiting · Asset Hash Cloaking · Cloudflare Edge Integration · Header Anonymization</text>
+  </g>
+
+  <!-- Layer 2: Core Sovereign AI & Decision Engine (Middle) -->
+  <g transform="translate(400, 245)">
+    <rect x="-340" y="-45" width="680" height="90" rx="12" fill="#082046" stroke="#34d399" stroke-width="1.8" filter="url(#glowEffectPlat)"/>
+    <text text-anchor="middle" y="-20" fill="#34d399" font-family="system-ui, sans-serif" font-weight="bold" font-size="13">LAYER 2 · SOVEREIGN AI ROUTER &amp; ONTOLOGY GRAPH ENGINE</text>
+    <text text-anchor="middle" y="2" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11">Private LLM Gateway · GraphRAG Query Execution · Rule Packs 2026.3 · Deterministic Fallbacks</text>
+    <text text-anchor="middle" y="24" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="10.5">Air-Gapped Private Cloud &amp; Sovereign On-Premise Ready</text>
+  </g>
+
+  <!-- Layer 3: IAP Ledger & Wallet Core (Middle-Bottom) -->
+  <g transform="translate(400, 365)">
+    <rect x="-340" y="-40" width="680" height="80" rx="12" fill="#082046" stroke="#c084fc" stroke-width="1.8" filter="url(#glowEffectPlat)"/>
+    <text text-anchor="middle" y="-15" fill="#c084fc" font-family="system-ui, sans-serif" font-weight="bold" font-size="13">LAYER 3 · REAL-TIME IAP WALLET &amp; CREDIT LEDGER</text>
+    <text text-anchor="middle" y="6" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11">Atomic Credit Hold &amp; Settlement · Quota Enforcement · Zero Token Leakage · Immutable Audit Logs</text>
+  </g>
+
+  <!-- Layer 4: Infrastructure & Storage (Bottom) -->
+  <g transform="translate(400, 480)">
+    <rect x="-340" y="-40" width="680" height="80" rx="12" fill="#082046" stroke="#fbbf24" stroke-width="1.8" filter="url(#glowEffectPlat)"/>
+    <text text-anchor="middle" y="-15" fill="#fbbf24" font-family="system-ui, sans-serif" font-weight="bold" font-size="13">LAYER 4 · HYBRID MULTI-TENANT ENGINE &amp; KUBERNETES RUNTIME</text>
+    <text text-anchor="middle" y="6" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11">PostgreSQL 16 + PgBouncer · Subdomain DB Filter · MinIO S3 Filestore · K3s Production High Availability</text>
+  </g>
+
+  <!-- Bottom KPI Banner -->
+  <g transform="translate(400, 565)">
+    <text text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="system-ui, sans-serif" font-size="11.5">
+      <tspan fill="#34d399" font-weight="bold">99.99% SLA Uptime</tspan> · 
+      <tspan fill="#38bdf8" font-weight="bold">&lt; 100ms API Latency</tspan> · 
+      <tspan fill="#c084fc" font-weight="bold">SOC 2 Type II &amp; ISO 27001 Certified</tspan>
+    </text>
+  </g>
+</svg>

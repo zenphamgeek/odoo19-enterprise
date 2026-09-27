@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { useSubEnv } from "@odoo/owl";
+import { useSubEnv } from "@web/owl2/utils";
 import { AccountMoveLineListController, AccountMoveLineListRenderer, AccountMoveLineListView } from "../move_line_list/move_line_list";
 
 

@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Note: route "/" is served by insilos_website_seed (insilos_homepage template). -->
+
+    <!-- ================= Industry Hub (/industry) ================= -->
+    <template id="industry_hub_template" name="Industry Solutions Hub">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Industry Solutions — Insilos</t>
+            <t t-set="meta_description">Pre-configured enterprise workflows and live sandbox environments for every industry sector.</t>
+
+            <main id="wrap" class="oe_structure">
+                <div class="oe_structure oe_empty"/>
+
+                <!-- HERO — s_title -->
+                <section class="s_title w_cc w_cc5 pt80 pb56" data-vcss="001" data-snippet="s_title" data-name="Title">
+                    <div class="container s_allow_columns">
+                        <p class="lead text-uppercase opacity-75">Industry Showcase</p>
+                        <h1 class="display-4">Tailored solutions for <t t-esc="total_count"/> industries</h1>
+                        <p class="lead">Specialized workflows, pre-configured application suites and instant sandbox environments for your sector.</p>
+                        <form action="/industry" method="get" class="row g-2 pt24">
+                            <div class="col-lg-6">
+                                <input type="text" name="search" class="form-control form-control-lg"
+                                       placeholder="Search by industry (e.g. Farm, Restaurant, Dental)…"
+                                       t-att-value="search"/>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-primary btn-lg w-100" type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- CATEGORY FILTERS — s_text_block -->
+                <section class="s_text_block pt24 pb24" data-snippet="s_text_block" data-name="Text">
+                    <div class="container s_allow_columns">
+                        <p class="mb-0">
+                            <a href="/industry" t-attf-class="btn btn-sm me-2 mb-2 #{'btn-primary' if not current_category else 'btn-outline-secondary'}">
+                                All sectors (<t t-esc="total_count"/>)
+                            </a>
+                            <t t-foreach="categories" t-as="cat_name">
+                                <a t-attf-href="/industry/category/#{cat_name.lower().replace(' ', '-')}"
+                                   t-attf-class="btn btn-sm me-2 mb-2 #{'btn-primary' if current_category and current_category.lower() == cat_name.lower() else 'btn-outline-secondary'}">
+                                    <t t-esc="cat_name"/> (<t t-esc="len(categories[cat_name])"/>)
+                                </a>
+                            </t>
+                        </p>
+                    </div>
+                </section>
+
+                <!-- CATALOG — s_features + s_card -->
+                <t t-if="not categories">
+                    <section class="s_text_block pt64 pb64" data-snippet="s_text_block" data-name="Text">
+                        <div class="container s_allow_columns" style="text-align: center;">
+                            <h2 class="h3-fs">No industry solution found</h2>
+                            <p><a href="/industry" class="btn btn-outline-secondary">View all industries</a></p>
+                        </div>
+                    </section>
+                </t>
+
+                <t t-foreach="categories" t-as="cat_name">
+                    <section t-attf-class="s_features pt48 pb48#{' w_cc w_cc2' if cat_name_index % 2 else ''}"
+                             data-snippet="s_features" data-name="Industries">
+                        <div class="container">
+                            <h2 class="h3-fs">
+                                <t t-esc="cat_name"/>
+                                <small class="text-muted ms-2"><t t-esc="len(categories[cat_name])"/> solutions</small>
+                            </h2>
+                            <div class="row pt24">
+                                <t t-foreach="categories[cat_name]" t-as="land">
+                                    <div class="col-md-6 col-lg-4 pb24" data-name="Industry">
+                                        <div class="s_card w_cc w_cc1 card h-100" data-vxml="001" data-snippet="s_card" data-name="Card">
+                                            <div class="card-body">
+                                                <i t-attf-class="s_features_icon #{land.icon or 'ph-duotone ph-briefcase'} mb-3 rounded bg-o-color-3" role="img"/>
+                                                <h3 class="h5-fs card-title"><t t-esc="land.name"/></h3>
+                                                <p class="card-text"><t t-esc="land.summary"/></p>
+                                                <a t-attf-href="/industry/#{land.slug}" class="btn btn-link px-0">Learn solution →</a>
+                                            </div>
+                                            <div class="card-footer">
+                                                <a t-att-href="land.demo_url" target="_blank" class="btn btn-sm btn-primary">Demo instance</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </section>
+                </t>
+
+                <!-- CTA — s_call_to_action -->
+                <section class="s_call_to_action w_cc w_cc5 pt64 pb64" data-snippet="s_call_to_action" data-name="Call to Action">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-9">
+                                <h2 class="h3-fs">Not sure which solution fits your operation?</h2>
+                                <p class="lead mb-0">Tell us about your workflows and we map them to a ready-to-run configuration.</p>
+                            </div>
+                            <div class="col-lg-3">
+                                <p style="text-align: center;" class="mb-0">
+                                    <a href="/request-demo" class="btn btn-primary btn-lg">Request a demo</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty"/>
+            </main>
+        </t>
+    </template>
+
+    <!-- ============ Industry Detail (/industry/&lt;slug&gt;) ============ -->
+    <template id="industry_detail_template" name="Industry Solution Detail">
+        <t t-call="website.layout">
+            <t t-set="additional_title"><t t-esc="landing.name"/> — Insilos</t>
+            <t t-set="meta_description"><t t-esc="landing.summary"/></t>
+
+            <main id="wrap" class="oe_structure">
+                <div class="oe_structure oe_empty"/>
+
+                <!-- HERO — s_cover -->
+                <section class="s_cover parallax s_parallax_is_fixed w_cc w_cc5 pt184 pb184"
+                         data-snippet="s_cover" data-name="Cover" data-scroll-background-ratio="1">
+                    <span class="s_parallax_bg we_img_bg"
+                          t-attf-style="background-image: url('#{landing.hero_image_url}'); background-position: 50% 50%;"/>
+                    <div class="w_we_bg_filter bg-black-50"/>
+                    <div class="container s_allow_columns">
+                        <p class="mb-2"><a href="/industry" class="btn btn-link px-0 text-reset">← All industries</a></p>
+                        <p class="lead text-uppercase opacity-75"><t t-esc="landing.category_name"/></p>
+                        <h1 class="display-3"><t t-esc="landing.name"/></h1>
+                        <p class="lead"><t t-esc="landing.summary"/></p>
+                        <p>
+                            <a t-att-href="landing.demo_url" target="_blank" class="btn btn-primary btn-lg mb-2">Launch live sandbox</a>
+                            <a href="#modules" class="btn btn-outline-secondary btn-lg mb-2">View included modules</a>
+                        </p>
+                    </div>
+                </section>
+
+                <!-- SANDBOX — s_text_image -->
+                <section class="s_text_image pt64 pb64" data-snippet="s_text_image" data-name="Text - Image">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-5 pt16 pb16">
+                                <h2 class="h3-fs">A dedicated database on its own sub-domain</h2>
+                                <p class="lead">Pre-installed with domain master data, automated workflows and sample records.</p>
+                                <p><code><t t-esc="landing.demo_url"/></code></p>
+                                <a t-att-href="landing.demo_url" target="_blank" class="btn btn-secondary">
+                                    Access the <t t-esc="landing.name"/> demo
+                                </a>
+                            </div>
+                            <div class="col-lg-6 offset-lg-1 pt16 pb16">
+                                <img t-att-src="landing.hero_image_url" class="img img-fluid mx-auto rounded"
+                                     t-att-alt="landing.name" loading="lazy"/>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FEATURES — s_features + s_card -->
+                <section class="s_features w_cc w_cc2 pt64 pb64" data-snippet="s_features" data-name="Features">
+                    <div class="container">
+                        <h2 class="h3-fs">Key features &amp; workflows</h2>
+                        <p class="lead">Operations designed for the specific demands of the <t t-esc="landing.name"/> sector.</p>
+                        <div class="row pt24">
+                            <t t-foreach="features" t-as="feat">
+                                <div class="col-md-6 col-lg-4 pb24" data-name="Feature">
+                                    <div class="s_card w_cc w_cc1 card h-100" data-vxml="001" data-snippet="s_card" data-name="Card">
+                                        <div class="card-body">
+                                            <i t-attf-class="s_features_icon #{feat.get('icon', 'ph-duotone ph-check-circle')} mb-3 rounded bg-o-color-3" role="img"/>
+                                            <h3 class="h5-fs card-title"><t t-esc="feat.get('title')"/></h3>
+                                            <p class="card-text"><t t-esc="feat.get('description')"/></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MODULES — s_features -->
+                <section id="modules" class="s_features pt64 pb64" data-snippet="s_features" data-name="Modules">
+                    <div class="container">
+                        <h2 class="h3-fs">Pre-configured module suite</h2>
+                        <p class="lead">Core business applications enabled by default for <t t-esc="landing.name"/>.</p>
+                        <div class="row pt24">
+                            <t t-foreach="modules" t-as="mod">
+                                <div class="col-md-4 col-lg-3 pb16" data-name="Module">
+                                    <p class="mb-0">
+                                        <i t-attf-class="#{mod.get('icon', 'ph-duotone ph-app-window')} me-2" role="img"/>
+                                        <b><t t-esc="mod['label']"/></b>
+                                    </p>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA — s_call_to_action -->
+                <section class="s_call_to_action w_cc w_cc5 pt64 pb64" data-snippet="s_call_to_action" data-name="Call to Action">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-9">
+                                <h2 class="h3-fs">Ready to transform your <t t-esc="landing.name"/> operations?</h2>
+                                <p class="lead mb-0">Launch a dedicated Insilos environment in seconds, with zero setup.</p>
+                            </div>
+                            <div class="col-lg-3">
+                                <p style="text-align: center;" class="mb-0">
+                                    <a t-att-href="landing.demo_url" target="_blank" class="btn btn-primary btn-lg">Get started</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty"/>
+            </main>
+        </t>
+    </template>
+
+    <!-- ================= SaaS 30-Day Free Trial Signup (/saas/signup) ================= -->
+    <template id="saas_signup_template" name="SaaS 30-Day Free Trial Signup">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Đăng ký Dùng thử Miễn phí 30 Ngày — Insilos SaaS</t>
+            <t t-set="meta_description">Khởi tạo không gian làm việc chuyên biệt theo ngành nghề của bạn trong 30 giây. Miễn phí 30 ngày, đầy đủ tính năng, không yêu cầu thẻ tín dụng.</t>
+
+            <main id="wrap" class="oe_structure bg-100">
+                <section class="py-5 bg-view border-bottom">
+                    <div class="container text-center">
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill fs-6 mb-3">
+                            <i class="ph-duotone ph-sparkle me-1"/> 30-DAY FREE TRIAL • KHÔNG RỦI RO
+                        </span>
+                        <h1 class="display-5 fw-bold text-dark mb-3">Khởi tạo SaaS Tenant Doanh nghiệp của Bạn</h1>
+                        <p class="lead text-muted mx-auto" style="max-width: 720px;">
+                            Chọn bộ mẫu giải pháp chuyên sâu theo ngành nghề, thiết lập tên miền riêng và bắt đầu vận hành toàn bộ quy trình ERP, IDP &amp; ESG tức thì.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="py-5">
+                    <div class="container" style="max-width: 960px;">
+                        <t t-if="error == 'subdomain_taken'">
+                            <div class="alert alert-danger d-flex align-items-center mb-4" role="alert">
+                                <i class="ph-duotone ph-warning-octagon fs-4 me-2"/>
+                                <div>Tên miền con (Subdomain) này đã có người sử dụng. Vui lòng chọn một tên miền con khác.</div>
+                            </div>
+                        </t>
+                        <t t-if="error == 'subdomain_invalid'">
+                            <div class="alert alert-warning d-flex align-items-center mb-4" role="alert">
+                                <i class="ph-duotone ph-warning me-2 fs-4"/>
+                                <div>Tên miền con không hợp lệ. Vui lòng chỉ dùng chữ cái viết thường không dấu, số và dấu gạch ngang (tối thiểu 3 ký tự).</div>
+                            </div>
+                        </t>
+
+                        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                            <div class="card-body p-4 p-md-5">
+                                <form action="/saas/signup/submit" method="post" class="js_saas_signup_form">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="idempotency_key" t-att-value="request.session.sid"/>
+
+                                    <div class="row g-4">
+                                        <!-- Step 1: Industry Template -->
+                                        <div class="col-12">
+                                            <h4 class="fw-bold text-primary mb-3 d-flex align-items-center">
+                                                <span class="badge bg-primary text-white rounded-circle me-2 px-2 py-1">1</span>
+                                                Chọn Bộ Mẫu Giải Pháp Ngành Nghề (Industry Template)
+                                            </h4>
+                                            <div class="mb-3">
+                                                <select name="template_slug" class="form-select form-select-lg" required="required">
+                                                    <t t-foreach="templates" t-as="tmpl">
+                                                        <option t-att-value="tmpl.slug" t-att-selected="'selected' if selected_template and selected_template.id == tmpl.id else None">
+                                                            <t t-esc="tmpl.name"/> — (<t t-esc="tmpl.category_id.name or 'Chuyên ngành'"/>)
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                                <div class="form-text">Mỗi bộ mẫu ngành đã cấu hình sẵn phân hệ Mua hàng, Bán hàng, Kho, Kế toán, IDP, HSE và ESG phù hợp nhất.</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Step 2: Subdomain -->
+                                        <div class="col-12">
+                                            <h4 class="fw-bold text-primary mb-3 d-flex align-items-center">
+                                                <span class="badge bg-primary text-white rounded-circle me-2 px-2 py-1">2</span>
+                                                Đặt Tên Miền Con Truy Cập (Subdomain)
+                                            </h4>
+                                            <div class="input-group input-group-lg mb-2">
+                                                <input type="text" name="subdomain" class="form-control text-lowercase" placeholder="ten-cong-ty" required="required" pattern="[a-z0-9-]{3,30}" id="saas_subdomain_input"/>
+                                                <span class="input-group-text bg-light text-muted fw-bold">.insilos.com</span>
+                                            </div>
+                                            <div class="form-text">Địa chỉ URL doanh nghiệp bạn sẽ sử dụng để đăng nhập và làm việc hàng ngày.</div>
+                                        </div>
+
+                                        <!-- Step 3: Company & Contact -->
+                                        <div class="col-12">
+                                            <h4 class="fw-bold text-primary mb-3 d-flex align-items-center">
+                                                <span class="badge bg-primary text-white rounded-circle me-2 px-2 py-1">3</span>
+                                                Thông Tin Doanh Nghiệp &amp; Người Quản Trị
+                                            </h4>
+                                            <div class="row g-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label fw-semibold">Tên Doanh nghiệp / Tổ chức</label>
+                                                    <input type="text" name="company_name" class="form-control" placeholder="Công ty TNHH Logistics An Phát" required="required"/>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label fw-semibold">Quy mô Doanh nghiệp</label>
+                                                    <select name="company_size" class="form-select">
+                                                        <option value="1-10">1 - 10 nhân sự</option>
+                                                        <option value="11-50" selected="selected">11 - 50 nhân sự</option>
+                                                        <option value="51-200">51 - 200 nhân sự</option>
+                                                        <option value="200+">Trên 200 nhân sự</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-semibold">Họ và Tên Quản trị viên</label>
+                                                    <input type="text" name="owner_name" class="form-control" placeholder="Nguyễn Văn A" required="required"/>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-semibold">Email Công việc (Nhận tài khoản)</label>
+                                                    <input type="email" name="owner_email" class="form-control" placeholder="admin@anphatlogistics.vn" required="required"/>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-semibold">Số Điện Thoại</label>
+                                                    <input type="tel" name="owner_phone" class="form-control" placeholder="0901234567" required="required"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Step 4: Plan Tier -->
+                                        <div class="col-12">
+                                            <h4 class="fw-bold text-primary mb-3 d-flex align-items-center">
+                                                <span class="badge bg-primary text-white rounded-circle me-2 px-2 py-1">4</span>
+                                                Gói Tính Năng Trải Nghiệm (Free 30 Days)
+                                            </h4>
+                                            <div class="row g-3">
+                                                <div class="col-md-4">
+                                                    <div class="border rounded-3 p-3 text-center h-100 position-relative">
+                                                        <input class="form-check-input position-absolute top-0 end-0 m-3" type="radio" name="plan_tier" id="plan_starter" value="starter" t-att-checked="'checked' if selected_plan == 'starter' else None"/>
+                                                        <h5 class="fw-bold mb-1">Starter</h5>
+                                                        <div class="text-primary fw-bold fs-5 mb-2">490.000đ<span class="text-muted fs-6 fw-normal">/tháng</span></div>
+                                                        <small class="text-muted d-block">Dành cho công ty khởi nghiệp &amp; doanh nghiệp vừa và nhỏ.</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="border border-primary border-2 rounded-3 p-3 text-center h-100 bg-primary-subtle position-relative">
+                                                        <span class="badge bg-primary position-absolute top-0 start-50 translate-middle">PHỔ BIẾN NHẤT</span>
+                                                        <input class="form-check-input position-absolute top-0 end-0 m-3" type="radio" name="plan_tier" id="plan_standard" value="standard" t-att-checked="'checked' if selected_plan in ('standard', None, '') else None"/>
+                                                        <h5 class="fw-bold mb-1 text-primary">Standard</h5>
+                                                        <div class="text-primary fw-bold fs-5 mb-2">990.000đ<span class="text-muted fs-6 fw-normal">/tháng</span></div>
+                                                        <small class="text-dark d-block">Trọn bộ ERP, IDP AI bóc tách và Báo cáo Quản trị chuyên sâu.</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="border rounded-3 p-3 text-center h-100 position-relative">
+                                                        <input class="form-check-input position-absolute top-0 end-0 m-3" type="radio" name="plan_tier" id="plan_enterprise" value="enterprise" t-att-checked="'checked' if selected_plan == 'enterprise' else None"/>
+                                                        <h5 class="fw-bold mb-1">Enterprise</h5>
+                                                        <div class="text-primary fw-bold fs-5 mb-2">2.490.000đ<span class="text-muted fs-6 fw-normal">/tháng</span></div>
+                                                        <small class="text-muted d-block">Không giới hạn người dùng, CEMS IoT, CBAM Carbon &amp; SLA 99.9%.</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 mt-4 text-center">
+                                            <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold shadow-lg">
+                                                <i class="ph-duotone ph-rocket-launch me-2"/> BẮT ĐẦU 30 NGÀY DÙNG THỬ MIỄN PHÍ TỨC THÌ
+                                            </button>
+                                            <p class="text-muted small mt-3 mb-0">
+                                                <i class="ph-duotone ph-shield-check text-success me-1"/> Không cần thẻ tín dụng • Tự động kích hoạt trong 30 giây • Hỗ trợ chuyển đổi linh hoạt sau 30 ngày.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </t>
+    </template>
+
+    <!-- ================= SaaS Signup Success Confirmation (/saas/signup/success) ================= -->
+    <template id="saas_signup_success_template" name="SaaS Signup Success">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Khởi tạo Không gian Làm việc Thành công! — Insilos SaaS</t>
+            <main id="wrap" class="oe_structure bg-100 py-5">
+                <div class="container text-center py-5" style="max-width: 760px;">
+                    <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-view">
+                        <div class="mb-4">
+                            <i class="ph-duotone ph-check-circle text-success" style="font-size: 72px;"/>
+                        </div>
+                        <h2 class="fw-bold text-dark mb-2">Chúc Mừng! Không Gian Làm Việc Đã Sẵn Sàng</h2>
+                        <p class="text-muted fs-5 mb-4">
+                            Tổ hợp ứng dụng cho <strong><t t-esc="tenant.name if tenant else 'Doanh nghiệp của Bạn'"/></strong> đã được khởi tạo thành công với gói dùng thử miễn phí 30 ngày.
+                        </p>
+
+                        <div class="p-3 bg-light rounded-3 border mb-4 text-start">
+                            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                <span class="text-muted">Địa chỉ Tenant (Subdomain):</span>
+                                <a t-attf-href="http://#{slug}.insilos.com:18069" target="_blank" class="fw-bold text-primary">
+                                    http://<t t-esc="slug"/>.insilos.com:18069
+                                </a>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                <span class="text-muted">Bộ Mẫu Ngành Nghề:</span>
+                                <span class="fw-semibold text-dark"><t t-esc="tenant.template_id.name if tenant and tenant.template_id else 'Tiêu chuẩn'"/></span>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                <span class="text-muted">Thời hạn Dùng thử:</span>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle">30 Ngày Miễn Phí (Đến <t t-esc="tenant.trial_ends_at.strftime('%d/%m/%Y') if tenant and tenant.trial_ends_at else '30 ngày tới'"/>)</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Tài khoản Quản trị Mặc định:</span>
+                                <span class="fw-bold text-dark"><t t-esc="tenant.owner_email if tenant and tenant.owner_email else 'admin@insilos.com'"/></span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                            <a t-attf-href="http://#{slug}.insilos.com:18069/insilos" target="_blank" class="btn btn-primary btn-lg px-4 py-2 rounded-pill fw-bold">
+                                <i class="ph-duotone ph-arrow-square-out me-2"/> TRUY CẬP WORKSPACE NGAY
+                            </a>
+                            <a href="/industry" class="btn btn-outline-secondary btn-lg px-4 py-2 rounded-pill">
+                                Khám phá Thêm Giải Pháp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </t>
+    </template>
+
+    <!-- ================= SaaS 30-Day Conversion Checkout (/saas/checkout/<tenant_id>) ================= -->
+    <template id="saas_checkout_template" name="SaaS Subscription Checkout">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Nâng Cấp Bản Quyền Chính Thức — Insilos SaaS</t>
+            <main id="wrap" class="oe_structure bg-100 py-5">
+                <div class="container" style="max-width: 860px;">
+                    <div class="text-center mb-4">
+                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2 rounded-pill fs-6 mb-2">
+                            <i class="ph-duotone ph-crown me-1"/> CHUYỂN ĐỔI BẢN QUYỀN CHÍNH THỨC
+                        </span>
+                        <h2 class="fw-bold text-dark">Nâng Cấp Bản Quyền: <t t-esc="tenant.name"/></h2>
+                        <p class="text-muted">Đảm bảo hệ thống vận hành liên tục không gián đoạn sau khi kết thúc 30 ngày dùng thử.</p>
+                    </div>
+
+                    <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-4 bg-view">
+                        <div class="card-body p-4 p-md-5">
+                            <form action="/saas/checkout/confirm" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="tenant_id" t-att-value="tenant.id"/>
+
+                                <h4 class="fw-bold text-primary mb-3">1. Chọn Chu Kỳ Thanh Toán</h4>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <div class="border border-primary border-2 rounded-3 p-3 bg-primary-subtle position-relative">
+                                            <span class="badge bg-danger position-absolute top-0 end-0 m-2">TIẾT KIỆM 20%</span>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="billing_cycle" id="cycle_annual" value="annual" checked="checked"/>
+                                                <label class="form-check-label fw-bold text-dark" for="cycle_annual">
+                                                    Gói 1 Năm (12 Tháng)
+                                                </label>
+                                                <div class="text-primary fw-bold fs-5 mt-1">
+                                                    <t t-esc="'{:,.0f}'.format(tenant.monthly_price * 12 * 0.8)"/> đ
+                                                    <span class="text-muted fs-6 fw-normal">/năm</span>
+                                                </div>
+                                                <small class="text-muted">Tặng thêm 1 tháng bảo trì kỹ thuật &amp; hỗ trợ dữ liệu VIP.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="border rounded-3 p-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="billing_cycle" id="cycle_monthly" value="monthly"/>
+                                                <label class="form-check-label fw-bold text-dark" for="cycle_monthly">
+                                                    Gói Hàng Tháng (1 Tháng)
+                                                </label>
+                                                <div class="text-primary fw-bold fs-5 mt-1">
+                                                    <t t-esc="'{:,.0f}'.format(tenant.monthly_price)"/> đ
+                                                    <span class="text-muted fs-6 fw-normal">/tháng</span>
+                                                </div>
+                                                <small class="text-muted">Linh hoạt hủy hoặc đổi gói bất kỳ lúc nào.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="fw-bold text-primary mb-3">2. Chọn Phương Thức Thanh Toán</h4>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-4">
+                                        <div class="border rounded-3 p-3 text-center">
+                                            <input class="form-check-input mb-2" type="radio" name="payment_method" id="pay_vnpay" value="vnpay" checked="checked"/>
+                                            <label class="d-block fw-semibold" for="pay_vnpay">
+                                                <i class="ph-duotone ph-qr-code text-primary fs-3 d-block mb-1"/>
+                                                VNPay QR / Thẻ ATM
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="border rounded-3 p-3 text-center">
+                                            <input class="form-check-input mb-2" type="radio" name="payment_method" id="pay_card" value="card"/>
+                                            <label class="d-block fw-semibold" for="pay_card">
+                                                <i class="ph-duotone ph-credit-card text-success fs-3 d-block mb-1"/>
+                                                Thẻ Quốc Tế (Visa/Master)
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="border rounded-3 p-3 text-center">
+                                            <input class="form-check-input mb-2" type="radio" name="payment_method" id="pay_bank" value="bank_transfer"/>
+                                            <label class="d-block fw-semibold" for="pay_bank">
+                                                <i class="ph-duotone ph-bank text-secondary fs-3 d-block mb-1"/>
+                                                Chuyển Khoản Doanh Nghiệp
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center pt-3 border-top">
+                                    <button type="submit" class="btn btn-success btn-lg px-5 py-3 rounded-pill fw-bold shadow">
+                                        <i class="ph-duotone ph-check-fat me-2"/> XÁC NHẬN THANH TOÁN &amp; KÍCH HOẠT BẢN QUYỀN
+                                    </button>
+                                    <p class="text-muted small mt-2 mb-0">Hóa đơn điện tử VAT sẽ được tự động xuất và gửi tới email quản trị của quý khách.</p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </t>
+    </template>
+
+    <!-- ================= SaaS Checkout Success (/saas/checkout/success) ================= -->
+    <template id="saas_checkout_success_template" name="SaaS Checkout Success">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Bản Quyền Đã Kích Hoạt Thành Công! — Insilos SaaS</t>
+            <main id="wrap" class="oe_structure bg-100 py-5">
+                <div class="container text-center py-5" style="max-width: 720px;">
+                    <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-view">
+                        <div class="mb-3">
+                            <i class="ph-duotone ph-seal-check text-success" style="font-size: 80px;"/>
+                        </div>
+                        <h2 class="fw-bold text-dark mb-2">Thanh Toán &amp; Kích Hoạt Bản Quyền Thành Công!</h2>
+                        <p class="text-muted fs-5 mb-4">
+                            Tenant <strong><t t-esc="tenant.name if tenant else 'Doanh nghiệp'"/></strong> đã được chuyển sang trạng thái <strong>Bản quyền Chính thức (Paid Active)</strong>.
+                        </p>
+
+                        <div class="p-3 bg-light rounded-3 border mb-4 text-start">
+                            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                <span class="text-muted">Trạng thái:</span>
+                                <span class="badge bg-success text-white">Đang Hoạt Động (Paid Active)</span>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                <span class="text-muted">Thời hạn Bản quyền đến:</span>
+                                <span class="fw-bold text-primary"><t t-esc="tenant.paid_until.strftime('%d/%m/%Y') if tenant and tenant.paid_until else '1 năm tới'"/></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Subdomain làm việc:</span>
+                                <a t-attf-href="http://#{tenant.slug}.insilos.com:18069" target="_blank" class="fw-bold text-primary">
+                                    http://<t t-esc="tenant.slug if tenant else ''"/>.insilos.com:18069
+                                </a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a t-attf-href="http://#{tenant.slug if tenant else ''}.insilos.com:18069/insilos" target="_blank" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold">
+                                <i class="ph-duotone ph-sign-in me-2"/> VÀO WORKSPACE DOANH NGHIỆP
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </t>
+    </template>
+</odoo>

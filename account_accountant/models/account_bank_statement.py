@@ -83,6 +83,25 @@ class AccountBankStatementLine(models.Model):
 
     bank_statement_attachment_ids = fields.One2many('ir.attachment', compute='_compute_bank_statement_attachment_ids')
     attachment_ids = fields.One2many('ir.attachment', related="move_id.attachment_ids")
+    checked = fields.Boolean(
+        string="Checked",
+        compute="_compute_checked",
+        search="_search_checked",
+    )
+
+    @api.depends('move_id.review_state')
+    def _compute_checked(self):
+        for line in self:
+            line.checked = line.move_id.review_state not in ('todo', 'anomaly')
+
+    def _search_checked(self, operator, value):
+        if operator in ('=', '!='):
+            val = value if operator == '=' else not value
+            if val:
+                return [('move_id.review_state', 'not in', ('todo', 'anomaly'))]
+            else:
+                return [('move_id.review_state', 'in', ('todo', 'anomaly'))]
+        return []
 
     def action_save_close(self):
         return {'type': 'ir.actions.act_window_close'}
@@ -1780,7 +1799,7 @@ class AccountBankStatementLine(models.Model):
                 statement_lines._cron_try_auto_reconcile_statement_lines(batch_size=AUTO_STATEMENT_PROCESSING_BATCH_SIZE)
         return statement_lines
 
-    @api.deprecated("Use _format_statement_line_data instead")
+    @tools.func.deprecated("Use _format_statement_line_data instead")
     def _format_transaction_details(self):
         return self._format_statement_line_data()
 

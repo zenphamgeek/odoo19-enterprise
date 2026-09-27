@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="privilege_pubsub_bridge" model="res.groups.privilege">
+        <field name="name">Pub/Sub Event Gateway</field>
+        <field name="sequence">25</field>
+        <field name="category_id" ref="base.module_category_productivity"/>
+    </record>
+
+    <record id="group_pubsub_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="privilege_pubsub_bridge"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_pubsub_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="privilege_pubsub_bridge"/>
+        <field name="implied_ids" eval="[(4, ref('group_pubsub_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_pubsub_manager'))]"/>
+    </record>
+
+    <record id="rule_pubsub_channel_company" model="ir.rule">
+        <field name="name">Pub/Sub Channel: company</field>
+        <field name="model_id" ref="model_is_pubsub_channel"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_pubsub_automation_rule_company" model="ir.rule">
+        <field name="name">Pub/Sub Automation Rule: company</field>
+        <field name="model_id" ref="model_is_pubsub_automation_rule"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_pubsub_event_log_company" model="ir.rule">
+        <field name="name">Pub/Sub Event Log: company or shared</field>
+        <field name="model_id" ref="model_is_pubsub_event_log"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <record id="rule_pubsub_forward_log_company" model="ir.rule">
+        <field name="name">Pub/Sub Forward Log: event company</field>
+        <field name="model_id" ref="model_is_pubsub_forward_log"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('event_log_id.company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_pubsub_outbound_event_company" model="ir.rule">
+        <field name="name">Pub/Sub Outbound Event: company</field>
+        <field name="model_id" ref="model_is_pubsub_outbound_event"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_pubsub_outbound_rule_company" model="ir.rule">
+        <field name="name">Pub/Sub Outbound Rule: company</field>
+        <field name="model_id" ref="model_is_pubsub_outbound_rule"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

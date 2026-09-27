@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//setting[@id='expense_cards_stripe_issuing']" position="replace">
                     <setting string="Expense Card" company_dependent="True" id="expense_cards_stripe_issuing"
-                             help="Create prepaid virtual and physical cards for both one-time and recurring expenses, integrated into Odoo through Stripe Issuing.">
+                             help="Create prepaid virtual and physical cards for both one-time and recurring expenses, integrated into Insilos through Stripe Issuing.">
                         <field name="module_hr_expense_stripe" widget="upgrade_boolean"/>
                         <div class="mt8" invisible="module_hr_expense_stripe and stripe_company_currency_id">
                                 <i class="fa fa-warning ms-1 text-warning"/>

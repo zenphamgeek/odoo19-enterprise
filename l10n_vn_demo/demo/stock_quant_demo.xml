@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================================ -->
+        <!-- 1. SỐ LÔ & SỐ SERIAL (STOCK LOTS & SERIAL NUMBERS)           -->
+        <!-- ============================================================ -->
+
+        <!-- Lô Thép tấm cán nóng kết cấu SS400 (Dày 12mm) -->
+        <record id="lot_raw_steel_ss400" model="stock.lot">
+            <field name="name">LOT-HP-SS400-2026-01</field>
+            <field name="product_id" ref="product_vn_9"/>
+        </record>
+
+        <!-- Lô Thép hộp mạ kẽm nhúng nóng 100x100x4.0mm -->
+        <record id="lot_raw_steel_box" model="stock.lot">
+            <field name="name">LOT-HP-BOX100-2026-01</field>
+            <field name="product_id" ref="product_vn_10"/>
+        </record>
+
+        <!-- Lô Sơn sấy tĩnh điện Epoxy Jotun -->
+        <record id="lot_raw_paint_jotun" model="stock.lot">
+            <field name="name">LOT-JOTUN-EP-2026-01</field>
+            <field name="product_id" ref="product_vn_11"/>
+        </record>
+
+        <!-- Lô Cell Pin Lithium LiFePO4 EVE 3.2V - 100Ah -->
+        <record id="lot_raw_lfp_cell" model="stock.lot">
+            <field name="name">LOT-EVE-100AH-2026-01</field>
+            <field name="product_id" ref="product_vn_13"/>
+        </record>
+
+        <!-- Serial Bo mạch ARM Cortex-M4 (tracking='serial') -->
+        <record id="sn_raw_pcb_01" model="stock.lot">
+            <field name="name">SN-ARM-M4-2026-0001</field>
+            <field name="product_id" ref="product_vn_14"/>
+        </record>
+        <record id="sn_raw_pcb_02" model="stock.lot">
+            <field name="name">SN-ARM-M4-2026-0002</field>
+            <field name="product_id" ref="product_vn_14"/>
+        </record>
+        <record id="sn_raw_pcb_03" model="stock.lot">
+            <field name="name">SN-ARM-M4-2026-0003</field>
+            <field name="product_id" ref="product_vn_14"/>
+        </record>
+        <record id="sn_raw_pcb_04" model="stock.lot">
+            <field name="name">SN-ARM-M4-2026-0004</field>
+            <field name="product_id" ref="product_vn_14"/>
+        </record>
+        <record id="sn_raw_pcb_05" model="stock.lot">
+            <field name="name">SN-ARM-M4-2026-0005</field>
+            <field name="product_id" ref="product_vn_14"/>
+        </record>
+        <record id="sn_raw_pcb_06" model="stock.lot">
+            <field name="name">SN-ARM-M4-2026-0006</field>
+            <field name="product_id" ref="product_vn_14"/>
+        </record>
+        <record id="sn_raw_pcb_07" model="stock.lot">
+            <field name="name">SN-ARM-M4-2026-0007</field>
+            <field name="product_id" ref="product_vn_14"/>
+        </record>
+        <record id="sn_raw_pcb_08" model="stock.lot">
+            <field name="name">SN-ARM-M4-2026-0008</field>
+            <field name="product_id" ref="product_vn_14"/>
+        </record>
+
+        <!-- Serial Lốp Bridgestone R150 11R22.5 (tracking='serial') -->
+        <record id="sn_raw_tyre_01" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0001</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_02" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0002</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_03" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0003</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_04" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0004</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_05" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0005</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_06" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0006</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_07" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0007</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_08" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0008</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_09" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0009</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_10" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0010</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_11" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0011</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_12" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0012</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_13" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0013</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_14" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0014</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_15" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0015</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+        <record id="sn_raw_tyre_16" model="stock.lot">
+            <field name="name">SN-BS-R150-2026-0016</field>
+            <field name="product_id" ref="product_vn_16"/>
+        </record>
+
+        <!-- Lô Bán thành phẩm: Khung gầm Chassis -->
+        <record id="lot_sfg_chassis" model="stock.lot">
+            <field name="name">LOT-CHASSIS-25E-2026-01</field>
+            <field name="product_id" ref="product_vn_4"/>
+        </record>
+
+        <!-- Lô Bán thành phẩm: Cầu truyền động & Động cơ AC 48V -->
+        <record id="lot_sfg_drive" model="stock.lot">
+            <field name="name">LOT-DRIVE-AC48V-2026-01</field>
+            <field name="product_id" ref="product_vn_5"/>
+        </record>
+
+        <!-- Serial Bán thành phẩm: Pack Pin Lithium LiFePO4 (tracking='serial') -->
+        <record id="sn_sfg_battery_01" model="stock.lot">
+            <field name="name">SN-BATTPACK-400AH-2026-0001</field>
+            <field name="product_id" ref="product_vn_6"/>
+        </record>
+        <record id="sn_sfg_battery_02" model="stock.lot">
+            <field name="name">SN-BATTPACK-400AH-2026-0002</field>
+            <field name="product_id" ref="product_vn_6"/>
+        </record>
+        <record id="sn_sfg_battery_03" model="stock.lot">
+            <field name="name">SN-BATTPACK-400AH-2026-0003</field>
+            <field name="product_id" ref="product_vn_6"/>
+        </record>
+        <record id="sn_sfg_battery_04" model="stock.lot">
+            <field name="name">SN-BATTPACK-400AH-2026-0004</field>
+            <field name="product_id" ref="product_vn_6"/>
+        </record>
+
+        <!-- Lô Bán thành phẩm: Trụ nâng thủy lực 3 tầng -->
+        <record id="lot_sfg_mast" model="stock.lot">
+            <field name="name">LOT-MAST-45-2026-01</field>
+            <field name="product_id" ref="product_vn_7"/>
+        </record>
+
+        <!-- Lô Bán thành phẩm: Trục cân bằng & Chân chống rơ-moóc -->
+        <record id="lot_sfg_gear" model="stock.lot">
+            <field name="name">LOT-GEAR-28T-2026-01</field>
+            <field name="product_id" ref="product_vn_8"/>
+        </record>
+
+        <!-- Serial Thành phẩm: Xe kéo điện V-LIFT 2500E (tracking='serial') -->
+        <record id="sn_fg_vlift_01" model="stock.lot">
+            <field name="name">SN-VLIFT-2500E-2026-0001</field>
+            <field name="product_id" ref="product_vn_1"/>
+        </record>
+        <record id="sn_fg_vlift_02" model="stock.lot">
+            <field name="name">SN-VLIFT-2500E-2026-0002</field>
+            <field name="product_id" ref="product_vn_1"/>
+        </record>
+        <record id="sn_fg_vlift_03" model="stock.lot">
+            <field name="name">SN-VLIFT-2500E-2026-0003</field>
+            <field name="product_id" ref="product_vn_1"/>
+        </record>
+
+        <!-- Serial Thành phẩm: Sơ mi rơ moóc VT-SEMITRAIL 40 (tracking='serial') -->
+        <record id="sn_fg_trailer_01" model="stock.lot">
+            <field name="name">SN-TRAIL-40HC-2026-0001</field>
+            <field name="product_id" ref="product_vn_2"/>
+        </record>
+        <record id="sn_fg_trailer_02" model="stock.lot">
+            <field name="name">SN-TRAIL-40HC-2026-0002</field>
+            <field name="product_id" ref="product_vn_2"/>
+        </record>
+
+        <!-- Serial Thành phẩm: Trạm sạc nhanh DC 60kW V-CHARGE 60 (tracking='serial') -->
+        <record id="sn_fg_vcharge_01" model="stock.lot">
+            <field name="name">SN-VCHG-60KW-2026-0001</field>
+            <field name="product_id" ref="product_vn_3"/>
+        </record>
+        <record id="sn_fg_vcharge_02" model="stock.lot">
+            <field name="name">SN-VCHG-60KW-2026-0002</field>
+            <field name="product_id" ref="product_vn_3"/>
+        </record>
+
+
+        <!-- ============================================================ -->
+        <!-- 2. TỒN KHO BAN ĐẦU TẠI KHO WH/Stock (STOCK QUANTS)            -->
+        <!-- ============================================================ -->
+
+        <!-- Thép tấm SS400 (60 tấn) -->
+        <record id="quant_steel_ss400" model="stock.quant">
+            <field name="product_id" ref="product_vn_9"/>
+            <field name="inventory_quantity">60000.0</field>
+            <field name="lot_id" ref="lot_raw_steel_ss400"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Thép hộp mạ kẽm (1,500 mét) -->
+        <record id="quant_steel_box" model="stock.quant">
+            <field name="product_id" ref="product_vn_10"/>
+            <field name="inventory_quantity">1500.0</field>
+            <field name="lot_id" ref="lot_raw_steel_box"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Sơn tĩnh điện Jotun (1,000 kg) -->
+        <record id="quant_paint_jotun" model="stock.quant">
+            <field name="product_id" ref="product_vn_11"/>
+            <field name="inventory_quantity">1000.0</field>
+            <field name="lot_id" ref="lot_raw_paint_jotun"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Cáp điện CADIVI 3 pha (3,500 mét, không tracking) -->
+        <record id="quant_cadivi_cable" model="stock.quant">
+            <field name="product_id" ref="product_vn_12"/>
+            <field name="inventory_quantity">3500.0</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Cell pin LFP 100Ah (2,500 viên) -->
+        <record id="quant_lfp_cell" model="stock.quant">
+            <field name="product_id" ref="product_vn_13"/>
+            <field name="inventory_quantity">2500.0</field>
+            <field name="lot_id" ref="lot_raw_lfp_cell"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Bo mạch ARM Cortex-M4 (8 bo mạch) -->
+        <record id="quant_pcb_01" model="stock.quant">
+            <field name="product_id" ref="product_vn_14"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_pcb_01"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_pcb_02" model="stock.quant">
+            <field name="product_id" ref="product_vn_14"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_pcb_02"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_pcb_03" model="stock.quant">
+            <field name="product_id" ref="product_vn_14"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_pcb_03"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_pcb_04" model="stock.quant">
+            <field name="product_id" ref="product_vn_14"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_pcb_04"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_pcb_05" model="stock.quant">
+            <field name="product_id" ref="product_vn_14"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_pcb_05"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_pcb_06" model="stock.quant">
+            <field name="product_id" ref="product_vn_14"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_pcb_06"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_pcb_07" model="stock.quant">
+            <field name="product_id" ref="product_vn_14"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_pcb_07"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_pcb_08" model="stock.quant">
+            <field name="product_id" ref="product_vn_14"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_pcb_08"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Khóa gù Container Twist-Lock (200 cái, không tracking) -->
+        <record id="quant_twistlock" model="stock.quant">
+            <field name="product_id" ref="product_vn_15"/>
+            <field name="inventory_quantity">200.0</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Lốp xe tải Bridgestone R150 (16 chiếc) -->
+        <record id="quant_tyre_01" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_01"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_02" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_02"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_03" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_03"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_04" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_04"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_05" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_05"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_06" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_06"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_07" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_07"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_08" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_08"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_09" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_09"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_10" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_10"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_11" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_11"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_12" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_12"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_13" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_13"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_14" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_14"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_15" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_15"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_tyre_16" model="stock.quant">
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_raw_tyre_16"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Bán thành phẩm: Khung gầm Chassis (10 cái) -->
+        <record id="quant_sfg_chassis" model="stock.quant">
+            <field name="product_id" ref="product_vn_4"/>
+            <field name="inventory_quantity">10.0</field>
+            <field name="lot_id" ref="lot_sfg_chassis"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Bán thành phẩm: Cầu truyền động AC 48V (8 cái) -->
+        <record id="quant_sfg_drive" model="stock.quant">
+            <field name="product_id" ref="product_vn_5"/>
+            <field name="inventory_quantity">8.0</field>
+            <field name="lot_id" ref="lot_sfg_drive"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Bán thành phẩm: Pack Pin LiFePO4 (4 pack) -->
+        <record id="quant_sfg_battery_01" model="stock.quant">
+            <field name="product_id" ref="product_vn_6"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_sfg_battery_01"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_sfg_battery_02" model="stock.quant">
+            <field name="product_id" ref="product_vn_6"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_sfg_battery_02"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_sfg_battery_03" model="stock.quant">
+            <field name="product_id" ref="product_vn_6"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_sfg_battery_03"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_sfg_battery_04" model="stock.quant">
+            <field name="product_id" ref="product_vn_6"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_sfg_battery_04"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Bán thành phẩm: Trụ nâng thủy lực 3 tầng (6 cụm) -->
+        <record id="quant_sfg_mast" model="stock.quant">
+            <field name="product_id" ref="product_vn_7"/>
+            <field name="inventory_quantity">6.0</field>
+            <field name="lot_id" ref="lot_sfg_mast"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Bán thành phẩm: Trục cân bằng & Chân chống rơ moóc (8 cụm) -->
+        <record id="quant_sfg_gear" model="stock.quant">
+            <field name="product_id" ref="product_vn_8"/>
+            <field name="inventory_quantity">8.0</field>
+            <field name="lot_id" ref="lot_sfg_gear"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Thành phẩm: Xe kéo điện V-LIFT 2500E (3 chiếc) -->
+        <record id="quant_fg_vlift_01" model="stock.quant">
+            <field name="product_id" ref="product_vn_1"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_fg_vlift_01"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_fg_vlift_02" model="stock.quant">
+            <field name="product_id" ref="product_vn_1"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_fg_vlift_02"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_fg_vlift_03" model="stock.quant">
+            <field name="product_id" ref="product_vn_1"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_fg_vlift_03"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Thành phẩm: Sơ mi rơ moóc VT-SEMITRAIL 40 (2 chiếc) -->
+        <record id="quant_fg_trailer_01" model="stock.quant">
+            <field name="product_id" ref="product_vn_2"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_fg_trailer_01"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_fg_trailer_02" model="stock.quant">
+            <field name="product_id" ref="product_vn_2"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_fg_trailer_02"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+        <!-- Thành phẩm: Trạm sạc nhanh DC 60kW V-CHARGE 60 (2 trạm) -->
+        <record id="quant_fg_vcharge_01" model="stock.quant">
+            <field name="product_id" ref="product_vn_3"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_fg_vcharge_01"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+        <record id="quant_fg_vcharge_02" model="stock.quant">
+            <field name="product_id" ref="product_vn_3"/>
+            <field name="inventory_quantity">1.0</field>
+            <field name="lot_id" ref="sn_fg_vcharge_02"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+        </record>
+
+
+        <!-- ============================================================ -->
+        <!-- 3. ÁP DỤNG KIỂM KÊ TỒN KHO (APPLY INITIAL INVENTORY)          -->
+        <!-- ============================================================ -->
+
+        <function model="stock.quant" name="action_apply_inventory">
+            <function eval="[[('id', 'in', (
+                ref('quant_steel_ss400'),
+                ref('quant_steel_box'),
+                ref('quant_paint_jotun'),
+                ref('quant_cadivi_cable'),
+                ref('quant_lfp_cell'),
+                ref('quant_pcb_01'),
+                ref('quant_pcb_02'),
+                ref('quant_pcb_03'),
+                ref('quant_pcb_04'),
+                ref('quant_pcb_05'),
+                ref('quant_pcb_06'),
+                ref('quant_pcb_07'),
+                ref('quant_pcb_08'),
+                ref('quant_twistlock'),
+                ref('quant_tyre_01'),
+                ref('quant_tyre_02'),
+                ref('quant_tyre_03'),
+                ref('quant_tyre_04'),
+                ref('quant_tyre_05'),
+                ref('quant_tyre_06'),
+                ref('quant_tyre_07'),
+                ref('quant_tyre_08'),
+                ref('quant_tyre_09'),
+                ref('quant_tyre_10'),
+                ref('quant_tyre_11'),
+                ref('quant_tyre_12'),
+                ref('quant_tyre_13'),
+                ref('quant_tyre_14'),
+                ref('quant_tyre_15'),
+                ref('quant_tyre_16'),
+                ref('quant_sfg_chassis'),
+                ref('quant_sfg_drive'),
+                ref('quant_sfg_battery_01'),
+                ref('quant_sfg_battery_02'),
+                ref('quant_sfg_battery_03'),
+                ref('quant_sfg_battery_04'),
+                ref('quant_sfg_mast'),
+                ref('quant_sfg_gear'),
+                ref('quant_fg_vlift_01'),
+                ref('quant_fg_vlift_02'),
+                ref('quant_fg_vlift_03'),
+                ref('quant_fg_trailer_01'),
+                ref('quant_fg_trailer_02'),
+                ref('quant_fg_vcharge_01'),
+                ref('quant_fg_vcharge_02'),
+            ))]]" model="stock.quant" name="search"/>
+        </function>
+
+    </data>
+</odoo>

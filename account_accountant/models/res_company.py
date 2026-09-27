@@ -8,7 +8,7 @@ from odoo.tools import date_utils
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    invoicing_switch_threshold = fields.Date(string="Invoicing Switch Threshold", help="Every payment and invoice before this date will receive the 'From Invoicing' status, hiding all the accounting entries related to it. Use this option after installing Accounting if you were using only Invoicing before, before importing all your actual accounting data in to Odoo.")
+    invoicing_switch_threshold = fields.Date(string="Invoicing Switch Threshold", help="Every payment and invoice before this date will receive the 'From Invoicing' status, hiding all the accounting entries related to it. Use this option after installing Accounting if you were using only Invoicing before, before importing all your actual accounting data in to Insilos.")
     predict_bill_product = fields.Boolean(string="Predict Bill Product")
 
     sign_invoice = fields.Boolean(string='Display signing field on invoices')

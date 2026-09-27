@@ -14,28 +14,35 @@ export class BankRecReconcileDialogListController extends ListController {
         const resIds = await this.model.root.getResIds(true);
         if (!resIds.length) {
             this.props.onSelectionChanged(resIds, []);
+            return;
         }
 
         let selectedLines;
         // When being in the list view with more element than the limit and doing a select all, the user has the
         // possibility to select more element than the limit. In this case the isDomainSelected is True
         if (this.isDomainSelected) {
-            const { resModel, context } = this.model.root._config;
-            selectedLines = await this.orm.read(
+            const resModel = this.model.root.resModel;
+            const context = this.model.root.context;
+            const lines = await this.orm.read(
                 resModel,
                 resIds,
                 ["amount_residual", "amount_residual_currency", "currency_id"],
                 { context }
             );
+            selectedLines = lines.map((line) => ({
+                amount_residual: line.amount_residual,
+                amount_residual_currency: line.amount_residual_currency,
+                currency_id: Array.isArray(line.currency_id) ? line.currency_id[0] : (line.currency_id?.id ?? line.currency_id),
+            }));
         } else {
             selectedLines = Object.values(this.model.root.records)
-                .filter((record) => resIds.includes(record._config.resId))
+                .filter((record) => resIds.includes(record.resId ?? record._config?.resId))
                 .map((record) => {
                     const data = record.data;
                     return {
                         amount_residual: data.amount_residual,
                         amount_residual_currency: data.amount_residual_currency,
-                        currency_id: data.currency_id.id,
+                        currency_id: data.currency_id?.id ?? data.currency_id,
                     };
                 });
         }

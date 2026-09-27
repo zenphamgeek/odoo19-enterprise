@@ -38,10 +38,7 @@ test("'backbutton' event should close attachment viewer", async () => {
         res_id: channelId,
     });
     await start();
-    await openDiscuss();
-    await contains("button.active", { text: "Notifications" });
-    await click("button", { text: "Channels" });
-    await click(".o-mail-NotificationItem", { text: "channel" });
+    await openDiscuss(channelId);
     await click(".o-mail-AttachmentImage");
     await contains(".o-FileViewer");
     const backButtonEvent = new Event("backbutton");

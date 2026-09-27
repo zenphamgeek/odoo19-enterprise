@@ -212,7 +212,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
                 api_response = client.create_transaction(document_data, include='Lines')
                 error = self._handle_response(api_response, _(
-                    'Odoo could not fetch the taxes related to %(document)s.\n'
+                    'Insilos could not fetch the taxes related to %(document)s.\n'
                     'Please check the status of `%(technical)s` in the AvaTax portal.',
                     document=record.display_name,
                     technical=record.avatax_unique_code,
@@ -262,7 +262,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                         continue
 
                 error = self._handle_response(query_result, _(
-                    'Odoo could not change the state of the transaction related to %(document)s in'
+                    'Insilos could not change the state of the transaction related to %(document)s in'
                     ' AvaTax\nPlease check the status of `%(technical)s` in the AvaTax portal.',
                     document=record.display_name,
                     technical=record.avatax_unique_code,

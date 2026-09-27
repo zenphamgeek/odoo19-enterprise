@@ -130,7 +130,7 @@ export class ThankYouDialog extends Component {
                 ignored: true,
                 click: () => {
                     window.open(
-                        "https://www.odoo.com/trial?selected_app=sign&utm_source=db&utm_medium=sign",
+                        "https://insilos.com/trial?selected_app=sign&utm_source=db&utm_medium=sign",
                         "_blank"
                     );
                 },
@@ -140,7 +140,7 @@ export class ThankYouDialog extends Component {
 
     onClickClose() {
         if (this.suggestSignUp) {
-            window.open(`https://odoo.com/app/sign`, "_self");
+            window.open(`https://insilos.com/app/sign`, "_self");
             return;
         }
         if (session.is_frontend) {

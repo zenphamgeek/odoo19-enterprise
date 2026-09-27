@@ -7,7 +7,8 @@
                     <div class="d-flex">
                         <label for="inputName" class="col-form-label col-md-2">Name</label>
                         <input class="form-control" id="inputName" type="text"
-                            t-model="state.name"
+                            t-att-value="state.name"
+                            t-on-input="ev => state.name = ev.target.value"
                             t-att-class="{ 'is-invalid': name === '' }"
                             t-ref="input"/>
                     </div>

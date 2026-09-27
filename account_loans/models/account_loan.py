@@ -53,7 +53,7 @@ class AccountLoan(models.Model):
     duration = fields.Integer('Duration')
     skip_until_date = fields.Date(
         string='Skip until',
-        help='Upon confirmation of the loan, Odoo will ignore the loan lines that are up to this date (included) and not create entries for them. '
+        help='Upon confirmation of the loan, Insilos will ignore the loan lines that are up to this date (included) and not create entries for them. '
              'This is useful if you have already manually created entries prior to the creation of this loan.'
     )
 

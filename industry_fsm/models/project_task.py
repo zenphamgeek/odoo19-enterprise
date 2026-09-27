@@ -449,10 +449,10 @@ class ProjectTask(models.Model):
             'url': self.get_portal_url(query_string=f'&source={source}')
         }
 
-    def _message_post_after_hook(self, message, msg_vals):
+    def _message_post_after_hook(self, message):
         if self.env.context.get('fsm_mark_as_sent') and not self.fsm_is_sent:
             self.fsm_is_sent = True
-        return super()._message_post_after_hook(message, msg_vals)
+        return super()._message_post_after_hook(message)
 
     # ---------------------------------------------------------
     # Business Methods

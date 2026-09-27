@@ -19,7 +19,7 @@ class L10n_Be_CodaboxChangePasswordWizard(models.TransientModel):
     )
     current_fidu_password = fields.Char(
         string='Current password',
-        help='This is the password you have received from Odoo the first time you connected to CodaBox.',
+        help='This is the password you have received from Insilos the first time you connected to CodaBox.',
     )
     new_fidu_password = fields.Char(
         string='New Password',

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cron_kg_outbox" model="ir.cron">
+        <field name="name">Knowledge Graph: Process outbox</field>
+        <field name="model_id" ref="model_kg_outbox"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_process()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+    </record>
+    <record id="cron_kg_reconcile" model="ir.cron">
+        <field name="name">Knowledge Graph: Reconcile projections</field>
+        <field name="model_id" ref="model_kg_node"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_reconcile()</field>
+        <field name="interval_number">15</field>
+        <field name="interval_type">minutes</field>
+    </record>
+</odoo>

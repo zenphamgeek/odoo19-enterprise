@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "authority_scope": "solo_repository_owner_synthetic_development_qa_baseline",
+  "independent_compliance_certification": false,
+  "formal_golden_acceptance": false,
+  "non_production": true,
+  "synthetic_development_acceptance": true,
+  "human_approval_required_before_formal_release": true,
+  "approval": {
+    "status": "approved",
+    "signed_at": "2026-08-08T00:00:00+07:00",
+    "signature_method": "repository_metadata_identity_assertion_no_secret"
+  },
+  "source": {
+    "workbook_path": "docs/industries/Insilos_IDP_Logistics_UAT_v1.4.xlsx",
+    "workbook_sha256": "540182067f6e20e35c7794cb23f9cb5a2c1c00f31dfd3d30b44ba2b17cfae097",
+    "development_result_path": "insilos/apps/insilos_logistics_idp/docs/tests/development_uat_result.json",
+    "development_result_sha256": "bdc86e145eb7a2644a838ff345785556c08adeefedca8081dda00554b7bbe439",
+    "synthetic_corpus_path": "insilos/apps/insilos_logistics_idp/tests/golden/sanitized_cases.json",
+    "synthetic_corpus_sha256": "46e3549fc1f2842ae840e3d7651c085fb50a1959fdfec29e143da021cf27edb1",
+    "corpus_manifest_sha256": "3f2de75cc8957d435f54cf57c9d8d99d1dd47ce617136a145fad4176ad004815"
+  },
+  "repository": {
+    "provenance_commit": "bd6e5ad0b",
+    "development_worktree_dirty": true,
+    "immutable_commit_sha_claimed": false,
+    "promotion_ready": false
+  },
+  "current_evidence": {
+    "database_schema_version": 9,
+    "policy_version": "2026.3",
+    "provider_acceptance": "15/15 parseable documents",
+    "canonical_exact_charge_run_id": 9185,
+    "wallet_invariants": "pass",
+    "logistics": "123/123",
+    "iap": "40/40",
+    "node": "1/1",
+    "silo_dashboard": "pass",
+    "hardening": "29/29",
+    "concurrency": "2/2",
+    "nfr_p95_seconds": 0.248,
+    "external_customer_acceptance": "NOT_RUN/BLOCKED_EXTERNAL",
+    "legal_compliance_authority_dataset": "NOT_RUN/BLOCKED_EXTERNAL",
+    "production_security_and_isolation": "NOT_RUN/BLOCKED_EXTERNAL",
+    "dr_rehearsal": "NOT_RUN/BLOCKED_EXTERNAL",
+    "production_release": "NOT_RUN/BLOCKED_EXTERNAL"
+  },
+  "counts": {
+    "detailed": {
+      "pass": 198,
+      "fail": 0,
+      "mapped_only": 0,
+      "not_runnable": 0,
+      "skipped": 0
+    },
+    "golden": {
+      "pass": 46,
+      "partial": 2,
+      "fail": 0,
+      "mapped_only": 0,
+      "not_runnable": 0,
+      "skipped": 0
+    }
+  },
+  "acceptance_metrics": {
+    "thresholds_unchanged": true,
+    "total": 15,
+    "executable_corpus_evidence_exists": true,
+    "formal_document_level_status": "synthetic-development-pass"
+  },
+  "limitations": [
+    "Baseline chỉ áp dụng corpus synthetic deterministic và local processor.",
+    "Không đo accuracy OCR/provider bên thứ ba hoặc dữ liệu production đại diện.",
+    "Không phải formal Golden acceptance, independent compliance certification hoặc production approval."
+  ]
+}

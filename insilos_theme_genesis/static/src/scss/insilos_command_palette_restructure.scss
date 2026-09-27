@@ -1,0 +1,90 @@
+/* ==========================================================================
+   Insilos Command Palette (Raycast / Spotlight Style)
+   Frosted glass backdrop, elevated modal, sleek keyboard pills & active item
+   ========================================================================== */
+
+/* Modal Backdrop */
+.modal:has(.o_command_palette) {
+  backdrop-filter: blur(12px) !important;
+  background-color: rgba(15, 23, 42, 0.45) !important;
+}
+
+.o_command_palette {
+  background: var(--insilos-bg-surface, #ffffff) !important;
+  border: 1px solid var(--insilos-border-subtle) !important;
+  border-radius: var(--insilos-radius-xl, 18px) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2) !important;
+  overflow: hidden;
+
+  /* Search Input Field */
+  .o_command_palette_search {
+    border-bottom: 1px solid var(--insilos-border-subtle) !important;
+    padding: 14px 20px !important;
+
+    input {
+      font-size: 15px !important;
+      font-weight: 500 !important;
+      color: var(--insilos-text-primary) !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+
+      &::placeholder {
+        color: var(--insilos-text-tertiary);
+      }
+    }
+  }
+
+  /* Command List Container */
+  .o_command_palette_listbox {
+    padding: 8px !important;
+
+    .o_command {
+      border-radius: var(--insilos-radius-md, 10px) !important;
+      padding: 8px 12px !important;
+      margin: 2px 0 !important;
+      transition: var(--insilos-transition-fast);
+
+      &:hover {
+        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+      }
+
+      &.focused {
+        background-color: var(--insilos-primary-subtle, rgba(37, 99, 235, 0.08)) !important;
+        color: var(--insilos-primary) !important;
+        font-weight: 550;
+
+        .o_command_name {
+          color: var(--insilos-primary) !important;
+        }
+      }
+
+      .o_command_name {
+        font-size: 13.5px;
+        color: var(--insilos-text-primary);
+      }
+
+      /* Keyboard Shortcut Badges */
+      kbd {
+        background: var(--insilos-bg-hover, #f1f5f9) !important;
+        color: var(--insilos-text-secondary) !important;
+        border: 1px solid var(--insilos-border-medium) !important;
+        border-radius: var(--insilos-radius-sm, 6px) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        padding: 3px 7px !important;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06) !important;
+        font-family: inherit !important;
+      }
+    }
+  }
+
+  /* Command Palette Footer / Tips */
+  .o_command_palette_footer {
+    border-top: 1px solid var(--insilos-border-subtle) !important;
+    background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+    padding: 10px 18px !important;
+    font-size: 12px !important;
+    color: var(--insilos-text-muted) !important;
+  }
+}

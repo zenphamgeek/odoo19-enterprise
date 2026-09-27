@@ -6,7 +6,7 @@
     'category': 'Human Resources/Payroll',
     'depends': [
         'hr_payroll',
-        'hr_work_entry_holidays',
+        'hr_holidays',
         'hr_payroll_holidays',
         'base_address_extended',
         'l10n_us',  # for l10n_us_bank_account_type

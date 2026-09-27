@@ -14,7 +14,7 @@ Manage Time Off in Payslips
 
 This application allows you to integrate time off in payslips.
     """,
-    'depends': ['hr_work_entry_holidays'],
+    'depends': ['hr_holidays'],
     'data': [
         'views/hr_work_entry_views.xml',
     ],

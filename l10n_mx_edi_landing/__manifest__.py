@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Odoo Mexico Localization for Stock/Landing',
+    'name': 'Mexico Localization for Stock/Landing',
     'countries': ['mx'],
     'summary': 'Generate Electronic Invoice with custom numbers',
     'version': '1.0',

@@ -9,7 +9,8 @@
                 <div class="col-sm-8 my-auto">
                     <input type="text" class="form-control bg-white"
                         placeholder="e.g. Meetings"
-                        t-model="state.name"
+                        t-att-value="state.name"
+                        t-on-input="ev => state.name = ev.target.value"
                         t-ref="autofocus"
                         />
                 </div>

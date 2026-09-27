@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_databases_tenant_projection_list" model="ir.ui.view">
+        <field name="name">databases.tenant.projection.list</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="databases.view_databases_list"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="tenant_id" optional="show"/>
+                <field name="fleet_classification" optional="show"/>
+                <field name="classification_owner_id" optional="hide"/>
+                <field name="classification_reviewer_id" optional="hide"/>
+                <field name="classification_evidence" optional="hide"/>
+                <field name="classified_at" optional="hide"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_databases_tenant_projection_form" model="ir.ui.view">
+        <field name="name">databases.tenant.projection.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="databases.edit_project"/>
+        <field name="arch" type="xml">
+            <field name="database_hosting" position="before">
+                <field name="tenant_id"/>
+                <field name="fleet_classification"/>
+                <field name="classification_owner_id"/>
+                <field name="classification_reviewer_id"/>
+                <field name="classification_evidence"/>
+                <field name="classified_at" readonly="1"/>
+                <field name="tenant_db_name" readonly="1" invisible="not tenant_id"/>
+                <field name="tenant_domain" readonly="1" invisible="not tenant_id"/>
+                <field name="tenant_observed_state" readonly="1" invisible="not tenant_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

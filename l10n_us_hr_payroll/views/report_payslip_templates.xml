@@ -40,11 +40,11 @@
                             <tr>
                                 <td><span t-out="line['type']"/></td>
                                 <td class="text-end"><span t-out="round(line['used'], 2)"
-                                    style="color:#875A7B;" t-if="line['used'] &gt; 0"/></td>
+                                    style="color:#004455;" t-if="line['used'] &gt; 0"/></td>
                                 <td class="text-end"><span t-out="round(line['accrual'], 2)"
                                     style="color:#00A09D;" t-if="line['accrual'] &gt; 0"/></td>
                                 <td class="text-end"><span t-out="round(line['balance'], 2)"
-                                    t-att-style="'color:#875A7B;' if line['balance'] &lt;= 0 else ''"/></td>
+                                    t-att-style="'color:#004455;' if line['balance'] &lt;= 0 else ''"/></td>
                             </tr>
                         </span>
                     </t>

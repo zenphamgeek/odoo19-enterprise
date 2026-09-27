@@ -113,7 +113,10 @@ class SaleCommissionAchievementReport(models.Model):
         return date_from, date_to
 
     @property
-    def _table_query(self):
+    def _table_sql(self) -> SQL:
+        return SQL("(%s)", SQL(self._query()))
+
+    def _query(self):
         users = self.env.context.get('commission_user_ids', [])
         if users:
             users = self.env['res.users'].browse(users).exists()

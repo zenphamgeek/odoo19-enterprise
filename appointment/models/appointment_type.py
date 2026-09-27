@@ -77,7 +77,7 @@ class AppointmentType(models.Model):
     location = fields.Char(
         'Location formatted', compute='_compute_location', compute_sudo=True,
         help='Location formatted for one line uses')
-    event_videocall_source = fields.Selection([('discuss', 'Odoo Discuss')], string="Video Link",
+    event_videocall_source = fields.Selection([('discuss', 'Insilos Discuss')], string="Video Link",
         help="Defines the type of video call link that will be used for the generated events. Keep it empty to prevent generating meeting url.")
     allow_guests = fields.Boolean(string='Allow invitations', help="Let attendees invite guests when registering a meeting.")
     manual_confirmation_percentage = fields.Float("Capacity Percentage", default=1.0,
@@ -174,7 +174,7 @@ class AppointmentType(models.Model):
         string="Book", default="users", required=True)
     slot_ids = fields.One2many('appointment.slot', 'appointment_type_id', 'Availabilities', copy=True)
     slot_creation_interval = fields.Float('Create slot every', default=1.0,
-        help="Starting from the beginning of the time slot, Odoo will create a new slot at regular intervals based on the time specified here.")
+        help="Starting from the beginning of the time slot, Insilos will create a new slot at regular intervals based on the time specified here.")
 
     # Staff Users Management
     staff_user_ids = fields.Many2many(

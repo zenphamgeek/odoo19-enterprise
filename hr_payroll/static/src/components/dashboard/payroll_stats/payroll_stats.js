@@ -87,7 +87,7 @@ export class PayrollDashboardStats extends Component {
         const labels = data.map(function (pt) {
             return pt.x;
         });
-        const borderColor = this.props.is_sample ? '#dddddd' : '#875a7b';
+        const borderColor = this.props.is_sample ? '#dddddd' : '#004455';
         const backgroundColor = this.props.is_sample ? '#ebebeb' : '#dcd0d9';
         return {
             type: 'line',

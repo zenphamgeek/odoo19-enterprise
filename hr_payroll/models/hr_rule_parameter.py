@@ -35,16 +35,25 @@ class HrRuleParameterValue(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        self.env.registry.clear_cache()
+        if hasattr(self.env, 'transaction') and hasattr(self.env.transaction, 'invalidate_ormcache'):
+            self.env.transaction.invalidate_ormcache()
+        else:
+            self.env.registry.clear_cache()
         return super().create(vals_list)
 
     def write(self, vals):
         if 'date_from' in vals or 'parameter_value' in vals:
-            self.env.registry.clear_cache()
+            if hasattr(self.env, 'transaction') and hasattr(self.env.transaction, 'invalidate_ormcache'):
+                self.env.transaction.invalidate_ormcache()
+            else:
+                self.env.registry.clear_cache()
         return super().write(vals)
 
     def unlink(self):
-        self.env.registry.clear_cache()
+        if hasattr(self.env, 'transaction') and hasattr(self.env.transaction, 'invalidate_ormcache'):
+            self.env.transaction.invalidate_ormcache()
+        else:
+            self.env.registry.clear_cache()
         return super().unlink()
 
 

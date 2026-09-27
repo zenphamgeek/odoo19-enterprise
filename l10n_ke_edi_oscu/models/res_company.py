@@ -72,8 +72,8 @@ class ResCompany(models.Model):
         string="User should go with the number to KRA first. "
     )
     l10n_ke_oscu_user_agreement = fields.Boolean(
-        string="Odoo OSCU user agreement",
-        help="Agreement is required to use Odoo as an OSCU service provider.",
+        string="Insilos OSCU user agreement",
+        help="Agreement is required to use Insilos as an OSCU service provider.",
         tracking=True,
     )
     l10n_ke_oscu_is_active = fields.Boolean(
@@ -178,7 +178,7 @@ class ResCompany(models.Model):
         if not self.l10n_ke_oscu_user_help:
             raise UserError(_('Please confirm that you did the necessary steps in the eTIMS portal first. '))
         if not self.l10n_ke_oscu_user_agreement:
-            raise UserError(_("Please agree to the terms of use of Odoo as an OSCU service provider first. "))
+            raise UserError(_("Please agree to the terms of use of Insilos as an OSCU service provider first. "))
         error_fields = []
         on_company = False
         if not self.vat:
@@ -201,8 +201,9 @@ class ResCompany(models.Model):
                     _("Go to the company"),
                 )
 
-        if not self.l10n_ke_oscu_serial_number.upper().startswith('ODOO/' + self.vat.upper() + '/'):
-            raise UserError(_('Your serial number should contain the PIN number and start: ODOO/%s/', self.vat))
+        valid_prefixes = ('INSILOS/' + self.vat.upper() + '/', 'ODOO/' + self.vat.upper() + '/')
+        if not self.l10n_ke_oscu_serial_number.upper().startswith(valid_prefixes):
+            raise UserError(_('Your serial number should contain the PIN number and start: INSILOS/%s/', self.vat))
 
     def action_l10n_ke_oscu_initialize(self):
         """ Initializing the device is necessary in order to receive the cmc key

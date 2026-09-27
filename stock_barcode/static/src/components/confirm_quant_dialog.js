@@ -1,5 +1,5 @@
 import { Dialog } from "@web/core/dialog/dialog";
-import { Component, useState } from "@odoo/owl";
+import { Component, proxy } from "@odoo/owl";
 
 export class ConfirmQuantDialog extends Component {
     static components = { Dialog };
@@ -11,7 +11,7 @@ export class ConfirmQuantDialog extends Component {
     };
 
     setup() {
-        this.inventoryReason = useState({ value: "Physical Inventory" });
+        this.inventoryReason = proxy({ value: "Physical Inventory" });
     }
 
     onConfirm() {

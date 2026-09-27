@@ -49,7 +49,7 @@ class MrpProductionSchedule(models.Model):
         help="This is the minimum free stock you want to keep for that product at all times.")
     min_to_replenish_qty = fields.Float(
         'Minimum to Replenish',
-        help="Unless the demand is 0, Odoo will always at least replenish this quantity.")
+        help="Unless the demand is 0, Insilos will always at least replenish this quantity.")
     replenish_trigger = fields.Selection([
         ('manual', "Manual"),
         ('automated', "Automatic"),

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="insilos_website.IndustryExplorer">
+        <div class="ins-industry-explorer">
+            <div class="ins-industry-tabs" role="tablist" aria-label="Ngành ưu tiên của Insilos">
+                <t t-foreach="industries" t-as="industry" t-key="industry.key">
+                    <button type="button"
+                            role="tab"
+                            t-att-aria-selected="state.active === industry.key ? 'true' : 'false'"
+                            t-att-class="'ins-industry-tab ' + (state.active === industry.key ? 'is-active' : '')"
+                            t-on-click="() => this.selectIndustry(industry.key)">
+                        <span t-esc="industry.short"/>
+                    </button>
+                </t>
+            </div>
+
+            <article class="ins-industry-stage" t-att-data-industry="activeIndustry.key">
+                <div class="ins-industry-stage__media">
+                    <img t-att-src="activeIndustry.image"
+                         t-att-alt="activeIndustry.alt"
+                         width="960" height="640" loading="lazy"/>
+                    <div class="ins-industry-stage__shade"></div>
+                    <div class="ins-industry-stage__signal">
+                        <span class="ins-live-dot"></span>
+                        <small t-esc="activeIndustry.label"/>
+                        <strong t-esc="activeIndustry.metric"/>
+                    </div>
+                </div>
+                <div class="ins-industry-stage__content">
+                    <div class="ins-eyebrow ins-eyebrow--dark" t-esc="activeIndustry.name"/>
+                    <h3 t-esc="activeIndustry.headline"/>
+                    <p t-esc="activeIndustry.description"/>
+                    <ul class="ins-inline-tags">
+                        <t t-foreach="activeIndustry.applications" t-as="application" t-key="application">
+                            <li t-esc="application"/>
+                        </t>
+                    </ul>
+                    <a class="ins-text-link ins-text-link--dark" t-att-href="activeIndustry.url">
+                        Xem giải pháp theo ngành <span>↗</span>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </t>
+</templates>

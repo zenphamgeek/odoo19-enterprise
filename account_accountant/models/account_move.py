@@ -566,8 +566,21 @@ class AccountMoveLine(models.Model):
 
     full_amount_switch_html = fields.Html(compute='_compute_full_amount_switch_html')
 
-    def _order_to_sql(self, order, query, alias=None, reverse=False):
-        sql_order = super()._order_to_sql(order, query, alias, reverse)
+    def _order_to_sql(self, *args, **kwargs):
+        from odoo.orm.query import TableSQL
+        if args and isinstance(args[0], TableSQL):
+            table = args[0]
+            order = args[1] if len(args) > 1 else kwargs.get('order')
+            reverse = args[2] if len(args) > 2 else kwargs.get('reverse', False)
+            sql_order = super()._order_to_sql(table, order, reverse=reverse)
+            alias = table._alias
+            query = table._query
+        else:
+            order = args[0] if args else kwargs.get('order')
+            query = args[1] if len(args) > 1 else kwargs.get('query')
+            alias = args[2] if len(args) > 2 else kwargs.get('alias')
+            reverse = args[3] if len(args) > 3 else kwargs.get('reverse', False)
+            sql_order = super()._order_to_sql(order, query, alias=alias, reverse=reverse)
         preferred_aml_residual_value = self.env.context.get('preferred_aml_value')
         preferred_aml_currency_id = self.env.context.get('preferred_aml_currency_id')
         if preferred_aml_residual_value and preferred_aml_currency_id and order == self._order:
@@ -1030,44 +1043,77 @@ class AccountMoveLine(models.Model):
             if predicted_deductible_amount:
                 self.deductible_amount = predicted_deductible_amount
 
-    def _read_group_select(self, aggregate_spec, query):
-        # Enable to use HAVING clause that sum rounded values depending on the
-        # currency precision settings. Limitation: we only handle a having
-        # clause of one element with that specific method :sum_rounded.
+    def _read_group_select(self, *args, **kwargs):
+        # In Odoo 20: (table, aggregate_spec)
+        # In Odoo 19: (aggregate_spec, query)
+        if len(args) >= 2 and isinstance(args[0], str):
+            aggregate_spec, query = args[0], args[1]
+            table = getattr(query, 'table', None)
+        elif len(args) >= 2:
+            table, aggregate_spec = args[0], args[1]
+            query = getattr(table, '_query', None)
+        elif len(args) == 1 and isinstance(args[0], str):
+            aggregate_spec = args[0]
+            query = kwargs.get('query')
+            table = getattr(query, 'table', None)
+        else:
+            table = args[0] if args else kwargs.get('table')
+            aggregate_spec = kwargs.get('aggregate_spec')
+            query = getattr(table, '_query', None) or kwargs.get('query')
+
         fname, __, func = models.parse_read_group_spec(aggregate_spec)
         if func != 'sum_rounded':
-            return super()._read_group_select(aggregate_spec, query)
-        currency_alias = query.make_alias(self._table, 'currency_id')
-        query.add_join('LEFT JOIN', currency_alias, 'res_currency', SQL(
-            "%s = %s",
-            self._field_to_sql(self._table, 'currency_id', query),
-            SQL.identifier(currency_alias, 'id'),
-        ))
+            return super()._read_group_select(*args, **kwargs)
 
-        return SQL(
-            'SUM(ROUND(%s, %s))',
-            self._field_to_sql(self._table, fname, query),
-            self.env['res.currency']._field_to_sql(currency_alias, 'decimal_places', query),
-        )
+        if query is not None:
+            currency_alias = query.make_alias(self._table, 'currency_id')
+            query.add_join('LEFT JOIN', currency_alias, 'res_currency', SQL(
+                "%s = %s",
+                table['currency_id'] if table is not None else self._field_to_sql(self._table, 'currency_id', query),
+                SQL.identifier(currency_alias, 'id'),
+            ))
 
-    def _read_group_groupby(self, alias, groupby_spec, query):
-        # enable grouping by :abs_rounded on fields, which is useful when trying
-        # to match positive and negative amounts
-        if ':' in groupby_spec:
+            return SQL(
+                'SUM(ROUND(%s, %s))',
+                table[fname] if table is not None else self._field_to_sql(self._table, fname, query),
+                self.env['res.currency']._field_to_sql(currency_alias, 'decimal_places', query),
+            )
+        return super()._read_group_select(*args, **kwargs)
+
+    def _read_group_groupby(self, *args, **kwargs):
+        # In Odoo 20: (table, groupby_spec)
+        # In Odoo 19: (alias, groupby_spec, query)
+        if len(args) >= 3:
+            alias, groupby_spec, query = args[0], args[1], args[2]
+            table = getattr(query, 'table', None)
+        elif len(args) == 2 and isinstance(args[0], str) and isinstance(args[1], str):
+            alias, groupby_spec = args[0], args[1]
+            query = kwargs.get('query')
+            table = getattr(query, 'table', None)
+        elif len(args) >= 2:
+            table, groupby_spec = args[0], args[1]
+            query = getattr(table, '_query', None)
+            alias = getattr(table, '_alias', self._table)
+        else:
+            table = kwargs.get('table')
+            groupby_spec = kwargs.get('groupby_spec')
+            query = getattr(table, '_query', None) or kwargs.get('query')
+            alias = getattr(table, '_alias', self._table)
+
+        if groupby_spec and ':' in groupby_spec:
             fname, method = groupby_spec.split(':')
-            if method == 'abs_rounded':
-                # rounds with the used currency settings
+            if method == 'abs_rounded' and query is not None:
                 currency_alias = query.make_alias(self._table, 'currency_id')
                 query.add_join('LEFT JOIN', currency_alias, 'res_currency', SQL(
                     "%s = %s",
-                    self._field_to_sql(self._table, 'currency_id', query),
+                    table['currency_id'] if table is not None else self._field_to_sql(self._table, 'currency_id', query),
                     SQL.identifier(currency_alias, 'id'),
                 ))
 
                 return SQL(
                     'ROUND(ABS(%s), %s)',
-                    self._field_to_sql(self._table, fname, query),
+                    table[fname] if table is not None else self._field_to_sql(self._table, fname, query),
                     self.env['res.currency']._field_to_sql(currency_alias, 'decimal_places', query),
                 )
 
-        return super()._read_group_groupby(alias, groupby_spec, query)
+        return super()._read_group_groupby(*args, **kwargs)

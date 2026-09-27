@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- HSE Compliance Guided Onboarding & Hub View -->
+    <record id="view_is_hse_onboarding_form" model="ir.ui.view">
+        <field name="name">is.hse.onboarding.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form string="HSE Knowledge &amp; Compliance Hub" create="false" edit="false">
+                <sheet class="w-100">
+                    <!-- Header Banner -->
+                    <div class="p-4 mb-4 rounded bg-primary text-white shadow-sm w-100">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-12 col-md-9">
+                                <h2 class="fw-bold text-white mb-2">Trung tâm Quản trị An toàn, Sức khỏe &amp; Môi trường (HSE)</h2>
+                                <p class="mb-0 text-white-50 small">
+                                    Không gian theo dõi nội bộ hồ sơ Luật Hóa chất, QCVN, sổ đăng ký nghĩa vụ và giấy phép chuyên ngành; cần rà soát nguồn và thẩm quyền trước khi sử dụng.
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-3 text-md-end">
+                                <span class="badge bg-success px-3 py-2">Internal Tracking</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4-Step Interactive Onboarding Cards -->
+                    <h4 class="fw-bold mb-3 text-primary">Quy trình 4 Bước Thiết lập &amp; Vận hành HSE Chuẩn hóa:</h4>
+                    <div class="row g-3 mb-4 w-100">
+                        <!-- Step 1: Facilities -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-primary me-2">1</span>
+                                        <h5 class="card-title fw-bold mb-0 text-primary">Cơ sở &amp; Kho bãi</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Khởi tạo thông tin nhà máy, kho lưu trữ hóa chất, sức chứa, người phụ trách và tiêu chuẩn PCCC/bảo vệ môi trường.
+                                    </p>
+                                    <button name="%(action_is_hse_facility)d" string="Manage Facilities" type="action" class="btn btn-outline-primary w-100 mt-auto"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Chemical Substances -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-warning text-dark me-2">2</span>
+                                        <h5 class="card-title fw-bold mb-0 text-warning">Hóa chất &amp; SDS</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Theo dõi nội bộ dữ liệu CAS/UN, phân loại GHS, SDS 16 phần và nồng độ tiếp xúc OEL; đối chiếu SDS nguồn trước khi sử dụng.
+                                    </p>
+                                    <button name="%(action_is_hse_chemical_substance)d" string="Chemical Master Catalog" type="action" class="btn btn-outline-warning w-100 mt-auto text-dark"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Permits & Licenses -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-success me-2">3</span>
+                                        <h5 class="card-title fw-bold mb-0 text-success">Giấy phép &amp; GCN</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Theo dõi hồ sơ giấy phép, chứng nhận do người dùng cung cấp và nhắc rà soát thời hạn trước 30 ngày.
+                                    </p>
+                                    <button name="%(action_is_hse_product_permit)d" string="Manage Safety Permits" type="action" class="btn btn-outline-success w-100 mt-auto"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Legal Register -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-secondary me-2">4</span>
+                                        <h5 class="card-title fw-bold mb-0 text-secondary">Sổ Tuân thủ HSE</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Theo dõi nghĩa vụ đã ghi nhận, trạng thái rà soát nội bộ và biên bản nội bộ; không thay thế kết luận tuân thủ hoặc hồ sơ nộp cơ quan.
+                                    </p>
+                                    <button name="%(action_is_hse_legal_register)d" string="Compliance Register" type="action" class="btn btn-outline-secondary w-100 mt-auto"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Reference Links -->
+                    <div class="card border shadow-sm rounded p-3 bg-light w-100">
+                        <div class="row g-3 align-items-center justify-content-between">
+                            <div class="col-12 col-md-8">
+                                <strong class="text-dark">Tra cứu Nhanh:</strong>
+                                <span class="text-muted ms-2 small">Luật Hóa chất 2025 | Thông tư 19/2024/TT-BCT | QCVN 05A:2020/BCT | Luật BVMT 2020</span>
+                            </div>
+                            <div class="col-12 col-md-4 text-md-end">
+                                <button name="%(action_is_hse_legal_document)d" string="Legal Documents Library" type="action" class="btn btn-sm btn-outline-secondary"/>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for HSE Hub / Onboarding -->
+    <record id="action_is_hse_onboarding_hub" model="ir.actions.act_window">
+        <field name="name">HSE Hub &amp; Onboarding</field>
+        <field name="path">hse-onboarding</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="view_id" ref="view_is_hse_onboarding_form"/>
+    </record>
+</odoo>

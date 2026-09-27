@@ -1,4 +1,5 @@
-import { onWillUnmount, status, useComponent, useEffect, useEnv } from "@odoo/owl";
+import { onWillUnmount, status, useComponent, useEnv } from "@odoo/owl";
+import { useLayoutEffect } from "@web/owl2/utils";
 import { getEndOfLocalWeek, getStartOfLocalWeek } from "@web/core/l10n/dates";
 import { makePopover, usePopover } from "@web/core/popover/popover_hook";
 import { makeDraggableHook } from "@web/core/utils/draggable_hook_builder_owl";
@@ -22,6 +23,11 @@ function closest(target, values) {
         (prev, val) => (Math.abs(val - target) < Math.abs(prev - target) ? val : prev),
         Infinity
     );
+}
+
+function getRefEl(ref) {
+    if (!ref) return null;
+    return (typeof ref === "function" ? ref() : ref.el) || null;
 }
 
 /**
@@ -177,7 +183,8 @@ export function getClosestCell(ctx, rowId) {
         const selector = rowId
             ? `.o_gantt_cells .o_gantt_cell:not(.o_drag_hover)[data-row-id='${CSS.escape(rowId)}']`
             : `.o_gantt_cells .o_gantt_cell:not(.o_drag_hover)`;
-        cell = getClosest(ref.el.querySelectorAll(selector), pointer);
+        const refEl = getRefEl(ref);
+        cell = getClosest(refEl ? refEl.querySelectorAll(selector) : [], pointer);
         part = getHoveredCellPart(cell, pointer.x, scale.cellPart, rtl);
     }
     return { cell, part };
@@ -195,12 +202,16 @@ export function useMultiHover({ ref, selector, exception, related, className }) 
     /**
      * @param {HTMLElement} el
      */
-    const findSiblings = (el) =>
-        ref.el.querySelectorAll(
-            related
-                .map((attr) => `[${attr}='${el.getAttribute(attr).replace(/'/g, "\\'")}']`)
-                .join("")
-        );
+    const findSiblings = (el) => {
+        const refEl = getRefEl(ref);
+        return refEl
+            ? refEl.querySelectorAll(
+                related
+                    .map((attr) => `[${attr}='${el.getAttribute(attr).replace(/'/g, "\\'")}']`)
+                    .join("")
+            )
+            : [];
+    };
 
     /**
      * @param {PointerEvent} ev
@@ -227,10 +238,11 @@ export function useMultiHover({ ref, selector, exception, related, className }) 
     const classList = className.split(/\s+/g);
     const classedEls = new Set();
 
-    useEffect(
+    useLayoutEffect(
         (...targets) => {
-            if (targets.length) {
-                for (const target of targets) {
+            const validTargets = targets.filter(Boolean);
+            if (validTargets.length) {
+                for (const target of validTargets) {
                     target.addEventListener("pointerenter", onPointerEnter);
                     target.addEventListener("pointerleave", onPointerLeave);
                 }
@@ -239,14 +251,17 @@ export function useMultiHover({ ref, selector, exception, related, className }) 
                         el.classList.remove(...classList);
                     }
                     classedEls.clear();
-                    for (const target of targets) {
+                    for (const target of validTargets) {
                         target.removeEventListener("pointerenter", onPointerEnter);
                         target.removeEventListener("pointerleave", onPointerLeave);
                     }
                 };
             }
         },
-        () => [...ref.el.querySelectorAll(selector)]
+        () => {
+            const refEl = getRefEl(ref);
+            return refEl ? [...refEl.querySelectorAll(selector)] : [];
+        }
     );
 }
 
@@ -357,9 +372,12 @@ export const useGanttConnectorDraggable = makeDraggableHook({
         if (!parent) {
             return;
         }
-        for (const otherParent of ctx.ref.el.querySelectorAll(ctx.parentWrapper)) {
-            if (otherParent !== parent) {
-                addStyle(otherParent, { pointerEvents: "auto" });
+        const refEl = getRefEl(ctx.ref);
+        if (refEl) {
+            for (const otherParent of refEl.querySelectorAll(ctx.parentWrapper)) {
+                if (otherParent !== parent) {
+                    addStyle(otherParent, { pointerEvents: "auto" });
+                }
             }
         }
         return { sourcePill: parent, ...current.connectorCenter };
@@ -547,7 +565,10 @@ export const useGanttDraggable = makeDraggableHook({
         current.gridColumnOffset = pGridColumnStart - cGridColumnStart;
         current.pillSpan = pillSpan;
 
-        addClass(ctx.ref.el, "pe-auto");
+        const refEl = getRefEl(ctx.ref);
+        if (refEl) {
+            addClass(refEl, "pe-auto");
+        }
         addCleanup(() => {
             current.placeHolder.remove();
             current.cellGhost.remove();
@@ -568,7 +589,10 @@ export const useGanttUndraggable = makeDraggableHook({
         const { x, y, width, height } = getRect(ctx.current.element);
         ctx.current.container = document.createElement("div");
 
-        addClass(ctx.ref.el, "pe-auto");
+        const refEl = getRefEl(ctx.ref);
+        if (refEl) {
+            addClass(refEl, "pe-auto");
+        }
         addStyle(ctx.current.container, {
             position: "fixed",
             left: `${x}px`,
@@ -638,13 +662,16 @@ export const useGanttResizable = makeDraggableHook({
         ctx.getBadgesInitialDates = params.getBadgesInitialDates;
         ctx.rtl = params.rtl;
 
-        for (const el of ctx.ref.el.querySelectorAll(params.elements)) {
-            el.addEventListener("pointerenter", onElementPointerEnter);
-            el.addEventListener("pointerleave", onElementPointerLeave);
-            addEffectCleanup(() => {
-                el.removeEventListener("pointerenter", onElementPointerEnter);
-                el.removeEventListener("pointerleave", onElementPointerLeave);
-            });
+        const refEl = getRefEl(ctx.ref);
+        if (refEl) {
+            for (const el of refEl.querySelectorAll(params.elements)) {
+                el.addEventListener("pointerenter", onElementPointerEnter);
+                el.addEventListener("pointerleave", onElementPointerLeave);
+                addEffectCleanup(() => {
+                    el.removeEventListener("pointerenter", onElementPointerEnter);
+                    el.removeEventListener("pointerleave", onElementPointerLeave);
+                });
+            }
         }
 
         handles.start.className = `${params.handles} ${HANDLE_CLASS_START}`;
@@ -749,7 +776,10 @@ export const useGanttResizable = makeDraggableHook({
 
         current.isStart = current.element.classList.contains(HANDLE_CLASS_START);
 
-        addClass(ctx.ref.el, "pe-auto");
+        const refEl = getRefEl(ctx.ref);
+        if (refEl) {
+            addClass(refEl, "pe-auto");
+        }
         return {};
     },
 });
@@ -809,11 +839,17 @@ export const useGanttSelectable = makeDraggableHook({
     onWillStartDrag({ addClass, ctx }) {
         const { current, hoveredCell, ref } = ctx;
         const { el: cell, part } = hoveredCell;
+        const hasMulti = typeof ctx.hasMultiCreate === "function" ? ctx.hasMultiCreate() : ctx.hasMultiCreate;
+        if (!hasMulti) {
+            current.rowId = cell.dataset.rowId;
+        }
         const cellBounds = getCellBounds({ cell, part });
         current.initialCellBounds = cellBounds;
         current.cellBounds = cellBounds;
-        current.rowId = ctx.hasMultiCreate ? null : cell.dataset.rowId;
-        addClass(ref.el, "pe-auto");
+        const refEl = getRefEl(ref);
+        if (refEl) {
+            addClass(refEl, "pe-auto");
+        }
         addClass(cell, "pe-auto");
         return getResult(current);
     },

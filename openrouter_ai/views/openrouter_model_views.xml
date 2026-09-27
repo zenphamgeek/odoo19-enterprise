@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_openrouter_model_tree" model="ir.ui.view">
+        <field name="name">openrouter.model.tree</field>
+        <field name="model">openrouter.model</field>
+        <field name="arch" type="xml">
+            <list string="Insilos AI Models" decoration-success="is_free == True">
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="is_free"/>
+                <field name="context_length"/>
+                <field name="prompt_price"/>
+                <field name="completion_price"/>
+                <field name="supports_vision"/>
+                <field name="supports_strict_json_schema"/>
+                <field name="supports_pdf_input"/>
+                <field name="extraction_max_tokens"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_openrouter_model_search" model="ir.ui.view">
+        <field name="name">openrouter.model.search</field>
+        <field name="model">openrouter.model</field>
+        <field name="arch" type="xml">
+            <search string="Search AI Models">
+                <field name="name"/>
+                <field name="model_id"/>
+                <filter string="Free Models Only" name="free_models" domain="[('is_free', '=', True)]"/>
+                <filter string="Vision Models" name="vision_models" domain="[('supports_vision', '=', True)]"/>
+                <separator/>
+                <filter string="Group by Free Status" name="group_free" context="{'group_by': 'is_free'}"/>
+                <filter string="Group by Vision Support" name="group_vision" context="{'group_by': 'supports_vision'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_openrouter_model" model="ir.actions.act_window">
+        <field name="name">AI Models Catalog</field>
+        <field name="res_model">openrouter.model</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_free_models': 1}</field>
+    </record>
+</odoo>

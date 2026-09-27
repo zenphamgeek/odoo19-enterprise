@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. Action Report: Portfolio Position Summary -->
+    <record id="action_report_capital_portfolio_position" model="ir.actions.report">
+        <field name="name">Portfolio Position Report</field>
+        <field name="model">capital.portfolio</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_capital_markets_decision_governance.report_capital_portfolio_position_doc</field>
+        <field name="report_file">insilos_capital_markets_decision_governance.report_capital_portfolio_position_doc</field>
+        <field name="print_report_name">'Portfolio_' + (object.name or '').replace('/', '_')</field>
+        <field name="binding_model_id" ref="model_capital_portfolio"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- 2. Action Report: Reconciliation Import Summary -->
+    <record id="action_report_capital_reconciliation" model="ir.actions.report">
+        <field name="name">Reconciliation Import Summary</field>
+        <field name="model">capital.reconciliation.import</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_capital_markets_decision_governance.report_capital_reconciliation_doc</field>
+        <field name="report_file">insilos_capital_markets_decision_governance.report_capital_reconciliation_doc</field>
+        <field name="print_report_name">'Reconciliation_' + (object.name or '').replace('/', '_')</field>
+        <field name="binding_model_id" ref="model_capital_reconciliation_import"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- 3. Action Report: Corporate Action Memo -->
+    <record id="action_report_capital_corporate_action" model="ir.actions.report">
+        <field name="name">Corporate Action Memo</field>
+        <field name="model">capital.corporate.action</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_capital_markets_decision_governance.report_capital_corporate_action_doc</field>
+        <field name="report_file">insilos_capital_markets_decision_governance.report_capital_corporate_action_doc</field>
+        <field name="print_report_name">'CorpAction_' + (object.name or '').replace('/', '_')</field>
+        <field name="binding_model_id" ref="model_capital_corporate_action"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

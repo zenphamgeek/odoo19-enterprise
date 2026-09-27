@@ -1,0 +1,88 @@
+{
+  "schema_version": 2,
+  "provenance_schema_version": 1,
+  "governed_cases_schema": "insilos.logistics_idp.governed_cases/1.0.0",
+  "governed_cases": [
+    {
+      "id": "Case01",
+      "evidence_class": "synthetic",
+      "source": "insilos/apps/insilos_logistics_idp/tests/golden/sanitized_cases.json#engine_capability_tests/ENGINE-SYNTHETIC-MULTI-ATTACHMENT-001",
+      "source_sha256": "46e3549fc1f2842ae840e3d7651c085fb50a1959fdfec29e143da021cf27edb1",
+      "outcome": "PASS",
+      "claim_scope": "engine_capability_only_not_observed_reference_stratum",
+      "customer_approval": null,
+      "raw_data_included": false
+    },
+    {
+      "id": "Case02",
+      "evidence_class": "source_limit",
+      "source": ".trae/documents/tracking/MASTER_TRACKER.md#IDP-REF-INVENTORY",
+      "policy_source": "insilos/apps/insilos_logistics_idp/config/compliance_policy.json",
+      "policy_source_sha256": "cf7bb1adafd7ca628df089fef287d8d5562c68d9bb0e790ec022d419e84e6df1",
+      "outcome": "REVIEW",
+      "reason": "multi_attachment:not_observed/source_limit",
+      "customer_approval": null,
+      "raw_data_included": false
+    }
+  ],
+  "authority": [
+    ".trae/documents/logistics_idp_authenticated_reference_corpus_plan.md",
+    ".trae/specs/authenticated-reference-corpus/spec.md",
+    ".trae/specs/idp-web-fetch-full-parity/spec.md"
+  ],
+  "gates": [
+    {
+      "id": "corpus_build_verify",
+      "execution_mode": "local_ci_deterministic",
+      "artifacts": ["insilos/apps/insilos_logistics_idp/tests/golden/sanitized_cases.json"],
+      "verifier": "insilos/apps/insilos_logistics_idp/tests/golden/build_sanitized_corpus.py --verify",
+      "provenance": "case.provenance"
+    },
+    {
+      "id": "uat",
+      "execution_mode": "local_db_deterministic",
+      "artifacts": ["insilos/apps/insilos_logistics_idp/docs/tests/development_uat_result.json"],
+      "verifier": "insilos/apps/insilos_logistics_idp/tests/development_uat_harness.py",
+      "provenance": "source.corpus_manifest_sha256"
+    },
+    {
+      "id": "qa_baseline",
+      "execution_mode": "local_ci_deterministic",
+      "artifacts": ["insilos/apps/insilos_logistics_idp/docs/tests/qa_baseline_approval.json"],
+      "verifier": "insilos/apps/insilos_logistics_idp/tests/verify_qa_baseline.py",
+      "provenance": "source.corpus_manifest_sha256"
+    },
+    {
+      "id": "wp6",
+      "execution_mode": "local_ci_deterministic",
+      "artifacts": ["insilos/apps/insilos_logistics_idp/docs/tests/tc_gov_requirement_delta.json"],
+      "verifier": "insilos/apps/insilos_logistics_idp/tests/validate_wp6_evidence.py",
+      "provenance": "artifact_sha256"
+    },
+    {
+      "id": "exporter_self_check_capability_lint",
+      "execution_mode": "local_ci_deterministic_no_network",
+      "artifacts": ["tools/export_digiforce_idp.js"],
+      "verifier": "insilos/apps/insilos_logistics_idp/tests/verify_reference_corpus_registry.py",
+      "provenance": "CAPABILITIES"
+    },
+    {
+      "id": "authenticated_external_parity",
+      "execution_mode": "non_ci_authenticated_external_not_executable_local",
+      "artifacts": [],
+      "verifier": "tools/export_digiforce_idp.js",
+      "provenance": "external quarantine only"
+    },
+    {
+      "id": "internal_reference_readiness",
+      "execution_mode": "local_ci_deterministic_synthetic",
+      "artifacts": [
+        "insilos/apps/insilos_logistics_idp/tests/golden/sanitized_cases.json",
+        "insilos/apps/insilos_logistics_idp/docs/tests/development_uat_result.json",
+        "insilos/apps/insilos_logistics_idp/docs/tests/swarovski_srs_parity_coverage_20260907.json"
+      ],
+      "verifier": "insilos/apps/insilos_logistics_idp/tests/verify_reference_corpus_registry.py --internal-readiness",
+      "provenance": "synthetic self-oracle; not external parity or customer acceptance"
+    }
+  ]
+}

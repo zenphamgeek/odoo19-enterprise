@@ -1,83 +1,61 @@
-import publicWidget from "@web/legacy/js/public/public_widget";
-
-/**
- * Simple widget that shows a small popup to request the notifications permission.
- * We use a jQuery 'dropdown' menu so that it automatically closes when clicked outside.
- */
-const NotificationRequestPopup = publicWidget.Widget.extend({
-    template: 'social_push_notifications.NotificationRequestPopup',
-    events: {
-        'click .o_social_push_notifications_permission_allow': '_onClickAllow',
-        'click .o_social_push_notifications_permission_deny': '_onClickDeny'
-    },
-
-    init: function (parent, options) {
-        this._super.apply(this, arguments);
-
+export class NotificationRequestPopup {
+    constructor(parent, options = {}) {
+        this.parent = parent;
         this.notificationTitle = options.title;
         this.notificationBody = options.body;
-        this.notificationDelay = options.delay;
+        this.notificationDelay = options.delay || 3;
         this.notificationIcon = options.icon;
-    },
-
-    /**
-     * Will start the timer to display the notification request popup.
-     *
-     * Also pushes down the notification window if the main menu nav bar is active.
-     * (We want to avoid covering the nav bar with the notification window)
-     *
-     * @override
-     */
-    start: function () {
-        var self = this;
-
-        return this._super.apply().then(function () {
-            var $mainNavBar = $('#oe_main_menu_navbar');
-            if ($mainNavBar && $mainNavBar.length !== 0){
-                self.$el.addClass('o_social_push_notifications_permission_with_menubar');
-            }
-            self.timer = setTimeout(self._toggleDropdown.bind(self), self.notificationDelay * 1000);
-            const dropdown = self.$el.find('.dropdown');
-            dropdown.on('hide.bs.dropdown', () => {
-                self.destroy();
-            });
-        });
-    },
-
-    /**
-     * @override
-     */
-    destroy: function () {
-        this._super(...arguments);
-        if (this.timer) {
-            clearTimeout(this.timer);
-        }
-    },
-
-    //--------------------------------------------------------------------------
-    // Handlers
-    //--------------------------------------------------------------------------
-
-    _onClickAllow: function () {
-        this.trigger_up('allow');
-    },
-
-    _onClickDeny: function () {
-        this.trigger_up('deny');
-    },
-
-    //--------------------------------------------------------------------------
-    // Private
-    //--------------------------------------------------------------------------
-
-    /**
-     * Will display the notification window by toggling the popup.
-     *
-     * @private
-     */
-    _toggleDropdown: function () {
-        this.$('.dropdown-toggle').dropdown('toggle');
+        this.callbacks = {};
     }
-});
+
+    on(event, unused, handler) {
+        const cb = typeof unused === 'function' ? unused : handler;
+        if (!this.callbacks[event]) this.callbacks[event] = [];
+        this.callbacks[event].push(cb);
+        return this;
+    }
+
+    trigger(event, data) {
+        if (this.callbacks[event]) {
+            for (const cb of this.callbacks[event]) cb(data);
+        }
+    }
+
+    appendTo(target) {
+        const targetEl = target.el || (target instanceof HTMLElement ? target : document.body);
+        const div = document.createElement("div");
+        div.className = "o_social_push_notifications_permission_request dropdown position-fixed";
+        div.innerHTML = `
+            <div class="dropdown-menu show p-3 shadow">
+                <div class="d-flex align-items-center mb-2">
+                    ${this.notificationIcon ? `<img src="${this.notificationIcon}" class="me-2" style="width: 24px; height: 24px;"/>` : ''}
+                    <strong>${this.notificationTitle || ''}</strong>
+                </div>
+                <p class="mb-3">${this.notificationBody || ''}</p>
+                <div class="d-flex justify-content-end gap-2">
+                    <button class="btn btn-sm btn-secondary o_social_push_notifications_permission_deny">Deny</button>
+                    <button class="btn btn-sm btn-primary o_social_push_notifications_permission_allow">Allow</button>
+                </div>
+            </div>
+        `;
+        if (document.getElementById('oe_main_menu_navbar')) {
+            div.classList.add('o_social_push_notifications_permission_with_menubar');
+        }
+        this.el = div;
+        targetEl.appendChild(div);
+
+        div.querySelector('.o_social_push_notifications_permission_allow')?.addEventListener('click', () => this.trigger('allow'));
+        div.querySelector('.o_social_push_notifications_permission_deny')?.addEventListener('click', () => {
+            this.trigger('deny');
+            this.destroy();
+        });
+        return this;
+    }
+
+    destroy() {
+        if (this.timer) clearTimeout(this.timer);
+        this.el?.remove();
+    }
+}
 
 export default NotificationRequestPopup;

@@ -3,7 +3,7 @@ import { rpc } from "@web/core/network/rpc";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { registry } from "@web/core/registry";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { Component, onWillStart, useState, markup } from "@odoo/owl";
+import { Component, onWillStart, proxy, markup } from "@odoo/owl";
 import { ManualBarcodeScanner } from "@barcodes/components/manual_barcode";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 import { url } from "@web/core/utils/urls";
@@ -20,7 +20,7 @@ export class MainMenu extends Component {
         this.pwaService = useService("pwa");
         this.home = useService("home_menu");
         this.notificationService = useService("notification");
-        this.state = useState({ displayDemoMessage });
+        this.state = proxy({ displayDemoMessage });
         this.barcodeService = useService("barcode");
         useBus(this.barcodeService.bus, "barcode_scanned", (ev) =>
             this._onBarcodeScanned(ev.detail.barcode)

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Obligation Form & List Views -->
+        <record id="view_is_hse_obligation_tree" model="ir.ui.view">
+            <field name="name">is.hse.obligation.list</field>
+            <field name="model">is.hse.obligation</field>
+            <field name="arch" type="xml">
+                <list string="Compliance Obligations" decoration-danger="compliance_status == 'non_compliant'" decoration-warning="compliance_status == 'partial'" decoration-success="compliance_status == 'compliant'">
+                    <field name="register_id"/>
+                    <field name="facility_id"/>
+                    <field name="title"/>
+                    <field name="document_id"/>
+                    <field name="authority_level"/>
+                    <field name="frequency"/>
+                    <field name="responsible_user_id"/>
+                    <field name="due_date"/>
+                    <field name="compliance_status" widget="badge" decoration-success="compliance_status == 'compliant'" decoration-warning="compliance_status == 'partial'" decoration-danger="compliance_status == 'non_compliant'"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_hse_obligation_form" model="ir.ui.view">
+            <field name="name">is.hse.obligation.form</field>
+            <field name="model">is.hse.obligation</field>
+            <field name="arch" type="xml">
+                <form string="Compliance Obligation">
+                    <sheet>
+                        <group>
+                            <group string="Obligation Context">
+                                <field name="register_id"/>
+                                <field name="facility_id"/>
+                                <field name="title"/>
+                                <field name="provision_id"/>
+                                <field name="document_id"/>
+                                <field name="authority_level"/>
+                            </group>
+                            <group string="Execution &amp; Governance">
+                                <field name="compliance_status" readonly="compliance_status == 'compliant'"/>
+                                <button name="action_approve_compliance" string="Mark Internal Review Complete" type="object" class="w_highlight" groups="insilos_hse_compliance.group_hse_manager" invisible="compliance_status == 'compliant'"/>
+                                <field name="compliance_approved_by_id" readonly="1"/>
+                                <field name="compliance_approved_at" readonly="1"/>
+                                <field name="frequency"/>
+                                <field name="responsible_user_id"/>
+                                <field name="due_date"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Obligation Summary" name="summary">
+                                <field name="summary" placeholder="Detailed compliance requirement and thresholds..."/>
+                            </page>
+                            <page string="Compliance Evidence" name="evidence">
+                                <field name="evidence_summary" placeholder="Internal records, inspection reports, test results, or permit references for review..."/>
+                                <field name="evidence_attachment_ids" widget="many2many_binary"/>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="notes" placeholder="Internal remarks..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Legal Register Form, List & Search Views -->
+        <record id="view_is_hse_legal_register_tree" model="ir.ui.view">
+            <field name="name">is.hse.legal.register.list</field>
+            <field name="model">is.hse.legal.register</field>
+            <field name="arch" type="xml">
+                <list string="Facility Legal Registers">
+                    <field name="name"/>
+                    <field name="facility_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="year"/>
+                    <field name="evaluation_date"/>
+                    <field name="total_obligations"/>
+                    <field name="compliant_count"/>
+                    <field name="non_compliant_count"/>
+                    <field name="compliance_score" widget="progressbar"/>
+                    <field name="state" widget="badge" decoration-success="state == 'active'" decoration-info="state == 'draft'"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_hse_legal_register_form" model="ir.ui.view">
+            <field name="name">is.hse.legal.register.form</field>
+            <field name="model">is.hse.legal.register</field>
+            <field name="arch" type="xml">
+                <form string="Facility Legal Register">
+                    <header>
+                        <button name="action_evaluate_applicability" string="Evaluate Applicability" type="object" class="w_highlight"/>
+                        <button name="action_activate" string="Set Active" type="object" invisible="state == 'active'"/>
+                        <button name="%(action_report_hse_legal_compliance_audit)d" string="Print Internal HSE Review" type="action" class="btn-secondary" icon="fa-print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,under_review"/>
+                    </header>
+                    <sheet>
+                        <div class="w_title">
+                            <label for="name" string="Legal Register Title"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Legal Register — Plant A (2026)"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Facility Information">
+                                <field name="facility_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="year"/>
+                            </group>
+                            <group string="Internal Review Metrics">
+                                <field name="evaluation_date"/>
+                                <field name="compliance_score" widget="progressbar"/>
+                                <field name="compliant_count"/>
+                                <field name="non_compliant_count"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Compliance Obligations" name="obligations">
+                                <field name="obligation_ids">
+                                    <list editable="bottom" decoration-danger="compliance_status == 'non_compliant'" decoration-warning="compliance_status in ('not_assessed', 'partial')" decoration-success="compliance_status == 'compliant'">
+                                        <field name="title"/>
+                                        <field name="provision_id"/>
+                                        <field name="authority_level"/>
+                                        <field name="frequency"/>
+                                        <field name="responsible_user_id"/>
+                                        <field name="due_date"/>
+                                        <field name="compliance_status"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Executive &amp; Audit Notes" name="notes">
+                                <field name="notes" placeholder="Auditor findings, management review comments..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Legal Register Kanban View -->
+        <record id="view_is_hse_legal_register_kanban" model="ir.ui.view">
+            <field name="name">is.hse.legal.register.kanban</field>
+            <field name="model">is.hse.legal.register</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" class="w_kanban_small_column" sample="1">
+                    <field name="name"/>
+                    <field name="facility_id"/>
+                    <field name="year"/>
+                    <field name="compliance_score"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="d-flex flex-column gap-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary"><field name="name"/></strong>
+                                    <field name="state" widget="badge" decoration-success="state == 'active'" decoration-info="state == 'draft'"/>
+                                </div>
+                                <div class="text-muted small"><field name="facility_id"/> (Year: <field name="year"/>)</div>
+                                <div class="mt-2">
+                                    <span class="small text-muted">Compliance Score:</span>
+                                    <field name="compliance_score" widget="progressbar"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Legal Register Search View -->
+        <record id="view_is_hse_legal_register_search" model="ir.ui.view">
+            <field name="name">is.hse.legal.register.search</field>
+            <field name="model">is.hse.legal.register</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="facility_id"/>
+                    <field name="year"/>
+                    <filter name="filter_active" string="Active Registers" domain="[('state', '=', 'active')]"/>
+                    <group>
+                        <filter name="group_facility" string="Facility" context="{'group_by': 'facility_id'}"/>
+                        <filter name="group_year" string="Year" context="{'group_by': 'year'}"/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Obligation Search View -->
+        <record id="view_is_hse_obligation_search" model="ir.ui.view">
+            <field name="name">is.hse.obligation.search</field>
+            <field name="model">is.hse.obligation</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="title"/>
+                    <field name="facility_id"/>
+                    <field name="register_id"/>
+                    <field name="document_id"/>
+                    <field name="responsible_user_id"/>
+                    <filter name="filter_pending_assessment" string="Pending Assessment" domain="[('compliance_status', '=', 'not_assessed')]"/>
+                    <filter name="filter_non_compliant" string="Non-Compliant" domain="[('compliance_status', '=', 'non_compliant')]"/>
+                    <filter name="filter_compliant" string="Compliant" domain="[('compliance_status', '=', 'compliant')]"/>
+                    <group>
+                        <filter name="group_status" string="Compliance Status" context="{'group_by': 'compliance_status'}"/>
+                        <filter name="group_facility" string="Facility" context="{'group_by': 'facility_id'}"/>
+                        <filter name="group_responsible" string="Responsible" context="{'group_by': 'responsible_user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_is_hse_legal_register" model="ir.actions.act_window">
+            <field name="name">Manage Environmental &amp; Safety Legal Registers</field>
+            <field name="path">hse-legal-registers</field>
+            <field name="res_model">is.hse.legal.register</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="search_view_id" ref="view_is_hse_legal_register_search"/>
+            <field name="help" type="html">
+                <p class="w_view_nocontent_smiling_face">
+                    Maintain legal registers and track compliance obligations for each facility.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_is_hse_obligation" model="ir.actions.act_window">
+            <field name="name">Manage Legal Compliance Obligations</field>
+            <field name="path">hse-obligations</field>
+            <field name="res_model">is.hse.obligation</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_is_hse_obligation_search"/>
+        </record>
+    </data>
+</odoo>

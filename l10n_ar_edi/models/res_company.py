@@ -20,7 +20,7 @@ class ResCompany(models.Model):
         '* Not Available: Will NOT show "Verify on ARCA" button in the invoices\n'
         '* Available: Will show "Verify on ARCA" button in the invoices so the user can manually check the vendor'
         ' bills\n'
-        '* Required: The vendor bills will be automatically verified on ARCA before been posted in Odoo. This is to'
+        '* Required: The vendor bills will be automatically verified on ARCA before been posted in Insilos. This is to'
         ' ensure that you have verified all the vendor bills that you are reporting in your Purchase VAT Book. NOTE:'
         ' Not all the document types can be validated in ARCA, only the ones defined in this link are the ones that '
         ' we are automatically validating https://serviciosweb.afip.gob.ar/genericos/comprobantes/Default.aspx')
@@ -35,7 +35,7 @@ class ResCompany(models.Model):
         compute="_compute_afip_key", store=True, readonly=False,
         help="This private key is required because is sent to the ARCA when"
         " trying to create a connection to validate that you are you\n\n * If you have one you can upload it here (In"
-        " order to be valid the private key should be in PEM format)\n * if you have not then Odoo will automatically"
+        " order to be valid the private key should be in PEM format)\n * if you have not then Insilos will automatically"
         " create a new one when you click in 'Generate Request' or 'Generate Renewal Request' button")
     l10n_ar_afip_ws_crt_id = fields.Many2one(string='ARCA Certificate', comodel_name="certificate.certificate",
         compute="_compute_afip_crt", store=True, readonly=False,

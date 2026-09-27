@@ -11,9 +11,10 @@ export class BankRecStatementSummary extends Component {
         isValid: { type: Boolean, optional: true },
         journalIsInvalid: { type: Boolean, optional: true },
     };
-    static defaultProps = {
-        isValid: true,
-    };
+
+    get isValid() {
+        return this.props.isValid ?? true;
+    }
 
     actionApplyInvalidStatement() {
         const facets = this.env.searchModel.facets;

@@ -618,28 +618,25 @@
                 <span t-field="line.product_uom_id"/>
             </td>
         </td>
-        <div t-field="line.price_unit" position="attributes">
+        <xpath expr="//span[@t-field='line.price_unit']" position="attributes">
             <attribute name="t-if" separator="or" add="sale_order.subscription_state == '7_upsell'"/>
-        </div>
-        <strong t-if="line.discount &gt; 0" position="attributes">
+        </xpath>
+        <xpath expr="//span[@t-if='line.discount &gt; 0']" position="attributes">
             <attribute name="t-if" separator="or" add="sale_order.subscription_state == '7_upsell'"/>
-        </strong>
+        </xpath>
         <div id="intro_row" position="inside">
             <div t-if="sale_order.subscription_state == '7_upsell'">
                 <span class="badge rounded-pill text-bg-primary"><i class="fa fa-fw fa-check"/> Upsell</span>
             </div>
         </div>
-        <xpath expr="//div[@id='customer_info']//h5" position="after">
-            <header class="d-flex justify-content-between align-items-center">
-                <button t-if="sale_order.subscription_state in ['3_progress', '4_paused'] and multiple_addresses_enabled" data-bs-toggle="modal" data-bs-target="#address_change_modal" class="btn btn-link link-info mb-1" type="object">
+        <xpath expr="//*[@id='customer_info']" position="before">
+            <div t-if="sale_order.subscription_state in ['3_progress', '4_paused'] and multiple_addresses_enabled" class="text-end mb-2">
+                <button data-bs-toggle="modal" data-bs-target="#address_change_modal" class="btn btn-link link-info mb-1" type="object">
                     Edit
                 </button>
-            </header>
+            </div>
         </xpath>
-        <xpath expr="//div[@id='customer_info']//header//button" position="before">
-            <xpath expr="//div[@id='customer_info']//h5" position="move"/>
-        </xpath>
-        <div id="customer_info" position="after">
+        <xpath expr="//*[@id='customer_info']" position="after">
             <!-- MODAL: subscription addresses edition -->
             <div t-if="multiple_addresses_enabled" role="dialog" t-attf-class="modal fade" id="address_change_modal" aria-hidden="true">
                 <div class="modal-dialog">
@@ -688,16 +685,16 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </xpath>
         <xpath expr="//t[@t-set='is_note']" position="after">
             <t t-set="is_note" t-value="is_note or line.display_type == 'subscription_discount'"/>
         </xpath>
     </template>
 
     <template id="sale_order_portal_content_totals_table_inherit" inherit_id="sale.sale_order_portal_content_totals_table">
-        <t t-set="tax_totals" t-value="sale_order.tax_totals" position="attributes">
-            <attribute name="t-value">next_billing_details.get('tax_totals') if page_name=='subscription' else sale_order.tax_totals</attribute>
-        </t>
+        <xpath expr="//table[@name='sale_order_totals_table']/t" position="attributes">
+            <attribute name="tax_totals">next_billing_details.get('tax_totals') if page_name=='subscription' else sale_order.tax_totals</attribute>
+        </xpath>
     </template>
 
     <template id="portal_my_orders_inherit" inherit_id="sale.portal_my_orders">

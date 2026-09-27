@@ -6,7 +6,6 @@
     'category': 'Human Resources/Payroll',
     'depends': [
         'hr_payroll',
-        'hr_work_entry_holidays',
         'hr_payroll_holidays',
     ],
     'auto_install': ['hr_payroll'],

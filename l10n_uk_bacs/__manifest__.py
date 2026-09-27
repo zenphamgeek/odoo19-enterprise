@@ -12,7 +12,7 @@ Direct Debit allows businesses to collect payments directly from the bank accoun
 This module follows the implementation guidelines issued by the Bacs Payment Schemes Limited (BPSL). For more information about the BACS standards: https://www.bacs.co.uk/
     """,
     'version': '1.0',
-    'depends': ['account_batch_payment', 'base_iban', 'l10n_uk'],
+    'depends': ['account_batch_payment', 'l10n_uk'],
     'data': [
         'security/ir.model.access.csv',
         'report/ddi_report.xml',

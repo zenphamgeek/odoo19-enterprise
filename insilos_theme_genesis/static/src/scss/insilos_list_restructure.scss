@@ -1,0 +1,121 @@
+/* ==========================================================================
+   Insilos List View & Table Restructure
+   Clean typography, rounded checkboxes, subtle row highlights
+   ========================================================================== */
+
+.o_list_view {
+  background-color: var(--insilos-bg-canvas, #f8fafc);
+
+  .o_list_renderer {
+    border-radius: var(--insilos-radius-lg);
+    background: var(--insilos-bg-surface, #ffffff);
+    margin: 12px 18px;
+    border: 1px solid var(--insilos-border-subtle);
+    box-shadow: var(--insilos-shadow-card);
+    overflow: hidden;
+
+    .o_list_table {
+      margin-bottom: 0;
+      border-collapse: separate;
+      border-spacing: 0;
+
+      /* Header Styling */
+      thead {
+        background-color: var(--insilos-bg-surface, #ffffff);
+        position: sticky;
+        top: 0;
+        z-index: 2;
+
+        tr {
+          border-bottom: 1px solid var(--insilos-border-subtle) !important;
+
+          th {
+            background-color: var(--insilos-bg-surface, #ffffff);
+            color: var(--insilos-text-muted, #64748b);
+            font-size: 11.5px;
+            font-weight: 650;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 12px 16px;
+            border: none !important;
+            border-bottom: 1px solid var(--insilos-border-subtle) !important;
+            vertical-align: middle;
+
+            &.o_column_sortable:hover {
+              background-color: var(--insilos-bg-hover);
+              color: var(--insilos-text-primary);
+            }
+          }
+        }
+      }
+
+      /* Body Row Styling */
+      tbody {
+        tr.o_data_row {
+          transition: background-color var(--insilos-transition-fast);
+          border-bottom: 1px solid var(--insilos-border-subtle);
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          td {
+            padding: 11px 16px;
+            font-size: 13px;
+            color: var(--insilos-text-primary);
+            vertical-align: middle;
+            border: none !important;
+            border-bottom: 1px solid var(--insilos-border-subtle) !important;
+
+            &.o_list_record_selector {
+              width: 44px;
+              padding-left: 18px;
+            }
+          }
+
+          &:hover {
+            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+          }
+
+          &.o_data_row_selected {
+            background-color: var(--insilos-primary-subtle, rgba(37, 99, 235, 0.08)) !important;
+          }
+        }
+      }
+    }
+  }
+
+  /* Rounded Checkboxes */
+  .form-check-input {
+    width: 17px;
+    height: 17px;
+    border-radius: 5px !important;
+    border: 1.5px solid var(--insilos-border-strong, #94a3b8);
+    transition: var(--insilos-transition-fast);
+    cursor: pointer;
+
+    &:checked {
+      background-color: var(--insilos-primary);
+      border-color: var(--insilos-primary);
+    }
+
+    &:focus {
+      border-color: var(--insilos-border-focus);
+      box-shadow: 0 0 0 2px var(--insilos-primary-subtle);
+    }
+  }
+
+  /* List Table Optional Column Switcher */
+  .o_optional_columns_dropdown_toggle {
+    color: var(--insilos-text-muted);
+    font-size: 13px;
+    padding: 6px;
+    border-radius: var(--insilos-radius-sm);
+    transition: var(--insilos-transition-fast);
+
+    &:hover {
+      color: var(--insilos-text-primary);
+      background-color: var(--insilos-bg-hover);
+    }
+  }
+}

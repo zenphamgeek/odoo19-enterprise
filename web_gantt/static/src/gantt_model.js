@@ -7,9 +7,9 @@ import {
     serializeDateTime,
 } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
-import { x2ManyCommands } from "@web/core/orm_service";
+import { x2ManyCommands } from "@web/core/orm_plugin";
 import { registry } from "@web/core/registry";
-import { groupBy, unique } from "@web/core/utils/arrays";
+import { unique } from "@web/core/utils/arrays";
 import { KeepLast, Mutex } from "@web/core/utils/concurrency";
 import { pick } from "@web/core/utils/objects";
 import { Model } from "@web/model/model";
@@ -741,7 +741,7 @@ export class GanttModel extends Model {
      * @param {string}
      */
     _formatTime(floatVal) {
-        const timeStr = formatFloatTime(floatVal, { noLeadingZeroHour: true });
+        const timeStr = formatFloatTime(floatVal, { noLeadingZeroHour: true, numeric: true });
         const [hourStr, minuteStr] = timeStr.split(":");
         const hour = parseInt(hourStr, 10);
         const minute = parseInt(minuteStr, 10);
@@ -793,7 +793,7 @@ export class GanttModel extends Model {
         // Some groups might be empty (thanks to expand_groups), so we can't
         // simply group the data, we need to keep all returned groups
         const groupedByField = groupedBy[0];
-        const currentLevelGroups = groupBy(groups, (g) => {
+        const currentLevelGroups = Object.groupBy(groups, (g) => {
             if (g[groupedByField] === undefined) {
                 // we want to group the groups with undefined values for groupedByField with the ones
                 // with false value for the same field.

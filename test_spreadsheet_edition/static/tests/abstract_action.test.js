@@ -34,10 +34,10 @@ test("custom colors in color picker", async function () {
     onRpc("/spreadsheet/data/*", () => ({
         data: {},
         name: "test",
-        company_colors: ["#875A7B", "not a valid color"],
+        company_colors: ["#004455", "not a valid color"],
     }));
     const { model } = await createSpreadsheetTestAction("spreadsheet_test_action");
-    expect(model.getters.getCustomColors()).toEqual(["#875A7B"]);
+    expect(model.getters.getCustomColors()).toEqual(["#004455"]);
 });
 
 test.tags("desktop");

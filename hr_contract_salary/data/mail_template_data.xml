@@ -22,7 +22,7 @@
                             ('?token=' + ctx.get('access_token')) if ctx.get('access_token') else ''
                         )"
                     target="_blank"
-                    t-attf-style="background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;">
+                    t-attf-style="background-color: {{object.company_id.email_secondary_color or '#004455'}}; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;">
                         Configure your package
                     </a>
                 </div>
@@ -50,7 +50,7 @@
                 <div style="padding: 16px 0px 16px 0px;">
                     <a t-attf-href="/salary_package/simulation/offer/{{ctx.get('offer_id')}}?token={{ctx.get('access_token')}}"
                         target="_blank"
-                        t-attf-style="background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;">Configure your package</a>
+                        t-attf-style="background-color: {{object.company_id.email_secondary_color or '#004455'}}; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;">Configure your package</a>
                 </div>
             </div>
         </field>

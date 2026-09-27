@@ -1,6 +1,5 @@
-import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, queryAll, queryAllTexts, queryOne } from "@odoo/hoot-dom";
+import { click, queryAll, queryAllTexts, queryOne, waitFor } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import {
     contains,
@@ -9,7 +8,9 @@ import {
     getService,
     models,
     mountWithCleanup,
+    webModels,
 } from "@web/../tests/web_test_helpers";
+import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
 
 import { BankRecSelectCreateDialog } from "@account_accountant/components/bank_reconciliation/search_dialog/search_dialog";
@@ -110,8 +111,7 @@ class Partner extends models.Model {
     ];
 }
 
-// Due to dependency with mail module, we have to define their models for our tests.
-defineModels({ ...mailModels, AccountMoveLine, Partner });
+defineModels({ ...webModels, ...mailModels, AccountMoveLine, Partner });
 
 beforeEach(() => {
     mockDate("2025-04-22 00:00:00");
@@ -203,7 +203,7 @@ test("BankRecSelectCreateDialog list view single currency", async () => {
     await animationFrame();
 
     await contains(`.o_select_domain`).click();
-    await animationFrame();
+    await waitFor("div[name='remaining_amount']:contains('-555.00')");
 
     expect("div[name='remaining_amount']").toHaveText("Balance: $ -555.00");
 });

@@ -281,7 +281,7 @@ class L10nBeSocialSecurityCertificate(models.TransientModel):
         # styling
         style_header = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center', 'bottom': 1})
         style_vertical_header = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center', 'bottom': 1, 'right': 1})
-        style_subtotal_header = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#875A7B', 'align': 'center', 'bottom': 1, 'right': 1})
+        style_subtotal_header = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#004455', 'align': 'center', 'bottom': 1, 'right': 1})
         style_normal = workbook.add_format({'align': 'center'})
         style_subtotal_normal = workbook.add_format({'bg_color': '#B49DAE', 'align': 'center'})
         column_width = 25

@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="pharmaBgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#07192A" />
+      <stop offset="100%" stop-color="#020C16" />
+    </linearGradient>
+    <linearGradient id="goldenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00E5FF" />
+      <stop offset="50%" stop-color="#42E6C3" />
+      <stop offset="100%" stop-color="#FFD166" />
+    </linearGradient>
+    <filter id="pharmaGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .ph-head { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; fill: #FFFFFF; font-size: 14px; }
+    .ph-sub { font-family: 'Inter', system-ui, sans-serif; font-weight: 500; fill: #8CAAB9; font-size: 11px; }
+    .ph-metric { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; fill: #42E6C3; font-size: 22px; }
+    .ph-badge { font-family: 'Inter', system-ui, sans-serif; font-weight: 700; font-size: 10px; fill: #FFD166; letter-spacing: 0.08em; }
+    .ph-radar-label { font-family: 'Inter', system-ui, sans-serif; font-weight: 600; font-size: 9px; fill: #8CAAB9; }
+  </style>
+
+  <rect width="880" height="540" rx="20" fill="url(#pharmaBgGrad)" stroke="rgba(66, 230, 195, 0.25)" stroke-width="1.5" />
+
+  <!-- TOP HEADER -->
+  <g transform="translate(40, 25)">
+    <rect width="800" height="48" rx="12" fill="#0A2438" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+    <circle cx="25" cy="24" r="6" fill="#42E6C3" />
+    <text x="40" y="29" class="ph-head">PHARMACEUTICAL GOLDEN BATCH TWIN &amp; GxP SPECTROSCOPY</text>
+    <text x="540" y="29" class="ph-badge">FDA 21 CFR PART 11 • GAMP 5 VALIDATED</text>
+  </g>
+
+  <!-- LEFT: GOLDEN BATCH TRAJECTORY & SPECTROSCOPY CURVES -->
+  <g transform="translate(40, 88)">
+    <rect width="490" height="290" rx="16" fill="#061826" stroke="rgba(0, 229, 255, 0.3)" stroke-width="1.5" />
+    
+    <!-- Title -->
+    <text x="25" y="32" class="ph-head" font-size="13">Bioreactor Critical Process Parameters (CPP)</text>
+    <text x="25" y="48" class="ph-sub">Real-Time Raman Spectroscopy &amp; Dissolved O2 vs Golden Trajectory</text>
+
+    <!-- Graph Grid Lines -->
+    <g transform="translate(45, 70)">
+      <line x1="0" y1="0" x2="410" y2="0" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+      <line x1="0" y1="45" x2="410" y2="45" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+      <line x1="0" y1="90" x2="410" y2="90" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+      <line x1="0" y1="135" x2="410" y2="135" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+      <line x1="0" y1="180" x2="410" y2="180" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+
+      <!-- Golden Corridor Ribbon (Upper & Lower Limits) -->
+      <path d="M 0 140 Q 100 60, 200 40 T 400 20 L 400 50 Q 300 70, 200 70 T 0 160 Z" fill="rgba(66, 230, 195, 0.12)" />
+      
+      <!-- Golden Benchmark Reference Curve -->
+      <path d="M 0 150 Q 100 70, 200 55 T 400 35" fill="none" stroke="#FFD166" stroke-width="2" stroke-dasharray="4,4" />
+      
+      <!-- Current Live Batch Curve (Sensor Telemetry) -->
+      <path d="M 0 152 Q 100 72, 190 56 T 340 38" fill="none" stroke="#00E5FF" stroke-width="2.5" filter="url(#pharmaGlow)" />
+      
+      <!-- Live Sensor Point -->
+      <circle cx="340" cy="38" r="5" fill="#42E6C3" />
+      <circle cx="340" cy="38" r="9" fill="none" stroke="#42E6C3" stroke-width="1.5" opacity="0.6" />
+
+      <!-- Deviation Early Warning Tag -->
+      <g transform="translate(230, 85)">
+        <rect width="165" height="42" rx="8" fill="rgba(10, 36, 56, 0.9)" stroke="#42E6C3" stroke-width="1" />
+        <text x="10" y="16" font-family="Inter" font-weight="700" font-size="9" fill="#42E6C3">BATCH-2026-X94: OPTIMAL</text>
+        <text x="10" y="32" font-family="Inter" font-weight="500" font-size="8" fill="#FFFFFF">Yield Projection: +4.6% • CPK: 1.84</text>
+      </g>
+    </g>
+
+    <!-- Legend -->
+    <g transform="translate(50, 265)">
+      <line x1="0" y1="0" x2="20" y2="0" stroke="#FFD166" stroke-width="2" stroke-dasharray="3,3" />
+      <text x="28" y="4" class="ph-sub" font-size="10">Golden Batch Target</text>
+      
+      <line x1="160" y1="0" x2="180" y2="0" stroke="#00E5FF" stroke-width="2.5" />
+      <text x="188" y="4" class="ph-sub" font-size="10">Active Telemetry (PAT)</text>
+
+      <rect x="315" y="-6" width="12" height="12" fill="rgba(66,230,195,0.2)" />
+      <text x="335" y="4" class="ph-sub" font-size="10">Validated GxP Corridor</text>
+    </g>
+  </g>
+
+  <!-- RIGHT: GxP QUALITY & YIELD METRICS -->
+  <g transform="translate(545, 88)">
+    <!-- Metric 1: Deviation Investigation Time -->
+    <g transform="translate(0, 0)">
+      <rect width="295" height="88" rx="14" fill="#0A2438" stroke="rgba(66, 230, 195, 0.3)" stroke-width="1.5" />
+      <text x="20" y="30" class="ph-sub">DEVIATION INVESTIGATION TIME</text>
+      <text x="20" y="62" class="ph-metric">-72.0%</text>
+      <text x="125" y="60" class="ph-sub" fill="#66DDFF">Root-Cause in &lt; 2h</text>
+    </g>
+
+    <!-- Metric 2: Batch Yield Improvement -->
+    <g transform="translate(0, 101)">
+      <rect width="295" height="88" rx="14" fill="#0A2438" stroke="rgba(255, 209, 102, 0.3)" stroke-width="1.5" />
+      <text x="20" y="30" class="ph-sub">COMMERCIAL BATCH YIELD</text>
+      <text x="20" y="62" class="ph-metric" fill="#FFD166">+4.6%</text>
+      <text x="110" y="60" class="ph-sub" fill="#FFFFFF">$3.2M Annual Value</text>
+    </g>
+
+    <!-- Metric 3: GxP Audit Trail Readiness -->
+    <g transform="translate(0, 202)">
+      <rect width="295" height="88" rx="14" fill="#0A2438" stroke="rgba(35, 140, 255, 0.3)" stroke-width="1.5" />
+      <text x="20" y="30" class="ph-sub">FDA AUDIT TRAIL INTEGRITY</text>
+      <text x="20" y="62" class="ph-metric" fill="#238CFF">100%</text>
+      <text x="100" y="60" class="ph-sub" fill="#42E6C3">Dual e-Signature</text>
+    </g>
+  </g>
+
+  <!-- BOTTOM: GxP LIFECYCLE WORKFLOW -->
+  <g transform="translate(40, 395)">
+    <rect width="800" height="120" rx="14" fill="#071B2B" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+    
+    <!-- Step 1 -->
+    <g transform="translate(25, 25)">
+      <text x="0" y="16" class="ph-head" font-size="12">1. In-Line PAT Sensors</text>
+      <text x="0" y="34" class="ph-sub">Raman, NIR, Dissolved O2 &amp; pH Ingest</text>
+    </g>
+    <line x1="240" y1="20" x2="240" y2="100" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+    <!-- Step 2 -->
+    <g transform="translate(265, 25)">
+      <text x="0" y="16" class="ph-head" font-size="12">2. Golden Twin Deviation AI</text>
+      <text x="0" y="34" class="ph-sub">Real-Time Critical Quality Attributes (CQA)</text>
+    </g>
+    <line x1="510" y1="20" x2="510" y2="100" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+    <!-- Step 3 -->
+    <g transform="translate(535, 25)">
+      <text x="0" y="16" class="ph-head" font-size="12">3. eBR &amp; Batch Release</text>
+      <text x="0" y="34" class="ph-sub">Review-by-Exception &amp; QA Sign-off</text>
+    </g>
+  </g>
+</svg>

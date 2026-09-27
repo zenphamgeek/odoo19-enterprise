@@ -5,7 +5,7 @@
         <field name="model">mrp.workorder</field>
         <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
         <field name="arch" type="xml">
-            <xpath expr="//header" position="replace">
+            <xpath expr="//sheet" position="before">
                 <field name="quality_check_fail" invisible="1"/>
                 <header>
                     <field name="state" widget="statusbar" statusbar_visible="pending,waiting,ready,progress,done"/>
@@ -391,7 +391,7 @@
         <field name="model">mrp.workorder</field>
         <field name="inherit_id" ref="mrp.workcenter_line_kanban"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('o_kanban_workorder_status')]//field[@name='last_working_user_id']" position="replace">
+            <xpath expr="//footer//field[@name='last_working_user_id']" position="replace">
                 <field t-if="record.employee_ids.raw_value" name="employee_ids" widget="list.many2many_avatar_user" class="ms-1"/>
             </xpath>
         </field>

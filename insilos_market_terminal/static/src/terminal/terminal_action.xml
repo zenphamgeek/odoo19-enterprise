@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="insilos_market_terminal.Terminal">
+    <div class="w_market_terminal d-flex flex-column h-100">
+        <div class="d-flex align-items-center gap-2 p-2 border-bottom">
+            <input class="w_input" style="max-width: 12rem;" placeholder="Symbol (e.g. FPT)"
+                   t-on-keydown="onSymbolKeydown"/>
+            <span t-if="state.instrument and !state.instrument.mapped" class="badge text-bg-warning">
+                Unmapped symbol — no ERP overlays
+            </span>
+            <span t-if="state.stream and state.stream.stale" class="badge text-bg-warning">STALE</span>
+            <span t-if="state.stream and state.stream.sequence_gap" class="badge text-bg-warning">Feed gap</span>
+            <span t-if="state.lineage" class="text-muted small ms-auto">
+                <t t-esc="state.lineage.provider"/> · as of <t t-esc="state.lineage.source_as_of"/>
+            </span>
+        </div>
+        <div class="d-flex gap-1 p-2 border-bottom" role="group" aria-label="Technical indicators">
+            <button t-foreach="['sma', 'ema', 'vwap', 'rsi', 'atr']" t-as="indicator" t-key="indicator"
+                    t-att-class="state.indicators.includes(indicator) ? 'btn btn-sm btn-primary' : 'btn btn-sm btn-outline-secondary'"
+                    t-on-click="() => this.toggleIndicator(indicator)">
+                <t t-esc="indicator.toUpperCase()"/>
+            </button>
+        </div>
+        <div t-if="state.error" class="alert alert-danger m-2 mb-0" role="alert"><t t-esc="state.error"/></div>
+        <div class="d-flex flex-grow-1 overflow-auto">
+            <div class="flex-grow-1" t-ref="chart"/>
+            <aside class="border-start p-2" style="width: 18rem;" aria-label="Market and portfolio state">
+                <h6>Market state</h6>
+                <div t-if="state.marketState and state.marketState.status === 'available'" class="small">
+                    <div>Close: <strong><t t-esc="state.marketState.close"/></strong></div>
+                    <div t-if="state.marketState.change_pct !== null">Change: <t t-esc="state.marketState.change_pct.toFixed(2)"/>%</div>
+                    <div t-if="state.marketState.volume">Volume: <t t-esc="state.marketState.volume"/></div>
+                    <div class="text-muted">As of <t t-esc="state.marketState.as_of"/></div>
+                </div>
+                <div t-else="" class="small text-muted">No market state.</div>
+                <div t-if="state.latency" class="small mt-2 w_terminal_latency"
+                     t-att-class="state.latency.within_sla ? 'text-muted' : 'text-danger'">
+                    Tick latency p50 <t t-esc="state.latency.p50"/>ms ·
+                    p95 <t t-esc="state.latency.p95"/>ms ·
+                    p99 <t t-esc="state.latency.p99"/>ms
+                    <span t-if="!state.latency.within_sla"> — SLA breach: <t t-esc="state.latency.breaches.join(', ')"/></span>
+                </div>
+                <h6 class="mt-3">Portfolio / Treasury</h6>
+                <div t-if="!state.portfolioCards.length" class="small text-muted">No governed position.</div>
+                <button t-foreach="state.portfolioCards" t-as="card" t-key="card.portfolio_id"
+                        class="btn btn-sm btn-outline-secondary text-start w-100 mb-2"
+                        t-on-click="() => this.openEvidence({res_model: 'capital.portfolio', res_id: card.portfolio_id})">
+                    <strong><t t-esc="card.name"/></strong>
+                    <br/>Qty: <t t-esc="card.quantity"/> · MV: <t t-esc="card.market_value"/>
+                    <br/>P&amp;L: <t t-esc="card.unrealised_pnl"/> · stale: <t t-esc="card.stale_positions"/>
+                </button>
+            </aside>
+        </div>
+        <div t-if="overlayRecords and overlayRecords.length" class="d-flex gap-2 p-2 border-top flex-wrap">
+            <button t-foreach="overlayRecords" t-as="overlay" t-key="`${overlay.res_model}-${overlay.res_id}`"
+                    class="btn btn-sm btn-outline-secondary" t-on-click="() => this.openEvidence(overlay)">
+                <t t-esc="overlay.label || overlay.text"/><t t-if="overlay.price">: <t t-esc="overlay.price"/></t>
+            </button>
+        </div>
+    </div>
+</t>
+
+</templates>

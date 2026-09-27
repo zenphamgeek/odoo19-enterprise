@@ -5,7 +5,7 @@ import { useService } from "@web/core/utils/hooks";
 import { useDebounced } from "@web/core/utils/timing";
 import { useVirtualGrid } from "@web/core/virtual_grid_hook";
 import { Field } from "@web/views/fields/field";
-import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
+import { getActiveHotkey } from "@web/core/hotkeys/hotkey_utils";
 import { ViewScaleSelector } from "@web/views/view_components/view_scale_selector";
 
 import { GridComponent } from "@web_grid/components/grid_component/grid_component";
@@ -13,12 +13,14 @@ import { GridComponent } from "@web_grid/components/grid_component/grid_componen
 import {
     Component,
     markup,
-    useState,
+    proxy,
+    signal,
+    t,
+    useProps,
     onWillUpdateProps,
     onMounted,
     onPatched,
     reactive,
-    useRef,
     useExternalListener,
 } from "@odoo/owl";
 
@@ -31,38 +33,34 @@ export class GridRenderer extends Component {
 
     static template = "web_grid.Renderer";
 
-    static props = {
-        sections: { type: Array, optional: true },
-        columns: { type: Array, optional: true },
-        rows: { type: Array, optional: true },
-        model: { type: Object, optional: true },
-        options: Object,
-        sectionField: { type: Object, optional: true },
-        rowFields: Array,
-        measureField: Object,
-        isEditable: Boolean,
-        widgetPerFieldName: Object,
-        openAction: { type: Object, optional: true },
-        contentRef: Object,
-        createInline: Boolean,
-        createRecord: Function,
-        ranges: { type: Object, optional: true },
-        state: Object,
-        toggleWeekendVisibility: Function,
-    };
+    props = useProps({
+        sections: t.array().optional([]),
+        columns: t.array().optional([]),
+        rows: t.array().optional([]),
+        model: t.any().optional({}),
+        options: t.any().optional({}),
+        sectionField: t.any().optional(),
+        rowFields: t.array().optional([]),
+        measureField: t.any().optional({}),
+        isEditable: t.boolean().optional(false),
+        widgetPerFieldName: t.any().optional({}),
+        openAction: t.any().optional(),
+        contentRef: t.any().optional(),
+        createInline: t.boolean().optional(false),
+        createRecord: t.function().optional(),
+        ranges: t.any().optional({}),
+        state: t.any().optional({}),
+        toggleWeekendVisibility: t.function().optional(),
+    });
 
-    static defaultProps = {
-        sections: [],
-        columns: [],
-        rows: [],
-        model: {},
-        ranges: {},
-    };
+    rendererRef = signal.ref();
+    get renderer() {
+        return this.rendererRef;
+    }
 
     setup() {
-        this.rendererRef = useRef("renderer");
         this.actionService = useService("action");
-        this.editionState = useState({
+        this.editionState = proxy({
             hoveredCellInfo: false,
             editedCellInfo: false,
         });
@@ -150,8 +148,30 @@ export class GridRenderer extends Component {
     }
 
     get virtualRows() {
-        this.virtualGrid.setRowsHeights(this.props.rows.map((row) => this.getItemHeight(row)));
-        const [start, end] = this.virtualGrid.rowsIndexes;
+        const heights = this.props.rows.map((row) => this.getItemHeight(row));
+        if (this.virtualGrid.setRowHeights) {
+            this.virtualGrid.setRowHeights(heights);
+        } else if (this.virtualGrid.setRowsHeights) {
+            this.virtualGrid.setRowsHeights(heights);
+        }
+        let start = 0;
+        let end = this.props.rows.length - 1;
+        if (typeof this.virtualGrid.firstRow === "function") {
+            const first = this.virtualGrid.firstRow();
+            if (first !== null && first !== undefined) {
+                start = first;
+            }
+        }
+        if (typeof this.virtualGrid.lastRow === "function") {
+            const last = this.virtualGrid.lastRow();
+            if (last !== null && last !== undefined) {
+                end = last;
+            }
+        }
+        if (this.virtualGrid.rowsIndexes) {
+            start = this.virtualGrid.rowsIndexes[0];
+            end = this.virtualGrid.rowsIndexes[1];
+        }
         return this.props.rows.slice(start, end + 1);
     }
 
@@ -242,8 +262,11 @@ export class GridRenderer extends Component {
         return 1;
     }
 
-    get displayAddLine() {
-        return this.props.createInline && this.row.id === this.row.section.lastRow.id;
+    displayAddLine(row) {
+        if (!row) {
+            return false;
+        }
+        return Boolean(this.props.createInline && row.id === row.section?.lastRow?.id);
     }
 
     getCellColorClass(column, section) {
@@ -366,9 +389,12 @@ export class GridRenderer extends Component {
         if (this.isMobile || !columnFieldIsDate || navigationInfo.range.name != "month") {
             return;
         }
-        const rendererEl = this.rendererRef.el;
+        const rendererEl = this.rendererRef() || this.rendererRef.el;
+        if (!rendererEl) {
+            return;
+        }
         const todayEl = rendererEl.querySelector("div.o_grid_column_title.fw-bolder");
-        if (todayEl) {
+        if (todayEl && rendererEl.parentElement) {
             rendererEl.parentElement.scrollLeft =
                 todayEl.offsetLeft - rendererEl.offsetWidth / 2 + todayEl.offsetWidth / 2;
         }
@@ -385,10 +411,14 @@ export class GridRenderer extends Component {
             // We are not in an element that should trigger a highlight.
             return;
         }
+        const rendererEl = this.rendererRef.el || this.rendererRef();
+        if (!rendererEl) {
+            return;
+        }
         const { column, gridRow, gridColumn, row } = highlightableElement.dataset;
         const isCellInColumnTotalHighlighted =
             highlightableElement.classList.contains("o_grid_row_total");
-        const elementsToHighlight = this.rendererRef.el.querySelectorAll(
+        const elementsToHighlight = rendererEl.querySelectorAll(
             `.o_grid_highlightable[data-grid-row="${gridRow}"]:not(.o_grid_add_line):not(.o_grid_column_title), .o_grid_highlightable[data-grid-column="${gridColumn}"]:not(.o_grid_row_timer):not(.o_grid_section_title):not(.o_grid_row_title${
                 isCellInColumnTotalHighlighted ? ",.o_grid_row_total" : ""
             })`
@@ -590,7 +620,8 @@ export class GridRenderer extends Component {
             rowId = rowIds[rowIndex];
         }
         this.onEditCell(false);
-        this.hoveredCellProps.reactive.cell = this.rendererRef.el.querySelector(
+        const rendererEl = this.rendererRef() || this.rendererRef.el;
+        this.hoveredCellProps.reactive.cell = rendererEl?.querySelector(
             `.o_grid_highlightable[data-row="${rowId}"][data-column="${columnId}"]`
         );
         this.onEditCell(true);

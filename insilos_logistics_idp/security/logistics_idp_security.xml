@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="privilege_logistics_idp" model="res.groups.privilege">
+        <field name="name">Logistics IDP</field>
+        <field name="sequence">30</field>
+        <field name="category_id" ref="base.module_category_services"/>
+    </record>
+
+    <record id="group_logistics_operator" model="res.groups">
+        <field name="name">Operator</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="privilege_logistics_idp"/>
+        <field name="implied_ids" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+    <record id="group_logistics_reviewer" model="res.groups">
+        <field name="name">Trade Compliance Reviewer</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="privilege_logistics_idp"/>
+        <field name="implied_ids" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+    <record id="group_logistics_manager" model="res.groups">
+        <field name="name">Logistics Manager</field>
+        <field name="sequence">30</field>
+        <field name="privilege_id" ref="privilege_logistics_idp"/>
+        <field name="implied_ids" eval="[(4, ref('project.group_project_manager'))]"/>
+    </record>
+    <record id="group_master_data_steward" model="res.groups">
+        <field name="name">Master Data Steward</field>
+        <field name="sequence">40</field>
+        <field name="privilege_id" ref="privilege_logistics_idp"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_logistics_auditor" model="res.groups">
+        <field name="name">Read-only Auditor</field>
+        <field name="sequence">50</field>
+        <field name="privilege_id" ref="privilege_logistics_idp"/>
+        <field name="implied_ids" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+    <record id="group_logistics_integration" model="res.groups">
+        <field name="name">Integration Service</field>
+        <field name="sequence">55</field>
+        <field name="privilege_id" ref="privilege_logistics_idp"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_logistics_admin" model="res.groups">
+        <field name="name">Vertical Administrator</field>
+        <field name="sequence">60</field>
+        <field name="privilege_id" ref="privilege_logistics_idp"/>
+        <field name="implied_ids" eval="[(4, ref('group_logistics_manager')), (4, ref('project.group_project_manager'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_logistics_admin'))]"/>
+    </record>
+
+    <record id="rule_case_company" model="ir.rule">
+        <field name="name">Logistics case company isolation</field><field name="model_id" ref="model_logistics_idp_case"/>
+        <field name="global" eval="True"/><field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_case_operator_assignment" model="ir.rule">
+        <field name="name">Logistics operator assignment</field><field name="model_id" ref="model_logistics_idp_case"/>
+        <field name="groups" eval="[(4, ref('group_logistics_operator'))]"/><field name="domain_force">[('owner_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_email_thread_entry_company" model="ir.rule">
+        <field name="name">Logistics email thread history company isolation</field><field name="model_id" ref="model_logistics_idp_email_thread_entry"/>
+        <field name="global" eval="True"/><field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_document_company" model="ir.rule">
+        <field name="name">Logistics document company isolation</field><field name="model_id" ref="model_logistics_idp_document"/>
+        <field name="global" eval="True"/><field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_evidence_company" model="ir.rule">
+        <field name="name">Logistics evidence company isolation</field><field name="model_id" ref="model_logistics_idp_evidence"/>
+        <field name="global" eval="True"/><field name="domain_force">[('case_id.company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_decision_company" model="ir.rule">
+        <field name="name">Logistics decision company isolation</field><field name="model_id" ref="model_logistics_idp_policy_decision"/>
+        <field name="global" eval="True"/><field name="domain_force">[('case_id.company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_run_company" model="ir.rule">
+        <field name="name">Logistics run company isolation</field><field name="model_id" ref="model_logistics_idp_extraction_run"/>
+        <field name="global" eval="True"/><field name="domain_force">[('case_id.company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_check_company" model="ir.rule">
+        <field name="name">Logistics check company isolation</field><field name="model_id" ref="model_logistics_idp_check_result"/>
+        <field name="global" eval="True"/><field name="domain_force">[('case_id.company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_output_company" model="ir.rule">
+        <field name="name">Logistics output company isolation</field><field name="model_id" ref="model_logistics_idp_output"/>
+        <field name="global" eval="True"/><field name="domain_force">[('case_id.company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_override_company" model="ir.rule">
+        <field name="name">Logistics override company isolation</field><field name="model_id" ref="model_logistics_idp_override"/>
+        <field name="global" eval="True"/><field name="domain_force">[('case_id.company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_policy_company" model="ir.rule">
+        <field name="name">Logistics policy company isolation</field><field name="model_id" ref="model_logistics_idp_policy_source"/>
+        <field name="global" eval="True"/><field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_policy_activation_company" model="ir.rule">
+        <field name="name">Policy activation company isolation</field><field name="model_id" ref="model_logistics_idp_policy_activation"/>
+        <field name="global" eval="True"/><field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_supplier_profile_company" model="ir.rule"><field name="name">Supplier profile company isolation</field><field name="model_id" ref="model_logistics_idp_supplier_profile"/><field name="global" eval="True"/><field name="domain_force">[('company_id', 'in', company_ids)]</field></record>
+    <record id="rule_reference_snapshot_company" model="ir.rule"><field name="name">Reference snapshot company isolation</field><field name="model_id" ref="model_logistics_idp_reference_snapshot"/><field name="global" eval="True"/><field name="domain_force">[('company_id', 'in', company_ids)]</field></record>
+    <record id="rule_po_snapshot_company" model="ir.rule"><field name="name">PO snapshot company isolation</field><field name="model_id" ref="model_logistics_idp_po_snapshot"/><field name="global" eval="True"/><field name="domain_force">[('company_id', 'in', company_ids)]</field></record>
+    <record id="rule_po_snapshot_line_company" model="ir.rule"><field name="name">PO snapshot line company isolation</field><field name="model_id" ref="model_logistics_idp_po_snapshot_line"/><field name="global" eval="True"/><field name="domain_force">[('snapshot_id.company_id', 'in', company_ids)]</field></record>
+    <record id="rule_exception_company" model="ir.rule"><field name="name">Logistics exception company isolation</field><field name="model_id" ref="model_logistics_idp_exception"/><field name="global" eval="True"/><field name="domain_force">[('company_id', 'in', company_ids)]</field></record>
+    <record id="rule_inbound_job_company" model="ir.rule"><field name="name">Logistics inbound job company isolation</field><field name="model_id" ref="model_logistics_idp_inbound_job"/><field name="global" eval="True"/><field name="domain_force">[('company_id', 'in', company_ids)]</field></record>
+    <record id="rule_mes_reference_company" model="ir.rule"><field name="name">MES reference company isolation</field><field name="model_id" ref="model_logistics_idp_mes_reference"/><field name="global" eval="True"/><field name="domain_force">[('case_id.company_id', 'in', company_ids)]</field></record>
+    <record id="rule_extracted_line_company" model="ir.rule"><field name="name">Extracted line company isolation</field><field name="model_id" ref="model_logistics_idp_extracted_line"/><field name="global" eval="True"/><field name="domain_force">[('company_id', 'in', company_ids)]</field></record>
+
+    <record id="rule_logistics_onboarding" model="ir.rule">
+        <field name="name">Logistics onboarding only</field><field name="model_id" ref="onboarding.model_onboarding_onboarding"/>
+        <field name="groups" eval="[(4, ref('group_logistics_operator')), (4, ref('group_logistics_reviewer')), (4, ref('group_logistics_manager')), (4, ref('group_logistics_auditor'))]"/>
+        <field name="domain_force">[('route_name', '=', 'logistics_idp_overview')]</field><field name="perm_write" eval="False"/><field name="perm_create" eval="False"/><field name="perm_unlink" eval="False"/>
+    </record>
+    <record id="rule_logistics_onboarding_step" model="ir.rule">
+        <field name="name">Logistics onboarding steps only</field><field name="model_id" ref="onboarding.model_onboarding_onboarding_step"/>
+        <field name="groups" eval="[(4, ref('group_logistics_operator')), (4, ref('group_logistics_reviewer')), (4, ref('group_logistics_manager')), (4, ref('group_logistics_auditor'))]"/>
+        <field name="domain_force">[('onboarding_ids.route_name', '=', 'logistics_idp_overview')]</field><field name="perm_write" eval="False"/><field name="perm_create" eval="False"/><field name="perm_unlink" eval="False"/>
+    </record>
+    <record id="rule_logistics_onboarding_progress" model="ir.rule">
+        <field name="name">Logistics onboarding progress by company</field><field name="model_id" ref="onboarding.model_onboarding_progress"/>
+        <field name="groups" eval="[(4, ref('group_logistics_operator')), (4, ref('group_logistics_reviewer')), (4, ref('group_logistics_manager')), (4, ref('group_logistics_auditor'))]"/>
+        <field name="domain_force">[('onboarding_id.route_name', '=', 'logistics_idp_overview'), ('company_id', 'in', [False] + company_ids)]</field><field name="perm_unlink" eval="False"/>
+    </record>
+    <record id="rule_logistics_onboarding_progress_step" model="ir.rule">
+        <field name="name">Logistics onboarding progress steps by company</field><field name="model_id" ref="onboarding.model_onboarding_progress_step"/>
+        <field name="groups" eval="[(4, ref('group_logistics_operator')), (4, ref('group_logistics_reviewer')), (4, ref('group_logistics_manager')), (4, ref('group_logistics_auditor'))]"/>
+        <field name="domain_force">[('step_id.onboarding_ids.route_name', '=', 'logistics_idp_overview'), ('company_id', 'in', [False] + company_ids)]</field><field name="perm_unlink" eval="False"/>
+    </record>
+</odoo>

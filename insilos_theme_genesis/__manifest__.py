@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Insilos Genesis Website Theme',
+    'summary': 'AI Generated Theme & Responsive Layout for Insilos Genesis',
+    'category': 'Theme/Corporate',
+    'version': '20.0.1.0.0',
+    'license': 'LGPL-3',
+    'author': 'Insilos Web Designer',
+    'depends': ['website', 'web', 'base_setup'],
+    'data': [
+        'views/pages.xml',
+        'views/res_config_settings_views.xml',
+    ],
+    'assets': {
+        'web._assets_primary_variables': [
+            'insilos_theme_genesis/static/src/scss/primary_variables.scss',
+        ],
+        'web.assets_backend': [
+            'insilos_theme_genesis/static/src/scss/insilos_modern_tokens.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_settings_restructure.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_apps_restructure.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_systray_restructure.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_usermenu_restructure.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_control_panel_restructure.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_list_restructure.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_kanban_restructure.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_form_restructure.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_command_palette_restructure.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_home_launcher_restructure.scss',
+            'insilos_theme_genesis/static/src/user_menu/user_menu_patch.js',
+            'insilos_theme_genesis/static/src/user_menu/user_menu_extension.xml',
+        ],
+    },
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

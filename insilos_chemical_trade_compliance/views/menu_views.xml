@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Root App Menu -->
+        <menuitem id="menu_chemical_compliance_root"
+                  name="Chemical Trade Compliance"
+                  web_icon="insilos_chemical_trade_compliance,static/description/icon.svg"
+                  sequence="76"/>
+
+        <!-- 0. Onboarding & Dashboard -->
+        <menuitem id="menu_chemical_onboarding_hub_item"
+                  name="Dashboard &amp; Onboarding"
+                  parent="menu_chemical_compliance_root"
+                  action="action_is_chemical_onboarding_hub"
+                  sequence="1"/>
+
+        <!-- 1. Operations & Dossiers -->
+        <menuitem id="menu_chemical_dossier_operations"
+                  name="Dossiers &amp; Declarations"
+                  parent="menu_chemical_compliance_root"
+                  sequence="10"/>
+
+        <menuitem id="menu_chemical_compliance_dossier_item"
+                  name="Compliance Dossiers"
+                  parent="menu_chemical_dossier_operations"
+                  action="action_is_chemical_compliance_dossier"
+                  sequence="10"/>
+
+        <menuitem id="menu_chemical_compliance_exception_item"
+                  name="Compliance Data Exceptions"
+                  parent="menu_chemical_dossier_operations"
+                  action="action_is_chemical_compliance_exception"
+                  sequence="20"/>
+
+        <!-- 2. Master Data & Mappings -->
+        <menuitem id="menu_chemical_master_mappings"
+                  name="Master Data &amp; Mappings"
+                  parent="menu_chemical_compliance_root"
+                  sequence="20"/>
+
+        <menuitem id="menu_chemical_material_mapping_item"
+                  name="Material-Chemical Mapping"
+                  parent="menu_chemical_master_mappings"
+                  action="action_is_chemical_material_mapping"
+                  sequence="10"/>
+
+        <menuitem id="menu_chemical_purpose_of_use_item"
+                  name="Purposes of Use"
+                  parent="menu_chemical_master_mappings"
+                  action="action_is_chemical_purpose_of_use"
+                  sequence="20"/>
+
+        <!-- 3. Usage & Quotas -->
+        <menuitem id="menu_chemical_quota_operations"
+                  name="Usage &amp; Quotas"
+                  parent="menu_chemical_compliance_root"
+                  sequence="30"/>
+
+        <menuitem id="menu_chemical_usage_tracking_item"
+                  name="Chemical Usage Tracking"
+                  parent="menu_chemical_quota_operations"
+                  action="action_is_chemical_usage_tracking"
+                  sequence="10"/>
+
+        <menuitem id="menu_chemical_permit_quota_item"
+                  name="Permit Quotas &amp; Burn-down"
+                  parent="menu_chemical_quota_operations"
+                  action="action_is_chemical_permit_quota"
+                  sequence="20"/>
+
+        <!-- 4. Rules & Regulatory Matrix -->
+        <menuitem id="menu_chemical_rules_operations"
+                  name="Regulatory &amp; Simulation"
+                  parent="menu_chemical_compliance_root"
+                  sequence="40"/>
+
+        <menuitem id="menu_chemical_obligation_simulator_item"
+                  name="Obligation Simulator (Tra cứu 2026)"
+                  parent="menu_chemical_rules_operations"
+                  action="action_is_chemical_obligation_simulator"
+                  sequence="5"/>
+
+        <menuitem id="menu_chemical_regulatory_rule_item"
+                  name="Regulatory Obligation Rules (2026)"
+                  parent="menu_chemical_rules_operations"
+                  action="action_is_chemical_regulatory_rule"
+                  sequence="10"/>
+
+        <!-- 5. Configuration -->
+        <menuitem id="menu_chemical_compliance_config"
+                  name="Configuration"
+                  parent="menu_chemical_compliance_root"
+                  groups="group_chemical_compliance_manager"
+                  sequence="90"/>
+
+        <menuitem id="menu_chemical_compliance_settings_item"
+                  name="Settings"
+                  parent="menu_chemical_compliance_config"
+                  action="action_chemical_trade_compliance_config_settings"
+                  sequence="10"/>
+    </data>
+</odoo>

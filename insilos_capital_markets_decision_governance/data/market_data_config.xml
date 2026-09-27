@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!-- The sidecar URL ships empty on purpose. An unconfigured database must
+         reach nothing at all, and a default that happens to be right in dev is
+         a default that is silently wrong in production. Production bootstrap
+         must explicitly set capital_markets.market_data_enabled to true.
+
+         The bearer token is runtime-only: set CAPITAL_MARKETS_SIDECAR_TOKEN
+         from the workload Secret. Never store it in is.config_parameter.
+    -->
+    <record id="param_market_data_enabled" model="ir.config_parameter">
+        <field name="key">capital_markets.market_data_enabled</field>
+        <field name="value">false</field>
+    </record>
+
+    <record id="param_sidecar_base_url" model="ir.config_parameter">
+        <field name="key">capital_markets.sidecar_base_url</field>
+        <field name="value"></field>
+    </record>
+
+</odoo>

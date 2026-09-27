@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- List View: Freight Carbon -->
+        <record id="view_is_esg_freight_carbon_tree" model="ir.ui.view">
+            <field name="name">is.esg.freight.carbon.list</field>
+            <field name="model">is.esg.freight.carbon</field>
+            <field name="arch" type="xml">
+                <list string="Scope 3 Category 4 Freight Carbon Footprints">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="case_id"/>
+                    <field name="transport_mode"/>
+                    <field name="cargo_weight_ton" string="Weight (Tons)"/>
+                    <field name="estimated_distance_km" string="Distance (km)"/>
+                    <field name="gross_freight_emissions_t_co2e" string="Carbon (tCO₂e)" class="fw-bold text-primary"/>
+                    <field name="paperless_pages_processed" string="IDP Pages"/>
+                    <field name="esg_other_emission_id" widget="many2one"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View: Freight Carbon -->
+        <record id="view_is_esg_freight_carbon_form" model="ir.ui.view">
+            <field name="name">is.esg.freight.carbon.form</field>
+            <field name="model">is.esg.freight.carbon</field>
+            <field name="arch" type="xml">
+                <form string="Scope 3 Freight Carbon Footprint">
+                    <header>
+                        <button name="action_post_to_esg_ledger" string="Post to Core ESG Carbon Ledger" type="object" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <div class="w_title">
+                            <label for="name" string="Carbon Calculation Code"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="1. Logistics Inbound Context">
+                                <field name="case_id"/>
+                                <field name="date"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="transport_mode"/>
+                                <field name="origin_port_or_city"/>
+                                <field name="destination_port_or_city"/>
+                            </group>
+                            <group string="2. Transport Parameters (GLEC Framework)">
+                                <field name="cargo_weight_ton"/>
+                                <field name="estimated_distance_km"/>
+                                <field name="emission_factor_kg_per_tkm"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group string="3. Gross &amp; Net Freight Carbon Footprint">
+                                <field name="gross_freight_emissions_kg_co2e"/>
+                                <field name="gross_freight_emissions_t_co2e" class="fw-bold fs-4 text-danger"/>
+                                <field name="net_logistics_carbon_kg_co2e"/>
+                            </group>
+                            <group string="4. Paperless Digital IDP Offsets">
+                                <field name="paperless_pages_processed"/>
+                                <field name="paperless_carbon_offset_kg"/>
+                                <field name="esg_other_emission_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_is_esg_freight_carbon_search" model="ir.ui.view">
+            <field name="name">is.esg.freight.carbon.search</field>
+            <field name="model">is.esg.freight.carbon</field>
+            <field name="arch" type="xml">
+            <search><field name="name"/><field name="case_id"/><field name="transport_mode"/></search></field>
+        </record>
+
+        <!-- Action Window: Freight Carbon -->
+        <record id="action_is_esg_freight_carbon" model="ir.actions.act_window">
+            <field name="name">Scope 3 Freight Carbon Footprint</field>
+            <field name="res_model">is.esg.freight.carbon</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>

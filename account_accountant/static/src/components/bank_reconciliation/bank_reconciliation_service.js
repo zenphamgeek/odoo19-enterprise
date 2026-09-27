@@ -1,4 +1,4 @@
-import { EventBus, reactive, useState } from "@odoo/owl";
+import { EventBus, proxy } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
 import { useService } from "@web/core/utils/hooks";
 import { registry } from "@web/core/registry";
@@ -13,15 +13,15 @@ export class BankReconciliationService {
         this.bus = new EventBus();
         this.orm = services["orm"];
 
-        this.chatterState = reactive({
+        this.chatterState = proxy({
             visible:
                 JSON.parse(
                     browser.sessionStorage.getItem("isBankReconciliationWidgetChatterOpened")
                 ) ?? false,
             statementLine: null,
         });
-        this.reconcileCountPerPartnerId = reactive({});
-        this.reconcileModelPerStatementLineId = reactive({});
+        this.reconcileCountPerPartnerId = proxy({});
+        this.reconcileModelPerStatementLineId = proxy({});
     }
 
     toggleChatter() {
@@ -135,5 +135,5 @@ const bankReconciliationService = {
 registry.category("services").add("bankReconciliation", bankReconciliationService);
 
 export function useBankReconciliation() {
-    return useState(useService("bankReconciliation"));
+    return proxy(useService("bankReconciliation"));
 }

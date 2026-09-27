@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template 1: Giấy phép / Giấy chứng nhận Đủ Điều kiện HSE -->
+    <template id="report_hse_product_permit_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1.4; border: 2px solid #0B2E64; padding: 25px; border-radius: 4px;">
+                        <div class="alert alert-warning text-center" role="alert">
+                            <strong>BẢN DỰ THẢO NỘI BỘ — KHÔNG XÁC NHẬN GIẤY PHÉP, CHỨNG NHẬN HOẶC CHẤP THUẬN CỦA CƠ QUAN CÓ THẨM QUYỀN</strong>
+                        </div>
+                        <div class="text-center mb-3">
+                            <h5 style="font-weight: bold; margin-bottom: 2px; text-transform: uppercase;">HỒ SƠ THEO DÕI NỘI BỘ</h5>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <strong>Cơ quan ban hành (theo khai báo):</strong><br/>
+                                <span style="font-size: 14px; font-weight: bold; color: #0B2E64;">
+                                    <t t-esc="o.issuing_authority or 'Chưa cập nhật'"/>
+                                </span><br/>
+                                <span>Mã hồ sơ: <strong><t t-esc="o.permit_number"/></strong></span>
+                            </div>
+                            <div class="col-6 text-end">
+                                <span>Ngày ghi nhận: <strong><t t-esc="o.issue_date and o.issue_date.strftime('%d/%m/%Y') or 'Chưa cập nhật'"/></strong></span><br/>
+                                <span>Trạng thái bản ghi nội bộ: <strong><t t-esc="dict(o._fields['state'].selection).get(o.state)"/></strong></span>
+                            </div>
+                        </div>
+
+                        <!-- Tiêu đề Chứng chỉ / Giấy phép -->
+                        <div class="text-center mb-4">
+                            <h3 style="font-weight: bold; color: #0B2E64; text-transform: uppercase; margin-bottom: 5px;">
+                                <t t-esc="o.name"/>
+                            </h3>
+                            <h6 class="fst-italic text-muted">
+                                Phân loại: <strong><t t-esc="dict(o._fields['permit_type'].selection).get(o.permit_type)"/></strong>
+                            </h6>
+                        </div>
+
+                        <!-- Thông tin Doanh nghiệp được cấp phép -->
+                        <div class="mb-3">
+                            <table class="table table-sm table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 25%;"><strong>Đơn vị liên quan:</strong></td>
+                                        <td><strong><t t-esc="o.company_id.name"/></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Mã số thuế / ĐKKD:</strong></td>
+                                        <td><t t-esc="o.company_id.vat or 'N/A'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Địa chỉ đăng ký:</strong></td>
+                                        <td><t t-esc="o.company_id.partner_id.contact_address or 'Trụ sở chính'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Hóa chất áp dụng:</strong></td>
+                                        <td>
+                                            <t t-if="o.chemical_substance_id">
+                                                <strong><t t-esc="o.chemical_substance_id.name"/></strong> (Mã CAS: <t t-esc="o.chemical_substance_id.cas_number"/>)
+                                            </t>
+                                            <t t-else="">
+                                                <em>Áp dụng chung theo danh mục sản phẩm bên dưới</em>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Thời hạn hiệu lực:</strong></td>
+                                        <td>
+                                            <t t-if="o.is_perpetual">
+                                                <span class="badge bg-success">Vô thời hạn (Perpetual)</span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>Từ ngày: <strong><t t-esc="o.issue_date"/></strong> đến ngày: <strong><t t-esc="o.expiry_date"/></strong></span>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Danh mục Sản phẩm / Hóa chất đính kèm -->
+                        <div class="mb-3" t-if="o.product_template_ids">
+                            <strong>Danh mục Vật tư / Hóa chất liên quan theo hồ sơ:</strong>
+                            <table class="table table-sm table-bordered mt-2" style="border-collapse: collapse; width: 100%;">
+                                <thead style="background-color: #f2f2f2; text-align: center;">
+                                    <tr>
+                                        <th style="width: 8%;">STT</th>
+                                        <th style="width: 45%;">Tên Thương phẩm / Sản phẩm</th>
+                                        <th style="width: 25%;">Hóa chất Thành phần</th>
+                                        <th style="width: 22%;">Mã CAS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="p_idx" t-value="1"/>
+                                    <tr t-foreach="o.product_template_ids" t-as="prod">
+                                        <td class="text-center"><t t-esc="p_idx"/></td>
+                                        <td><strong><t t-esc="prod.name"/></strong></td>
+                                        <td><t t-esc="prod.chemical_substance_id.name or 'N/A'"/></td>
+                                        <td class="text-center"><t t-esc="prod.chemical_substance_id.cas_number or 'N/A'"/></td>
+                                        <t t-set="p_idx" t-value="p_idx + 1"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mb-4" t-if="o.conditions_summary">
+                            <strong>Điều kiện và phạm vi theo khai báo:</strong>
+                            <div style="background-color: #fcfcfc; border: 1px solid #e0e0e0; padding: 10px; border-radius: 3px; text-align: justify; margin-top: 5px;">
+                                <t t-esc="o.conditions_summary"/>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-6 text-center">
+                                <strong>NGƯỜI LẬP HỒ SƠ</strong><br/>
+                                <span class="fst-italic">(Ký, ghi rõ họ tên)</span>
+                                <div style="height: 60px;"></div>
+                            </div>
+                            <div class="col-6 text-center">
+                                <strong>NGƯỜI RÀ SOÁT NỘI BỘ</strong><br/>
+                                <span class="fst-italic">(Ký, ghi rõ họ tên)</span>
+                                <div style="height: 60px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Template 2: Phiếu Tóm tắt An toàn Hóa chất & Quy trình SOP Khẩn cấp -->
+    <template id="report_hse_chemical_safety_sop_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.35;">
+                        <!-- Header SOP Card -->
+                        <div style="background-color: #0B2E64; color: white; padding: 12px; border-radius: 4px;" class="text-center mb-3">
+                            <h4 style="font-weight: bold; margin: 0; text-transform: uppercase;">
+                                PHIẾU AN TOÀN HÓA CHẤT &amp; QUY TRÌNH SOP KHẨN CẤP
+                            </h4>
+                            <span style="font-size: 13px;">(CHEMICAL SAFETY &amp; EMERGENCY RESPONSE CARD)</span>
+                        </div>
+
+                        <!-- Định danh Hóa chất -->
+                        <div class="row mb-3">
+                            <div class="col-8">
+                                <table class="table table-sm table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 30%; background-color: #f5f5f5;"><strong>Tên Hóa chất / IUPAC:</strong></td>
+                                            <td><strong style="font-size: 14px; color: #0B2E64;"><t t-esc="o.name"/></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #f5f5f5;"><strong>Mã số CAS:</strong></td>
+                                            <td><strong style="color: #c0392b;"><t t-esc="o.cas_number"/></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #f5f5f5;"><strong>Công thức Hóa học:</strong></td>
+                                            <td><strong><t t-esc="o.formula or 'Chưa cập nhật'"/></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #f5f5f5;"><strong>Mã UN / Vận chuyển:</strong></td>
+                                            <td><t t-esc="o.un_number or 'UN N/A'"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border: 2px solid #e74c3c; border-radius: 6px; padding: 10px; background-color: #fdf2f2;">
+                                    <span style="font-size: 11px; font-weight: bold; color: #7f1d1d;">MỨC ĐỘ NGUY HIỂM GHS</span><br/>
+                                    <h4 style="font-weight: 900; color: #c0392b; margin-top: 5px; text-transform: uppercase;">
+                                        <t t-esc="o.ghs_signal_word.upper() if o.ghs_signal_word else 'CẢNH BÁO'"/>
+                                    </h4>
+                                    <small class="text-muted"><t t-esc="dict(o._fields['hazard_classification'].selection).get(o.hazard_classification)"/></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Biểu trưng Nguy hại GHS & Nhận diện -->
+                        <div class="mb-3">
+                            <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 8px; border-radius: 4px;">
+                                <strong>Đặc tính Nguy hại (GHS Hazard Characteristics):</strong>
+                                <div class="row text-center mt-2">
+                                    <div class="col-2" t-if="o.ghs_flammable">
+                                        <span class="badge bg-danger p-2" style="width: 100%;">🔥 DỄ CHÁY (GHS02)</span>
+                                    </div>
+                                    <div class="col-2" t-if="o.ghs_corrosive">
+                                        <span class="badge bg-dark p-2" style="width: 100%;">🧪 ĂN MÒN (GHS05)</span>
+                                    </div>
+                                    <div class="col-2" t-if="o.ghs_toxic">
+                                        <span class="badge bg-danger p-2" style="width: 100%;">☠️ ĐỘC HẠI (GHS06)</span>
+                                    </div>
+                                    <div class="col-3" t-if="o.ghs_health_hazard">
+                                        <span class="badge bg-warning text-dark p-2" style="width: 100%;">☣️ NGUY HẠI SỨC KHỎE (GHS08)</span>
+                                    </div>
+                                    <div class="col-3" t-if="o.ghs_environmental">
+                                        <span class="badge bg-info text-dark p-2" style="width: 100%;">🌊 NGUY HẠI MÔI TRƯỜNG (GHS09)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning" role="alert">
+                            <strong>BẢN DỰ THẢO NỘI BỘ — KHÔNG DÙNG THAY THẾ SDS HOẶC QUY TRÌNH KHẨN CẤP ĐƯỢC PHÊ DUYỆT.</strong>
+                            Thực hiện PPE, thao tác, sơ cứu, xử lý tràn đổ và chữa cháy theo SDS và quy trình khẩn cấp đã được phê duyệt cho đúng hóa chất này.
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Template 3: Biên bản Đánh giá Tuân thủ Quy chuẩn HSE -->
+    <template id="report_hse_legal_compliance_audit_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1.4;">
+                        <div class="alert alert-warning text-center" role="alert">
+                            <strong>BẢN RÀ SOÁT NỘI BỘ — KHÔNG PHẢI KẾT LUẬN TUÂN THỦ PHÁP LÝ, CHỨNG NHẬN, HOẶC HỒ SƠ NỘP CƠ QUAN.</strong>
+                        </div>
+                        <!-- Header -->
+                        <div class="row text-center mb-3">
+                            <div class="col-12">
+                                <strong><t t-esc="o.company_id.name.upper()"/></strong><br/>
+                                <strong>BIÊN BẢN ĐÁNH GIÁ TUÂN THỦ QUY CHUẨN PHÁP LUẬT HSE &amp; HÓA CHẤT</strong><br/>
+                                <span>Năm đánh giá: <strong><t t-esc="o.year"/></strong> | Ngày đánh giá: <strong><t t-esc="o.evaluation_date or 'Chưa đánh giá'"/></strong></span>
+                            </div>
+                        </div>
+
+                        <!-- Thông tin Cơ sở & Kết quả Đánh giá Tổng thể -->
+                        <div class="row mb-3">
+                            <div class="col-7">
+                                <table class="table table-sm table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 35%;"><strong>Cơ sở / Nhà máy:</strong></td>
+                                            <td><strong><t t-esc="o.facility_id.name"/></strong> (<t t-esc="o.facility_id.code or 'FAC'"/>)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Địa điểm:</strong></td>
+                                            <td><t t-esc="o.facility_id.address or 'Khu công nghiệp'"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Trạng thái Sổ HSE:</strong></td>
+                                            <td><strong><t t-esc="dict(o._fields['state'].selection).get(o.state)"/></strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-5">
+                                <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; padding: 10px; text-align: center;">
+                                    <span>KẾT QUẢ ĐÁNH GIÁ NGHĨA VỤ ĐÃ GHI NHẬN:</span><br/>
+                                    <small class="text-muted">Chỉ phản ánh đánh giá nội bộ trên các nghĩa vụ đã ghi nhận; không phải kết luận tuân thủ pháp lý.</small><br/>
+                                    <t t-if="o.obligation_ids.filtered(lambda obl: obl.compliance_status not in ('not_assessed', 'not_applicable'))">
+                                        <h3 style="font-weight: bold; margin: 5px 0;" x-attf-class="{{ 'text-success' if o.compliance_score >= 90 else 'text-warning' if o.compliance_score >= 75 else 'text-danger' }}">
+                                            <t t-esc="'{:.1f}%'.format(o.compliance_score)"/>
+                                        </h3>
+                                        <small>Đạt: <strong><t t-esc="o.compliant_count"/></strong> / Đã đánh giá: <strong><t t-esc="len(o.obligation_ids.filtered(lambda obl: obl.compliance_status not in ('not_assessed', 'not_applicable')))"/></strong> / Tổng số: <strong><t t-esc="o.total_obligations"/></strong> nghĩa vụ</small>
+                                    </t>
+                                    <t t-else="">
+                                        <strong>CHƯA ĐÁNH GIÁ — không có kết luận tuân thủ</strong>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Danh sách Chi tiết Nghĩa vụ Pháp lý & Hiện trạng -->
+                        <div class="mb-4">
+                            <strong>Chi tiết Đánh giá các Điều khoản &amp; Tiêu chuẩn Tuân thủ:</strong>
+                            <table class="table table-sm table-bordered mt-2" style="border-collapse: collapse; width: 100%;">
+                                <thead style="background-color: #f2f2f2; text-align: center;">
+                                    <tr>
+                                        <th style="width: 5%;">STT</th>
+                                        <th style="width: 45%;">Quy định / Điều khoản Pháp lý</th>
+                                        <th style="width: 20%;">Phân loại</th>
+                                        <th style="width: 15%;">Hiện trạng</th>
+                                        <th style="width: 15%;">Hạn khắc phục</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="obl_idx" t-value="1"/>
+                                    <tr t-foreach="o.obligation_ids" t-as="obl">
+                                        <td class="text-center"><t t-esc="obl_idx"/></td>
+                                        <td>
+                                            <strong><t t-esc="obl.title"/></strong><br/>
+                                            <small class="text-muted"><t t-esc="obl.summary or ''"/></small><br/>
+                                            <small class="text-muted">
+                                                Nguồn: <t t-esc="obl.document_id.code"/>; phiên bản <t t-esc="obl.document_id.source_version"/>; SHA-256: <t t-esc="obl.document_id.source_content_sha256"/>.<br/>
+                                                Bằng chứng nội bộ: <t t-esc="obl.evidence_summary or 'Chưa ghi nhận'"/>.
+                                                <t t-if="obl.compliance_approved_by_id"> Rà soát: <t t-esc="obl.compliance_approved_by_id.name"/> lúc <t t-esc="obl.compliance_approved_at"/>.</t>
+                                            </small>
+                                        </td>
+                                        <td><t t-esc="dict(obl._fields['category'].selection).get(obl.category) if obl.category else 'Hóa chất &amp; Môi trường'"/></td>
+                                        <td class="text-center">
+                                            <t t-if="obl.compliance_status == 'compliant'">
+                                                <span class="badge bg-success" style="color: green; font-weight: bold;">ĐẠT (Compliant)</span>
+                                            </t>
+                                            <t t-elif="obl.compliance_status == 'non_compliant'">
+                                                <span class="badge bg-danger" style="color: red; font-weight: bold;">CHƯA ĐẠT</span>
+                                            </t>
+                                            <t t-elif="obl.compliance_status == 'partial'">
+                                                <span class="badge bg-warning" style="color: orange; font-weight: bold;">ĐẠT MỘT PHẦN</span>
+                                            </t>
+                                            <t t-elif="obl.compliance_status == 'not_applicable'">
+                                                <span class="badge bg-secondary" style="color: gray;">Không áp dụng</span>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="badge bg-secondary" style="color: gray;">CHƯA ĐÁNH GIÁ</span>
+                                            </t>
+                                        </td>
+                                        <td class="text-center"><t t-esc="obl.due_date or '-'"/></td>
+                                        <t t-set="obl_idx" t-value="obl_idx + 1"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Chữ ký & Phê duyệt -->
+                        <div class="row mt-5">
+                            <div class="col-6 text-center">
+                                <strong>CÁN BỘ ĐÁNH GIÁ HSE</strong><br/>
+                                <span class="fst-italic">(Ký, ghi rõ họ tên)</span>
+                                <div style="height: 60px;"></div>
+                            </div>
+                            <div class="col-6 text-center">
+                                <strong>GIÁM ĐỐC NHÀ MÁY / CƠ SỞ</strong><br/>
+                                <span class="fst-italic">(Ký, đóng dấu)</span>
+                                <div style="height: 60px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Template 4: Phiếu An toàn Hóa chất 16 Mục Chuẩn (Safety Data Sheet - SDS) -->
+    <template id="report_hse_safety_data_sheet_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 12px; line-height: 1.4;">
+                        <!-- Header Quốc gia & Doanh nghiệp -->
+                        <div class="row text-center mb-3">
+                            <div class="col-12">
+                                <h4 style="font-weight: bold; color: #0B2E64; margin-bottom: 3px; text-transform: uppercase;">
+                                    PHIẾU AN TOÀN HÓA CHẤT (SAFETY DATA SHEET - SDS)
+                                </h4>
+                                <p class="fst-italic text-muted" style="margin-bottom: 2px;">
+                                    Thông tin quy chuẩn/pháp lý: <t t-esc="o.sec15_regulatory or 'Chưa đánh giá hoặc xác minh nguồn pháp lý.'"/>
+                                </p>
+                                <span>Phiên bản: <strong><t t-esc="o.version or '1.0'"/></strong> | Ngày ban hành: <strong><t t-esc="o.issue_date"/></strong> | Tiêu chuẩn: <strong>16 Mục GHS</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- Khung Tóm tắt Định danh -->
+                        <div class="mb-3" style="border: 1.5px solid #0B2E64; padding: 10px; border-radius: 4px; background-color: #f8fafc;">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h5 style="color: #0B2E64; font-weight: bold; margin-bottom: 5px;">
+                                        Tên Hóa chất: <t t-esc="o.substance_id.name"/>
+                                    </h5>
+                                    <span>• Số CAS: <strong><t t-esc="o.substance_id.cas_number"/></strong> | Số UN: <strong><t t-esc="o.substance_id.un_number or 'N/A'"/></strong> | Công thức: <strong><t t-esc="o.substance_id.formula or 'N/A'"/></strong></span><br/>
+                                    <span>• Nhà sản xuất / Phân phối: <strong><t t-esc="o.supplier_name or 'Chưa xác định'"/></strong></span>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <span style="font-size: 13px; font-weight: bold; color: #b91c1c;">
+                                        TỪ CẢNH BÁO: <t t-esc="(o.substance_id.ghs_signal_word or 'WARNING').upper()"/>
+                                    </span><br/>
+                                    <span class="badge bg-secondary text-dark">
+                                        <t t-esc="dict(o.substance_id._fields['hazard_classification'].selection).get(o.substance_id.hazard_classification)"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 16 Mục Chuẩn SDS -->
+                        <table class="table table-sm table-bordered" style="border-collapse: collapse; width: 100%;">
+                            <tbody>
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">1. NHẬN DẠNG HÓA CHẤT VÀ THÔNG TIN VỀ NHÀ CUNG CẤP</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec1_identification or 'Thông tin định danh sản phẩm hóa chất, mục đích sử dụng công nghiệp và thông tin liên hệ nhà sản xuất / cung ứng.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">2. NHẬN DẠNG CÁC NGUY CƠ (GHS HAZARD IDENTIFICATION)</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <t t-esc="o.sec2_hazard_identification or 'Phân loại nguy hại GHS: Hóa chất nguy hiểm, cảnh báo cháy nổ, ăn mòn hoặc nguy hại sức khỏe/môi trường.'"/>
+                                        <div class="mt-2">
+                                            <t t-if="o.substance_id.ghs_flammable"><span class="badge bg-danger me-2">GHS02 - Nguy cơ Cháy</span></t>
+                                            <t t-if="o.substance_id.ghs_corrosive"><span class="badge bg-warning text-dark me-2">GHS05 - Ăn mòn</span></t>
+                                            <t t-if="o.substance_id.ghs_toxic"><span class="badge bg-dark me-2">GHS06 - Độc cấp tính</span></t>
+                                            <t t-if="o.substance_id.ghs_health_hazard"><span class="badge bg-info text-dark me-2">GHS08 - Nguy hại sức khỏe</span></t>
+                                            <t t-if="o.substance_id.ghs_environmental"><span class="badge bg-success me-2">GHS09 - Nguy hại môi trường</span></t>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">3. THÔNG TIN VỀ THÀNH PHẦN CÁC CHẤT</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec3_composition or 'Thành phần hóa chất đơn chất hoặc hỗn hợp, hàm lượng % nồng độ và số đăng ký CAS.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">4. BIỆN PHÁP SƠ CỨU KHI GẶP SỰ CỐ</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec4_first_aid or 'Quy trình sơ cứu y tế: Tiếp xúc mắt, tiếp xúc da, hít phải hơi khí độc, nuốt phải. Cần đưa ngay nạn nhân ra nơi thoáng khí và gọi cấp cứu.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">5. BIỆN PHÁP CHỮA CHÁY</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec5_fire_fighting or 'Chất chữa cháy phù hợp: Bọt Foam, Bột khô ABC, Khí CO2. Phương tiện bảo hộ đặc biệt cho lực lượng PCCC.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">6. BIỆN PHÁP PHÒNG NGỪA VÀ ỨNG PHÓ KHI RÒ RỈ, TRÀN ĐỔ</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec6_accidental_release or 'Quy trình xử lý sự cố tràn đổ: Sử dụng cát, đất hoặc vật liệu thấm hút trơ. Không để hóa chất tràn vào nguồn nước sinh hoạt và cống rãnh.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">7. SỬ DỤNG VÀ BẢO QUẢN</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec7_handling_storage or 'Bảo quản nơi khô ráo, thoáng mát, có hệ thống thông gió chống nổ. Tránh xa nguồn nhiệt, tia lửa và các hóa chất kỵ nhau.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">8. KIỂM SOÁT TIẾP XÚC VÀ BẢO HỘ CÁ NHÂN (PPE)</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <t t-esc="o.sec8_exposure_controls or 'Yêu cầu trang bị bảo hộ: Kính bảo hộ hóa chất, Găng tay cao su chịu hóa chất (Nitrile/Neoprene), Quần áo chống thấm và Mặt nạ lọc hơi độc chuyên dụng.'"/>
+                                        <t t-if="o.substance_id.oel_ids">
+                                            <div class="mt-2">
+                                                <strong>Giới hạn Tiếp xúc Nghề nghiệp (OEL):</strong>
+                                                <ul class="mb-0">
+                                                    <li t-foreach="o.substance_id.oel_ids" t-as="oel">
+                                                        <t t-esc="oel.authority"/>: TWA = <t t-esc="oel.twa_mg_m3"/> mg/m³ (<t t-esc="oel.twa_ppm"/> ppm) | STEL = <t t-esc="oel.stel_mg_m3"/> mg/m³
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </t>
+                                    </td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">9. ĐẶC TÍNH LÝ HÓA</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec9_physical_chemical or 'Trạng thái vật lý, màu sắc, mùi, nhiệt độ sôi, nhiệt độ chớp cháy, tỷ trọng và độ hòa tan trong nước.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">10. TÍNH ỔN ĐỊNH VÀ KHẢ NĂNG PHẢN ỨNG</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec10_stability_reactivity or 'Tính ổn định hóa học trong điều kiện thường. Các phản ứng nguy hiểm và chất không tương thích cần tránh.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">11. THÔNG TIN VỀ ĐỘC TÍNH</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec11_toxicological or 'Độc tính cấp tính (LD50, LC50), khả năng gây kích ứng, dị ứng, ung thư hoặc độc tính sinh sản.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">12. THÔNG TIN VỀ SINH THÁI VÀ MÔI TRƯỜNG</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec12_ecological or 'Độc tính đối với thủy sinh vật (cá, daphnia), khả năng phân hủy sinh học và tích lũy sinh học.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">13. BIỆN PHÁP TIÊU HỦY</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec13_disposal or 'Xử lý chất thải nguy hại qua đơn vị có giấy phép xử lý môi trường. Không xả thải trực tiếp vào cống rãnh.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">14. QUY ĐỊNH VỀ VẬN CHUYỂN</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec14_transport or 'Mã số UN, Nhóm đóng gói (PG), Nhãn hàng nguy hiểm theo quy chuẩn vận chuyển đường bộ (ADR), đường biển (IMDG) và hàng không (IATA).'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">15. THÔNG TIN VỀ PHÁP LUẬT VÀ QUY CHUẨN</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec15_regulatory or 'Chưa đánh giá hoặc xác minh nguồn pháp lý.'"/></td>
+                                </tr>
+
+                                <tr style="background-color: #f1f5f9;">
+                                    <td colspan="2" style="font-weight: bold; color: #0B2E64;">16. THÔNG TIN CẦN THIẾT KHÁC</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><t t-esc="o.sec16_other or 'Tài liệu tham khảo, từ viết tắt và ngày sửa đổi bản tin an toàn hóa chất gần nhất.'"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Khung Dấu Kiểm Thực Điện Tử SHA-256 Audit Trail Seal -->
+                        <div class="mt-4 p-3" style="border: 1px dashed #0B2E64; background-color: #f8fafc; border-radius: 4px;">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <strong style="color: #0B2E64;">THAM CHIẾU BẢN GHI NỘI BỘ</strong><br/>
+                                    <span style="font-size: 10px; color: #64748b;">
+                                        Mã tham chiếu: <code><t t-esc="(o.substance_id.cas_number + '-SDS-' + (o.version or '1.0')).encode('utf-8').hex()"/></code><br/>
+                                        Bản in từ hệ thống Insilos Enterprise Suite; không xác nhận nguồn pháp lý hoặc tính đầy đủ của SDS.
+                                    </span>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <span style="font-size: 11px; font-weight: bold; color: #0B2E64; border: 1.5px solid #0B2E64; padding: 4px 8px; border-radius: 3px;">
+SDS NỘI BỘ — CHƯA XÁC MINH
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -26,7 +26,14 @@ class EquityCapTable(models.Model):
     valuation = fields.Float()
 
     @property
+    def _table_sql(self):
+        return self._get_table_sql()
+
+    @property
     def _table_query(self):
+        return self._table_sql
+
+    def _get_table_sql(self):
         self.env['equity.transaction'].flush_model()
         current_date = self.env.context.get('current_date') or datetime.max.date()
 
@@ -61,7 +68,7 @@ class EquityCapTable(models.Model):
             ),
         ])
         return SQL(
-            """
+            """(
                 WITH transactions AS (%(all_transactions)s),
                      security_class AS (
                         SELECT *,
@@ -92,7 +99,7 @@ class EquityCapTable(models.Model):
                      ) last_valuation ON TRUE
             GROUP BY partner_id, holder_id, security_class_id, last_valuation.valuation
               WINDOW by_partner AS (PARTITION BY partner_id)
-            """,
+            )""",
             all_transactions=all_transactions,
             current_date=current_date,
         )

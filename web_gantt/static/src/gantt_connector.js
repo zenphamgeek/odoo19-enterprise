@@ -1,4 +1,5 @@
-import { Component, onWillRender, useEffect, useRef } from "@odoo/owl";
+import { Component, onWillRender, signal } from "@odoo/owl";
+import { useLayoutEffect } from "@web/owl2/utils";
 
 /**
  * @typedef {"error" | "warning"} ConnectorAlert
@@ -49,24 +50,18 @@ export const COLORS = {
 /** @extends {Component<{ reactive: ConnectorProps }, any>} */
 export class GanttConnector extends Component {
     static props = {
+        popover: { type: Object },
+        sourcePoint: { type: [Function, Object] },
+        targetPoint: { type: [Function, Object] },
         reactive: {
             type: Object,
             shape: {
                 id: String,
-                alert: {
-                    type: [{ value: "error" }, { value: "warning" }, { value: null }],
-                    optional: true,
-                },
+                alert: { type: Boolean, optional: true },
                 highlighted: { type: Boolean, optional: true },
                 displayButtons: { type: Boolean, optional: true },
-                sourcePoint: [
-                    { value: null },
-                    Function,
-                    { type: Object, shape: { left: Number, top: Number } },
-                ],
-                targetPoint: [
-                    { value: null },
-                    Function,
+                point: [
+                    { value: false },
                     { type: Object, shape: { left: Number, top: Number } },
                 ],
                 dashed: { type: Boolean, optional: true },
@@ -75,13 +70,12 @@ export class GanttConnector extends Component {
         onRemoveButtonClick: { type: Function, optional: true },
         onConnectorHover: { type: Function },
     };
-    static defaultProps = {
-        highlighted: false,
-        displayButtons: false,
-    };
     static template = "web_gantt.GanttConnector";
 
-    rootRef = useRef("root");
+    root = signal.ref();
+    get rootRef() {
+        return this.root;
+    }
     style = {
         hoverEaseWidth: 10,
         slackness: 0.9,
@@ -124,7 +118,7 @@ export class GanttConnector extends Component {
     setup() {
         onWillRender(this.onWillRender);
 
-        useEffect(
+        useLayoutEffect(
             (el, sourceLeft, sourceTop, targetLeft, targetTop) => {
                 if (!el) {
                     return;
@@ -193,10 +187,11 @@ export class GanttConnector extends Component {
         if (typeof targetPoint === "function") {
             targetPoint = targetPoint();
         }
-        const { x, y } = this.rootRef.el?.getBoundingClientRect() || { x: 0, y: 0 };
+        const el = this.root();
+        const { x, y } = el?.getBoundingClientRect() || { x: 0, y: 0 };
 
         return [
-            this.rootRef.el,
+            el,
             sourcePoint.left - x,
             sourcePoint.top - y,
             targetPoint.left - x,

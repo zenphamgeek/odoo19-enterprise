@@ -6,4 +6,4 @@ from odoo import fields, models
 class HelpdeskTicket(models.Model):
     _inherit = 'helpdesk.ticket'
 
-    partner_company_name = fields.Char(string='Company Name', related='partner_id.company_name', store=True, readonly=False)
+    partner_company_name = fields.Char(string='Company Name', related='partner_id.parent_name', store=True, readonly=False)

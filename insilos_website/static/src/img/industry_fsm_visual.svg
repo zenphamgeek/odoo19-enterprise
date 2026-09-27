@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%" style="background: linear-gradient(135deg, #10172A 0%, #1E293B 50%, #0F172A 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="fsm-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#6366F1" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="orange-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FB923C" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EA580C" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="card-fsm" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="emerald-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#059669" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="edge-fsm" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#818CF8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow-fsm" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="shadow-fsm" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Pattern -->
+    <pattern id="grid-fsm" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-width="0.75" stroke-opacity="0.3"/>
+      <circle cx="40" cy="40" r="1.5" fill="#38BDF8" fill-opacity="0.3"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="960" height="540" fill="url(#grid-fsm)"/>
+
+  <!-- Ambient Light Orbs -->
+  <circle cx="200" cy="180" r="160" fill="#6366F1" opacity="0.12" filter="url(#glow-fsm)"/>
+  <circle cx="760" cy="350" r="180" fill="#38BDF8" opacity="0.12" filter="url(#glow-fsm)"/>
+
+  <!-- Top Title Banner -->
+  <g transform="translate(60, 45)">
+    <rect x="0" y="0" width="840" height="44" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1.2" filter="url(#shadow-fsm)"/>
+    <circle cx="24" cy="22" r="6" fill="#38BDF8" filter="url(#glow-fsm)"/>
+    <text x="40" y="27" fill="#FFFFFF" font-size="14" font-weight="700" letter-spacing="1">INSILOS FIELD SERVICE INTELLIGENCE &amp; WORKFORCE ENGINE</text>
+    <rect x="660" y="10" width="160" height="24" rx="12" fill="#0C4A6E" stroke="#38BDF8" stroke-width="1"/>
+    <text x="740" y="26" fill="#38BDF8" font-size="11" font-weight="600" text-anchor="middle">FTFR 94.8% SLA</text>
+  </g>
+
+  <!-- Flow Connecting Lines -->
+  <path d="M 240 200 L 360 200" stroke="#FB923C" stroke-width="2.5" stroke-dasharray="6,4" opacity="0.8"/>
+  <path d="M 560 200 L 670 200" stroke="#38BDF8" stroke-width="2.5" stroke-dasharray="6,4" opacity="0.8"/>
+  <path d="M 460 290 L 460 350" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4" opacity="0.7"/>
+
+  <!-- Node 1: IoT Anomaly Trigger & Asset Context -->
+  <g transform="translate(60, 115)" filter="url(#shadow-fsm)">
+    <rect width="190" height="165" rx="12" fill="url(#card-fsm)" stroke="url(#edge-fsm)" stroke-width="1.5"/>
+    <rect x="15" y="15" width="34" height="34" rx="8" fill="#0F172A" stroke="#FB923C" stroke-width="1"/>
+    <!-- Sensor / Vibration Alert Icon -->
+    <path d="M 24 32 Q 28 22 32 32 T 40 32" stroke="#FB923C" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="32" cy="20" r="3" fill="#FB923C"/>
+    <text x="60" y="30" fill="#FFFFFF" font-size="14" font-weight="700">IoT Telemetry</text>
+    <text x="60" y="44" fill="#94A3B8" font-size="10" font-weight="500">Asset Vibration &amp; Temp</text>
+
+    <line x1="15" y1="62" x2="175" y2="62" stroke="#334155" stroke-width="0.8"/>
+    
+    <text x="15" y="82" fill="#E2E8F0" font-size="11">⚠️ Bearing Vibration Spike</text>
+    <text x="150" y="82" fill="#FB923C" font-size="10" font-weight="700">+4.2g</text>
+    <text x="15" y="104" fill="#E2E8F0" font-size="11">📍 Asset Geo-Location</text>
+    <text x="150" y="104" fill="#38BDF8" font-size="10" font-weight="700">Zone 4</text>
+    <text x="15" y="126" fill="#E2E8F0" font-size="11">🔧 Required Spare Part</text>
+    <text x="150" y="126" fill="#10B981" font-size="10" font-weight="700">In Stock</text>
+    <text x="15" y="148" fill="#E2E8F0" font-size="11">⏱️ Failure Horizon</text>
+    <text x="150" y="148" fill="#FB923C" font-size="10" font-weight="700">48 Hours</text>
+  </g>
+
+  <!-- Node 2: Dynamic Skill & Route Dispatch Core -->
+  <g transform="translate(360, 105)" filter="url(#shadow-fsm)">
+    <rect width="200" height="185" rx="14" fill="#1E293B" stroke="#38BDF8" stroke-width="2"/>
+    <rect x="18" y="16" width="36" height="36" rx="8" fill="#0F172A" stroke="#10B981" stroke-width="1.2"/>
+    <!-- Technician GPS Route Icon -->
+    <path d="M 28 24 C 28 20 44 20 44 28 C 44 36 36 44 36 44 C 36 44 28 36 28 28 Z" stroke="#10B981" stroke-width="1.8" fill="none"/>
+    <circle cx="36" cy="27" r="3" fill="#10B981"/>
+    <text x="64" y="31" fill="#FFFFFF" font-size="15" font-weight="700">Smart Dispatch</text>
+    <text x="64" y="46" fill="#38BDF8" font-size="11" font-weight="600">Skills &amp; Live Route</text>
+
+    <line x1="18" y1="64" x2="182" y2="64" stroke="#334155" stroke-width="0.8"/>
+
+    <g transform="translate(18, 76)">
+      <rect width="164" height="24" rx="6" fill="#0F172A"/>
+      <text x="8" y="16" fill="#FFFFFF" font-size="11">Technician Skill Match</text>
+      <text x="140" y="16" fill="#10B981" font-size="11" font-weight="700">100%</text>
+    </g>
+    <g transform="translate(18, 106)">
+      <rect width="164" height="24" rx="6" fill="#0F172A"/>
+      <text x="8" y="16" fill="#FFFFFF" font-size="11">Travel Time Reduction</text>
+      <text x="140" y="16" fill="#38BDF8" font-size="11" font-weight="700">-38%</text>
+    </g>
+    <g transform="translate(18, 136)">
+      <rect width="164" height="24" rx="6" fill="#0F172A"/>
+      <text x="8" y="16" fill="#FFFFFF" font-size="11">First-Time Fix Rate</text>
+      <text x="140" y="16" fill="#10B981" font-size="11" font-weight="700">94.8%</text>
+    </g>
+  </g>
+
+  <!-- Node 3: Mobile Briefing & Closed-Loop Feedback -->
+  <g transform="translate(670, 115)" filter="url(#shadow-fsm)">
+    <rect width="230" height="165" rx="12" fill="url(#card-fsm)" stroke="url(#edge-fsm)" stroke-width="1.5"/>
+    <rect x="16" y="15" width="34" height="34" rx="8" fill="#0F172A" stroke="#38BDF8" stroke-width="1"/>
+    <!-- Mobile Checkmark Icon -->
+    <rect x="26" y="20" width="16" height="24" rx="3" stroke="#38BDF8" stroke-width="1.5" fill="none"/>
+    <path d="M 30 32 L 33 35 L 38 29" stroke="#10B981" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <text x="60" y="30" fill="#FFFFFF" font-size="14" font-weight="700">Mobile Briefing</text>
+    <text x="60" y="44" fill="#38BDF8" font-size="10" font-weight="600">SOP &amp; Audio Diagnostic</text>
+
+    <line x1="16" y1="62" x2="214" y2="62" stroke="#334155" stroke-width="0.8"/>
+
+    <text x="16" y="82" fill="#E2E8F0" font-size="11">📱 Offline SOP &amp; 3D Diagram</text>
+    <text x="185" y="82" fill="#10B981" font-size="10" font-weight="700">Ready</text>
+    <text x="16" y="104" fill="#E2E8F0" font-size="11">🎙️ Audio Motor Diagnostic</text>
+    <text x="185" y="104" fill="#38BDF8" font-size="10" font-weight="700">AI FFT</text>
+    <text x="16" y="126" fill="#E2E8F0" font-size="11">📸 Post-Fix Photo Signoff</text>
+    <text x="185" y="126" fill="#10B981" font-size="10" font-weight="700">Verified</text>
+    <text x="16" y="148" fill="#E2E8F0" font-size="11">🔄 Asset Health Ledger</text>
+    <text x="185" y="148" fill="#FB923C" font-size="10" font-weight="700">Updated</text>
+  </g>
+
+  <!-- Bottom Panel: Real-time FSM KPIs -->
+  <g transform="translate(60, 360)" filter="url(#shadow-fsm)">
+    <rect width="840" height="135" rx="14" fill="#0B132B" stroke="#334155" stroke-width="1.2"/>
+    
+    <!-- KPI 1 -->
+    <g transform="translate(40, 25)">
+      <text x="0" y="18" fill="#94A3B8" font-size="12" font-weight="600">FIRST-TIME FIX RATE</text>
+      <text x="0" y="58" fill="#10B981" font-size="34" font-weight="800">94.8%</text>
+      <text x="0" y="80" fill="#64748B" font-size="11">+42% vs Legacy FSM</text>
+    </g>
+
+    <line x1="240" y1="20" x2="240" y2="115" stroke="#1E293B" stroke-width="1"/>
+
+    <!-- KPI 2 -->
+    <g transform="translate(280, 25)">
+      <text x="0" y="18" fill="#94A3B8" font-size="12" font-weight="600">MEAN TIME TO REPAIR (MTTR)</text>
+      <text x="0" y="58" fill="#FFFFFF" font-size="34" font-weight="800">-65%</text>
+      <text x="0" y="80" fill="#38BDF8" font-size="11">Context-Rich SOP Briefing</text>
+    </g>
+
+    <line x1="510" y1="20" x2="510" y2="115" stroke="#1E293B" stroke-width="1"/>
+
+    <!-- KPI 3 -->
+    <g transform="translate(550, 25)">
+      <text x="0" y="18" fill="#94A3B8" font-size="12" font-weight="600">ROUTE FUEL &amp; DISPATCH</text>
+      <text x="0" y="58" fill="#38BDF8" font-size="34" font-weight="800">-38%</text>
+      <text x="0" y="80" fill="#64748B" font-size="11">Multi-Stop AI Optimizer</text>
+    </g>
+
+    <line x1="740" y1="20" x2="740" y2="115" stroke="#1E293B" stroke-width="1"/>
+
+    <!-- KPI 4 -->
+    <g transform="translate(770, 25)">
+      <text x="0" y="18" fill="#94A3B8" font-size="12" font-weight="600">SAFETY PROTOCOLS</text>
+      <text x="0" y="58" fill="#FB923C" font-size="34" font-weight="800">100%</text>
+      <text x="0" y="80" fill="#10B981" font-size="11">OSHA e-Sign Enforced</text>
+    </g>
+  </g>
+</svg>

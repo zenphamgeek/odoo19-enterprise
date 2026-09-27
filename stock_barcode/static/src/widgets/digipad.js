@@ -4,7 +4,7 @@ import { formatFloat } from "@web/core/utils/numbers";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
-import { Component, onWillStart, useState } from "@odoo/owl";
+import { Component, onWillStart, proxy } from "@odoo/owl";
 
 export class Digipad extends Component {
     static template = "stock_barcode.DigipadTemplate";
@@ -28,7 +28,7 @@ export class Digipad extends Component {
         const field = this.props.record.model.config.fields[this.props.fieldToEdit];
         this.precision = field.digits[1];
         this.productId = this.props.record.data.product_id.id;
-        this.state = useState({
+        this.state = proxy({
             packagingButtons: [],
         });
         useRecordObserver(async (record) => {

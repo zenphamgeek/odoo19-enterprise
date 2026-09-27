@@ -48,7 +48,8 @@
             </div>
             <div t-else="" class="o_hierarchy_article_name position-relative text-truncate" t-on-click="env.ensureArticleName">
                 <input class="o_input position-absolute top-50 start-50 translate-middle fw-bold text-truncate text-body border-0"
-                    t-model="state.articleName"
+                    t-att-value="this.state.articleName"
+                    t-on-input="ev => this.state.articleName = ev.target.value"
                     t-on-change="ev => this.env.renameArticle(ev.target.value)"
                     type="text"
                     autocomplete="off"
@@ -62,7 +63,7 @@
             <i t-if="props.record.data.is_locked"
                 class="fa fa-fw fa-lock"
                 title="This article is locked" />
-            <KnowledgeFormStatusIndicator model="props.record.model" save="env.save" discard="env.discard"/>
+            <KnowledgeFormStatusIndicator model="this.props.record?.model" record="this.props.record" save="this.env.save" discard="this.env.discard"/>
         </div>
     </t>
 </templates>

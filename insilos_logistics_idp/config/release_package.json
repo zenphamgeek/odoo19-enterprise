@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "module": "insilos_logistics_idp",
+  "module_version": "19.0.1.3.12",
+  "approval_scope": "enterprise_rd_sales_demo",
+  "synthetic": true,
+  "non_production": true,
+  "corpus_classes": {
+    "raw_reference_evidence": {
+      "included": false,
+      "release_allowed": false,
+      "storage": "external_quarantine"
+    },
+    "sanitized_acceptance_corpus": {
+      "included": false,
+      "internal_only": true,
+      "human_review_required": true
+    },
+    "synthetic_release_corpus": {
+      "included": true,
+      "non_production": true,
+      "deterministic": true
+    }
+  },
+  "raw_reference_claim_restrictions": {
+    "parity": false,
+    "superiority": false,
+    "legal_correctness": false,
+    "formal_acceptance": false,
+    "automatic_claim_promotion": false
+  },
+  "formal_golden_acceptance": false,
+  "independent_compliance_certification": false,
+  "reference_document_traceability": {
+    "content_embedded": false,
+    "pii_embedded": false,
+    "sources": [
+      {
+        "id": "meeting_workbook",
+        "path": "docs/industries/Meeting INNORIA -SWAROVSKI.xlsx",
+        "sha256": "295f7429dc20acf0daee7e71c1d21dab87227ea82955c50af5c7374ca5109362",
+        "coverage": {
+          "kind": "worksheets",
+          "complete": true,
+          "items": [
+            "172026",
+            "24062026",
+            "11062026",
+            "27052026",
+            "13052026",
+            "21042026",
+            "16042026",
+            "08042026",
+            "01042026",
+            "2532026",
+            "12032026",
+            "29012026",
+            "NT 2",
+            "NT 1",
+            "Quy trình",
+            "Chi phí"
+          ]
+        }
+      },
+      {
+        "id": "uat_workbook",
+        "path": "docs/industries/Insilos_IDP_Logistics_UAT_v1.4.xlsx",
+        "sha256": "540182067f6e20e35c7794cb23f9cb5a2c1c00f31dfd3d30b44ba2b17cfae097",
+        "coverage": {
+          "kind": "worksheets",
+          "complete": true,
+          "items": [
+            "UAT Plan",
+            "Defect Log",
+            "Execution Dashboard",
+            "UAT Cases",
+            "Golden 48",
+            "Requirement Coverage",
+            "Test Data",
+            "Source Traceability",
+            "Acceptance Metrics"
+          ]
+        }
+      },
+      {
+        "id": "solution_description",
+        "path": "docs/industries/Tài_liệu_mô_tả_giải_pháp_đối_chiếu_chứng_từ_tự_động.pdf",
+        "sha256": "3a4fcd9b592aa0d16506a6953e688c9c32c0486822e4868bd65884974959fd17",
+        "coverage": {
+          "kind": "pdf_pages",
+          "complete": true,
+          "page_count": 4,
+          "ranges": [
+            [
+              1,
+              4
+            ]
+          ]
+        }
+      },
+      {
+        "id": "product_intent",
+        "path": "docs/industries/TỰ ĐỘNG KIỂM SOÁT CHỨNG TỪ XUẤT NHẬP KHẨU.pdf",
+        "sha256": "a84260999d0fcc41cbaf864fecd0f9c7db42ee940fa4234924d39bc81faca369",
+        "coverage": {
+          "kind": "pdf_pages",
+          "complete": true,
+          "page_count": 19,
+          "ranges": [
+            [
+              1,
+              19
+            ]
+          ]
+        }
+      }
+    ],
+    "precedence": [
+      {
+        "rank": 1,
+        "source": "meeting_workbook",
+        "selector": "latest_dated_change_record"
+      },
+      {
+        "rank": 2,
+        "source": "meeting_workbook",
+        "selector": "Quy trình"
+      },
+      {
+        "rank": 3,
+        "source": "solution_description",
+        "selector": "not_superseded"
+      },
+      {
+        "rank": 4,
+        "source": "product_intent",
+        "selector": "all_pages"
+      },
+      {
+        "rank": 5,
+        "source": "srs_productization",
+        "selector": "intentional_generalization"
+      }
+    ],
+    "requirement_mappings": [
+      {
+        "source": "meeting_workbook",
+        "evidence": "tests/golden/sanitized_cases.json#/workbook_contract/source_traceability",
+        "requirements": "tests/golden/sanitized_cases.json#/workbook_contract/requirement_coverage"
+      },
+      {
+        "source": "uat_workbook",
+        "evidence": "tests/golden/sanitized_cases.json#/workbook_contract",
+        "requirements": "docs/tests/development_uat_result.json#/requirement_coverage"
+      },
+      {
+        "source": "solution_description",
+        "evidence": "SRS#2.2",
+        "requirements": "SRS#4,SRS#5,SRS#8,SRS#13,SRS#18"
+      },
+      {
+        "source": "product_intent",
+        "evidence": "SRS#2.1",
+        "requirements": "SRS#1,SRS#3,SRS#23"
+      }
+    ]
+  },
+  "required_artifacts": [
+    "manifest",
+    "onboarding_profile",
+    "compliance_policy",
+    "security_acl",
+    "runtime_tests"
+  ],
+  "deferred_artifacts": [
+    "formal_golden_uat_nfr_acceptance",
+    "dr_rollback_rehearsal",
+    "production_security_and_isolation_gate",
+    "independent_compliance_review",
+    "customer_acceptance"
+  ],
+  "synthetic_development_corpus_included": true,
+  "acceptance_corpus_included": false,
+  "formal_release_gate_passed": false,
+  "implemented_scope": [
+    "case_aggregate_prototype",
+    "immutable_evidence_snapshot",
+    "policy_decision_snapshot",
+    "inbound_mes_reference",
+    "inbound_retry_dead_letter",
+    "linked_project_task_workspace",
+    "canonical_document_pipeline",
+    "typed_extraction_runs",
+    "required_check_matrix",
+    "versioned_outputs",
+    "policy_source_registry",
+    "controlled_overrides",
+    "control_tower_ui",
+    "security_isolation_hardening",
+    "198_synthetic_executable_uat",
+    "business_playwright_e2e"
+  ],
+  "development_evidence": {
+    "measured_at": "2026-08-10",
+    "staging_database": "logistics_idp_staging_20260810",
+    "database_schema_version": 9,
+    "policy_version": "2026.3",
+    "policy_artifact_sha256": {
+      "demo_xml": "adcc2a8d1108b53570cec93bf860b2825cbfba8e3b5ac12f3e972d0513257b39",
+      "upgrade_xml": "4e54e10766d1c5cda4a2f20cf74dabd975374d52a43756519c79aa5884f7a3a6"
+    },
+    "restricted_corpus": {
+      "metadata_only": true,
+      "raw_binaries_excluded": true,
+      "documents": 16,
+      "valid": 6,
+      "review": 9,
+      "invalid_pdf_quarantined": 1
+    },
+    "provider_acceptance": {
+      "status": "pass",
+      "parseable_documents": 15,
+      "accepted": 15
+    },
+    "iap": {
+      "bounded_budget_max": 3,
+      "tests": {
+        "passed": 40,
+        "total": 40
+      },
+      "canonical_exact_charge_linkage": {
+        "status": "demonstrated",
+        "run_id": 9185
+      },
+      "wallet_invariants": "pass"
+    },
+    "test_runs": {
+      "module": {
+        "passed": 118,
+        "total": 118
+      },
+      "trade_configuration": {
+        "passed": 27,
+        "total": 27
+      },
+      "tier4": {
+        "passed": 12,
+        "total": 12
+      },
+      "logistics_first": {
+        "passed": 60,
+        "total": 60
+      },
+      "logistics_second": {
+        "passed": 60,
+        "total": 60
+      },
+      "node": {
+        "passed": 1,
+        "total": 1
+      },
+      "silo_dashboard": "pass",
+      "corpus": {
+        "passed": 198,
+        "total": 198
+      },
+      "golden": {
+        "passed": 41,
+        "partial": 7,
+        "total": 48
+      },
+      "hardening": {
+        "passed": 29,
+        "total": 29
+      },
+      "migration_19_0_1_3_0": {
+        "recorded_at_backfill": "pass",
+        "active_overlap_trigger": "pass",
+        "upgrade_passed": 2,
+        "upgrade_total": 2
+      },
+      "concurrency": {
+        "passed": 2,
+        "total": 2
+      }
+    },
+    "nfr": {
+      "stored_evidence": {
+        "status": "pass",
+        "documents": 4613,
+        "pages": 13665,
+        "dashboard_p95_seconds": 0.24803998285133275
+      },
+      "current_run": {
+        "status": "not_run"
+      }
+    },
+    "integrity": {
+      "mail_mail_created": 0,
+      "secrets_found": 0,
+      "repo_integrity_issues": 0,
+      "orphans": 0
+    },
+    "reference_parity": {
+      "status": "REVIEW",
+      "verified": false,
+      "blocker": "Current authoritative parity evidence unavailable"
+    },
+    "final_post_uat": {
+      "verified_at": "2026-08-11T02:00:00Z",
+      "manual_uat": {
+        "passed": 20,
+        "total": 20
+      },
+      "canonical_database": "insilos_migration_digiforce_v2",
+      "solo_dev_db_enforced": true,
+      "backup_timestamp": "20260811T003108Z",
+      "backup_checksums_valid": null,
+      "backup_checksum_status": "unsupported_no_durable_checksum_artifact",
+      "required_untracked_files": [
+        "insilos/addons/iap/migrations/19.0.1.3/",
+        "insilos/apps/insilos_logistics_idp/migrations/",
+        "insilos/apps/insilos_logistics_idp/static/tests/",
+        "insilos/apps/insilos_logistics_idp/tests/common.py",
+        "insilos/apps/openrouter_ai/migrations/",
+        "insilos/apps/openrouter_ai/security/openrouter_log_security.xml",
+        "insilos/apps/openrouter_ai/tests/",
+        "tools/test_with_local_credentials.py",
+        "tools/with_local_credentials.py"
+      ],
+      "ci_ready": false
+    },
+    "strategic_panels": "Not Configured",
+    "notification_sending_enabled": false
+  },
+  "release_governance": {
+    "mode": "DEV",
+    "development_worktree_dirty": true,
+    "promotion_ready": false,
+    "release_status": "BLOCKED_DIRTY_UNBOUND_EVIDENCE",
+    "provenance_commit": null,
+    "worktree_hash_scope": null,
+    "worktree_diff_sha256": null,
+    "worktree_status_sha256": null,
+    "bundle_sha256": null,
+    "bundle_sha256_status": "not_generated",
+    "evidence_sha256": null,
+    "evidence_sha256_status": "not_run",
+    "manifest_sha256": "4cba32798d2ea4a67c42e261f71d656d4dac48a9f1b88580617fbea93ef76102",
+    "manifest_sha256_status": "verified",
+    "verifier_evidence_status": "not_run",
+    "restore_evidence_status": "not_run",
+    "rollback_evidence_status": "not_run",
+    "source_sha256": {
+      "__manifest__.py": "4cba32798d2ea4a67c42e261f71d656d4dac48a9f1b88580617fbea93ef76102",
+      "models/logistics_idp.py": "b251d395d45c455b0e9e30455e35aecd41d6aa9951423c3f66fa79d8da55e99a",
+      "tests/test_logistics_idp_concurrency.py": "0098258e170b09abeac3aaa6af2680176d10357823efa8406f0898e6063f7ad4",
+      "tests/test_logistics_idp_configuration.py": "be5318a215558bac7be457a4d14badee08374fcc2685ad21724b4411b6d339db"
+    },
+    "immutable_commit_sha_claimed": false
+  },
+  "blocked_external": [
+    "external_customer_acceptance",
+    "legal_compliance_authority_dataset",
+    "production_security_and_isolation",
+    "dr_rehearsal",
+    "production_release"
+  ],
+  "not_run": [
+    "external_customer_acceptance",
+    "legal_compliance_authority_dataset",
+    "production_security_and_isolation",
+    "dr_rehearsal",
+    "production_release"
+  ],
+  "deferred_scope": [
+    "external_customer_acceptance",
+    "legal_compliance_authority_dataset",
+    "production_release"
+  ],
+  "assurance_artifact_sha256": null,
+  "assurance_artifact_sha256_status": "unverifiable_mutable_dirty_worktree"
+}

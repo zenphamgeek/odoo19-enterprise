@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action Report: Trích lục Phán quyết Xác định trước Mã HS Hải quan -->
+    <record id="action_report_hs_customs_ruling" model="ir.actions.report">
+        <field name="name">Trích lục Phán quyết Xác định trước Mã HS</field>
+        <field name="model">is.customs.ruling</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_hs_sync.report_hs_customs_ruling_doc</field>
+        <field name="report_file">insilos_hs_sync.report_hs_customs_ruling_doc</field>
+        <field name="print_report_name">'Phan-quyet-HS-%s' % (object.ruling_number)</field>
+        <field name="binding_model_id" ref="model_is_customs_ruling"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Action Report: Phiếu Tra cứu Biểu thuế & Quản lý Chuyên ngành -->
+    <record id="action_report_hs_tariff_item" model="ir.actions.report">
+        <field name="name">Phiếu Tra cứu Biểu thuế &amp; Quản lý Chuyên ngành</field>
+        <field name="model">is.hs.tariff</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_hs_sync.report_hs_tariff_item_doc</field>
+        <field name="report_file">insilos_hs_sync.report_hs_tariff_item_doc</field>
+        <field name="print_report_name">'Bieu-thue-HS-%s' % (object.hs_code)</field>
+        <field name="binding_model_id" ref="model_is_hs_tariff"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

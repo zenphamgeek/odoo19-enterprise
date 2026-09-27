@@ -1,0 +1,2248 @@
+{
+  "baseline": {
+    "bundle": "point_of_sale.assets_prod",
+    "expanded_file_count": 1212,
+    "expanded_source_bytes": 7747190,
+    "expanded_source_gzip_bytes": 1785338
+  },
+  "capabilities": [
+    {
+      "blocker": null,
+      "dependency": [
+        "resource",
+        "stock_account",
+        "barcodes",
+        "html_editor",
+        "digest",
+        "phone_validation",
+        "partner_autocomplete",
+        "iot_base",
+        "google_address_autocomplete"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "point_of_sale",
+      "oracle_tests": [
+        "insilos/addons/point_of_sale/static/tests/customer_display/customer_display_tour.js",
+        "insilos/addons/point_of_sale/static/tests/customer_display/customer_display_utils.js",
+        "insilos/addons/point_of_sale/static/tests/generic_components/mount_generic_components.test.js",
+        "insilos/addons/point_of_sale/static/tests/generic_helpers/dialog_util.js",
+        "insilos/addons/point_of_sale/static/tests/generic_helpers/notification_util.js",
+        "insilos/addons/point_of_sale/static/tests/generic_helpers/number_popup_util.js",
+        "insilos/addons/point_of_sale/static/tests/generic_helpers/numpad_util.js",
+        "insilos/addons/point_of_sale/static/tests/generic_helpers/offline_util.js",
+        "insilos/addons/point_of_sale/static/tests/generic_helpers/order_widget_util.js",
+        "insilos/addons/point_of_sale/static/tests/generic_helpers/selection_popup_util.js",
+        "insilos/addons/point_of_sale/static/tests/generic_helpers/text_input_popup_util.js",
+        "insilos/addons/point_of_sale/static/tests/generic_helpers/utils.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/OrderWithLots_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/acceptance_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/barcode_scanning_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/chrome_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/chrome_without_cash_move_permission_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/customer_display_popup_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/fake_tours.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/feedback_screen_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/fixed_price_negative_qty_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/generic_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/optional_product_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/payment_screen_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/pos_cash_rounding_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/pos_combo_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/pos_line_configurator_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/pos_performance_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/pos_self_invoicing_portal_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/pricelist_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/product_configurator_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/product_screen_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/product_variants_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/receipt_screen_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/shipping_date_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/synchronization_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/ticket_screen_tour.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/backend_utils.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/cash_move_list_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/chrome_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/combo_popup_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/common.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/feedback_screen_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/generic_hooks.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/optional_product_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/partner_list_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/payment_screen_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/preparation_receipt_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/pricelist_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/product_configurator_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/product_screen_partner_list_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/product_screen_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/receipt_screen_util.js",
+        "insilos/addons/point_of_sale/static/tests/pos/tours/utils/ticket_screen_util.js",
+        "insilos/addons/point_of_sale/static/tests/unit/accounting/discount.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/accounting/old_tour.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/accounting/price.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/accounting/pricelist.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/accounting/rounding.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/accounting/utils.js",
+        "insilos/addons/point_of_sale/static/tests/unit/components/order_summary.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/components/orderline.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/components/orderline_note_button.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/components/payment_screen.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/components/product_screen.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/components/receipt_screen.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/customer_display/customer_display_adapter.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/account_cash_rounding.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/account_fiscal_position.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/account_journal.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/account_move.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/account_tax.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/account_tax_group.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/barcode_nomenclature.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/decimal_precision.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/generate_model_definitions.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/get_model_definitions.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/is_module_module.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/is_sequence.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_bill.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_category.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_config.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_note.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_order.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_order_line.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_pack_operation_lot.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_payment.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_payment_method.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_preset.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_printer.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/pos_session.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_attribute.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_attribute_custom_value.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_attribute_value.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_category.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_combo.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_combo_item.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_pricelist.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_pricelist_item.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_product.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_tag.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_template.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_template_attribute_exclusion.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_template_attribute_line.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_template_attribute_value.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/product_uom.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/resource_calendar.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/resource_calendar_attendance.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/rs_company.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/rs_country.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/rs_country_state.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/rs_currency.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/rs_lang.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/rs_partner.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/rs_users.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/stock_picking_type.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/stock_route.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/stock_warehouse.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/data/uom_uom.data.js",
+        "insilos/addons/point_of_sale/static/tests/unit/models/account_fiscal_position.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/models/pos_category.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/models/pos_order.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/models/pos_order_line.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/models/pos_preset.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/models/product_product.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/models/product_template.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/override/data_service.js",
+        "insilos/addons/point_of_sale/static/tests/unit/related_models/events.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/related_models/indexed_db_serialization.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/related_models/orm_serialization.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/related_models/related_models.backlink.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/related_models/related_models.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/related_models/related_models_dirty.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/related_models/utils.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/services/data_service.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/services/pos_printer_service.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/services/pos_service.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/services/render_service.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/tools/devices_identifier_sequence.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/tools/lazy_getter.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/tools/lna.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/tools/numbers.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/tools/order_payment_validation.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/tools/server_synchronization.test.js",
+        "insilos/addons/point_of_sale/static/tests/unit/utils.js",
+        "insilos/addons/point_of_sale/tests/test_anglo_saxon.py",
+        "insilos/addons/point_of_sale/tests/test_continental.py",
+        "insilos/addons/point_of_sale/tests/test_digest.py",
+        "insilos/addons/point_of_sale/tests/test_frontend.py",
+        "insilos/addons/point_of_sale/tests/test_generic_localization.py",
+        "insilos/addons/point_of_sale/tests/test_performances.py",
+        "insilos/addons/point_of_sale/tests/test_point_of_sale.py",
+        "insilos/addons/point_of_sale/tests/test_point_of_sale_flow.py",
+        "insilos/addons/point_of_sale/tests/test_point_of_sale_ui.py",
+        "insilos/addons/point_of_sale/tests/test_pos_basic_config.py",
+        "insilos/addons/point_of_sale/tests/test_pos_cash_difference_tax.py",
+        "insilos/addons/point_of_sale/tests/test_pos_cash_rounding.py",
+        "insilos/addons/point_of_sale/tests/test_pos_controller.py",
+        "insilos/addons/point_of_sale/tests/test_pos_invoice_consolidation.py",
+        "insilos/addons/point_of_sale/tests/test_pos_margin.py",
+        "insilos/addons/point_of_sale/tests/test_pos_multiple_receivable_accounts.py",
+        "insilos/addons/point_of_sale/tests/test_pos_other_currency_config.py",
+        "insilos/addons/point_of_sale/tests/test_pos_picking_backorder.py",
+        "insilos/addons/point_of_sale/tests/test_pos_product_variants.py",
+        "insilos/addons/point_of_sale/tests/test_pos_products_with_tax.py",
+        "insilos/addons/point_of_sale/tests/test_pos_setup.py",
+        "insilos/addons/point_of_sale/tests/test_pos_simple_invoiced_orders.py",
+        "insilos/addons/point_of_sale/tests/test_pos_simple_orders.py",
+        "insilos/addons/point_of_sale/tests/test_pos_stock_account.py",
+        "insilos/addons/point_of_sale/tests/test_pos_with_fiscal_position.py",
+        "insilos/addons/point_of_sale/tests/test_report_pos_order.py",
+        "insilos/addons/point_of_sale/tests/test_report_session.py",
+        "insilos/addons/point_of_sale/tests/test_res_config_settings.py"
+      ],
+      "owner": "core",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "point_of_sale",
+        "sale_management"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_sale",
+      "oracle_tests": [
+        "insilos/addons/pos_sale/static/tests/tours/pos_sale_tour.js",
+        "insilos/addons/pos_sale/static/tests/tours/test_taxes_downpayment.js",
+        "insilos/addons/pos_sale/static/tests/tours/utils/pos_sale_utils.js",
+        "insilos/addons/pos_sale/static/tests/unit/components/orderline.test.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/pos_config.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/pos_order_line.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/pos_session.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/product_product.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/product_template.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/rs_partner.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/sale_order.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/sale_order_line.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/models/pos_order_line.test.js",
+        "insilos/addons/pos_sale/static/tests/unit/services/pos_store.test.js",
+        "insilos/addons/pos_sale/tests/test_pos_sale_flow.py",
+        "insilos/addons/pos_sale/tests/test_pos_sale_lot.py",
+        "insilos/addons/pos_sale/tests/test_pos_sale_report.py",
+        "insilos/addons/pos_sale/tests/test_taxes_downpayment.py"
+      ],
+      "owner": "pos_sale",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_restaurant",
+      "oracle_tests": [
+        "insilos/addons/pos_restaurant/static/tests/tours/control_buttons_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/devices_synchronization_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/fake_tours.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/floor_screen_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/pos_restaurant_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/refund_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/split_bill_screen_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/ticket_screen_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/tip_screen_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/chrome.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/devices_synchronization.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/floor_screen_util.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/product_screen_util.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/split_bill_screen_util.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/tip_screen_util.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/components/actionpad_widget.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/components/floor_screen.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/components/product_screen.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/components/split_bill_screen.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/components/tip_screen.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/pos_config.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/pos_order_line.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/pos_preset.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/pos_session.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/restaurant_floor.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/restaurant_order_course.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/restaurant_table.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/models/pos_order.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/models/restaurant_order_course.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/models/restaurant_table.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/services/pos_service.test.js",
+        "insilos/addons/pos_restaurant/tests/test_devices_synchronization.py",
+        "insilos/addons/pos_restaurant/tests/test_frontend.py",
+        "insilos/addons/pos_restaurant/tests/test_pos_restaurant_flow.py"
+      ],
+      "owner": "pos_restaurant",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_at",
+        "iap",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_at_pos",
+      "oracle_tests": [
+        "insilos/apps/l10n_at_pos/static/tests/unit/data/pos_config.data.js",
+        "insilos/apps/l10n_at_pos/static/tests/unit/data/rs_company.data.js",
+        "insilos/apps/l10n_at_pos/static/tests/unit/data/rs_country.data.js",
+        "insilos/apps/l10n_at_pos/static/tests/unit/services/pos_store.test.js"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_br_edi",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_br_edi_pos",
+      "oracle_tests": [
+        "insilos/apps/l10n_br_edi_pos/static/tests/tours/common.js",
+        "insilos/apps/l10n_br_edi_pos/static/tests/tours/tours.js",
+        "insilos/apps/l10n_br_edi_pos/static/tests/tours/utils/generic_hooks.js",
+        "insilos/apps/l10n_br_edi_pos/tests/test_l10n_br_edi_pos.py",
+        "insilos/apps/l10n_br_edi_pos/tests/test_l10n_br_edi_pos_download_nfce.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_cl_edi",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_cl_edi_pos",
+      "oracle_tests": [
+        "insilos/apps/l10n_cl_edi_pos/static/tests/tours/l10n_cl_edi_pos.js",
+        "insilos/apps/l10n_cl_edi_pos/tests/test_cl_edi_pos.py",
+        "insilos/apps/l10n_cl_edi_pos/tests/test_l10n_cl_edi_pos.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_de",
+        "point_of_sale",
+        "iap"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_de_pos_cert",
+      "oracle_tests": [
+        "insilos/apps/l10n_de_pos_cert/static/tests/unit/models/pos_order.test.js",
+        "insilos/apps/l10n_de_pos_cert/tests/test_de_pos_cert.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_ec_edi",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python"
+      ],
+      "module": "l10n_ec_edi_pos",
+      "oracle_tests": [
+        "insilos/apps/l10n_ec_edi_pos/static/tests/tours/test_pos_order.js",
+        "insilos/apps/l10n_ec_edi_pos/tests/test_ec_edi_pos.py",
+        "insilos/apps/l10n_ec_edi_pos/tests/test_pos_order.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_in_reports",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "localization_fiscal",
+        "python"
+      ],
+      "module": "l10n_in_reports_gstr_pos",
+      "oracle_tests": [
+        "insilos/apps/l10n_in_reports_gstr_pos/tests/test_pos_gstr_reports.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_it",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_it_pos",
+      "oracle_tests": [
+        "insilos/apps/l10n_it_pos/static/tests/tours/test_taxes_tax_totals_summary.js",
+        "insilos/apps/l10n_it_pos/static/tests/unit/html_to_xml.test.js",
+        "insilos/apps/l10n_it_pos/static/tests/unit/it_document_values.test.js",
+        "insilos/apps/l10n_it_pos/tests/test_it_pos.py",
+        "insilos/apps/l10n_it_pos/tests/test_taxes_tax_totals_summary.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_ke_edi_oscu_stock",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_ke_edi_oscu_pos",
+      "oracle_tests": [
+        "insilos/apps/l10n_ke_edi_oscu_pos/tests/test_etims_pos.py",
+        "insilos/apps/l10n_ke_edi_oscu_pos/tests/test_ke_edi_pos.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_mx_edi",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_mx_edi_pos",
+      "oracle_tests": [
+        "insilos/apps/l10n_mx_edi_pos/static/tests/tours/invoice_order_tour.js",
+        "insilos/apps/l10n_mx_edi_pos/static/tests/tours/invoice_previous_order_tour.js",
+        "insilos/apps/l10n_mx_edi_pos/static/tests/tours/l10n_mx_pos_tour.js",
+        "insilos/apps/l10n_mx_edi_pos/static/tests/tours/refund_order_tour.js",
+        "insilos/apps/l10n_mx_edi_pos/tests/test_cfdi_pos_order.py",
+        "insilos/apps/l10n_mx_edi_pos/tests/test_cfdi_pos_order_documents.py",
+        "insilos/apps/l10n_mx_edi_pos/tests/test_tour.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_pe_edi",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_pe_edi_pos",
+      "oracle_tests": [
+        "insilos/apps/l10n_pe_edi_pos/static/tests/tours/pos/pos_refund_tour.js",
+        "insilos/apps/l10n_pe_edi_pos/tests/test_frontend.py",
+        "insilos/apps/l10n_pe_edi_pos/tests/test_pe_edi_pos.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "l10n_pl_reports",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "localization_fiscal",
+        "python"
+      ],
+      "module": "l10n_pl_reports_pos_jpk",
+      "oracle_tests": [
+        "insilos/apps/l10n_pl_reports_pos_jpk/tests/test_pl_pos.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "point_of_sale",
+        "account_reports"
+      ],
+      "extension_mechanism": [
+        "dependency_only"
+      ],
+      "module": "pos_account_reports",
+      "oracle_tests": [
+        "insilos/apps/pos_account_reports/tests/test_account_reports.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "appointment",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_appointment",
+      "oracle_tests": [
+        "insilos/apps/pos_appointment/static/tests/unit/components/navbar.test.js",
+        "insilos/apps/pos_appointment/static/tests/unit/data/appointment_type.data.js",
+        "insilos/apps/pos_appointment/static/tests/unit/data/calendar_event.data.js",
+        "insilos/apps/pos_appointment/static/tests/unit/data/pos_config.data.js",
+        "insilos/apps/pos_appointment/static/tests/unit/data/pos_session.data.js",
+        "insilos/apps/pos_appointment/static/tests/unit/services/pos_service.test.js",
+        "insilos/apps/pos_appointment/tests/test_pos_appointment_flow.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "point_of_sale",
+        "account_avatax"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_avatax",
+      "oracle_tests": [
+        "insilos/apps/pos_react/tests/test_pos_avatax_parity.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "point_of_sale",
+        "product_barcodelookup"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "manifest_data"
+      ],
+      "module": "pos_barcodelookup",
+      "oracle_tests": [
+        "insilos/apps/pos_barcodelookup/static/tests/tours/pos_barcodelookup_flow.js",
+        "insilos/apps/pos_barcodelookup/tests/test_pos_barcodelookup_start.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "web_enterprise",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_enterprise",
+      "oracle_tests": [
+        "insilos/apps/pos_enterprise/static/tests/tours/point_of_sale/pos_tour.js",
+        "insilos/apps/pos_enterprise/static/tests/tours/preparation_display/preparation_display_tour.js",
+        "insilos/apps/pos_enterprise/static/tests/tours/preparation_display/utils/preparation_display_util.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/components/category.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/components/order.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/components/preparation_display.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/components/stage.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/generate_model_definitions.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_order.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_prep_line.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_prep_order.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_prep_stage.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_prep_state.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_session.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/preparation_display.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/models/pos_config.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/services/pos_store.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/services/preparation_display_service.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/utils.js",
+        "insilos/apps/pos_enterprise/tests/test_frontend.py",
+        "insilos/apps/pos_enterprise/tests/test_pos_preparation_display.py",
+        "insilos/apps/pos_enterprise/tests/test_res_config_settings.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "point_of_sale",
+        "iot"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "hardware",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_iot",
+      "oracle_tests": [
+        "insilos/apps/pos_iot/static/tests/tours/payment_tour.js",
+        "insilos/apps/pos_iot/static/tests/tours/scale_tour.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/iot_box.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/iot_channel.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/iot_device.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/pos_config.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/pos_payment_method.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/pos_printer.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/pos_session.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/iot_devices.test.js",
+        "insilos/apps/pos_iot/tests/test_frontend.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "product",
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "hardware",
+        "javascript",
+        "manifest_data",
+        "python"
+      ],
+      "module": "pos_pricer",
+      "oracle_tests": [
+        "insilos/apps/pos_pricer/tests/test_pos_pricer.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "point_of_sale",
+        "account_followup"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_settle_due",
+      "oracle_tests": [
+        "insilos/apps/pos_settle_due/static/tests/tours/SettleAccountDueTour.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/components/payment_screen.test.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/data/pos_config.data.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/data/product_product.data.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/data/product_template.data.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/data/rs_partner.data.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/utils.js",
+        "insilos/apps/pos_settle_due/tests/test_frontend.py",
+        "insilos/apps/pos_settle_due/tests/test_receivable_account_reconciliation.py",
+        "insilos/apps/pos_settle_due/tests/test_total_due.py",
+        "insilos/apps/pos_settle_due/tests/test_total_due_frontend.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "point_of_sale"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_tyro",
+      "oracle_tests": [
+        "insilos/apps/pos_tyro/static/tests/unit/data/pos_payment_method.data.js"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    },
+    {
+      "blocker": null,
+      "dependency": [
+        "point_of_sale",
+        "whatsapp"
+      ],
+      "extension_mechanism": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "whatsapp_pos",
+      "oracle_tests": [
+        "insilos/apps/pos_react/tests/test_whatsapp_pos_receipt_parity.py"
+      ],
+      "owner": "Enterprise",
+      "status": "Inventoried"
+    }
+  ],
+  "dependencies": [
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "localization_fiscal",
+        "python"
+      ],
+      "module": "l10n_account_withholding_tax_pos",
+      "oracle_paths": [],
+      "static_assets": [
+        "l10n_account_withholding_tax/static/src/helpers/*.js"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python"
+      ],
+      "module": "l10n_ar_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_ar_pos/static/tests/tours/l10n_ar_tour.js",
+        "insilos/addons/l10n_ar_pos/tests/test_ar_pos.py",
+        "insilos/addons/l10n_ar_pos/tests/test_pos_ar.py"
+      ],
+      "static_assets": [
+        "l10n_ar_pos/static/src/**/*",
+        "l10n_ar_pos/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "localization_fiscal",
+        "python"
+      ],
+      "module": "l10n_ch_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_ch_pos/tests/test_ch_pos.py",
+        "insilos/addons/l10n_ch_pos/tests/test_frontend.py"
+      ],
+      "static_assets": []
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_co_pos",
+      "oracle_paths": [],
+      "static_assets": [
+        "l10n_co_pos/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_es_edi_tbai_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_es_edi_tbai_pos/tests/test_es_tbai_pos.py",
+        "insilos/addons/l10n_es_edi_tbai_pos/tests/test_tbai_pos.py"
+      ],
+      "static_assets": [
+        "l10n_es_edi_tbai_pos/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_es_edi_verifactu_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_es_edi_verifactu_pos/tests/test_pos_order.py"
+      ],
+      "static_assets": [
+        "l10n_es_edi_verifactu_pos/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_es_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_es_pos/static/tests/tours/spanish_pos_tour.js",
+        "insilos/addons/l10n_es_pos/static/tests/tours/utils/receipt_util.js",
+        "insilos/addons/l10n_es_pos/tests/test_es_pos.py",
+        "insilos/addons/l10n_es_pos/tests/test_frontend.py"
+      ],
+      "static_assets": [
+        "l10n_es_pos/static/src/**/*",
+        "l10n_es_pos/static/tests/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "localization_fiscal",
+        "python"
+      ],
+      "module": "l10n_fr_pdp_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_fr_pdp_pos/tests/test_pos_flow_lifecycle.py"
+      ],
+      "static_assets": []
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_fr_pos_cert",
+      "oracle_paths": [
+        "insilos/addons/l10n_fr_pos_cert/static/tests/tours/l10n_fr_pos_cert_tour.js",
+        "insilos/addons/l10n_fr_pos_cert/static/tests/unit/data/pos_config.data.js",
+        "insilos/addons/l10n_fr_pos_cert/static/tests/unit/data/rs_company.data.js",
+        "insilos/addons/l10n_fr_pos_cert/static/tests/unit/data/rs_country.data.js",
+        "insilos/addons/l10n_fr_pos_cert/static/tests/unit/services/pos_store.test.js",
+        "insilos/addons/l10n_fr_pos_cert/tests/test_fr_pos.py",
+        "insilos/addons/l10n_fr_pos_cert/tests/test_frontend.py",
+        "insilos/addons/l10n_fr_pos_cert/tests/test_hash.py",
+        "insilos/addons/l10n_fr_pos_cert/tests/test_string_to_hash.py"
+      ],
+      "static_assets": [
+        "l10n_fr_pos_cert/static/src/**/*",
+        "l10n_fr_pos_cert/static/tests/tours/**/*",
+        "l10n_fr_pos_cert/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_gcc_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_gcc_pos/tests/test_gcc_pos.py"
+      ],
+      "static_assets": [
+        "l10n_gcc_pos/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "python"
+      ],
+      "module": "l10n_id_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_id_pos/static/tests/test_pos_qris_payment.tour.js",
+        "insilos/addons/l10n_id_pos/tests/test_qris_pos.py"
+      ],
+      "static_assets": [
+        "l10n_id_pos/static/src/**/*",
+        "l10n_id_pos/static/tests/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_in_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_in_pos/static/tests/tours/product_screen_tour.js",
+        "insilos/addons/l10n_in_pos/static/tests/tours/test_hsn_summary.js",
+        "insilos/addons/l10n_in_pos/tests/test_gstr_section.py",
+        "insilos/addons/l10n_in_pos/tests/test_hsn_summary.py",
+        "insilos/addons/l10n_in_pos/tests/test_in_pos.py",
+        "insilos/addons/l10n_in_pos/tests/test_pos_flow.py",
+        "insilos/addons/l10n_in_pos/tests/test_product_screen.py"
+      ],
+      "static_assets": [
+        "l10n_in/static/src/helpers/hsn_summary.js",
+        "l10n_in_pos/static/src/**/*",
+        "l10n_in_pos/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "localization_fiscal",
+        "manifest_data"
+      ],
+      "module": "l10n_mt_pos",
+      "oracle_paths": [],
+      "static_assets": []
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "localization_fiscal",
+        "manifest_data",
+        "python"
+      ],
+      "module": "l10n_my_edi_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_my_edi_pos/tests/test_myinvois_pos.py"
+      ],
+      "static_assets": []
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python"
+      ],
+      "module": "l10n_pe_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_pe_pos/tests/test_pe_pos.py"
+      ],
+      "static_assets": [
+        "l10n_pe_pos/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "localization_fiscal",
+        "payment"
+      ],
+      "module": "l10n_test_pos_qr_payment",
+      "oracle_paths": [
+        "insilos/addons/l10n_test_pos_qr_payment/static/tests/test_pos_payment_tour.js",
+        "insilos/addons/l10n_test_pos_qr_payment/tests/test_pos_qr_payment.py"
+      ],
+      "static_assets": [
+        "l10n_test_pos_qr_payment/static/tests/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_tw_edi_ecpay_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_tw_edi_ecpay_pos/static/tests/tours/ecpay_tour.js",
+        "insilos/addons/l10n_tw_edi_ecpay_pos/static/tests/unit/ecpay_info_popup.test.js",
+        "insilos/addons/l10n_tw_edi_ecpay_pos/tests/test_edi_pos_order.py",
+        "insilos/addons/l10n_tw_edi_ecpay_pos/tests/test_edi_pos_order_ui.py"
+      ],
+      "static_assets": [
+        "l10n_tw_edi_ecpay_pos/static/src/**/*",
+        "l10n_tw_edi_ecpay_pos/static/tests/tours/**/*",
+        "l10n_tw_edi_ecpay_pos/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal"
+      ],
+      "module": "l10n_uy_pos",
+      "oracle_paths": [],
+      "static_assets": [
+        "l10n_uy_pos/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_vn_edi_viettel_pos",
+      "oracle_paths": [
+        "insilos/addons/l10n_vn_edi_viettel_pos/static/tests/tours/l10n_vn_edi_viettel_pos_tour.js",
+        "insilos/addons/l10n_vn_edi_viettel_pos/tests/test_l10n_vn_edi_pos.py",
+        "insilos/addons/l10n_vn_edi_viettel_pos/tests/test_l10n_vn_edi_pos_tour.py"
+      ],
+      "static_assets": [
+        "l10n_vn_edi_viettel_pos/static/src/**/*",
+        "l10n_vn_edi_viettel_pos/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "python"
+      ],
+      "module": "pos_account_tax_python",
+      "oracle_paths": [
+        "insilos/addons/pos_account_tax_python/static/tests/tours/test_taxes_tax_totals_summary.js",
+        "insilos/addons/pos_account_tax_python/static/tests/unit/data/pos_printer.data.js",
+        "insilos/addons/pos_account_tax_python/tests/test_taxes_tax_totals_summary.py"
+      ],
+      "static_assets": [
+        "account_tax_python/static/src/helpers/*.js",
+        "pos_account_tax_python/static/tests/tours/**/*",
+        "pos_account_tax_python/static/tests/unit/data/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python"
+      ],
+      "module": "pos_adyen",
+      "oracle_paths": [
+        "insilos/addons/pos_adyen/static/tests/tours/adyen_tour.js",
+        "insilos/addons/pos_adyen/static/tests/unit/data/pos_payment_method.data.js",
+        "insilos/addons/pos_adyen/tests/test_basic.py"
+      ],
+      "static_assets": [
+        "pos_adyen/static/src/**/*",
+        "pos_adyen/static/tests/tours/**/*",
+        "pos_adyen/static/tests/unit/data/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_cashdro",
+      "oracle_paths": [
+        "insilos/addons/pos_cashdro/static/tests/cashdro_service.test.js"
+      ],
+      "static_assets": [
+        "pos_cashdro/static/src/**/*",
+        "pos_cashdro/static/src/**/*",
+        "pos_cashdro/static/src/cashdro_service.js",
+        "pos_cashdro/static/tests/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_cashmatic",
+      "oracle_paths": [
+        "insilos/addons/pos_cashmatic/static/tests/cashmatic_service.test.js"
+      ],
+      "static_assets": [
+        "pos_cashmatic/static/src/**/*",
+        "pos_cashmatic/static/src/cashmatic_service.js",
+        "pos_cashmatic/static/tests/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_discount",
+      "oracle_paths": [
+        "insilos/addons/pos_discount/static/tests/tours/test_pos_global_discount_flow.js",
+        "insilos/addons/pos_discount/static/tests/tours/test_taxes_global_discount.js",
+        "insilos/addons/pos_discount/static/tests/unit/components/product_screen.test.js",
+        "insilos/addons/pos_discount/static/tests/unit/data/pos_config.data.js",
+        "insilos/addons/pos_discount/static/tests/unit/data/product_product.data.js",
+        "insilos/addons/pos_discount/static/tests/unit/data/product_template.data.js",
+        "insilos/addons/pos_discount/static/tests/unit/models/pos_order_line.test.js",
+        "insilos/addons/pos_discount/static/tests/unit/services/pos_service.test.js",
+        "insilos/addons/pos_discount/tests/test_taxes_global_discount.py"
+      ],
+      "static_assets": [
+        "pos_discount/static/src/**/*",
+        "pos_discount/static/tests/tours/**/*",
+        "pos_discount/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python"
+      ],
+      "module": "pos_dpopay",
+      "oracle_paths": [],
+      "static_assets": [
+        "pos_dpopay/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "python"
+      ],
+      "module": "pos_edi_ubl",
+      "oracle_paths": [],
+      "static_assets": []
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_event",
+      "oracle_paths": [
+        "insilos/addons/pos_event/static/tests/tours/pos_event_tour.js",
+        "insilos/addons/pos_event/static/tests/tours/pos_multi_slot_event_tour.js",
+        "insilos/addons/pos_event/static/tests/tours/utils/event_tour_utils.js",
+        "insilos/addons/pos_event/static/tests/tours/utils/slot_selection_screen_utils.js",
+        "insilos/addons/pos_event/static/tests/unit/components/event_configurator_popup.test.js",
+        "insilos/addons/pos_event/static/tests/unit/components/event_registration_popup.test.js",
+        "insilos/addons/pos_event/static/tests/unit/components/event_slot_selection_popup.test.js",
+        "insilos/addons/pos_event/static/tests/unit/components/product_card.test.js",
+        "insilos/addons/pos_event/static/tests/unit/data/event_event.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data/event_event_ticket.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data/event_question.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data/event_question_answer.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data/event_registration.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data/event_registration_answer.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data/event_slot.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data/pos_order_line.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data/pos_session.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data/product_product.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data/product_template.data.js",
+        "insilos/addons/pos_event/static/tests/unit/data_service_options.test.js",
+        "insilos/addons/pos_event/static/tests/unit/services/pos_store.test.js",
+        "insilos/addons/pos_event/tests/test_frontend.py"
+      ],
+      "static_assets": [
+        "pos_event/static/src/**/*",
+        "pos_event/static/tests/tours/**/*",
+        "pos_event/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_glory_cash",
+      "oracle_paths": [
+        "insilos/addons/pos_glory_cash/static/tests/glory_service.test.js",
+        "insilos/addons/pos_glory_cash/static/tests/glory_xml.test.js",
+        "insilos/addons/pos_glory_cash/static/tests/socket_io.test.js"
+      ],
+      "static_assets": [
+        "pos_glory_cash/static/src/**/*",
+        "pos_glory_cash/static/src/**/*",
+        "pos_glory_cash/static/src/utils/*.js",
+        "pos_glory_cash/static/tests/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_hr",
+      "oracle_paths": [
+        "insilos/addons/pos_hr/static/tests/tours/pos_hr_tour.js",
+        "insilos/addons/pos_hr/static/tests/tours/utils/pos_hr_helpers.js",
+        "insilos/addons/pos_hr/static/tests/unit/components/navbar/cashier_name.test.js",
+        "insilos/addons/pos_hr/static/tests/unit/components/navbar/navbar.test.js",
+        "insilos/addons/pos_hr/static/tests/unit/components/popups/cash_move_popup.test.js",
+        "insilos/addons/pos_hr/static/tests/unit/components/popups/product_info_popup.test.js",
+        "insilos/addons/pos_hr/static/tests/unit/components/screens/login_screen.test.js",
+        "insilos/addons/pos_hr/static/tests/unit/components/screens/payment_screen.test.js",
+        "insilos/addons/pos_hr/static/tests/unit/data/hr_employee.data.js",
+        "insilos/addons/pos_hr/static/tests/unit/data/pos_config.data.js",
+        "insilos/addons/pos_hr/static/tests/unit/data/pos_order.data.js",
+        "insilos/addons/pos_hr/static/tests/unit/data/pos_session.data.js",
+        "insilos/addons/pos_hr/static/tests/unit/models/pos_order.test.js",
+        "insilos/addons/pos_hr/static/tests/unit/services/pos_store.test.js",
+        "insilos/addons/pos_hr/tests/test_frontend.py",
+        "insilos/addons/pos_hr/tests/test_point_of_sale_flow.py",
+        "insilos/addons/pos_hr/tests/test_res_config_settings.py",
+        "insilos/addons/pos_hr/tests/test_synchronisation.py"
+      ],
+      "static_assets": [
+        "pos_hr/static/src/**/*",
+        "pos_hr/static/tests/tours/**/*",
+        "pos_hr/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python"
+      ],
+      "module": "pos_imin",
+      "oracle_paths": [],
+      "static_assets": [
+        "pos_imin/static/lib/imin-printer/imin-printer.js",
+        "pos_imin/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_loyalty",
+      "oracle_paths": [
+        "insilos/addons/pos_loyalty/static/tests/tours/e_wallet_program_tour.js",
+        "insilos/addons/pos_loyalty/static/tests/tours/gift_card_program_tour.js",
+        "insilos/addons/pos_loyalty/static/tests/tours/loyalty_history_tour.js",
+        "insilos/addons/pos_loyalty/static/tests/tours/multiple_gift_wallet_programs_tour.js",
+        "insilos/addons/pos_loyalty/static/tests/tours/pos_loyalty_loyalty_program_tour.js",
+        "insilos/addons/pos_loyalty/static/tests/tours/pos_loyalty_reward_button_tour.js",
+        "insilos/addons/pos_loyalty/static/tests/tours/pos_loyalty_tour.js",
+        "insilos/addons/pos_loyalty/static/tests/tours/pos_loyalty_validity_tour.js",
+        "insilos/addons/pos_loyalty/static/tests/tours/utils/pos_loyalty_util.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/components/manage_giftcard_popup.test.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/components/screens/control_buttons.test.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/components/screens/order_summary.test.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/components/screens/partner_line.test.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/data/loyalty_card.data.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/data/loyalty_program.data.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/data/loyalty_reward.data.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/data/loyalty_rule.data.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/data/pos_order.data.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/data/pos_order_line.data.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/data/pos_session.data.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/data/product_product.data.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/data/product_template.data.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/models/pos_order.test.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/models/pos_order_line.test.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/screens/ticket_screen.test.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/services/pos_service.test.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/tools/order_payment_validation.test.js",
+        "insilos/addons/pos_loyalty/static/tests/unit/utils.js",
+        "insilos/addons/pos_loyalty/tests/test_frontend.py",
+        "insilos/addons/pos_loyalty/tests/test_loyalty_history.py",
+        "insilos/addons/pos_loyalty/tests/test_product_loading.py",
+        "insilos/addons/pos_loyalty/tests/test_unlink_reward.py"
+      ],
+      "static_assets": [
+        "pos_loyalty/static/src/**/*",
+        "pos_loyalty/static/src/portal/*",
+        "pos_loyalty/static/tests/tours/**/*",
+        "pos_loyalty/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python"
+      ],
+      "module": "pos_mercado_pago",
+      "oracle_paths": [],
+      "static_assets": [
+        "pos_mercado_pago/static/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python"
+      ],
+      "module": "pos_mollie",
+      "oracle_paths": [],
+      "static_assets": [
+        "pos_mollie/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "manifest_data",
+        "python"
+      ],
+      "module": "pos_mrp",
+      "oracle_paths": [
+        "insilos/addons/pos_mrp/static/tests/tours/pos_mrp_tour.js",
+        "insilos/addons/pos_mrp/tests/test_frontend.py",
+        "insilos/addons/pos_mrp/tests/test_pos_mrp_flow.py"
+      ],
+      "static_assets": [
+        "pos_mrp/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_online_payment",
+      "oracle_paths": [
+        "insilos/addons/pos_online_payment/static/tests/tours/customer_display_tour.js",
+        "insilos/addons/pos_online_payment/static/tests/tours/online_payment_tour.js",
+        "insilos/addons/pos_online_payment/tests/test_frontend.py"
+      ],
+      "static_assets": [
+        "point_of_sale/static/tests/generic_helpers/dialog_util.js",
+        "pos_online_payment/static/src/app/**/*",
+        "pos_online_payment/static/src/app/components/popups/online_payment_popup/**/*",
+        "pos_online_payment/static/src/overrides/customer_display_overrides/customer_display.js",
+        "pos_online_payment/static/src/overrides/customer_display_overrides/customer_display_adapter.js",
+        "pos_online_payment/static/src/overrides/pos_overrides/**/*",
+        "pos_online_payment/static/tests/tours/**/*",
+        "pos_online_payment/static/tests/tours/customer_display_tour.js"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python"
+      ],
+      "module": "pos_pine_labs",
+      "oracle_paths": [],
+      "static_assets": [
+        "pos_pine_labs/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python"
+      ],
+      "module": "pos_qfpay",
+      "oracle_paths": [
+        "insilos/addons/pos_qfpay/static/tests/tours/qfpay_tour.js",
+        "insilos/addons/pos_qfpay/static/tests/tours/utils/common.js",
+        "insilos/addons/pos_qfpay/tests/test_basic.py"
+      ],
+      "static_assets": [
+        "pos_qfpay/static/src/**/*",
+        "pos_qfpay/static/src/app/qfpay.js",
+        "pos_qfpay/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python"
+      ],
+      "module": "pos_razorpay",
+      "oracle_paths": [
+        "insilos/addons/pos_razorpay/static/tests/tours/razorpay_tour.js",
+        "insilos/addons/pos_razorpay/tests/test_basic.py"
+      ],
+      "static_assets": [
+        "pos_razorpay/static/src/**/*",
+        "pos_razorpay/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "python"
+      ],
+      "module": "pos_repair",
+      "oracle_paths": [
+        "insilos/addons/pos_repair/static/tests/tours/pos_repair_tour.js",
+        "insilos/addons/pos_repair/tests/test_frontend.py"
+      ],
+      "static_assets": [
+        "pos_repair/static/src/**/*",
+        "pos_repair/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_restaurant",
+      "oracle_paths": [
+        "insilos/addons/pos_restaurant/static/tests/tours/control_buttons_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/devices_synchronization_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/fake_tours.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/floor_screen_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/pos_restaurant_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/refund_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/split_bill_screen_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/ticket_screen_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/tip_screen_tour.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/chrome.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/devices_synchronization.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/floor_screen_util.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/product_screen_util.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/split_bill_screen_util.js",
+        "insilos/addons/pos_restaurant/static/tests/tours/utils/tip_screen_util.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/components/actionpad_widget.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/components/floor_screen.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/components/product_screen.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/components/split_bill_screen.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/components/tip_screen.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/pos_config.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/pos_order_line.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/pos_preset.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/pos_session.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/restaurant_floor.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/restaurant_order_course.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/data/restaurant_table.data.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/models/pos_order.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/models/restaurant_order_course.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/models/restaurant_table.test.js",
+        "insilos/addons/pos_restaurant/static/tests/unit/services/pos_service.test.js",
+        "insilos/addons/pos_restaurant/tests/test_devices_synchronization.py",
+        "insilos/addons/pos_restaurant/tests/test_frontend.py",
+        "insilos/addons/pos_restaurant/tests/test_pos_restaurant_flow.py"
+      ],
+      "static_assets": [
+        "point_of_sale/static/src/scss/pos_dashboard.scss",
+        "pos_restaurant/static/src/**/*",
+        "pos_restaurant/static/tests/tours/**/*",
+        "pos_restaurant/static/tests/tours/**/*",
+        "pos_restaurant/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_safaricom",
+      "oracle_paths": [
+        "insilos/addons/pos_safaricom/static/tests/tours/safaricom_tour.js",
+        "insilos/addons/pos_safaricom/tests/test_frontend.py",
+        "insilos/addons/pos_safaricom/tests/test_pos_safaricom.py"
+      ],
+      "static_assets": [
+        "pos_safaricom/static/src/**/*",
+        "pos_safaricom/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_sale",
+      "oracle_paths": [
+        "insilos/addons/pos_sale/static/tests/tours/pos_sale_tour.js",
+        "insilos/addons/pos_sale/static/tests/tours/test_taxes_downpayment.js",
+        "insilos/addons/pos_sale/static/tests/tours/utils/pos_sale_utils.js",
+        "insilos/addons/pos_sale/static/tests/unit/components/orderline.test.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/pos_config.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/pos_order_line.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/pos_session.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/product_product.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/product_template.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/rs_partner.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/sale_order.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/data/sale_order_line.data.js",
+        "insilos/addons/pos_sale/static/tests/unit/models/pos_order_line.test.js",
+        "insilos/addons/pos_sale/static/tests/unit/services/pos_store.test.js",
+        "insilos/addons/pos_sale/tests/test_pos_sale_flow.py",
+        "insilos/addons/pos_sale/tests/test_pos_sale_lot.py",
+        "insilos/addons/pos_sale/tests/test_pos_sale_report.py",
+        "insilos/addons/pos_sale/tests/test_taxes_downpayment.py"
+      ],
+      "static_assets": [
+        "pos_sale/static/src/**/*",
+        "pos_sale/static/tests/tours/**/*",
+        "pos_sale/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_sms",
+      "oracle_paths": [
+        "insilos/addons/pos_sms/static/tests/tours/test_pos_sms_tour.js",
+        "insilos/addons/pos_sms/static/tests/tours/utils/test_pos_sms_util.js",
+        "insilos/addons/pos_sms/tests/test_frontend.py"
+      ],
+      "static_assets": [
+        "pos_sms/static/src/**/*",
+        "pos_sms/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python"
+      ],
+      "module": "pos_stripe",
+      "oracle_paths": [
+        "insilos/addons/pos_stripe/static/tests/unit/data/pos_payment_method.data.js"
+      ],
+      "static_assets": [
+        "pos_stripe/static/src/**/*",
+        "pos_stripe/static/tests/unit/data/**/*"
+      ]
+    },
+    {
+      "boundary": "addons",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python"
+      ],
+      "module": "pos_viva_com",
+      "oracle_paths": [
+        "insilos/addons/pos_viva_com/static/tests/tours/utils/payment_screen_viva_com_util.js",
+        "insilos/addons/pos_viva_com/static/tests/tours/viva_com_tour.js",
+        "insilos/addons/pos_viva_com/static/tests/unit/data/pos_payment.data.js",
+        "insilos/addons/pos_viva_com/static/tests/unit/data/pos_payment_method.data.js",
+        "insilos/addons/pos_viva_com/tests/test_frontend.py",
+        "insilos/addons/pos_viva_com/tests/test_pos_payment_method.py"
+      ],
+      "static_assets": [
+        "pos_viva_com/static/src/**/*",
+        "pos_viva_com/static/tests/tours/**/*",
+        "pos_viva_com/static/tests/unit/data/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_at_pos",
+      "oracle_paths": [
+        "insilos/apps/l10n_at_pos/static/tests/unit/data/pos_config.data.js",
+        "insilos/apps/l10n_at_pos/static/tests/unit/data/rs_company.data.js",
+        "insilos/apps/l10n_at_pos/static/tests/unit/data/rs_country.data.js",
+        "insilos/apps/l10n_at_pos/static/tests/unit/services/pos_store.test.js"
+      ],
+      "static_assets": [
+        "l10n_at_pos/static/src/**/*",
+        "l10n_at_pos/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_br_edi_pos",
+      "oracle_paths": [
+        "insilos/apps/l10n_br_edi_pos/static/tests/tours/common.js",
+        "insilos/apps/l10n_br_edi_pos/static/tests/tours/tours.js",
+        "insilos/apps/l10n_br_edi_pos/static/tests/tours/utils/generic_hooks.js",
+        "insilos/apps/l10n_br_edi_pos/tests/test_l10n_br_edi_pos.py",
+        "insilos/apps/l10n_br_edi_pos/tests/test_l10n_br_edi_pos_download_nfce.py"
+      ],
+      "static_assets": [
+        "l10n_br_edi_pos/static/src/**/*",
+        "l10n_br_edi_pos/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_cl_edi_pos",
+      "oracle_paths": [
+        "insilos/apps/l10n_cl_edi_pos/static/tests/tours/l10n_cl_edi_pos.js",
+        "insilos/apps/l10n_cl_edi_pos/tests/test_cl_edi_pos.py",
+        "insilos/apps/l10n_cl_edi_pos/tests/test_l10n_cl_edi_pos.py"
+      ],
+      "static_assets": [
+        "l10n_cl_edi_pos/static/src/**/*",
+        "l10n_cl_edi_pos/static/tests/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_de_pos_cert",
+      "oracle_paths": [
+        "insilos/apps/l10n_de_pos_cert/static/tests/unit/models/pos_order.test.js",
+        "insilos/apps/l10n_de_pos_cert/tests/test_de_pos_cert.py"
+      ],
+      "static_assets": [
+        "l10n_de_pos_cert/static/src/**/*",
+        "l10n_de_pos_cert/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python"
+      ],
+      "module": "l10n_ec_edi_pos",
+      "oracle_paths": [
+        "insilos/apps/l10n_ec_edi_pos/static/tests/tours/test_pos_order.js",
+        "insilos/apps/l10n_ec_edi_pos/tests/test_ec_edi_pos.py",
+        "insilos/apps/l10n_ec_edi_pos/tests/test_pos_order.py"
+      ],
+      "static_assets": [
+        "l10n_ec_edi_pos/static/src/**/*",
+        "l10n_ec_edi_pos/static/tests/tours/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "localization_fiscal",
+        "python"
+      ],
+      "module": "l10n_in_reports_gstr_pos",
+      "oracle_paths": [
+        "insilos/apps/l10n_in_reports_gstr_pos/tests/test_pos_gstr_reports.py"
+      ],
+      "static_assets": []
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_it_pos",
+      "oracle_paths": [
+        "insilos/apps/l10n_it_pos/static/tests/tours/test_taxes_tax_totals_summary.js",
+        "insilos/apps/l10n_it_pos/static/tests/unit/html_to_xml.test.js",
+        "insilos/apps/l10n_it_pos/static/tests/unit/it_document_values.test.js",
+        "insilos/apps/l10n_it_pos/tests/test_it_pos.py",
+        "insilos/apps/l10n_it_pos/tests/test_taxes_tax_totals_summary.py"
+      ],
+      "static_assets": [
+        "l10n_it_pos/static/src/**/*",
+        "l10n_it_pos/static/src/app/documents/fiscal_document/body/body.js",
+        "l10n_it_pos/static/src/app/overrides/helpers/account_tax.js",
+        "l10n_it_pos/static/src/app/utils/html_to_xml.js",
+        "l10n_it_pos/static/tests/tours/**/*",
+        "l10n_it_pos/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_ke_edi_oscu_pos",
+      "oracle_paths": [
+        "insilos/apps/l10n_ke_edi_oscu_pos/tests/test_etims_pos.py",
+        "insilos/apps/l10n_ke_edi_oscu_pos/tests/test_ke_edi_pos.py"
+      ],
+      "static_assets": [
+        "l10n_ke_edi_oscu_pos/static/src/app/**/*",
+        "l10n_ke_edi_oscu_pos/static/src/components/**/*",
+        "l10n_ke_edi_oscu_pos/static/src/overrides/components/**/*",
+        "l10n_ke_edi_oscu_pos/static/src/overrides/models/*.js",
+        "l10n_ke_edi_oscu_pos/static/src/overrides/views/*.js",
+        "l10n_ke_edi_oscu_pos/static/src/overrides/views/*.xml"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_mx_edi_pos",
+      "oracle_paths": [
+        "insilos/apps/l10n_mx_edi_pos/static/tests/tours/invoice_order_tour.js",
+        "insilos/apps/l10n_mx_edi_pos/static/tests/tours/invoice_previous_order_tour.js",
+        "insilos/apps/l10n_mx_edi_pos/static/tests/tours/l10n_mx_pos_tour.js",
+        "insilos/apps/l10n_mx_edi_pos/static/tests/tours/refund_order_tour.js",
+        "insilos/apps/l10n_mx_edi_pos/tests/test_cfdi_pos_order.py",
+        "insilos/apps/l10n_mx_edi_pos/tests/test_cfdi_pos_order_documents.py",
+        "insilos/apps/l10n_mx_edi_pos/tests/test_tour.py"
+      ],
+      "static_assets": [
+        "l10n_mx_edi_pos/static/src/**/*",
+        "l10n_mx_edi_pos/static/tests/tours/invoice_order_tour.js",
+        "l10n_mx_edi_pos/static/tests/tours/invoice_previous_order_tour.js",
+        "l10n_mx_edi_pos/static/tests/tours/l10n_mx_pos_tour.js",
+        "l10n_mx_edi_pos/static/tests/tours/refund_order_tour.js"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "localization_fiscal",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "l10n_pe_edi_pos",
+      "oracle_paths": [
+        "insilos/apps/l10n_pe_edi_pos/static/tests/tours/pos/pos_refund_tour.js",
+        "insilos/apps/l10n_pe_edi_pos/tests/test_frontend.py",
+        "insilos/apps/l10n_pe_edi_pos/tests/test_pe_edi_pos.py"
+      ],
+      "static_assets": [
+        "l10n_pe_edi_pos/static/src/**/*",
+        "l10n_pe_edi_pos/static/tests/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "localization_fiscal",
+        "python"
+      ],
+      "module": "l10n_pl_reports_pos_jpk",
+      "oracle_paths": [
+        "insilos/apps/l10n_pl_reports_pos_jpk/tests/test_pl_pos.py"
+      ],
+      "static_assets": []
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "dependency_only"
+      ],
+      "module": "pos_account_reports",
+      "oracle_paths": [
+        "insilos/apps/pos_account_reports/tests/test_account_reports.py"
+      ],
+      "static_assets": []
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_appointment",
+      "oracle_paths": [
+        "insilos/apps/pos_appointment/static/tests/unit/components/navbar.test.js",
+        "insilos/apps/pos_appointment/static/tests/unit/data/appointment_type.data.js",
+        "insilos/apps/pos_appointment/static/tests/unit/data/calendar_event.data.js",
+        "insilos/apps/pos_appointment/static/tests/unit/data/pos_config.data.js",
+        "insilos/apps/pos_appointment/static/tests/unit/data/pos_session.data.js",
+        "insilos/apps/pos_appointment/static/tests/unit/services/pos_service.test.js",
+        "insilos/apps/pos_appointment/tests/test_pos_appointment_flow.py"
+      ],
+      "static_assets": [
+        "appointment/static/src/components/appointment_booking_action_helper/*",
+        "appointment/static/src/components/appointment_type_sync_duration/*",
+        "appointment/static/src/views/gantt/**/*",
+        "appointment/static/src/xml/appointment_svg.xml",
+        "calendar/static/src/scss/calendar_event_views.scss",
+        "calendar/static/src/views/**/*",
+        "html_editor/static/src/backend/**/*",
+        "html_editor/static/src/fields/html_field*",
+        "html_editor/static/src/main/placeholder_plugin.js",
+        "html_editor/static/src/others/dynamic_placeholder_plugin.js",
+        "html_editor/static/src/utils/regex.js",
+        "pos_appointment/static/src/**/*",
+        "pos_appointment/static/tests/unit/**/*",
+        "web/static/lib/dompurify/DOMpurify.js",
+        "web_gantt/static/src/**/*",
+        "web_gantt/static/src/**/*.dark.scss",
+        "web_gantt/static/src/**/*.dark.scss"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_avatax",
+      "oracle_paths": [
+        "insilos/apps/pos_react/tests/test_pos_avatax_parity.py"
+      ],
+      "static_assets": [
+        "pos_avatax/static/src/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data"
+      ],
+      "module": "pos_barcodelookup",
+      "oracle_paths": [
+        "insilos/apps/pos_barcodelookup/static/tests/tours/pos_barcodelookup_flow.js",
+        "insilos/apps/pos_barcodelookup/tests/test_pos_barcodelookup_start.py"
+      ],
+      "static_assets": [
+        "pos_barcodelookup/static/src/**/*",
+        "pos_barcodelookup/static/tests/**/*",
+        "product_barcodelookup/static/src/widgets/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_enterprise",
+      "oracle_paths": [
+        "insilos/apps/pos_enterprise/static/tests/tours/point_of_sale/pos_tour.js",
+        "insilos/apps/pos_enterprise/static/tests/tours/preparation_display/preparation_display_tour.js",
+        "insilos/apps/pos_enterprise/static/tests/tours/preparation_display/utils/preparation_display_util.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/components/category.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/components/order.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/components/preparation_display.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/components/stage.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/generate_model_definitions.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_order.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_prep_line.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_prep_order.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_prep_stage.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_prep_state.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/pos_session.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/data/preparation_display.data.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/models/pos_config.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/services/pos_store.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/services/preparation_display_service.test.js",
+        "insilos/apps/pos_enterprise/static/tests/unit/utils.js",
+        "insilos/apps/pos_enterprise/tests/test_frontend.py",
+        "insilos/apps/pos_enterprise/tests/test_pos_preparation_display.py",
+        "insilos/apps/pos_enterprise/tests/test_res_config_settings.py"
+      ],
+      "static_assets": [
+        "mail/static/src/core/common/sound_effects_service.js",
+        "point_of_sale/static/src/app/models/data_service_options.js",
+        "point_of_sale/static/src/app/models/pos_category.js",
+        "point_of_sale/static/src/app/models/pos_preset.js",
+        "point_of_sale/static/src/app/models/related_models/**/*",
+        "point_of_sale/static/src/app/models/utils/indexed_db.js",
+        "point_of_sale/static/src/app/services/data_service.js",
+        "point_of_sale/static/src/app/utils/devices_identifier_sequence.js",
+        "point_of_sale/static/src/app/utils/pretty_console_log.js",
+        "point_of_sale/static/src/lazy_getter.js",
+        "point_of_sale/static/src/overrides/sound_effects_service.js",
+        "point_of_sale/static/src/proxy_trap.js",
+        "point_of_sale/static/src/utils.js",
+        "pos_enterprise/static/src/**/*.dark.scss",
+        "pos_enterprise/static/src/app/**/*",
+        "pos_enterprise/static/src/backend/components/fields/duration_field.js",
+        "pos_enterprise/static/src/backend/components/fields/duration_field.xml",
+        "pos_enterprise/static/src/override/point_of_sale/**/*",
+        "pos_enterprise/static/src/scss/primary_variables.scss",
+        "pos_enterprise/static/tests/tours/point_of_sale/**/*",
+        "pos_enterprise/static/tests/tours/preparation_display/**/*",
+        "pos_enterprise/static/tests/unit/**/*",
+        "web/static/src/core/browser/router.js",
+        "web/static/src/core/debug/**/*",
+        "web/static/src/scss/functions.scss",
+        "web/static/src/webclient/icons.scss",
+        "web/static/src/webclient/webclient.scss",
+        "web_enterprise/static/src/**/*.dark.scss"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "hardware",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_iot",
+      "oracle_paths": [
+        "insilos/apps/pos_iot/static/tests/tours/payment_tour.js",
+        "insilos/apps/pos_iot/static/tests/tours/scale_tour.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/iot_box.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/iot_channel.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/iot_device.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/pos_config.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/pos_payment_method.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/pos_printer.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/data/pos_session.data.js",
+        "insilos/apps/pos_iot/static/tests/unit/iot_devices.test.js",
+        "insilos/apps/pos_iot/tests/test_frontend.py"
+      ],
+      "static_assets": [
+        "iot/static/src/client_action/delete_local_storage.js",
+        "iot/static/src/iot_report_action.js",
+        "iot/static/src/network_utils/*",
+        "iot/static/src/overrides/network_utils/*",
+        "iot/static/src/select_printer_wizard.js",
+        "iot_base/static/src/device_controller.js",
+        "iot_base/static/src/network_utils/*",
+        "pos_iot/static/src/**/*",
+        "pos_iot/static/src/backend/**/*",
+        "pos_iot/static/tests/tours/**/*",
+        "pos_iot/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "hardware",
+        "javascript",
+        "manifest_data",
+        "python"
+      ],
+      "module": "pos_pricer",
+      "oracle_paths": [
+        "insilos/apps/pos_pricer/tests/test_pos_pricer.py"
+      ],
+      "static_assets": [
+        "pos_pricer/static/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_settle_due",
+      "oracle_paths": [
+        "insilos/apps/pos_settle_due/static/tests/tours/SettleAccountDueTour.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/components/payment_screen.test.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/data/pos_config.data.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/data/product_product.data.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/data/product_template.data.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/data/rs_partner.data.js",
+        "insilos/apps/pos_settle_due/static/tests/unit/utils.js",
+        "insilos/apps/pos_settle_due/tests/test_frontend.py",
+        "insilos/apps/pos_settle_due/tests/test_receivable_account_reconciliation.py",
+        "insilos/apps/pos_settle_due/tests/test_total_due.py",
+        "insilos/apps/pos_settle_due/tests/test_total_due_frontend.py"
+      ],
+      "static_assets": [
+        "pos_settle_due/static/src/**/*",
+        "pos_settle_due/static/tests/tours/**/*",
+        "pos_settle_due/static/tests/unit/**/*",
+        "pos_settle_due/static/tests/unit/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "payment",
+        "python",
+        "qweb"
+      ],
+      "module": "pos_tyro",
+      "oracle_paths": [
+        "insilos/apps/pos_tyro/static/tests/unit/data/pos_payment_method.data.js"
+      ],
+      "static_assets": [
+        "pos_tyro/static/src/actions/**/*",
+        "pos_tyro/static/src/app/**/*",
+        "pos_tyro/static/src/overrides/**/*",
+        "pos_tyro/static/src/urls.js",
+        "pos_tyro/static/src/urls.js",
+        "pos_tyro/static/tests/unit/data/**/*"
+      ]
+    },
+    {
+      "boundary": "apps",
+      "extension_classification": [
+        "asset_injection",
+        "javascript",
+        "manifest_data",
+        "python",
+        "qweb"
+      ],
+      "module": "whatsapp_pos",
+      "oracle_paths": [
+        "insilos/apps/pos_react/tests/test_whatsapp_pos_receipt_parity.py"
+      ],
+      "static_assets": [
+        "whatsapp_pos/static/src/**/*"
+      ]
+    }
+  ],
+  "direct_dependency_count": 66,
+  "schema_version": 2
+}

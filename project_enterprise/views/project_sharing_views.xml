@@ -35,7 +35,7 @@
      <record id="project_sharing_project_task_view_kanban_inherited" model="ir.ui.view">
         <field name="name">project.sharing.project.task.view.kanban.inherit</field>
         <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.project_sharing_project_task_view_kanban"/>
+        <field name="inherit_id" ref="project.project_sharing_project_task_view_card"/>
         <field name="arch" type="xml">
             <field name="date_deadline" position="attributes">
                 <attribute name="invisible">planned_date_begin or not date_deadline or state in ['1_done', '1_canceled']</attribute>

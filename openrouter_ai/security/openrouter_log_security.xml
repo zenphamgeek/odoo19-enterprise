@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_openrouter_log_company" model="ir.rule">
+        <field name="name">OpenRouter log company isolation</field>
+        <field name="model_id" ref="model_openrouter_log"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_openrouter_log_system_auditor" model="ir.rule">
+        <field name="name">OpenRouter system auditor access</field>
+        <field name="model_id" ref="model_openrouter_log"/>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>

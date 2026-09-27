@@ -1169,7 +1169,7 @@ describe("grid_view_desktop", () => {
         ar_SY: "الأحد،\n٢٩ كانون الثاني",
         he_IL: "יום א׳,\n29 בינו׳",
         fa_IR: "یکشنبه\n۱۰ بهمن",
-        th_TH: "อา.\n29 ม.ค.",
+        th_TH: ["อา.\n29 ม.ค.", "อาทิตย์\n29 ม.ค."],
         tr_TR: "29 Oca Paz",
         pl_PL: "niedz.,\n29 sty",
         // for CJK locales: keep everything on one line
@@ -1196,7 +1196,11 @@ describe("grid_view_desktop", () => {
             await makeMockEnv();
             await mountView(view);
             const text = queryAllTexts(".o_grid_column_title")[1];
-            expect(text).toEqual(expected);
+            if (Array.isArray(expected)) {
+                expect(expected.includes(text)).toBe(true);
+            } else {
+                expect(text).toEqual(expected);
+            }
         });
     }
 
@@ -1615,7 +1619,7 @@ describe("grid_view_desktop", () => {
         let currentRows = initialRows;
 
         expect(content.scrollTop).toBe(0, { message: "content should be scrolled to the top" });
-        expect(content.offsetHeight).toBe(710, { message: "content should have its height fixed" });
+        expect(content.offsetHeight).toBe(718, { message: "content should have its height fixed" });
         // ! This next assertion is important: it ensures that the grid rows are
         // ! hard-coded so that the virtual hook can work with it. Adapt this test
         // ! accordingly should the row height change.

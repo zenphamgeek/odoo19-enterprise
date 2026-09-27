@@ -22,7 +22,7 @@ function dragAndDropSignature(isActive) {
 }
 
 registry.category("web_tour.tours").add("sign_tour", {
-    url: "/odoo",
+    url: "/insilos",
     steps: () => [
         stepUtils.showAppsMenuItem(),
         {
@@ -91,7 +91,7 @@ registry.category("web_tour.tours").add("sign_tour", {
             trigger: ".o_control_panel .o_sign_sign_directly",
             content: markup(
                 _t(
-                    "Since you're the one signing this document, you can do it directly within Odoo.<br>External users can use the link provided by email."
+                    "Since you're the one signing this document, you can do it directly within Insilos.<br>External users can use the link provided by email."
                 )
             ),
             tooltipPosition: "bottom",

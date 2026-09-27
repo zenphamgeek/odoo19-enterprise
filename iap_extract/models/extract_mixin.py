@@ -22,7 +22,7 @@ ERROR_MESSAGES = {
     'error_too_many_pages': _lt("Your document contains too many pages"),
     'error_invalid_account_token': _lt(
         "The 'invoice_ocr' IAP account token is invalid. "
-        "Please delete it to let Odoo generate a new one or fill it with a valid token."),
+        "Please delete it to let Insilos generate a new one or fill it with a valid token."),
     'error_unsupported_size': _lt("The document has been rejected because it is too small"),
     'error_no_page_count': _lt("Invalid PDF (Unable to get page count)"),
     'error_pdf_conversion_to_images': _lt("Invalid PDF (Conversion error)"),

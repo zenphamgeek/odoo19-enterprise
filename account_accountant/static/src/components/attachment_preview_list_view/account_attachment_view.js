@@ -3,7 +3,15 @@ import { onMounted } from "@odoo/owl";
 import { useBus } from "@web/core/utils/hooks";
 
 export class AccountAttachmentView extends AttachmentView {
-    static props = [...AttachmentView.props, "openInPopout"];
+    static props = {
+        ...(Array.isArray(AttachmentView.props)
+            ? Object.fromEntries(AttachmentView.props.map((p) => [p.replace("?", ""), { optional: p.endsWith("?") }]))
+            : (AttachmentView.props || {})),
+        thread: { optional: true },
+        threadId: { optional: true },
+        threadModel: { optional: true },
+        openInPopout: { optional: true },
+    };
     static components = { AttachmentView };
 
     setup() {

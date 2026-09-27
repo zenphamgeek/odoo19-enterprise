@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+    
+    <record id="industry_warehouse" model="insilos.industry.template">
+        <field name="name">Warehouse / Distribution</field>
+        <field name="description">Warehousing, distribution centers, and fulfillment</field>
+        <field name="icon">ph-duotone ph-warehouse</field>
+        <field name="category_id" ref="industry_cat_logistics" />
+        <field name="sequence">10</field>
+        <field name="synonyms">warehouse,distribution,fulfillment,storage,3PL</field>
+        <field name="module_names">stock,purchase,sale,delivery</field>
+        <field name="hero_image_url">/web/static/src/img/banners/warehouse.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/warehouse.webp</field>
+        <field name="intro_text">Warehouse Management &amp; Logistics ERP</field>
+        <field name="contact_email">contact@warehouse.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0050</field>
+        <field name="contact_address">Insilos Logistics Park, Binh Duong</field>
+        <field name="footer_json">{"intro": "Warehouse / Distribution Enterprise Powered by Insilos Hard-Fork Platform. Warehouse Management &amp; Logistics ERP.", "email": "contact@warehouse.insilos.com", "phone": "+84 (0) 28 7300 0050", "address": "Insilos Logistics Park, Binh Duong", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Warehouse / Distribution."}</field>
+    </record>
+
+    <record id="industry_freight" model="insilos.industry.template">
+        <field name="name">Freight / Shipping</field>
+        <field name="description">Freight forwarding, shipping, and cargo transport</field>
+        <field name="icon">ph-duotone ph-truck</field>
+        <field name="category_id" ref="industry_cat_logistics" />
+        <field name="sequence">20</field>
+        <field name="synonyms">freight,shipping,cargo,transport,logistics,haulage</field>
+        <field name="module_names">sale,purchase,stock,fleet,delivery</field>
+        <field name="hero_image_url">/web/static/src/img/banners/freight.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/freight.webp</field>
+        <field name="intro_text">Freight Forwarding &amp; Cargo Management System</field>
+        <field name="contact_email">contact@freight.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0051</field>
+        <field name="contact_address">Insilos Port Logistics, Cat Lai, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Freight / Shipping Enterprise Powered by Insilos Hard-Fork Platform. Freight Forwarding &amp; Cargo Management System.", "email": "contact@freight.insilos.com", "phone": "+84 (0) 28 7300 0051", "address": "Insilos Port Logistics, Cat Lai, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Freight / Shipping."}</field>
+    </record>
+
+    <record id="industry_courier" model="insilos.industry.template">
+        <field name="name">Courier / Delivery Service</field>
+        <field name="description">Package delivery, messenger, and last-mile logistics</field>
+        <field name="icon">ph-duotone ph-package</field>
+        <field name="category_id" ref="industry_cat_logistics" />
+        <field name="sequence">30</field>
+        <field name="synonyms">courier,delivery,messenger,parcel,last mile</field>
+        <field name="module_names">sale,fleet,stock,delivery</field>
+        <field name="hero_image_url">/web/static/src/img/banners/courier.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/courier.webp</field>
+        <field name="intro_text">Express Courier &amp; Parcel Delivery System</field>
+        <field name="contact_email">contact@courier.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0052</field>
+        <field name="contact_address">Insilos Express Hub, Tan Bình, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Courier / Delivery Service Enterprise Powered by Insilos Hard-Fork Platform. Express Courier &amp; Parcel Delivery System.", "email": "contact@courier.insilos.com", "phone": "+84 (0) 28 7300 0052", "address": "Insilos Express Hub, Tan B\u00ecnh, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Courier / Delivery Service."}</field>
+    </record>
+
+    <record id="industry_import_export" model="insilos.industry.template">
+        <field name="name">Import / Export Trading</field>
+        <field name="description">International trade, import/export, and customs</field>
+        <field name="icon">ph-duotone ph-globe-hemisphere-west</field>
+        <field name="category_id" ref="industry_cat_logistics" />
+        <field name="sequence">40</field>
+        <field name="synonyms">import,export,trade,customs,international,commerce</field>
+        <field name="module_names">sale,purchase,stock,account,delivery</field>
+        <field name="hero_image_url">/web/static/src/img/banners/import_export.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/import_export.webp</field>
+        <field name="intro_text">Global Trade &amp; Import Export ERP</field>
+        <field name="contact_email">contact@import_export.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0053</field>
+        <field name="contact_address">Insilos World Trade Center, District 1, Ho Chi Minh City</field>
+        <field name="footer_json">{"intro": "Import / Export Trading Enterprise Powered by Insilos Hard-Fork Platform. Global Trade &amp; Import Export ERP.", "email": "contact@import_export.insilos.com", "phone": "+84 (0) 28 7300 0053", "address": "Insilos World Trade Center, District 1, Ho Chi Minh City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Import / Export Trading."}</field>
+    </record>
+
+    <record id="industry_moving_company" model="insilos.industry.template">
+        <field name="name">Moving / Relocation</field>
+        <field name="description">Moving services, relocation, and storage</field>
+        <field name="icon">ph-duotone ph-van</field>
+        <field name="category_id" ref="industry_cat_logistics" />
+        <field name="sequence">50</field>
+        <field name="synonyms">moving,relocation,movers,storage,packing</field>
+        <field name="module_names">sale,project,fleet,hr</field>
+        <field name="hero_image_url">/web/static/src/img/banners/moving_company.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/moving_company.webp</field>
+        <field name="intro_text">Moving &amp; Relocation Services Management</field>
+        <field name="contact_email">contact@moving_company.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0054</field>
+        <field name="contact_address">Insilos Relocation Hub, Thu Duc City</field>
+        <field name="footer_json">{"intro": "Moving / Relocation Enterprise Powered by Insilos Hard-Fork Platform. Moving &amp; Relocation Services Management.", "email": "contact@moving_company.insilos.com", "phone": "+84 (0) 28 7300 0054", "address": "Insilos Relocation Hub, Thu Duc City", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Moving / Relocation."}</field>
+    </record>
+
+    <record id="industry_cold_chain" model="insilos.industry.template">
+        <field name="name">Cold Chain / Refrigerated Logistics</field>
+        <field name="description">Temperature-controlled storage and transport</field>
+        <field name="icon">ph-duotone ph-snowflake</field>
+        <field name="category_id" ref="industry_cat_logistics" />
+        <field name="sequence">60</field>
+        <field name="synonyms">cold chain,refrigerated,temperature controlled,frozen</field>
+        <field name="module_names">stock,purchase,sale,fleet,delivery</field>
+        <field name="hero_image_url">/web/static/src/img/banners/cold_chain.webp</field>
+        <field name="bg_image_url">/web/static/src/img/backgrounds/cold_chain.webp</field>
+        <field name="intro_text">Cold Chain Storage &amp; Distribution ERP</field>
+        <field name="contact_email">contact@cold_chain.insilos.com</field>
+        <field name="contact_phone">+84 (0) 28 7300 0055</field>
+        <field name="contact_address">Insilos Cold Logistics, Long An</field>
+        <field name="footer_json">{"intro": "Cold Chain / Refrigerated Logistics Enterprise Powered by Insilos Hard-Fork Platform. Cold Chain Storage &amp; Distribution ERP.", "email": "contact@cold_chain.insilos.com", "phone": "+84 (0) 28 7300 0055", "address": "Insilos Cold Logistics, Long An", "copyright": "\u00a9 2026 Insilos Inc. All rights reserved. Built for Cold Chain / Refrigerated Logistics."}</field>
+    </record>
+</odoo>

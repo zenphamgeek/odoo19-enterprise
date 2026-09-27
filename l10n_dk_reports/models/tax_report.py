@@ -30,7 +30,7 @@ class DanishReportCustomHandler(models.AbstractModel):
     ERROR_MESSAGES_IAP = {
         'error_subscription': _lt("An error has occurred when trying to verify your subscription."),
         'dbuuid_not_exist': _lt("Your database uuid does not exist."),
-        'not_enterprise': _lt("You do not have an Odoo enterprise subscription."),
+        'not_enterprise': _lt("You do not have an Insilos enterprise subscription."),
         'not_prod_env': _lt("Your database is not used for a production environment."),
         'not_active_db': _lt("Your database is not yet activated."),
         'error_deprecated': _lt("Please upgrade the Danish Localization - RSU module.")

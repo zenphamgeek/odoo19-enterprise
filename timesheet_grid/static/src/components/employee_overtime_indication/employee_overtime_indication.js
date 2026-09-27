@@ -9,9 +9,6 @@ export class EmployeeOvertimeIndication extends Component {
         uom: { type: String, optional: true },
         worked_hours: { type: Number, optional: true },
     };
-    static defaultProps = {
-        uom: "hours",
-    };
     static template = "timesheet_grid.EmployeeOvertimeIndication";
 
     get shouldShowHours() {

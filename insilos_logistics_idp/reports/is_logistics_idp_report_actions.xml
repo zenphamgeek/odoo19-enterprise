@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action Report: Hồ sơ Đối soát & Đánh giá Tuân thủ Chứng từ Logistics IDP -->
+    <record id="action_report_logistics_idp_case_dossier" model="ir.actions.report">
+        <field name="name">Hồ sơ Đối soát &amp; Đánh giá Tuân thủ Case IDP</field>
+        <field name="model">logistics.idp.case</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_logistics_idp.report_logistics_idp_case_dossier_doc</field>
+        <field name="report_file">insilos_logistics_idp.report_logistics_idp_case_dossier_doc</field>
+        <field name="print_report_name">'Ho-so-doi-soat-IDP-%s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_logistics_idp_case"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

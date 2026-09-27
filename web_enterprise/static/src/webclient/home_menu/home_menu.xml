@@ -2,9 +2,9 @@
 <templates xml:space="preserve">
 
 <t t-name="web_enterprise.HomeMenu">
-    <div t-ref="root" class="o_home_menu h-100 overflow-auto" t-att-class="{ o_ios_app: state.isIosApp }">
+    <div t-ref="this.root" class="o_home_menu h-100 overflow-auto" t-att-class="{ o_ios_app: state.isIosApp }">
         <div class="container">
-            <input t-ref="input" type="text" class="o_search_hidden visually-hidden w-auto" data-allow-hotkeys="true" t-on-input="_onInputSearch" t-on-blur="_onInputBlur" t-on-compositionstart="_onCompositionStart"
+            <input t-ref="this.input" type="text" class="o_search_hidden visually-hidden w-auto" data-allow-hotkeys="true" t-on-input="_onInputSearch" t-on-blur="_onInputBlur" t-on-compositionstart="_onCompositionStart"
                 role="combobox"
                 t-att-aria-activedescendant="'result_app_' + state.focusedIndex"
                 t-att-aria-expanded="displayedApps.length ? 'true' : 'false'"
@@ -33,7 +33,7 @@
                         >
                             <i t-attf-class="{{app.webIcon.iconClass}} position-relative w-auto h-auto" t-attf-style="color: {{app.webIcon.color}};"/>
                         </div>
-                        <div class="o_caption w-100 text-center text-truncate mt-2" t-esc="app.label or app.name"/>
+                        <div class="o_caption w-100 text-center text-truncate mt-2" t-out="app.label or app.name"/>
                     </a>
                 </div>
             </div>
@@ -46,7 +46,7 @@
 
 <t t-name="web_enterprise.HomeMenu.CommandPalette.Footer">
     <span>
-        <span class='fw-bolder text-primary'>TIP</span> — open me anywhere with <span t-esc="controlKey" class='fw-bolder text-primary'/> + <span class='fw-bolder text-primary'>K</span>
+        <span class='fw-bolder text-primary'>TIP</span> — open me anywhere with <span t-out="controlKey" class='fw-bolder text-primary'/> + <span class='fw-bolder text-primary'>K</span>
     </span>
 </t>
 

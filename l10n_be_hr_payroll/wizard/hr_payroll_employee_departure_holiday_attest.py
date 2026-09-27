@@ -37,9 +37,9 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
             - End-of-year bonus, 13th month or other similar amount
             - Beneficiary holdings
             - Various bonuses
-        We draw your attention to the fact that this information is based on the data in Odoo and / or that you
-        have introduced in Odoo and that it is important that they be accompanied by a verification on your part
-        according to the particularities related to contract of the worker or your company which Odoo would not
+        We draw your attention to the fact that this information is based on the data in Insilos and / or that you
+        have introduced in Insilos and that it is important that they be accompanied by a verification on your part
+        according to the particularities related to contract of the worker or your company which Insilos would not
         know.
         """
     )

@@ -21,25 +21,25 @@ class ResUsersSettings(models.Model):
 
     should_call_from_another_device = fields.Boolean(
         "Call from another device",
-        help="""Specify a phone number so that placing a call in Odoo Phone will ring your preferred device (your desk phone or cell phone) and then connect you to the recipient.""",
+        help="""Specify a phone number so that placing a call in Insilos Phone will ring your preferred device (your desk phone or cell phone) and then connect you to the recipient.""",
     )
     external_device_number = fields.Char(
         "External device number",
-        help="""Specify a phone number so that placing a call in Odoo Phone will ring your preferred device (your desk phone or cell phone) and then connect you to the recipient.""",
+        help="""Specify a phone number so that placing a call in Insilos Phone will ring your preferred device (your desk phone or cell phone) and then connect you to the recipient.""",
     )
 
     # Mobile stuff
     how_to_call_on_mobile = fields.Selection(
-        [("ask", "Always Ask"), ("voip", "Odoo Phone"), ("phone", "Phone's Default App")],
+        [("ask", "Always Ask"), ("voip", "Insilos Phone"), ("phone", "Phone's Default App")],
         default="ask",
         string="Default phone app",
-        help="""Choose which app to open when clicking on a phone number in the Odoo Mobile app.""",
+        help="""Choose which app to open when clicking on a phone number in the Insilos Mobile app.""",
         required=True,
     )
 
     do_not_disturb_until_dt = fields.Datetime(
         string="Do Not Disturb until",
-        help="If set, Odoo Phone will be in Do Not Disturb mode until this time."
+        help="If set, Insilos Phone will be in Do Not Disturb mode until this time."
     )
 
     @api.model

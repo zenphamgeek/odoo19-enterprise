@@ -1,9 +1,6 @@
 import { Plugin } from "@html_editor/plugin";
 import { registry } from "@web/core/registry";
 import { BuilderAction } from "@html_builder/core/builder_action";
-import { withSequence } from "@html_editor/utils/resource";
-import { before } from "@html_builder/utils/option_sequence";
-import { WEBSITE_BACKGROUND_OPTIONS } from "@website/builder/option_sequence";
 import { AILivechatOption } from "./ai_livechat_option";
 
 async function update_website_snippet_agent({ ormService, newAgentId = null, oldAgentId = null }) {
@@ -22,7 +19,7 @@ class AILivechatOptionPlugin extends Plugin {
 
     resources = {
         so_content_addition_selector: [".s_ai_livechat"],
-        builder_options: [withSequence(before(WEBSITE_BACKGROUND_OPTIONS), AILivechatOption)],
+        builder_options: [AILivechatOption],
         builder_actions: {
             SetChatStyleAction,
             SetAIAgentAction,

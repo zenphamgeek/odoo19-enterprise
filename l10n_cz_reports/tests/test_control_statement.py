@@ -197,7 +197,7 @@ class CzechControlStatementTest(CzechReportsCommon):
         )
 
         expected_xml = f"""
-            <Pisemnost nazevSW="Odoo SA" verzeSW="{release.version}">
+            <Pisemnost nazevSW="Insilos" verzeSW="{release.version}">
                 <DPHKH1 verzePis="03.01.10">
                 <VetaD dokument="KH1" k_uladis="DPH" khdph_forma="B" mesic="1" rok="2024"/>
                 <VetaP typ_ds="P" zkrobchjm="company_1_data" c_pracufo="2001" c_ufo="451" dic="12345679" email="info@company.czexample.com"/>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top-level Insilos IAP menu -->
+    <menuitem id="menu_openrouter_root"
+              name="Insilos IAP"
+              web_icon="openrouter_ai,static/description/icon.svg"
+              sequence="15"/>
+
+    <!-- Submenus -->
+    <menuitem id="menu_openrouter_domain"
+              name="AI Domain Router"
+              parent="menu_openrouter_root"
+              action="action_openrouter_domain"
+              sequence="10"/>
+
+    <menuitem id="menu_openrouter_model"
+              name="AI Models Catalog"
+              parent="menu_openrouter_root"
+              action="action_openrouter_model"
+              sequence="20"/>
+
+    <menuitem id="menu_openrouter_key"
+              name="IAP Keys &amp; Credits"
+              parent="menu_openrouter_root"
+              action="action_openrouter_key"
+              groups="base.group_system"
+              sequence="30"/>
+
+    <menuitem id="menu_openrouter_log"
+              name="Usage &amp; Cost Log"
+              parent="menu_openrouter_root"
+              action="action_openrouter_log"
+              sequence="40"/>
+</odoo>

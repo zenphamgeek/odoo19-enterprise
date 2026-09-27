@@ -49,6 +49,9 @@ class ProductTemplate(models.Model):
         string='Display Price', compute='_compute_display_subscription_pricing',
     )
 
+    def _base_domain_item_ids(self):
+        return self._domain_pricelist_rule_ids()
+
     def _domain_subscription_rule_ids(self):
         return Domain.AND([
             self._base_domain_item_ids(),

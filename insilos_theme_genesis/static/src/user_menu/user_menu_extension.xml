@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.UserMenu" t-inherit-mode="extension">
+        <xpath expr="//t[@t-set-slot='content']/t[@t-foreach='this.getElements()']" position="before">
+            <!-- 1. Modern User Identity Card -->
+            <div class="is-user-identity-card">
+                <div class="is-identity-top">
+                    <img class="is-identity-avatar" t-att-src="this.source" alt="User Avatar"/>
+                    <div class="is-identity-info">
+                        <div class="is-identity-name" t-out="this.userName"/>
+                        <div class="is-identity-badges">
+                            <span class="is-badge-role">Enterprise Admin</span>
+                            <span class="is-badge-db">
+                                <i class="oi oi-sm me-1" data-icon="database"/>
+                                <t t-out="this.dbName"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Quick Theme Mode Switcher -->
+            <div class="is-theme-switcher-box">
+                <div class="is-theme-segmented">
+                    <button type="button" class="is-theme-btn" t-att-class="{'active': this.insilosTheme.current === 'light'}" t-on-click="() => this.setTheme('light')">
+                        <span class="is-theme-icon">☀️</span> Light
+                    </button>
+                    <button type="button" class="is-theme-btn" t-att-class="{'active': this.insilosTheme.current === 'dark'}" t-on-click="() => this.setTheme('dark')">
+                        <span class="is-theme-icon">🌙</span> Dark
+                    </button>
+                    <button type="button" class="is-theme-btn" t-att-class="{'active': this.insilosTheme.current === 'auto'}" t-on-click="() => this.setTheme('auto')">
+                        <span class="is-theme-icon">💻</span> Auto
+                    </button>
+                </div>
+            </div>
+
+            <div role="separator" class="dropdown-divider my-2"/>
+        </xpath>
+    </t>
+
+</templates>

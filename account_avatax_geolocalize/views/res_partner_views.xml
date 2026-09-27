@@ -3,16 +3,13 @@
     <record id="res_partner_form_inherit" model="ir.ui.view">
         <field name="name">res.partner.form.inherit</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="inherit_id" ref="base_geolocalize.view_crm_partner_geo_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@name='geo_localize_button']" position="replace">
+            <xpath expr="//button[@name='geo_localize'][2]" position="before">
                 <field name="is_avatax_valid" invisible="1"/>
-                <button invisible="partner_latitude != 0 or partner_longitude != 0"
-                        icon="fa-gear" string="Compute based on address" title="Compute Localization"
-                        name="geo_localize" type="object" class="btn btn-link p-0"/>
-                <button invisible="is_avatax_valid or partner_latitude == 0 and partner_longitude == 0"
-                        icon="fa-refresh" string="Refresh" title="Refresh Localization"
-                        name="geo_localize" type="object" class="btn btn-link p-0"/>
+            </xpath>
+            <xpath expr="//button[@name='geo_localize'][2]" position="attributes">
+                <attribute name="invisible">is_avatax_valid or partner_latitude == 0 and partner_longitude == 0</attribute>
             </xpath>
         </field>
     </record>

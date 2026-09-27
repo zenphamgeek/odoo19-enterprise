@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_is_chemical_compliance_dossier_tree" model="ir.ui.view">
+            <field name="name">is.chemical.compliance.dossier.list</field>
+            <field name="model">is.chemical.compliance.dossier</field>
+            <field name="arch" type="xml">
+                <list string="Chemical Trade Compliance Dossiers" decoration-danger="has_prohibited_chemicals or state == 'rejected'" decoration-warning="has_restricted_chemicals" decoration-success="state == 'internally_approved'">
+                    <field name="name"/>
+                    <field name="dossier_type"/>
+                    <field name="partner_id"/>
+                    <field name="purchase_order_id"/>
+                    <field name="line_count"/>
+                    <field name="total_net_weight_kg"/>
+                    <field name="exception_count" string="Exceptions"/>
+                    <field name="nsw_registration_no"/>
+                    <field name="customs_declaration_no"/>
+                    <field name="state" widget="badge" decoration-danger="state == 'rejected'" decoration-warning="state in ('evaluating', 'submission_prepared')" decoration-success="state == 'internally_approved'" decoration-info="state == 'dossier_ready'"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_chemical_compliance_dossier_form" model="ir.ui.view">
+            <field name="name">is.chemical.compliance.dossier.form</field>
+            <field name="model">is.chemical.compliance.dossier</field>
+            <field name="arch" type="xml">
+                <form string="Chemical Compliance Dossier">
+                    <header>
+                        <button name="action_run_compliance_data_check" string="Check Data Completeness" type="object" class="btn-secondary"/>
+                        <button name="action_evaluate_obligations" string="Evaluate Obligations" type="object" class="btn-primary" invisible="state not in ('draft', 'evaluating')"/>
+                        <button name="action_complete_internal_review" string="Complete Internal Review" type="object" class="btn-success" invisible="state != 'submission_prepared'"/>
+                        <button name="%(insilos_chemical_trade_compliance.action_report_chemical_dossier_application)d" string="Print Permit Application (PDF)" type="action" class="btn-secondary" icon="fa-print" invisible="dossier_type == 'declaration'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,evaluating,dossier_ready,submission_prepared,internally_approved"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="PROHIBITED CHEMICAL" bg_color="bg-danger" invisible="not has_prohibited_chemicals"/>
+                        <widget name="web_ribbon" title="RESTRICTED LICENSE REQ" bg_color="bg-warning" invisible="not has_restricted_chemicals or has_prohibited_chemicals"/>
+                        <div class="w_button_box" name="button_box">
+                            <button class="w_stat_button" icon="fa-exclamation-triangle" type="action" invisible="exception_count == 0">
+                                <field name="exception_count" widget="statinfo" string="Data Anomalies"/>
+                            </button>
+                        </div>
+                        <div class="w_title">
+                            <label for="name" string="Dossier Reference"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Trade &amp; Logistics Information">
+                                <field name="dossier_type"/>
+                                <field name="partner_id"/>
+                                <field name="importer_company_id" groups="base.group_multi_company"/>
+                                <field name="purchase_order_id"/>
+                                <field name="picking_id"/>
+                                <field name="usage_tracking_id"/>
+                                <field name="case_id"/>
+                                <field name="invoice_number"/>
+                                <field name="invoice_date"/>
+                            </group>
+                            <group string="Customs &amp; National Single Window (NSW)">
+                                <field name="nsw_procedure_code" readonly="state not in ('draft', 'evaluating')"/>
+                                <field name="submitted_by" readonly="1"/>
+                                <field name="approved_by" readonly="1"/>
+                                <field name="nsw_registration_no" placeholder="Internal NSW reference, if recorded"/>
+                                <field name="nsw_verification_code" placeholder="Internal verification reference, if recorded"/>
+                                <field name="customs_declaration_no" placeholder="Internal customs reference, if recorded"/>
+                                <field name="customs_office_code"/>
+                                <field name="port_of_loading"/>
+                                <field name="port_of_discharge"/>
+                                <field name="total_net_weight_kg"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Chemical Items &amp; Consignment" name="items">
+                                <field name="line_ids">
+                                    <list editable="bottom" decoration-danger="regulatory_status in ('prohibited', 'review')" decoration-warning="regulatory_status in ('license_required', 'group_1_license', 'group_2_license')" decoration-info="regulatory_status == 'nsw_required'">
+                                        <field name="product_id"/>
+                                        <field name="chemical_substance_id"/>
+                                        <field name="trade_name"/>
+                                        <field name="cas_number"/>
+                                        <field name="hs_code"/>
+                                        <field name="purpose_of_use_id"/>
+                                        <field name="concentration_percentage"/>
+                                        <field name="quantity"/>
+                                        <field name="package_type"/>
+                                        <field name="net_weight_kg"/>
+                                        <field name="regulatory_status" widget="badge"/>
+                                        <field name="permit_id"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Data Exceptions &amp; Anomalies" name="exceptions" invisible="exception_count == 0">
+                                <field name="exception_ids">
+                                    <list decoration-danger="severity == 'critical'" decoration-warning="severity == 'warning'">
+                                        <field name="name"/>
+                                        <field name="exception_type"/>
+                                        <field name="severity" widget="badge"/>
+                                        <field name="product_tmpl_id"/>
+                                        <field name="description"/>
+                                        <field name="state" widget="badge"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Attached Documents (PO, Invoice, CoA, SDS)" name="documents">
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </page>
+                            <page string="NSW Payload Preview (JSON/XML)" name="nsw_payload">
+                                <group>
+                                    <field name="nsw_payload_json" widget="text" placeholder="Generated NSW JSON Payload appears here..."/>
+                                    <field name="nsw_payload_xml" widget="text" placeholder="Generated NSW XML Payload appears here..."/>
+                                </group>
+                            </page>
+                            <page string="Compliance Notes &amp; Findings" name="notes">
+                                <field name="compliance_notes" placeholder="Auditor findings, regulatory remarks, customs release conditions..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_is_chemical_compliance_dossier_search" model="ir.ui.view">
+            <field name="name">is.chemical.compliance.dossier.search</field>
+            <field name="model">is.chemical.compliance.dossier</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="nsw_registration_no"/>
+                    <field name="customs_declaration_no"/>
+                    <field name="purchase_order_id"/>
+                    <filter name="filter_ready" string="Dossier Ready" domain="[('state', '=', 'dossier_ready')]"/>
+                    <filter name="filter_submission_prepared" string="NSW Submission Prepared" domain="[('state', '=', 'submission_prepared')]"/>
+                    <filter name="filter_internally_reviewed" string="Internally Reviewed" domain="[('state', '=', 'internally_approved')]"/>
+                    <group>
+                        <filter name="group_type" string="Dossier Category" context="{'group_by': 'dossier_type'}"/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                        <filter name="group_partner" string="Supplier" context="{'group_by': 'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Kanban View -->
+        <record id="view_is_chemical_compliance_dossier_kanban" model="ir.ui.view">
+            <field name="name">is.chemical.compliance.dossier.kanban</field>
+            <field name="model">is.chemical.compliance.dossier</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" class="w_kanban_small_column" sample="1">
+                    <field name="name"/>
+                    <field name="dossier_type"/>
+                    <field name="partner_id"/>
+                    <field name="total_net_weight_kg"/>
+                    <field name="has_prohibited_chemicals"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="d-flex flex-column gap-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary"><field name="name"/></strong>
+                                    <field name="state" widget="badge" decoration-danger="state == 'rejected'" decoration-warning="state in ('evaluating', 'submission_prepared')" decoration-success="state == 'internally_approved'" decoration-info="state == 'dossier_ready'"/>
+                                </div>
+                                <div class="fw-bold text-truncate"><field name="partner_id"/></div>
+                                <div class="text-muted small"><field name="dossier_type"/></div>
+                                <div class="d-flex justify-content-between text-muted small mt-1">
+                                    <span>Total: <field name="total_net_weight_kg"/> kg</span>
+                                    <span t-if="record.has_prohibited_chemicals.raw_value" class="badge text-bg-danger">PROHIBITED</span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_is_chemical_compliance_dossier" model="ir.actions.act_window">
+            <field name="name">Manage Chemical Compliance Dossiers</field>
+            <field name="path">chemical-dossiers</field>
+            <field name="res_model">is.chemical.compliance.dossier</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="search_view_id" ref="view_is_chemical_compliance_dossier_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="w_view_nocontent_smiling_face">
+                    Create and manage chemical trade compliance dossiers for NSW declaration and licensing.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

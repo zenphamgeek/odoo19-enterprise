@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="onboarding_step_intake" model="onboarding.onboarding.step">
+      <field name="title">Receive dossier</field><field name="description">Open the case queue and triage newly received dossiers.</field><field name="button_text">Open intake</field><field name="panel_step_open_action_name">action_open_logistics_intake</field><field name="sequence">10</field>
+    </record>
+    <record id="onboarding_step_collect" model="onboarding.onboarding.step">
+      <field name="title">Collect document set</field><field name="description">Complete the evidence set for each dossier.</field><field name="button_text">Open collecting</field><field name="panel_step_open_action_name">action_open_logistics_collecting</field><field name="sequence">20</field>
+    </record>
+    <record id="onboarding_step_extract" model="onboarding.onboarding.step">
+      <field name="title">Classify and extract</field><field name="description">Process documents attached to active dossiers.</field><field name="button_text">Open processing</field><field name="panel_step_open_action_name">action_open_logistics_processing</field><field name="sequence">30</field>
+    </record>
+    <record id="onboarding_step_review" model="onboarding.onboarding.step">
+      <field name="title">Review and compliance</field><field name="description">Reconcile extracted facts and compliance checks by dossier.</field><field name="button_text">Open review</field><field name="panel_step_open_action_name">action_open_logistics_review</field><field name="sequence">40</field>
+    </record>
+    <record id="onboarding_step_exception" model="onboarding.onboarding.step">
+      <field name="title">Resolve exceptions</field><field name="description">Handle blocked and exception dossiers.</field><field name="button_text">Open exceptions</field><field name="panel_step_open_action_name">action_open_logistics_exceptions</field><field name="sequence">50</field>
+    </record>
+    <record id="onboarding_step_complete" model="onboarding.onboarding.step">
+      <field name="title">Outputs and completion</field><field name="description">Verify outputs and complete ready dossiers.</field><field name="button_text">Open ready dossiers</field><field name="panel_step_open_action_name">action_open_logistics_completion</field><field name="sequence">60</field>
+    </record>
+    <record id="onboarding_logistics_idp" model="onboarding.onboarding">
+      <field name="name">Logistics dossier workflow</field><field name="route_name">logistics_idp_overview</field><field name="panel_close_action_name">action_close_panel_logistics_idp</field><field name="text_completed">Standard dossier workflow reviewed.</field>
+      <field name="step_ids" eval="[Command.link(ref('insilos_logistics_idp.onboarding_step_intake')), Command.link(ref('insilos_logistics_idp.onboarding_step_collect')), Command.link(ref('insilos_logistics_idp.onboarding_step_extract')), Command.link(ref('insilos_logistics_idp.onboarding_step_review')), Command.link(ref('insilos_logistics_idp.onboarding_step_exception')), Command.link(ref('insilos_logistics_idp.onboarding_step_complete'))]"/>
+    </record>
+  </data>
+</odoo>

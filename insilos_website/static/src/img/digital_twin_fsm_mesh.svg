@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fsmBgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#071828" />
+      <stop offset="100%" stop-color="#020B14" />
+    </linearGradient>
+    <linearGradient id="twinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFB703" />
+      <stop offset="50%" stop-color="#FB8500" />
+      <stop offset="100%" stop-color="#238CFF" />
+    </linearGradient>
+    <filter id="fsmGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .fs-head { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; fill: #FFFFFF; font-size: 14px; }
+    .fs-sub { font-family: 'Inter', system-ui, sans-serif; font-weight: 500; fill: #8CAAB9; font-size: 11px; }
+    .fs-metric { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; fill: #42E6C3; font-size: 22px; }
+    .fs-badge { font-family: 'Inter', system-ui, sans-serif; font-weight: 700; font-size: 10px; fill: #00E5FF; letter-spacing: 0.08em; }
+  </style>
+
+  <rect width="880" height="540" rx="20" fill="url(#fsmBgGrad)" stroke="rgba(255, 183, 3, 0.25)" stroke-width="1.5" />
+
+  <!-- TOP HEADER -->
+  <g transform="translate(40, 25)">
+    <rect width="800" height="48" rx="12" fill="#0A2234" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+    <circle cx="25" cy="24" r="6" fill="#42E6C3" />
+    <text x="40" y="29" class="fs-head">INTELLIGENT FIELD SERVICE &amp; DIGITAL TWIN DISPATCH MESH</text>
+    <text x="560" y="29" class="fs-badge">FTFR 94.8% • SKILLS-BASED ROUTING</text>
+  </g>
+
+  <!-- LEFT: 3D DIGITAL TWIN TURBINE / ASSET WIREFRAME & SENSORS -->
+  <g transform="translate(40, 88)">
+    <rect width="490" height="290" rx="16" fill="#061828" stroke="rgba(0, 229, 255, 0.3)" stroke-width="1.5" />
+    
+    <!-- Heavy Asset / Turbine Digital Twin Geometry -->
+    <g transform="translate(245, 145)">
+      <!-- Turbine Rotor / Stator Rings -->
+      <circle cx="0" cy="0" r="85" fill="none" stroke="rgba(35, 140, 255, 0.2)" stroke-width="1.5" stroke-dasharray="6,6" />
+      <circle cx="0" cy="0" r="65" fill="none" stroke="rgba(0, 229, 255, 0.4)" stroke-width="2" />
+      <circle cx="0" cy="0" r="40" fill="#0B2E64" stroke="#42E6C3" stroke-width="2" filter="url(#fsmGlow)" />
+      
+      <!-- Turbine Blades -->
+      <g stroke="#00E5FF" stroke-width="2" opacity="0.8">
+        <line x1="0" y1="-65" x2="0" y2="-40" />
+        <line x1="0" y1="65" x2="0" y2="40" />
+        <line x1="-65" y1="0" x2="-40" y2="0" />
+        <line x1="65" y1="0" x2="40" y2="0" />
+        <line x1="-46" y1="-46" x2="-28" y2="-28" />
+        <line x1="46" y1="46" x2="28" y2="28" />
+        <line x1="-46" y1="46" x2="-28" y2="28" />
+        <line x1="46" y1="-46" x2="28" y2="-28" />
+      </g>
+
+      <!-- Center Hub -->
+      <circle cx="0" cy="0" r="14" fill="#42E6C3" />
+      <text x="0" y="4" text-anchor="middle" font-family="Inter" font-weight="900" font-size="9" fill="#051824">T-102</text>
+
+      <!-- IoT Vibration Sensor Anomaly Tag -->
+      <g transform="translate(55, -75)">
+        <rect width="130" height="34" rx="6" fill="rgba(61, 41, 6, 0.9)" stroke="#FFB703" stroke-width="1" />
+        <text x="8" y="15" font-family="Inter" font-weight="700" font-size="9" fill="#FFB703">VIBRATION: 4.8 mm/s</text>
+        <text x="8" y="27" font-family="Inter" font-weight="500" font-size="8" fill="#FFFFFF">Bearing Wear Pre-empted</text>
+      </g>
+    </g>
+
+    <!-- Digital Twin Health Status -->
+    <g transform="translate(25, 25)">
+      <rect width="140" height="28" rx="6" fill="rgba(66, 230, 195, 0.15)" stroke="#42E6C3" stroke-width="1" />
+      <text x="70" y="18" text-anchor="middle" font-family="Inter" font-weight="700" font-size="10" fill="#42E6C3">DIGITAL TWIN: SYNCED</text>
+    </g>
+  </g>
+
+  <!-- RIGHT: REAL-TIME FSM DISPATCH METRICS -->
+  <g transform="translate(545, 88)">
+    <!-- Metric 1: First-Time Fix Rate (FTFR) -->
+    <g transform="translate(0, 0)">
+      <rect width="295" height="88" rx="14" fill="#0A2234" stroke="rgba(66, 230, 195, 0.3)" stroke-width="1.5" />
+      <text x="20" y="30" class="fs-sub">FIRST-TIME FIX RATE (FTFR)</text>
+      <text x="20" y="62" class="fs-metric">94.8%</text>
+      <text x="110" y="60" class="fs-sub" fill="#66DDFF">+28% vs Industry Avg</text>
+    </g>
+
+    <!-- Metric 2: Mean Time to Repair (MTTR) Reduction -->
+    <g transform="translate(0, 101)">
+      <rect width="295" height="88" rx="14" fill="#0A2234" stroke="rgba(35, 140, 255, 0.3)" stroke-width="1.5" />
+      <text x="20" y="30" class="fs-sub">UNPLANNED DOWNTIME REDUCTION</text>
+      <text x="20" y="62" class="fs-metric" fill="#238CFF">-50.0%</text>
+      <text x="125" y="60" class="fs-sub" fill="#FFFFFF">Predictive IoT Trigger</text>
+    </g>
+
+    <!-- Metric 3: Dynamic Skills-Based Routing -->
+    <g transform="translate(0, 202)">
+      <rect width="295" height="88" rx="14" fill="#0A2234" stroke="rgba(255, 183, 3, 0.3)" stroke-width="1.5" />
+      <text x="20" y="30" class="fs-sub">SKILLS MATCH &amp; DISPATCH SPEED</text>
+      <text x="20" y="62" class="fs-metric" fill="#FFB703">&lt; 45s</text>
+      <text x="100" y="60" class="fs-sub" fill="#42E6C3">Certified Level 4 Tech</text>
+    </g>
+  </g>
+
+  <!-- BOTTOM: FSM LIFECYCLE WORKFLOW -->
+  <g transform="translate(40, 395)">
+    <rect width="800" height="120" rx="14" fill="#071928" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+    
+    <!-- Step 1 -->
+    <g transform="translate(25, 25)">
+      <text x="0" y="16" class="fs-head" font-size="12">1. IoT Telemetry Anomaly</text>
+      <text x="0" y="34" class="fs-sub">Continuous Vibration &amp; Temp Scan</text>
+    </g>
+    <line x1="240" y1="20" x2="240" y2="100" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+    <!-- Step 2 -->
+    <g transform="translate(265, 25)">
+      <text x="0" y="16" class="fs-head" font-size="12">2. Skills-Based Dispatch</text>
+      <text x="0" y="34" class="fs-sub">Geo-Location &amp; Spare Parts Match</text>
+    </g>
+    <line x1="510" y1="20" x2="510" y2="100" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+    <!-- Step 3 -->
+    <g transform="translate(535, 25)">
+      <text x="0" y="16" class="fs-head" font-size="12">3. Mobile Twin &amp; e-Sign</text>
+      <text x="0" y="34" class="fs-sub">Offline AR Schematics &amp; ERP Work Order</text>
+    </g>
+  </g>
+</svg>

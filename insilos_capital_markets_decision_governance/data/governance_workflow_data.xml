@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+
+    <!-- The decision workspace is a project template: users copy it per mandate
+         instead of editing the seeded one. `is_template` keeps it out of the
+         normal project list and out of task counts. -->
+    <record id="project_decision_governance" model="project.project">
+        <field name="name">Capital Markets Decision Governance</field>
+        <field name="is_template" eval="True"/>
+        <field name="allow_task_dependencies" eval="True"/>
+        <field name="description" type="html">
+            <div>
+                <p>Template workspace for investment decision governance. Copy it per
+                mandate or per desk; do not run cases in the template itself.</p>
+                <p>One task = one decision case. The stage is the state of record:
+                a case is only approved when it sits in Approved, and only the
+                approver may move it there.</p>
+            </div>
+        </field>
+    </record>
+
+    <!-- Stages carry the workflow. Rework is a stage rather than a flag so the
+         round trip stays visible in the case history instead of being
+         overwritten. -->
+    <record id="stage_intake" model="project.task.type">
+        <field name="name">Intake</field>
+        <field name="sequence">10</field>
+        <field name="project_ids" eval="[(4, ref('project_decision_governance'))]"/>
+    </record>
+
+    <record id="stage_evidence" model="project.task.type">
+        <field name="name">Evidence Collection</field>
+        <field name="sequence">20</field>
+        <field name="project_ids" eval="[(4, ref('project_decision_governance'))]"/>
+    </record>
+
+    <record id="stage_review" model="project.task.type">
+        <field name="name">Independent Review</field>
+        <field name="sequence">30</field>
+        <field name="project_ids" eval="[(4, ref('project_decision_governance'))]"/>
+    </record>
+
+    <record id="stage_rework" model="project.task.type">
+        <field name="name">Rework</field>
+        <field name="sequence">40</field>
+        <field name="project_ids" eval="[(4, ref('project_decision_governance'))]"/>
+    </record>
+
+    <record id="stage_approval" model="project.task.type">
+        <field name="name">Approval</field>
+        <field name="sequence">50</field>
+        <field name="project_ids" eval="[(4, ref('project_decision_governance'))]"/>
+    </record>
+
+    <record id="stage_closed" model="project.task.type">
+        <field name="name">Closed</field>
+        <field name="sequence">60</field>
+        <field name="fold" eval="True"/>
+        <field name="project_ids" eval="[(4, ref('project_decision_governance'))]"/>
+    </record>
+
+    <!-- Tags carry the attributes the SRS wants to filter on (materiality, risk,
+         source tier, archetype). They are tags and not fields because this
+         module adds no schema; the trade-off is that reporting groups by tag
+         rather than by a typed column. -->
+    <record id="tag_materiality_high" model="project.tags">
+        <field name="name">Materiality: High</field>
+        <field name="color">1</field>
+    </record>
+
+    <record id="tag_materiality_medium" model="project.tags">
+        <field name="name">Materiality: Medium</field>
+        <field name="color">3</field>
+    </record>
+
+    <record id="tag_materiality_low" model="project.tags">
+        <field name="name">Materiality: Low</field>
+        <field name="color">4</field>
+    </record>
+
+    <record id="tag_risk_elevated" model="project.tags">
+        <field name="name">Risk: Elevated</field>
+        <field name="color">2</field>
+    </record>
+
+    <record id="tag_risk_standard" model="project.tags">
+        <field name="name">Risk: Standard</field>
+        <field name="color">5</field>
+    </record>
+
+    <record id="tag_source_official" model="project.tags">
+        <field name="name">Source Tier: Official Filing</field>
+        <field name="color">10</field>
+    </record>
+
+    <record id="tag_source_vendor" model="project.tags">
+        <field name="name">Source Tier: Licensed Vendor</field>
+        <field name="color">11</field>
+    </record>
+
+    <record id="tag_source_unverified" model="project.tags">
+        <field name="name">Source Tier: Unverified</field>
+        <field name="color">9</field>
+    </record>
+
+    <record id="tag_archetype_new_position" model="project.tags">
+        <field name="name">Case: New Position</field>
+        <field name="color">6</field>
+    </record>
+
+    <record id="tag_archetype_exit" model="project.tags">
+        <field name="name">Case: Exit / Reduce</field>
+        <field name="color">7</field>
+    </record>
+
+    <record id="tag_archetype_limit_breach" model="project.tags">
+        <field name="name">Case: Limit Breach</field>
+        <field name="color">8</field>
+    </record>
+
+    <!-- The MVP archetype, seeded as a task inside the template so a copied
+         workspace starts with the checklist rather than an empty board. -->
+    <record id="case_archetype_new_position" model="project.task">
+        <field name="name">[Archetype] New Position Decision Case</field>
+        <field name="project_id" ref="project_decision_governance"/>
+        <field name="stage_id" ref="stage_intake"/>
+        <field name="tag_ids" eval="[(6, 0, [ref('tag_archetype_new_position')])]"/>
+        <field name="description" type="html">
+            <div>
+                <h3>Decision case checklist</h3>
+                <ol>
+                    <li><b>Intake</b> — sponsor, instrument, thesis in one paragraph,
+                        requested size, materiality tag, risk tag, target decision date.</li>
+                    <li><b>Evidence Collection</b> — attach every source to this task.
+                        Tag the weakest source tier present; an unverified source keeps
+                        the case out of Approval.</li>
+                    <li><b>Independent Review</b> — reviewer is not the requester.
+                        Record the counter-thesis and any dissent in the chatter, not in
+                        a private document.</li>
+                    <li><b>Rework</b> — return here on unresolved challenge. The round
+                        trip stays in history.</li>
+                    <li><b>Approval</b> — approver states disposition and rationale in
+                        the chatter, then moves the case to Closed.</li>
+                </ol>
+                <p>The AI research agent drafts and challenges; it never approves and
+                never moves a case forward.</p>
+            </div>
+        </field>
+    </record>
+
+</odoo>

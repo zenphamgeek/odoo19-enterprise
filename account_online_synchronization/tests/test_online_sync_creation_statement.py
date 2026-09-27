@@ -2,7 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from unittest.mock import MagicMock, patch
 
-from odoo.addons.base.models.res_bank import sanitize_account_number
+try:
+    from odoo.addons.base.models.res_partner_bank import sanitize_account_number
+except ImportError:
+    from odoo.addons.base.models.res_bank import sanitize_account_number
 from odoo.addons.account_online_synchronization.tests.common import AccountOnlineSynchronizationCommon
 from odoo.exceptions import RedirectWarning
 from odoo.tests import tagged

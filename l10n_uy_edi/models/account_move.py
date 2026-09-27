@@ -1055,7 +1055,7 @@ class AccountMove(models.Model):
             if not self.currency_id.is_zero(amount_total - formatted_xml_amount_total):
                 formatted_amount_total = formatLang(self.env, formatted_xml_amount_total, currency_obj=self.currency_id)
                 errors.append(_(
-                    "There is a difference between the move total amount in Odoo and the move XML. Odoo: %(amount_total)s  XML: %(formatted_amount_total)s.",
+                    "There is a difference between the move total amount in Insilos and the move XML. Insilos: %(amount_total)s  XML: %(formatted_amount_total)s.",
                     amount_total=amount_total, formatted_amount_total=formatted_amount_total
                 ))
         if errors:

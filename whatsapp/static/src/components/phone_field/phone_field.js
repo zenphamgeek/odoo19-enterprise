@@ -8,14 +8,6 @@ patch(PhoneField, {
         ...PhoneField.components,
         SendWhatsAppButton,
     },
-    defaultProps: {
-        ...PhoneField.defaultProps,
-        enableWhatsAppButton: true,
-    },
-    props: {
-        ...PhoneField.props,
-        enableWhatsAppButton: { type: Boolean, optional: true },
-    },
 });
 
 const patchDescr = {
@@ -36,4 +28,6 @@ const patchDescr = {
 };
 
 patch(phoneField, patchDescr);
-patch(formPhoneField, patchDescr);
+if (formPhoneField && formPhoneField !== phoneField) {
+    patch(formPhoneField, patchDescr);
+}

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template 1: Trích lục Phán quyết Xác định trước Mã HS Hải quan -->
+    <template id="report_hs_customs_ruling_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1.5;">
+                        <!-- Administrative Header -->
+                        <div class="row mb-3">
+                            <div class="col-6 text-center">
+                                <strong>TỔNG CỤC HẢI QUAN</strong><br/>
+                                <strong style="text-decoration: underline;"><t t-esc="(o.issuing_authority or 'CỤC GIÁM ĐỊNH HẢI QUAN').upper()"/></strong><br/>
+                                <span>Số thông báo: <strong><t t-esc="o.ruling_number"/></strong></span>
+                            </div>
+                            <div class="col-6 text-center">
+                                <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong><br/>
+                                <strong>Độc lập - Tự do - Hạnh phúc</strong><br/>
+                                <span>---------------</span><br/>
+                                <em>Ngày ban hành: <t t-esc="o.issue_date or 'N/A'"/></em>
+                            </div>
+                        </div>
+
+                        <div class="text-center my-3">
+                            <h3 class="fw-bold" style="font-size: 17px; margin-bottom: 2px;">THÔNG BÁO KẾT QUẢ XÁC ĐỊNH TRƯỚC MÃ SỐ HẢI QUAN</h3>
+                            <span class="fst-italic">(Phục vụ đối soát thông quan, chứng từ hải quan và áp dụng thuế suất)</span>
+                        </div>
+
+                        <!-- Content Table -->
+                        <table class="table table-bordered table-sm my-3" style="border-collapse: collapse; width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 30%; background-color: #f5f5f5;"><strong>1. Tên Thương phẩm / Hàng hóa:</strong></td>
+                                    <td><strong class="text-primary fs-6"><t t-esc="o.commercial_name or 'N/A'"/></strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>2. Mã số HS Kết luận (8-digit):</strong></td>
+                                    <td>
+                                        <span class="badge bg-success text-white p-2 fs-6" style="background-color: #27ae60; font-size: 15px; font-weight: bold; letter-spacing: 1px;">
+                                            <t t-esc="o.hs_code"/>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>3. Trạng thái Hiệu lực:</strong></td>
+                                    <td>
+                                        <t t-if="o.status == 'active'"><span class="text-success fw-bold">Đang có hiệu lực</span></t>
+                                        <t t-elif="o.status == 'revoked'"><span class="text-danger fw-bold">Đã bị hủy bỏ</span></t>
+                                        <t t-else=""><span class="text-muted fw-bold">Hết hiệu lực</span></t>
+                                        <t t-if="o.expiry_date"> (Đến ngày: <t t-esc="o.expiry_date"/>)</t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>4. Mô tả Kỹ thuật &amp; Đặc tính:</strong></td>
+                                    <td><t t-esc="o.technical_description or 'Đã thẩm định theo hồ sơ mẫu thực tế gửi Tổng cục Hải quan.'"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>5. Căn cứ Pháp lý &amp; Phân loại:</strong></td>
+                                    <td><t t-esc="o.classification_rationale or 'Áp dụng 6 quy tắc tổng quát giải thích việc phân loại hàng hóa theo Danh mục hàng hóa XNK Việt Nam.'"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>6. SHA-256 Provenance:</strong></td>
+                                    <td><code style="font-size: 11px;"><t t-esc="o.artifact_sha256 or 'N/A'"/></code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Verification stamp -->
+                        <div class="row mt-4">
+                            <div class="col-6 text-center">
+                                <strong>DOANH NGHIỆP TRA CỨU</strong><br/>
+                                <span class="fst-italic">(Bộ phận Logistics / Xuất Nhập khẩu)</span>
+                                <div style="height: 60px;"></div>
+                            </div>
+                            <div class="col-6 text-center">
+                                <strong>CƠ QUAN HẢI QUAN XÁC NHẬN</strong><br/>
+                                <span class="fst-italic">(Ký, đóng dấu trích sao)</span>
+                                <div style="height: 60px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Template 2: Phiếu Tra cứu Biểu thuế & Quản lý Chuyên ngành -->
+    <template id="report_hs_tariff_item_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1.5;">
+                        <!-- Header -->
+                        <div class="text-center my-3">
+                            <h3 class="fw-bold" style="font-size: 17px; margin-bottom: 2px;">PHIẾU TRA CỨU BIỂU THUẾ XNK &amp; CHÍNH SÁCH QUẢN LÝ CHUYÊN NGÀNH</h3>
+                            <span>Mã số HS: <strong class="text-primary fs-5"><t t-esc="o.hs_code"/></strong></span>
+                        </div>
+
+                        <!-- Main Table -->
+                        <table class="table table-bordered table-sm my-3" style="border-collapse: collapse; width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 30%; background-color: #f5f5f5;"><strong>Mô tả Tiếng Việt:</strong></td>
+                                    <td><strong><t t-esc="o.description_vi"/></strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>Mô tả Tiếng Anh (English):</strong></td>
+                                    <td><t t-esc="o.description_en or 'N/A'"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>Đơn vị tính (UoM):</strong></td>
+                                    <td><t t-esc="o.unit or 'kg'"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>Thuế Nhập khẩu Ưu đãi (MFN):</strong></td>
+                                    <td><strong class="text-danger"><t t-esc="o.import_duty_rate"/>%</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>Thuế Xuất khẩu:</strong></td>
+                                    <td><t t-esc="o.export_duty_rate"/>%</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>Thuế Giá trị Gia tăng (VAT):</strong></td>
+                                    <td><strong class="text-primary"><t t-esc="o.vat_rate"/>%</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>Chính sách Quản lý Chuyên ngành:</strong></td>
+                                    <td><t t-esc="o.specialized_management_notes or 'Không có ghi chú hạn chế đặc biệt.'"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f5f5f5;"><strong>Căn cứ Pháp lý Biểu thuế:</strong></td>
+                                    <td><t t-esc="o.legal_basis or 'Nghị định 26/2023/NĐ-CP về Biểu thuế xuất khẩu, Biểu thuế nhập khẩu ưu đãi.'"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="alert alert-info mt-3">
+                            <em>Dữ liệu được cập nhật từ Hệ thống Quản trị Biểu thuế Hải quan Insilos Enterprise.</em>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

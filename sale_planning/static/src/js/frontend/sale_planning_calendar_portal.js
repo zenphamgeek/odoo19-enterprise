@@ -1,9 +1,10 @@
 import PlanningView from '@planning/js/planning_calendar_front';
+import { patch } from '@web/core/utils/patch';
 
-PlanningView.include({
+patch(PlanningView.prototype, {
     // override popup of calendar
-    eventFunction: function (calEvent) {
-        this._super.apply(this, arguments);
+    eventFunction(calEvent) {
+        super.eventFunction(...arguments);
         const $saleLine = $("#sale_line");
         if (calEvent.event.extendedProps.sale_line) {
             $saleLine.text(calEvent.event.extendedProps.sale_line);
@@ -15,3 +16,4 @@ PlanningView.include({
         }
     },
 });
+

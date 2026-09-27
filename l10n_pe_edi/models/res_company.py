@@ -26,7 +26,7 @@ class ResCompany(models.Model):
              "Estela (formerly DIGIFLOW): With the certificate that estela (formerly digiflow) provided you, user and "
              "password you will report the invoices to them."
              "SUNAT: You will report the invoices directly to them using your own certified, user and password."
-             "IAP: This is an odoo service that will send the unsigned documents to a PSE and process their response.")
+             "IAP: This is an insilos service that will send the unsigned documents to a PSE and process their response.")
     l10n_pe_edi_address_type_code = fields.Char(
         string="Address Type Code",
         default="0000",

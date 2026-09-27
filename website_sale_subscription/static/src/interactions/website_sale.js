@@ -1,8 +1,8 @@
 import { patch } from '@web/core/utils/patch';
 import wSaleUtils from '@website_sale/js/website_sale_utils';
-import { WebsiteSale } from '@website_sale/interactions/website_sale';
+import { ProductPage } from '@website_sale/interactions/product_page';
 
-patch(WebsiteSale.prototype, {
+patch(ProductPage.prototype, {
     /**
      * Override of `_updateRootProduct` to add the subscription plan id to the rootProduct for
      * subscription products.

@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Phosphor Duotone SVG Icon Component -->
+    <template id="ph_icon" name="Phosphor Duotone Icon">
+        <svg t-attf-class="ph-duotone ph-#{name} #{extra_class or ''}" viewBox="0 0 256 256" role="img" aria-hidden="true">
+            <use t-attf-href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-#{name}"/>
+        </svg>
+    </template>
+
+    <!-- Global CTA — C3.ai dark slate aesthetic -->
+    <template id="insilos_global_cta" name="Insilos Global CTA">
+        <section class="s_call_to_action o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_call_to_action" data-name="Call to Action" data-bs-theme="dark">
+            <div class="container">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-8">
+                        <div class="d-inline-flex align-items-center gap-2 mb-2">
+                            <span class="ins-live-ping ins-live-ping--emerald"/>
+                            <span class="text-mint small fw-semibold text-uppercase">Production Operational AI</span>
+                        </div>
+                        <h2 class="display-4 fw-bold text-white mb-2"><t t-out="cta_title or 'Sẵn Sàng Hợp Nhất Trí Tuệ Vận Hành?'"/></h2>
+                        <p class="lead text-secondary mb-0"><t t-out="cta_text or 'Triển khai giải pháp Industrial AI với dữ liệu thật của bạn chỉ trong 4 tuần.'"/></p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <div class="d-flex flex-column flex-sm-row justify-content-lg-end gap-3">
+                            <a href="/request-demo" class="btn btn-primary rounded-pill px-4 py-2">
+                                <span>Yêu Cầu Live Demo</span>
+                                <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                            </a>
+                            <a href="/pricing" class="btn btn-outline-secondary rounded-pill px-4 py-2">Bảng Giá</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Card giải pháp — C3.ai modern bento card -->
+    <template id="insilos_solution_card" name="Insilos Solution Card">
+        <div class="card border border-secondary border-opacity-25 rounded-4 h-100 p-4 p-xl-5 d-flex flex-column justify-content-between" data-name="Solution Card">
+            <div class="flex-grow-1">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="ins-card-pictogram ins-pictogram-lg">
+                        <svg class="ph-duotone ph-cube ph-xl"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cube"/></svg>
+                    </div>
+                    <span class="ins-pill-badge small fw-semibold"><t t-out="solution_data['eyebrow']"/></span>
+                </div>
+                <h3 class="h4 fw-bold text-white mb-2"><t t-out="solution_data['name']"/></h3>
+                <p class="text-secondary small mb-3"><t t-out="solution_data['summary']"/></p>
+            </div>
+            <div class="pt-3 border-top border-secondary border-opacity-25 mt-3">
+                <a class="ins-card-action" t-att-href="'/solutions/' + solution_slug">
+                    <span>Xem Chi Tiết Kiến Trúc</span>
+                    <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                </a>
+            </div>
+        </div>
+    </template>
+
+    <!-- Preconnect, High-Performance Vietnamese Typography Stack & Brand Metadata -->
+    <template id="insilos_vietnamese_fonts" inherit_id="website.layout" priority="1">
+        <xpath expr="//head" position="inside">
+            <meta name="theme-color" content="#FF8000"/>
+            <meta name="msapplication-TileColor" content="#FF8000"/>
+            <meta property="og:site_name" content="Insilos Sovereign AI"/>
+            <meta name="twitter:card" content="summary_large_image"/>
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap&amp;subset=latin,latin-ext,vietnamese" rel="stylesheet"/>
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "Insilos Sovereign AI Platform",
+                "operatingSystem": "Linux, Cloud, On-Premises, Air-Gapped",
+                "applicationCategory": "BusinessApplication",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "VND"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Insilos",
+                    "url": "https://insilos.ai",
+                    "logo": "https://insilos.ai/addons/web/static/img/insilos_logo.svg"
+                },
+                "description": "Sovereign Industrial AI Operating System uniting Vertical IDP, Enterprise Knowledge Graph, Trade Compliance, and Field Service Management for APAC enterprises."
+            }
+            </script>
+        </xpath>
+    </template>
+
+    <!-- Glassmorphism Header Class Attribute -->
+    <template id="insilos_header_layout_glass" inherit_id="website.layout" priority="20">
+        <xpath expr="//header" position="attributes">
+            <attribute name="t-attf-class" add="ins-glass-header" separator=" "/>
+        </xpath>
+    </template>
+
+    <!-- Executive Glassmorphism Mega-Menu (Desktop Navigation) -->
+    <template id="insilos_megamenu_desktop" inherit_id="website.template_header_default" priority="25">
+        <xpath expr="//t[@t-call='website.navbar_nav']" position="replace">
+            <div class="ins-nav-wrapper d-flex align-items-center position-relative me-auto">
+                <div class="ins-nav-indicator" id="ins_nav_indicator"/>
+                <ul id="top_menu" class="nav navbar-nav top_menu align-items-center mb-0 gap-1" role="menu">
+                    <li role="presentation" class="nav-item ins-nav-item">
+                        <a role="menuitem" href="/platform" class="nav-link">
+                            <span>Platform</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="solutions">
+                        <a role="menuitem" href="/solutions" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                            <span>Solutions</span>
+                            <svg class="ph-duotone ph-caret-down ph-xs ms-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                        </a>
+                    </li>
+                    <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="industries">
+                        <a role="menuitem" href="/industries" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                            <span>Industries</span>
+                            <svg class="ph-duotone ph-caret-down ph-xs ms-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                        </a>
+                    </li>
+                    <li role="presentation" class="nav-item ins-nav-item">
+                        <a role="menuitem" href="/resources" class="nav-link">
+                            <span>Resources</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="nav-item ins-nav-item">
+                        <a role="menuitem" href="/pricing" class="nav-link">
+                            <span>Pricing</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="nav-item ins-nav-item">
+                        <a role="menuitem" href="/about" class="nav-link">
+                            <span>Company</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Solutions Mega-Menu Dropdown Panel (Full-Width Viewport-anchored) -->
+            <div class="ins-megamenu-dropdown ins-megamenu-solutions shadow-lg" id="ins_megamenu_solutions" data-megamenu-target="solutions">
+                <div class="container py-4">
+                    <div class="row g-4 align-items-stretch">
+                        <!-- Col 1: Core Intelligence -->
+                        <div class="col-lg-4">
+                            <div class="ins-megamenu-col-header mb-3">
+                                <span class="ins-col-eyebrow text-uppercase text-mint fw-semibold small">Core Intelligence</span>
+                                <h5 class="text-white fw-bold mb-0">Hệ Thống Trí Tuệ Lõi</h5>
+                            </div>
+                            <div class="d-flex flex-column gap-2">
+                                <!-- Item 1: Vertical IDP -->
+                                <a href="/solutions/vertical-idp" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3 is-active"
+                                   data-badge="99.8% STP · WCO SAFE"
+                                   data-title="Vertical IDP &amp; Customs AI"
+                                   data-icon="ph-file-text"
+                                   data-m1-val="99.8%" data-m1-lbl="STP Accuracy"
+                                   data-m2-val="&lt; 3.2s" data-m2-lbl="Processing SLA"
+                                   data-m3-val="1,420 doc/h" data-m3-lbl="Throughput"
+                                   data-desc="Tự động hóa bóc tách chứng từ xuất nhập khẩu (B/L, Invoice, Packing List) và đối soát 3 chiều VNACCS."
+                                   data-href="/solutions/vertical-idp">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-file-text ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Vertical IDP</span>
+                                            <span class="badge ins-badge-subtle">STP 99.8%</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">AI-OCR bóc tách đa thể thức, đối soát 3 chiều WCO SAFE</p>
+                                    </div>
+                                </a>
+                                <!-- Item 2: Enterprise Knowledge Graph -->
+                                <a href="/solutions/enterprise-knowledge-graph" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                   data-badge="&lt; 15ms · Merkle DAG"
+                                   data-title="Enterprise Knowledge Graph"
+                                   data-icon="ph-tree-structure"
+                                   data-m1-val="&lt; 15ms" data-m1-lbl="Query Latency"
+                                   data-m2-val="1.4M+" data-m2-lbl="Entities Mapped"
+                                   data-m3-val="100%" data-m3-lbl="Merkle Audit"
+                                   data-desc="Hợp nhất các ốc đảo dữ liệu ERP, MES, WMS thành mạng lưới tri thức doanh nghiệp theo chuẩn W3C OWL."
+                                   data-href="/solutions/enterprise-knowledge-graph">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-tree-structure ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-tree-structure"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Knowledge Graph</span>
+                                            <span class="badge ins-badge-subtle">&lt; 15ms</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Ontology W3C OWL/RDF thống nhất 1.4M+ thực thể</p>
+                                    </div>
+                                </a>
+                                <!-- Item 3: Trade Compliance -->
+                                <a href="/solutions/trade-compliance" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                   data-badge="Zero Tax Risk · HS 8-10"
+                                   data-title="Trade Compliance &amp; FTA"
+                                   data-icon="ph-scales"
+                                   data-m1-val="-98%" data-m1-lbl="Tax Audit Risk"
+                                   data-m2-val="100%" data-m2-lbl="FTA Origin Match"
+                                   data-m3-val="8-10 số" data-m3-lbl="HS Code Engine"
+                                   data-desc="Tối ưu quy tắc xuất xứ CTC, RVC theo hiệp định EVFTA/CPTPP và kiểm soát tự động danh sách cấm vận."
+                                   data-href="/solutions/trade-compliance">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-scales ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scales"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Trade Compliance</span>
+                                            <span class="badge ins-badge-subtle">WCO SAFE</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Phân loại HS 8-10 số tự động, rà soát thuế FTA</p>
+                                    </div>
+                                </a>
+                                <!-- Item 4: Field Service Intelligence -->
+                                <a href="/solutions/field-service-intelligence" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                   data-badge="94.8% FTFR · 0h Downtime"
+                                   data-title="Field Service Intelligence"
+                                   data-icon="ph-wrench"
+                                   data-m1-val="94.8%" data-m1-lbl="First-Time Fix"
+                                   data-m2-val="0h" data-m2-lbl="Unplanned Stop"
+                                   data-m3-val="IEC 61850" data-m3-lbl="Safety Standard"
+                                   data-desc="Điều phối kỹ sư theo chứng chỉ an toàn lưới điện và đặt trước linh kiện thay thế OEM tự động."
+                                   data-href="/solutions/field-service-intelligence">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-wrench ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-wrench"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Field Service (FSM)</span>
+                                            <span class="badge ins-badge-subtle">IEC 61850</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Điều phối FSM dự đoán, bảo đảm an toàn thiết bị</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Col 2: Operations & Optimization -->
+                        <div class="col-lg-4">
+                            <div class="ins-megamenu-col-header mb-3">
+                                <span class="ins-col-eyebrow text-uppercase text-cyan fw-semibold small">Operations &amp; Optimization</span>
+                                <h5 class="text-white fw-bold mb-0">Vận Hành &amp; Tối Ưu Hóa</h5>
+                            </div>
+                            <div class="d-flex flex-column gap-2">
+                                <!-- Item 5: Asset Reliability -->
+                                <a href="/solutions/asset-reliability" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                   data-badge="14-Day Warning · ISO 10816"
+                                   data-title="Asset Reliability &amp; Digital Twin"
+                                   data-icon="ph-pulse"
+                                   data-m1-val="14 ngày" data-m1-lbl="Early Warning"
+                                   data-m2-val="50.02 Hz" data-m2-lbl="FFT Frequency"
+                                   data-m3-val="$45k/h" data-m3-lbl="Downtime Saved"
+                                   data-desc="Theo dõi độ rung hài bậc cao động cơ quay theo chuẩn ISO 10816, ngăn chặn thảm họa gãy trục."
+                                   data-href="/solutions/asset-reliability">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-pulse ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-pulse"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Asset Reliability</span>
+                                            <span class="badge ins-badge-subtle">ISO 10816</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Bảo trì dự đoán rung động FFT, giảm sự cố dừng máy</p>
+                                    </div>
+                                </a>
+                                <!-- Item 6: Logistics Control Tower -->
+                                <a href="/solutions/logistics-control-tower" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                   data-badge="End-to-End Visibility"
+                                   data-title="Logistics Control Tower"
+                                   data-icon="ph-navigation-arrow"
+                                   data-m1-val="99.2%" data-m1-lbl="ETA Accuracy"
+                                   data-m2-val="-18.4%" data-m2-lbl="Demurrage Loss"
+                                   data-m3-val="24/7" data-m3-lbl="Port Monitoring"
+                                   data-desc="Hợp nhất luồng dữ liệu AIS tàu biển, GPS xe đầu kéo và trạng thái bãi container thời gian thực."
+                                   data-href="/solutions/logistics-control-tower">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-navigation-arrow ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-navigation-arrow"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Logistics Control Tower</span>
+                                            <span class="badge ins-badge-subtle">Real-time ETA</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Tháp điều khiển mạng lưới logistics, dự báo luồng hàng</p>
+                                    </div>
+                                </a>
+                                <!-- Item 7: Process Optimization -->
+                                <a href="/solutions/process-optimization" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                   data-badge="Closed-Loop AI Control"
+                                   data-title="Process Optimization Suite"
+                                   data-icon="ph-cpu"
+                                   data-m1-val="-12.5%" data-m1-lbl="Energy Savings"
+                                   data-m2-val="+8.2%" data-m2-lbl="Golden Batch Yield"
+                                   data-m3-val="Zero-Drift" data-m3-lbl="ERP Write-Back"
+                                   data-desc="Mô hình AI vật lý tìm kiếm điểm đặt tối ưu cho lò đốt, tháp chưng cất và dây chuyền sản xuất."
+                                   data-href="/solutions/process-optimization">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-cpu ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Process Optimization</span>
+                                            <span class="badge ins-badge-subtle">Closed-Loop</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Tối ưu hóa setpoint đa biến, khép kín vòng lặp ERP</p>
+                                    </div>
+                                </a>
+                                <!-- Item 8: Operations AI Assistant -->
+                                <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                   data-badge="100% Provenance Cited"
+                                   data-title="Operations AI Assistant"
+                                   data-icon="ph-sparkle"
+                                   data-m1-val="&lt; 500ms" data-m1-lbl="Query Latency"
+                                   data-m2-val="100%" data-m2-lbl="Cited Evidence"
+                                   data-m3-val="FIPS 140-3" data-m3-lbl="HSM Encryption"
+                                   data-desc="Truy vấn tức thì lịch sử bảo trì, thông số mẻ lỗi và SOP không rò rỉ dữ liệu qua giao tiếp tự nhiên."
+                                   data-href="/solutions">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-sparkle ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-sparkle"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Operations Assistant</span>
+                                            <span class="badge ins-badge-subtle">Air-Gapped</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Trợ lý vận hành tự chủ, trích dẫn bằng chứng dữ liệu</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Col 3: Live Interactive Preview Card -->
+                        <div class="col-lg-4">
+                            <div class="card h-100 p-4 rounded-4 border border-secondary border-opacity-25 d-flex flex-column justify-content-between ins-preview-card" id="ins_sol_preview_card">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div class="ins-card-pictogram ins-pictogram-lg ins-sol-preview-icon">
+                                            <svg class="ph-duotone ph-file-text ph-xl"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                        </div>
+                                        <span class="badge ins-pill-badge small fw-semibold ins-sol-preview-badge">99.8% STP · WCO SAFE</span>
+                                    </div>
+                                    <h4 class="text-white fw-bold mb-2 ins-sol-preview-title">Vertical IDP &amp; Customs AI</h4>
+                                    <p class="text-secondary small mb-3 ins-sol-preview-desc">Tự động hóa bóc tách chứng từ xuất nhập khẩu (B/L, Invoice, Packing List) và đối soát 3 chiều VNACCS.</p>
+                                    <!-- Live SLA Metrics Grid -->
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-4">
+                                            <div class="ins-metric-cell p-2 rounded-3 text-center">
+                                                <div class="ins-metric-val fw-bold text-mint ins-sol-m1-val">99.8%</div>
+                                                <div class="ins-metric-lbl text-secondary x-small ins-sol-m1-lbl">STP Rate</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="ins-metric-cell p-2 rounded-3 text-center">
+                                                <div class="ins-metric-val fw-bold text-cyan ins-sol-m2-val">&lt; 15ms</div>
+                                                <div class="ins-metric-lbl text-secondary x-small ins-sol-m2-lbl">Response SLA</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="ins-metric-cell p-2 rounded-3 text-center">
+                                                <div class="ins-metric-val fw-bold text-orange ins-sol-m3-val">Genco 3</div>
+                                                <div class="ins-metric-lbl text-secondary x-small ins-sol-m3-lbl">Verified Proof</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-auto pt-3 border-top border-secondary border-opacity-25">
+                                    <a href="/solutions/vertical-idp" class="btn btn-primary rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 ins-sol-preview-btn">
+                                        <span>Khám Phá Giải Pháp</span>
+                                        <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Industries Mega-Menu Dropdown Panel (Full-Width Viewport-anchored) -->
+            <div class="ins-megamenu-dropdown ins-megamenu-industries shadow-lg" id="ins_megamenu_industries" data-megamenu-target="industries">
+                <div class="container py-4">
+                    <div class="row g-4 align-items-stretch">
+                        <!-- Col 1: Flagship Verticals -->
+                        <div class="col-lg-4">
+                            <div class="ins-megamenu-col-header mb-3">
+                                <span class="ins-col-eyebrow text-uppercase text-mint fw-semibold small">Flagship Verticals</span>
+                                <h5 class="text-white fw-bold mb-0">Ngành Trọng Điểm</h5>
+                            </div>
+                            <div class="d-flex flex-column gap-2">
+                                <!-- Ind 1: Logistics & Ports -->
+                                <a href="/industries/logistics" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3 is-active"
+                                   data-badge="Cát Lái Port Case Study"
+                                   data-title="Logistics &amp; Seaport Operations"
+                                   data-icon="ph-anchor"
+                                   data-m1-val="-18.4%" data-m1-lbl="Demurrage Loss"
+                                   data-m2-val="100%" data-m2-lbl="Serial Trace"
+                                   data-m3-val="VAS 156" data-m3-lbl="Accounting Match"
+                                   data-desc="Loại bỏ phí lưu bãi container, tối ưu luồng xếp dỡ bãi và kiểm soát vận tải lạnh tại Cát Lái."
+                                   data-href="/industries/logistics">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-anchor ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-anchor"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Logistics &amp; Cảng Biển</span>
+                                            <span class="badge ins-badge-subtle">Cát Lái Port</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Loại bỏ phí lưu bãi container, tối ưu luồng xếp dỡ</p>
+                                    </div>
+                                </a>
+                                <!-- Ind 2: Pharma & GxP -->
+                                <a href="/industries/pharma" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                   data-badge="GxP &amp; FDA 21 CFR 11"
+                                   data-title="Pharma &amp; Life Sciences"
+                                   data-icon="ph-pill"
+                                   data-m1-val="99.9%" data-m1-lbl="Cleanroom Uptime"
+                                   data-m2-val="0 lỗi" data-m2-lbl="Batch Audit"
+                                   data-m3-val="GMP-WHO" data-m3-lbl="Compliance"
+                                   data-desc="Giám sát phòng sạch, phân tích độ lệch mẻ Golden Batch và khóa cứng hồ sơ lô điện tử."
+                                   data-href="/industries/pharma">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-pill ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-pill"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Dược Phẩm &amp; GxP</span>
+                                            <span class="badge ins-badge-subtle">FDA 21 CFR 11</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Kiểm soát phòng sạch, Golden Batch yield deviation</p>
+                                    </div>
+                                </a>
+                                <!-- Ind 3: Energy & Utilities -->
+                                <a href="/industries/energy" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                   data-badge="EVN Genco 3 Verified Proof"
+                                   data-title="Energy &amp; Power Generation"
+                                   data-icon="ph-lightning"
+                                   data-m1-val="99.8%" data-m1-lbl="Grid Reliability"
+                                   data-m2-val="14 ngày" data-m2-lbl="Turbine Warning"
+                                   data-m3-val="IEC 61850" data-m3-lbl="SCADA Standard"
+                                   data-desc="Giám sát rung động tuabin điện, số hóa trạm biến áp IEC 61850 và điều độ nguồn điện."
+                                   data-href="/industries/energy">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-lightning ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lightning"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Năng Lượng &amp; Utilities</span>
+                                            <span class="badge ins-badge-subtle">EVN Genco 3</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Giám sát tuabin nhiệt điện, chuẩn hóa IEC 61850</p>
+                                    </div>
+                                </a>
+                                <!-- Ind 4: Field Service & Machinery -->
+                                <a href="/industries/fsm" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                   data-badge="Heavy Machinery Fleet"
+                                   data-title="Field Service &amp; Machinery"
+                                   data-icon="ph-truck"
+                                   data-m1-val="94.8%" data-m1-lbl="First-Time Fix"
+                                   data-m2-val="0h" data-m2-lbl="Fleet Stop"
+                                   data-m3-val="ISO 55000" data-m3-lbl="Asset Health"
+                                   data-desc="Bảo trì cơ giới nặng CAT/Komatsu, lập lịch phụ tùng tự động và nhật ký kỹ thuật số."
+                                   data-href="/industries/fsm">
+                                    <div class="ins-menu-icon-box flex-shrink-0">
+                                        <svg class="ph-duotone ph-truck ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg>
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <span class="ins-menu-item-title fw-semibold text-white">Dịch Vụ Hiện Trường</span>
+                                            <span class="badge ins-badge-subtle">94.8% FTFR</span>
+                                        </div>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Bảo trì thiết bị nặng, lập lịch phụ tùng tự động</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Col 2: 11 Industry Clusters -->
+                        <div class="col-lg-4">
+                            <div class="ins-megamenu-col-header mb-3">
+                                <span class="ins-col-eyebrow text-uppercase text-orange fw-semibold small">101 Industry Directory</span>
+                                <h5 class="text-white fw-bold mb-0">11 Cụm Ngành Công Nghiệp</h5>
+                            </div>
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <ul class="list-unstyled mb-0 d-flex flex-column gap-2 small">
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Chế Tạo Công Nghiệp</a></li>
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Tài Chính &amp; Ngân Hàng</a></li>
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Công Nghệ &amp; Viễn Thông</a></li>
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Bán Lẻ &amp; FMCG Chuỗi</a></li>
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Năng Lượng &amp; Mỏ</a></li>
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Y Tế &amp; Dược Phẩm</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <ul class="list-unstyled mb-0 d-flex flex-column gap-2 small">
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Logistics &amp; Cảng Biển</a></li>
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Xây Dựng &amp; BĐS</a></li>
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Nông Nghiệp &amp; Thực Phẩm</a></li>
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Khu Vực Công &amp; Hạ Tầng</a></li>
+                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Dịch Vụ Chuyên Sâu</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="pt-2 border-top border-secondary border-opacity-25">
+                                <a href="/industries" class="ins-action-link d-inline-flex align-items-center gap-2 small text-orange fw-semibold text-decoration-none">
+                                    <span>Khám Phá Danh Mục 101 Ngành Công Nghiệp</span>
+                                    <svg class="ph-duotone ph-arrow-right ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Col 3: Dynamic Industry Preview Card -->
+                        <div class="col-lg-4">
+                            <div class="card h-100 p-4 rounded-4 border border-secondary border-opacity-25 d-flex flex-column justify-content-between ins-preview-card" id="ins_ind_preview_card">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div class="ins-card-pictogram ins-pictogram-lg ins-ind-preview-icon">
+                                            <svg class="ph-duotone ph-anchor ph-xl"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-anchor"/></svg>
+                                        </div>
+                                        <span class="badge ins-pill-badge small fw-semibold ins-ind-preview-badge">EVN Genco 3 &amp; Cát Lái</span>
+                                    </div>
+                                    <h4 class="text-white fw-bold mb-2 ins-ind-preview-title">Năng Lực Triển Khai Thực Chiến</h4>
+                                    <p class="text-secondary small mb-3 ins-ind-preview-desc">Kiểm chứng tại các tập đoàn hạ tầng then chốt: EVN Genco 3, MobiFone và hệ thống cảng biển quốc tế.</p>
+                                    <!-- Live SLA Metrics Grid -->
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-4">
+                                            <div class="ins-metric-cell p-2 rounded-3 text-center">
+                                                <div class="ins-metric-val fw-bold text-mint ins-ind-m1-val">99.8%</div>
+                                                <div class="ins-metric-lbl text-secondary x-small ins-ind-m1-lbl">Uptime SLA</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="ins-metric-cell p-2 rounded-3 text-center">
+                                                <div class="ins-metric-val fw-bold text-cyan ins-ind-m2-val">50M+</div>
+                                                <div class="ins-metric-lbl text-secondary x-small ins-ind-m2-lbl">CDR / 4h</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="ins-metric-cell p-2 rounded-3 text-center">
+                                                <div class="ins-metric-val fw-bold text-orange ins-ind-m3-val">VAS 200</div>
+                                                <div class="ins-metric-lbl text-secondary x-small ins-ind-m3-lbl">Compliance</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-auto pt-3 border-top border-secondary border-opacity-25">
+                                    <a href="/industries" class="btn btn-primary rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 ins-ind-preview-btn">
+                                        <span>Xem Hồ Sơ Ngành</span>
+                                        <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//t[@t-call='website.placeholder_header_call_to_action']" position="replace">
+            <li class="nav-item ms-2">
+                <a href="/request-demo" class="btn btn-primary rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2">
+                    <span>Yêu Cầu Demo</span>
+                    <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                </a>
+            </li>
+        </xpath>
+    </template>
+
+    <!-- Executive Mobile Drawer Navigation (< 992px) with Accordion Collapse -->
+    <template id="insilos_megamenu_mobile" inherit_id="website.template_header_mobile" priority="25">
+        <xpath expr="//div[@id='top_menu_collapse_mobile']//t[@t-call='website.navbar_nav']/.." position="replace">
+            <li class="w-100 px-3 py-2">
+                <div class="accordion accordion-flush ins-mobile-accordion" id="insMobileAccordion">
+                    <!-- Mobile Solutions Accordion -->
+                    <div class="accordion-item bg-transparent border-secondary border-opacity-25">
+                        <h2 class="accordion-header" id="headingMobileSolutions">
+                            <button class="accordion-button collapsed bg-transparent text-white px-0 py-3 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileSolutions" aria-expanded="false" aria-controls="collapseMobileSolutions">
+                                <span class="fw-semibold">Solutions</span>
+                            </button>
+                        </h2>
+                        <div id="collapseMobileSolutions" class="accordion-collapse collapse" aria-labelledby="headingMobileSolutions" data-bs-parent="#insMobileAccordion">
+                            <div class="accordion-body px-0 pt-0 pb-3">
+                                <div class="d-flex flex-column gap-2">
+                                    <div class="text-uppercase text-mint x-small fw-semibold mt-2">Core Intelligence</div>
+                                    <a href="/solutions/vertical-idp" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Vertical IDP</span>
+                                        <span class="badge ins-badge-subtle">99.8% STP</span>
+                                    </a>
+                                    <a href="/solutions/enterprise-knowledge-graph" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Knowledge Graph</span>
+                                        <span class="badge ins-badge-subtle">&lt; 15ms</span>
+                                    </a>
+                                    <a href="/solutions/trade-compliance" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Trade Compliance</span>
+                                        <span class="badge ins-badge-subtle">WCO SAFE</span>
+                                    </a>
+                                    <a href="/solutions/field-service-intelligence" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Field Service (FSM)</span>
+                                        <span class="badge ins-badge-subtle">IEC 61850</span>
+                                    </a>
+                                    <div class="text-uppercase text-cyan x-small fw-semibold mt-2">Operations &amp; Optimization</div>
+                                    <a href="/solutions/asset-reliability" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Asset Reliability</span>
+                                        <span class="badge ins-badge-subtle">ISO 10816</span>
+                                    </a>
+                                    <a href="/solutions/logistics-control-tower" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Logistics Control Tower</span>
+                                        <span class="badge ins-badge-subtle">ETA</span>
+                                    </a>
+                                    <a href="/solutions/process-optimization" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Process Optimization</span>
+                                        <span class="badge ins-badge-subtle">Closed-Loop</span>
+                                    </a>
+                                    <a href="/solutions" class="ins-mobile-menu-link text-orange text-decoration-none fw-semibold py-1">
+                                        <span>Khám Phá Tất Cả Giải Pháp →</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile Industries Accordion -->
+                    <div class="accordion-item bg-transparent border-secondary border-opacity-25">
+                        <h2 class="accordion-header" id="headingMobileIndustries">
+                            <button class="accordion-button collapsed bg-transparent text-white px-0 py-3 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileIndustries" aria-expanded="false" aria-controls="collapseMobileIndustries">
+                                <span class="fw-semibold">Industries</span>
+                            </button>
+                        </h2>
+                        <div id="collapseMobileIndustries" class="accordion-collapse collapse" aria-labelledby="headingMobileIndustries" data-bs-parent="#insMobileAccordion">
+                            <div class="accordion-body px-0 pt-0 pb-3">
+                                <div class="d-flex flex-column gap-2">
+                                    <div class="text-uppercase text-mint x-small fw-semibold mt-2">Flagship Verticals</div>
+                                    <a href="/industries/logistics" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Logistics &amp; Cảng Biển</span>
+                                        <span class="badge ins-badge-subtle">Cát Lái</span>
+                                    </a>
+                                    <a href="/industries/pharma" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Dược Phẩm &amp; GxP</span>
+                                        <span class="badge ins-badge-subtle">FDA 21 CFR</span>
+                                    </a>
+                                    <a href="/industries/energy" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Năng Lượng &amp; Utilities</span>
+                                        <span class="badge ins-badge-subtle">EVN Genco 3</span>
+                                    </a>
+                                    <a href="/industries/fsm" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <span>Dịch Vụ Hiện Trường</span>
+                                        <span class="badge ins-badge-subtle">94.8% FTFR</span>
+                                    </a>
+                                    <a href="/industries" class="ins-mobile-menu-link text-orange text-decoration-none fw-semibold py-1">
+                                        <span>Danh Mục 101 Ngành Công Nghiệp →</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Direct Nav Links -->
+                <div class="d-flex flex-column gap-2 border-top border-secondary border-opacity-25 pt-3">
+                    <a href="/platform" class="text-white text-decoration-none py-2 fw-medium">Platform</a>
+                    <a href="/resources" class="text-white text-decoration-none py-2 fw-medium">Resources</a>
+                    <a href="/pricing" class="text-white text-decoration-none py-2 fw-medium">Pricing</a>
+                    <a href="/about" class="text-white text-decoration-none py-2 fw-medium">Company</a>
+                </div>
+                <!-- Action Button in Mobile Drawer -->
+                <div class="pt-3 pb-2">
+                    <a href="/request-demo" class="btn btn-primary rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2">
+                        <span>Yêu Cầu Live Demo</span>
+                        <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                    </a>
+                </div>
+            </li>
+        </xpath>
+    </template>
+
+    <!-- Include Insilos Interactive Controllers in Website Layout -->
+    <template id="insilos_frontend_interactive_script" inherit_id="website.layout" priority="99">
+        <xpath expr="//body" position="inside">
+            <script type="text/javascript" src="/insilos_website/static/src/js/c3ai_interactive.js"/>
+            <script type="text/javascript" src="/insilos_website/static/src/js/insilos_megamenu.js"/>
+        </xpath>
+    </template>
+</odoo>

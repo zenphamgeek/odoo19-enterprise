@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_treasury_ic_pack" model="ir.actions.report">
+        <field name="name">Treasury IC Pack</field><field name="model">project.task</field><field name="report_type">qweb-pdf</field><field name="report_name">insilos_treasury_market_risk.report_treasury_ic_pack</field><field name="report_file">insilos_treasury_market_risk.report_treasury_ic_pack</field><field name="binding_model_id" ref="project.model_project_task"/><field name="binding_type">report</field>
+    </record>
+    <template id="report_treasury_ic_pack"><t t-call="web.html_container"><t t-foreach="docs" t-as="o"><t t-call="web.external_layout"><div class="page"><h2>Treasury Investment Committee Pack</h2><t t-set="na" t-value="'Unavailable'"/>
+        <h3>1. Case Identification</h3><p><span t-out="o.name or na"/></p>
+        <h3>2. Decision Requested</h3><p><span t-out="o.treasury_recommendation or na"/></p>
+        <h3>3. Decision Value</h3><p><span t-out="o.treasury_decision_value if o.treasury_decision_value else na"/> <span t-out="o.treasury_decision_currency_id.name or na"/></p>
+        <h3>4. Executive Summary</h3><p>Unavailable</p>
+        <h3>5. Strategic Rationale</h3><p><span t-out="o.description or na"/></p>
+        <h3>6. Market Context</h3><p>Unavailable</p>
+        <h3>7. Financial Analysis</h3><p>Unavailable</p>
+        <h3>8. Risk Assessment</h3><p>Unavailable</p>
+        <h3>9. Scorecard</h3><pre t-out="o.treasury_scorecard_json or na"/>
+        <h3>10. Alternatives Considered</h3><p><span t-out="o.treasury_alternatives or na"/></p>
+        <h3>11. Recommendation</h3><p><span t-out="o.treasury_recommendation or na"/></p>
+        <h3>12. Independent Challenge</h3><p><span t-out="o.treasury_independent_challenge or na"/></p>
+        <h3>13. Assumptions and Unknowns</h3><p><span t-out="o.treasury_assumptions_unknowns or na"/></p>
+        <h3>14. Evidence References</h3><p><span t-out="o.treasury_evidence_references or na"/></p>
+        <h3>15. Approval Requests</h3><p><span t-out="', '.join(o.treasury_approval_request_ids.mapped('name')) or na"/></p>
+        <h3>16. Implementation Plan</h3><p>Unavailable</p>
+        <h3>17. Governance and Signatures</h3><p>Unavailable</p>
+        <h3>18. Post-Decision Review</h3><p>Unavailable</p>
+    </div></t></t></t></template>
+</odoo>

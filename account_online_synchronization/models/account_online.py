@@ -377,7 +377,7 @@ class AccountOnlineLink(models.Model):
                 \nIf the automatic sync is disabled. that will be due to security policy on the bank's end. So, they have to launch the sync manually""",
     )
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
-    has_unlinked_accounts = fields.Boolean(default=True, help="True if that connection still has accounts that are not linked to an Odoo journal")
+    has_unlinked_accounts = fields.Boolean(default=True, help="True if that connection still has accounts that are not linked to an Insilos journal")
     show_sync_actions = fields.Boolean(compute='_compute_show_sync_actions')
 
     # Information received from OdooFin, should not be tampered with
@@ -697,12 +697,12 @@ class AccountOnlineLink(models.Model):
                     if context.get('redirect_warning_url'):
                         if context['redirect_warning_url'] == 'odoo_support':
                             url_params = urllib.parse.urlencode({'stage': 'bank_sync', 'summary': odoo_help_summary, 'description': odoo_help_description[:1500]})
-                            url = f'https://www.odoo.com/help?{url_params}'
+                            url = f'https://insilos.com/help?{url_params}'
                             message += _("\n\nIf you've already opened a ticket for this issue, don't report it again: a support agent will contact you shortly.")
-                            message_post = Markup('%s<br>%s <a href="%s" >%s</a>') % (message, _("You can contact Odoo support"), url, _("Here"))
+                            message_post = Markup('%s<br>%s <a href="%s" >%s</a>') % (message, _("You can contact Insilos support"), url, _("Here"))
                             button_label = _('Report issue')
                         else:
-                            url = "https://www.odoo.com/documentation/latest/applications/finance/accounting/bank/bank_synchronization.html#faq"
+                            url = "https://insilos.com/documentation/latest/applications/finance/accounting/bank/bank_synchronization.html#faq"
                             message_post = Markup('%s<br>%s <a href="%s" >%s</a>') % (message_post, _("Check the documentation"), url, _("Here"))
                             button_label = _('Check the documentation')
                     self.message_post(body=message_post, subject=subject)
@@ -1028,7 +1028,7 @@ class AccountOnlineLink(models.Model):
             method_name = '_success_%s' % mode
             method = getattr(self.with_context(journal_type=journal_type), method_name)
         except AttributeError:
-            message = _("This version of Odoo appears to be outdated and does not support the '%s' sync mode. "
+            message = _("This version of Insilos appears to be outdated and does not support the '%s' sync mode. "
                         "Installing the latest update might solve this.", mode)
             _logger.info('Online sync: %s' % (message,))
             self.env.cr.rollback()

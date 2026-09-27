@@ -21,7 +21,7 @@ class MarketingActivity(models.Model):
     _inherit = ['utm.source.mixin']
     _order = 'interval_standardized, id ASC'
 
-    # definition and UTM
+    name = fields.Char(string='Activity Name', required=True)
     activity_type = fields.Selection([
         ('email', 'Email'),
         ('action', 'Server Action')

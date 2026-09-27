@@ -15,7 +15,7 @@ class AccountJournal(models.Model):
                                          'You must select "Manual" if you are either a user of "Facturación MiPyme"\n'
                                          '(free SII\'s website invoicing system) or if you have already generated\n'
                                          'those documents using a different system in the past, and you want to\n'
-                                         'register them in Odoo now.', copy=False)
+                                         'register them in Insilos now.', copy=False)
     l10n_cl_point_of_sale_number = fields.Integer(
         'Point Of Sale Number', help='This number is needed only if provided by SII.', copy=False)
     l10n_cl_point_of_sale_name = fields.Char(

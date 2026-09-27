@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_is_chemical_permit_quota_tree" model="ir.ui.view">
+            <field name="name">is.chemical.permit.quota.list</field>
+            <field name="model">is.chemical.permit.quota</field>
+            <field name="arch" type="xml">
+                <list string="Chemical Permit Quotas &amp; Burn-down" decoration-danger="state == 'exhausted'" decoration-warning="state == 'warning'" decoration-success="state == 'active'">
+                    <field name="name"/>
+                    <field name="permit_number"/>
+                    <field name="chemical_substance_id"/>
+                    <field name="cas_number"/>
+                    <field name="allocated_quota_kg"/>
+                    <field name="consumed_quota_kg"/>
+                    <field name="remaining_quota_kg"/>
+                    <field name="remaining_percentage" widget="progressbar"/>
+                    <field name="state" widget="badge" decoration-danger="state == 'exhausted'" decoration-warning="state == 'warning'" decoration-success="state == 'active'"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_chemical_permit_quota_form" model="ir.ui.view">
+            <field name="name">is.chemical.permit.quota.form</field>
+            <field name="model">is.chemical.permit.quota</field>
+            <field name="arch" type="xml">
+                <form string="Chemical Permit Quota Ledger">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="active,warning,exhausted"/>
+                    </header>
+                    <sheet>
+                        <div class="w_title">
+                            <label for="name" string="Quota Reference"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Permit &amp; Chemical Details">
+                                <field name="permit_id"/>
+                                <field name="permit_number"/>
+                                <field name="chemical_substance_id"/>
+                                <field name="cas_number"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                            <group string="Quota Metrics &amp; Balances">
+                                <field name="allocated_quota_kg"/>
+                                <field name="consumed_quota_kg"/>
+                                <field name="remaining_quota_kg"/>
+                                <field name="remaining_percentage" widget="progressbar"/>
+                                <field name="warning_threshold_pct"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Internal Quota Record History" name="deductions">
+                                <field name="line_ids">
+                                    <list string="Deductions" create="false" edit="false">
+                                        <field name="deduction_date"/>
+                                        <field name="dossier_id"/>
+                                        <field name="customs_declaration_no"/>
+                                        <field name="quantity_kg"/>
+                                        <field name="user_id"/>
+                                        <field name="notes"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_is_chemical_permit_quota_search" model="ir.ui.view">
+            <field name="name">is.chemical.permit.quota.search</field>
+            <field name="model">is.chemical.permit.quota</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="permit_number"/>
+                    <field name="chemical_substance_id"/>
+                    <field name="cas_number"/>
+                    <filter name="filter_active" string="Active &amp; Available" domain="[('state', '=', 'active')]"/>
+                    <filter name="filter_warning" string="Low Quota (&lt; 10%)" domain="[('state', '=', 'warning')]"/>
+                    <filter name="filter_exhausted" string="Exhausted" domain="[('state', '=', 'exhausted')]"/>
+                    <group>
+                        <filter name="group_chemical" string="Chemical Substance" context="{'group_by': 'chemical_substance_id'}"/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Kanban View -->
+        <record id="view_is_chemical_permit_quota_kanban" model="ir.ui.view">
+            <field name="name">is.chemical.permit.quota.kanban</field>
+            <field name="model">is.chemical.permit.quota</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" class="w_kanban_small_column" sample="1">
+                    <field name="name"/>
+                    <field name="permit_number"/>
+                    <field name="chemical_substance_id"/>
+                    <field name="remaining_quota_kg"/>
+                    <field name="remaining_percentage"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="d-flex flex-column gap-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary"><field name="name"/></strong>
+                                    <field name="state" widget="badge" decoration-danger="state == 'exhausted'" decoration-warning="state == 'warning'" decoration-success="state == 'active'"/>
+                                </div>
+                                <div class="text-muted small"><field name="chemical_substance_id"/></div>
+                                <div class="text-muted small">Permit: <field name="permit_number"/></div>
+                                <div class="mt-2">
+                                    <div class="d-flex justify-content-between small text-muted">
+                                        <span>Remaining:</span>
+                                        <strong><field name="remaining_quota_kg"/> kg</strong>
+                                    </div>
+                                    <field name="remaining_percentage" widget="progressbar"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_is_chemical_permit_quota" model="ir.actions.act_window">
+            <field name="name">Monitor Chemical Import Quotas &amp; Drawdowns</field>
+            <field name="path">chemical-quotas</field>
+            <field name="res_model">is.chemical.permit.quota</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="search_view_id" ref="view_is_chemical_permit_quota_search"/>
+            <field name="context">{'search_default_filter_active': 1}</field>
+            <field name="help" type="html">
+                <p class="w_view_nocontent_smiling_face">
+                    Track allocated chemical import permit quotas and real-time burn-down deductions.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

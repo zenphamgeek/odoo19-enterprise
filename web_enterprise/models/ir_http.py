@@ -37,7 +37,7 @@ class IrHttp(models.AbstractModel):
             warn_enterprise = False
 
         result = super().session_info()
-        result['support_url'] = "https://www.odoo.com/help"
+        result['support_url'] = "https://insilos.com/help"
         if warn_enterprise:
             result['warning'] = warn_enterprise
             result['expiration_date'] = ICP.get_param('database.expiration_date')

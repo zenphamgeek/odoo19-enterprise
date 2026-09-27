@@ -16,7 +16,7 @@ import { useSearchBarToggler } from "@web/search/search_bar/search_bar_toggler";
 import { browser } from "@web/core/browser/browser";
 import { ActionHelper } from "@web/views/action_helper";
 
-import { Component, useState, onWillUnmount, useRef } from "@odoo/owl";
+import { Component, proxy, signal, onWillUnmount } from "@odoo/owl";
 
 const { DateTime } = luxon;
 
@@ -41,7 +41,14 @@ export class GridController extends Component {
 
     static template = "web_grid.GridView";
 
+    rootRef = signal.ref();
+    get root() {
+        return this.rootRef;
+    }
+
     setup() {
+        this.ui = useService("ui");
+        this.dialogService = useService("dialog");
         const state = this.props.state || {};
         let activeRangeName = this.props.archInfo.activeRangeName;
         let defaultAnchor;
@@ -55,7 +62,6 @@ export class GridController extends Component {
         } else if (this.props.context.grid_anchor) {
             defaultAnchor = deserializeDate(this.props.context.grid_anchor);
         }
-        this.dialogService = useService("dialog");
         this.model = useModelWithSampleData(this.props.Model, {
             resModel: this.props.resModel,
             sectionField: this.props.archInfo.sectionField,
@@ -68,9 +74,8 @@ export class GridController extends Component {
             ranges: this.props.archInfo.ranges,
             defaultAnchor,
         });
-        const rootRef = useRef("root");
         useSetupAction({
-            rootRef: rootRef,
+            rootRef: this.rootRef,
             getLocalState: () => {
                 const { anchor, range } = this.model.navigationInfo;
                 return {
@@ -80,13 +85,13 @@ export class GridController extends Component {
             }
         })
         const isWeekendVisible = browser.localStorage.getItem("grid.isWeekendVisible");
-        this.state = useState({
+        this.state = proxy({
             activeRangeName: this.model.navigationInfo.range?.name,
             isWeekendVisible: isWeekendVisible !== null && isWeekendVisible !== undefined
                 ? JSON.parse(isWeekendVisible)
                 : true,
         });
-        useViewButtons(rootRef, {
+        useViewButtons(this.rootRef, {
             beforeExecuteAction: this.beforeExecuteActionButton.bind(this),
             afterExecuteAction: this.afterExecuteActionButton.bind(this),
             reload: this.reload.bind(this),
@@ -96,7 +101,7 @@ export class GridController extends Component {
     }
 
     get isMobile() {
-        return this.env.isSmall;
+        return Boolean(this.ui?.isSmall ?? this.env.isSmall);
     }
 
     get isEditable() {

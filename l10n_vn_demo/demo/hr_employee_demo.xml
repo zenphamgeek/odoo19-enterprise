@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============================================================ -->
+        <!-- CƠ CẤU PHÒNG BAN SẢN XUẤT & VẬN TẢI CÔNG NGHIỆP               -->
+        <!-- ============================================================ -->
+
+        <!-- Ban Tổng Giám đốc (Tự tạo độc lập, không phụ thuộc hr_demo) -->
+        <record id="dep_management_vn" model="hr.department">
+            <field name="name">Ban Tổng Giám đốc &amp; Quản trị Tập đoàn</field>
+        </record>
+
+        <record id="dep_mfg_vn" model="hr.department">
+            <field name="name">Khối Kỹ thuật &amp; Sản xuất Chế tạo</field>
+            <field name="parent_id" ref="dep_management_vn"/>
+        </record>
+
+        <record id="dep_logistics_vn" model="hr.department">
+            <field name="name">Khối Vận tải &amp; Tiếp vận Logistics</field>
+            <field name="parent_id" ref="dep_management_vn"/>
+        </record>
+
+        <record id="dep_qa_vn" model="hr.department">
+            <field name="name">Khối Quản lý Chất lượng QA/QC</field>
+            <field name="parent_id" ref="dep_management_vn"/>
+        </record>
+
+        <record id="dep_account_vn" model="hr.department">
+            <field name="name">Khối Tài chính - Kế toán</field>
+            <field name="parent_id" ref="dep_management_vn"/>
+        </record>
+
+        <record id="dep_purchase_vn" model="hr.department">
+            <field name="name">Khối Mua hàng &amp; Chuỗi cung ứng</field>
+            <field name="parent_id" ref="dep_management_vn"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- ĐỘI NGŨ NHÂN SỰ CHỦ CHỐT                                     -->
+        <!-- ============================================================ -->
+
+        <!-- Ban Tổng Giám đốc -->
+        <record id="hr_employee_director" model="hr.employee">
+            <field name="name">Lê Đình Nam</field>
+            <field name="job_title">Tổng Giám đốc Điều hành (CEO)</field>
+            <field name="department_id" ref="dep_management_vn"/>
+            <field name="work_email">nam.le@navilog.vn</field>
+            <field name="mobile_phone">0912 345 678</field>
+            <field name="work_phone">028 3822 1000</field>
+            <field name="parent_id" eval="False"/>
+        </record>
+
+        <!-- Khối Sản xuất Cơ khí & R&D -->
+        <record id="hr_employee_mfg_director" model="hr.employee">
+            <field name="name">Vũ Minh Trí</field>
+            <field name="job_title">Giám đốc Khối Sản xuất Cơ khí &amp; R&amp;D</field>
+            <field name="department_id" ref="dep_mfg_vn"/>
+            <field name="work_email">tri.vu@navilog.vn</field>
+            <field name="mobile_phone">0918 889 901</field>
+            <field name="parent_id" ref="hr_employee_director"/>
+        </record>
+
+        <record id="hr_employee_workshop_manager" model="hr.employee">
+            <field name="name">Đặng Hữu Phước</field>
+            <field name="job_title">Quản đốc Phân xưởng Chế tạo &amp; Hàn CNC</field>
+            <field name="department_id" ref="dep_mfg_vn"/>
+            <field name="work_email">phuoc.dang@navilog.vn</field>
+            <field name="mobile_phone">0903 778 112</field>
+            <field name="parent_id" ref="hr_employee_mfg_director"/>
+        </record>
+
+        <record id="hr_employee_qa_manager" model="hr.employee">
+            <field name="name">Đỗ Quỳnh Anh</field>
+            <field name="job_title">Trưởng phòng Quản lý Chất lượng QA/QC</field>
+            <field name="department_id" ref="dep_qa_vn"/>
+            <field name="work_email">quynhanh.do@navilog.vn</field>
+            <field name="mobile_phone">0934 556 778</field>
+            <field name="parent_id" ref="hr_employee_mfg_director"/>
+        </record>
+
+        <!-- Khối Vận tải & Logistics -->
+        <record id="hr_employee_logistics_director" model="hr.employee">
+            <field name="name">Nguyễn Hải Đăng</field>
+            <field name="job_title">Giám đốc Khối Vận tải &amp; Tiếp vận</field>
+            <field name="department_id" ref="dep_logistics_vn"/>
+            <field name="work_email">dang.nguyen@navilog.vn</field>
+            <field name="mobile_phone">0909 234 567</field>
+            <field name="parent_id" ref="hr_employee_director"/>
+        </record>
+
+        <record id="hr_employee_driver_lead" model="hr.employee">
+            <field name="name">Nguyễn Văn Long</field>
+            <field name="job_title">Đội trưởng Đội xe Container (GPLX Hạng FC)</field>
+            <field name="department_id" ref="dep_logistics_vn"/>
+            <field name="work_email">long.nv@navilog.vn</field>
+            <field name="mobile_phone">0914 567 890</field>
+            <field name="parent_id" ref="hr_employee_logistics_director"/>
+        </record>
+
+        <record id="hr_employee_driver_tractor_1" model="hr.employee">
+            <field name="name">Trần Quốc Toản</field>
+            <field name="job_title">Tài xế Xe đầu kéo Container Hạng nặng (GPLX FC)</field>
+            <field name="department_id" ref="dep_logistics_vn"/>
+            <field name="work_email">toan.tq@navilog.vn</field>
+            <field name="mobile_phone">0987 654 321</field>
+            <field name="parent_id" ref="hr_employee_driver_lead"/>
+        </record>
+
+        <record id="hr_employee_driver_truck_1" model="hr.employee">
+            <field name="name">Lê Hoàng Nam</field>
+            <field name="job_title">Tài xế Xe tải nặng Tuyến Bắc - Nam (GPLX Hạng C)</field>
+            <field name="department_id" ref="dep_logistics_vn"/>
+            <field name="work_email">nam.lh@navilog.vn</field>
+            <field name="mobile_phone">0976 123 456</field>
+            <field name="parent_id" ref="hr_employee_driver_lead"/>
+        </record>
+
+        <record id="hr_employee_driver_reefer" model="hr.employee">
+            <field name="name">Phạm Minh Quân</field>
+            <field name="job_title">Tài xế Xe tải lạnh chuyên dụng (GPLX Hạng C)</field>
+            <field name="department_id" ref="dep_logistics_vn"/>
+            <field name="work_email">quan.pm@navilog.vn</field>
+            <field name="mobile_phone">0965 987 321</field>
+            <field name="parent_id" ref="hr_employee_driver_lead"/>
+        </record>
+
+        <!-- Khối Tài chính - Kế toán -->
+        <record id="hr_employee_chief_accountant" model="hr.employee">
+            <field name="name">Hoàng Thu Trang</field>
+            <field name="job_title">Kế toán trưởng</field>
+            <field name="department_id" ref="dep_account_vn"/>
+            <field name="work_email">trang.hoang@navilog.vn</field>
+            <field name="mobile_phone">0908 112 233</field>
+            <field name="parent_id" ref="hr_employee_director"/>
+        </record>
+
+    </data>
+</odoo>

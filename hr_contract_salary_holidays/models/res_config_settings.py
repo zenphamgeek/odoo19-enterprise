@@ -9,4 +9,4 @@ class ResConfigSettings(models.TransientModel):
 
     hr_contract_timeoff_auto_allocation = fields.Boolean(related="company_id.hr_contract_timeoff_auto_allocation", readonly=False)
     hr_contract_timeoff_auto_allocation_type_id = fields.Many2one(
-        'hr.leave.type', related='company_id.hr_contract_timeoff_auto_allocation_type_id', readonly=False)
+        'hr.work.entry.type', related='company_id.hr_contract_timeoff_auto_allocation_type_id', readonly=False)

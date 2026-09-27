@@ -77,9 +77,13 @@ class MrpReport(models.Model):
     )
 
     @property
-    def _table_query(self):
+    def _table_sql(self):
         ''' Report needs to be dynamic to take into account multi-company selected + multi-currency rates '''
-        return '%s %s %s %s' % (self._select(), self._from(), self._where(), self._group_by())
+        return SQL(f"{self._select()} {self._from()} {self._where()} {self._group_by()}")
+
+    @property
+    def _table_query(self):
+        return self._table_sql
 
     def _select_total_cost(self):
         return "comp_cost.total + op_cost.total"

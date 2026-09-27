@@ -278,6 +278,7 @@ test("Reorder apps in home menu using drag and drop", async () => {
 });
 
 test("The HomeMenu input takes the focus when you press a key only if no other element is the activeElement", async () => {
+    mockService("command", { openMainPalette: () => {} });
     await mountWithCleanup(HomeMenu, {
         props: getDefaultHomeMenuProps(),
     });
@@ -303,6 +304,7 @@ test("The HomeMenu input takes the focus when you press a key only if no other e
 });
 
 test("The HomeMenu input does not take the focus if it is already on another input", async () => {
+    mockService("command", { openMainPalette: () => {} });
     await mountWithCleanup(HomeMenu, {
         props: getDefaultHomeMenuProps(),
     });
@@ -322,6 +324,7 @@ test("The HomeMenu input does not take the focus if it is already on another inp
 });
 
 test("The HomeMenu input does not take the focus if it is already on a textarea", async () => {
+    mockService("command", { openMainPalette: () => {} });
     await mountWithCleanup(HomeMenu, {
         props: getDefaultHomeMenuProps(),
     });
@@ -368,7 +371,7 @@ test("home keynav not triggering when navigating a dropdown", async () => {
 
     await mountWebClient({ WebClient: WebClientEnterprise });
 
-    await click(".o_user_menu .o-dropdown");
+    await click(".o_user_menu");
     await animationFrame();
 
     await press("arrowdown");

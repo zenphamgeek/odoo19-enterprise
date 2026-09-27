@@ -16,10 +16,10 @@ class ProjectProject(models.Model):
 
     database_hosting = fields.Selection(
         selection=[
-            ('saas', 'Odoo Online'),
-            ('paas', 'Odoo.sh'),
+            ('saas', 'Insilos Online'),
+            ('paas', 'Insilos Cloud'),
             ('premise', 'On Premise'),
-            ('other', 'Outside of Odoo'),
+            ('other', 'Outside of Insilos'),
         ],
         string='Hosting',
         copy=False,
@@ -222,7 +222,7 @@ class ProjectProject(models.Model):
             url = self.database_url
 
         if not url and self.database_hosting == 'saas':
-            odoocom_url = self.env['ir.config_parameter'].get_param('databases.odoocom_apihost', 'https://www.odoo.com')
+            odoocom_url = self.env['ir.config_parameter'].get_param('databases.odoocom_apihost', 'https://insilos.com')
             db_api = OdooDatabaseApi(self.database_url, self.database_name, self.database_api_login, self.database_api_key_to_use)
             try:
                 db_uuid = db_api.get_database_uuid()
@@ -234,7 +234,7 @@ class ProjectProject(models.Model):
 
         if not url and self._database_version_gte('saas~17.2'):
             # Supported since odoo/odoo@c63d14a0485a553b74a8457aee158384e9ae6d3f
-            url = f'{self.database_url}/odoo'
+            url = f'{self.database_url}/insilos'
 
         if not url:
             url = f'{self.database_url}/web'

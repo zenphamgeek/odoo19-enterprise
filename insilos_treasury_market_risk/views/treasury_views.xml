@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_fx_scenario_wizard" model="ir.ui.view">
+        <field name="name">treasury.fx.scenario.wizard.form</field><field name="model">treasury.fx.scenario.wizard</field>
+        <field name="arch" type="xml">
+            <form string="FX Exposure"><sheet><group><field name="company_ids" widget="many2many_tags"/><field name="as_of"/><field name="custom_shock"/></group><field name="result_html" nolabel="1"/></sheet><footer><button name="action_calculate" type="object" string="Calculate" class="btn-primary"/><button name="action_open_ledger" type="object" string="Open Journal Items"/><button string="Close" special="cancel"/></footer></form></field>
+    </record>
+    <record id="action_fx_scenario" model="ir.actions.act_window"><field name="name">FX Exposure</field><field name="res_model">treasury.fx.scenario.wizard</field><field name="view_mode">form</field><field name="target">new</field></record>
+    <menuitem id="menu_treasury_root" name="Treasury &amp; Market Risk"
+              web_icon="insilos_treasury_market_risk,static/description/icon.svg"
+              sequence="75" groups="insilos_treasury_market_risk.group_treasury_analyst"/>
+    <menuitem id="menu_fx_exposure" name="FX Exposure" parent="menu_treasury_root" action="action_fx_scenario" sequence="10"/>
+
+    <record id="view_liquidity_scenario_wizard" model="ir.ui.view">
+        <field name="name">treasury.liquidity.scenario.wizard.form</field><field name="model">treasury.liquidity.scenario.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Liquidity Risk"><sheet><group><field name="company_ids" widget="many2many_tags"/><field name="as_of"/><field name="scenario"/></group><field name="result_html" nolabel="1"/></sheet><footer><button name="action_calculate" type="object" string="Calculate" class="btn-primary"/><button string="Close" special="cancel"/></footer></form></field>
+    </record>
+    <record id="action_liquidity_scenario" model="ir.actions.act_window"><field name="name">Liquidity Risk</field><field name="res_model">treasury.liquidity.scenario.wizard</field><field name="view_mode">form</field><field name="target">new</field></record>
+    <menuitem id="menu_liquidity_risk" name="Liquidity Risk" parent="menu_treasury_root" action="action_liquidity_scenario" sequence="20"/>
+    <menuitem id="menu_investment_portfolios" name="Investment Portfolios" parent="menu_treasury_root" action="insilos_capital_markets_decision_governance.action_capital_portfolio" sequence="30"/>
+    <menuitem id="menu_committee_governance" name="Committee Governance" parent="menu_treasury_root" action="project.open_view_project_all" sequence="40"/>
+</odoo>

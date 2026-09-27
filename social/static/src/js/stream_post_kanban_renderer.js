@@ -23,12 +23,13 @@ export class StreamPostKanbanRenderer extends KanbanRenderer {
         this.dialog = useService('dialog');
         const rootRef = useRef("root");
         useEffect((images) => {
+            if (!images || !images.length) return;
             const onClickMoreImages = this.onClickMoreImages.bind(this);
             images.forEach((image) => image.addEventListener('click', onClickMoreImages));
             return () => {
                 images.forEach((image) => image.removeEventListener('click', onClickMoreImages));
             };
-        }, () => [rootRef.el.querySelectorAll('.o_social_stream_post_image_more')]);
+        }, () => [rootRef.el ? rootRef.el.querySelectorAll('.o_social_stream_post_image_more') : []]);
     }
 
     /**

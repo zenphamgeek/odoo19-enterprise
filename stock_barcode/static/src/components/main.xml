@@ -17,10 +17,10 @@
                         <i class="oi oi-chevron-left"/>
                     </button>
                     <button class="o_title btn text-start p-0" t-on-click="toggleInformation">
-                        <div t-esc="env.model.name"/>
+                        <div t-out="env.model.name"/>
                         <div t-if="env.model.record.partner_id" class="o_barcode_partner text-muted">
                             <i class="fa fa-user-circle-o me-1"/>
-                            <t t-esc="env.model.record.partner_id.display_name"/>
+                            <t t-out="env.model.record.partner_id.display_name"/>
                         </div>
                     </button>
                 </nav>
@@ -48,7 +48,7 @@
             <t t-if="state.view === 'barcodeLines'">
                 <div t-if="state.displayNote" class="alert alert-warning text-start mb-0">
                     <button type="button" class="btn-close float-end" title="Close" aria-label="Close" t-on-click="() => this.state.displayNote = false"/>
-                    <t t-esc="env.model.record.note"/>
+                    <t t-out="env.model.record.note"/>
                 </div>
                 <div class="o_barcode_lines_header py-3 px-1 text-bg-800">
                     <t t-set="info" t-value="env.model.barcodeInfo"/>
@@ -66,7 +66,7 @@
              class="o_barcode_lines list-group flex-grow-1 text-bg-200">
             <div t-if="env.model.resModel == 'stock.picking' &amp;&amp; env.model.record.picking_warning_text"
                  class="alert alert-info mb-1 mt-1 text-center fw-bold" role="alert" style="white-space: pre-wrap;">
-                <t t-esc="env.model.record.picking_warning_text"/>
+                <t t-out="env.model.record.picking_warning_text"/>
             </div>
             <t t-foreach="env.model.groupedLinesByLocation" t-as="group" t-key="group.location.id">
                 <t t-set="currentLocation" t-value="env.model.location &amp;&amp; env.model.location.id == group.location.id"/>
@@ -185,7 +185,7 @@
                 t-attf-class="{{highlightValidateButton ? 'btn-primary' : 'btn-secondary'}}">
                 Confirm
                 <span t-attf-class="{{highlightValidateButton ? '' : 'text-muted'}}">
-                    (<t t-esc="env.model.applyOn"/>)
+                    (<t t-out="env.model.applyOn"/>)
                 </span>
             </button>
         </footer>
@@ -203,7 +203,7 @@
                 <img src="/web/static/img/spin.svg" alt="Loading..."/>
             </div>
             <div t-if="props.message or props.blockComponent">
-                <div class="o_message text-center px-4" t-esc="props.message" />
+                <div class="o_message text-center px-4" t-out="props.message" />
                 <t t-if="props.blockComponent" t-component="props.blockComponent.class" t-props="props.blockComponent.props"/>
             </div>
         </div>

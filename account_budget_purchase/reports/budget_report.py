@@ -28,7 +28,7 @@ class BudgetReport(models.Model):
             LEFT JOIN account_move_line aml ON aml.purchase_line_id = pol.id
             LEFT JOIN account_move am ON aml.move_id = am.id
             LEFT JOIN uom_uom uom_aml ON uom_aml.id = aml.product_uom_id
-            LEFT JOIN uom_uom uom_pol ON uom_pol.id = pol.product_uom_id
+            LEFT JOIN uom_uom uom_pol ON uom_pol.id = pol.uom_id
                 WHERE aml.parent_state = 'posted'
              GROUP BY pol.id
         """,
@@ -80,13 +80,13 @@ class BudgetReport(models.Model):
         )
 
     @property
-    def _table_query(self):
+    def _table_sql(self) -> SQL:
         self.env['purchase.order'].flush_model()
         self.env['purchase.order.line'].flush_model()
         project_plan, other_plans = self.env['account.analytic.plan']._get_all_plans()
         plan_fnames = [plan._column_name() for plan in project_plan | other_plans]
         return SQL(
-            "%s UNION ALL %s",
-            super()._table_query,
+            "(%s UNION ALL %s)",
+            super()._table_sql,
             self._get_pol_query(plan_fnames),
         )

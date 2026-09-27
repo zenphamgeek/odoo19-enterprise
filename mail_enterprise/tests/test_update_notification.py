@@ -1,6 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.base.tests.test_cloc import TestClocCustomization
+try:
+    from odoo.addons.base.tests.test_cloc import TestClocCustomization
+except ImportError:
+    from odoo.addons.test_base.tests.test_tools.test_cloc import TestClocCustomization
 from ast import literal_eval
 
 

@@ -60,7 +60,7 @@ class ResConfigSettings(models.TransientModel):
                 and vals.get('l10n_ke_oscu_cmc_key')
                 and not (vals.get('l10n_ke_oscu_user_agreement') or self.env['res.company'].browse(vals.get('company_id')).l10n_ke_oscu_user_agreement)
             ):
-                raise UserError(_("To use OSCU functionality in Odoo, please agree to the terms of use of Odoo as an OSCU service provider."))
+                raise UserError(_("To use OSCU functionality in Insilos, please agree to the terms of use of Insilos as an OSCU service provider."))
         return super().create(vals_list)
 
     def action_l10n_ke_oscu_initialize(self):

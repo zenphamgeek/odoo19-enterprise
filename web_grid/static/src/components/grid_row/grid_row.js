@@ -13,11 +13,6 @@ export class GridRow extends Component {
         style: { type: String, optional: true },
         value: { optional: true },
     };
-    static defaultProps = {
-        classNames: "",
-        context: {},
-        style: "",
-    };
 
     get value() {
         let value = 'value' in this.props ? this.props.value : this.props.row.initialRecordValues[this.props.name];

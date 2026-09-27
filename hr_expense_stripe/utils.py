@@ -373,10 +373,10 @@ STRIPE_REQUEST_REFUSED_REASONS = {
     'spending_controls': _lt("The card was declined because of the Stripe spending controls"),
     'suspected_fraud': _lt("The authorization was suspected as fraudulent by Stripe's risk controls"),
     'verification_failed': _lt("The authorization failed required verification checks"),
-    'webhook_approved': _lt("The authorization was approved by your Odoo database"),
-    'webhook_declined': _lt("The authorization was refused by your Odoo database"),
-    'webhook_error': _lt("There was an error in your Odoo database and Stripe received an invalid response"),
-    'webhook_timeout': _lt("Your Odoo database failed to respond to Stripe in time, and the authorization was refused by default")
+    'webhook_approved': _lt("The authorization was approved by your Insilos database"),
+    'webhook_declined': _lt("The authorization was refused by your Insilos database"),
+    'webhook_error': _lt("There was an error in your Insilos database and Stripe received an invalid response"),
+    'webhook_timeout': _lt("Your Insilos database failed to respond to Stripe in time, and the authorization was refused by default")
 }
 
 
@@ -417,23 +417,23 @@ def interpret_error_code(response):
         501: _lt("We received the following error from Stripe: %(reason)s", reason=reason),  # Stripe Server Error
 
         # IAP specific
-        400: _lt("Invalid request sent to the Odoo IAP proxy server: %(reason)s", reason=reason),  # Unauthorized
+        400: _lt("Invalid request sent to the Insilos IAP proxy server: %(reason)s", reason=reason),  # Unauthorized
         403: _lt("Forbidden access to the IAP proxy server"),
-        404: _lt("We were unable to reach Odoo IAP proxy server"),
+        404: _lt("We were unable to reach Insilos IAP proxy server"),
         451: _lt("Missing Cardholder on IAP proxy server"),
         452: _lt("Wrong or Expired validation code"),
         453: _lt("The sms service is currently experiencing a lot of request. Please try again in a few minutes."),  # Rate limit reached for sending SMS
-        454: _lt("Stripe Issuing with Odoo is not yet implemented for the US customers."),
+        454: _lt("Stripe Issuing with Insilos is not yet implemented for the US customers."),
         455: _lt("The Stripe account specified in the request wasn't found. Please check your configuration"),
         456: _lt("No signature found in the request. Please check your configuration"),
         457: _lt("Invalid or expired signature found in the request. Please check your configuration"),
         459: _lt("Your account balance isn't zero, please use any remaining funds or contact support to close your account."),
         460: _lt("The creation rate limit for this type of cards has been reached. Please try again later."),  # Rate limit reached for creating cards
-        461: _lt("Only licenses databases can use Odoo Stripe Issuing services."),
-        500: _lt("There was an unexpected error on Odoo IAP proxy server"),
-        503: _lt("We received the following error from Odoo IAP proxy server:\n- Missing account secret"),
-        504: _lt("We received the following error from Odoo IAP proxy server:\n- Missing account webhook"),
-        505: _lt("We received the following error from Odoo IAP proxy server:\n- Wrong platform setup/route is restricted"),
+        461: _lt("Only licenses databases can use Insilos Stripe Issuing services."),
+        500: _lt("There was an unexpected error on Insilos IAP proxy server"),
+        503: _lt("We received the following error from Insilos IAP proxy server:\n- Missing account secret"),
+        504: _lt("We received the following error from Insilos IAP proxy server:\n- Missing account webhook"),
+        505: _lt("We received the following error from Insilos IAP proxy server:\n- Wrong platform setup/route is restricted"),
         False: _lt("Unknown Error Code"),
     }
     error_message = iap_errors.get(code) or iap_errors[False]

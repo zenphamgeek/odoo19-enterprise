@@ -108,7 +108,7 @@ class AccountReturnType(models.Model):
     default_deadline_start_date = fields.Date(string="Default Start Date")
     deadline_days_delay = fields.Integer(
         string="Deadline",
-        help="By default, Odoo applies its own deadline for returns (shown as 0). Entering a value here will override it and be used as the new deadline.",
+        help="By default, Insilos applies its own deadline for returns (shown as 0). Entering a value here will override it and be used as the new deadline.",
         tracking=True,
         company_dependent=True,
     )
@@ -2265,7 +2265,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             if not deferred_entries_count:
                 checks.append({
                     'name': _lt("Deferred Entries"),
-                    'message': _lt("Odoo manages your deferred entries automatically. No deferred entries were found for this period. Ensure your start and end dates are correctly set on your bills and invoices."),
+                    'message': _lt("Insilos manages your deferred entries automatically. No deferred entries were found for this period. Ensure your start and end dates are correctly set on your bills and invoices."),
                     'code': 'check_deferred_entries',
                     'records_count': deferred_entries_count,
                     'records_model': self.env['ir.model']._get('account.move').id,

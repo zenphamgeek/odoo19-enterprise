@@ -6,7 +6,7 @@
 Generate XML payment orders as recommended by the SEPA and ISO20022 norms.
     """,
     'version': '1.0',
-    'depends': ['account_batch_payment', 'base_iban'],
+    'depends': ['account_batch_payment', 'account'],
     'data': [
         'data/account_payment_method.xml',
         'views/account_journal_dashboard_view.xml',

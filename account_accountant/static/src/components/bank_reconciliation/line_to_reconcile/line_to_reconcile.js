@@ -1,4 +1,4 @@
-import { Component, useRef } from "@odoo/owl";
+import { Component, signal } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { formatMonetary } from "@web/views/fields/formatters";
 import { useService } from "@web/core/utils/hooks";
@@ -6,7 +6,7 @@ import { useBankReconciliation } from "../bank_reconciliation_service";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { BankRecFormDialog } from "../bankrec_form_dialog/bankrec_form_dialog";
 import { BankRecLineInfoPopOver } from "../line_info_pop_over/line_info_pop_over";
-import { x2ManyCommands } from "@web/core/orm_service";
+import { x2ManyCommands } from "@web/core/orm_plugin";
 
 export class BankRecLineToReconcile extends Component {
     static template = "account_accountant.BankRecLineToReconcile";
@@ -16,6 +16,12 @@ export class BankRecLineToReconcile extends Component {
         statementLine: Object,
     };
 
+    lineInfo = signal.ref();
+
+    get lineInfoRef() {
+        return { el: this.lineInfo() };
+    }
+
     setup() {
         this.action = useService("action");
         this.orm = useService("orm");
@@ -23,7 +29,6 @@ export class BankRecLineToReconcile extends Component {
         this.ui = useService("ui");
         this.bankReconciliation = useBankReconciliation();
 
-        this.lineInfoRef = useRef("line-info-ref");
         this.lineInfoPopOver = usePopover(BankRecLineInfoPopOver, {
             position: "left",
             closeOnClickAway: true,
@@ -120,7 +125,7 @@ export class BankRecLineToReconcile extends Component {
         if (this.lineInfoPopOver.isOpen || !this.showLineInfo) {
             this.lineInfoPopOver.close();
         } else {
-            this.lineInfoPopOver.open(this.lineInfoRef.el, {
+            this.lineInfoPopOver.open(this.lineInfo() || this.lineInfoRef.el, {
                 statementLineData: this.statementLineData,
                 lineData: this.lineData,
                 exchangeMove: this.exchangeMove,

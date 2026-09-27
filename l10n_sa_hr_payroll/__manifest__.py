@@ -17,7 +17,7 @@ Saudi Arabia Payroll and End of Service rules.
 - Master Payroll Export
     """,
     "license": "OEEL-1",
-    "depends": ["hr_payroll", "hr_work_entry_holidays"],
+    "depends": ["hr_payroll", "hr_payroll_holidays"],
     "data": [
         "views/reports.xml",
         "views/report_payslip_templates.xml",

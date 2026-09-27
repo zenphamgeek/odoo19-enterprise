@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_insilos_demo_request_list" model="ir.ui.view">
+        <field name="name">insilos.demo.request.list</field>
+        <field name="model">insilos.demo.request</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state == 'new'" decoration-warning="state == 'contacted'" decoration-success="state == 'qualified'" decoration-muted="state == 'closed'">
+                <field name="create_date"/>
+                <field name="name"/>
+                <field name="company"/>
+                <field name="email"/>
+                <field name="industry"/>
+                <field name="use_case"/>
+                <field name="assigned_user_id" widget="many2one_avatar_user"/>
+                <field name="state" widget="badge" decoration-info="state == 'new'" decoration-warning="state == 'contacted'" decoration-success="state == 'qualified'" decoration-muted="state == 'closed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_insilos_demo_request_search" model="ir.ui.view">
+        <field name="name">insilos.demo.request.search</field>
+        <field name="model">insilos.demo.request</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="company"/>
+                <field name="email"/>
+                <field name="industry"/>
+                <field name="use_case"/>
+                <filter string="New" name="new" domain="[('state','=','new')]"/>
+                <filter string="Contacted" name="contacted" domain="[('state','=','contacted')]"/>
+                <filter string="Qualified" name="qualified" domain="[('state','=','qualified')]"/>
+                <separator/>
+                <filter string="My Requests" name="my_requests" domain="[('assigned_user_id','=',uid)]"/>
+                <group>
+                    <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
+                    <filter string="Industry" name="group_industry" context="{'group_by':'industry'}"/>
+                    <filter string="Use Case" name="group_use_case" context="{'group_by':'use_case'}"/>
+                    <filter string="Created Month" name="group_month" context="{'group_by':'create_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_insilos_demo_request_form" model="ir.ui.view">
+        <field name="name">insilos.demo.request.form</field>
+        <field name="model">insilos.demo.request</field>
+        <field name="arch" type="xml">
+            <form string="Demo Request">
+                <header>
+                    <button name="action_mark_contacted" type="object" string="Mark Contacted" class="btn-primary" invisible="state != 'new'"/>
+                    <button name="action_mark_qualified" type="object" string="Mark Qualified" class="btn-primary" invisible="state in ('qualified','closed')"/>
+                    <button name="action_close" type="object" string="Close" invisible="state == 'closed'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,contacted,qualified,closed"/>
+                </header>
+                <sheet>
+                    <div class="w_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Full Name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Contact Details">
+                            <field name="company"/>
+                            <field name="job_title"/>
+                            <field name="email" widget="email"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="company_size"/>
+                        </group>
+                        <group string="Business Needs">
+                            <field name="industry"/>
+                            <field name="use_case"/>
+                            <field name="assigned_user_id" widget="many2one_avatar_user"/>
+                            <field name="website_id"/>
+                            <field name="language_code"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="message" placeholder="Client background and specific business needs..."/>
+                        <field name="internal_notes" placeholder="Internal notes and assessment..."/>
+                    </group>
+                    <group string="Lead Source">
+                        <field name="source_url" widget="url"/>
+                        <field name="consent"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_insilos_demo_requests" model="ir.actions.act_window">
+        <field name="name">Demo Requests</field>
+        <field name="path">demo-requests</field>
+        <field name="res_model">insilos.demo.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_insilos_demo_request_search"/>
+        <field name="context">{'search_default_new': 1}</field>
+    </record>
+
+    <menuitem id="menu_insilos_backend_root" name="Insilos Website" sequence="80" web_icon="insilos_website,static/description/icon.svg" groups="insilos_website.group_insilos_demo_manager,base.group_system"/>
+    <menuitem id="menu_insilos_demo_requests" name="Demo Requests" parent="menu_insilos_backend_root" action="action_insilos_demo_requests" sequence="10" groups="insilos_website.group_insilos_demo_manager,base.group_system"/>
+</odoo>

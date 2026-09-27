@@ -85,7 +85,7 @@ class ResCompany(models.Model):
             res.raise_for_status()
             return res
         except ConnectionError:
-            raise UserError(_("Connection lost between Odoo and Fiskaly."))
+            raise UserError(_("Connection lost between Insilos and Fiskaly."))
         except ConnectTimeout:
             raise UserError(_("There are some connection issues between us and Fiskaly, try again later."))
 
@@ -121,7 +121,7 @@ class ResCompany(models.Model):
                 res = self._l10n_de_fiskaly_dsfinvk_rpc(method, path, json, version, True)
             return res
         except ConnectionError:
-            raise UserError(_("Connection lost between Odoo and Fiskaly."))
+            raise UserError(_("Connection lost between Insilos and Fiskaly."))
         except ConnectTimeout:
             raise UserError(_("There are some connection issues between us and Fiskaly, try again later."))
 

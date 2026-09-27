@@ -22,13 +22,13 @@ def get_error_message(error):
     error_message = error.get("message", "")
     return {
         "jsonrpc": error_message,
-        "iap_error_server": _("An internal error occurred on the IAP server. Please contact Odoo support."),
-        "iap_error_connecting": _("An error occurred while connecting to the IAP server. If the error persists please contact Odoo support."),
+        "iap_error_server": _("An internal error occurred on the IAP server. Please contact Insilos support."),
+        "iap_error_connecting": _("An error occurred while connecting to the IAP server. If the error persists please contact Insilos support."),
         "iap_error_connection_not_found": _("Connection not found. Please check your configuration."),
         "codaclean_error_connecting": _("An error occurred while connecting to Codaclean. %s", error_message),
         "codaclean_error_auth": _("An error occurred while trying to authenticate with Codaclean. %s", error_message),
         "codaclean_error_file_download": _("An error occurred while trying to download a Coda file / PDF from Codaclean. %s", error_message),
-    }.get(error_type, _("Unknown error '%s' while contacting IAP / Codaclean. Please contact Odoo support.", error_type))
+    }.get(error_type, _("Unknown error '%s' while contacting IAP / Codaclean. Please contact Insilos support.", error_type))
 
 
 def contact(env, action, params, timeout=15):

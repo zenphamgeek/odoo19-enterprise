@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tenant_operation_list" model="ir.ui.view">
+        <field name="name">insilos.tenant.operation.list</field>
+        <field name="model">insilos.tenant.operation</field>
+        <field name="arch" type="xml">
+            <list create="0" delete="0">
+                <field name="create_date"/>
+                <field name="tenant_id"/>
+                <field name="operation_type"/>
+                <field name="state" widget="badge"/>
+                <field name="k8s_job_name"/>
+                <field name="message"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_tenant_operation_form" model="ir.ui.view">
+        <field name="name">insilos.tenant.operation.form</field>
+        <field name="model">insilos.tenant.operation</field>
+        <field name="arch" type="xml">
+            <form delete="0">
+                <header>
+                    <button name="action_submit" type="object" string="Submit" groups="insilos_tenant_control.group_tenant_operator" invisible="state != 'queued'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="tenant_id" readonly="1"/>
+                        <field name="operation_type" readonly="1"/>
+                        <field name="state" readonly="1"/>
+                        <field name="requested_by" readonly="1"/>
+                        <field name="idempotency_key" readonly="1"/>
+                        <field name="k8s_job_name" readonly="1"/>
+                        <field name="k8s_namespace" readonly="1"/>
+                        <field name="started_at" readonly="1"/>
+                        <field name="finished_at" readonly="1"/>
+                        <field name="error" readonly="1"/>
+                        <field name="message" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_tenant_operation" model="ir.actions.act_window">
+        <field name="name">Tenant Operations</field>
+        <field name="res_model">insilos.tenant.operation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

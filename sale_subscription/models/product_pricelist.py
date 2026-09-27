@@ -14,6 +14,9 @@ class ProductPricelist(models.Model):
             [('plan_id', '=', False)]
         ])
 
+    def _base_domain_item_ids(self):
+        return self._domain_item_ids()
+
     def _domain_subscription_item_ids(self):
         return Domain.AND([
             self._base_domain_item_ids(),

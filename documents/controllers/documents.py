@@ -322,7 +322,7 @@ class ShareRoute(http.Controller):
             and target_sudo.access_via_link != 'none'
             and not target_sudo.is_access_via_link_hidden
         ):
-            return request.redirect(f'/odoo/documents/{quote(target_sudo.access_token, safe="")}')
+            return request.redirect(f'/insilos/documents/{quote(target_sudo.access_token, safe="")}')
         if target_sudo or not document_sudo:
             return request.render(
                 'documents.not_available', {'document': document_sudo}, status=404)
@@ -417,7 +417,7 @@ class ShareRoute(http.Controller):
             Redirect = request.env['documents.redirect'].sudo()
             if document_sudo := Redirect._get_redirection(access_token):
                 return request.redirect(
-                    f'/odoo/documents/{quote(document_sudo.access_token, safe="")}',
+                    f'/insilos/documents/{quote(document_sudo.access_token, safe="")}',
                     HTTPStatus.MOVED_PERMANENTLY,
                 )
             raise request.not_found()
@@ -445,7 +445,7 @@ class ShareRoute(http.Controller):
 
     @http.route('/documents/redirect/<access_token>', type='http', auth='public', readonly=True)
     def documents_redirect(self, access_token):
-        return request.redirect(f'/odoo/documents/{quote(access_token, safe="")}', HTTPStatus.MOVED_PERMANENTLY)
+        return request.redirect(f'/insilos/documents/{quote(access_token, safe="")}', HTTPStatus.MOVED_PERMANENTLY)
 
     @http.route('/documents/touch/<access_token>', type='jsonrpc', auth='user')
     def documents_touch(self, access_token):
@@ -551,7 +551,7 @@ class ShareRoute(http.Controller):
         '/document/share/<token>'], type='http', auth='public')
     def share_portal(self, share_id=None, token=None):
         logger.warning("Deprecated since Odoo 18. Please access /odoo/documents/<access_token> instead.")
-        return request.redirect(f'/odoo/documents/{quote(token or "", safe="")}', code=HTTPStatus.MOVED_PERMANENTLY)
+        return request.redirect(f'/insilos/documents/{quote(token or "", safe="")}', code=HTTPStatus.MOVED_PERMANENTLY)
 
     @http.route(['/documents/upload/', '/documents/upload/<access_token>'],
                 type='http', auth='public', methods=['POST'],

@@ -54,11 +54,11 @@ class ProductProduct(models.Model):
                     )
 
     def _get_domain_locations_new(self, location_ids):
-        domain_quant, domain_move_in_loc, domain_move_out_loc = super()._get_domain_locations_new(location_ids)
+        domain_quant, domain_move_in_loc, domain_move_out_loc, *extra = super()._get_domain_locations_new(location_ids)
         if self.env.context.get('ignore_rental_returns'):
             rental_loc_ids = self.env.companies.rental_loc_id.ids
             domain_move_in_loc &= Domain('location_id', 'not in', rental_loc_ids)
-        return domain_quant, domain_move_in_loc, domain_move_out_loc
+        return (domain_quant, domain_move_in_loc, domain_move_out_loc, *extra)
 
     def _get_qty_in_rent_domain(self):
         """Allow precising the warehouse_id to get qty currently in rent."""

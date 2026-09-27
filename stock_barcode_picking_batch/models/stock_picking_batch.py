@@ -11,6 +11,9 @@ class StockPickingBatch(models.Model):
 
     picking_type_code = fields.Selection(related='picking_type_id.code')
 
+    def action_view_reception_report(self):
+        return self.action_view_allocation_report()
+
     def action_client_action(self):
         """ Open the mobile view specialized in handling barcodes on mobile devices.
 

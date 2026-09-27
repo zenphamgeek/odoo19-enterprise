@@ -16,7 +16,7 @@ export class PromoteStudioSystrayItem extends Component {
 
     _onClick() {
         this.dialog.add(PromoteStudioDialog, {
-            title: _t("Odoo Studio - Add new fields to any view"),
+            title: _t("Studio - Add new fields to any view"),
         });
     }
 }

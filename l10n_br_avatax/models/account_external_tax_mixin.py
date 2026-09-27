@@ -622,7 +622,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
                 api_response = self._l10n_br_call_avatax_taxes(company, document_data)
                 error = self._l10n_br_avatax_handle_response(service_params, api_response, _(
-                    'Odoo could not fetch the taxes related to %(document)s.',
+                    'Insilos could not fetch the taxes related to %(document)s.',
                     document=record.display_name,
                 ))
                 if error:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name':"Map View",
-    'summary':"Defines the map view for odoo enterprise",
+    'summary':"Defines the map view for Insilos enterprise",
     'description':"Allows the viewing of records on a map",
     'category': 'Hidden',
     'version':'1.0',

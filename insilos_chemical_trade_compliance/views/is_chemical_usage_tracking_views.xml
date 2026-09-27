@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_is_chemical_usage_tracking_tree" model="ir.ui.view">
+        <field name="name">is.chemical.usage.tracking.tree</field>
+        <field name="model">is.chemical.usage.tracking</field>
+        <field name="arch" type="xml">
+            <list string="Chemical Usage Tracking Reports" sample="1">
+                <field name="name"/>
+                <field name="chemical_substance_id"/>
+                <field name="cas_number"/>
+                <field name="reporting_year"/>
+                <field name="reporting_period"/>
+                <field name="planned_demand_kg" sum="Total Planned Demand"/>
+                <field name="imported_volume_kg" sum="Total Import"/>
+                <field name="domestic_purchased_kg" sum="Total Domestic"/>
+                <field name="consumed_in_production_kg" sum="Total Consumption"/>
+                <field name="current_stock_kg" sum="Total Current Stock"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_is_chemical_usage_tracking_form" model="ir.ui.view">
+        <field name="name">is.chemical.usage.tracking.form</field>
+        <field name="model">is.chemical.usage.tracking</field>
+        <field name="arch" type="xml">
+            <form string="Chemical Usage &amp; Inbound Tracking Report">
+                <header>
+                    <button name="action_sync_from_erp_stock_moves" string="Sync from ERP Stock Moves" type="object" class="btn btn-primary" icon="fa-refresh"/>
+                </header>
+                <sheet>
+                    <div class="w_title">
+                        <label for="name" string="Report Title"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Scope &amp; Chemical Master">
+                            <field name="chemical_substance_id"/>
+                            <field name="cas_number"/>
+                            <field name="facility_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Reporting Period">
+                            <field name="reporting_year"/>
+                            <field name="reporting_period"/>
+                        </group>
+                    </group>
+
+                    <group string="5-Stage Regulatory Usage &amp; Inbound Chain">
+                        <group string="Inbound &amp; Planning">
+                            <field name="planned_demand_kg"/>
+                            <field name="imported_volume_kg"/>
+                            <field name="domestic_purchased_kg"/>
+                            <field name="total_inbound_volume_kg"/>
+                        </group>
+                        <group string="Outbound &amp; Inventory">
+                            <field name="consumed_in_production_kg"/>
+                            <field name="loss_or_evaporation_kg"/>
+                            <field name="calculated_balance_kg"/>
+                            <field name="current_stock_kg"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Detailed Inflow &amp; Consumption Ledger" name="lines">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="flow_type"/>
+                                    <field name="document_ref"/>
+                                    <field name="partner_id"/>
+                                    <field name="quantity_kg" sum="Total Volume (kg)"/>
+                                    <field name="purpose_of_use_id"/>
+                                    <field name="remarks"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Purposes of Use" name="purposes">
+                            <field name="purpose_of_use_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="industry_category"/>
+                                    <field name="max_annual_demand_kg"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Auditor &amp; Explanations" name="notes">
+                            <field name="notes" placeholder="Explain variance, physical stock, and consumption fluctuation causes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_is_chemical_usage_tracking_search" model="ir.ui.view">
+        <field name="name">is.chemical.usage.tracking.search</field>
+        <field name="model">is.chemical.usage.tracking</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="chemical_substance_id"/>
+                <field name="cas_number"/>
+                <field name="facility_id"/>
+                <field name="reporting_year"/>
+                <group>
+                    <filter name="group_chemical" string="Chemical Substance" context="{'group_by': 'chemical_substance_id'}"/>
+                    <filter name="group_facility" string="Facility" context="{'group_by': 'facility_id'}"/>
+                    <filter name="group_year" string="Year" context="{'group_by': 'reporting_year'}"/>
+                    <filter name="group_period" string="Period" context="{'group_by': 'reporting_period'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_is_chemical_usage_tracking" model="ir.actions.act_window">
+        <field name="name">Manage 5-Stage Chemical Usage &amp; Inventory Ledgers</field>
+        <field name="path">chemical-usage-ledger</field>
+        <field name="res_model">is.chemical.usage.tracking</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_is_chemical_usage_tracking_search"/>
+        <field name="help" type="html">
+            <p class="w_view_nocontent_smiling_face">
+                Consolidate the 5-stage data chain: Demand -> Import -> Domestic Purchase -> Consumption -> Current Stock.
+            </p>
+        </field>
+    </record>
+</odoo>

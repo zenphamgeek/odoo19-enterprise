@@ -9,11 +9,11 @@ import { patch } from '@web/core/utils/patch';
 import { redirect } from '@web/core/utils/urls';
 import { patchDynamicContent } from '@web/public/utils';
 import wSaleUtils from '@website_sale/js/website_sale_utils';
-import { WebsiteSale } from '@website_sale/interactions/website_sale';
+import { ProductPage } from '@website_sale/interactions/product_page';
 import { RentingMixin } from '@website_sale_renting/js/renting_mixin';
 
-patch(WebsiteSale.prototype, RentingMixin);
-patch(WebsiteSale.prototype, {
+patch(ProductPage.prototype, RentingMixin);
+patch(ProductPage.prototype, {
     setup() {
         super.setup();
         patchDynamicContent(this.dynamicContent, {

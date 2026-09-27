@@ -17,8 +17,8 @@
                     <button t-on-click="fulfill"
                             class="o_digipad_fufill w-100 btn"
                             t-att-class="buttonFulfillClass">
-                        <t t-if="quantityToFulfill &gt; 0" t-esc="'+' + quantityToFulfill"/>
-                        <t t-elif="quantityToFulfill &lt; 0" t-esc="quantityToFulfill"/>
+                        <t t-if="quantityToFulfill &gt; 0" t-out="'+' + quantityToFulfill"/>
+                        <t t-elif="quantityToFulfill &lt; 0" t-out="quantityToFulfill"/>
                         <span t-else="" class="fa fa-lg fa-check"/>
                     </button>
                 </div>

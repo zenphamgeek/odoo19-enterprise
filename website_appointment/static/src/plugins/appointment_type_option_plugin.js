@@ -3,7 +3,7 @@ import { registry } from "@web/core/registry";
 import { _t } from '@web/core/l10n/translation';
 import { Cache } from "@web/core/utils/cache";
 import { BuilderAction } from "@html_builder/core/builder_action";
-import { BaseOptionComponent } from "@html_builder/core/utils";
+import { BaseOptionComponent } from "@html_builder/core/base_option_component";
 
 export class AppointmentTypeOption extends BaseOptionComponent {
     static template = "website_appointment.AppointmentTypeOption";

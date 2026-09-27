@@ -3,7 +3,7 @@ import { formatFloatFactor } from "@web/views/fields/formatters";
 import { useGridCell, useMagnifierGlass } from "@web_grid/hooks/grid_cell_hook";
 import { standardGridCellProps } from "./grid_cell";
 
-import { Component, useRef, useState, useEffect } from "@odoo/owl";
+import { Component, useLayoutEffect, proxy, signal } from "@odoo/owl";
 
 function formatter(value, options = {}) {
     return formatFloatFactor(value, options);
@@ -16,18 +16,27 @@ export class FloatToggleGridCell extends Component {
     };
     static template = "web_grid.FloatToggleGridCell";
 
+    rootRef = signal.ref();
+    buttonRef = signal.ref();
+
+    get root() {
+        return this.rootRef;
+    }
+
+    get toggleButton() {
+        return this.buttonRef;
+    }
+
     setup() {
-        this.rootRef = useRef("root");
-        this.buttonRef = useRef("toggleButton");
         this.magnifierGlassHook = useMagnifierGlass();
-        this.state = useState({
-            edit: this.props.editMode,
+        this.state = proxy({
+            edit: this.props.editMode ?? false,
             invalid: false,
             cell: null,
         });
         useGridCell();
 
-        useEffect(
+        useLayoutEffect(
             (buttonEl) => {
                 if (buttonEl) {
                     buttonEl.focus();
@@ -57,8 +66,9 @@ export class FloatToggleGridCell extends Component {
     }
 
     isEditable(props = this.props) {
+        const readonly = props.readonly ?? true;
         return (
-            !props.readonly && this.state.cell?.readonly === false && !this.state.cell.row.isSection
+            !readonly && this.state.cell?.readonly === false && !this.state.cell.row.isSection
         );
     }
 

@@ -43,7 +43,7 @@
                 <strong>Mandate identifier:</strong> <span t-out="o.name">SEPA1234</span>
             </p>
             <p name="mandate_description" class="mb-4 avoid-page-break-inside small">
-                By signing this mandate form, you authorise (A) <span t-out="o.company_id.name">Odoo PVT LTD</span> to send instructions to your bank to debit your account and (B) your bank to debit your account in accordance with the instructions from <span t-out="o.company_id.name">Odoo PVT LTD</span>.
+                By signing this mandate form, you authorise (A) <span t-out="o.company_id.name">Insilos PVT LTD</span> to send instructions to your bank to debit your account and (B) your bank to debit your account in accordance with the instructions from <span t-out="o.company_id.name">Insilos PVT LTD</span>.
                 <t t-if="o.sdd_scheme == 'CORE'">
                     As part of your rights, you are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. Your rights are explained in a statement that you can obtain from your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.
                 </t>
@@ -57,7 +57,7 @@
                     <div class="col-6">
                         <h5 class="mb-2">Creditor</h5>
                         <p class="mb-2"><strong>Creditor identifier:</strong> <span t-out="o.company_id.sdd_creditor_identifier">CREDIT-1234</span></p>
-                        <p class="mb-2"><span t-out="o.company_id.name">Odoo PVT LTD</span></p>
+                        <p class="mb-2"><span t-out="o.company_id.name">Insilos PVT LTD</span></p>
                         <span t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'>SEPA-CUST-001</span>
                     </div>
                     <div class="col-6">

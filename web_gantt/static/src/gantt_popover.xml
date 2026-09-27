@@ -2,37 +2,37 @@
 <templates xml:space="preserve">
 
     <t t-name="web_gantt.GanttPopover">
-        <div t-ref="root" class="o_gantt_popover">
-            <div t-if="displayPopoverHeader" class="popover-header d-flex justify-content-between py-2 pe-2">
+        <div t-ref="this.rootRef" class="o_gantt_popover">
+            <div t-if="this.displayPopoverHeader" class="popover-header d-flex justify-content-between py-2 pe-2">
                 <h4 class="p-0 pt-1">
-                    <t t-esc="props.title" />
+                    <t t-out="this.props.title" />
                 </h4>
-                <span class="ms-4 mt-1 me-2 cursor-pointer" t-on-click.stop="props.close">
+                <span class="ms-4 mt-1 me-2 cursor-pointer" t-on-click.stop="this.props.close">
                     <i class="fa fa-close" />
                 </span>
             </div>
             <div class="popover-body">
-                <t t-if="templates.body">
-                    <t t-call="{{ templates.body }}" t-call-context="renderingContext" />
+                <t t-if="this.templates.body">
+                    <t t-call="{{ this.templates.body }}" t-call-context="this.renderingContext" />
                 </t>
                 <t t-else="">
-                    <Record t-props="recordProps" t-slot-scope="data">
-                        <t t-component="props.KanbanRecord" t-props="kanbanRecordProps" record="data.record"/>
+                    <Record t-props="this.recordProps" t-slot-scope="data">
+                        <t t-component="this.props.KanbanRecord" t-props="this.kanbanRecordProps" record="data.record"/>
                     </Record>
                 </t>
             </div>
             <div class="popover-footer d-flex justify-content-between">
-                <div t-if="(props.displayGenericButtons and props.buttons) or templates.footer" class="p-3 pt-0 d-flex gap-1">
-                    <t t-if="props.displayGenericButtons and props.buttons">
-                        <t t-foreach="props.buttons" t-as="button" t-key="button_index">
-                            <button t-att-class="button.class" t-on-click="() => this.onClick(button)" t-esc="button.text" />
+                <div t-if="(this.props.displayGenericButtons and this.props.buttons) or this.templates.footer" class="p-3 pt-0 d-flex gap-1">
+                    <t t-if="this.props.displayGenericButtons and this.props.buttons">
+                        <t t-foreach="this.props.buttons" t-as="button" t-key="button_index">
+                            <button t-att-class="button.class" t-on-click="() => this.onClick(button)" t-out="button.text" />
                         </t>
                     </t>
-                    <t t-if="templates.footer">
-                        <t t-call="{{ templates.footer }}" t-call-context="renderingContext" />
+                    <t t-if="this.templates.footer">
+                        <t t-call="{{ this.templates.footer }}" t-call-context="this.renderingContext" />
                     </t>
                 </div>
-                <span t-if="!displayPopoverHeader" class="p-3 pt-0 mt-1 ms-auto cursor-pointer" t-on-click.stop="props.close">
+                <span t-if="!this.displayPopoverHeader" class="p-3 pt-0 mt-1 ms-auto cursor-pointer" t-on-click.stop="this.props.close">
                     <i class="fa fa-close" />
                 </span>
             </div>

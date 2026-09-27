@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Logistics IDP Guided Onboarding Hub View -->
+    <record id="view_is_logistics_idp_onboarding_form" model="ir.ui.view">
+        <field name="name">is.logistics.idp.onboarding.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form string="Logistics IDP Knowledge &amp; Control Hub" class="o_logistics_idp_onboarding_form w-100" create="false" edit="false">
+                <sheet class="w-100 o_logistics_idp_sheet_full">
+                    <!-- Header Banner -->
+                    <div class="p-4 mb-4 rounded bg-primary text-white shadow-sm w-100">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-12 col-md-9">
+                                <h2 class="fw-bold text-white mb-2">Trung tâm Xử lý Tài liệu &amp; Thẩm định Logistics (Logistics IDP Hub)</h2>
+                                <p class="mb-0 text-white-50 small">
+                                    Tự động hóa bóc tách chứng từ xuất nhập khẩu (Invoice, B/L, Packing List, Tờ khai HQ), thẩm định chính sách tuân thủ và đồng bộ vào hệ sinh thái ERP Insilos.
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-3 text-md-end">
+                                <span class="badge bg-success px-3 py-2">AI Vision IAP Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4-Step Interactive Onboarding Cards -->
+                    <h4 class="fw-bold mb-3 text-primary">Quy trình 4 Bước Tự động hóa Chứng từ Logistics IDP:</h4>
+                    <div class="row g-3 mb-4 w-100">
+                        <!-- Step 1: Inbound & Document Upload -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-primary me-2">1</span>
+                                        <h5 class="card-title fw-bold mb-0 text-primary">Tiếp nhận Chứng từ</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Thu nhận Invoice, Vận đơn, Packing List, Tờ khai từ Email, Webhook hoặc tải lên trực tiếp kéo-thả nhiều file.
+                                    </p>
+                                    <button name="%(action_logistics_documents)d" string="Document Inbox" type="action" class="btn btn-outline-primary w-100 mt-auto"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: AI Extraction & Control Tower -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-warning text-dark me-2">2</span>
+                                        <h5 class="card-title fw-bold mb-0 text-warning">Trích xuất &amp; Case</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Tự động nhận diện cấu trúc văn bản qua Insilos IAP AI Vision, liên kết bộ chứng từ theo Case và khớp số đơn mua PO.
+                                    </p>
+                                    <button name="%(action_logistics_cases)d" string="Control Tower" type="action" class="btn btn-outline-warning w-100 mt-auto text-dark"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Policy & Review Center -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-danger me-2">3</span>
+                                        <h5 class="card-title fw-bold mb-0 text-danger">Thẩm định &amp; Review</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Sàng lọc quy tắc nội bộ, kiểm tra lệch số liệu Invoice vs B/L, phát hiện cảnh báo Block để người dùng rà soát và xử lý Overrides.
+                                    </p>
+                                    <button name="%(action_logistics_review_center)d" string="Review Center" type="action" class="btn btn-outline-danger w-100 mt-auto"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Downstream Outputs & ERP -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100 border shadow-sm rounded">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-success me-2">4</span>
+                                        <h5 class="card-title fw-bold mb-0 text-success">Kết xuất Dữ liệu ERP</h5>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1">
+                                        Chuẩn bị Shipping Plan, Gate Pass nội bộ, Draft Vendor Bill và hồ sơ NSW để người dùng rà soát trước khi gửi qua kênh có thẩm quyền.
+                                    </p>
+                                    <button name="%(action_logistics_output_history)d" string="Extraction Outputs" type="action" class="btn btn-outline-success w-100 mt-auto"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Analytics & Overview Link -->
+                    <div class="card border shadow-sm rounded p-3 bg-light w-100">
+                        <div class="row g-3 align-items-center justify-content-between">
+                            <div class="col-12 col-md-8">
+                                <strong class="text-dark">Báo cáo Hiệu suất &amp; Kiểm toán:</strong>
+                                <span class="text-muted ms-2 small">OCR Performance | Mapping &amp; Validation | Policy Sources v2026.3</span>
+                            </div>
+                            <div class="col-12 col-md-4 text-md-end">
+                                <button name="%(action_logistics_ocr_performance)d" string="OCR Performance Report" type="action" class="btn btn-sm btn-outline-secondary"/>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Logistics IDP Onboarding Hub -->
+    <record id="action_is_logistics_idp_onboarding_hub" model="ir.actions.act_window">
+        <field name="name">Dashboard &amp; Onboarding</field>
+        <field name="path">logistics-onboarding</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="view_id" ref="view_is_logistics_idp_onboarding_form"/>
+    </record>
+
+    <!-- Menu Item for Logistics IDP Dashboard & Onboarding -->
+    <menuitem id="menu_logistics_onboarding_hub"
+              name="Dashboard &amp; Onboarding"
+              parent="menu_logistics_idp_root"
+              action="action_is_logistics_idp_onboarding_hub"
+              sequence="1"/>
+</odoo>

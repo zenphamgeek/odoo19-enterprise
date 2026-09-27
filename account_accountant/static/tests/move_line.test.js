@@ -14,6 +14,7 @@ import {
     waitStoreFetch,
 } from "@mail/../tests/mail_test_helpers";
 import { beforeEach, test } from "@odoo/hoot";
+import { animationFrame } from "@odoo/hoot-mock";
 import { asyncStep, onRpc, waitForSteps } from "@web/../tests/web_test_helpers";
 import { getOrigin } from "@web/core/utils/urls";
 
@@ -113,7 +114,6 @@ test("No preview on small devices", async () => {
                 offset: 0,
                 order: "",
                 auto_unfold: false,
-                opening_info: [],
                 unfold_read_specification: {
                     id: {},
                     name: {},
@@ -124,6 +124,7 @@ test("No preview on small devices", async () => {
                 groupby_read_specification: {},
                 context: {
                     ...userContext(),
+                    bin_size: true,
                     read_group_expand: true,
                     group_by: ["move_id"],
                 },
@@ -148,7 +149,6 @@ test("No preview on small devices", async () => {
                 limit: 80,
                 context: {
                     ...userContext(),
-                    bin_size: true,
                     group_by: ["move_id"],
                     default_move_id: 1,
                 },
@@ -158,7 +158,7 @@ test("No preview on small devices", async () => {
         })}`,
     ]);
     await click(":nth-child(1 of .o_data_row) :nth-child(2 of .o_data_cell)");
-    await contains(":nth-child(1 of .o_data_row) :nth-child(2 of .o_data_cell) input");
+    await contains(":nth-child(1 of .o_data_row) :nth-child(2 of .o_data_cell) .o_input");
     // weak test, no guarantee to wait long enough for the potential attachment preview to show
     await contains(".o_attachment_preview", { count: 0 }); // The preview component shouldn't be mounted for small screens even when clicking on a line without attachment
     await click(":nth-child(2 of .o_group_header)");
@@ -177,7 +177,6 @@ test("No preview on small devices", async () => {
                 limit: 80,
                 context: {
                     ...userContext(),
-                    bin_size: true,
                     group_by: ["move_id"],
                     default_move_id: 2,
                 },
@@ -187,7 +186,7 @@ test("No preview on small devices", async () => {
         })}`,
     ]);
     await click(":nth-child(4 of .o_data_row) :nth-child(2 of .o_data_cell)");
-    await contains(":nth-child(4 of .o_data_row) :nth-child(2 of .o_data_cell) input");
+    await contains(":nth-child(4 of .o_data_row) :nth-child(2 of .o_data_cell) .o_input");
     // weak test, no guarantee to wait long enough for the potential attachment preview to show
     await contains(".o_attachment_preview", { count: 0 }); // The preview component shouldn't be mounted for small screens even when clicking on a line with attachment
     await waitForSteps([], { message: "no extra rpc should be done" });
@@ -206,7 +205,6 @@ test("Fetch and preview of attachments on big devices", async () => {
                 offset: 0,
                 order: "",
                 auto_unfold: false,
-                opening_info: [],
                 unfold_read_specification: {
                     id: {},
                     name: {},
@@ -217,6 +215,7 @@ test("Fetch and preview of attachments on big devices", async () => {
                 groupby_read_specification: {},
                 context: {
                     ...userContext(),
+                    bin_size: true,
                     read_group_expand: true,
                     group_by: ["move_id"],
                 },
@@ -244,7 +243,6 @@ test("Fetch and preview of attachments on big devices", async () => {
                 limit: 80,
                 context: {
                     ...userContext(),
-                    bin_size: true,
                     group_by: ["move_id"],
                     default_move_id: 1,
                 },
@@ -273,7 +271,6 @@ test("Fetch and preview of attachments on big devices", async () => {
                 limit: 80,
                 context: {
                     ...userContext(),
-                    bin_size: true,
                     group_by: ["move_id"],
                     default_move_id: 2,
                 },
@@ -312,7 +309,6 @@ test("Fetch and preview of attachments on big devices", async () => {
                 limit: 80,
                 context: {
                     ...userContext(),
-                    bin_size: true,
                     group_by: ["move_id"],
                     default_move_id: 3,
                 },
@@ -322,7 +318,7 @@ test("Fetch and preview of attachments on big devices", async () => {
         })}`,
     ]);
     await click(":nth-child(5 of .o_data_row) :nth-child(2 of .o_data_cell)");
-    await contains(":nth-child(5 of .o_data_row) :nth-child(2 of .o_data_cell) input");
+    await contains(":nth-child(5 of .o_data_row) :nth-child(2 of .o_data_cell) .o_input");
     await contains(
         `.o_attachment_preview iframe[data-src='/web/static/lib/pdfjs/web/viewer.html?file=${encodeURIComponent(
             getOrigin() + "/web/content/2"

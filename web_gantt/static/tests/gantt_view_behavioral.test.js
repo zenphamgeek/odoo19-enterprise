@@ -14,7 +14,6 @@ import {
 } from "@odoo/hoot-dom";
 import { Deferred, advanceTime, animationFrame, mockDate, runAllTimers } from "@odoo/hoot-mock";
 import {
-    asyncStep,
     contains,
     defineParams,
     fields,
@@ -24,7 +23,6 @@ import {
     toggleMenuItem,
     toggleSearchBarMenu,
     validateSearch,
-    waitForSteps,
 } from "@web/../tests/web_test_helpers";
 import { ResUsers, Tasks, defineGanttModels } from "./gantt_mock_models";
 import {
@@ -2878,14 +2876,14 @@ test("Select a range via the range menu", async () => {
 
 test("Select range with left/rigth arrows", async () => {
     onRpc("get_gantt_data", ({ kwargs }) => {
-        asyncStep(kwargs.domain);
+        expect.step(kwargs.domain);
     });
 
     await mountGanttView({
         resModel: "tasks",
         arch: '<gantt date_start="start" date_stop="stop" default_range="month"/>',
     });
-    await waitForSteps([
+    await expect.waitForSteps([
         ["&", ["start", "<", "2019-01-31 23:00:00"], ["stop", ">", "2018-10-31 23:00:00"]],
     ]);
 
@@ -2898,7 +2896,7 @@ test("Select range with left/rigth arrows", async () => {
     await click(SELECTORS.previousButton);
     await ganttControlsChanges();
 
-    await waitForSteps([
+    await expect.waitForSteps([
         ["&", ["start", "<", "2019-03-31 23:00:00"], ["stop", ">", "2018-12-31 23:00:00"]],
     ]);
     content = getGridContent();
@@ -2906,7 +2904,7 @@ test("Select range with left/rigth arrows", async () => {
 
     await press("alt+n");
     await ganttControlsChanges();
-    await waitForSteps([
+    await expect.waitForSteps([
         ["&", ["start", "<", "2019-04-30 23:00:00"], ["stop", ">", "2019-01-31 23:00:00"]],
     ]);
     content = getGridContent();

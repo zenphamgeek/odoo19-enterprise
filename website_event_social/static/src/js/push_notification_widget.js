@@ -1,16 +1,17 @@
 import { _t } from "@web/core/l10n/translation";
 import NotificationWidget from "@social_push_notifications/js/push_notification_widget";
+import { patch } from "@web/core/utils/patch";
 
-NotificationWidget.include({
+patch(NotificationWidget.prototype, {
     /**
      * Basic override that forces the display of the popup, ignoring the expirationDate for the
      * tickets registration confirmation page.
      */
-    _askPermission: function () {
+    _askPermission() {
         var self = this;
 
         if (!document.querySelector(".o_wereg_js_confirmed")) {
-            return this._super(...arguments);
+            return super._askPermission(...arguments);
         }
 
         this._fetchPushConfiguration().then(function (config) {
@@ -27,9 +28,9 @@ NotificationWidget.include({
      * Basic override that forces the title, body and delay of the popup if we are
      * on the registration confirmed page.
      */
-    _showNotificationRequestPopup: function (popupConfig, pushConfig) {
+    _showNotificationRequestPopup(popupConfig, pushConfig) {
         if (!document.querySelector(".o_wereg_js_confirmed")) {
-            return this._super(...arguments);
+            return super._showNotificationRequestPopup(...arguments);
         }
 
         if (popupConfig.title && popupConfig.body) {
@@ -38,6 +39,7 @@ NotificationWidget.include({
             popupConfig.delay = 0;
         }
 
-        return this._super(popupConfig, pushConfig);
+        return super._showNotificationRequestPopup(popupConfig, pushConfig);
     },
 });
+

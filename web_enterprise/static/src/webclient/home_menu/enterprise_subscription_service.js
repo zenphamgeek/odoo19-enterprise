@@ -22,22 +22,17 @@ export class SubscriptionManager {
         this.orm = orm;
         this.notification = notification;
         if (session.expiration_date) {
-            // this.expirationDate = deserializeDateTime(session.expiration_date);
-            this.expirationDate = deserializeDateTime("2099-01-08 14:10:08");
-
-            // this.expirationDate = DateTime.utc().plus({ days: 7300 }); //Decoy
+            this.expirationDate = deserializeDateTime(session.expiration_date);
         } else {
             // If no date found, assume 1 month and hope for the best
-            this.expirationDate = DateTime.utc().plus({ days: 7300 }); //Decoy
-            // this.expirationDate = DateTime.utc().plus({ days: 30 });
+            this.expirationDate = DateTime.utc().plus({ days: 30 });
         }
         this.expirationReason = session.expiration_reason;
         // Hack: we need to know if there is at least one app installed (except from App and
         // Settings). We use mail to do that, as it is a dependency of almost every addon. To
         // determine whether mail is installed or not, we check for the presence of the key
         // "storeData" in session_info, as it is added in mail.
-        // this.hasInstalledApps = "storeData" in session;
-        this.hasInstalledApps = true; //Decoy
+        this.hasInstalledApps = "storeData" in session;
         // "user" or "admin"
         this.warningType = session.warning;
         this.lastRequestStatus = null;
@@ -53,8 +48,7 @@ export class SubscriptionManager {
     }
 
     get unregistered() {
-        // return ["trial", "demo", false].includes(this.expirationReason);
-        return false //decoy
+        return ["trial", "demo", false].includes(this.expirationReason);
     }
 
     hideWarning() {
@@ -72,7 +66,7 @@ export class SubscriptionManager {
             ],
         ];
         const nbUsers = await this.orm.call("res.users", "search_count", args);
-        browser.location = `https://www.odoo.com/odoo-enterprise/upgrade?num_users=${nbUsers}`;
+        browser.location = `https://insilos.com/pricing?num_users=${nbUsers}`;
     }
     /**
      * Save the registration code then triggers a ping to submit it.
@@ -103,20 +97,18 @@ export class SubscriptionManager {
             this.linkedEmail = linkedEmail;
         } else if (expirationDate !== oldDate) {
             this.lastRequestStatus = "success";
-            this.expirationDate = deserializeDateTime("2099-01-08 14:10:08");
-            // if (this.daysLeft > 30) {
-            //     this.notification.add(
-            //         _t(
-            //             "Thank you, your registration was successful! Your database is valid until %s.",
-            //             this.formattedExpirationDate
-            //         ),
-            //         { type: "success" }
-            //     );
-            // } //Decoy
+            this.expirationDate = deserializeDateTime(expirationDate);
+            if (this.daysLeft > 30) {
+                this.notification.add(
+                    _t(
+                        "Thank you, your registration was successful! Your database is valid until %s.",
+                        this.formattedExpirationDate
+                    ),
+                    { type: "success" }
+                );
+            }
         } else {
-            // this.lastRequestStatus = "error";
-            this.lastRequestStatus = "success"; //decoy
-
+            this.lastRequestStatus = "error";
         }
     }
 
@@ -127,30 +119,29 @@ export class SubscriptionManager {
             "database.expiration_date",
         ]);
         this.lastRequestStatus = "update";
-        this.expirationDate = deserializeDateTime("2099-01-08 14:10:08");
+        this.expirationDate = deserializeDateTime(expirationDateStr);
     }
 
     async sendUnlinkEmail() {
-        // const sendUnlinkInstructionsUrl = await this.orm.call("ir.config_parameter", "get_param", [
-        //     "database.already_linked_send_mail_url",
-        // ]);
-        // this.mailDeliveryStatus = "ongoing";
-        // const { result, reason } = await rpc(sendUnlinkInstructionsUrl);
-        // if (result) {
-        //     this.mailDeliveryStatus = "success";
-        // } else {
-        //     this.mailDeliveryStatus = "fail";
-        //     this.mailDeliveryStatusError = reason;
-        // } decoy
-        this.mailDeliveryStatus = "success"; //decoy
+        const sendUnlinkInstructionsUrl = await this.orm.call("ir.config_parameter", "get_param", [
+            "database.already_linked_send_mail_url",
+        ]);
+        this.mailDeliveryStatus = "ongoing";
+        const { result, reason } = await rpc(sendUnlinkInstructionsUrl);
+        if (result) {
+            this.mailDeliveryStatus = "success";
+        } else {
+            this.mailDeliveryStatus = "fail";
+            this.mailDeliveryStatusError = reason;
+        }
     }
 
-    async renew() { //check
+    async renew() {
         const enterpriseCode = await this.orm.call("ir.config_parameter", "get_param", [
             "database.enterprise_code",
         ]);
 
-        const url = "https://www.odoo.com/odoo-enterprise/renew";
+        const url = "https://insilos.com/pricing";
         const contractQueryString = enterpriseCode ? `?contract=${enterpriseCode}` : "";
         browser.location = `${url}${contractQueryString}`;
     }
@@ -166,7 +157,7 @@ export class SubscriptionManager {
                 ],
             ]),
         ]);
-        const url = "https://www.odoo.com/odoo-enterprise/upsell";
+        const url = "https://insilos.com/pricing";
         const contractQueryString = enterpriseCode ? `&contract=${enterpriseCode}` : "";
         browser.location = `${url}?num_users=${nbUsers}${contractQueryString}`;
     }
@@ -176,7 +167,7 @@ class ExpiredSubscriptionBlockUI extends Component {
     static props = {};
     // TODO the "o_blockUI" div in there seems useless (it has 0 height and thus displays and does nothing)
     static template = xml`
-        <t t-if="False">
+        <t t-if="subscription.daysLeft &lt;= 0">
             <div class="o_blockUI"/>
             <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1100" class="d-flex align-items-center justify-content-center">
                 <ExpirationPanel/>

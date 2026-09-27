@@ -8,7 +8,7 @@ import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
 import { kanbanView } from "@web/views/kanban/kanban_view";
 import { _t } from "@web/core/l10n/translation";
 import { formatMonetary } from "@web/views/fields/formatters";
-import { useState, onWillStart, onWillDestroy } from "@odoo/owl";
+import { proxy, onWillStart, onWillDestroy } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { useBankReconciliation } from "./bank_reconciliation_service";
@@ -29,7 +29,7 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
         this.orm = useService("orm");
         this.ui = useService("ui");
         this.bankReconciliation = useBankReconciliation();
-        this.globalState = useState({
+        this.globalState = proxy({
             resModel: this.env.model.config.resModel,
             context: this.env.model.config.context,
             quickCreate: {

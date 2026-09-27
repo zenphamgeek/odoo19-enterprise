@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web_enterprise.HomeMenu" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_apps')]" position="before">
+            <!-- FSM Field Operations Quick Bar -->
+            <div t-if="fsmState &amp;&amp; fsmState.isFsmActive" class="w_fsm_quick_bar mt-4 mb-2 p-3 rounded-3 border bg-body-tertiary border-light-subtle user-select-none shadow-sm">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="w_fsm_badge_icon rounded-circle p-2 bg-primary-subtle text-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"/><path d="M128,64a64,64,0,1,0,64,64A64.07,64.07,0,0,0,128,64Zm0,112a48,48,0,1,1,48-48A48.05,48.05,0,0,1,128,176Z"/></svg>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-body">Field Operations Overview</h6>
+                            <span class="text-muted small">Real-time Field Service Management Status</span>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-primary d-flex align-items-center gap-1 rounded-pill px-3" t-on-click="() => this.openFsmTasks('my')">
+                            <span>My Field Tasks</span>
+                            <span class="badge bg-white text-primary rounded-pill ms-1" t-esc="fsmState.todayTasks || 0"/>
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 rounded-pill px-3" t-on-click="() => this.openFsmTasks('unassigned')">
+                            <span>Unassigned Orders</span>
+                            <span class="badge bg-secondary text-white rounded-pill ms-1" t-esc="fsmState.unassignedOrders || 0"/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

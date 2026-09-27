@@ -3,32 +3,32 @@
     <t t-name="web_gantt.GanttRowProgressBar">
         <span
             class="o_gantt_progress_bar position-relative h-100 pe-none"
-            t-att-class="`o_gantt_group_${status || 'none'}`"
+            t-att-class="`o_gantt_group_${this.status || 'none'}`"
         >
-            <t t-if="props.progressBar.max_value gt 0">
+            <t t-if="this.props.progressBar.max_value gt 0">
                 <span
                     class="bg-opacity-25 position-absolute top-0 end-0 h-100"
-                    t-att-class="status and `bg-${status}`"
-                    t-attf-style="width:{{ Math.min(props.progressBar.ratio, 100) }}%;"
+                    t-att-class="this.status and `bg-${this.status}`"
+                    t-attf-style="width:{{ Math.min(this.props.progressBar.ratio, 100) }}%;"
                 />
                 <span
-                    t-if="show"
+                    t-if="this.show"
                     class="position-absolute top-0 end-0 h-100 d-flex align-items-center px-1"
-                    t-att-class="status ? `text-bg-${status}` : 'bg-view'"
+                    t-att-class="this.status ? `text-bg-${this.status}` : 'bg-view'"
                 >
                     <span
                         class="o_gantt_group_hours"
-                        t-esc="`${props.progressBar.value_formatted} / ${props.progressBar.max_value_formatted}`"
+                        t-out="`${this.props.progressBar.value_formatted} / ${this.props.progressBar.max_value_formatted}`"
                     />
                 </span>
             </t>
-            <t t-elif="show">
+            <t t-elif="this.show">
                 <span
                     class="o_gantt_group_hours position-absolute top-0 end-0 h-100 d-flex align-items-center px-1 pe-auto bg-view"
-                    t-attf-title="{{ props.progressBar.warning }}"
+                    t-attf-title="{{ this.props.progressBar.warning }}"
                 >
-                    <t t-esc="props.progressBar.value_formatted"/>
-                    <t t-if="props.progressBar.warning">
+                    <t t-out="this.props.progressBar.value_formatted"/>
+                    <t t-if="this.props.progressBar.warning">
                         <i class="fa fa-exclamation-triangle" />
                     </t>
                 </span>

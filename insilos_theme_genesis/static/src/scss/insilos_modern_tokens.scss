@@ -1,0 +1,95 @@
+/* ==========================================================================
+   Insilos Modern Design Tokens (Scoped for Settings & Apps Restructuring)
+   ========================================================================== */
+
+:root {
+  /* Surface & Backgrounds */
+  --insilos-bg-canvas: #f8fafc;
+  --insilos-bg-surface: #ffffff;
+  --insilos-bg-card: #ffffff;
+  --insilos-bg-hover: #f1f5f9;
+  --insilos-bg-active: #e2e8f0;
+  --insilos-bg-subtle: #f8fafc;
+  --insilos-bg-header: #ffffff;
+
+  /* Borders */
+  --insilos-border-subtle: rgba(226, 232, 240, 0.85);
+  --insilos-border-medium: #cbd5e1;
+  --insilos-border-strong: #94a3b8;
+  --insilos-border-focus: #3b82f6;
+
+  /* Typography */
+  --insilos-text-primary: #0f172a;
+  --insilos-text-secondary: #475569;
+  --insilos-text-tertiary: #94a3b8;
+  --insilos-text-muted: #64748b;
+
+  /* Brand Accents */
+  --insilos-primary: #2563eb;
+  --insilos-primary-hover: #1d4ed8;
+  --insilos-primary-subtle: rgba(37, 99, 235, 0.08);
+  --insilos-primary-border: rgba(37, 99, 235, 0.25);
+
+  /* Status Colors */
+  --insilos-success: #10b981;
+  --insilos-success-bg: #ecfdf5;
+  --insilos-success-border: rgba(16, 185, 129, 0.25);
+  --insilos-warning: #f59e0b;
+  --insilos-warning-bg: #fffbeb;
+  --insilos-danger: #ef4444;
+  --insilos-danger-bg: #fef2f2;
+
+  /* Shadows */
+  --insilos-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  --insilos-shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  --insilos-shadow-hover: 0 10px 20px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --insilos-shadow-pill: 0 2px 6px rgba(37, 99, 235, 0.15);
+
+  /* Radii */
+  --insilos-radius-sm: 6px;
+  --insilos-radius-md: 10px;
+  --insilos-radius-lg: 14px;
+  --insilos-radius-xl: 18px;
+  --insilos-radius-full: 9999px;
+
+  /* Transitions */
+  --insilos-transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  --insilos-transition-normal: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark Mode Overrides (supports Odoo dark mode) */
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
+  --insilos-bg-canvas: #0b0f19;
+  --insilos-bg-surface: #111827;
+  --insilos-bg-card: #141e33;
+  --insilos-bg-hover: #1e293b;
+  --insilos-bg-active: #334155;
+  --insilos-bg-subtle: #0f172a;
+  --insilos-bg-header: #111827;
+
+  --insilos-border-subtle: rgba(255, 255, 255, 0.09);
+  --insilos-border-medium: rgba(255, 255, 255, 0.16);
+  --insilos-border-strong: rgba(255, 255, 255, 0.28);
+  --insilos-border-focus: #60a5fa;
+
+  --insilos-text-primary: #f8fafc;
+  --insilos-text-secondary: #94a3b8;
+  --insilos-text-tertiary: #64748b;
+  --insilos-text-muted: #94a3b8;
+
+  --insilos-primary: #3b82f6;
+  --insilos-primary-hover: #60a5fa;
+  --insilos-primary-subtle: rgba(59, 130, 246, 0.14);
+  --insilos-primary-border: rgba(96, 165, 250, 0.3);
+
+  --insilos-success: #34d399;
+  --insilos-success-bg: rgba(52, 211, 153, 0.12);
+  --insilos-success-border: rgba(52, 211, 153, 0.3);
+
+  --insilos-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --insilos-shadow-card: 0 2px 5px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --insilos-shadow-hover: 0 12px 24px -4px rgba(0, 0, 0, 0.45);
+}

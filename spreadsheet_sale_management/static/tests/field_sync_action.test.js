@@ -3,7 +3,7 @@ import { click } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
 import { defineModels, onRpc } from "@web/../tests/web_test_helpers";
-import { x2ManyCommands } from "@web/core/orm_service";
+import { x2ManyCommands } from "@web/core/orm_plugin";
 
 import { mailModels } from "@mail/../tests/mail_test_helpers";
 
@@ -168,7 +168,7 @@ test("hover field sync highlights matching list formulas", async () => {
     hoverStore.hover({ col: 1, row: 0 });
     expect(highlightStore.highlights).toHaveLength(1);
     expect(highlightStore.highlights[0].range.zone).toEqual(toZone("A1"));
-    expect(highlightStore.highlights[0].color).toBe("#875A7B");
+    expect(highlightStore.highlights[0].color).toBe("#004455");
     expect(highlightStore.highlights[0].sheetId).toBe(model.getters.getActiveSheetId());
 
     // with computed list args
@@ -180,6 +180,6 @@ test("hover field sync highlights matching list formulas", async () => {
     hoverStore.hover({ col: 1, row: 0 });
     expect(highlightStore.highlights).toHaveLength(1);
     expect(highlightStore.highlights[0].range.zone).toEqual(toZone("A1"));
-    expect(highlightStore.highlights[0].color).toBe("#875A7B");
+    expect(highlightStore.highlights[0].color).toBe("#004455");
     expect(highlightStore.highlights[0].sheetId).toBe(model.getters.getActiveSheetId());
 });

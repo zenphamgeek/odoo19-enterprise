@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root App Menu -->
+    <menuitem id="menu_hs_knowledge_root"
+              name="HS &amp; Customs"
+              web_icon="insilos_hs_sync,static/description/icon.svg"
+              sequence="85"
+              groups="group_hs_sync_user"/>
+
+    <!-- 0. Onboarding & Hub -->
+    <menuitem id="menu_hs_onboarding_hub_item"
+              name="Dashboard &amp; Onboarding"
+              parent="menu_hs_knowledge_root"
+              action="action_is_hs_onboarding_hub"
+              sequence="1"/>
+
+    <!-- Operations Submenu -->
+    <menuitem id="menu_hs_knowledge_operations"
+              name="Operations"
+              parent="menu_hs_knowledge_root"
+              sequence="10"/>
+
+    <menuitem id="menu_is_customs_ruling"
+              name="Advance Classification Rulings"
+              parent="menu_hs_knowledge_operations"
+              action="action_is_customs_ruling"
+              sequence="10"/>
+
+    <menuitem id="menu_is_hs_tariff"
+              name="HS Tariff Schedule"
+              parent="menu_hs_knowledge_operations"
+              action="action_is_hs_tariff"
+              sequence="20"/>
+
+    <!-- Configuration & Audit Submenu -->
+    <menuitem id="menu_hs_knowledge_config"
+              name="Configuration &amp; Audit"
+              parent="menu_hs_knowledge_root"
+              sequence="90"
+              groups="group_hs_sync_manager"/>
+
+    <menuitem id="menu_is_hs_sync_log"
+              name="Sync Audit Logs"
+              parent="menu_hs_knowledge_config"
+              action="action_is_hs_sync_log"
+              sequence="10"/>
+</odoo>

@@ -5,7 +5,7 @@
     'name': 'Helpdesk: Help Center',
     'category': 'Services/Helpdesk',
     'sequence': 58,
-    'summary': 'Help Center for helpdesk based on Odoo Forum',
+    'summary': 'Help Center for helpdesk based on Insilos Forum',
     'depends': [
         'website_forum',
         'website_helpdesk',

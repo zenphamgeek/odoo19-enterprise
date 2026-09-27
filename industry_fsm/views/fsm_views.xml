@@ -193,9 +193,9 @@
     <record id="project_task_view_kanban" model="ir.ui.view">
         <field name="name">project.task.kanban.fsm.nonprimary</field>
         <field name="model">project.task</field>
-        <field name="inherit_id" ref="project_enterprise.view_task_kanban_inherited"/>
+        <field name="inherit_id" ref="project.view_task_card"/>
         <field name="arch" type="xml">
-            <xpath expr="//kanban" position="inside">
+            <xpath expr="//card" position="inside">
                 <field name="is_fsm"/>
                 <field name="fsm_done" />
             </xpath>
@@ -1705,16 +1705,9 @@
             <xpath expr="//kanban" position="attributes">
                 <attribute name="on_create">industry_fsm.open_create_project_fsm</attribute>
             </xpath>
-            <xpath expr='//a[@name="action_view_tasks"]' position='attributes'>
-                <attribute name="name">%(industry_fsm.project_tasks_action_fsm)d</attribute>
-                <attribute name="type">action</attribute>
-            </xpath>
-            <xpath expr="//a[@name='action_view_tasks'][hasclass('o_project_kanban_box')]" position='attributes'>
-                <attribute name="name">%(industry_fsm.project_tasks_action_fsm)d</attribute>
-                <attribute name="type">action</attribute>
-            </xpath>
             <xpath expr="//kanban" position="attributes">
-                <attribute name="action"></attribute>
+                <attribute name="action">%(industry_fsm.project_tasks_action_fsm)d</attribute>
+                <attribute name="type">action</attribute>
             </xpath>
         </field>
     </record>

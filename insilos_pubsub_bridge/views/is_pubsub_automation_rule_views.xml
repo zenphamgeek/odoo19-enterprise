@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pubsub_automation_rule_list" model="ir.ui.view">
+        <field name="name">is.pubsub.automation.rule.list</field>
+        <field name="model">is.pubsub.automation.rule</field>
+        <field name="arch" type="xml">
+            <list string="Pub/Sub Automation Rules &amp; Call Forwarding" decoration-success="state == 'active'" decoration-muted="state == 'disabled'" decoration-warning="state == 'draft'">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="event_type_filter"/>
+                <field name="sender_filter"/>
+                <field name="keyword_filter"/>
+                <field name="action_type"/>
+                <field name="target_model"/>
+                <field name="call_forward_enabled" widget="boolean_toggle"/>
+                <field name="telegram_alert_enabled" widget="boolean_toggle"/>
+                <field name="email_notify_enabled" widget="boolean_toggle"/>
+                <field name="execution_count" string="Runs"/>
+                <field name="success_count" string="OK"/>
+                <field name="failed_count" string="Fail"/>
+                <field name="last_executed_at" string="Last Run"/>
+                <field name="state" widget="badge" decoration-success="state == 'active'" decoration-muted="state == 'disabled'" decoration-warning="state == 'draft'"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pubsub_automation_rule_kanban" model="ir.ui.view">
+        <field name="name">is.pubsub.automation.rule.kanban</field>
+        <field name="model">is.pubsub.automation.rule</field>
+        <field name="arch" type="xml">
+            <kanban><field name="state"/><templates><t t-name="card"><field name="name"/><field name="action_type"/><field name="state" widget="badge"/></t></templates></kanban>
+        </field>
+    </record>
+
+    <record id="view_pubsub_automation_rule_form" model="ir.ui.view">
+        <field name="name">is.pubsub.automation.rule.form</field>
+        <field name="model">is.pubsub.automation.rule</field>
+        <field name="arch" type="xml">
+            <form string="Automation Rule &amp; Call Forwarding">
+                <header>
+                    <button name="action_test_rule" type="object" string="Test Execute Rule" class="btn-primary"/>
+                    <button name="action_activate" type="object" string="Activate" class="btn-success" invisible="state == 'active'"/>
+                    <button name="action_disable" type="object" string="Disable" class="btn-secondary" invisible="state == 'disabled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,disabled"/>
+                </header>
+                <sheet>
+                    <div class="w_title">
+                        <label for="name" string="Rule Name"/>
+                        <h1><field name="name" placeholder="e.g. Forward Quotation Inquiries to Logistics Agent"/></h1>
+                    </div>
+                    <group>
+                        <group string="Trigger Filter Criteria">
+                            <field name="event_type_filter"/>
+                            <field name="sender_filter" placeholder="e.g. @hapag-lloyd.com, partner.*"/>
+                            <field name="keyword_filter" placeholder="e.g. Toluene, Bill of Lading, RFQ"/>
+                            <field name="active"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group string="Action Mode &amp; Target Model">
+                            <field name="action_type"/>
+                            <field name="target_model" invisible="action_type not in ('route_model', 'multi_action')"/>
+                            <field name="max_retries"/>
+                            <field name="retry_delay_sec" invisible="max_retries == 0"/>
+                        </group>
+                    </group>
+                    <group string="Execution Statistics">
+                        <group>
+                            <field name="execution_count"/>
+                            <field name="success_count"/>
+                        </group>
+                        <group>
+                            <field name="failed_count"/>
+                            <field name="last_executed_at"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Call Forwarding (Webhook Push)" name="call_forward">
+                            <group>
+                                <group>
+                                    <field name="call_forward_enabled"/>
+                                    <field name="forward_url" invisible="not call_forward_enabled" placeholder="https://api.partner.com/v1/webhook/events"/>
+                                </group>
+                                <group invisible="not call_forward_enabled">
+                                    <field name="forward_http_method"/>
+                                    <field name="forward_auth_header" placeholder="Bearer eyJ... or API key"/>
+                                    <field name="forward_timeout_sec"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert" invisible="not call_forward_enabled">
+                                <strong>Call Forward Payload:</strong> Automatically packages the verified JSON event envelope, extracted AI entities, and ERP record reference to your target destination URL.
+                            </div>
+                        </page>
+                        <page string="Telegram Instant Alert" name="telegram">
+                            <group>
+                                <group>
+                                    <field name="telegram_alert_enabled"/>
+                                    <field name="telegram_chat_id" invisible="not telegram_alert_enabled"/>
+                                </group>
+                                <group invisible="not telegram_alert_enabled">
+                                    <field name="telegram_bot_token" password="True"/>
+                                </group>
+                            </group>
+                            <group string="Template (HTML)" invisible="not telegram_alert_enabled">
+                                <field name="telegram_message_template" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Email Notification" name="email_notify">
+                            <group>
+                                <group>
+                                    <field name="email_notify_enabled"/>
+                                    <field name="email_notify_to" invisible="not email_notify_enabled" placeholder="admin@company.com, alerts@team.com"/>
+                                </group>
+                                <group invisible="not email_notify_enabled">
+                                    <field name="email_notify_subject_template"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert" invisible="not email_notify_enabled">
+                                <strong>Email Alert:</strong> Sends a rich HTML email to configured recipients with event details, AI summary, and sender information.
+                            </div>
+                        </page>
+                        <page string="Delivery &amp; Forwarding History" name="history">
+                            <field name="forward_log_ids" readonly="1">
+                                <list string="Forwarding Logs" decoration-success="state == 'success'" decoration-danger="state == 'failed'">
+                                    <field name="create_date" string="Forward Time"/>
+                                    <field name="event_log_id"/>
+                                    <field name="forward_url"/>
+                                    <field name="http_status"/>
+                                    <field name="latency_ms" string="Latency (ms)"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pubsub_automation_rule_search" model="ir.ui.view">
+        <field name="name">is.pubsub.automation.rule.search</field>
+        <field name="model">is.pubsub.automation.rule</field>
+        <field name="arch" type="xml">
+            <search string="Search Automation Rules">
+                <field name="name"/>
+                <field name="event_type_filter"/>
+                <field name="sender_filter"/>
+                <field name="keyword_filter"/>
+                <filter string="Active Rules" name="active_rules" domain="[('state', '=', 'active')]"/>
+                <filter string="Draft Rules" name="draft_rules" domain="[('state', '=', 'draft')]"/>
+                <filter string="With Call Forward" name="with_forward" domain="[('call_forward_enabled', '=', True)]"/>
+                <filter string="With Telegram" name="with_telegram" domain="[('telegram_alert_enabled', '=', True)]"/>
+                <separator/>
+                <group name="group_by">
+                    <filter string="Action Type" name="group_action" context="{'group_by': 'action_type'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Event Type" name="group_event" context="{'group_by': 'event_type_filter'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pubsub_automation_rule" model="ir.actions.act_window">
+        <field name="name">Automation Rules &amp; Call Forwarding</field>
+        <field name="res_model">is.pubsub.automation.rule</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Pub/Sub automation &amp; call forwarding rule.
+            </p>
+            <p>
+                Automatically dispatch inbound emails to CRM Leads, Purchase Orders, HSE SDS, forward payloads to partner APIs, send email notifications, or trigger Telegram alerts.
+            </p>
+        </field>
+    </record>
+</odoo>

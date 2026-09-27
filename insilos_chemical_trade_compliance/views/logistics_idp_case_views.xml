@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_logistics_case_form_inherit_chemical" model="ir.ui.view">
+        <field name="name">logistics.idp.case.form.inherit.chemical</field>
+        <field name="model">logistics.idp.case</field>
+        <field name="inherit_id" ref="insilos_logistics_idp.view_logistics_case_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_generate_chemical_dossier_from_idp" string="Create NSW Chemical Dossier" type="object" class="btn-primary" icon="fa-flask"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_generate_chemical_dossier_from_idp" type="object" class="w_stat_button" icon="fa-flask">
+                    <field name="chemical_dossier_count" widget="statinfo" string="NSW Dossiers"/>
+                </button>
+            </xpath>
+            <xpath expr="//group//field[@name='po_reference']" position="after">
+                <field name="chemical_dossier_id" readonly="1" invisible="not chemical_dossier_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

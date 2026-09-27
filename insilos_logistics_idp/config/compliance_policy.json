@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "candidate_acceptance_dossier_schema": {
+    "schema_id": "insilos.trade_compliance.candidate_acceptance_dossier",
+    "schema_version": "1.0.0",
+    "canonicalization": "UTF-8 JSON; sorted keys; compact separators; SHA-256",
+    "eligible_source_tiers": ["authoritative_tier_1", "authoritative_tier_2", "approved_provider_tier_3"],
+    "required_fields": [
+      "citation", "captured_bytes", "captured_sha256", "publication_date", "effective_date",
+      "recorded_at_utc", "jurisdiction", "document_identity", "license", "retention",
+      "content_owner", "independent_oracle_reviewer", "expected_boundary_outcomes", "approval_statuses"
+    ],
+    "field_constraints": {
+      "captured_bytes": "non_negative_integer",
+      "captured_sha256": "lowercase_sha256_hex",
+      "publication_date": "ISO_8601_date",
+      "effective_date": "ISO_8601_date",
+      "recorded_at_utc": "RFC3339_UTC",
+      "document_identity": "object_with_document_id_title_and_version",
+      "expected_boundary_outcomes": "non_empty_array_from_independent_oracle",
+      "approval_statuses": "object_with_source_content_oracle_and_activation_status"
+    },
+    "null_or_pending_verdict": "REVIEW",
+    "null_or_pending_blocker": "BLOCKED_APPROVED_POLICY_DATASET",
+    "activation_requires_complete_dossier": true,
+    "activation_requires_distinct_maker_checker": true,
+    "canonical_policy_projection": {
+      "schema_id": "insilos.trade_compliance.canonical_policy_projection",
+      "schema_version": "1.0.0",
+      "encoding": "UTF-8",
+      "json": "sorted_keys_compact_separators",
+      "digest": "SHA-256",
+      "included": ["immutable_source_chain_and_hashes", "policy_identity_version_jurisdiction", "effective_dates", "reviewed_article_citations", "rules_and_outcomes", "unsupported_day_10_review", "fail_safe_semantics"],
+      "excluded": ["policy_and_artifact_hashes", "approval_and_signature_metadata", "oracle_expected_outcomes_and_reviewer_signatures", "mutable_review_checklists"]
+    }
+  },
+  "authority_taxonomy": {
+    "demo": {"legal_authority": false},
+    "customer_reference": {"legal_authority": false},
+    "early_warning_tier_4": {"legal_authority": false},
+    "authoritative_tier_1": {"legal_authority": true},
+    "authoritative_tier_2": {"legal_authority": true},
+    "approved_provider_tier_3": {"legal_authority": true}
+  },
+  "compliance_context_schema": {
+    "schema_version": "1.0",
+    "fields": ["who", "what", "where", "why", "value", "currency", "uom", "preference", "procedure", "transport", "when", "evidence"],
+    "critical_fields": ["who", "when", "evidence", "transaction_time", "effective_time", "recorded_time"],
+    "provenance_fields": ["document_id", "field", "source_hash", "extraction_run_id", "authority"],
+    "missing_or_unknown_verdict": "REVIEW",
+    "canonicalization": "UTF-8 JSON; sorted keys; compact separators; SHA-256"
+  },
+  "source_classes": {
+    "restricted_authenticated_product_reference": {
+      "compliance_authority": false,
+      "automated_ingestion": false,
+      "raw_release_allowed": false,
+      "synthetic_derivation_allowed": true,
+      "required_metadata": [
+        "ownership_authorization_reference",
+        "capture_actor",
+        "capture_time",
+        "source_locator",
+        "content_sha256",
+        "retention_policy",
+        "approver"
+      ]
+    },
+    "external_api_candidate": {
+      "compliance_authority": false,
+      "default_source_tier": "early_warning_tier_4",
+      "provider_tier_selection_allowed": false,
+      "verification": "unverified",
+      "activation_allowed": false,
+      "missing_or_invalid_metadata_verdict": "REVIEW",
+      "required_metadata": [
+        "provider_id",
+        "endpoint_config_reference",
+        "source_key",
+        "source_version",
+        "retrieved_at_utc",
+        "response_sha256",
+        "content_sha256",
+        "request_fingerprint",
+        "citation_clean_url",
+        "license_terms",
+        "retention_terms",
+        "content_owner",
+        "independent_oracle_status"
+      ],
+      "provider_registry": "closed_allowlist",
+      "endpoint_policy": "fixed_config_reference_only_no_raw_arbitrary_url",
+      "egress_policy": "sidecar_or_IAP_preferred",
+      "network_denied": ["private", "loopback", "link_local", "dns_rebinding", "redirect_without_full_revalidation"],
+      "required_limits": ["connect_timeout", "read_timeout", "maximum_body_bytes", "allowed_content_types"],
+      "credential_policy": "config_or_IAP_only_never_payload_or_log",
+      "idempotency_key": "request_fingerprint",
+      "retry_policy": "bounded_with_dead_letter",
+      "hash_policy": "immutable_raw_and_normalized_sha256",
+      "approval_policy": "no_auto_activation_four_eyes"
+    }
+  },
+  "provider_registry": {
+    "traluat_documents": {
+      "base_endpoint": "https://traluat.com/api/documents",
+      "allowed_methods": ["GET"],
+      "source_tier": "early_warning_tier_4",
+      "verification": "pending_independent_verification",
+      "license_status": "pending",
+      "content_owner_status": "pending",
+      "legal_authority": false,
+      "auto_activation": false,
+      "connect_timeout_seconds": 10,
+      "read_timeout_seconds": 10,
+      "maximum_body_bytes": 2097152,
+      "allowed_content_types": ["application/json", "application/problem+json", "application/*+json"],
+      "max_pages": 10,
+      "max_results": 200,
+      "max_attempts": 3,
+      "dead_letter_on_exhaustion": true
+    }
+  },
+  "verdicts": ["PASS", "REVIEW", "BLOCK", "NOT_APPLICABLE"],
+  "gate_policy": {
+    "PARTIAL_VERIFY": {
+      "derived_gate_status": "PASS_WITH_REVIEW",
+      "allowed_gates": ["discovery", "candidate_ingestion", "release_reporting"],
+      "raw_status_preserved": true,
+      "legal_verdict": "REVIEW",
+      "content_status": "unverified",
+      "activation_allowed": false,
+      "activation_blocker": "BLOCKED_APPROVED_POLICY_DATASET",
+      "forbidden_activation_tiers": ["early_warning_tier_4", "customer_reference"],
+      "approval_policy": "four_eyes_distinct_maker_checker_no_auto_activation"
+    }
+  },
+  "required_context": ["source_system", "source_key", "source_version", "effective_date", "imported_at", "provenance"],
+  "missing_context_verdict": "REVIEW",
+  "retry_contract": {
+    "identity_fields": ["source_system", "source_key", "source_version"],
+    "duplicate_result": "existing_snapshot",
+    "exhausted_result": "REVIEW",
+    "max_attempts": 3,
+    "backoff_minutes": [1, 2, 4],
+    "observable_fields": ["state", "attempt_count", "last_attempt_at", "next_attempt_at", "last_error"]
+  },
+  "audit_required_fields": ["provenance", "imported_at", "source_version"],
+  "onboarding_required_fields": ["profile_code", "source_system", "adapter_type"],
+  "erp_adapter": {
+    "type": "generic_inbound",
+    "operations": ["import"],
+    "required_fields": ["source_key", "source_version", "effective_date", "provenance"]
+  },
+  "mes_mode": "inbound_read_only",
+  "mes_forbidden_operations": ["author", "mutate", "write_back", "plan", "execute"]
+}

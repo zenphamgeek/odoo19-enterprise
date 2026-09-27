@@ -510,12 +510,12 @@ class AccountMove(models.Model):
         if still_missing:
             if len(still_missing) > 1:
                 raise UserError(_(
-                    'We can not post these vendor bills in Odoo because the '
+                    'We can not post these vendor bills in Insilos because the '
                     'ARCA verification fail: %s\nPlease verify in ARCA '
                     'manually and review the bill chatter for more information',
                     '\n * '.join(still_missing.mapped('display_name'))))
             raise UserError(_(
-                'We can not post this vendor bill in Odoo because the ARCA '
+                'We can not post this vendor bill in Insilos because the ARCA '
                 'verification fail: %s\nPlease verify in ARCA manually and '
                 'review the bill chatter for more information',
                 still_missing.display_name))

@@ -5,8 +5,8 @@
         <field name="model">pos.payment.method</field>
         <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='use_payment_terminal']" position="after">
-                <button name="%(pos_iot_six.action_add_six_terminal)d" type="action" string="Setup Six Terminal" class="btn-primary text-nowrap" invisible="use_payment_terminal != 'six_iot'"/>
+            <xpath expr="//field[@name='payment_provider']" position="after">
+                <button name="%(pos_iot_six.action_add_six_terminal)d" type="action" string="Setup Six Terminal" class="btn-primary text-nowrap" invisible="payment_provider != 'six_iot'"/>
             </xpath>
         </field>
     </record>

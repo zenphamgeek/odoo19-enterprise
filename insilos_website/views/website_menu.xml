@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Tên website mặc định của upstream là "My Website", và nó đi thẳng vào
+         `<title>` mọi trang: "Insilos Platform — ... | My Website". Trên
+         insilos.com đó vừa là dấu vết cấu hình bỏ quên, vừa là dấu vết nhận
+         diện: chuỗi ấy là mặc định của Insilos, không phải của ta.
+         `noupdate="1"` nên chỉ áp lúc cài; ai đổi tên sau đó vẫn giữ nguyên. -->
+    <record id="base.default_website" model="website">
+        <field name="name">Insilos</field>
+    </record>
+
+    <record id="menu_insilos_platform" model="website.menu">
+        <field name="name">Platform</field><field name="url">/platform</field><field name="parent_id" ref="website.main_menu"/><field name="sequence">10</field>
+    </record>
+    <record id="menu_insilos_solutions" model="website.menu">
+        <field name="name">Solutions</field><field name="url">/solutions</field><field name="parent_id" ref="website.main_menu"/><field name="sequence">20</field>
+    </record>
+    <record id="menu_insilos_industries" model="website.menu">
+        <field name="name">Industries</field><field name="url">/industries</field><field name="parent_id" ref="website.main_menu"/><field name="sequence">30</field>
+    </record>
+    <record id="menu_insilos_resources" model="website.menu">
+        <field name="name">Resources</field><field name="url">/resources</field><field name="parent_id" ref="website.main_menu"/><field name="sequence">40</field>
+    </record>
+    <record id="menu_insilos_pricing" model="website.menu">
+        <field name="name">Pricing</field><field name="url">/pricing</field><field name="parent_id" ref="website.main_menu"/><field name="sequence">45</field>
+    </record>
+    <record id="menu_insilos_about" model="website.menu">
+        <field name="name">Company</field><field name="url">/about</field><field name="parent_id" ref="website.main_menu"/><field name="sequence">50</field>
+    </record>
+    <record id="menu_insilos_demo" model="website.menu">
+        <field name="name">Request a Demo</field><field name="url">/request-demo</field><field name="parent_id" ref="website.main_menu"/><field name="sequence">60</field>
+    </record>
+
+    <!-- website.page cho các trang tĩnh: cần thiết để Website Designer gắn
+         branding và mở khoá snippet (xem .trae/skills/insilos-website-designer).
+         Route Python vẫn phục vụ URL; page chỉ đóng vai main_object. -->
+    <record id="page_platform" model="website.page">
+        <field name="url">/platform</field><field name="view_id" ref="insilos_website.insilos_platform_page"/><field name="is_published">True</field>
+    </record>
+    <record id="page_solutions" model="website.page">
+        <field name="url">/solutions</field><field name="view_id" ref="insilos_website.insilos_solutions_page"/><field name="is_published">True</field>
+    </record>
+    <record id="page_industries" model="website.page">
+        <field name="url">/industries</field><field name="view_id" ref="insilos_website.insilos_industries_page"/><field name="is_published">True</field>
+    </record>
+    <record id="page_resources" model="website.page">
+        <field name="url">/resources</field><field name="view_id" ref="insilos_website.insilos_resources_page"/><field name="is_published">True</field>
+    </record>
+    <record id="page_pricing" model="website.page">
+        <field name="url">/pricing</field><field name="view_id" ref="insilos_website.insilos_pricing_page"/><field name="is_published">True</field>
+    </record>
+    <record id="page_about" model="website.page">
+        <field name="url">/about</field><field name="view_id" ref="insilos_website.insilos_about_page"/><field name="is_published">True</field>
+    </record>
+</odoo>

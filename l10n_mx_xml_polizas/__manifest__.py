@@ -2,12 +2,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    "name": "Odoo Mexican XML Polizas Export",
+    "name": "Mexican XML Polizas Export",
     "summary": "XML Export of the Journal Entries for the Mexican Tax Authorities for a compulsory audit.",
     "version": "0.1",
-    "author": "Odoo",
+    "author": "Insilos",
     "category": "Accounting/Localizations/Reporting",
-    "website": "http://www.odoo.com/",
+    "website": "https://insilos.com",
     "license": "OEEL-1",
     "depends": [
         "l10n_mx_reports",

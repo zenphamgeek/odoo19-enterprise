@@ -5,7 +5,7 @@
         <field name="model">pos.payment.method</field>
         <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
         <field name="arch" type="xml">
-            <field name="split_transactions" position="after">
+            <field name="config_ids" position="after">
                 <field name="is_delivery_payment"/>
             </field>
             <field name="payment_method_type" position="after">

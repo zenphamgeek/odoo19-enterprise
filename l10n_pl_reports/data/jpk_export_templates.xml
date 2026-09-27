@@ -6,7 +6,7 @@
                 <KodFormularza kodSystemowy="JPK_V7M (2)" wersjaSchemy="1-0E">JPK_VAT</KodFormularza>
                 <WariantFormularza t-out="2"/>
                 <DataWytworzeniaJPK t-out="date_now"/>
-                <NazwaSystemu>Odoo</NazwaSystemu>
+                <NazwaSystemu>Insilos</NazwaSystemu>
                 <CelZlozenia poz="P_7" t-out="2 if options.get('l10n_pl_is_amendment') else 1"/>
                 <KodUrzedu t-out="company.l10n_pl_reports_tax_office_id.code"/>
                 <Rok t-out="date_year"/>
@@ -103,7 +103,7 @@
                           t-out="options.get('l10n_pl_repayment_future_tax_type')"/>
                     <P_62 t-if="agg_values.get('53') and not float_is_zero(agg_values.get('53', 0) - agg_values.get('54', 0), 0)" t-out="float_repr(agg_values.get('53', 0) - agg_values.get('54', 0), 0)"/> <!--
                     <P_63 />
-                    <P_64 /> Margin-based not supported by Odoo  -->
+                    <P_64 /> Margin-based not supported by Insilos  -->
                     <P_65 t-if="agg_values.get('65', 0)" t-out="1"/>
                     <P_66 t-if="any(val.get('l10n_pl_vat_tt_d', 0) != 0 for val in list_values)"
                           t-out="1"/> <!-- TODO fill P_660 with 1 when paid electronically, EDI -->
@@ -150,8 +150,8 @@
                     <TP t-if="i.get('l10n_pl_links_with_customer')" t-out="1"/> <!-- link customer supplier -->
                     <TT_WNT t-if="i.get('l10n_pl_vat_tt_wnt', 0) != 0" t-out="1"/> <!-- Intra-Com Acquisition goods second VAT payer Triangular -->
                     <TT_D t-if="i.get('l10n_pl_vat_tt_d', 0) != 0" t-out="1"/> <!-- Intra-Com Supply of goods second VAT payer Triangular --> <!--
-                    <MR_T/> Margin-based not supported by Odoo
-                    <MR_UZ/> Margin-based not supported by Odoo -->
+                    <MR_T/> Margin-based not supported by Insilos
+                    <MR_UZ/> Margin-based not supported by Insilos -->
                     <I_42 t-if="i.get('l10n_pl_vat_i_42', 0) != 0" t-out="1"/> <!-- https://www.asd-int.com/en/what-is-a-customs-regime-the-example-of-the-customs-regime-42/
                     So goods from Out Of Europe, imported in a EU country, but sold to a customer from another country -->
                     <I_63 t-if="i.get('l10n_pl_vat_i_63', 0) != 0" t-out="1"/> <!-- https://poradnikprzedsiebiorcy.pl/-procedura-celna-63-a-nowe-oznaczenie-w-pliku-jpk-v7-przyklady-cz-i
@@ -191,7 +191,7 @@
                     <K_34 t-if="'34' in i.get('tax_values')" t-out="float_repr(i.get('tax_values').get('34'), 2)"/>
                     <K_35 t-if="'35' in i.get('tax_values')" t-out="float_repr(i.get('tax_values').get('35'), 2)"/>
                     <K_36 t-if="'36' in i.get('tax_values')" t-out="float_repr(i.get('tax_values').get('36'), 2)"/> <!--
-                    <SprzedazVAT_Marza/> Margin-based not supported by Odoo -->
+                    <SprzedazVAT_Marza/> Margin-based not supported by Insilos -->
                     </t>
                 </SprzedazWiersz>
                 <SprzedazCtrl>
@@ -220,7 +220,7 @@
                     <K_45 t-if="'45' in b.get('tax_values')" t-out="float_repr(b.get('tax_values').get('45'), 2)"/>
                     <K_46 t-if="'46' in b.get('tax_values')" t-out="float_repr(b.get('tax_values').get('46'), 2)"/>
                     <K_47 t-if="'47' in b.get('tax_values')" t-out="float_repr(b.get('tax_values').get('47'), 2)"/> <!--
-                    <ZakupVAT_Marza /> Margin-based not supported by Odoo -->
+                    <ZakupVAT_Marza /> Margin-based not supported by Insilos -->
                 </ZakupWiersz>
                 <ZakupCtrl>
                     <LiczbaWierszyZakupow t-out="len(input_tax_moves)"/>

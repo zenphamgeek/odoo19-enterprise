@@ -1,11 +1,11 @@
-import { Chatter } from "@mail/chatter/web_portal/chatter";
+import { Chatter } from "@mail/chatter/web_portal_project/chatter";
 import "@mail/chatter/web/chatter_patch";
 
 import { Component } from "@odoo/owl";
 
 export class ChatterContainer extends Chatter {
     static template = "web_studio.ChatterContainer";
-    static props = [...Chatter.props, "studioXpath?"];
+    static props = { ...(Chatter.props || {}), studioXpath: { type: String, optional: true } };
 
     onClick(ev) {
         this.env.config.onNodeClicked(this.props.studioXpath);

@@ -4,7 +4,7 @@
     'name': 'Kenya - Payroll',
     'countries': ['ke'],
     'category': 'Human Resources/Payroll',
-    'depends': ['hr_payroll', 'hr_work_entry_holidays', 'hr_payroll_holidays'],
+    'depends': ['hr_payroll', 'hr_payroll_holidays'],
     'auto_install': True,
     'version': '1.0',
     'description': """

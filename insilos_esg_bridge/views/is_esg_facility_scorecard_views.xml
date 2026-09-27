@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- List View: Facility ESG Scorecard -->
+        <record id="view_is_esg_facility_scorecard_tree" model="ir.ui.view">
+            <field name="name">is.esg.facility.scorecard.list</field>
+            <field name="model">is.esg.facility.scorecard</field>
+            <field name="arch" type="xml">
+                <list string="Industrial Facility ESG Scorecards" decoration-success="sustainability_grade in ('a_plus', 'a')" decoration-warning="sustainability_grade == 'b'" decoration-danger="sustainability_grade == 'c'">
+                    <field name="name"/>
+                    <field name="facility_id"/>
+                    <field name="reporting_year"/>
+                    <field name="reporting_period"/>
+                    <field name="total_scope1_2_co2e" string="Scope 1+2 (tCO₂e)"/>
+                    <field name="cems_so2_emissions_kg" string="SO₂ (kg)"/>
+                    <field name="cems_nox_emissions_kg" string="NOₓ (kg)"/>
+                    <field name="wastewater_discharged_m3" string="Wastewater (m³)"/>
+                    <field name="environmental_score" widget="progressbar"/>
+                    <field name="sustainability_grade" widget="badge" decoration-success="sustainability_grade in ('a_plus', 'a')" decoration-warning="sustainability_grade == 'b'" decoration-danger="sustainability_grade == 'c'"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'audited'" decoration-success="state == 'published'"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_esg_facility_scorecard_search" model="ir.ui.view">
+            <field name="name">is.esg.facility.scorecard.search</field>
+            <field name="model">is.esg.facility.scorecard</field>
+            <field name="arch" type="xml">
+            <search><field name="name"/><field name="facility_id"/><field name="reporting_year"/></search></field>
+        </record>
+
+        <record id="view_is_esg_facility_scorecard_kanban" model="ir.ui.view">
+            <field name="name">is.esg.facility.scorecard.kanban</field>
+            <field name="model">is.esg.facility.scorecard</field>
+            <field name="arch" type="xml">
+                <kanban><field name="state"/><templates><t t-name="card"><field name="name"/><field name="facility_id"/><field name="state" widget="badge"/></t></templates></kanban>
+            </field>
+        </record>
+
+        <!-- Form View: Facility ESG Scorecard -->
+        <record id="view_is_esg_facility_scorecard_form" model="ir.ui.view">
+            <field name="name">is.esg.facility.scorecard.form</field>
+            <field name="model">is.esg.facility.scorecard</field>
+            <field name="arch" type="xml">
+                <form string="Facility ESG &amp; Environmental Scorecard">
+                    <header>
+                        <button name="action_audit" string="Audit &amp; Verify EHS Metrics" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_publish_esg" string="Publish to Annual ESG Report" type="object" class="btn-success" invisible="state != 'audited'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,audited,published"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="INTERNAL BAND A+" bg_color="bg-success" invisible="sustainability_grade != 'a_plus'"/>
+                        <widget name="web_ribbon" title="INTERNAL BAND C" bg_color="bg-danger" invisible="sustainability_grade != 'c'"/>
+                        <div class="w_title">
+                            <label for="name" string="Scorecard Reference"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Facility Context &amp; Scope">
+                                <field name="facility_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="reporting_year"/>
+                                <field name="reporting_period"/>
+                                <field name="total_worker_headcount"/>
+                                <field name="auditor_id" readonly="1" invisible="state == 'draft'"/>
+                                <field name="audited_at" readonly="1" invisible="state == 'draft'"/>
+                                <field name="publisher_id" readonly="1" invisible="state != 'published'"/>
+                                <field name="published_at" readonly="1" invisible="state != 'published'"/>
+                            </group>
+                            <group string="Internal Scorecard Summary">
+                                <field name="environmental_score" widget="progressbar"/>
+                                <field name="sustainability_grade" widget="badge" decoration-success="sustainability_grade in ('a_plus', 'a')" decoration-warning="sustainability_grade == 'b'" decoration-danger="sustainability_grade == 'c'"/>
+                                <field name="ltifr_safety_rate"/>
+                                <field name="recycled_waste_percentage"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="1. Carbon &amp; Greenhouse Gases (GHG)" name="ghg">
+                                <group>
+                                    <group string="Direct &amp; Indirect GHG (tCO₂e)">
+                                        <field name="scope1_direct_co2e"/>
+                                        <field name="scope2_indirect_co2e"/>
+                                        <field name="total_scope1_2_co2e" class="fw-bold fs-5 text-primary"/>
+                                    </group>
+                                    <group string="Decarbonization Intensity">
+                                        <field name="safety_training_hours_per_worker"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="2. CEMS Air Pollutants &amp; Emissions" name="cems">
+                                <group>
+                                    <group string="Continuous Online Emissions (kg)">
+                                        <field name="cems_so2_emissions_kg"/>
+                                        <field name="cems_nox_emissions_kg"/>
+                                        <field name="cems_tsp_dust_kg"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="3. Water &amp; Industrial Waste" name="water_waste">
+                                <group>
+                                    <group string="Effluent Discharge (m³ &amp; kg)">
+                                        <field name="wastewater_discharged_m3"/>
+                                        <field name="wastewater_cod_kg"/>
+                                        <field name="wastewater_bod_kg"/>
+                                        <field name="wastewater_compliance_pct"/>
+                                    </group>
+                                    <group string="Solid &amp; Hazardous Waste">
+                                        <field name="hazardous_waste_generated_ton"/>
+                                        <field name="recycled_waste_percentage"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Supporting Evidence" name="evidence">
+                                <group>
+                                    <field name="evidence_attachment_ids" widget="many2many_binary"/>
+                                    <field name="evidence_summary" placeholder="Identify the source records, measurement period, and coverage of attached evidence..."/>
+                                    <field name="source_url" placeholder="https://..."/>
+                                    <field name="source_version"/>
+                                    <field name="source_date"/>
+                                </group>
+                            </page>
+                            <page string="Auditor Remarks &amp; CAPA" name="notes">
+                                <field name="notes" placeholder="EHS auditor findings, QCVN variance notes, and corrective action recommendations..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action Window: Scorecard -->
+        <record id="action_is_esg_facility_scorecard" model="ir.actions.act_window">
+            <field name="name">Facility ESG Scorecards</field>
+            <field name="res_model">is.esg.facility.scorecard</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Khởi tạo Hồ sơ Đánh giá ESG Cơ sở Công nghiệp
+                </p>
+                <p>
+                    Tổng hợp tự động khí thải CEMS, nước thải QCVN, rác thải nguy hại và chỉ số an toàn lao động LTIFR.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

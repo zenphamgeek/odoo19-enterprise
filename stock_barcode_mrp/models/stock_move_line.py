@@ -6,7 +6,7 @@ from odoo import api, fields, models
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
 
-    manual_consumption = fields.Boolean(related='move_id.manual_consumption', inverse='_inverse_manual_consumption')
+    manual_consumption = fields.Boolean(default=False)
     pick_type_create_components_lots = fields.Boolean(related='picking_type_id.use_create_components_lots')
 
     @api.depends('pick_type_create_components_lots', 'picking_code')

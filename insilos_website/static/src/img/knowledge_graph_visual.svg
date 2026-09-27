@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071836"/>
+      <stop offset="50%" stop-color="#0B2E64"/>
+      <stop offset="100%" stop-color="#051329"/>
+    </linearGradient>
+    <linearGradient id="glowBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="glowGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="glowPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="glowAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="800" height="600" rx="16" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle Grid lines -->
+  <g stroke="rgba(255,255,255,0.05)" stroke-width="1">
+    <line x1="100" y1="0" x2="100" y2="600"/>
+    <line x1="200" y1="0" x2="200" y2="600"/>
+    <line x1="300" y1="0" x2="300" y2="600"/>
+    <line x1="400" y1="0" x2="400" y2="600"/>
+    <line x1="500" y1="0" x2="500" y2="600"/>
+    <line x1="600" y1="0" x2="600" y2="600"/>
+    <line x1="700" y1="0" x2="700" y2="600"/>
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="0" y1="500" x2="800" y2="500"/>
+  </g>
+
+  <!-- Relationship Connections (Edges) -->
+  <g stroke-linecap="round">
+    <!-- Center to Logistics -->
+    <path d="M400,280 L220,160" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="6,4" opacity="0.8"/>
+    <!-- Center to Asset FSM -->
+    <path d="M400,280 L580,160" stroke="#34d399" stroke-width="2.5" opacity="0.9"/>
+    <!-- Center to Trade Compliance -->
+    <path d="M400,280 L220,420" stroke="#c084fc" stroke-width="2.5" opacity="0.9"/>
+    <!-- Center to Telemetry -->
+    <path d="M400,280 L580,420" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="4,4" opacity="0.8"/>
+    <!-- Secondary Inter-links -->
+    <path d="M220,160 L220,420" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <path d="M580,160 L580,420" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <path d="M220,160 L400,100" stroke="#38bdf8" stroke-width="1.5" opacity="0.6"/>
+    <path d="M580,160 L400,100" stroke="#34d399" stroke-width="1.5" opacity="0.6"/>
+    <path d="M220,420 L400,500" stroke="#c084fc" stroke-width="1.5" opacity="0.6"/>
+    <path d="M580,420 L400,500" stroke="#fbbf24" stroke-width="1.5" opacity="0.6"/>
+  </g>
+
+  <!-- Central Hub Node: Operational Knowledge Graph -->
+  <g transform="translate(400,280)">
+    <circle r="60" fill="url(#bgGrad)" stroke="#38bdf8" stroke-width="3" filter="url(#glow)"/>
+    <circle r="48" fill="rgba(11,46,100,0.8)" stroke="rgba(56,189,248,0.5)" stroke-width="1.5"/>
+    <text text-anchor="middle" y="-10" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="14">INSILOS ONTOLOGY</text>
+    <text text-anchor="middle" y="10" fill="#38bdf8" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="11">Core Graph Engine</text>
+    <text text-anchor="middle" y="26" fill="rgba(255,255,255,0.7)" font-family="system-ui, -apple-system, sans-serif" font-size="10">2.8M Triples · Real-Time</text>
+  </g>
+
+  <!-- Node 1: Logistics & Supply Chain (Top Left) -->
+  <g transform="translate(220,160)">
+    <rect x="-85" y="-35" width="170" height="70" rx="12" fill="#0c234a" stroke="#38bdf8" stroke-width="2" filter="url(#glow)"/>
+    <text text-anchor="middle" y="-12" fill="#38bdf8" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="12">BILL OF LADING #VN-882</text>
+    <text text-anchor="middle" y="6" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="11">Carrier: Maersk Line</text>
+    <text text-anchor="middle" y="22" fill="rgba(56,189,248,0.9)" font-family="system-ui, -apple-system, sans-serif" font-size="10">Port: Cat Lai ➔ Rotterdam</text>
+  </g>
+
+  <!-- Node 2: Industrial Digital Twin (Top Right) -->
+  <g transform="translate(580,160)">
+    <rect x="-85" y="-35" width="170" height="70" rx="12" fill="#0c234a" stroke="#34d399" stroke-width="2" filter="url(#glow)"/>
+    <text text-anchor="middle" y="-12" fill="#34d399" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="12">TURBINE T-102 (DIGITAL TWIN)</text>
+    <text text-anchor="middle" y="6" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="11">Status: Running · 98.2% Health</text>
+    <text text-anchor="middle" y="22" fill="rgba(52,211,153,0.9)" font-family="system-ui, -apple-system, sans-serif" font-size="10">Vibration: 1.4 mm/s · Nominal</text>
+  </g>
+
+  <!-- Node 3: Trade & Customs Policy (Bottom Left) -->
+  <g transform="translate(220,420)">
+    <rect x="-85" y="-35" width="170" height="70" rx="12" fill="#0c234a" stroke="#c084fc" stroke-width="2" filter="url(#glow)"/>
+    <text text-anchor="middle" y="-12" fill="#c084fc" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="12">TRADE COMPLIANCE RULE</text>
+    <text text-anchor="middle" y="6" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="11">HS Code: 8471.50 · EVFTA 0%</text>
+    <text text-anchor="middle" y="22" fill="rgba(192,132,252,0.9)" font-family="system-ui, -apple-system, sans-serif" font-size="10">C/O EUR.1 · Verified PSR</text>
+  </g>
+
+  <!-- Node 4: Field Service Execution (Bottom Right) -->
+  <g transform="translate(580,420)">
+    <rect x="-85" y="-35" width="170" height="70" rx="12" fill="#0c234a" stroke="#fbbf24" stroke-width="2" filter="url(#glow)"/>
+    <text text-anchor="middle" y="-12" fill="#fbbf24" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="12">FIELD SERVICE ORDER #491</text>
+    <text text-anchor="middle" y="6" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="11">Tech: Nguyen Van A (Level 4)</text>
+    <text text-anchor="middle" y="22" fill="rgba(251,191,36,0.9)" font-family="system-ui, -apple-system, sans-serif" font-size="10">SOP: Bearings Replacement</text>
+  </g>
+
+  <!-- Satellite Node: Enterprise ERP Connector (Top) -->
+  <g transform="translate(400,100)">
+    <rect x="-70" y="-22" width="140" height="44" rx="8" fill="#091b38" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+    <text text-anchor="middle" y="-2" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="11">SAP / ORACLE ERP</text>
+    <text text-anchor="middle" y="14" fill="rgba(255,255,255,0.7)" font-family="system-ui, -apple-system, sans-serif" font-size="9.5">Entity Master Synced</text>
+  </g>
+
+  <!-- Satellite Node: IoT Sensor Stream (Bottom) -->
+  <g transform="translate(400,500)">
+    <rect x="-70" y="-22" width="140" height="44" rx="8" fill="#091b38" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+    <text text-anchor="middle" y="-2" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="11">SCADA &amp; IoT TELEMETRY</text>
+    <text text-anchor="middle" y="14" fill="#34d399" font-family="system-ui, -apple-system, sans-serif" font-size="9.5">● 1,240 Events / sec</text>
+  </g>
+
+</svg>

@@ -102,7 +102,7 @@ class BudgetReport(models.Model):
         )
 
     @property
-    def _table_query(self):
+    def _table_sql(self) -> SQL:
         self.env['account.move.line'].flush_model()
         self.env['budget.line'].flush_model()
         self.env['account.analytic.line'].flush_model()
@@ -113,7 +113,7 @@ class BudgetReport(models.Model):
             if (fname := plan._column_name()) in self
         ]
         return SQL(
-            "%s UNION ALL %s",
+            "(%s UNION ALL %s)",
             self._get_bl_query(plan_fnames),
             self._get_aal_query(plan_fnames),
         )

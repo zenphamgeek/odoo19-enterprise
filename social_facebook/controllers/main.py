@@ -48,7 +48,7 @@ class SocialFacebookController(SocialController):
                 except SocialValidationException as e:
                     return request.render('social.social_http_error_view', {'error_message': e.get_message(), 'documentation_data': e.get_documentation_data()})
 
-        return request.redirect('/odoo/action-social.action_social_stream_post')
+        return request.redirect('/insilos/action-social.action_social_stream_post')
 
     # ========================================================
     # COMMENTS / LIKES
@@ -184,7 +184,7 @@ class SocialFacebookController(SocialController):
         if 'data' not in json_response:
             raise SocialValidationException(_('Facebook did not provide a valid access token or it may have expired.'))
         if not json_response['data']:
-            message = _('You need to be the manager of a Facebook Page to post with Odoo Social.\n Please create one and make sure it is linked to your account.')
+            message = _('You need to be the manager of a Facebook Page to post with Insilos Social.\n Please create one and make sure it is linked to your account.')
             documentation_link = 'https://facebook.com/business/pages/manage'
             documentation_link_label = _('Read More about Facebook Pages')
             documentation_link_icon_class = 'fa fa-facebook'

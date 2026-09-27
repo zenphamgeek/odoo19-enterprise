@@ -67,7 +67,7 @@ class PosOrder(models.Model):
         help="This is the total amount of the 0% tax",
     )
     plu_hash = fields.Char(help="Eight last characters of PLU hash")
-    pos_version = fields.Char(help="Version of Odoo that created the order")
+    pos_version = fields.Char(help="Version of Insilos that created the order")
     is_clock = fields.Boolean("Is clock in/out", compute='_compute_is_clock')
 
     @api.depends("blackbox_date", "blackbox_time")

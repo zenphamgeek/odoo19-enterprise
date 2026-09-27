@@ -41,4 +41,4 @@ export const selectPrinterForm = {
     Controller: SelectPrinterFormController,
 }
 
-registry.category("views").add('select_printers_wizard', selectPrinterForm);
+registry.category("views").add('select_printers_wizard', selectPrinterForm, { force: true });

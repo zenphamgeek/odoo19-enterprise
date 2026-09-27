@@ -20,7 +20,7 @@
                 <a name="action_archive" type="object" class="dropdown-item" t-if="record.active.raw_value">Remove</a>
                 <a name="action_unarchive" type="object" class="dropdown-item" t-if="!record.active.raw_value">Undo</a>
             </xpath>
-            <xpath expr="//main/div" position="replace">
+            <xpath expr="//main" position="inside">
                 <div class="mt-2" invisible="origin_res_model != 'product.product'">
                     <field name="origin_res_name" class="text-decoration-underline fst-italic"/>
                 </div>

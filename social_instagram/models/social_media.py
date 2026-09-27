@@ -87,7 +87,7 @@ class SocialMedia(models.Model):
             raise UserError(_(
                 "Oops! You currently don't have an active subscription. No worries, though! "
                 "You can easily get one here: %s.\n"
-                "Grab a subscription and unlock a world of amazing features!", 'https://www.odoo.com/buy'))
+                "Grab a subscription and unlock a world of amazing features!", 'https://www.insilos.com/buy'))
 
         return {
             'type': 'ir.actions.act_url',

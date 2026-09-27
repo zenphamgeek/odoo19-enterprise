@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="privilege_esg_bridge" model="res.groups.privilege">
+        <field name="name">ESG Operations Bridge</field>
+        <field name="sequence">37</field>
+        <field name="category_id" ref="base.module_category_services"/>
+    </record>
+
+    <record id="group_esg_bridge_user" model="res.groups">
+        <field name="name">User / ESG Officer</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="privilege_esg_bridge"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_esg_bridge_manager" model="res.groups">
+        <field name="name">Manager / ESG Lead</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="privilege_esg_bridge"/>
+        <field name="implied_ids" eval="[(4, ref('group_esg_bridge_user')), (4, ref('insilos_hse_compliance.group_hse_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_esg_bridge_manager'))]"/>
+    </record>
+
+    <record id="is_esg_facility_scorecard_company_rule" model="ir.rule">
+        <field name="name">ESG scorecards: multi-company</field>
+        <field name="model_id" ref="model_is_esg_facility_scorecard"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <record id="is_esg_chemical_impact_company_rule" model="ir.rule">
+        <field name="name">ESG chemical impacts: multi-company</field>
+        <field name="model_id" ref="model_is_esg_chemical_impact"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <record id="is_esg_freight_carbon_company_rule" model="ir.rule">
+        <field name="name">ESG freight carbon: multi-company</field>
+        <field name="model_id" ref="model_is_esg_freight_carbon"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <record id="is_esg_cbam_advisor_company_rule" model="ir.rule">
+        <field name="name">ESG CBAM advisors: multi-company</field>
+        <field name="model_id" ref="model_is_esg_cbam_advisor"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

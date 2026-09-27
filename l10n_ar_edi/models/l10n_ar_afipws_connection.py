@@ -158,7 +158,7 @@ class L10n_ArAfipwsConnection(models.Model):
             if isinstance(error, HTTPError) and error.response.status_code == 503:
                 error_msg += _('\n\nThe ARCA electronic billing webservice is not available. Wait a few minutes for it to reset and try to validate the action again.')
             else:
-                error_msg += '\n\n' + _('Please report this error to your Odoo provider')
+                error_msg += '\n\n' + _('Please report this error to your Insilos provider')
         raise UserError(error_msg)
 
     def _l10n_ar_get_token_data(self, company, afip_ws):

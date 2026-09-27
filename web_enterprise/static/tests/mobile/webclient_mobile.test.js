@@ -111,7 +111,7 @@ test("Share URL item is not present in the user menu when screen is small", asyn
     expect(".o_user_menu").toHaveCount(1);
     queryFirst(".o_user_menu").classList.remove("d-none");
 
-    await click(".o_user_menu button");
+    await click(".o_user_menu");
     await animationFrame();
 
     expect(".o_user_menu .dropdown-item").toHaveCount(0, {

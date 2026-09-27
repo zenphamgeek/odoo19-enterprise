@@ -90,7 +90,7 @@ class SocialMedia(models.Model):
             raise UserError(_(
                 "Oops! You currently don't have an active subscription. No worries, though! "
                 "You can easily get one here: %s.\n"
-                "Grab a subscription and unlock a world of amazing features!", 'https://www.odoo.com/buy'))
+                "Grab a subscription and unlock a world of amazing features!", 'https://www.insilos.com/buy'))
         if iap_add_accounts_url == 'wrong_configuration':
             raise UserError(_("The url that this service requested returned an error. Please contact the author of the app."))
 

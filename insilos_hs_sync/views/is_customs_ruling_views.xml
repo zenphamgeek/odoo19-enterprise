@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_is_customs_ruling_list" model="ir.ui.view">
+        <field name="name">is.customs.ruling.list</field>
+        <field name="model">is.customs.ruling</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="status in ('expired', 'revoked')" decoration-success="status == 'active'">
+                <field name="ruling_number"/>
+                <field name="hs_code"/>
+                <field name="commercial_name"/>
+                <field name="issuing_authority"/>
+                <field name="issue_date"/>
+                <field name="expiry_date" optional="hide"/>
+                <field name="status" widget="badge" decoration-success="status == 'active'" decoration-danger="status == 'revoked'" decoration-warning="status == 'expired'"/>
+                <field name="product_template_count" string="Products"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_is_customs_ruling_form" model="ir.ui.view">
+        <field name="name">is.customs.ruling.form</field>
+        <field name="model">is.customs.ruling</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="%(action_report_hs_customs_ruling)d" string="Print Customs Ruling" type="action" class="btn-primary" icon="fa-print"/>
+                    <field name="status" widget="statusbar" statusbar_visible="active,expired,revoked"/>
+                </header>
+                <sheet>
+                    <div class="w_button_box" name="button_box">
+                        <button name="action_view_matching_products" type="object" class="w_stat_button" icon="fa-cubes">
+                            <field name="product_template_count" widget="statinfo" string="Products"/>
+                        </button>
+                    </div>
+                    <div class="w_title">
+                        <label for="ruling_number" string="Ruling Number"/>
+                        <h1>
+                            <field name="ruling_number" placeholder="e.g. 1234/TB-TCHQ"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Classification Outcome">
+                            <field name="hs_code" placeholder="8-digit HS Code"/>
+                            <field name="commercial_name"/>
+                            <field name="issuing_authority"/>
+                        </group>
+                        <group string="Validity &amp; Provenance">
+                            <field name="issue_date"/>
+                            <field name="expiry_date"/>
+                            <field name="source_url" widget="url"/>
+                            <field name="artifact_sha256"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Technical Description">
+                            <field name="technical_description" placeholder="Technical specifications, material composition, physical properties..."/>
+                        </page>
+                        <page string="Classification Rationale">
+                            <field name="classification_rationale" placeholder="General Rules for Interpretation (GRI), Explanatory Notes, Circulars..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_is_customs_ruling_search" model="ir.ui.view">
+        <field name="name">is.customs.ruling.search</field>
+        <field name="model">is.customs.ruling</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ruling_number"/>
+                <field name="hs_code"/>
+                <field name="commercial_name"/>
+                <field name="technical_description"/>
+                <field name="artifact_sha256"/>
+                <filter name="active_rulings" string="Active" domain="[('status', '=', 'active')]"/>
+                <filter name="revoked_rulings" string="Revoked" domain="[('status', '=', 'revoked')]"/>
+                <filter name="expired_rulings" string="Expired" domain="[('status', '=', 'expired')]"/>
+                <group>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_issue_date" string="Issue Date" context="{'group_by': 'issue_date:month'}"/>
+                    <filter name="group_issuing_authority" string="Authority" context="{'group_by': 'issuing_authority'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_is_customs_ruling" model="ir.actions.act_window">
+        <field name="name">Manage Customs Advance Rulings on Classification</field>
+        <field name="path">customs-rulings</field>
+        <field name="res_model">is.customs.ruling</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_is_customs_ruling_search"/>
+        <field name="context">{'search_default_active_rulings': 1}</field>
+        <field name="help" type="html">
+            <p class="w_view_nocontent_smiling_face">
+                No advance customs classification rulings registered yet.
+            </p>
+            <p>
+                Rulings are automatically synchronized in real-time from the Hermes HS Knowledge Webhook Hub.
+            </p>
+        </field>
+    </record>
+</odoo>

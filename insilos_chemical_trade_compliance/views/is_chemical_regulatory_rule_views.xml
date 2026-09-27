@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_is_chemical_regulatory_rule_tree" model="ir.ui.view">
+            <field name="name">is.chemical.regulatory.rule.list</field>
+            <field name="model">is.chemical.regulatory.rule</field>
+            <field name="arch" type="xml">
+                <list string="Chemical Regulatory Obligation Rules" decoration-danger="rule_category == 'prohibited_chemical_block'" decoration-warning="rule_category == 'restricted_chemical_license'" decoration-info="rule_category == 'mandatory_nsw_declaration'">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="rule_category"/>
+                    <field name="state"/>
+                    <field name="cas_number"/>
+                    <field name="hs_code"/>
+                    <field name="threshold_concentration"/>
+                    <field name="required_permit_type"/>
+                    <field name="nsw_procedure_code"/>
+                    <field name="active" widget="boolean_toggle" readonly="1"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_chemical_regulatory_rule_form" model="ir.ui.view">
+            <field name="name">is.chemical.regulatory.rule.form</field>
+            <field name="model">is.chemical.regulatory.rule</field>
+            <field name="arch" type="xml">
+                <form string="Chemical Regulatory Rule">
+                    <header>
+                        <button name="action_submit_for_review" string="Submit for Review" type="object" class="w_highlight" invisible="state != 'draft'" groups="insilos_chemical_trade_compliance.group_chemical_compliance_manager,insilos_hse_compliance.group_hse_manager"/>
+                        <button name="action_activate" string="Activate" type="object" class="w_highlight" invisible="state != 'review'" groups="insilos_chemical_trade_compliance.group_chemical_compliance_manager,insilos_hse_compliance.group_hse_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,review,active"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Prohibited" bg_color="bg-danger" invisible="rule_category != 'prohibited_chemical_block'"/>
+                        <widget name="web_ribbon" title="Restricted License" bg_color="bg-warning" invisible="rule_category != 'restricted_chemical_license'"/>
+                        <div class="w_title">
+                            <label for="name" string="Rule Name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Khai báo NSW Toluene Phụ lục V NĐ 113"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Regulatory Classification">
+                                <field name="rule_category"/>
+                                <field name="chemical_substance_id"/>
+                                <field name="cas_number"/>
+                                <field name="hs_code"/>
+                                <field name="threshold_concentration"/>
+                                <field name="jurisdiction"/>
+                                <field name="effective_from"/>
+                                <field name="effective_to"/>
+                            </group>
+                            <group string="Obligation &amp; NSW Linkage">
+                                <field name="required_permit_type"/>
+                                <field name="nsw_procedure_code"/>
+                                <field name="legal_basis"/>
+                                <field name="legal_document_id" domain="[('state', 'in', ('active', 'amended')), ('source_url', '=like', 'https://%'), ('source_content_sha256', '!=', False), ('source_version', '!=', False), ('effective_date', '!=', False)]"/>
+                                <field name="active" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Conditions &amp; Legal Remarks" name="remarks">
+                                <field name="notes" placeholder="Detailed legal provisions, exceptions, administrative sanctions for non-compliance..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_is_chemical_regulatory_rule_search" model="ir.ui.view">
+            <field name="name">is.chemical.regulatory.rule.search</field>
+            <field name="model">is.chemical.regulatory.rule</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="cas_number"/>
+                    <field name="hs_code"/>
+                    <filter name="filter_nsw" string="NSW Declaration (Phụ lục V)" domain="[('rule_category', '=', 'mandatory_nsw_declaration')]"/>
+                    <filter name="filter_restricted" string="Restricted License (Phụ lục II)" domain="[('rule_category', '=', 'restricted_chemical_license')]"/>
+                    <filter name="filter_prohibited" string="Prohibited (Phụ lục III)" domain="[('rule_category', '=', 'prohibited_chemical_block')]"/>
+                    <filter name="filter_active" string="Active" domain="[('active', '=', True)]"/>
+                    <group>
+                        <filter name="group_category" string="Obligation Category" context="{'group_by': 'rule_category'}"/>
+                        <filter name="group_permit" string="Permit Type" context="{'group_by': 'required_permit_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_is_chemical_regulatory_rule_kanban" model="ir.ui.view">
+            <field name="name">is.chemical.regulatory.rule.kanban</field>
+            <field name="model">is.chemical.regulatory.rule</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" class="w_kanban_small_column" sample="1">
+                    <field name="name"/>
+                    <field name="rule_category"/>
+                    <field name="state"/>
+                    <field name="cas_number"/>
+                    <field name="hs_code"/>
+                    <field name="active"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="d-flex flex-column gap-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'review'" decoration-success="state == 'active'"/>
+                                    <field name="active" widget="boolean_toggle" readonly="1"/>
+                                </div>
+                                <div class="fw-bold text-truncate"><field name="name"/></div>
+                                <div class="text-muted small text-truncate"><field name="rule_category"/></div>
+                                <div class="text-muted small">CAS <field name="cas_number"/> • HS <field name="hs_code"/></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_is_chemical_regulatory_rule" model="ir.actions.act_window">
+            <field name="name">Manage Chemical Regulatory Rules &amp; Master Lists</field>
+            <field name="path">chemical-rules</field>
+            <field name="res_model">is.chemical.regulatory.rule</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="search_view_id" ref="view_is_chemical_regulatory_rule_search"/>
+            <field name="context">{'search_default_filter_active': 1}</field>
+            <field name="help" type="html">
+                <p class="w_view_nocontent_smiling_face">
+                    Configure Vietnamese Decree 113 &amp; Law on Chemicals 2025/2026 regulatory lists and rule engines.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -16,8 +16,8 @@ class AccountJournal(models.Model):
         copy=False,
         readonly=False,
         help="Type of journals that can be used for Uruguayan companies:\n"
-        "* Electronic: To generate electronic documents via web service to DGI directly from Odoo\n"
-        "* Manual: To add electronic documents that were created previously outside Odoo (example: backups,"
+        "* Electronic: To generate electronic documents via web service to DGI directly from Insilos\n"
+        "* Manual: To add electronic documents that were created previously outside Insilos (example: backups,"
         " from Uruware, pre printed). This type is used to maintain the history and"
         " consistency of all the CFE (they will not create a new CFE in DGI)."
     )

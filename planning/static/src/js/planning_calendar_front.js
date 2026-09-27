@@ -1,56 +1,48 @@
 /* eslint-disable no-undef */
 
-import publicWidget from "@web/legacy/js/public/public_widget";
+import { Interaction } from "@web/public/interaction";
+import { registry } from "@web/core/registry";
 import { _t } from "@web/core/l10n/translation";
 import { loadBundle } from "@web/core/assets";
 const { DateTime } = luxon;
 
-publicWidget.registry.PlanningView = publicWidget.Widget.extend({
-    selector: '#calendar_employee',
+export class PlanningView extends Interaction {
+    static selector = '#calendar_employee';
 
-    init: function (parent, options) {
-        this._super.apply(this, arguments);
-    },
-    start: function () {
+    async start() {
         if ($('.message_slug').attr('value')) {
             $("#PlanningToast").toast('show');
         }
-        this._super.apply(this, arguments);
-        // The calendar is displayed if there are slots (open or not)
         if ($('.no_data').attr('value')) {
             return;
         }
-        this.calendarElement = this.$(".o_calendar_widget")[0];
-        const employeeSlotsFcData = JSON.parse($('.employee_slots_fullcalendar_data').attr('value'));
+        await loadBundle("web.fullcalendar_lib");
+        this.calendarElement = this.el.querySelector(".o_calendar_widget");
+        const employeeSlotsFcData = JSON.parse($('.employee_slots_fullcalendar_data').attr('value') || '[]');
         const locale = $('.locale').attr('value');
-        // initialise popovers and add the event listeners
         $('[data-bs-toggle="popover"]').popover();
-        // code used to dismiss popover when clicking outside of it
         $('body').on('click', function (e) {
             var parentElsClassList = $(e.target).parents().map(function() {
                 return [...this.classList];
-            })
+            });
             if (!['assignee-cell', 'contact-assignee-popover'].some(el => [...parentElsClassList].includes(el))) {
                 $('[data-bs-toggle="popover"]').popover('hide');
             }
         });
-        // code used to dismiss popover when opening another popover
         $('[data-bs-toggle="popover"]').on('click', function (e) {
             $('[data-bs-toggle="popover"]').not(this).popover('hide');
         });
-        // default date: first event of either assigned slots or open shifts
-        const defaultStartValue = $('.default_start').attr('value'); //yyyy-MM-dd
-        const defaultStart = DateTime.fromFormat(defaultStartValue, "yyyy-MM-dd").toJSDate();
-        const defaultView = $('.default_view').attr('value');
-        const minTime = $('.mintime').attr('value'); //HH:mm:ss
-        const maxTime = $('.maxtime').attr('value'); //HH:mm:ss
+        const defaultStartValue = $('.default_start').attr('value');
+        const defaultStart = defaultStartValue ? DateTime.fromFormat(defaultStartValue, "yyyy-MM-dd").toJSDate() : new Date();
+        const defaultView = $('.default_view').attr('value') || 'dayGridMonth';
+        const minTime = $('.mintime').attr('value');
+        const maxTime = $('.maxtime').attr('value');
         let calendarHeaders = {
             left: 'dayGridMonth,timeGridWeek,listMonth',
             center: 'title',
             right: 'today,prev,next',
         };
         if (employeeSlotsFcData.length === 0) {
-            // There are no event to display. This is probably an empty slot sent for assignment
             calendarHeaders = {
                 left: false,
                 center: 'title',
@@ -58,22 +50,21 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
             };
         }
         const titleFormat = { month: "long", year: "numeric" };
-        let noEventsContent = _t("You don't have any shifts planned yet.")
+        let noEventsContent = _t("You don't have any shifts planned yet.");
         const openSlotsIds = $('.open_slots_ids').attr('value');
         if (openSlotsIds) {
-            noEventsContent = _t("You don't have any shifts planned yet. You can assign yourself some of the available open shifts.")
+            noEventsContent = _t("You don't have any shifts planned yet. You can assign yourself some of the available open shifts.");
         }
-        this.calendar = new FullCalendar.Calendar(document.querySelector("#calendar_employee .o_calendar_widget"), {
-            // Settings
+        this.calendar = new FullCalendar.Calendar(this.calendarElement || document.querySelector("#calendar_employee .o_calendar_widget"), {
             locale: locale,
             initialView: defaultView,
-            navLinks: true, // can click day/week names to navigate views
-            dayMaxEventRows: 3, // allow "more" link when too many events
+            navLinks: true,
+            dayMaxEventRows: 3,
             titleFormat: titleFormat,
             initialDate: defaultStart,
             displayEventEnd: true,
             height: 'auto',
-            eventDidMount: this.onEventDidMount,
+            eventDidMount: this.onEventDidMount.bind(this),
             eventTextColor: 'white',
             eventOverlap: true,
             eventTimeFormat: {
@@ -85,9 +76,7 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
             slotMinTime: minTime,
             slotMaxTime: maxTime,
             headerToolbar: calendarHeaders,
-            // Data
             events: employeeSlotsFcData,
-            // Event Function is called when clicking on the event
             eventClick: this.eventFunction.bind(this),
             buttonText: {
                 today: _t("Today"),
@@ -99,13 +88,11 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
         });
         this.calendar.setOption('locale', locale);
         this.calendar.render();
-    },
-    willStart: async function () {
-        await loadBundle("web.fullcalendar_lib");
-    },
-    onEventDidMount: function (calRender) {
+    }
+
+    onEventDidMount(calRender) {
         const calendarElement = calRender.el;
-        const timeEvent = calendarElement.querySelector('.fc-event-time')
+        const timeEvent = calendarElement.querySelector('.fc-event-time');
         if (calRender.view.type !== 'listMonth') {
             calendarElement.classList.add('px-2', 'py-1');
         }
@@ -114,14 +101,20 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
             timeRow.classList.add('d-flex', 'align-items-center', 'w-100', 'overflow-hidden');
             const titleEvent = calendarElement.querySelector('.fc-event-title');
             const colorElement = calendarElement.querySelector('.fc-daygrid-event-dot');
-            timeEvent.classList.add('w-100', 'text-truncate');
-            timeRow.append(colorElement, timeEvent);
-            titleEvent.classList.add('w-100', 'text-truncate', 'ms-4');
+            timeEvent?.classList.add('w-100', 'text-truncate');
+            if (colorElement && timeEvent) {
+                timeRow.append(colorElement, timeEvent);
+            }
+            titleEvent?.classList.add('w-100', 'text-truncate', 'ms-4');
             calendarElement.classList.add('flex-column');
-            calendarElement.append(timeRow, titleEvent);
+            if (titleEvent) {
+                calendarElement.append(timeRow, titleEvent);
+            }
         }
         calendarElement.classList.add('cursor-pointer');
-        calendarElement.childNodes[0].classList.add('fw-bold');
+        if (calendarElement.childNodes[0]?.classList) {
+            calendarElement.childNodes[0].classList.add('fw-bold');
+        }
         const timeElement = document.createElement('span');
         timeElement.classList.add('ps-1');
         const allocatedHours = calRender.event.extendedProps.alloc_hours;
@@ -144,25 +137,29 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
             calendarElement.style.borderWidth = '5px';
             calendarElement.style.background = 'repeating-linear-gradient(40deg, #A0A0A0, #A0A0A0 5px, '+backgroundColor+' 5px, '+backgroundColor + ' 10px)';
         }
-    },
-    formatDateAsBackend: function (date) {
+    }
+
+    formatDateAsBackend(date) {
         return DateTime.fromJSDate(date).toLocaleString({
             ...DateTime.DATE_SHORT,
             ...DateTime.TIME_24_SIMPLE,
             weekday: "short",
         });
-    },
-    eventFunction: function (calEvent) {
+    }
+
+    eventFunction(calEvent) {
         const planningToken = $('.planning_token').attr('value');
         const employeeToken = $('.employee_token').attr('value');
         let displayFooter = false;
         $(".modal-title").text(calEvent.event.title);
         $(".modal-header").css("background-color", calEvent.event.backgroundColor);
         if (calEvent.event.extendedProps.request_to_switch && !calEvent.event.extendedProps.allow_self_unassign) {
-            document.getElementById("switch-warning").style.display = "block";
+            const switchWarning = document.getElementById("switch-warning");
+            if (switchWarning) switchWarning.style.display = "block";
             $(".warning-text").text("You requested to switch this shift. Other employees can now assign themselves to it.");
         } else {
-            document.getElementById("switch-warning").style.display = "none";
+            const switchWarning = document.getElementById("switch-warning");
+            if (switchWarning) switchWarning.style.display = "none";
         }
         $('.o_start_date').text(this.formatDateAsBackend(calEvent.event.start));
         let textValue = this.formatDateAsBackend(calEvent.event.end);
@@ -190,51 +187,58 @@ publicWidget.registry.PlanningView = publicWidget.Widget.extend({
             $("#note").css("display", "none");
         }
         $("#allow_self_unassign").text(calEvent.event.extendedProps.allow_self_unassign);
+        const dismissShift = document.getElementById("dismiss_shift");
         if (
             calEvent.event.extendedProps.allow_self_unassign
             && !calEvent.event.extendedProps.is_unassign_deadline_passed
             && !calEvent.event.extendedProps.is_open_shift
-            ) {
-            document.getElementById("dismiss_shift").style.display = "block";
+        ) {
+            if (dismissShift) dismissShift.style.display = "block";
             displayFooter = true;
-        } else {
-            document.getElementById("dismiss_shift").style.display = "none";
+        } else if (dismissShift) {
+            dismissShift.style.display = "none";
         }
+        const switchShift = document.getElementById("switch_shift");
         if (
             !calEvent.event.extendedProps.request_to_switch
             && !calEvent.event.extendedProps.is_past
             && !calEvent.event.extendedProps.allow_self_unassign
             && !calEvent.event.extendedProps.is_open_shift
-            ) {
-            document.getElementById("switch_shift").style.display = "block";
+        ) {
+            if (switchShift) switchShift.style.display = "block";
             displayFooter = true;
-        } else {
-            document.getElementById("switch_shift").style.display = "none";
+        } else if (switchShift) {
+            switchShift.style.display = "none";
         }
+        const cancelSwitch = document.getElementById("cancel_switch");
         if (
             calEvent.event.extendedProps.request_to_switch
             && !calEvent.event.extendedProps.allow_self_unassign
             && !calEvent.event.extendedProps.is_open_shift
-            ) {
-            document.getElementById("cancel_switch").style.display = "block";
+        ) {
+            if (cancelSwitch) cancelSwitch.style.display = "block";
             displayFooter = true;
-        } else {
-            document.getElementById("cancel_switch").style.display = "none";
+        } else if (cancelSwitch) {
+            cancelSwitch.style.display = "none";
         }
+        const takeOpenSwitch = document.getElementById("take_open_switch");
         if (calEvent.event.extendedProps.is_open_shift) {
-            document.getElementById("take_open_switch").style.display = "block";
+            if (takeOpenSwitch) takeOpenSwitch.style.display = "block";
             displayFooter = true;
-        } else {
-            document.getElementById("take_open_switch").style.display = "none";
+        } else if (takeOpenSwitch) {
+            takeOpenSwitch.style.display = "none";
         }
         $("#modal_action_dismiss_shift").attr("action", "/planning/" + planningToken + "/" + employeeToken + "/unassign/" + calEvent.event.extendedProps.slot_id);
         $("#modal_action_switch_shift").attr("action", "/planning/" + planningToken + "/" + employeeToken + "/switch/" + calEvent.event.extendedProps.slot_id);
         $("#modal_action_cancel_switch").attr("action", "/planning/" + planningToken + "/" + employeeToken + "/cancel_switch/" + calEvent.event.extendedProps.slot_id);
         $("#modal_action_take_open_switch").attr("action", "/planning/" + planningToken + "/" + employeeToken + "/take_open_shift/" + calEvent.event.extendedProps.slot_id);
         $("#fc-slot-onclick-modal").modal("show");
-        document.getElementsByClassName("modal-footer")[0].style.display = displayFooter ? "block" : "none" ;
-    },
-});
+        const modalFooter = document.getElementsByClassName("modal-footer")[0];
+        if (modalFooter) {
+            modalFooter.style.display = displayFooter ? "block" : "none";
+        }
+    }
+}
 
-// Add client actions
-export default publicWidget.registry.PlanningView;
+registry.category("public.interactions").add("planning.planning_calendar_front", PlanningView);
+export default PlanningView;

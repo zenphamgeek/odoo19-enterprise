@@ -26,8 +26,8 @@
                     }
                     .top_button {
                         color: #FFFFFF;
-                        background-color: #714B67;
-                        border: solid #714B67;
+                        background-color: #004455;
+                        border: solid #004455;
                         flex: 1 1 60%;
                     }
                     .button_box {
@@ -131,7 +131,7 @@
                     <div style="display: flex; margin: 15px;">
                         <div t-if="ctx.get('planning_url')" style="margin-right: 15px;">
                             <a t-att-href="ctx['planning_url']" target="_blank" class="planning_mail_template_button"
-                                t-attf-style="color: {{object.company_id.email_primary_color or '#FFFFFF'}}; background-color: {{object.company_id.email_secondary_color or '#875A7B'}};">View Your Planning</a>
+                                t-attf-style="color: {{object.company_id.email_primary_color or '#FFFFFF'}}; background-color: {{object.company_id.email_secondary_color or '#004455'}};">View Your Planning</a>
                         </div>
                         <div t-if="ctx.get('planning_url_ics')">
                             <a t-att-href="ctx['planning_url_ics']" target="_blank" class="planning_mail_template_button"

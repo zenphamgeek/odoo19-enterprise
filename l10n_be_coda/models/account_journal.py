@@ -625,7 +625,7 @@ class AccountJournal(models.Model):
                 elif line[1] == '2':
                     if statement['lines'][-1]['ref'][0:4] != line[2:6]:
                         raise UserError(_(
-                            "Error %(error_code)s: CODA parsing error on movement data record 2.2, seq nr %(seq_nr)s! Please report this issue via your Odoo support channel.",
+                            "Error %(error_code)s: CODA parsing error on movement data record 2.2, seq nr %(seq_nr)s! Please report this issue via your Insilos support channel.",
                             error_code="R2004",
                             seq_nr=line[2:10],
                         ))
@@ -636,7 +636,7 @@ class AccountJournal(models.Model):
                 elif line[1] == '3':
                     if statement['lines'][-1]['ref'][0:4] != line[2:6]:
                         raise UserError(_(
-                            "Error %(error_code)s: CODA parsing error on movement data record 2.3, seq nr %(seq_nr)s! Please report this issue via your Odoo support channel.",
+                            "Error %(error_code)s: CODA parsing error on movement data record 2.3, seq nr %(seq_nr)s! Please report this issue via your Insilos support channel.",
                             error_code="R2005",
                             seq_nr=line[2:10],
                         ))
@@ -687,7 +687,7 @@ class AccountJournal(models.Model):
                 elif line[1] == '2':
                     if infoLine['ref'] != rmspaces(line[2:10]):
                         raise UserError(_(
-                            "Error %(error_code)s: CODA parsing error on information data record 3.2, seq nr %(seq_nr)s! Please report this issue via your Odoo support channel.",
+                            "Error %(error_code)s: CODA parsing error on information data record 3.2, seq nr %(seq_nr)s! Please report this issue via your Insilos support channel.",
                             error_code="R3004",
                             seq_nr=line[2:10],
                         ))
@@ -695,7 +695,7 @@ class AccountJournal(models.Model):
                 elif line[1] == '3':
                     if infoLine['ref'] != rmspaces(line[2:10]):
                         raise UserError(_(
-                            "Error %(error_code)s: CODA parsing error on information data record 3.3, seq nr %(seq_nr)s! Please report this issue via your Odoo support channel.",
+                            "Error %(error_code)s: CODA parsing error on information data record 3.3, seq nr %(seq_nr)s! Please report this issue via your Insilos support channel.",
                             error_code="R3005",
                             seq_nr=line[2:10],
                         ))

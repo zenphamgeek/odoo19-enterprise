@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Danh mục sản phẩm ngành Cơ khí Chế tạo & Vận tải Công nghiệp -->
+        <record id="product_category_machinery" model="product.category">
+            <field name="name">Máy móc &amp; Thiết bị Cơ điện Công nghiệp</field>
+            <field name="parent_id" ref="product.product_category_goods"/>
+        </record>
+
+        <record id="product_category_subassemblies" model="product.category">
+            <field name="name">Cụm Bán thành phẩm Cơ điện</field>
+            <field name="parent_id" ref="product.product_category_goods"/>
+        </record>
+
+        <record id="product_category_raw_materials" model="product.category">
+            <field name="name">Nguyên vật liệu Kim khí &amp; Công nghiệp</field>
+            <field name="parent_id" ref="product.product_category_goods"/>
+        </record>
+
+        <record id="product_category_spare_parts" model="product.category">
+            <field name="name">Phụ tùng &amp; Linh kiện Tiêu hao Đội xe</field>
+            <field name="parent_id" ref="product.product_category_goods"/>
+        </record>
+
+        <record id="product_category_logistics_services" model="product.category">
+            <field name="name">Dịch vụ Vận tải &amp; Tiếp vận Đa phương thức</field>
+            <field name="parent_id" ref="product.product_category_goods"/>
+        </record>
+
+    </data>
+</odoo>

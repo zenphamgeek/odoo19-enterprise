@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="project_logistics_idp" model="project.project">
+        <field name="name">Logistics IDP Cases</field>
+        <field name="allow_task_dependencies" eval="True"/>
+        <field name="task_properties_definition">[
+            {"name":"case_reference","type":"char","string":"Case Reference"},
+            {"name":"supplier","type":"many2one","string":"Supplier","comodel":"res.partner"},
+            {"name":"po_references","type":"char","string":"PO References"},
+            {"name":"jurisdiction","type":"many2one","string":"Jurisdiction","comodel":"res.country"},
+            {"name":"deployment_mode","type":"selection","string":"ERP Mode","selection":[["native","Native ERP"],["external","External ERP"]]},
+            {"name":"document_check","type":"selection","string":"Document Check","selection":[["pending","Pending"],["pass","Pass"],["review","Review"],["block","Block"],["na","Not Applicable"]]},
+            {"name":"reconciliation_check","type":"selection","string":"Reconciliation Check","selection":[["pending","Pending"],["pass","Pass"],["review","Review"],["block","Block"],["na","Not Applicable"]]},
+            {"name":"compliance_verdict","type":"selection","string":"Compliance Verdict","selection":[["pending","Pending"],["pass","Pass"],["review","Review"],["block","Block"],["na","Not Applicable"]]},
+            {"name":"policy_version","type":"char","string":"Policy Version"},
+            {"name":"evidence_reference","type":"char","string":"Evidence Reference"},
+            {"name":"source_provenance","type":"char","string":"Source Provenance"},
+            {"name":"sla_due_date","type":"date","string":"SLA Due Date"}
+        ]</field>
+        <field name="description" type="html"><div>
+            <p>One task is one logistics case. Attach source and generated files; record decisions in chatter.</p>
+            <p>Missing critical context never passes. Use Review or Block. MES/MRP evidence is inbound/read-only; no execution or write-back.</p>
+        </div></field>
+    </record>
+
+    <record id="stage_intake" model="project.task.type"><field name="name">Intake</field><field name="sequence">10</field><field name="project_ids" eval="[(4, ref('project_logistics_idp'))]"/></record>
+    <record id="stage_extract_review" model="project.task.type"><field name="name">Extraction Review</field><field name="sequence">20</field><field name="project_ids" eval="[(4, ref('project_logistics_idp'))]"/></record>
+    <record id="stage_reconciliation" model="project.task.type"><field name="name">Reconciliation</field><field name="sequence">30</field><field name="project_ids" eval="[(4, ref('project_logistics_idp'))]"/></record>
+    <record id="stage_compliance_review" model="project.task.type"><field name="name">Compliance Review</field><field name="sequence">40</field><field name="project_ids" eval="[(4, ref('project_logistics_idp'))]"/></record>
+    <record id="stage_exception" model="project.task.type"><field name="name">Exception</field><field name="sequence">50</field><field name="project_ids" eval="[(4, ref('project_logistics_idp'))]"/></record>
+    <record id="stage_output" model="project.task.type"><field name="name">Output Preparation</field><field name="sequence">60</field><field name="project_ids" eval="[(4, ref('project_logistics_idp'))]"/></record>
+    <record id="stage_completed" model="project.task.type"><field name="name">Completed</field><field name="sequence">70</field><field name="fold" eval="True"/><field name="project_ids" eval="[(4, ref('project_logistics_idp'))]"/></record>
+
+    <record id="tag_exact_duplicate" model="project.tags"><field name="name">IDP: Exact Duplicate</field><field name="color">2</field></record>
+    <record id="tag_semantic_duplicate_review" model="project.tags"><field name="name">IDP: Possible Semantic Duplicate</field><field name="color">3</field></record>
+    <record id="tag_recheck_required" model="project.tags"><field name="name">IDP: Re-check Required</field><field name="color">4</field></record>
+    <record id="tag_vietnam_e13" model="project.tags"><field name="name">VN Customs: E13</field><field name="color">5</field></record>
+    <record id="tag_vietnam_e15" model="project.tags"><field name="name">VN Customs: E15</field><field name="color">6</field></record>
+    <record id="tag_import_declaration" model="project.tags"><field name="name">Output: Import Declaration</field><field name="color">7</field></record>
+    <record id="tag_shipping_plan" model="project.tags"><field name="name">Output: Shipping Plan</field><field name="color">8</field></record>
+    <record id="tag_gate_pass_optional" model="project.tags"><field name="name">Output: Gate Pass Optional</field><field name="color">9</field></record>
+    <record id="tag_mes_reference_only" model="project.tags"><field name="name">MES/MRP: Reference Only</field><field name="color">10</field></record>
+
+    <record id="document_tag_purchase_order" model="documents.tag"><field name="name">IDP / Purchase Order</field><field name="sequence">20</field></record>
+    <record id="document_tag_draft_invoice" model="documents.tag"><field name="name">IDP / Draft Invoice</field><field name="sequence">21</field></record>
+    <record id="document_tag_main_invoice" model="documents.tag"><field name="name">IDP / Main Invoice</field><field name="sequence">22</field></record>
+    <record id="document_tag_export_declaration" model="documents.tag"><field name="name">IDP / Export Declaration</field><field name="sequence">23</field></record>
+    <record id="document_tag_import_declaration" model="documents.tag"><field name="name">IDP / Import Declaration</field><field name="sequence">24</field></record>
+    <record id="document_tag_e13_e15" model="documents.tag"><field name="name">IDP / E13-E15</field><field name="sequence">25</field></record>
+    <record id="document_tag_broker_package" model="documents.tag"><field name="name">IDP / Broker Package</field><field name="sequence">26</field></record>
+    <record id="document_tag_shipping_plan" model="documents.tag"><field name="name">IDP / Shipping Plan</field><field name="sequence">27</field></record>
+    <record id="document_tag_policy_snapshot" model="documents.tag"><field name="name">IDP / Policy Snapshot</field><field name="sequence">28</field></record>
+    <record id="document_tag_mes_evidence" model="documents.tag"><field name="name">IDP / MES-MRP Evidence (Read Only)</field><field name="sequence">29</field></record>
+
+    <record id="openrouter_domain_logistics_ocr" model="openrouter.domain">
+        <field name="name">Logistics Document OCR</field>
+        <field name="code">logistics_ocr</field>
+        <field name="sequence">15</field>
+        <field name="description">Strict structured extraction for logistics PDF and image documents</field>
+        <field name="require_free" eval="False"/>
+        <field name="max_temperature">0.1</field>
+        <field name="provider">openrouter</field>
+        <field name="system_prompt">Extract logistics document fields exactly according to the requested JSON schema. Never invent missing values.</field>
+        <field name="primary_model_id" model="openrouter.model" search="[('model_id','=','google/gemini-2.5-flash')]"/>
+        <field name="fallback_model_ids" model="openrouter.model" search="[('model_id','=','google/gemini-3.5-flash-lite')]"/>
+    </record>
+
+    <record id="cron_logistics_idp_inbound" model="ir.cron">
+        <field name="name">Logistics IDP: Process inbound jobs</field>
+        <field name="model_id" ref="model_logistics_idp_inbound_job"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_process()</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+    </record>
+
+    <record id="cron_logistics_idp_extract_queued" model="ir.cron">
+        <field name="name">Logistics IDP: Extract queued documents</field>
+        <field name="model_id" ref="model_logistics_idp_document"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_extract_queued()</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+    </record>
+
+    <record id="cron_logistics_idp_compliance_deadlines" model="ir.cron">
+        <field name="name">Logistics IDP: Evaluate compliance deadlines</field>
+        <field name="model_id" ref="model_logistics_idp_case"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_evaluate_compliance_deadlines()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+
+    <record id="cron_logistics_idp_daily_report" model="ir.cron">
+        <field name="name">Logistics IDP: Generate daily report artifacts</field>
+        <field name="model_id" ref="model_logistics_idp_case"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_generate_daily_reports()</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+    </record>
+</odoo>

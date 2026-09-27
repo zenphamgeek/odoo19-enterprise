@@ -10,7 +10,7 @@
                     <field name="company_id" invisible="1"/>
                     <field name="allowed_picking_ids" invisible="1"/>
                     <field name="show_allocation" invisible="1"/>
-                    <button name="action_view_reception_report" string="Allocation" type="object"
+                    <button name="action_view_allocation_report" string="Allocation" type="object"
                         class="btn btn-primary o_reception_report" icon="fa-list"
                         invisible="not show_allocation"
                         groups="stock.group_reception_report"/>
@@ -111,7 +111,7 @@
     <record id="stock_picking_batch_form" model="ir.ui.view">
         <field name="name">stock.picking.batch.form.inherit.stock.barcode</field>
         <field name="model">stock.picking.batch</field>
-        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+        <field name="inherit_id" ref="stock.stock_picking_batch_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_client_action" type="object"

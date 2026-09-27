@@ -5,7 +5,8 @@
         <field name="model">pos.printer</field>
         <field name="inherit_id" ref="point_of_sale.view_pos_printer_form"/>
         <field name="arch" type="xml">
-            <field name="proxy_ip" position="replace">
+            <field name="printer_ip" position="after">
+                <field name="company_id" invisible="1"/>
                 <field name="device_id" invisible="printer_type != 'iot'"/>
             </field>
         </field>
@@ -15,7 +16,7 @@
         <field name="model">pos.printer</field>
         <field name="inherit_id" ref="point_of_sale.view_pos_printer"/>
         <field name="arch" type="xml">
-            <field name="proxy_ip" position="replace">
+            <field name="printer_type" position="after">
                 <field name="device_id"/>
             </field>
         </field>

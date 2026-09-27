@@ -9,7 +9,7 @@ import {
 import { IrMenuSelectorDialog } from "@spreadsheet_edition/bundle/ir_menu_selector/ir_menu_selector";
 
 const { markdownLink } = spreadsheet.links;
-const { linkMenuRegistry } = spreadsheet.registries;
+const { linkMenuRegistry } = spreadsheet.registries || {};
 
 /**
  * Helper to get the function to be called when the spreadsheet is opened
@@ -40,20 +40,22 @@ function insertLink(actionToLink) {
 
 initCallbackRegistry.add("insertLink", insertLink);
 
-linkMenuRegistry.add("odooMenu", {
-    name: _t("Link an Odoo menu"),
-    sequence: 20,
-    execute: async (env) =>
-        new Promise((resolve) => {
-            const closeDialog = env.services.dialog.add(IrMenuSelectorDialog, {
-                onMenuSelected: (menuId) => {
-                    closeDialog();
-                    const menu = env.services.menu.getMenu(menuId);
-                    const xmlId = menu && menu.xmlid;
-                    const url = xmlId ? buildIrMenuXmlLink(xmlId) : buildIrMenuIdLink(menuId);
-                    const label = menu.name;
-                    resolve(markdownLink(label, url));
-                },
-            });
-        }),
-});
+if (linkMenuRegistry) {
+    linkMenuRegistry.add("odooMenu", {
+        name: _t("Link an Insilos menu"),
+        sequence: 20,
+        execute: async (env) =>
+            new Promise((resolve) => {
+                const closeDialog = env.services.dialog.add(IrMenuSelectorDialog, {
+                    onMenuSelected: (menuId) => {
+                        closeDialog();
+                        const menu = env.services.menu.getMenu(menuId);
+                        const xmlId = menu && menu.xmlid;
+                        const url = xmlId ? buildIrMenuXmlLink(xmlId) : buildIrMenuIdLink(menuId);
+                        const label = menu.name;
+                        resolve(markdownLink(label, url));
+                    },
+                });
+            }),
+    });
+}

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ROOT MENU: Pub/Sub Gateway
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <menuitem id="menu_pubsub_root"
+              name="Pub/Sub Gateway"
+              sequence="85"
+              groups="insilos_pubsub_bridge.group_pubsub_user"
+              web_icon="insilos_pubsub_bridge,static/description/icon.svg"/>
+
+    <!-- ─── Dashboard ─────────────────────────────────────────────── -->
+
+    <menuitem id="menu_pubsub_dashboard"
+              name="Dashboard"
+              parent="menu_pubsub_root"
+              action="action_pubsub_dashboard"
+              sequence="1"/>
+
+    <!-- ─── Inbound Section ───────────────────────────────────────── -->
+
+    <menuitem id="menu_pubsub_inbound"
+              name="Inbound"
+              parent="menu_pubsub_root"
+              sequence="5"/>
+
+    <menuitem id="menu_pubsub_channels"
+              name="Channels &amp; Topics"
+              parent="menu_pubsub_inbound"
+              action="action_pubsub_channel"
+              sequence="5"/>
+
+    <menuitem id="menu_pubsub_event_log"
+              name="Event Logs"
+              parent="menu_pubsub_inbound"
+              action="action_pubsub_event_log"
+              sequence="10"/>
+
+    <menuitem id="menu_pubsub_automation_rule"
+              name="Automation &amp; Call Forwarding"
+              parent="menu_pubsub_inbound"
+              action="action_pubsub_automation_rule"
+              sequence="20"/>
+
+    <menuitem id="menu_pubsub_forward_log"
+              name="Forwarding History"
+              parent="menu_pubsub_inbound"
+              action="action_pubsub_forward_log"
+              sequence="30"/>
+
+    <!-- ─── Outbound Section ──────────────────────────────────────── -->
+
+    <menuitem id="menu_pubsub_outbound"
+              name="Outbound"
+              parent="menu_pubsub_root"
+              sequence="10"/>
+
+    <menuitem id="menu_pubsub_outbound_rules"
+              name="Outbound Rules"
+              parent="menu_pubsub_outbound"
+              action="action_pubsub_outbound_rule"
+              sequence="5"/>
+
+    <menuitem id="menu_pubsub_outbound_events"
+              name="Outbound Events"
+              parent="menu_pubsub_outbound"
+              action="action_pubsub_outbound_event"
+              sequence="10"/>
+
+    <!-- ─── Reporting Section ─────────────────────────────────────── -->
+
+    <menuitem id="menu_pubsub_analytics"
+              name="Reporting"
+              parent="menu_pubsub_root"
+              sequence="20"/>
+
+    <menuitem id="menu_pubsub_forward_analytics"
+              name="Forwarding Reports"
+              parent="menu_pubsub_analytics"
+              action="action_pubsub_forward_dashboard"
+              sequence="5"/>
+
+</odoo>

@@ -2,8 +2,7 @@ from datetime import timedelta
 from unittest.mock import patch, ANY
 from requests.exceptions import RequestException
 
-from odoo.tests.common import TransactionCase, tagged
-from odoo.addons.mail.tests.common import freeze_all_time
+from odoo.tests.common import TransactionCase, tagged, freeze_time as freeze_all_time
 from odoo.addons.voip_ai.models.voip_call import _logger
 
 

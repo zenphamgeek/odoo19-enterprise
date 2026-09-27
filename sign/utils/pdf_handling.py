@@ -14,6 +14,32 @@ _lt = LazyTranslate(__name__)
 _logger = logging.getLogger(__name__)
 
 
+def decode_pdf_bytes(pdf_bytes):
+    if not pdf_bytes:
+        return b''
+    if hasattr(pdf_bytes, 'content'):
+        pdf_bytes = pdf_bytes.content
+    elif hasattr(pdf_bytes, '__bytes__') and not isinstance(pdf_bytes, (bytes, bytearray, memoryview, str)):
+        pdf_bytes = bytes(pdf_bytes)
+    if isinstance(pdf_bytes, str):
+        try:
+            return base64.b64decode(pdf_bytes)
+        except Exception:
+            return pdf_bytes.encode('latin1')
+    if isinstance(pdf_bytes, (bytes, bytearray, memoryview)):
+        raw = bytes(pdf_bytes)
+        if raw.startswith(b'%PDF'):
+            return raw
+        try:
+            decoded = base64.b64decode(raw)
+            if decoded.startswith(b'%PDF'):
+                return decoded
+        except Exception:
+            pass
+        return raw
+    return bytes(pdf_bytes)
+
+
 def get_valid_pdf_data(pdf_bytes, strict=True):
     """
     Validate and return a readable PDF file object from the given byte data.
@@ -23,12 +49,13 @@ def get_valid_pdf_data(pdf_bytes, strict=True):
     :return: A valid and non-encrypted PdfFileReader instance.
     :raises ValidationError: If cannot return non-encrypted PdfFileReader instance.
     """
+    pdf_bytes = decode_pdf_bytes(pdf_bytes)
     try:
         pdf_reader = PdfFileReader(BytesIO(pdf_bytes), strict)
         if not pdf_reader.isEncrypted:
             return pdf_reader
-    except (DependencyError, UnicodeDecodeError, PdfReadError):
-        _logger.warning("Failed to read PDF data.")
+    except (DependencyError, UnicodeDecodeError, PdfReadError, Exception) as e:
+        _logger.warning("Failed to read PDF data: %s", e)
 
     raise ValidationError(_lt(
         "It seems that we're not able to process one of the uploaded pdf. It is either"

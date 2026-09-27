@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Insilos Top Menu Systray Restructure (The Capsule Island Concept)
+   ========================================================================== */
+
+.o_navbar .o_main_navbar {
+  /* --------------------------------------------------------------------------
+     1. The Systray Capsule Island
+     -------------------------------------------------------------------------- */
+  .o_menu_systray {
+    margin: auto 16px auto auto;
+    padding: 3px 8px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: var(--insilos-radius-full);
+    background: var(--insilos-bg-surface);
+    border: 1px solid var(--insilos-border-subtle);
+    box-shadow: var(--insilos-shadow-sm);
+    transition: var(--insilos-transition-fast);
+
+    &:hover {
+      border-color: var(--insilos-border-medium);
+      box-shadow: var(--insilos-shadow-card);
+    }
+
+    /* ------------------------------------------------------------------------
+       2. Tenant / Company Switcher Chip
+       ------------------------------------------------------------------------ */
+    .o_switch_company_menu {
+      height: 28px;
+      line-height: 26px;
+      padding: 0 12px !important;
+      border-radius: var(--insilos-radius-full) !important;
+      background: var(--insilos-bg-hover) !important;
+      border: 1px solid var(--insilos-border-subtle) !important;
+      color: var(--insilos-text-primary) !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      transition: var(--insilos-transition-fast);
+
+      /* Live status green dot */
+      &::before {
+        content: '';
+        width: 6.5px;
+        height: 6.5px;
+        border-radius: 50%;
+        background-color: var(--insilos-success);
+        box-shadow: 0 0 6px var(--insilos-success);
+        display: inline-block;
+        flex-shrink: 0;
+      }
+
+      &:hover {
+        background: var(--insilos-bg-active) !important;
+        border-color: var(--insilos-border-medium) !important;
+        color: var(--insilos-primary) !important;
+      }
+
+      .oe_topbar_name {
+        max-width: 140px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    /* ------------------------------------------------------------------------
+       3. Mobile Menu Toggle - HIDE ON DESKTOP (Prevents Duplicate Avatar!)
+       ------------------------------------------------------------------------ */
+    .o_mobile_menu_toggle {
+      display: none !important; /* Never display on desktop */
+
+      @media (max-width: 767.98px) {
+        display: flex !important;
+      }
+    }
+
+    /* ------------------------------------------------------------------------
+       4. Icon Buttons (Messaging, Activities, Copilot)
+       ------------------------------------------------------------------------ */
+    .o_nav_entry:not(.o_mobile_menu_toggle):not(.o_user_menu),
+    .dropdown-toggle:not(.o_switch_company_menu):not(.o_mobile_menu_toggle):not(.o_user_menu) {
+      width: 30px;
+      height: 30px;
+      padding: 0 !important;
+      border-radius: 50% !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: transparent !important;
+      border: none !important;
+      color: var(--insilos-text-secondary) !important;
+      transition: var(--insilos-transition-fast);
+      position: relative;
+
+      i, .oi, svg {
+        font-size: 15px;
+        transition: var(--insilos-transition-fast);
+      }
+
+      &:hover {
+        background: var(--insilos-bg-hover) !important;
+        color: var(--insilos-text-primary) !important;
+      }
+
+      /* Active / Open state */
+      &[aria-expanded="true"],
+      &.show {
+        background: var(--insilos-primary-subtle) !important;
+        color: var(--insilos-primary) !important;
+      }
+
+      /* Notification Glow Badges */
+      .badge {
+        position: absolute;
+        top: 2px;
+        right: 0px;
+        transform: translate(30%, -20%) !important;
+        font-size: 9.5px !important;
+        font-weight: 750 !important;
+        line-height: 1;
+        padding: 2.5px 5.5px !important;
+        border-radius: var(--insilos-radius-full) !important;
+        background-color: var(--insilos-danger) !important;
+        color: #ffffff !important;
+        border: 1.5px solid var(--insilos-bg-surface);
+        box-shadow: 0 1px 4px rgba(239, 68, 68, 0.4);
+      }
+    }
+
+    /* ------------------------------------------------------------------------
+       5. User Avatar Button (The ONLY avatar on desktop)
+       ------------------------------------------------------------------------ */
+    .o_user_menu {
+      width: auto !important;
+      height: 30px !important;
+      padding: 1px 4px !important;
+      border-radius: var(--insilos-radius-full) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px;
+      background: transparent !important;
+      border: none !important;
+      cursor: pointer;
+      position: relative;
+
+      .o-mail-DiscussAvatar,
+      .o_user_avatar {
+        width: 26px !important;
+        height: 26px !important;
+        border-radius: 50% !important;
+        border: 1.5px solid var(--insilos-primary-border);
+        object-fit: cover;
+        transition: var(--insilos-transition-fast);
+      }
+
+      &:hover {
+        .o-mail-DiscussAvatar,
+        .o_user_avatar {
+          transform: scale(1.06);
+          border-color: var(--insilos-primary);
+        }
+      }
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     6. App Navigation Sections & Home Toggle
+     -------------------------------------------------------------------------- */
+  .o_menu_toggle {
+    margin: auto 8px auto 16px !important;
+    border-radius: var(--insilos-radius-md) !important;
+    transition: var(--insilos-transition-fast);
+
+    &:hover {
+      background: var(--insilos-bg-hover) !important;
+      transform: scale(1.05);
+    }
+  }
+
+  .o_menu_sections {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-left: 4px;
+
+    .o_nav_entry,
+    .dropdown-toggle {
+      border-radius: var(--insilos-radius-full) !important;
+      padding: 5px 12px !important;
+      font-size: 13px !important;
+      font-weight: 550 !important;
+      color: var(--insilos-text-secondary) !important;
+      transition: var(--insilos-transition-fast);
+      text-decoration: none !important;
+
+      &:hover {
+        background: var(--insilos-bg-hover) !important;
+        color: var(--insilos-text-primary) !important;
+      }
+
+      &[aria-expanded="true"],
+      &.active {
+        background: var(--insilos-primary-subtle) !important;
+        color: var(--insilos-primary) !important;
+        font-weight: 650 !important;
+      }
+    }
+  }
+}
+

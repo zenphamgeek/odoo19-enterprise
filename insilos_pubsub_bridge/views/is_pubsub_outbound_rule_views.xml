@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         OUTBOUND RULE — LIST VIEW
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="view_pubsub_outbound_rule_list" model="ir.ui.view">
+        <field name="name">is.pubsub.outbound.rule.list</field>
+        <field name="model">is.pubsub.outbound.rule</field>
+        <field name="arch" type="xml">
+            <list string="Outbound Event Rules">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="model_name"/>
+                <field name="trigger_action"/>
+                <field name="target_url" widget="url"/>
+                <field name="execution_count" string="Triggered"/>
+                <field name="last_triggered_at" string="Last Fired"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         OUTBOUND RULE — FORM VIEW
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="view_pubsub_outbound_rule_form" model="ir.ui.view">
+        <field name="name">is.pubsub.outbound.rule.form</field>
+        <field name="model">is.pubsub.outbound.rule</field>
+        <field name="arch" type="xml">
+            <form string="Outbound Event Rule">
+                <header>
+                    <button name="action_view_outbound_events" type="object" string="View Published Events" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="w_button_box" name="button_box">
+                        <button name="action_view_outbound_events" type="object" class="w_stat_button" icon="fa-paper-plane">
+                            <field name="outbound_event_count" widget="statinfo" string="Events"/>
+                        </button>
+                    </div>
+                    <div class="w_title">
+                        <label for="name" string="Rule Name"/>
+                        <h1><field name="name" placeholder="e.g. Push CRM Leads to Partner CRM"/></h1>
+                    </div>
+                    <group>
+                        <group string="Trigger Configuration">
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="model_name" placeholder="e.g. crm.lead"/>
+                            <field name="trigger_action"/>
+                            <field name="watched_fields" invisible="trigger_action != 'write'" placeholder="e.g. stage_id,priority"/>
+                            <field name="state_field" invisible="trigger_action != 'state_change'"/>
+                            <field name="state_from" invisible="trigger_action != 'state_change'"/>
+                            <field name="state_to" invisible="trigger_action != 'state_change'"/>
+                        </group>
+                        <group string="Destination &amp; Delivery">
+                            <field name="target_url" widget="url" placeholder="https://partner-api.com/v1/webhook/erp-events"/>
+                            <field name="http_method"/>
+                            <field name="auth_header" password="True"/>
+                            <field name="timeout_sec"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Retry Policy">
+                            <field name="max_retries"/>
+                            <field name="retry_delay_sec"/>
+                        </group>
+                        <group string="Payload Options">
+                            <field name="include_full_record"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Statistics">
+                            <field name="execution_count"/>
+                            <field name="last_triggered_at"/>
+                            <field name="active"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pubsub_outbound_rule_search" model="ir.ui.view">
+        <field name="name">is.pubsub.outbound.rule.search</field>
+        <field name="model">is.pubsub.outbound.rule</field>
+        <field name="arch" type="xml">
+            <search><field name="name"/><field name="model_name"/><field name="target_url"/></search></field>
+    </record>
+
+    <record id="action_pubsub_outbound_rule" model="ir.actions.act_window">
+        <field name="name">Outbound Event Rules</field>
+        <field name="res_model">is.pubsub.outbound.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure your first outbound event rule.
+            </p>
+            <p>
+                Define which ERP model changes (create/update/delete) should be pushed to external partner webhooks automatically.
+            </p>
+        </field>
+    </record>
+
+</odoo>

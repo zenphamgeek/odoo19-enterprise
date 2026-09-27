@@ -58,7 +58,7 @@
       <attribute name="t-att-data-studio-xpath">column.studioXpath</attribute>
     </xpath>
 
-    <xpath expr="//t[@t-if='hasOpenFormViewColumn']" position="attributes">
+    <xpath expr="//t[contains(@t-if, 'hasOpenFormViewColumn')]" position="attributes">
       <attribute name="t-if">props.archInfo.openFormView</attribute>
     </xpath>
 

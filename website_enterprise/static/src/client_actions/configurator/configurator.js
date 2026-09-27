@@ -5,6 +5,7 @@ import { ROUTES, WelcomeScreen } from "@website/client_actions/configurator/conf
 
 export const WEBSITE_GENERATOR_ROUTE = 6;
 
+if (WelcomeScreen?.prototype) {
 patch(WelcomeScreen.prototype, {
     setup() {
         super.setup(...arguments);
@@ -37,3 +38,4 @@ patch(WelcomeScreen.prototype, {
         this.ui.unblock();
     },
 });
+}

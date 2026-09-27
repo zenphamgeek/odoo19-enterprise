@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tenant_search" model="ir.ui.view"><field name="name">insilos.tenant.search</field><field name="model">insilos.tenant</field><field name="arch" type="xml">
+            <search><field name="name"/><field name="slug"/><field name="db_name"/><field name="primary_domain"/><field name="template_id"/></search></field></record>
+    <record id="view_tenant_operation_search" model="ir.ui.view"><field name="name">insilos.tenant.operation.search</field><field name="model">insilos.tenant.operation</field><field name="arch" type="xml">
+            <search><field name="tenant_id"/><field name="operation_type"/><field name="k8s_job_name"/><filter string="Queued" name="queued" domain="[('state','=','queued')]"/><filter string="Running" name="running" domain="[('state','=','running')]"/><filter string="Failed" name="failed" domain="[('state','=','failed')]"/><group><filter string="Tenant" name="group_tenant" context="{'group_by':'tenant_id'}"/><filter string="State" name="group_state" context="{'group_by':'state'}"/></group></search></field></record>
+    <record id="view_template_release_search" model="ir.ui.view"><field name="name">insilos.template.release.search</field><field name="model">insilos.template.release</field><field name="arch" type="xml">
+            <search><field name="name"/><field name="template_id"/><field name="app_version"/><field name="artifact_sha256"/><filter string="Draft" name="draft" domain="[('state','=','draft')]"/><filter string="Published" name="published" domain="[('state','=','published')]"/><group><filter string="Template" name="group_template" context="{'group_by':'template_id'}"/><filter string="State" name="group_state" context="{'group_by':'state'}"/></group></search></field></record>
+</odoo>

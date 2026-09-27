@@ -1,5 +1,5 @@
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
+import { getActiveHotkey } from "@web/core/hotkeys/hotkey_utils";
 import { _t } from "@web/core/l10n/translation";
 import { FormController } from '@web/views/form/form_controller';
 import { KnowledgeCoverDialog } from '@knowledge/components/knowledge_cover/knowledge_cover_dialog';

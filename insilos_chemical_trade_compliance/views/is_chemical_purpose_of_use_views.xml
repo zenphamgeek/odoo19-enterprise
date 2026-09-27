@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_is_chemical_purpose_of_use_tree" model="ir.ui.view">
+        <field name="name">is.chemical.purpose.of.use.tree</field>
+        <field name="model">is.chemical.purpose.of.use</field>
+        <field name="arch" type="xml">
+            <list string="Purposes of Use" sample="1">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="industry_category"/>
+                <field name="facility_id"/>
+                <field name="max_annual_demand_kg" sum="Total Max Demand (kg)"/>
+                <field name="standard_loss_rate_pct"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_is_chemical_purpose_of_use_form" model="ir.ui.view">
+        <field name="name">is.chemical.purpose.of.use.form</field>
+        <field name="model">is.chemical.purpose.of.use</field>
+        <field name="arch" type="xml">
+            <form string="Purpose of Use &amp; Maximum Demand Quota">
+                <sheet>
+                    <div class="w_title">
+                        <label for="name" class="w_edit_only" string="Purpose Name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Solvent for circuit board coating"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Categorization &amp; Scope">
+                            <field name="code"/>
+                            <field name="industry_category"/>
+                            <field name="facility_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Industrial Demand &amp; Loss Quota">
+                            <field name="max_annual_demand_kg"/>
+                            <field name="standard_loss_rate_pct"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Technical Description" name="description">
+                            <field name="description" placeholder="Detailed technical description of chemical usage process in facility..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_is_chemical_purpose_of_use_search" model="ir.ui.view">
+        <field name="name">is.chemical.purpose.of.use.search</field>
+        <field name="model">is.chemical.purpose.of.use</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="industry_category"/>
+                <field name="facility_id"/>
+                <group>
+                    <filter name="group_industry" string="Industry Category" context="{'group_by': 'industry_category'}"/>
+                    <filter name="group_facility" string="Facility" context="{'group_by': 'facility_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_is_chemical_purpose_of_use" model="ir.actions.act_window">
+        <field name="name">Manage Chemical Applications &amp; Consumption Quotas</field>
+        <field name="path">chemical-purposes</field>
+        <field name="res_model">is.chemical.purpose.of.use</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_is_chemical_purpose_of_use_search"/>
+        <field name="help" type="html">
+            <p class="w_view_nocontent_smiling_face">
+                Define the intended industrial applications and annual demand quotas for chemical substances.
+            </p>
+        </field>
+    </record>
+</odoo>

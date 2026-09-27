@@ -6,11 +6,11 @@ import {
     onWillUnmount,
     onWillUpdateProps,
     reactive,
-    useEffect,
+    signal,
+    proxy,
     useExternalListener,
-    useRef,
-    useState,
 } from "@odoo/owl";
+import { useLayoutEffect } from "@web/owl2/utils";
 import { hasTouch, isMobileOS } from "@web/core/browser/feature_detection";
 import { Domain } from "@web/core/domain";
 import { serializeDate, serializeDateTime, toLocaleDateTimeString } from "@web/core/l10n/dates";
@@ -202,11 +202,18 @@ export class GanttRenderer extends Component {
 
     static getRowHeaderWidth = (width) => 100 / (width > 768 ? 6 : 3);
 
+    gridRef = signal.ref();
+    cellContainerRef = signal.ref();
+
+    get grid() {
+        return this.gridRef;
+    }
+    get cellContainer() {
+        return this.cellContainerRef;
+    }
+
     setup() {
         this.model = this.props.model;
-
-        this.gridRef = useRef("grid");
-        this.cellContainerRef = useRef("cellContainer");
 
         this.actionService = useService("action");
         this.dialogService = useService("dialog");
@@ -229,13 +236,17 @@ export class GanttRenderer extends Component {
         };
 
         /** @type {Interaction} */
-        this.interaction = reactive(
-            {
-                mode: null,
-                dragAction: "reschedule",
+        const rawInteraction = proxy({
+            mode: null,
+            dragAction: "reschedule",
+        });
+        this.interaction = new Proxy(rawInteraction, {
+            set: (target, prop, value) => {
+                target[prop] = value;
+                this.onInteractionChange();
+                return true;
             },
-            () => this.onInteractionChange()
-        );
+        });
         this.onInteractionChange(); // Used to hook into "interaction"
         /** @type {Record<ConnectorId, ConnectorProps>} */
         this.connectors = reactive({});
@@ -279,7 +290,7 @@ export class GanttRenderer extends Component {
             this.computeHoverParams(ev)
         );
 
-        this.offHoursState = useState({});
+        this.offHoursState = {};
 
         useExternalListener(window, "keydown", (ev) => this.onWindowKeyDown(ev));
         useExternalListener(window, "keyup", (ev) => this.onWindowKeyUp(ev));
@@ -473,17 +484,19 @@ export class GanttRenderer extends Component {
         onWillRender(this.onWillRender);
         onWillUnmount(this.onWillUnmount);
 
-        useEffect(
+        useLayoutEffect(
             (content) => {
-                content.addEventListener("scroll", this.throttledComputeHoverParams);
-                return () => {
-                    content.removeEventListener("scroll", this.throttledComputeHoverParams);
-                };
+                if (content) {
+                    content.addEventListener("scroll", this.throttledComputeHoverParams);
+                    return () => {
+                        content.removeEventListener("scroll", this.throttledComputeHoverParams);
+                    };
+                }
             },
             () => [this.gridRef.el?.parentElement]
         );
 
-        useEffect(() => {
+        useLayoutEffect(() => {
             if (this.useFocusDate) {
                 this.useFocusDate = false;
                 this.focusDate(this.model.metaData.focusDate);
@@ -590,7 +603,7 @@ export class GanttRenderer extends Component {
     }
 
     removeCellGhosts() {
-        for (const ghost of this.gridRef.el.querySelectorAll(".o_cell_ghost")) {
+        for (const ghost of this.gridRef.el?.querySelectorAll(".o_cell_ghost") || []) {
             ghost.remove();
         }
         this.removeStickyCoordinates();
@@ -1893,6 +1906,7 @@ export class GanttRenderer extends Component {
     getDurationStr(record) {
         const durationStr = formatFloatTime(record.allocated_hours, {
             noLeadingZeroHour: true,
+            numeric: true,
         }).replace(/(:00|:)/g, "h");
         return ` (${durationStr})`;
     }
@@ -1926,6 +1940,9 @@ export class GanttRenderer extends Component {
     }
 
     setSomeGridStyleProperties() {
+        if (!this.gridRef.el) {
+            return;
+        }
         const rowsTemplate = this.computeRowsTemplate();
         const colsTemplate = this.computeColsTemplate();
         this.gridRef.el.style.setProperty("--Gantt__GridRows-grid-template-rows", rowsTemplate);
@@ -2199,7 +2216,7 @@ export class GanttRenderer extends Component {
             // remove some elements/attributes from archXmlDoc
             archXmlDoc.removeAttribute("highlight_color");
             const menu = archXmlDoc.querySelector(
-                `templates [t-name=${KanbanRecord.KANBAN_MENU_ATTRIBUTE}]`
+                `templates [t-name=${KanbanRecord.MENU_ATTRIBUTE || "menu"}]`
             );
             menu?.remove();
 
@@ -2221,16 +2238,16 @@ export class GanttRenderer extends Component {
                     <templates>
                         <field name="${dateStartField}"/>
                         <field name="${dateStopField}"/>
-                        <t t-name="${KanbanRecord.KANBAN_CARD_ATTRIBUTE}">
+                        <t t-name="${KanbanRecord.CARD_ATTRIBUTE || "card"}">
                             <ul class="p-0 mb-0 list-unstyled">
                                 <li class="pe-2">
                                     <strong>${nameString}</strong>: <field name="display_name"/>
                                 </li>
                                 <li class="pe-2">
-                                    <strong>${startString}</strong>: <span t-esc="luxon.DateTime.fromISO(record.${dateStartField}.raw_value).toFormat('f')"/>
+                                    <strong>${startString}</strong>: <span t-out="luxon.DateTime.fromISO(record.${dateStartField}.raw_value).toFormat('f')"/>
                                 </li>
                                 <li class="pe-2">
-                                    <strong>${stopString}</strong>: <span t-esc="luxon.DateTime.fromISO(record.${dateStopField}.raw_value).toFormat('f')"/>
+                                    <strong>${stopString}</strong>: <span t-out="luxon.DateTime.fromISO(record.${dateStopField}.raw_value).toFormat('f')"/>
                                 </li>
                             </ul>
                         </t>
@@ -3172,9 +3189,13 @@ export class GanttRenderer extends Component {
         this.offHoursState.foldedColumns.fill(fold ? 1 : 0, startIndex, stopIndex + 1);
         this.computeFoldedGrid();
         this.cleanMultiSelection();
+        this.render();
     }
 
     toggleCollapsableColumnHeaderHighlighting(collapsableColumnHeader) {
+        if (!this.gridRef.el) {
+            return;
+        }
         if (
             !collapsableColumnHeader ||
             collapsableColumnHeader.classList.contains("o_gantt_header_folded")
@@ -3424,8 +3445,13 @@ export class GanttRenderer extends Component {
             return;
         }
         const target = ev.target.closest(".o_gantt_pill_wrapper");
-        const props = await this.keepLast.add(this.getPopoverProps(pill));
-        this.popover.open(target, props);
+        try {
+            const props = await this.keepLast.add(this.getPopoverProps(pill));
+            this.popover.open(target, props);
+        } catch (e) {
+            console.error("ON PILL CLICKED ERROR:", e);
+            throw e;
+        }
     }
 
     onPlan(rowId, startCol, stopCol) {
@@ -3475,6 +3501,7 @@ export class GanttRenderer extends Component {
                               {
                                   name: "Undo",
                                   icon: "fa-undo",
+                                  iconClass: "fa fa-undo",
                                   onClick: async () => {
                                       const ids = Object.keys(result["old_vals_per_pill_id"]).map(
                                           Number

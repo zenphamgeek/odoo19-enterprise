@@ -2,10 +2,10 @@
 
 <templates xml:space="preserve">
     <t t-name="account_accountant.AttachmentPreviewListView" t-inherit="web.ListView">
-        <xpath expr="//div[@t-ref='root']" position="attributes" type="add">
+        <xpath expr="//div[contains(@t-ref, 'root')]" position="attributes" type="add">
             <attribute name="class" add="o_move_line_list_view" separator=" "/>
         </xpath>
-        <xpath expr="//t[@t-component='props.Renderer']" position="attributes">
+        <xpath expr="//t[contains(@t-component, 'props.Renderer')]" position="attributes">
             <attribute name="setSelectedRecord.bind">this.setSelectedRecord</attribute>
         </xpath>
         <xpath expr="//Layout" position="inside">
@@ -18,6 +18,7 @@
             <t t-if="this.attachmentPreviewState.displayAttachment">
                 <t t-if="this.attachmentPreviewState.thread and this.attachmentPreviewState.thread.attachmentsInWebClientView.length > 0">
                     <AccountAttachmentView
+                        thread="this.thread"
                         threadId="this.attachmentPreviewState.thread.id"
                         threadModel="this.attachmentPreviewState.thread.model"
                         openInPopout="0"
@@ -41,6 +42,7 @@
                      t-if="this.attachmentPreviewState.thread?.attachmentsInWebClientView.length"
                 >
                     <AccountAttachmentView
+                        thread="this.thread"
                         threadId="this.attachmentPreviewState.thread.id"
                         threadModel="this.attachmentPreviewState.thread.model"
                         openInPopout="1"

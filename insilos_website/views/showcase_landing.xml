@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ================================================================= -->
+    <!-- DEDICATED SHOWCASE LANDING PAGE: /showcase-3d                     -->
+    <!-- ================================================================= -->
+    <template id="insilos_showcase_3d_page" name="Insilos 3D Industrial Showcase Landing Page">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Insilos — 3D Industrial &amp; Logistics Showcase</t>
+            <t t-set="meta_description">Trải nghiệm tương tác 3D và Video 4K Cinematic toàn cảnh chuỗi giá trị Sản xuất Cơ khí &amp; Vận tải Đa phương thức trên nền tảng Insilos Enterprise.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
+                <div class="oe_structure oe_empty" id="oe_structure_showcase_top"/>
+
+                <!-- 1. Hero 3D Cinematic Section -->
+                <t t-call="insilos_website.s_insilos_hero_cinematic"/>
+
+                <!-- 2. Interactive Feature Footage Breakdown -->
+                <t t-call="insilos_website.s_insilos_feature_breakdown"/>
+
+                <!-- 2.1 Complete 12 Business Demos Gold Master Release Suite -->
+                <t t-call="insilos_website.s_insilos_gold_master_suite"/>
+
+                <!-- 3. Executive Assurance & Tech Compliance Strip -->
+                <section class="s_features o_colored_level o_cc o_cc5 py-5 border-top border-secondary border-opacity-25" data-snippet="s_features" data-name="Insilos Compliance Bar" data-bs-theme="dark">
+                    <div class="container">
+                        <div class="row g-4 text-center justify-content-center">
+                            <div class="col-md-3 col-6">
+                                <div class="p-3">
+                                    <svg class="ph-duotone ph-shield ph-xl text-cyan mb-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield"/></svg>
+                                    <h5 class="text-white fw-bold mb-1">Bảo Mật Sovereign</h5>
+                                    <p class="text-secondary small mb-0">100% On-Premises &amp; Air-Gapped Ready</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="p-3">
+                                    <svg class="ph-duotone ph-file-text ph-xl text-emerald mb-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                    <h5 class="text-white fw-bold mb-1">Thông Tư 200/2014</h5>
+                                    <p class="text-secondary small mb-0">Hạch toán chuẩn mực kế toán Việt Nam</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="p-3">
+                                    <svg class="ph-duotone ph-gauge ph-xl text-cyan mb-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-gauge"/></svg>
+                                    <h5 class="text-white fw-bold mb-1">Real-Time Telemetry</h5>
+                                    <p class="text-secondary small mb-0">Đồng bộ SCADA máy cắt CNC &amp; GPS Fleet</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="p-3">
+                                    <svg class="ph-duotone ph-handshake ph-xl text-emerald mb-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-handshake"/></svg>
+                                    <h5 class="text-white fw-bold mb-1">Đối Tác Tier-1</h5>
+                                    <p class="text-secondary small mb-0">Đã kiểm chứng tại VSIP, Đình Vũ, Cát Lái</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Closing CTA Section -->
+                <section class="s_call_to_action o_colored_level o_cc o_cc5 py-5 text-center position-relative overflow-hidden" data-snippet="s_call_to_action" data-name="Insilos Closing CTA" data-bs-theme="dark">
+                    <div class="container position-relative z-1 py-4">
+                        <div class="col-lg-8 mx-auto">
+                            <h2 class="display-5 fw-bold text-white mb-3">
+                                Sẵn Sàng Chuyển Đổi Vận Hành Cùng Insilos?
+                            </h2>
+                            <p class="lead text-secondary mb-4">
+                                Đội ngũ chuyên gia kiến trúc giải pháp công nghiệp của Insilos sẵn sàng khảo sát thực địa và thiết kế mô hình số hóa cho nhà máy của Quý vị.
+                            </p>
+                            <div class="d-flex justify-content-center gap-3">
+                                <button type="button" class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold" data-bs-toggle="modal" data-bs-target="#insilosLeadModal">
+                                    Đăng Ký Tư Vấn Trực Tiếp
+                                </button>
+                                <a href="/request-demo" class="btn btn-outline-light btn-lg rounded-pill px-4 py-3">
+                                    Yêu Cầu Demo Chi Tiết
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty" id="oe_structure_showcase_bottom"/>
+            </main>
+        </t>
+    </template>
+</odoo>

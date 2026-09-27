@@ -1,5 +1,6 @@
 import { _t } from "@web/core/l10n/translation";
-import { Component, onWillUnmount, useEffect, useRef, useSubEnv } from "@odoo/owl";
+import { Component, onWillUnmount, signal, useSubEnv } from "@odoo/owl";
+import { useLayoutEffect } from "@web/owl2/utils";
 import {
     deleteConfirmationMessage,
     ConfirmationDialog,
@@ -34,21 +35,25 @@ export class GanttController extends Component {
     };
     static template = "web_gantt.GanttController";
 
+    rootRef = signal.ref();
+    get root() {
+        return this.rootRef;
+    }
+
     setup() {
         this.actionService = useService("action");
         this.dialogService = useService("dialog");
         this.orm = useService("orm");
+        this.ui = useService("ui");
 
         useSubEnv({
             getCurrentFocusDateCallBackRecorder: new CallbackRecorder(),
             createFromSelectionCallBackRecorder: new CallbackRecorder(),
         });
 
-        const rootRef = useRef("root");
-
         this.model = useModelWithSampleData(this.props.Model, this.props.modelParams);
         useSetupAction({
-            rootRef,
+            rootRef: this.rootRef,
             getLocalState: () => ({
                 metaData: this.model.metaData,
                 displayParams: this.model.displayParams,
@@ -72,26 +77,30 @@ export class GanttController extends Component {
             }
         });
 
-        useEffect(
+        useLayoutEffect(
             (showNoContentHelp) => {
-                if (showNoContentHelp) {
+                if (showNoContentHelp && this.rootRef.el) {
                     const realRows = [
-                        ...rootRef.el.querySelectorAll(
+                        ...this.rootRef.el.querySelectorAll(
                             ".o_gantt_row_header:not(.o_sample_data_disabled)"
                         ),
                     ];
                     // interactive rows created in extensions (fromServer undefined)
+                    const headerGroupsEl = this.rootRef.el.querySelector(".o_gantt_header_groups");
+                    const headerColumnsEl = this.rootRef.el.querySelector(".o_gantt_header_columns");
                     const headerContainerWidth =
-                        rootRef.el.querySelector(".o_gantt_header_groups").clientHeight +
-                        rootRef.el.querySelector(".o_gantt_header_columns").clientHeight;
+                        (headerGroupsEl ? headerGroupsEl.clientHeight : 0) +
+                        (headerColumnsEl ? headerColumnsEl.clientHeight : 0);
 
                     const offset = realRows.reduce(
                         (current, el) => current + el.clientHeight,
                         headerContainerWidth
                     );
 
-                    const noContentHelperEl = rootRef.el.querySelector(".o_view_nocontent");
-                    noContentHelperEl.style.top = `${offset}px`;
+                    const noContentHelperEl = this.rootRef.el.querySelector(".o_view_nocontent");
+                    if (noContentHelperEl) {
+                        noContentHelperEl.style.top = `${offset}px`;
+                    }
                 }
             },
             () => [this.showNoContentHelp]
@@ -100,7 +109,7 @@ export class GanttController extends Component {
     }
 
     get className() {
-        if (this.env.isSmall) {
+        if (this.ui.isSmall) {
             const classList = (this.props.className || "").split(" ");
             classList.push("o_action_delegate_scroll");
             return classList.join(" ");

@@ -1,0 +1,46 @@
+.w_idp_dashboard { overflow:auto; padding:1rem 1.5rem 2rem; background:#f4f7fb; height:100%; color:#172b4d;
+  .w_idp_results { display:grid; gap:1rem; }
+  .w_idp_header { display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1rem 1.25rem; border-radius:.75rem; color:#fff; background:linear-gradient(120deg,#0b2e64,#174f91); box-shadow:0 6px 18px #0b2e6426; h1{margin:0;font-size:clamp(1.4rem,2vw,1.75rem);color:#fff} p{margin:0;color:#dce9f8} }
+  .w_idp_eyebrow { display:block;margin:0 0 .25rem;color:#5f7798;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase; } .w_idp_header .w_idp_eyebrow{color:#b9d4f4}
+  .w_idp_filters { display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.5rem;align-items:end;margin:.75rem 0; .w_idp_filter_fields{display:contents} label{font-size:.75rem;font-weight:600} input,select{margin-top:.2rem;min-width:0} button{min-height:38px} }
+  .w_idp_kpis { display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.75rem; }
+  .w_idp_card,.w_idp_panel { min-width:0;border:1px solid #dbe2ea;border-radius:.75rem;background:#fff;box-shadow:0 2px 8px #0b2e640d; }
+  .w_idp_card { padding:.8rem;text-align:left;color:inherit;transition:transform .15s,box-shadow .15s; span,small{display:block} strong{display:block;font-size:1.5rem;color:#0b2e64} small{color:#65758b;font-size:.72rem} &:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 6px 16px #0b2e641a} &:focus-visible{outline:3px solid #2684ff;outline-offset:2px} }
+  .w_idp_tower_grid { display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:.75rem;align-items:stretch; }
+  .w_idp_panel { padding:1rem; h2{font-size:1rem;margin:0 0 .75rem} h3{font-size:.85rem;margin:1rem 0 .4rem} }
+  .w_idp_panel_heading{display:flex;justify-content:space-between;gap:.75rem;align-items:start}.w_idp_queue{margin:0}.w_idp_queue .table{margin-bottom:0}.w_idp_queue td,.w_idp_queue th{white-space:nowrap}.w_idp_queue td:nth-child(4){max-width:22rem;overflow:hidden;text-overflow:ellipsis}.w_idp_queue small{font-size:.75rem;color:#65758b}
+  .w_idp_visual_donut { display:flex;align-items:center;gap:1rem;flex-wrap:wrap; }.w_idp_donut { width:130px;height:130px;flex:0 0 130px;border-radius:50%;display:grid;place-items:center;margin:.5rem auto;>div{width:82px;height:82px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}strong{font-size:1.5rem;color:#0b2e64}small{color:#526680} }.w_idp_legend{flex:1;min-width:0}.w_idp_visual_donut .w_idp_bar{grid-template-columns:minmax(70px,1fr) auto auto;min-height:36px}.w_idp_swatch{display:inline-block;width:10px;height:10px;margin-right:8px;border-radius:3px}.w_idp_line{width:100%;height:auto;display:block}.w_idp_gridlines{stroke:#dbe5ef;stroke-width:1;fill:none}.w_idp_axis{display:flex;justify-content:space-between;color:#526680;font-size:.75rem;gap:1rem}.w_idp_visual_line .w_idp_legend{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem;max-height:80px;overflow:auto}.w_idp_visual_line .w_idp_bar{width:auto;display:flex;gap:.75rem;padding:.35rem .5rem;border:1px solid #dbe5ef;min-height:36px}
+  .w_idp_columns{display:flex;gap:1rem;padding:1rem 0;overflow-x:auto}.w_idp_column{display:flex;flex:1;min-width:80px;flex-direction:column;align-items:center;gap:.5rem;background:transparent;border:0;color:inherit;font-size:.8rem;border-radius:.4rem;&:hover{background:#f1f6fc}&:focus-visible{outline:3px solid #2684ff;outline-offset:2px}}.w_idp_column_track{height:160px;width:100%;display:flex;align-items:flex-end;justify-content:center;border-bottom:1px solid #dbe5ef;background:repeating-linear-gradient(to top,transparent 0,transparent 39px,#edf1f6 39px,#edf1f6 40px);i{display:block;width:55%;max-width:64px;border-radius:5px 5px 0 0}}.w_idp_empty{padding:1.25rem 0;color:#526680;text-align:center}
+  .w_idp_grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}.w_idp_bar,.w_idp_row{display:grid;grid-template-columns:minmax(90px,1fr) 2fr auto;align-items:center;gap:.5rem;width:100%;border:0;background:transparent;padding:.45rem 0;text-align:left}.w_idp_bar{border-radius:.25rem;&:hover{background:#f1f6fc}.w_idp_chart{width:100%;height:.75rem;overflow:visible}.w_idp_chart_track{fill:#dce7f3}.w_idp_chart_value{fill:#0b5cad}}.w_idp_bar:focus-visible{outline:3px solid #2684ff;outline-offset:2px}.w_idp_row{grid-template-columns:1fr auto;border-bottom:1px solid #edf0f4}.w_idp_strategic strong{color:#805500}.w_idp_ocr_table{min-width:0;max-width:100%;overflow-x:auto}.w_idp_onboarding{summary{cursor:pointer;list-style:none}.w_onboarding_steps{display:flex;gap:.5rem;padding:1rem 0;overflow-x:auto}.w_onboarding_step{min-width:11rem;flex:1;strong,small{display:block}.badge{margin-top:.4rem}}}.w_idp_state{text-align:center;padding:4rem;font-size:1.1rem}
+}
+@media (max-width:1100px){.w_idp_dashboard{.w_idp_filters{grid-template-columns:repeat(4,minmax(0,1fr))}.w_idp_kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.w_idp_tower_grid{grid-template-columns:1fr 1fr}.w_idp_throughput{grid-column:span 2}}}
+@media (max-width:768px){.w_idp_dashboard{overflow-x:hidden;padding:.75rem;overflow-wrap:anywhere;> *{box-sizing:border-box;min-width:0;max-width:100%}>fieldset{min-inline-size:0!important;width:100%!important}.w_idp_header{align-items:flex-start;flex-direction:column}.w_idp_filters,.w_idp_kpis,.w_idp_grid,.w_idp_tower_grid{grid-template-columns:minmax(0,1fr)}.w_idp_throughput{grid-column:auto}.w_idp_filters label,.w_idp_header>div{min-width:0}.w_idp_filters input,.w_idp_filters select{min-width:0;width:100%}.w_idp_filters input,.w_idp_filters select,.w_idp_header button,.w_onboarding_step,.w_idp_card{min-height:44px}.w_idp_onboarding,.w_idp_queue .table-responsive,.w_idp_ocr_table{contain:inline-size;width:100%;max-width:100%;overflow-x:auto}.w_idp_panel_heading{align-items:start;flex-direction:column}.w_idp_queue .table{width:100%;table-layout:fixed}.w_idp_queue .table th,.w_idp_queue .table td{white-space:normal;overflow-wrap:anywhere}.w_idp_queue .table :is(th,td):nth-child(n+4){display:none}.w_onboarding_steps{flex-direction:column;overflow-x:clip}.w_onboarding_step{min-width:0;width:100%}}}
+
+/* Logistics IDP Full-Width Onboarding Form */
+.o_form_view.o_logistics_idp_onboarding_form,
+.o_action_manager:has(.o_logistics_idp_onboarding_form) {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    .o_form_view_container {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .o_form_sheet_bg {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    .o_form_sheet {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 1.5rem 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+}

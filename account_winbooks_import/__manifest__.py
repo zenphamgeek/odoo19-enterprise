@@ -8,7 +8,7 @@
 Import Data From Winbooks
     """,
     'category': 'Accounting/Accounting',
-    'depends': ['account_accountant', 'base_vat', 'account_base_import'],
+    'depends': ['account_accountant', 'account_base_import'],
     'external_dependencies': {
         'python': ['dbfread'],
         'apt': {

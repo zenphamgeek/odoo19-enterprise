@@ -22,6 +22,6 @@ pivotSidePanelRegistry.add("ODOO", {
 initCallbackRegistry.add("insertPivot", insertPivot);
 
 sidePanelRegistry.add("NewOdooPivotSidePanel", {
-    title: _t("New Odoo Pivot"),
+    title: _t("New Insilos Pivot"),
     Body: NewPivotSidePanel,
 });

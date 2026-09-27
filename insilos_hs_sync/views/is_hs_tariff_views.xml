@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_is_hs_tariff_list" model="ir.ui.view">
+        <field name="name">is.hs.tariff.list</field>
+        <field name="model">is.hs.tariff</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="hs_code"/>
+                <field name="description_vi"/>
+                <field name="import_duty_rate" string="Import Duty (%)"/>
+                <field name="export_duty_rate" string="Export Duty (%)" optional="hide"/>
+                <field name="vat_rate" string="VAT (%)"/>
+                <field name="unit" optional="hide"/>
+                <field name="ruling_count" string="Rulings"/>
+                <field name="product_template_count" string="Products"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_is_hs_tariff_form" model="ir.ui.view">
+        <field name="name">is.hs.tariff.form</field>
+        <field name="model">is.hs.tariff</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="%(action_report_hs_tariff_item)d" string="Print Tariff Schedule &amp; Notes" type="action" class="btn-secondary" icon="fa-print"/>
+                </header>
+                <sheet>
+                    <div class="w_button_box" name="button_box">
+                        <button name="action_view_rulings" type="object" class="w_stat_button" icon="fa-certificate">
+                            <field name="ruling_count" widget="statinfo" string="Rulings"/>
+                        </button>
+                        <button name="action_view_matching_products" type="object" class="w_stat_button" icon="fa-cubes">
+                            <field name="product_template_count" widget="statinfo" string="Products"/>
+                        </button>
+                    </div>
+                    <div class="w_title">
+                        <label for="hs_code" string="HS Code (8-digit)"/>
+                        <h1>
+                            <field name="hs_code" placeholder="e.g. 8471.30.20"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Tariff Rates &amp; Taxes">
+                            <field name="import_duty_rate"/>
+                            <field name="export_duty_rate"/>
+                            <field name="vat_rate"/>
+                            <field name="unit"/>
+                        </group>
+                        <group string="Validity &amp; Authority">
+                            <field name="valid_from"/>
+                            <field name="valid_to"/>
+                            <field name="source_url" widget="url"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Product Descriptions">
+                        <field name="description_vi" placeholder="Vietnamese official customs tariff description..."/>
+                        <field name="description_en" placeholder="English customs tariff description (AHTN/WCO)..."/>
+                    </group>
+                    <notebook>
+                        <page string="Specialized Management">
+                            <field name="specialized_management_notes" placeholder="Ministry regulations, quality inspection requirements, permits..."/>
+                        </page>
+                        <page string="Legal Basis">
+                            <field name="legal_basis" placeholder="Decrees, Circulars, Decision numbers..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_is_hs_tariff_search" model="ir.ui.view">
+        <field name="name">is.hs.tariff.search</field>
+        <field name="model">is.hs.tariff</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="hs_code"/>
+                <field name="description_vi"/>
+                <field name="description_en"/>
+                <field name="specialized_management_notes"/>
+                <field name="legal_basis"/>
+                <filter name="active_tariffs" string="Active" domain="[('active', '=', True)]"/>
+                <group>
+                    <filter name="group_import_duty" string="Import Duty Rate" context="{'group_by': 'import_duty_rate'}"/>
+                    <filter name="group_vat_rate" string="VAT Rate" context="{'group_by': 'vat_rate'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_is_hs_tariff" model="ir.actions.act_window">
+        <field name="name">Manage Harmonized Tariff Schedule (HS Master)</field>
+        <field name="path">hs-tariff</field>
+        <field name="res_model">is.hs.tariff</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_is_hs_tariff_search"/>
+        <field name="context">{'search_default_active_tariffs': 1}</field>
+        <field name="help" type="html">
+            <p class="w_view_nocontent_smiling_face">
+                No HS tariff codes synchronized yet.
+            </p>
+            <p>
+                Tariffs are automatically received via webhooks or queried on-demand from the Hermes HS Knowledge Engine.
+            </p>
+        </field>
+    </record>
+</odoo>

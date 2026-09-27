@@ -9,10 +9,9 @@ export class Many2OneGridRow extends GridRow {
         relation: { type: String, optional: true },
         canOpen: { type: Boolean, optional: true },
     }
-    static defaultProps = {
-        ...GridRow.defaultProps,
-        canOpen: true,
-    };
+    get canOpen() {
+        return this.props.canOpen ?? true;
+    }
 
     setup() {
         this.orm = useService("orm");
@@ -55,7 +54,7 @@ export class Many2OneGridRow extends GridRow {
     }
 
     onClick(ev) {
-        if (this.props.canOpen) {
+        if (this.canOpen) {
             ev.stopPropagation();
             this.openAction();
         }

@@ -7,7 +7,7 @@
     'category': 'Supply Chain/Manufacturing',
     'sequence': 51,
     'summary': """Work Orders, Planning, Stock Reports.""",
-    'depends': ['quality', 'mrp', 'barcodes', 'web_gantt', 'web_tour', 'hr_hourly_cost'],
+    'depends': ['quality', 'mrp', 'barcodes', 'web_gantt', 'web_tour', 'hr'],
     'auto_install': ['mrp'],
     'description': """Enterprise extension for MRP
 * Work order planning.  Check planning by Gantt views grouped by production order / work center

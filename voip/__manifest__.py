@@ -1,7 +1,7 @@
 {  # noqa: B018
     "name": "Phone",
-    "summary": """Make and receive phone calls from within Odoo.""",
-    "description": """Adds a softphone and helpers to make phone calls directly from within your Odoo database.""",
+    "summary": """Make and receive phone calls from within Insilos.""",
+    "description": """Adds a softphone and helpers to make phone calls directly from within your Insilos database.""",
     "category": "Productivity/Phone",
     "sequence": 280,
     "version": "2.0",

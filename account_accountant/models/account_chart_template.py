@@ -25,10 +25,10 @@ class AccountChartTemplate(models.AbstractModel):
             }
         }
 
-    def _get_chart_template_data(self, chart_template):
+    def _get_chart_template_data(self, chart_template, *args, **kwargs):
         # OVERRIDE chart template to process the default values for deferred journal and accounts.
 
-        data = super()._get_chart_template_data(chart_template)
+        data = super()._get_chart_template_data(chart_template, *args, **kwargs)
 
         for company_data in data['res.company'].values():
             company_data['deferred_expense_journal_id'] = (

@@ -1,0 +1,193 @@
+/* ==========================================================================
+   Insilos Form View & Chatter Restructure
+   Elevated Form Sheet, KPI Smart Buttons, Modern Notebook Tabs & Chatter
+   ========================================================================== */
+
+.o_form_view {
+  background-color: var(--insilos-bg-canvas, #f8fafc) !important;
+
+  /* Form Statusbar (Stage Indicators & Header Actions) */
+  .o_form_statusbar {
+    background-color: var(--insilos-bg-surface, #ffffff) !important;
+    border-bottom: 1px solid var(--insilos-border-subtle) !important;
+    padding: 10px 24px !important;
+
+    .o_statusbar_status {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      .btn {
+        border-radius: var(--insilos-radius-full) !important;
+        font-size: 12px !important;
+        font-weight: 550 !important;
+        padding: 4px 14px !important;
+        transition: var(--insilos-transition-fast);
+
+        &.btn-primary {
+          background-color: var(--insilos-primary) !important;
+          border-color: var(--insilos-primary) !important;
+          box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25) !important;
+        }
+
+        &.btn-secondary:not(.disabled) {
+          background: transparent !important;
+          border-color: transparent !important;
+          color: var(--insilos-text-muted) !important;
+
+          &:hover {
+            background-color: var(--insilos-bg-hover) !important;
+            color: var(--insilos-text-primary) !important;
+          }
+        }
+      }
+    }
+  }
+
+  /* Form Sheet Background & Main Card */
+  .o_form_sheet_bg {
+    background-color: var(--insilos-bg-canvas, #f8fafc) !important;
+    padding: 24px !important;
+
+    .o_form_sheet {
+      background: var(--insilos-bg-surface, #ffffff) !important;
+      border: 1px solid var(--insilos-border-subtle) !important;
+      border-radius: var(--insilos-radius-lg) !important;
+      box-shadow: var(--insilos-shadow-card) !important;
+      padding: 32px 40px !important;
+      max-width: 1140px;
+      margin: 0 auto !important;
+
+      /* Title styling */
+      .oe_title {
+        h1 {
+          font-size: 26px;
+          font-weight: 700;
+          color: var(--insilos-text-primary);
+          letter-spacing: -0.02em;
+        }
+      }
+    }
+  }
+
+  /* Smart Buttons (KPI Micro-Cards) */
+  .oe_button_box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    border: none !important;
+
+    .oe_stat_button {
+      background: var(--insilos-bg-surface, #ffffff) !important;
+      border: 1px solid var(--insilos-border-subtle) !important;
+      border-radius: var(--insilos-radius-md) !important;
+      box-shadow: var(--insilos-shadow-sm) !important;
+      padding: 8px 14px !important;
+      transition: var(--insilos-transition-fast);
+      height: auto !important;
+      min-height: 48px;
+
+      &:hover {
+        background-color: var(--insilos-bg-hover) !important;
+        border-color: var(--insilos-border-medium) !important;
+        transform: translateY(-1px);
+        box-shadow: var(--insilos-shadow-card) !important;
+      }
+
+      .o_stat_info {
+        .o_stat_value {
+          font-size: 15px;
+          font-weight: 700;
+          color: var(--insilos-primary);
+        }
+
+        .o_stat_text {
+          font-size: 11px;
+          font-weight: 550;
+          color: var(--insilos-text-muted);
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+
+  /* Notebook Tabs */
+  .o_notebook {
+    margin-top: 24px;
+
+    .nav-tabs {
+      border-bottom: 1px solid var(--insilos-border-subtle) !important;
+      gap: 6px;
+
+      .nav-item {
+        .nav-link {
+          border: none !important;
+          border-bottom: 2px solid transparent !important;
+          color: var(--insilos-text-muted) !important;
+          font-size: 13px !important;
+          font-weight: 550 !important;
+          padding: 8px 16px !important;
+          border-radius: 0 !important;
+          transition: var(--insilos-transition-fast);
+
+          &:hover {
+            color: var(--insilos-text-primary) !important;
+          }
+
+          &.active {
+            color: var(--insilos-primary) !important;
+            font-weight: 650 !important;
+            border-bottom-color: var(--insilos-primary) !important;
+            background: transparent !important;
+          }
+        }
+      }
+    }
+
+    .tab-content {
+      padding-top: 20px;
+    }
+  }
+}
+
+/* Chatter Restructuring */
+.o-mail-Chatter {
+  background-color: var(--insilos-bg-canvas, #f8fafc);
+  border-left: 1px solid var(--insilos-border-subtle);
+
+  /* Chatter Top Bar Action Buttons */
+  .o-mail-Chatter-topbar {
+    padding: 12px 16px;
+    gap: 8px;
+
+    button {
+      border-radius: var(--insilos-radius-full) !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      padding: 5px 14px !important;
+      transition: var(--insilos-transition-fast);
+
+      &.btn-primary {
+        background: var(--insilos-primary) !important;
+        border-color: var(--insilos-primary) !important;
+      }
+
+      &.btn-secondary {
+        background: var(--insilos-bg-surface, #ffffff) !important;
+        border: 1px solid var(--insilos-border-medium) !important;
+        color: var(--insilos-text-secondary) !important;
+
+        &:hover {
+          background: var(--insilos-bg-hover) !important;
+          color: var(--insilos-text-primary) !important;
+        }
+      }
+    }
+  }
+
+  /* Messages Container */
+  .o-mail-Thread {
+    padding: 16px;
+  }
+}

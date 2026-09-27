@@ -1,6 +1,6 @@
 from odoo import models, _
 from odoo.exceptions import UserError, ValidationError
-from odoo.addons.base_iban.models.res_partner_bank import validate_iban
+from odoo.tools.bank_account_number import validate_iban
 
 
 def _is_iban_valid(iban):

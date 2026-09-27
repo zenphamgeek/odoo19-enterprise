@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_logistics_idp_import_wizard_form" model="ir.ui.view">
+        <field name="name">logistics.idp.import.wizard.form</field>
+        <field name="model">logistics.idp.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Logistics Manifest">
+                <group invisible="is_imported">
+                    <group>
+                        <field name="import_file" filename="file_name"/>
+                        <field name="file_name" invisible="1"/>
+                        <field name="project_id"/>
+                    </group>
+                    <group>
+                        <div class="alert alert-info" role="alert">
+                            <strong>CSV Columns:</strong> case_name, document_type, reference_number, partner_name, transport_mode, total_amount, currency, weight
+                        </div>
+                    </group>
+                </group>
+                <group invisible="not is_imported">
+                    <group string="Import Results">
+                        <field name="result_cases_created"/>
+                        <field name="result_docs_created"/>
+                        <field name="result_skipped"/>
+                    </group>
+                    <group string="Errors" invisible="not result_errors">
+                        <field name="result_errors" nolabel="1"/>
+                    </group>
+                </group>
+                <field name="is_imported" invisible="1"/>
+                <footer>
+                    <button string="Import Manifest" name="action_import" type="object" class="btn-primary" invisible="is_imported"/>
+                    <button string="Download Template" name="action_download_template" type="object" class="btn-secondary" invisible="is_imported"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_logistics_idp_import_wizard" model="ir.actions.act_window">
+        <field name="name">Import Logistics Manifest</field>
+        <field name="res_model">logistics.idp.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

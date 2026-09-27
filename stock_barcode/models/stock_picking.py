@@ -143,7 +143,8 @@ class StockPicking(models.Model):
             data['config']['create_backorder'] = 'never'
         data['line_view_id'] = self.env.ref('stock_barcode.stock_move_line_product_selector').id
         data['form_view_id'] = self.env.ref('stock_barcode.stock_picking_barcode').id
-        data['scrap_view_id'] = self.env.ref('stock_barcode.scrap_product_selector').id
+        scrap_view = self.env.ref('stock_barcode.scrap_product_selector', raise_if_not_found=False) or self.env.ref('stock.view_scrap_move_form', raise_if_not_found=False)
+        data['scrap_view_id'] = scrap_view.id if scrap_view else False
         data['package_view_id'] = self.env.ref('stock_barcode.stock_quant_barcode_kanban').id
         return data
 

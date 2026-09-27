@@ -3,7 +3,7 @@ import { registry } from "@web/core/registry";
 import { markup } from "@odoo/owl";
 
 registry.category("web_tour.tours").add("web_studio_home_menu_background_tour", {
-    url: "/odoo",
+    url: "/insilos",
     steps: () => [
         {
             trigger: ".o_home_menu_background",
@@ -11,7 +11,7 @@ registry.category("web_tour.tours").add("web_studio_home_menu_background_tour", 
         {
             trigger: ".o_web_studio_navbar_item",
             content: markup(
-                _t("Want to customize the background? Let’s activate <b>Odoo Studio</b>.")
+                _t("Want to customize the background? Let’s activate <b>Insilos Studio</b>.")
             ),
             tooltipPosition: "bottom",
             run: "click",

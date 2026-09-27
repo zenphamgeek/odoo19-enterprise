@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_instrument" model="ir.ui.view">
+        <field name="name">product.template.form.instrument</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Financial Instrument" name="financial_instrument">
+                    <group>
+                        <group>
+                            <field name="is_financial_instrument"/>
+                            <field name="instrument_type" invisible="not is_financial_instrument" required="is_financial_instrument"/>
+                            <field name="instrument_currency_id" invisible="not is_financial_instrument" required="is_financial_instrument"/>
+                            <field name="issuer_partner_id" invisible="not is_financial_instrument"/>
+                        </group>
+                        <group invisible="not is_financial_instrument">
+                            <field name="isin"/>
+                            <field name="ticker"/>
+                            <field name="market_provider_symbol"/>
+                            <field name="maturity_date"/>
+                            <field name="coupon_rate"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="product_template_search_instrument" model="ir.ui.view">
+        <field name="name">product.template.search.instrument</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <filter string="Financial Instruments" name="financial_instruments"
+                        domain="[('is_financial_instrument', '=', True)]"/>
+                <filter string="Instrument Type" name="group_instrument_type"
+                        context="{'group_by': 'instrument_type'}"/>
+            </search>
+        </field>
+    </record>
+</odoo>

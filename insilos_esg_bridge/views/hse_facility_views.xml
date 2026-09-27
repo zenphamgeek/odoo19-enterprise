@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit HSE Facility Form: Add ESG Scorecards Tab -->
+        <record id="view_is_hse_facility_form_esg" model="ir.ui.view">
+            <field name="name">is.hse.facility.form.esg</field>
+            <field name="model">is.hse.facility</field>
+            <field name="inherit_id" ref="insilos_hse_compliance.view_is_hse_facility_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string="Plant ESG &amp; Sustainability Scorecards" name="esg_scorecards">
+                            <group>
+                                <group string="Latest Internal Scorecard Band">
+                                    <field name="latest_environmental_score" widget="progressbar"/>
+                                    <field name="latest_sustainability_grade" widget="badge" decoration-success="latest_sustainability_grade in ('a_plus', 'a')" decoration-warning="latest_sustainability_grade == 'b'" decoration-danger="latest_sustainability_grade == 'c'"/>
+                                </group>
+                            </group>
+                            <field name="scorecard_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="reporting_year"/>
+                                    <field name="reporting_period"/>
+                                    <field name="total_scope1_2_co2e" string="Scope 1+2 (tCO₂e)"/>
+                                    <field name="environmental_score" widget="progressbar"/>
+                                    <field name="sustainability_grade" widget="badge"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

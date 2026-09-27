@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://insilos.com/schemas/pos-react/compiled-bundle-evidence-v1.json",
+  "title": "Compiled POS bundle evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "bundle", "database", "collected_at", "artifacts"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "bundle": {"const": "point_of_sale.assets_prod"},
+    "database": {"type": "string", "minLength": 1},
+    "collected_at": {"type": "string", "format": "date-time"},
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url", "name", "mimetype", "bytes", "sha256"],
+        "properties": {
+          "url": {"type": "string", "pattern": "^/"},
+          "name": {"type": "string", "minLength": 1},
+          "mimetype": {"type": "string", "minLength": 1},
+          "bytes": {"type": "integer", "minimum": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    }
+  }
+}

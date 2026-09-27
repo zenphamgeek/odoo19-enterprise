@@ -295,7 +295,7 @@ class AIAgent(models.Model):
     topic_ids = fields.Many2many(
         'ai.topic',
         string="Topics",
-        help="A topic includes instructions and tools that guide Odoo AI in helping the user complete their tasks.",
+        help="A topic includes instructions and tools that guide Insilos AI in helping the user complete their tasks.",
     )
     partner_id = fields.Many2one('res.partner', required=True, ondelete='cascade', index=True)
 

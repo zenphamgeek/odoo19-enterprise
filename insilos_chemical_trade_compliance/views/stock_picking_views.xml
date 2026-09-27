@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_picking_form_chemical_compliance" model="ir.ui.view">
+            <field name="name">stock.picking.form.chemical.compliance</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button name="action_view_chemical_dossier" type="object" class="w_stat_button" icon="fa-shield" invisible="not has_chemical_items and not chemical_dossier_id">
+                        <field name="is_chemical_compliance_cleared" widget="boolean" invisible="1"/>
+                        <div class="w_stat_info">
+                            <span class="w_stat_text" invisible="not is_chemical_compliance_cleared">Chemical review</span>
+                            <span class="w_stat_value" invisible="not is_chemical_compliance_cleared">Internal review complete</span>
+                            <span class="w_stat_text text-danger" invisible="is_chemical_compliance_cleared">Chemical review</span>
+                            <span class="w_stat_value text-danger" invisible="is_chemical_compliance_cleared">Internal review pending</span>
+                        </div>
+                    </button>
+                </div>
+                <field name="origin" position="after">
+                    <field name="chemical_dossier_id" readonly="1" invisible="not chemical_dossier_id"/>
+                    <field name="has_chemical_items" invisible="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

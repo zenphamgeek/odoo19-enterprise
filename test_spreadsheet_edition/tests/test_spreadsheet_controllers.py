@@ -38,7 +38,7 @@ class SpreadsheetMixinControllerTest(SpreadsheetTestCase, HttpCase):
         self.opener.cookies['cids'] = str(company.id)
         response = self.url_open(f'/spreadsheet/data/spreadsheet.test/{spreadsheet.id}')
         data = response.json()
-        self.assertEqual(data['company_colors'], ['#FFFFFF', '#875A7B'])
+        self.assertEqual(data['company_colors'], ['#FFFFFF', '#004455'])
 
     def test_all_company_custom_colors(self):
         self.authenticate(self.raoul.login, self.raoul.password)
@@ -67,4 +67,4 @@ class SpreadsheetMixinControllerTest(SpreadsheetTestCase, HttpCase):
         company_B.secondary_color = '#bb1111'
         response = self.url_open(f'/spreadsheet/data/spreadsheet.test/{spreadsheet.id}')
         data = response.json()
-        self.assertEqual(data['company_colors'], ['#aa0000', '#aa1111', '#FFFFFF', '#875A7B', '#bb0000', '#bb1111'])
+        self.assertEqual(data['company_colors'], ['#aa0000', '#aa1111', '#FFFFFF', '#004455', '#bb0000', '#bb1111'])

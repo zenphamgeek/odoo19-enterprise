@@ -11,17 +11,17 @@ export class GridComponent extends Component {
     static template = "web_grid.GridComponent"
 
     get gridComponent() {
+        let comp = GridRow;
         if (this.props.component) {
-            return this.props.component;
-        }
-        if (gridComponentRegistry.contains(this.props.type)) {
-            return gridComponentRegistry.get(this.props.type).component;
-        }
-        if (this.props.isMeasure) {
+            comp = this.props.component;
+        } else if (gridComponentRegistry.contains(this.props.type)) {
+            comp = gridComponentRegistry.get(this.props.type).component;
+        } else if (this.props.isMeasure) {
             console.warn(`Missing widget: ${this.props.type} for grid component`);
-            return GridCell;
+            comp = GridCell;
         }
-        return GridRow;
+        console.log("DEBUG GRID COMPONENT:", this.props.type, comp?.name, comp?.template);
+        return comp;
     }
 
     get gridComponentProps() {

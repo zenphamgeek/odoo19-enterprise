@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. Action Report: ESG Facility Scorecard -->
+    <record id="action_report_esg_facility_scorecard" model="ir.actions.report">
+        <field name="name">ESG Facility Scorecard Report</field>
+        <field name="model">is.esg.facility.scorecard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_esg_bridge.report_esg_facility_scorecard_doc</field>
+        <field name="report_file">insilos_esg_bridge.report_esg_facility_scorecard_doc</field>
+        <field name="print_report_name">'ESG_Scorecard_' + (object.name or '').replace('/', '_')</field>
+        <field name="binding_model_id" ref="model_is_esg_facility_scorecard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

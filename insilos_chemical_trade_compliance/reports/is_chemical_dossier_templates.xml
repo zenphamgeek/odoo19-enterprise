@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template 1: Hồ sơ dự thảo nội bộ -->
+    <template id="report_chemical_dossier_application_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1.4;">
+                        <div class="text-center mb-4">
+                            <h4 style="font-weight: bold; margin-bottom: 5px;">HỒ SƠ DỮ LIỆU HÓA CHẤT</h4>
+                            <p class="text-danger"><strong>DỰ THẢO NỘI BỘ PHỤC VỤ RÀ SOÁT VÀ CHUẨN BỊ DỮ LIỆU</strong></p>
+                            <p class="fst-italic text-muted">Không phải hồ sơ nộp chính thức, xác nhận, phê duyệt hoặc giấy phép của cơ quan nhà nước.</p>
+                            <p>Mã tham chiếu nội bộ: <strong><t t-esc="o.name"/></strong></p>
+                        </div>
+
+                        <!-- Thông tin Doanh nghiệp & Lô hàng -->
+                        <div class="mb-3">
+                            <table class="table table-sm table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 25%;"><strong>1. Tên tổ chức/cá nhân:</strong></td>
+                                        <td><t t-esc="o.importer_company_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2. Mã số thuế/ĐKKD:</strong></td>
+                                        <td><t t-esc="o.importer_company_id.vat or 'Đang cập nhật'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>3. Địa chỉ trụ sở:</strong></td>
+                                        <td><t t-esc="o.importer_company_id.partner_id.contact_address or 'Trụ sở chính'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>4. Đối tác xuất khẩu:</strong></td>
+                                        <td><t t-esc="o.partner_id.name or 'Chưa xác định'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>5. Cửa khẩu nhập khẩu:</strong></td>
+                                        <td><t t-esc="o.port_of_discharge or 'Chưa ghi nhận'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>6. Đơn mua hàng (PO):</strong></td>
+                                        <td><t t-esc="o.purchase_order_id.name or 'Trực tiếp'"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Danh sách hóa chất theo dữ liệu nội bộ -->
+                        <div class="mb-4">
+                            <strong>7. Danh mục hóa chất theo dữ liệu nội bộ:</strong>
+                            <table class="table table-sm table-bordered mt-2" style="border-collapse: collapse; width: 100%;">
+                                <thead style="background-color: #f2f2f2; text-align: center;">
+                                    <tr>
+                                        <th style="width: 5%;">STT</th>
+                                        <th style="width: 25%;">Tên Thương mại</th>
+                                        <th style="width: 25%;">Tên Hóa chất Master</th>
+                                        <th style="width: 12%;">Mã CAS</th>
+                                        <th style="width: 12%;">Mã HS</th>
+                                        <th style="width: 10%;">Hàm lượng (%)</th>
+                                        <th style="width: 11%;">Khối lượng (kg)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="line_idx" t-value="1"/>
+                                    <tr t-foreach="o.line_ids" t-as="line">
+                                        <td class="text-center"><t t-esc="line_idx"/></td>
+                                        <td><t t-esc="line.trade_name"/></td>
+                                        <td><t t-esc="line.chemical_substance_id.name or 'N/A'"/></td>
+                                        <td class="text-center"><t t-esc="line.cas_number or 'N/A'"/></td>
+                                        <td class="text-center"><t t-esc="line.hs_code or 'N/A'"/></td>
+                                        <td class="text-center"><t t-esc="line.concentration_percentage"/>%</td>
+                                        <td class="text-end"><strong><t t-esc="'{:,.2f}'.format(line.net_weight_kg)"/></strong></td>
+                                        <t t-set="line_idx" t-value="line_idx + 1"/>
+                                    </tr>
+                                    <tr style="background-color: #fbfbfb; font-weight: bold;">
+                                        <td colspan="6" class="text-end">TỔNG KHỐI LƯỢNG (KG):</td>
+                                        <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_net_weight_kg)"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert alert-info mt-3">
+                            <em>Dữ liệu thô nội bộ cần được rà soát, bổ sung và xác thực theo quy trình phù hợp trước mọi sử dụng bên ngoài hệ thống.</em>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Template 2: Bảng Theo dõi Tình hình Sử dụng Hóa chất 5 Bước -->
+    <template id="report_chemical_usage_tracking_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 12px; line-height: 1.4;">
+                        <!-- Header -->
+                        <div class="row text-center mb-3">
+                            <div class="col-12">
+                                <strong><t t-esc="o.company_id.name.upper()"/></strong><br/>
+                                <strong>SỔ THEO DÕI NỘI BỘ SỬ DỤNG HÓA CHẤT</strong><br/>
+                                <span class="text-danger">BẢN GHI NỘI BỘ/DỰ THẢO; KHÔNG PHẢI HỒ SƠ CẤP PHÉP, BÁO CÁO CHÍNH THỨC, XÁC NHẬN HOẶC CĂN CỨ PHÁP LÝ</span><br/>
+                                <span>Kỳ ghi nhận nội bộ: Năm <t t-esc="o.reporting_year"/> - <t t-esc="dict(o._fields['reporting_period'].selection).get(o.reporting_period)"/></span>
+                            </div>
+                        </div>
+
+                        <!-- Thông tin Cơ sở & Hóa chất -->
+                        <div class="mb-3">
+                            <table class="table table-sm table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 20%;"><strong>Cơ sở sản xuất/Kho:</strong></td>
+                                        <td><t t-esc="o.facility_id.name or 'Cơ sở chính'"/> (<t t-esc="o.facility_id.address or 'N/A'"/>)</td>
+                                        <td style="width: 15%;"><strong>Tên Hóa chất:</strong></td>
+                                        <td><strong><t t-esc="o.chemical_substance_id.name"/></strong> (CAS: <t t-esc="o.cas_number or 'N/A'"/>)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Bảng Chi tiết 5 Bước (Nhu cầu -> Nhập khẩu -> Mua nội địa -> Sử dụng -> Tồn) -->
+                        <div class="mb-4">
+                            <table class="table table-sm table-bordered" style="border-collapse: collapse; width: 100%;">
+                                <thead style="background-color: #f2f2f2; text-align: center; font-weight: bold;">
+                                    <tr>
+                                        <th style="width: 5%;">STT</th>
+                                        <th style="width: 15%;">Ngày GD</th>
+                                        <th style="width: 25%;">Phân loại Luồng Dữ liệu</th>
+                                        <th style="width: 25%;">Chứng từ Tham chiếu</th>
+                                        <th style="width: 15%;">Mục đích Sử dụng</th>
+                                        <th style="width: 15%;">Khối lượng (kg)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="idx" t-value="1"/>
+                                    <tr t-foreach="o.line_ids" t-as="line">
+                                        <td class="text-center"><t t-esc="idx"/></td>
+                                        <td class="text-center"><t t-esc="line.date"/></td>
+                                        <td><t t-esc="dict(line._fields['flow_type'].selection).get(line.flow_type)"/></td>
+                                        <td><t t-esc="line.document_ref"/></td>
+                                        <td><t t-esc="line.purpose_of_use_id.name or '-'"/></td>
+                                        <td class="text-end"><strong><t t-esc="'{:,.2f}'.format(line.quantity_kg)"/></strong></td>
+                                        <t t-set="idx" t-value="idx + 1"/>
+                                    </tr>
+                                    <tr style="background-color: #fbfbfb; font-weight: bold;">
+                                        <td colspan="5" class="text-end">1. Nhu cầu kế hoạch (Planned Demand):</td>
+                                        <td class="text-end"><t t-esc="'{:,.2f}'.format(o.planned_demand_kg)"/></td>
+                                    </tr>
+                                    <tr style="background-color: #fbfbfb; font-weight: bold;">
+                                        <td colspan="5" class="text-end">2. Đã nhập khẩu (Imported Volume):</td>
+                                        <td class="text-end"><t t-esc="'{:,.2f}'.format(o.imported_volume_kg)"/></td>
+                                    </tr>
+                                    <tr style="background-color: #fbfbfb; font-weight: bold;">
+                                        <td colspan="5" class="text-end">3. Mua trong nước (Domestic Purchase):</td>
+                                        <td class="text-end"><t t-esc="'{:,.2f}'.format(o.domestic_purchased_kg)"/></td>
+                                    </tr>
+                                    <tr style="background-color: #fbfbfb; font-weight: bold;">
+                                        <td colspan="5" class="text-end">4. Xuất dùng sản xuất (Consumed in Manufacturing):</td>
+                                        <td class="text-end"><t t-esc="'{:,.2f}'.format(o.consumed_in_production_kg)"/></td>
+                                    </tr>
+                                    <tr style="background-color: #eef7ee; font-weight: bold; font-size: 13px;">
+                                        <td colspan="5" class="text-end text-success">5. TỒN KHO HIỆN TẠI (Current Inventory):</td>
+                                        <td class="text-end text-success"><t t-esc="'{:,.2f}'.format(o.current_stock_kg)"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Xác nhận rà soát nội bộ -->
+                        <div class="row mt-4">
+                            <div class="col-6 text-center">
+                                <strong>NGƯỜI LẬP NỘI BỘ</strong><br/>
+                                <span class="fst-italic">(Ghi nhận người lập)</span>
+                                <div style="height: 60px;"></div>
+                            </div>
+                            <div class="col-6 text-center">
+                                <strong>NGƯỜI RÀ SOÁT NỘI BỘ</strong><br/>
+                                <span class="fst-italic">(Ghi nhận người rà soát)</span>
+                                <div style="height: 60px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Template 3: Bản Khai báo Hóa chất Nhập khẩu NSW -->
+    <template id="report_chemical_nsw_declaration_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1.4;">
+                        <!-- Header -->
+                        <div class="row text-center mb-3">
+                            <div class="col-12">
+                                <strong>BẢN NHÁP KHAI BÁO HÓA CHẤT NHẬP KHẨU NSW</strong><br/>
+                                <span class="text-danger">KHÔNG PHẢI XÁC NHẬN, PHÊ DUYỆT HOẶC BIÊN NHẬN CỦA CƠ QUAN NHÀ NƯỚC</span><br/>
+                                <span>Mã tham chiếu nội bộ: <strong class="text-primary"><t t-esc="o.name"/></strong></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <table class="table table-sm table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 25%;"><strong>Doanh nghiệp khai báo:</strong></td>
+                                        <td><t t-esc="o.importer_company_id.name"/> (MST: <t t-esc="o.importer_company_id.vat or 'N/A'"/>)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tham chiếu hải quan nội bộ:</strong></td>
+                                        <td><t t-esc="o.customs_declaration_no or 'Chưa ghi nhận'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cửa khẩu / Cảng nhập:</strong></td>
+                                        <td><t t-esc="o.port_of_discharge or 'Chưa ghi nhận'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Trạng thái hồ sơ:</strong></td>
+                                        <td><strong><t t-esc="dict(o._fields['state'].selection).get(o.state)"/></strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Danh sách Hóa chất Khai báo -->
+                        <div class="mb-4">
+                            <strong>Chi tiết hóa chất trong bản nháp chuẩn bị khai báo:</strong>
+                            <table class="table table-sm table-bordered mt-2" style="border-collapse: collapse; width: 100%;">
+                                <thead style="background-color: #f2f2f2; text-align: center;">
+                                    <tr>
+                                        <th style="width: 5%;">STT</th>
+                                        <th style="width: 30%;">Tên Thương phẩm</th>
+                                        <th style="width: 30%;">Tên Hóa chất Master</th>
+                                        <th style="width: 15%;">Số CAS</th>
+                                        <th style="width: 10%;">Hàm lượng</th>
+                                        <th style="width: 10%;">Khối lượng (kg)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="idx" t-value="1"/>
+                                    <tr t-foreach="o.line_ids" t-as="line">
+                                        <td class="text-center"><t t-esc="idx"/></td>
+                                        <td><t t-esc="line.trade_name"/></td>
+                                        <td><t t-esc="line.chemical_substance_id.name or 'N/A'"/></td>
+                                        <td class="text-center"><t t-esc="line.cas_number or 'N/A'"/></td>
+                                        <td class="text-center"><t t-esc="line.concentration_percentage"/>%</td>
+                                        <td class="text-end"><strong><t t-esc="'{:,.2f}'.format(line.net_weight_kg)"/></strong></td>
+                                        <t t-set="idx" t-value="idx + 1"/>
+                                    </tr>
+                                    <tr style="background-color: #fbfbfb; font-weight: bold;">
+                                        <td colspan="5" class="text-end">TỔNG KHỐI LƯỢNG KHAI BÁO (KG):</td>
+                                        <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_net_weight_kg)"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert alert-info mt-3">
+                            <em>Bản nháp do hệ thống lập từ dữ liệu nội bộ, cần được rà soát trước khi nộp qua kênh phù hợp.</em>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Template 4: Bảng Theo dõi & Khấu trừ Hạn ngạch Giấy phép Hóa chất -->
+    <template id="report_chemical_permit_quota_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1.4;">
+                        <!-- Header -->
+                        <div class="row text-center mb-3">
+                            <div class="col-12">
+                                <strong><t t-esc="o.company_id.name.upper()"/></strong><br/>
+                                <strong>BẢN THEO DÕI NỘI BỘ HẠN NGẠCH HÓA CHẤT</strong><br/>
+                                <span class="text-danger">DỮ LIỆU NỘI BỘ PHỤC VỤ RÀ SOÁT; KHÔNG XÁC NHẬN GIẤY PHÉP HOẶC THẨM QUYỀN CƠ QUAN NHÀ NƯỚC</span><br/>
+                                <span>Thông tin giấy phép do nội bộ ghi nhận: <strong class="text-primary"><t t-esc="o.permit_number or o.permit_id.name"/></strong> (Cơ quan cấp khai báo: <t t-esc="o.permit_id.issuing_authority or 'Chưa xác minh'"/>)</span>
+                            </div>
+                        </div>
+
+                        <!-- Thông tin Hóa chất & Hạn ngạch Tổng -->
+                        <div class="row mb-3">
+                            <div class="col-7">
+                                <table class="table table-sm table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 35%;"><strong>Hóa chất Cấp phép:</strong></td>
+                                            <td><strong><t t-esc="o.chemical_substance_id.name"/></strong> (CAS: <t t-esc="o.cas_number or 'N/A'"/>)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Thời hạn Giấy phép:</strong></td>
+                                            <td>
+                                                <t t-if="o.permit_id.is_perpetual">Vô thời hạn</t>
+                                                <t t-else="">Đến ngày <strong><t t-esc="o.permit_id.expiry_date"/></strong></t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Trạng thái Hạn ngạch:</strong></td>
+                                            <td><strong><t t-esc="dict(o._fields['state'].selection).get(o.state)"/></strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-5">
+                                <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; padding: 10px; text-align: center;">
+                                    <span>HẠN NGẠCH CÒN LẠI:</span><br/>
+                                    <h3 style="font-weight: bold; margin: 5px 0;" x-attf-class="{{ 'text-danger' if o.is_quota_low or o.is_quota_exhausted else 'text-success' }}">
+                                        <t t-esc="'{:,.2f} kg'.format(o.remaining_quota_kg)"/>
+                                    </h3>
+                                    <small>Tỷ lệ còn lại: <strong><t t-esc="'{:.1f}%'.format(o.remaining_percentage)"/></strong> / Tổng hạn ngạch: <strong><t t-esc="'{:,.2f} kg'.format(o.allocated_quota_kg)"/></strong></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nhật ký ghi nhận nội bộ hạn ngạch -->
+                        <div class="mb-4">
+                            <strong>Nhật ký ghi nhận nội bộ biến động hạn ngạch:</strong>
+                            <table class="table table-sm table-bordered mt-2" style="border-collapse: collapse; width: 100%;">
+                                <thead style="background-color: #f2f2f2; text-align: center;">
+                                    <tr>
+                                        <th style="width: 5%;">STT</th>
+                                        <th style="width: 15%;">Ngày ghi nhận</th>
+                                        <th style="width: 25%;">Tham chiếu hải quan nội bộ</th>
+                                        <th style="width: 20%;">Số Hồ sơ Dossier</th>
+                                        <th style="width: 15%;">Khối lượng (kg)</th>
+                                        <th style="width: 20%;">Ghi chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="q_idx" t-value="1"/>
+                                    <tr t-foreach="o.line_ids" t-as="line">
+                                        <td class="text-center"><t t-esc="q_idx"/></td>
+                                        <td class="text-center"><t t-esc="line.deduction_date"/></td>
+                                        <td class="text-center"><strong><t t-esc="line.customs_declaration_no"/></strong></td>
+                                        <td><t t-esc="line.dossier_id.name or '-'"/></td>
+                                        <td class="text-end"><strong><t t-esc="'{:,.2f}'.format(line.quantity_kg)"/></strong></td>
+                                        <td><t t-esc="line.notes or ''"/></td>
+                                        <t t-set="q_idx" t-value="q_idx + 1"/>
+                                    </tr>
+                                    <tr style="background-color: #fbfbfb; font-weight: bold;">
+                                        <td colspan="4" class="text-end">TỔNG ĐÃ GHI NHẬN:</td>
+                                        <td class="text-end text-danger"><t t-esc="'{:,.2f}'.format(o.consumed_quota_kg)"/></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="background-color: #eef7ee; font-weight: bold; font-size: 13px;">
+                                        <td colspan="4" class="text-end text-success">HẠN NGẠCH KHẢ DỤNG HIỆN TẠI:</td>
+                                        <td class="text-end text-success"><t t-esc="'{:,.2f}'.format(o.remaining_quota_kg)"/></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Chữ ký -->
+                        <div class="row mt-5">
+                            <div class="col-6 text-center">
+                                <strong>NGƯỜI QUẢN LÝ HẠN NGẠCH</strong><br/>
+                                <span class="fst-italic">(Ký, ghi rõ họ tên)</span>
+                                <div style="height: 60px;"></div>
+                            </div>
+                            <div class="col-6 text-center">
+                                <strong>NGƯỜI RÀ SOÁT NỘI BỘ</strong><br/>
+                                <span class="fst-italic">(Thông tin nội bộ)</span>
+                                <div style="height: 60px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

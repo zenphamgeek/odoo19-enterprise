@@ -8,7 +8,7 @@ from lxml import etree
 
 from odoo import models, _
 from odoo.exceptions import UserError
-from odoo.addons.base.models.res_bank import sanitize_account_number
+from odoo.addons.base.models.res_partner_bank import sanitize_account_number
 from odoo.addons.account_bank_statement_import_camt.lib.camt import CAMT
 
 _logger = logging.getLogger(__name__)

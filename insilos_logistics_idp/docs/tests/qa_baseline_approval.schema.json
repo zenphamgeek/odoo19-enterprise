@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "insilos_logistics_idp/qa_baseline_approval.schema.json",
+  "type": "object",
+  "required": ["schema_version", "independent_compliance_certification", "formal_golden_acceptance", "non_production", "source", "counts", "acceptance_metrics", "limitations"],
+  "properties": {
+    "schema_version": {"const": 2},
+    "independent_compliance_certification": {"const": false},
+    "formal_golden_acceptance": {"const": false},
+    "non_production": {"const": true},
+    "source": {
+      "type": "object",
+      "required": ["workbook_path", "workbook_sha256", "development_result_path", "development_result_sha256", "synthetic_corpus_path", "synthetic_corpus_sha256", "corpus_manifest_sha256"],
+      "properties": {
+        "workbook_sha256": {"$ref": "#/$defs/hash"},
+        "development_result_sha256": {"$ref": "#/$defs/hash"},
+        "synthetic_corpus_sha256": {"$ref": "#/$defs/hash"},
+        "corpus_manifest_sha256": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "counts": {"type": "object", "required": ["detailed", "golden"]},
+    "acceptance_metrics": {"type": "object", "required": ["thresholds_unchanged", "total", "executable_corpus_evidence_exists", "formal_document_level_status"]},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {"hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

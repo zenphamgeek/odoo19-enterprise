@@ -60,7 +60,7 @@
             <xpath expr="//field[@name='active']" position="after">
                 <field name="is_subscription" invisible="1"/>
             </xpath>
-            <xpath expr="//notebook/page[@name='order_lines']/field/list/field[@name='name']" position="after">
+            <xpath expr="//list[@name='sotl_list']" position="inside">
                 <field name="recurring_invoice" column_invisible="True"/>
             </xpath>
             <group name="sale_info" position="after">

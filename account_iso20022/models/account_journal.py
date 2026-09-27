@@ -10,7 +10,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_repr, float_round
 
-from odoo.addons.base_iban.models.res_partner_bank import get_iban_part
+from odoo.tools.bank_account_number import get_iban_part
 import odoo.addons.account.tools.structured_reference as sr
 from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_communication
 from odoo.addons.account_iso20022.models.account_payment import ISO20022_CHARGE_BEARER_SELECTION, ISO20022_PRIORITY_SELECTION, ISO20022_PRIORITY_HELP

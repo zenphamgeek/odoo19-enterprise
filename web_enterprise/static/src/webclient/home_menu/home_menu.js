@@ -11,8 +11,8 @@ import {
     onMounted,
     onPatched,
     onWillUpdateProps,
-    useState,
-    useRef,
+    proxy,
+    signal,
 } from "@odoo/owl";
 
 class FooterComponent extends Component {
@@ -36,6 +36,8 @@ class FooterComponent extends Component {
 export class HomeMenu extends Component {
     static template = "web_enterprise.HomeMenu";
     static components = { ExpirationPanel };
+    input = signal.ref();
+    root = signal.ref();
     static props = {
         apps: {
             type: Array,
@@ -93,22 +95,20 @@ export class HomeMenu extends Component {
         this.homeMenuService = useService("home_menu");
         this.subscription = useService("enterprise_subscription");
         this.ui = useService("ui");
-        this.state = useState({
+        this.state = proxy({
             focusedIndex: null,
             isIosApp: isIosApp(),
         });
-        this.inputRef = useRef("input");
-        this.rootRef = useRef("root");
         this.pressTimer;
 
-        if (!this.env.isSmall) {
+        if (!this.ui.isSmall) {
             this._registerHotkeys();
         }
 
         useSortable({
             enable: this._enableAppsSorting,
             // Params
-            ref: this.rootRef,
+            ref: this.root,
             elements: ".o_draggable",
             cursor: "move",
             delay: 500,
@@ -130,7 +130,7 @@ export class HomeMenu extends Component {
         });
 
         onPatched(() => {
-            if (this.state.focusedIndex !== null && !this.env.isSmall) {
+            if (this.state.focusedIndex !== null && !this.ui.isSmall) {
                 const selectedItem = document.querySelector(".o_home_menu .o_menuitem.o_focused");
                 // When TAB is managed externally the class o_focused disappears.
                 if (selectedItem) {
@@ -253,8 +253,9 @@ export class HomeMenu extends Component {
     }
 
     _focusInput() {
-        if (!this.env.isSmall && this.inputRef.el) {
-            this.inputRef.el.focus({ preventScroll: true });
+        const inputEl = this.input();
+        if (!this.ui.isSmall && inputEl) {
+            inputEl.focus({ preventScroll: true });
         }
     }
 
@@ -337,8 +338,9 @@ export class HomeMenu extends Component {
     }
 
     _onKeydownFocusInput() {
+        const inputEl = this.input();
         if (
-            document.activeElement !== this.inputRef.el &&
+            document.activeElement !== inputEl &&
             this.ui.activeElement === document &&
             !["TEXTAREA", "INPUT"].includes(document.activeElement.tagName)
         ) {
@@ -349,11 +351,13 @@ export class HomeMenu extends Component {
     _onInputSearch() {
         const onClose = () => {
             this._focusInput();
-            if (this.inputRef.el) {
-                this.inputRef.el.value = "";
+            const inputEl = this.input();
+            if (inputEl) {
+                inputEl.value = "";
             }
         };
-        const searchValue = this.compositionStart ? "/" : `/${this.inputRef.el.value.trim()}`;
+        const inputVal = (this.input()?.value || "").trim();
+        const searchValue = this.compositionStart ? "/" : `/${inputVal}`;
         this.compositionStart = false;
         this.command.openMainPalette({ searchValue, FooterComponent }, onClose);
     }

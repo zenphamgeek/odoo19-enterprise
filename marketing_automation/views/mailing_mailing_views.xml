@@ -28,9 +28,6 @@
             <xpath expr="//div[hasclass('o_mass_mailing_alert_message')]" position="attributes">
                 <attribute name="invisible">use_in_marketing_automation and sent == 0 and canceled == 0 and scheduled == 0 and failed == 0 and not warning_message</attribute>
             </xpath>
-            <xpath expr="//div[hasclass('o_mails_sent')]" position="attributes">
-                <attribute name="invisible">sent == 0 and use_in_marketing_automation</attribute>
-            </xpath>
             <xpath expr="//field[@name='subject']" position="attributes">
                 <attribute name="readonly"/>
                 </xpath>
@@ -54,7 +51,12 @@
             </xpath>
             <xpath expr="//button[@name='action_launch']" position="replace"/>
             <xpath expr="//button[@name='action_schedule']" position="replace"/>
-            <field name="mailing_domain" position="replace"/>
+            <xpath expr="//label[@for='mailing_domain']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <field name="mailing_domain" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
             <xpath expr="//label[@for='mailing_model_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
@@ -65,7 +67,7 @@
             <xpath expr="//field[@name='source_id']" position="after">
                 <field name="marketing_activity_ids" string="Activities" widget="many2many_tags" readonly="1"/>
             </xpath>
-            <xpath expr="//page[@name='ab_testing']" position="attributes">
+            <xpath expr="//div[@name='ab_testing']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//field[@name='mail_server_id']" position="attributes">

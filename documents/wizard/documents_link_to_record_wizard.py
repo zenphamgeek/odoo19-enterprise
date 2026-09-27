@@ -6,7 +6,8 @@ class DocumentsLink_To_Record_Wizard(models.TransientModel):
     _description = "Documents Link to Record"
 
     def _get_model_domain(self):
-        models = self.env['ir.model.access']._get_allowed_models() - {'documents.document'}
+        access_model = self.env['ir.access'] if 'ir.access' in self.env else self.env['ir.model.access']
+        models = access_model._get_allowed_models() - {'documents.document'}
         return [('model', 'in', list(models)), ('is_mail_thread', '=', 'True')]
 
     @api.model

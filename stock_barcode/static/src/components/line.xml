@@ -8,12 +8,12 @@
                     class="o_product_ref fs-2">
                     <span t-if="line.product_id.default_code"
                         class="o_product_code font-monospace"
-                        t-esc="line.product_id.default_code"/>
+                        t-out="line.product_id.default_code"/>
                     <span t-if="line.product_id.code != line.product_id.default_code"
                         class="o_partner_code ms-1 text-muted"
-                        t-esc="line.product_id.code"/>
+                        t-out="line.product_id.code"/>
                 </div>
-                <div class="o_product_label small" t-esc="line.product_id.display_name"/>
+                <div class="o_product_label small" t-out="line.product_id.display_name"/>
                 <div t-if="showDescription" name="description" class="text-muted o_stock_barcode_line_description" t-out="line.description_picking"/>
             </div>
             <t t-if="upperButtons !== false" t-call="{{upperButtons || 'stock_barcode.LineUpperButtons'}}"/>
@@ -40,7 +40,7 @@
         <div class="d-flex justify-content-between align-items-end">
             <div name="quantity">
                 <span class="o_packaging text-muted" t-if="line.packaging_uom_id &amp;&amp; line.packaging_uom_id.id !== line.product_uom_id.id">
-                    Packaging: <span t-esc="line.packaging_uom_qty"/> <span t-esc="line.packaging_uom_id.name"/>
+                    Packaging: <span t-out="line.packaging_uom_qty"/> <span t-out="line.packaging_uom_id.name"/>
                 </span>
                 <br/>
                 <span t-attf-class="o_barcode_scanner_qty font-monospace fs-1">
@@ -89,7 +89,7 @@
                     t-on-click="() => this.addQuantity(incrementQty)"
                     t-att-disabled="!this.env.model.lineCanBeEdited(line)"
                     t-attf-class="o_line_button o_add_remaining_quantity btn btn-{{isSelected ? 'light' : 'secondary'}}">
-                <t t-if="incrementQty > 0">+</t><t t-esc="incrementQty"/>
+                <t t-if="incrementQty > 0">+</t><t t-out="incrementQty"/>
             </button>
             <button t-if="displayDeleteButton" name="deleteButton"
                     t-on-click="() => this.env.model.deleteLine(line)"
@@ -109,7 +109,7 @@
     <t t-name="stock_barcode.LineOwner">
         <div t-if="line.owner_id">
             <i class="fa fa-fw fa-user-o"/>
-            <small class="o_line_owner" t-esc="line.owner_id.display_name"/>
+            <small class="o_line_owner" t-out="line.owner_id.display_name"/>
         </div>
     </t>
 
@@ -117,7 +117,7 @@
         <div t-if="isTracked" class="o_line_tracking_number d-flex justify-content-between align-items-center">
             <div name="lot">
                 <i class="fa fa-fw fa-barcode" t-attf-class="{{nextExpected === 'lot' ? 'o_next_expected' : ''}}"/>
-                <span class="o_line_lot_name ms-1" t-esc="lotName"/>
+                <span class="o_line_lot_name ms-1" t-out="lotName"/>
             </div>
             <div t-if="props.subline" class="mb-1">
                 <button t-if="!displayToggleBtn" class="o_line_button o_edit btn btn-secondary ms-2"
@@ -135,8 +135,8 @@
              t-att-class="line.location_dest_id.usage != 'internal' ? 'text-danger' : ''">
             <i class="fa fa-fw fa-sign-in"/>
             <span class="o_line_destination_location fst-italic">
-                <t t-esc="destinationLocationPath"/>
-                <i t-esc="line.location_dest_id.name"
+                <t t-out="destinationLocationPath"/>
+                <i t-out="line.location_dest_id.name"
                    t-attf-class="
                     {{env.model.lastScanned.destLocation &amp;&amp; env.model.lastScanned.destLocation.id == line.location_dest_id.id ? 'fw-bold' : ''}}
                     {{line.location_dest_id.usage != 'internal' ? 'text-danger' : ''}}"/>
@@ -159,9 +159,9 @@
                 <t t-call="stock_barcode.LineQuantity"/>
                 <div t-if="line.package_id || line.result_package_id" name="package">
                     <i class="fa fa-fw fa-archive"/>
-                    <span t-if="line.package_id" class="package" t-esc="packageLabel"/>
+                    <span t-if="line.package_id" class="package" t-out="packageLabel"/>
                     <i t-if="displayResultPackage" class="fa fa-long-arrow-right mx-1"/>
-                    <span t-if="line.result_package_id" class="result-package" t-esc="resultPackageLabel"/>
+                    <span t-if="line.result_package_id" class="result-package" t-out="resultPackageLabel"/>
                 </div>
             </div>
         </div>

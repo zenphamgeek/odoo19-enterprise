@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template: Hồ sơ Đối soát & Đánh giá Tuân thủ Case Logistics IDP -->
+    <template id="report_logistics_idp_case_dossier_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1.4;">
+                        <!-- Header -->
+                        <div class="row text-center mb-3">
+                            <div class="col-12">
+                                <strong style="font-size: 16px;"><t t-esc="(o.company_id.name or 'INSILOS ENTERPRISE').upper()"/></strong><br/>
+                                <strong style="font-size: 18px; color: #0B2E64;">HỒ SƠ ĐỐI SOÁT &amp; ĐÁNH GIÁ TUÂN THỦ CHỨNG TỪ LOGISTICS IDP</strong><br/>
+                                <span>Mã hồ sơ Case: <strong class="text-primary"><t t-esc="o.name"/></strong> | Trạng thái: <strong><t t-esc="dict(o._fields['state'].selection).get(o.state)"/></strong></span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning mb-3" role="note">
+                            <strong>HỒ SƠ NỘI BỘ — CHỜ RÀ SOÁT:</strong> Kết quả chỉ dựa trên dữ liệu nội bộ; không phải thông quan hải quan, phê duyệt, chứng nhận hoặc kết quả sàng lọc có thẩm quyền. Chỉ cơ quan hoặc nguồn có thẩm quyền với bằng chứng hiện hành được quản trị mới quyết định các nội dung này.
+                        </div>
+
+                        <!-- General Information -->
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <table class="table table-sm table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 40%;"><strong>Chuyên viên phụ trách:</strong></td>
+                                            <td><t t-esc="o.owner_id.name or 'Chưa gán'"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Số Đơn mua hàng (PO):</strong></td>
+                                            <td><strong><t t-esc="o.po_reference or 'N/A'"/></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Nhà cung cấp / Đối tác:</strong></td>
+                                            <td><t t-esc="o.supplier_reference or 'N/A'"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Mã Lô hàng / Vận đơn:</strong></td>
+                                            <td><t t-esc="o.shipment_reference or 'N/A'"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm table-bordered" style="background-color: #f8f9fa;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 50%;"><strong>Tình trạng Chứng từ:</strong></td>
+                                            <td class="text-center"><strong><t t-esc="o.document_status"/></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Tình trạng Đối soát:</strong></td>
+                                            <td class="text-center"><strong><t t-esc="o.reconciliation_status"/></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Kết quả kiểm tra nội bộ (Trade):</strong></td>
+                                            <td class="text-center">
+                                                <strong x-attf-class="{{ 'text-danger' if o.compliance_status == 'block' else 'text-secondary' }}">
+                                                    <t t-esc="o.compliance_status"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Kết quả sàng lọc nội bộ tự động:</strong></td>
+                                            <td class="text-center">
+                                                <strong style="color: #0B2E64;"><t t-esc="o.verdict or 'CHƯA KẾT LUẬN'"/></strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Documents in Case -->
+                        <div class="mb-3">
+                            <strong style="color: #0B2E64;">1. Danh mục Chứng từ Nạp vào Case:</strong>
+                            <table class="table table-sm table-bordered mt-1" style="border-collapse: collapse; width: 100%;">
+                                <thead style="background-color: #f2f2f2; text-align: center;">
+                                    <tr>
+                                        <th style="width: 5%;">STT</th>
+                                        <th style="width: 25%;">Loại Chứng từ</th>
+                                        <th style="width: 20%;">Kênh Tiếp nhận</th>
+                                        <th style="width: 20%;">Trạng thái OCR</th>
+                                        <th style="width: 15%;">Độ tin cậy</th>
+                                        <th style="width: 15%;">Số trang</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="d_idx" t-value="1"/>
+                                    <tr t-foreach="o.document_ids" t-as="doc">
+                                        <td class="text-center"><t t-esc="d_idx"/></td>
+                                        <td><t t-esc="doc.document_type"/></td>
+                                        <td><t t-esc="doc.source_channel"/></td>
+                                        <td class="text-center"><strong><t t-esc="doc.status"/></strong></td>
+                                        <td class="text-center"><t t-esc="'{:.1f}%'.format((doc.classification_confidence or 0.0) * 100)"/></td>
+                                        <td class="text-center"><t t-esc="doc.page_count"/></td>
+                                        <t t-set="d_idx" t-value="d_idx + 1"/>
+                                    </tr>
+                                    <t t-if="not o.document_ids">
+                                        <tr><td colspan="6" class="text-center text-muted">Chưa có chứng từ nạp vào Case</td></tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Policy & Validation Check Results -->
+                        <div class="mb-3">
+                            <strong style="color: #0B2E64;">2. Kết quả Đánh giá Quy tắc Tuân thủ &amp; Đối soát Chéo:</strong>
+                            <table class="table table-sm table-bordered mt-1" style="border-collapse: collapse; width: 100%;">
+                                <thead style="background-color: #f2f2f2; text-align: center;">
+                                    <tr>
+                                        <th style="width: 5%;">STT</th>
+                                        <th style="width: 20%;">Mã Quy tắc</th>
+                                        <th style="width: 20%;">Giá trị Mong đợi</th>
+                                        <th style="width: 20%;">Giá trị Thực tế</th>
+                                        <th style="width: 15%;">Kết luận</th>
+                                        <th style="width: 20%;">Căn cứ Pháp lý / Citation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="c_idx" t-value="1"/>
+                                    <tr t-foreach="o.check_result_ids" t-as="chk">
+                                        <td class="text-center"><t t-esc="c_idx"/></td>
+                                        <td><t t-esc="chk.code"/></td>
+                                        <td><t t-esc="chk.expected or '-'"/></td>
+                                        <td><t t-esc="chk.actual or '-'"/></td>
+                                        <td class="text-center">
+                                            <strong x-attf-class="{{ 'text-danger' if chk.verdict == 'block' else ('text-warning' if chk.verdict == 'review' else 'text-success') }}">
+                                                <t t-esc="chk.verdict"/>
+                                            </strong>
+                                        </td>
+                                        <td><t t-esc="chk.citation or '-'"/></td>
+                                        <t t-set="c_idx" t-value="c_idx + 1"/>
+                                    </tr>
+                                    <t t-if="not o.check_result_ids">
+                                        <tr><td colspan="6" class="text-center text-muted">Không có cảnh báo vi phạm quy tắc</td></tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Signatures -->
+                        <div class="row mt-4">
+                            <div class="col-6 text-center">
+                                <strong>CHUYÊN VIÊN LOGISTICS / REVIEWER</strong><br/>
+                                <span class="fst-italic">(Ký, ghi rõ họ tên)</span>
+                                <div style="height: 50px;"></div>
+                            </div>
+                            <div class="col-6 text-center">
+                                <strong>TRƯỞNG PHÒNG XUẤT NHẬP KHẨU / AUDITOR</strong><br/>
+                                <span class="fst-italic">(Ký, đóng dấu duyệt)</span>
+                                <div style="height: 50px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

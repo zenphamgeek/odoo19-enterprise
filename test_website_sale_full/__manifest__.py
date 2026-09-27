@@ -5,9 +5,8 @@
     'summary': "Test Suite for eCommerce functionalities in enterprise",
     'category': "Hidden",
     'depends': [
-        'website_sale_comparison',
+        'website_sale',
         'website_sale_renting',
-        'website_sale_wishlist',
     ],
     'assets': {
         'web.assets_tests': [

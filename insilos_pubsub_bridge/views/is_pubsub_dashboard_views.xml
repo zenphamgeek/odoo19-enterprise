@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         EVENT LOG — GRAPH VIEW (Event Throughput by Day)
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="view_pubsub_event_log_graph" model="ir.ui.view">
+        <field name="name">is.pubsub.event.log.graph</field>
+        <field name="model">is.pubsub.event.log</field>
+        <field name="arch" type="xml">
+            <graph string="Event Throughput" type="bar" stacked="True">
+                <field name="create_date" interval="day" type="col"/>
+                <field name="event_type" type="row"/>
+                <field name="id" type="measure" string="Event Count"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         EVENT LOG — PIVOT VIEW (Analytics Crosstab)
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="view_pubsub_event_log_pivot" model="ir.ui.view">
+        <field name="name">is.pubsub.event.log.pivot</field>
+        <field name="model">is.pubsub.event.log</field>
+        <field name="arch" type="xml">
+            <pivot string="Event Analytics" display_quantity="True">
+                <field name="event_type" type="row"/>
+                <field name="state" type="col"/>
+                <field name="id" type="measure" string="Count"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         DASHBOARD ACTION (landing page for Pub/Sub Gateway)
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="action_pubsub_dashboard" model="ir.actions.act_window">
+        <field name="name">Pub/Sub Dashboard</field>
+        <field name="res_model">is.pubsub.event.log</field>
+        <field name="view_mode">graph,pivot,list,form</field>
+        <field name="context">{'search_default_group_event_type': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No events ingested yet.
+            </p>
+            <p>
+                The dashboard shows real-time event throughput, processing states, and analytics across all Pub/Sub channels.
+            </p>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         FORWARD LOG — GRAPH VIEW (Delivery Success Rate)
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="view_pubsub_forward_log_graph" model="ir.ui.view">
+        <field name="name">is.pubsub.forward.log.graph</field>
+        <field name="model">is.pubsub.forward.log</field>
+        <field name="arch" type="xml">
+            <graph string="Call Forward Delivery Rate" type="pie">
+                <field name="state" type="row"/>
+                <field name="id" type="measure" string="Deliveries"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_pubsub_forward_dashboard" model="ir.actions.act_window">
+        <field name="name">Forwarding Analytics</field>
+        <field name="res_model">is.pubsub.forward.log</field>
+        <field name="view_mode">graph,list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         OUTBOUND EVENT — GRAPH VIEW (Delivery Status)
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="view_pubsub_outbound_event_graph" model="ir.ui.view">
+        <field name="name">is.pubsub.outbound.event.graph</field>
+        <field name="model">is.pubsub.outbound.event</field>
+        <field name="arch" type="xml">
+            <graph string="Outbound Event Delivery" type="bar">
+                <field name="create_date" interval="day" type="col"/>
+                <field name="state" type="row"/>
+                <field name="id" type="measure" string="Events"/>
+            </graph>
+        </field>
+    </record>
+
+</odoo>

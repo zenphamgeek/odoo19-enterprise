@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { queryAll, queryAllTexts, queryFirst } from "@odoo/hoot-dom";
 import { animationFrame, mockDate, mockTimeZone } from "@odoo/hoot-mock";
-import { onRendered, useEffect, useRef } from "@odoo/owl";
+import { useEffect, useLayoutEffect, useRef } from "@odoo/owl";
 import {
     contains,
     defineParams,
@@ -339,7 +339,7 @@ test("Progress bar rpc is triggered when option set.", async () => {
 test("Progress bar component will not render when hovering cells of the same row", async () => {
     patchWithCleanup(GanttRowProgressBar.prototype, {
         setup() {
-            onRendered(() => expect.step("rendering progress bar"));
+            useLayoutEffect(() => expect.step("rendering progress bar"));
         },
     });
     onRpc("get_gantt_data", ({ parent }) => {
@@ -761,7 +761,7 @@ test("position of no content help in sample mode", async () => {
         setup() {
             super.setup(...arguments);
             const rootRef = useRef("root");
-            useEffect(() => {
+            useLayoutEffect(() => {
                 rootRef.el.querySelector(".o_content.o_view_sample_data").style.position =
                     "relative";
             });

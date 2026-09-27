@@ -34,7 +34,7 @@ patch(OrderPaymentValidation.prototype, {
                         this.pos.showFiskalyNoInternetConfirmPopup(this);
                     } else {
                         const message = {
-                            unknown: _t("An unknown error has occurred! Please, contact Odoo."),
+                            unknown: _t("An unknown error has occurred! Please, contact Insilos."),
                         };
                         this.pos.fiskalyError(error, message);
                     }
@@ -56,7 +56,7 @@ patch(OrderPaymentValidation.prototype, {
                         this.pos.showFiskalyNoInternetConfirmPopup(this);
                     } else {
                         const message = {
-                            unknown: _t("An unknown error has occurred! Please, contact Odoo."),
+                            unknown: _t("An unknown error has occurred! Please, contact Insilos."),
                         };
                         this.pos.fiskalyError(error, message);
                     }

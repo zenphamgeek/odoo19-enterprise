@@ -69,7 +69,7 @@ class AccountOnlineLink(models.Model):
                 'mail.mail_activity_data_todo',
                 user_id=self.env.user.id,
                 summary=_("Complete your KYC"),
-                note=_("You haven't completed your KYC yet, so you can't process payment directly from Odoo."),
+                note=_("You haven't completed your KYC yet, so you can't process payment directly from Insilos."),
             )
 
             return {
@@ -79,7 +79,7 @@ class AccountOnlineLink(models.Model):
                     'type': 'info',
                     'title': _("Time to complete your KYC"),
                     'message': _(
-                        "To process payments directly from Odoo, please complete your KYC now: %s. You can also do it later in the bank journal settings."
+                        "To process payments directly from Insilos, please complete your KYC now: %s. You can also do it later in the bank journal settings."
                     ),
                     'links': [{
                         'label': _("KYC Link"),

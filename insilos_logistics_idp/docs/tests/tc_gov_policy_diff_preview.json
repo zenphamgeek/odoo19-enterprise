@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.1",
+  "generated_at_utc": "2026-09-05T16:08:46Z",
+  "run_started_at_utc": "2026-09-05T15:57:38Z",
+  "run_ended_at_utc": "2026-09-05T16:08:46Z",
+  "start_ns": 1787466372321813331,
+  "end_ns": 1787467928341344380,
+  "elapsed_ns": 1556019531049,
+  "limit_ns": 14400000000000,
+  "within_4h": true,
+  "environment": {
+    "scope": "SOLO_DEV_LOCAL",
+    "database": "insilos_migration_digiforce_v2",
+    "module": "insilos_logistics_idp",
+    "module_version": "19.0.1.3.11",
+    "non_production": true,
+    "external_calls": false
+  },
+  "commit_sha": "bcbca5c3376a4e95f39464a1e3bc12b090cff5d5",
+  "scope": [
+    "WP0",
+    "WP1",
+    "WP2",
+    "WP3",
+    "WP4",
+    "security_hardening"
+  ],
+  "exclusions": [
+    "WP5 durable activation",
+    "TC-GOV-006 completion",
+    "production",
+    "deployment",
+    "external authority/provider calls",
+    "legal certification",
+    "tariff",
+    "sanctions",
+    "FTA qualification",
+    "export control"
+  ],
+  "artifact_type": "tc_gov_policy_diff_preview",
+  "status": "PASS_EPHEMERAL_READ_ONLY",
+  "commands": [
+    "python3 tools/with_local_credentials.py --solo-dev-db -- python3 insilos/insilos-bin -c insilos.conf -d insilos_migration_digiforce_v2 --test-enable --stop-after-init --workers=0 --max-cron-threads=0 --addons-path=insilos/addons,insilos/apps --http-port=18179 --log-level=test --test-tags /insilos_logistics_idp:TestLogisticsIdpConfiguration"
+  ],
+  "requirements": [
+    "TC-GOV-003",
+    "TC-GOV-005"
+  ],
+  "expected": {
+    "outcomes": [
+      "affected",
+      "possibly_affected",
+      "not_affected",
+      "insufficient_context"
+    ],
+    "deterministic": true,
+    "writes": 0
+  },
+  "actual": {
+    "tests": [
+      "test_policy_candidate_import_is_draft_idempotent_and_diff_is_read_only",
+      "test_policy_impact_preview_is_deterministic_read_only_and_fails_closed"
+    ],
+    "active_hash": "asserted runtime SHA-256; raw payload omitted",
+    "candidate_hash": "asserted runtime SHA-256; transactional fixture omitted",
+    "semantic_diff": [
+      "$.horizontal.classification.thresholds.strong_filename",
+      "$.vertical.packs.vn_fdi_fta.counterpart_rules[0].deadline_days"
+    ],
+    "outcome_counts": {
+      "affected": "fixture-dependent, asserted key present",
+      "possibly_affected": "fixture-dependent, asserted key present",
+      "not_affected": "fixture-dependent, asserted key present",
+      "insufficient_context": "fixture-dependent, asserted key present"
+    },
+    "input_manifest_hash": "asserted deterministic by exact equality",
+    "output_hash": "separate from input manifest",
+    "zero_write_models": [
+      "logistics.idp.case",
+      "logistics.idp.check.result",
+      "logistics.idp.evidence",
+      "logistics.idp.policy.decision",
+      "mail.activity",
+      "logistics.idp.policy.source"
+    ],
+    "writes": 0,
+    "local_captures": {
+      "configuration": {
+        "passed": 52,
+        "failed": 0,
+        "errors": 0,
+        "total": 52
+      }
+    }
+  },
+  "run": {
+    "passed": 2,
+    "failed": 0
+  },
+  "cumulative": {
+    "focused_suite_passed": 30,
+    "focused_suite_failed": 0
+  },
+  "failures": [],
+  "blockers": [
+    "Preview is not activation authorization; durable binding blocked"
+  ],
+  "artifact_sha256_scope": "canonical JSON excluding artifact_sha256",
+  "artifact_sha256": "4739660d1eb76b38da11d7e2bdeac69d781a41211904ee88b686658137f61e2e",
+  "worktree_dirty": true,
+  "worktree_hash_scope": "module_excluding_tc_gov_artifacts",
+  "worktree_status_sha256": "861aabcfa96f837ae84dfbfda9736b67195d71b34eb851f2436b7cf74c4eaf81",
+  "worktree_diff_sha256": "d8fd2bc77312d996fb191cceea4d8879e6e5cc6fd24eedf4d71a55407ae79965",
+  "source_sha256": {
+    "__manifest__.py": "a9fd00b4a72b4fd33938e5fe46638df347052a19e29fa97cac025dfafd6a06a0",
+    "models/logistics_idp.py": "b251d395d45c455b0e9e30455e35aecd41d6aa9951423c3f66fa79d8da55e99a",
+    "tests/test_logistics_idp_configuration.py": "be5318a215558bac7be457a4d14badee08374fcc2685ad21724b4411b6d339db"
+  }
+}

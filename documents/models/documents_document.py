@@ -200,7 +200,7 @@ class DocumentsDocument(models.Model):
     @api.depends('access_token')
     def _compute_access_url(self):
         for document in self:
-            document.access_url = f'{document.sudo().get_base_url()}/odoo/documents/{quote(document.access_token, safe="")}'
+            document.access_url = f'{document.sudo().get_base_url()}/insilos/documents/{quote(document.access_token, safe="")}'
 
     @api.depends('create_activity_type_id', 'create_activity_user_id')
     def _compute_create_activity_option(self):
@@ -910,7 +910,7 @@ class DocumentsDocument(models.Model):
 
         return super()._field_to_sql(alias, fname, query)
 
-    def _order_field_to_sql(self, alias, field_name, direction, nulls, query):
+    def _order_field_to_sql(self, alias, field_name, direction, nulls, query=None):
         if field_name == 'last_access_date_group':
             sql_field = SQL(
                 "SELECT last_access_date FROM documents_access WHERE partner_id = %s AND document_id = %s",
@@ -923,7 +923,7 @@ class DocumentsDocument(models.Model):
             sql_field = SQL("%s != 'folder'", SQL.identifier(alias, 'type'))
             return SQL("(%s) %s %s", sql_field, direction, nulls)
 
-        return super()._order_field_to_sql(alias, field_name, direction, nulls, query)
+        return super()._order_field_to_sql(alias, field_name, direction, nulls)
 
     @api.model
     def get_previewable_file_extensions(self):
@@ -1721,15 +1721,14 @@ class DocumentsDocument(models.Model):
         return super(DocumentsDocument, self.with_context(no_document=True)).message_post(
             message_type=message_type, **kwargs)
 
-    def _message_post_after_hook(self, message, msg_vals):
+    def _message_post_after_hook(self, message):
         # If the res model was an attachment and a mail, adds all the custom values of the linked
         # document settings to the attachments of the mail. If it was only a new email converts
         # its body to an attachment for the given document (use case: invoice/receipt sent as an email)
         if message.message_type != 'email' or not self.env.context.get("document_message_new"):
-            return super()._message_post_after_hook(message, msg_vals)
+            return super()._message_post_after_hook(message)
 
-        m2m_commands = msg_vals['attachment_ids']
-        attachments = self.env['ir.attachment'].browse([x[1] for x in m2m_commands])
+        attachments = message.attachment_ids
         disable_mail_to_document = literal_eval(self.env['ir.config_parameter'].get_param('documents.disable_mail_to_document', default="0"))
         documents = None
 
@@ -1748,23 +1747,20 @@ class DocumentsDocument(models.Model):
                     'res_id': document.id,
                 })
                 sub_message_values = {
-                    'author_id': msg_vals.get('author_id'),
-                    'body': msg_vals.get('body', ''),
-                    'email_from': msg_vals.get('email_from'),
+                    'author_id': message.author_id.id,
+                    'body': message.body or '',
+                    'email_from': message.email_from,
                     'message_type': 'email',
-                    'subject': msg_vals.get('subject') or self.name,
-                    'subtype_id': msg_vals.get('subtype_id'),
-                    'subtype_xmlid': msg_vals.get('subtype_xmlid'),
+                    'subject': message.subject or self.name,
+                    'subtype_id': message.subtype_id.id,
                 }
-                sub_message_values.pop('model', None)
-                sub_message_values.pop('res_id', None)
-                sub_message_values.pop('attachment_ids', None)
                 document.message_post(**sub_message_values)
         elif not self.attachment_id and not disable_mail_to_document:
+            raw_data = message.body.encode('utf-8') if isinstance(message.body, str) else (message.body or b'')
             attachment = self.env['ir.attachment'].create({
-                'name': msg_vals.get('subject') or msg_vals.get('email_from', _('email')),
+                'name': message.subject or message.email_from or _('email'),
                 'type': 'binary',
-                'raw':  message.body,
+                'raw': raw_data,
                 'mimetype': 'application/documents-email',  # Custom mimetype. Only for preview in Documents
                 'res_model': 'documents.document',
             })
@@ -1784,7 +1780,7 @@ class DocumentsDocument(models.Model):
                 elif self.folder_id.create_activity_option:
                     document.documents_set_activity(settings_record=self.folder_id)
 
-        return super()._message_post_after_hook(message, msg_vals)
+        return super()._message_post_after_hook(message)
 
     def _message_post_after_hook_template_values(self):
         """Values that will be taken from the document template."""

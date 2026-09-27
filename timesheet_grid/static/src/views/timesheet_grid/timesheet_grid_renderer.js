@@ -80,14 +80,14 @@ export class TimesheetGridRenderer extends GridRenderer {
         }
     }
 
-    get displayAddLine() {
-        const res = super.displayAddLine;
+    displayAddLine(row) {
+        const res = typeof super.displayAddLine === "function" ? super.displayAddLine(row) : super.displayAddLine;
         if (!res || this.props.sectionField?.name !== "employee_id") {
             return res;
         }
 
-        const employeeId = this.row.section.valuePerFieldName.employee_id[0];
-        if (employeeId in this.lastValidationDatePerEmployee) {
+        const employeeId = row?.section?.valuePerFieldName?.employee_id?.[0];
+        if (employeeId && employeeId in this.lastValidationDatePerEmployee) {
             return !this.lastValidationDatePerEmployee[employeeId] || this.lastValidationDatePerEmployee[employeeId].startOf("day") < this.props.model.navigationInfo.periodEnd.startOf("day");
         }
 

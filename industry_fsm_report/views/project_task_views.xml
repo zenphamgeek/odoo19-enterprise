@@ -28,9 +28,9 @@
     <record id="project_task_view_kanban_fsm_report" model="ir.ui.view">
         <field name="name">project.task.kanban.fsm.report</field>
         <field name="model">project.task</field>
-        <field name="inherit_id" ref="industry_fsm.project_task_view_kanban_fsm"/>
+        <field name="inherit_id" ref="project.view_task_card"/>
         <field name="arch" type="xml">
-            <xpath expr="//kanban" position="inside">
+            <xpath expr="//card" position="inside">
                 <field name="worksheet_template_id" />
             </xpath>
             <xpath expr="//field[@name='name']" position="after">

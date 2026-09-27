@@ -55,7 +55,7 @@ const FormControllerPatch = {
             });
             useEffect(
                 () => this._evaluateRecordCandidate(),
-                () => [this.model.root.resId],
+                () => [this.model.root?.resId],
             );
         }
     },
@@ -71,6 +71,7 @@ const FormControllerPatch = {
      */
     _evaluateRecordCandidate() {
         if (
+            !this.model.root ||
             KNOWLEDGE_EXCLUDED_MODELS.has(this.props.resModel) ||
             !this.env.config.breadcrumbs ||
             !this.env.config.breadcrumbs.length

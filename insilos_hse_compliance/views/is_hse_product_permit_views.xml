@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_is_hse_product_permit_tree" model="ir.ui.view">
+            <field name="name">is.hse.product.permit.list</field>
+            <field name="model">is.hse.product.permit</field>
+            <field name="arch" type="xml">
+                <list string="Chemical &amp; Product Compliance Permits">
+                    <field name="permit_number"/>
+                    <field name="name"/>
+                    <field name="permit_type"/>
+                    <field name="issuing_authority"/>
+                    <field name="chemical_substance_id"/>
+                    <field name="product_count"/>
+                    <field name="issue_date" string="Recorded Issue Date"/>
+                    <field name="expiry_date" string="Recorded Expiry Date"/>
+                    <field name="is_perpetual"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state" string="Internal Record Status" widget="badge" decoration-muted="state == 'draft'"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_hse_product_permit_form" model="ir.ui.view">
+            <field name="name">is.hse.product.permit.form</field>
+            <field name="model">is.hse.product.permit</field>
+            <field name="arch" type="xml">
+                <form string="Compliance Permit">
+                    <header>
+                        <button name="%(action_report_hse_product_permit)d" string="Print Internal Permit Record" type="action" class="btn-primary" icon="fa-print"/>
+                    </header>
+                    <sheet>
+                        <div class="w_title">
+                            <label for="permit_number" string="Recorded Permit / Certificate Number"/>
+                            <h1>
+                                <field name="permit_number" placeholder="e.g. 45/GP-BCT, 128/GCN-SCT"/>
+                            </h1>
+                            <h3>
+                                <field name="name" placeholder="Title (e.g. Restricted Chemical Trading License)"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group string="Permit Category &amp; Authority">
+                                <field name="permit_type"/>
+                                <field name="issuing_authority"/>
+                                <field name="chemical_substance_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                            <group string="Recorded Issue &amp; Expiry Metadata">
+                                <field name="issue_date" string="Recorded Issue Date"/>
+                                <field name="expiry_date" string="Recorded Expiry Date" invisible="is_perpetual"/>
+                                <field name="is_perpetual"/>
+                                <field name="state" string="Internal Record Status" widget="badge" decoration-muted="state == 'draft'"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Covered Products" name="products">
+                                <field name="product_template_ids">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="default_code"/>
+                                        <field name="cas_number"/>
+                                        <field name="is_hazardous_chemical" widget="boolean_toggle"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Attached Documents &amp; Scans" name="attachments">
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </page>
+                            <page string="Conditions &amp; Scope" name="conditions">
+                                <field name="conditions_summary" placeholder="Recorded chemical volume, facility boundaries, storage conditions..."/>
+                            </page>
+                            <page string="Internal Remarks" name="notes">
+                                <field name="notes" placeholder="Renewal notes, auditor recommendations..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_is_hse_product_permit_search" model="ir.ui.view">
+            <field name="name">is.hse.product.permit.search</field>
+            <field name="model">is.hse.product.permit</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="permit_number"/>
+                    <field name="name"/>
+                    <field name="issuing_authority"/>
+                    <field name="chemical_substance_id"/>
+                    <group>
+                        <filter name="group_type" string="Permit Category" context="{'group_by': 'permit_type'}"/>
+                        <filter name="group_state" string="Internal Record Status" context="{'group_by': 'state'}"/>
+                        <filter name="group_substance" string="Chemical Substance" context="{'group_by': 'chemical_substance_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_is_hse_product_permit_kanban" model="ir.ui.view">
+            <field name="name">is.hse.product.permit.kanban</field>
+            <field name="model">is.hse.product.permit</field>
+            <field name="arch" type="xml">
+                <kanban class="w_kanban_small_column" sample="1">
+                    <field name="permit_number"/>
+                    <field name="name"/>
+                    <field name="permit_type"/>
+                    <field name="issuing_authority"/>
+                    <field name="state"/>
+                    <field name="expiry_date"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="d-flex flex-column gap-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary"><field name="permit_number"/></strong>
+                                    <field name="state" string="Internal Record Status" widget="badge" decoration-muted="state == 'draft'"/>
+                                </div>
+                                <div class="fw-bold text-truncate"><field name="name"/></div>
+                                <div class="text-muted small"><field name="issuing_authority"/></div>
+                                <div class="d-flex justify-content-between text-muted small mt-1">
+                                    <span><field name="permit_type"/></span>
+                                    <span>Recorded expiry: <field name="expiry_date"/></span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_is_hse_product_permit" model="ir.actions.act_window">
+            <field name="name">Internal Permit &amp; Certificate Metadata</field>
+            <field name="path">hse-licenses</field>
+            <field name="res_model">is.hse.product.permit</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="search_view_id" ref="view_is_hse_product_permit_search"/>
+            <field name="help" type="html">
+                <p class="w_view_nocontent_smiling_face">
+                    Record internal permit and certificate metadata for products. Draft-only records; no validation or authority confirmation.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

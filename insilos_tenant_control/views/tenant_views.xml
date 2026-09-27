@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tenant_list" model="ir.ui.view">
+        <field name="name">insilos.tenant.list</field>
+        <field name="model">insilos.tenant</field>
+        <field name="arch" type="xml">
+            <list decoration-success="billing_state == 'paid_active'" decoration-info="billing_state == 'trial_active'" decoration-warning="billing_state in ('trial_expiring', 'grace_period')" decoration-danger="billing_state == 'suspended'">
+                <field name="name"/>
+                <field name="slug"/>
+                <field name="primary_domain"/>
+                <field name="template_id"/>
+                <field name="tenant_type" widget="badge"/>
+                <field name="billing_state" widget="badge" decoration-success="billing_state == 'paid_active'" decoration-info="billing_state == 'trial_active'" decoration-warning="billing_state in ('trial_expiring', 'grace_period')" decoration-danger="billing_state == 'suspended'"/>
+                <field name="trial_days_left" string="Days Left"/>
+                <field name="plan_tier"/>
+                <field name="observed_state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_tenant_form" model="ir.ui.view">
+        <field name="name">insilos.tenant.form</field>
+        <field name="model">insilos.tenant</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_provision" type="object" string="Provision DB" class="btn-primary" invisible="desired_state == 'provisioned' and observed_state == 'healthy'"/>
+                    <button name="action_convert_to_paid" type="object" string="Activate Paid Subscription" class="btn-success fw-bold" invisible="billing_state == 'paid_active'"/>
+                    <button name="action_extend_trial" type="object" string="Extend Trial (+14 Days)" class="btn-secondary" invisible="billing_state == 'paid_active'"/>
+                    <field name="billing_state" widget="statusbar" statusbar_visible="trial_active,trial_expiring,grace_period,paid_active"/>
+                </header>
+                <sheet>
+                    <div class="w_title">
+                        <label for="name" string="Tenant Name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. An Phat Logistics Co., Ltd..."/>
+                        </h1>
+                        <div class="d-flex gap-2 align-items-center mt-1">
+                            <span class="badge bg-primary fs-6"><field name="slug"/></span>
+                            <span class="text-muted">➔</span>
+                            <span class="fw-bold text-dark"><field name="primary_domain"/></span>
+                        </div>
+                    </div>
+
+                    <group>
+                        <group string="1. 30-Day Trial &amp; Subscription Lifecycle">
+                            <field name="tenant_type" widget="radio" options="{'horizontal': true}"/>
+                            <field name="plan_tier"/>
+                            <field name="monthly_price"/>
+                            <field name="trial_started_at" readonly="1"/>
+                            <field name="trial_ends_at"/>
+                            <field name="trial_days_left" class="fw-bold text-primary fs-5"/>
+                            <field name="paid_until" invisible="billing_state != 'paid_active'"/>
+                        </group>
+                        <group string="2. Contact Information &amp; Scale">
+                            <field name="owner_name"/>
+                            <field name="owner_email" widget="email"/>
+                            <field name="owner_phone" widget="phone"/>
+                            <field name="company_size"/>
+                            <field name="environment"/>
+                        </group>
+                    </group>
+
+                    <group string="3. Infrastructure &amp; Template">
+                        <group>
+                            <field name="template_id"/>
+                            <field name="release_id"/>
+                            <field name="db_name"/>
+                            <field name="db_uuid"/>
+                        </group>
+                        <group>
+                            <field name="region"/>
+                            <field name="cluster"/>
+                            <field name="desired_state"/>
+                            <field name="observed_state"/>
+                            <field name="last_reconciled_at" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Operations History">
+                            <field name="operation_ids" readonly="1">
+                                <list>
+                                    <field name="operation_type"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="create_date"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_tenant" model="ir.actions.act_window">
+        <field name="name">SaaS Tenant Fleet</field>
+        <field name="path">tenant-fleet</field>
+        <field name="res_model">insilos.tenant</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

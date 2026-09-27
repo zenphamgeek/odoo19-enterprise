@@ -6,6 +6,8 @@ from odoo import fields, models
 class ProjectProject(models.Model):
     _inherit = 'project.project'
 
+    stage_id_color = fields.Integer(string='Stage Color')
+
     def web_gantt_write(self, data):
         # If it's schedule context (One of the projects doesn't have date)
         # we need to remove m2o field like user_id from data if they are empty to keep the old values

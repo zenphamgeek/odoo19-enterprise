@@ -25,10 +25,10 @@ appropriate views and selling choices.
         'web.assets_frontend': [
             'sale_renting/static/src/js/combo_configurator_dialog/*',
             'sale_renting/static/src/js/product_configurator_dialog/*',
+            'website_sale_renting/static/src/js/*.js',
             'website_sale_renting/static/src/interactions/**/*',
             'website_sale_renting/static/src/snippets/**/*.js',
             'website_sale_renting/static/src/scss/*.scss',
-            ('before', 'website_sale/static/src/interactions/website_sale.js', 'website_sale_renting/static/src/js/*.js'),
         ],
         'web.assets_tests': [
             'website_sale_renting/static/tests/tours/**/*',

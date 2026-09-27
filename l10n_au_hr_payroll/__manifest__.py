@@ -7,7 +7,6 @@
     'version': '1.0',
     "depends": [
         "hr_payroll",
-        "hr_work_entry_holidays",
         "hr_payroll_holidays",
         "base_address_extended",
     ],

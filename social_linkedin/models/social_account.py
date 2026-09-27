@@ -191,7 +191,7 @@ class SocialAccount(models.Model):
     def _create_linkedin_accounts(self, access_token, media):
         linkedin_accounts = self._get_linkedin_accounts(access_token)
         if not linkedin_accounts:
-            message = _('You need a Business Account to post on LinkedIn with Odoo Social.\n Please create one and make sure it is linked to your account')
+            message = _('You need a Business Account to post on LinkedIn with Insilos Social.\n Please create one and make sure it is linked to your account')
             documentation_link = 'https://business.linkedin.com/marketing-solutions/linkedin-pages'
             documentation_link_label = _('Read More about Business Accounts')
             documentation_link_icon_class = 'fa fa-linkedin'

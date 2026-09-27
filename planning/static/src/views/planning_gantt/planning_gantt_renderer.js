@@ -37,7 +37,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
         this.splitToolHelperReactive = reactive({});
         super.setup();
         useEffect(() => {
-            this.gridRef.el.classList.add("o_planning_gantt");
+            this.gridRef?.el?.classList.add("o_planning_gantt");
         });
 
         this.state = useState({

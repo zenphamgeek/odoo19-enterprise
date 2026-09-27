@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradTc" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091834"/>
+      <stop offset="50%" stop-color="#0B2E64"/>
+      <stop offset="100%" stop-color="#040e20"/>
+    </linearGradient>
+    <linearGradient id="purpleGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <filter id="glowEffectTc" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="800" height="600" rx="16" fill="url(#bgGradTc)"/>
+
+  <!-- Grid lines -->
+  <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+    <line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="450" x2="800" y2="450"/>
+    <line x1="200" y1="0" x2="200" y2="600"/>
+    <line x1="400" y1="0" x2="400" y2="600"/>
+    <line x1="600" y1="0" x2="600" y2="600"/>
+  </g>
+
+  <!-- Title Header -->
+  <g transform="translate(400, 50)">
+    <text text-anchor="middle" fill="#ffffff" font-family="system-ui, sans-serif" font-weight="bold" font-size="16">INSILOS TRADE COMPLIANCE &amp; CUSTOMS INTELLIGENCE</text>
+    <text text-anchor="middle" y="22" fill="#c084fc" font-family="system-ui, sans-serif" font-weight="600" font-size="12">Autonomous HS Classification · Rules of Origin · Sanction Screening</text>
+  </g>
+
+  <!-- Central Shield / Intelligence Engine -->
+  <g transform="translate(400, 300)">
+    <circle r="65" fill="#082046" stroke="#c084fc" stroke-width="2.5" filter="url(#glowEffectTc)"/>
+    <circle r="52" fill="rgba(11,46,100,0.8)" stroke="rgba(192,132,252,0.4)" stroke-width="1.5"/>
+    <text text-anchor="middle" y="-12" fill="#c084fc" font-family="system-ui, sans-serif" font-weight="bold" font-size="13">LEGAL-POLICY</text>
+    <text text-anchor="middle" y="6" fill="#ffffff" font-family="system-ui, sans-serif" font-weight="bold" font-size="12">DOSSIER ENGINE</text>
+    <text text-anchor="middle" y="24" fill="#34d399" font-family="system-ui, sans-serif" font-size="10">Audit-Ready 100%</text>
+  </g>
+
+  <!-- Left: HS Code Classification -->
+  <g transform="translate(180, 200)">
+    <rect x="-110" y="-55" width="220" height="110" rx="12" fill="#0c234a" stroke="#38bdf8" stroke-width="1.8" filter="url(#glowEffectTc)"/>
+    <text text-anchor="middle" y="-28" fill="#38bdf8" font-family="system-ui, sans-serif" font-weight="bold" font-size="12">8-10 DIGIT HS CODE ENGINE</text>
+    <text text-anchor="middle" y="-8" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11">HS: 8471.50.00 · Servers &amp; Data</text>
+    <text text-anchor="middle" y="10" fill="#34d399" font-family="system-ui, sans-serif" font-size="10.5">MFN: 0% · EVFTA: 0% (EUR.1)</text>
+    <text text-anchor="middle" y="28" fill="rgba(255,255,255,0.7)" font-family="system-ui, sans-serif" font-size="9.5">GRI 1 &amp; 6 Legal Rationale Attached</text>
+  </g>
+
+  <!-- Right: Rules of Origin Verification -->
+  <g transform="translate(620, 200)">
+    <rect x="-110" y="-55" width="220" height="110" rx="12" fill="#0c234a" stroke="#34d399" stroke-width="1.8" filter="url(#glowEffectTc)"/>
+    <text text-anchor="middle" y="-28" fill="#34d399" font-family="system-ui, sans-serif" font-weight="bold" font-size="12">RULES OF ORIGIN (C/O)</text>
+    <text text-anchor="middle" y="-8" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11">Criteria: PSR / RVC ≥ 40%</text>
+    <text text-anchor="middle" y="10" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="10.5">FTA Packs: EVFTA, CPTPP, RCEP</text>
+    <text text-anchor="middle" y="28" fill="rgba(255,255,255,0.7)" font-family="system-ui, sans-serif" font-size="9.5">Form D, E, EUR.1 Pre-validated</text>
+  </g>
+
+  <!-- Bottom Left: Sanctions & Denied Party Screening -->
+  <g transform="translate(180, 420)">
+    <rect x="-110" y="-55" width="220" height="110" rx="12" fill="#0c234a" stroke="#fbbf24" stroke-width="1.8" filter="url(#glowEffectTc)"/>
+    <text text-anchor="middle" y="-28" fill="#fbbf24" font-family="system-ui, sans-serif" font-weight="bold" font-size="12">DENIED PARTY &amp; SANCTIONS</text>
+    <text text-anchor="middle" y="-8" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11">Real-time Watchlist Screening</text>
+    <text text-anchor="middle" y="10" fill="#34d399" font-family="system-ui, sans-serif" font-size="10.5">Vessels, Carriers, Ultimate Consignee</text>
+    <text text-anchor="middle" y="28" fill="rgba(255,255,255,0.7)" font-family="system-ui, sans-serif" font-size="9.5">0 Restricted Entity Matched</text>
+  </g>
+
+  <!-- Bottom Right: Customs Declaration Pack -->
+  <g transform="translate(620, 420)">
+    <rect x="-110" y="-55" width="220" height="110" rx="12" fill="#0c234a" stroke="#c084fc" stroke-width="1.8" filter="url(#glowEffectTc)"/>
+    <text text-anchor="middle" y="-28" fill="#c084fc" font-family="system-ui, sans-serif" font-weight="bold" font-size="12">DECLARATION READY PACK</text>
+    <text text-anchor="middle" y="-8" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11">VNACCS / Customs Gateway API</text>
+    <text text-anchor="middle" y="10" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="10.5">Full Hash &amp; Cryptographic Proof</text>
+    <text text-anchor="middle" y="28" fill="rgba(255,255,255,0.7)" font-family="system-ui, sans-serif" font-size="9.5">Zero Customs Clearance Delay</text>
+  </g>
+
+  <!-- Connecting Lines -->
+  <g stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-dasharray="4,4">
+    <line x1="290" y1="230" x2="345" y2="270"/>
+    <line x1="510" y1="230" x2="455" y2="270"/>
+    <line x1="290" y1="390" x2="345" y2="330"/>
+    <line x1="510" y1="390" x2="455" y2="330"/>
+  </g>
+
+  <!-- Bottom Banner -->
+  <g transform="translate(400, 550)">
+    <rect x="-350" y="-22" width="700" height="44" rx="10" fill="rgba(11,46,100,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <text text-anchor="middle" y="6" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12">
+      <tspan fill="#34d399" font-weight="bold">-98% Tariff Penalty Risk</tspan> · 
+      <tspan fill="#38bdf8" font-weight="bold">100% FTA Rule Conformance</tspan> · 
+      <tspan fill="#c084fc" font-weight="bold">Post-Clearance Audit Shield</tspan>
+    </text>
+  </g>
+</svg>

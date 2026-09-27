@@ -1,16 +1,16 @@
-import { Component, onWillUnmount, onWillUpdateProps, useState } from "@odoo/owl";
+import { Component, onWillUnmount, onWillUpdateProps, proxy } from "@odoo/owl";
 import { session } from "@web/session";
 
 export class CountScreenRFID extends Component {
     static props = {
         close: Function,
-        receivedRFIDs: { type: Array, default: [] },
-        totalRFIDs: { type: Array, default: [] },
+        receivedRFIDs: { type: Array, optional: true },
+        totalRFIDs: { type: Array, optional: true },
     };
     static template = "stock_barcode.CountScreenRFID";
 
     setup() {
-        this.state = useState({
+        this.state = proxy({
             duration: "00:00",
             readRate: 0,
         });

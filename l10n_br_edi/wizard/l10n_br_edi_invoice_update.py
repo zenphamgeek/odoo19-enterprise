@@ -100,7 +100,7 @@ class L10n_Br_EdiInvoiceUpdate(models.TransientModel):
         # Cancel without an API request. Avalara's cancellation API only supports
         # select cities. Customers will instead cancel through their city's portal.
         move.message_post(
-            body=_("E-invoice cancelled in Odoo, make sure to also cancel it in your city's portal."),
+            body=_("E-invoice cancelled in Insilos, make sure to also cancel it in your city's portal."),
         )
         move.button_cancel()
 

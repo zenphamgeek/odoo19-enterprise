@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_dev_about" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.dev.about</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//widget[@name='res_config_dev_tool']" position="replace"/>
+            <xpath expr="//div[@id='about']" position="replace">
+                <div class="row o_dev_about_row" id="dev_about_row">
+                    <div class="col-12 col-lg-6 o_dev_col">
+                        <widget name="res_config_dev_tool"/>
+                    </div>
+                    <div class="col-12 col-lg-6 o_about_col" id="about">
+                        <block title="About" name="about_setting_container">
+                            <widget name="res_config_edition"/>
+                        </block>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

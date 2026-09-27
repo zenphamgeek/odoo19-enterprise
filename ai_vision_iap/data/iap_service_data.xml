@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- `_hold_iap()` tra giá bằng technical_name `ai_vision`. Không có bản
+         ghi này thì `cost_for()` rơi về mặc định 1.0 kèm cảnh báo — chạy
+         được nhưng giá nằm ngoài tầm cấu hình, đúng thứ cột `credit_cost`
+         sinh ra để bỏ. -->
+    <record id="iap_service_ai_vision" model="iap.service">
+        <field name="name">AI Vision Extraction</field>
+        <field name="technical_name">ai_vision</field>
+        <field name="description">Extract invoice date, partner and totals from vendor bill images using AI Vision.</field>
+        <field name="unit_name">Credits</field>
+        <field name="integer_balance">True</field>
+        <field name="credit_cost">1.0</field>
+    </record>
+</odoo>

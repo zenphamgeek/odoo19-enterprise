@@ -27,6 +27,7 @@ class HrEmployee(models.Model):
     employee_token = fields.Char('Security Token', default=_default_employee_token, groups='hr.group_hr_user',
                                  copy=False, readonly=True, export_string_translation=False)
     has_slots = fields.Boolean(compute='_compute_has_slots')
+    is_flexible = fields.Boolean(string='Flexible Hours', related='resource_calendar_id.flexible_hours', store=True)
 
     _employee_token_unique = models.Constraint(
         'unique(employee_token)',
@@ -63,7 +64,7 @@ class HrEmployee(models.Model):
         result = {}
         for employee in self:
             if employee.user_id and not employee.user_id._is_portal():
-                result[employee.id] = f"/odoo/action-planning.planning_action_open_shift?date_start={date_start}&date_end={date_end}"
+                result[employee.id] = f"/insilos/action-planning.planning_action_open_shift?date_start={date_start}&date_end={date_end}"
             else:
                 result[employee.id] = '/planning/%s/%s' % (planning_access_token, employee.employee_token)
         return result

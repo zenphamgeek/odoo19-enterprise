@@ -39,7 +39,7 @@
             <xpath expr="//field[@name='sale_line_employee_ids']/list/field[@name='price_unit']" position="attributes">
                 <attribute name="readonly">not parent.is_fsm or not timesheet_product_id</attribute>
             </xpath>
-            <xpath expr="//group[@name='group_sales_invoicing']/div" position="inside">
+            <xpath expr="//group[@name='group_sales_invoicing']" position="inside">
                 <field name="is_fsm" invisible="1"/>
                 <setting class="col-lg-12" help="Track the material used to complete tasks">
                     <field name="allow_material"/>
@@ -47,7 +47,7 @@
                     <span invisible="not allow_material" class="text-muted">Hide prices on customer report</span>
                 </setting>
             </xpath>
-            <xpath expr="//group[@name='group_sales_invoicing']/div" position="inside">
+            <xpath expr="//group[@name='group_sales_invoicing']" position="inside">
                 <setting class="col-lg-12" help="Create new quotations directly from tasks">
                     <field name="allow_quotations"/>
                 </setting>

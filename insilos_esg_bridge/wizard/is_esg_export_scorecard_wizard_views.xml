@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_esg_export_scorecard_wizard_form" model="ir.ui.view">
+        <field name="name">is.esg.export.scorecard.wizard.form</field>
+        <field name="model">is.esg.export.scorecard.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Export ESG Disclosures">
+                <group>
+                    <group>
+                        <field name="reporting_year"/>
+                        <field name="export_format" widget="radio"/>
+                    </group>
+                    <group>
+                        <field name="facility_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <div class="alert alert-info" role="alert">
+                    <strong>Export Options:</strong>
+                    <ul>
+                        <li><strong>CSV:</strong> Tabular data of GHG Scope 1+2, CEMS Air Emissions, Water, Waste and LTIFR metrics.</li>
+                        <li><strong>JSON:</strong> Structured scorecard payload for ESG API ingestion; not GRI/SASB-aligned or assured.</li>
+                    </ul>
+                </div>
+                <footer>
+                    <button string="Export Disclosures" name="action_export" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_esg_export_scorecard_wizard" model="ir.actions.act_window">
+        <field name="name">Export ESG Disclosures</field>
+        <field name="res_model">is.esg.export.scorecard.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

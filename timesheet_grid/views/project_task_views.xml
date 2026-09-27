@@ -62,7 +62,7 @@
         <record id="project_task_view_kanban" model="ir.ui.view">
             <field name="name">project.task.kanban.timer</field>
             <field name="model">project.task</field>
-            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="inherit_id" ref="project.view_task_card"/>
             <field name="arch" type="xml">
                 <xpath expr="//footer//field[@name='priority']" position="before">
                     <field name="display_timesheet_timer" invisible="1"/>

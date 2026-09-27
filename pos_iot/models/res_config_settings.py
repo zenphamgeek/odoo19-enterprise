@@ -14,5 +14,6 @@ class ResConfigSettings(models.TransientModel):
     # pos.config fields
     pos_iface_display_id = fields.Many2one(related='pos_config_id.iface_display_id', readonly=False)
     pos_iface_printer_id = fields.Many2one(related='pos_config_id.iface_printer_id', readonly=False)
+    pos_iface_cashdrawer = fields.Boolean(related='pos_config_id.iface_cashdrawer', readonly=False)
     pos_iface_scale_id = fields.Many2one(related='pos_config_id.iface_scale_id', readonly=False)
     pos_iface_scanner_ids = fields.Many2many(related='pos_config_id.iface_scanner_ids', readonly=False)

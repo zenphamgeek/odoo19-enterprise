@@ -1,29 +1,29 @@
-import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
+import { SelectCreateDialog, selectCreateDialogProps } from "@web/views/view_dialogs/select_create_dialog";
 import { formatMonetary } from "@web/views/fields/formatters";
 import { useService } from "@web/core/utils/hooks";
+import { t, useProps } from "@odoo/owl";
 
 const { DateTime } = luxon;
 
 export class BankRecSelectCreateDialog extends SelectCreateDialog {
     static template = "account_accountant.BankRecSelectCreateDialog";
-    static props = {
-        ...SelectCreateDialog.props,
-        suspenseAccountLine: Object,
-        reference: String,
-        date: DateTime,
-        size: { type: String, optional: true },
-    };
+    props = useProps({
+        ...selectCreateDialogProps,
+        suspenseAccountLine: t.object().optional(),
+        reference: t.string().optional(),
+        date: t.any().optional(),
+        size: t.string().optional(),
+    });
 
-    static defaultProps = {
-        ...SelectCreateDialog.defaultProps,
-        size: "lg",
-    };
+    get size() {
+        return this.props.size ?? "lg";
+    }
 
     setup() {
         super.setup();
         this.orm = useService("orm");
         this.ui = useService("ui");
-        this.state.remainingAmount = this.suspenseAccountLine.amount_currency;
+        this.state.remainingAmount = this.suspenseAccountLine?.amount_currency ?? 0;
         this.state.hideRemainingAmount = false;
 
         this.baseViewProps.onSelectionChanged = (resIds, selectedLines) => {

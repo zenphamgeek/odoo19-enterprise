@@ -196,7 +196,7 @@
     </template>
 
     <template id="product_template_message" inherit_id="website_sale.product">
-        <xpath expr="//form[@t-if='is_add_to_cart_possible']" position="after">
+        <xpath expr="//article[@t-if='is_add_to_cart_possible']" position="after">
             <p t-elif="product.recurring_invoice and product.subscription_rule_ids" class="alert alert-warning">
                 This subscription is not compatible with the one already in your cart.
                 Please order them separately or empty your cart.
@@ -205,11 +205,11 @@
     </template>
 
     <template id="product_template_message_add_to_cart" inherit_id="website_sale.cta_wrapper">
-        <a id="add_to_cart" position="attributes">
+        <xpath expr="//button[@data-action='add_to_cart']" position="attributes">
             <attribute name="t-att-data-subscription-plan-id">
                 combination_info['subscription_default_pricing_plan_id'] if combination_info.get('is_subscription') and combination_info['pricings'] else ''
             </attribute>
-        </a>
+        </xpath>
     </template>
 
 </odoo>

@@ -33,7 +33,7 @@ class FetchmailServer(models.Model):
                            'and "Mail Contacto Empresas".')
     l10n_cl_last_uid = fields.Integer(
         string='Last read message ID (CL)', default=1,
-        help='This value is pointing to the number of the last message read by odoo '
+        help='This value is pointing to the number of the last message read by Insilos '
              'in the inbox. This value will be updated by the system during its normal'
              'operation.')
 

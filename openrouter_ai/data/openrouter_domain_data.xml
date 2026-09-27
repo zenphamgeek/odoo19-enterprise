@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- 1. Vision & OCR -->
+        <record id="domain_vision_ocr" model="openrouter.domain">
+            <field name="name">Vision &amp; Invoice OCR</field>
+            <field name="code">vision_ocr</field>
+            <field name="sequence">10</field>
+            <field name="description">Vendor bill data extraction, receipts, document OCR, image analysis</field>
+            <field name="require_free" eval="False"/>
+            <field name="max_temperature">0.1</field>
+            <field name="system_prompt">You are an expert ERP invoice OCR engine. Extract structured vendor name, total amount, and invoice date from document images.</field>
+            <field name="primary_model_id" model="openrouter.model" search="[('model_id','=','qwen/qwen3.7-flash')]"/>
+            <field name="fallback_model_ids" model="openrouter.model" search="[('model_id','in',['google/gemini-3.6-flash','google/gemini-3.5-flash-lite','inclusionai/ling-3.0-flash:free','poolside/laguna-s-2.1:free'])]"/>
+        </record>
+
+        <!-- 2. Document AI & High Context -->
+        <record id="domain_document_ai" model="openrouter.domain">
+            <field name="name">Document AI (Large Context)</field>
+            <field name="code">document_ai</field>
+            <field name="sequence">20</field>
+            <field name="description">Contract analysis, legal compliance, 100k-1M context document processing</field>
+            <field name="require_free" eval="False"/>
+            <field name="max_temperature">0.2</field>
+            <field name="system_prompt">You are an enterprise document AI specialist. Summarize key clauses, deadlines, and liabilities from legal contracts.</field>
+            <field name="primary_model_id" model="openrouter.model" search="[('model_id','=','qwen/qwen3.7-flash')]"/>
+            <field name="fallback_model_ids" model="openrouter.model" search="[('model_id','in',['google/gemini-3.6-flash','anthropic/claude-opus-5','inclusionai/ling-3.0-flash:free'])]"/>
+        </record>
+
+        <!-- 3. Customer Support & Chatbot -->
+        <record id="domain_helpdesk_chat" model="openrouter.domain">
+            <field name="name">Helpdesk &amp; Customer Chatbot</field>
+            <field name="code">helpdesk_chat</field>
+            <field name="sequence">30</field>
+            <field name="description">Livechat auto-replies, helpdesk ticket classification, customer support</field>
+            <field name="require_free" eval="True"/>
+            <field name="max_temperature">0.3</field>
+            <field name="system_prompt">You are a polite, helpful Insilos ERP customer support AI assistant.</field>
+            <field name="primary_model_id" model="openrouter.model" search="[('model_id','=','inclusionai/ling-3.0-flash:free')]"/>
+            <field name="fallback_model_ids" model="openrouter.model" search="[('model_id','in',['poolside/laguna-s-2.1:free','poolside/laguna-xs-2.1:free'])]"/>
+        </record>
+
+        <!-- 4. Form Autocomplete & Code -->
+        <record id="domain_form_autocomplete" model="openrouter.domain">
+            <field name="name">Form Autocomplete &amp; Field Predictor</field>
+            <field name="code">form_autocomplete</field>
+            <field name="sequence">40</field>
+            <field name="description">ERP field auto-fill, category prediction, smart search autocomplete</field>
+            <field name="require_free" eval="True"/>
+            <field name="max_temperature">0.1</field>
+            <field name="primary_model_id" model="openrouter.model" search="[('model_id','=','poolside/laguna-xs-2.1:free')]"/>
+            <field name="fallback_model_ids" model="openrouter.model" search="[('model_id','in',['inclusionai/ling-3.0-flash:free','poolside/laguna-s-2.1:free'])]"/>
+        </record>
+
+        <!-- 5. Heavy Financial Reasoning -->
+        <record id="domain_financial_reasoning" model="openrouter.domain">
+            <field name="name">Financial &amp; Risk Reasoning</field>
+            <field name="code">financial_reasoning</field>
+            <field name="sequence">50</field>
+            <field name="description">Complex accounting reasoning, tax risk audit, cashflow forecasting</field>
+            <field name="require_free" eval="False"/>
+            <field name="max_temperature">0.1</field>
+            <field name="primary_model_id" model="openrouter.model" search="[('model_id','=','qwen/qwen3.7-flash')]"/>
+            <field name="fallback_model_ids" model="openrouter.model" search="[('model_id','in',['openai/gpt-5.6-sol','openai/gpt-5.6-luna','inclusionai/ling-3.0-flash:free'])]"/>
+        </record>
+
+        <!-- 6. Marketing & Translation -->
+        <record id="domain_marketing_translation" model="openrouter.domain">
+            <field name="name">Marketing &amp; Multi-lingual Translation</field>
+            <field name="code">marketing_translation</field>
+            <field name="sequence">60</field>
+            <field name="description">Product description generation, blog posts, multi-lingual email translation</field>
+            <field name="require_free" eval="True"/>
+            <field name="max_temperature">0.5</field>
+            <field name="primary_model_id" model="openrouter.model" search="[('model_id','=','inclusionai/ling-3.0-flash:free')]"/>
+            <field name="fallback_model_ids" model="openrouter.model" search="[('model_id','in',['poolside/laguna-s-2.1:free','poolside/laguna-xs-2.1:free'])]"/>
+        </record>
+
+        <!-- 7. Discuss & AI Agent Chat -->
+        <record id="domain_discuss_chat" model="openrouter.domain">
+            <field name="name">Discuss &amp; AI Agent Chat</field>
+            <field name="code">discuss_chat</field>
+            <field name="sequence">70</field>
+            <field name="description">Internal AI agent conversations, discuss channel automation, knowledge base Q&amp;A</field>
+            <field name="require_free" eval="False"/>
+            <field name="max_temperature">0.3</field>
+            <field name="system_prompt">You are an Insilos ERP AI assistant. Help users with business operations, data analysis, and workflow guidance.</field>
+            <field name="primary_model_id" model="openrouter.model" search="[('model_id','=','qwen/qwen3.7-flash')]"/>
+            <field name="fallback_model_ids" model="openrouter.model" search="[('model_id','in',['openai/gpt-5.6-luna','google/gemini-3.6-flash','inclusionai/ling-3.0-flash:free','poolside/laguna-s-2.1:free'])]"/>
+        </record>
+
+        <!-- 8. RAG Embedding & Knowledge Retrieval -->
+        <record id="domain_rag_embedding" model="openrouter.domain">
+            <field name="name">RAG Embedding &amp; Knowledge Retrieval</field>
+            <field name="code">rag_embedding</field>
+            <field name="sequence">80</field>
+            <field name="description">LLM embeddings generation, vector search, RAG-SOP for knowledge-based enterprise retrieval</field>
+            <field name="require_free" eval="False"/>
+            <field name="max_temperature">0.1</field>
+            <field name="system_prompt">You are an enterprise knowledge retrieval engine. Generate precise embeddings and retrieve relevant information from corporate knowledge bases.</field>
+            <field name="primary_model_id" model="openrouter.model" search="[('model_id','=','qwen/qwen3.7-flash')]"/>
+            <field name="fallback_model_ids" model="openrouter.model" search="[('model_id','in',['poolside/laguna-s-2.1','inclusionai/ling-3.0-flash:free'])]"/>
+        </record>
+    </data>
+</odoo>

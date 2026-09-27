@@ -34,14 +34,14 @@
     </p>
     <div style="text-align: center; padding: 16px 0px 16px 0px; margin-top: 16px;">
         <a t-attf-href="/calendar/meeting/join?token={{ object.access_token }}"
-            t-attf-style="display: inline-block; padding: 7px 14px; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; text-decoration: none; background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; border-radius: 3px">
+            t-attf-style="display: inline-block; padding: 7px 14px; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; text-decoration: none; background-color: {{user.company_id.email_secondary_color or '#004455'}}; border-radius: 3px">
             Join</a>
-        <a t-attf-href="/odoo/calendar.event/{{ object.id }}"
+        <a t-attf-href="/insilos/calendar.event/{{ object.id }}"
             t-attf-style="display: inline-block; margin-left: 12px; padding: 7px 14px; color: #111827; text-decoration: none; background-color: #E7E9ED; border-radius: 3px;">
             View</a>
     </div>
     <div style="margin: 16px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Details</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Details</h2>
         <table cellpadding="0" cellspacing="0" border="0" style="font-size: 13px; color: #374151;">
             <tr>
                 <td style="width: 100px; color: #676F7B;">Date &amp; Time</td>
@@ -95,7 +95,7 @@
                 </td>
                 <td style="padding-top: 6px;">
                     <a t-attf-href="{{ object.videocall_redirection }}" target="_blank" style="color: #008f8c;">
-                        <t t-if="object.videocall_source == 'discuss'">Odoo Discuss</t>
+                        <t t-if="object.videocall_source == 'discuss'">Insilos Discuss</t>
                         <t t-else="">Video meeting</t>
                     </a>
                 </td>
@@ -103,7 +103,7 @@
         </table>
     </div>
     <div style="margin: 32px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Attendees</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Attendees</h2>
         <div t-foreach="object.attendee_ids" t-as="attendee" style="margin-bottom: 5px;">
             <img t-if="attendee.state" t-attf-src="/calendar/static/src/img/state_{{ attendee.state }}.png" style="border:0; width: 15px; height: 15px; vertical-align: text-bottom;" />
             <t t-if="attendee.common_name">
@@ -115,14 +115,14 @@
         </div>
     </div>
     <div t-if="not is_html_empty(object.description)" style="margin: 32px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Description of the event</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Description of the event</h2>
         <div t-out="object.description"/>
     </div>
     <t t-set="upcoming_appointments"
         t-value="(object.appointment_booker_id.upcoming_appointment_ids - object).sorted('start')"/>
     <div t-if="upcoming_appointments" style="margin: 32px 0 0;">
         <t t-set="appointment_booker_id" t-value="object.appointment_booker_id.id"/>
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Your Other Upcoming Appointment(s)</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Your Other Upcoming Appointment(s)</h2>
         <ul  style="margin: 6px 0 0; padding: 0 18px;">
             <li style="margin-top: 6px;" t-foreach="upcoming_appointments" t-as="upcoming_appointment">
                 <span t-out="upcoming_appointment.appointment_type_id.name or ''">Technical Demo</span>
@@ -164,7 +164,7 @@
         <span style="display: block; margin-top: 8px;">Your appointment for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t> <t t-if="object.appointment_type_id.category not in ['custom', 'anytime'] and object.appointment_type_id.schedule_based_on == 'users' and object.partner_id"> with <t t-out="object.partner_id.name or ''">Brandon Freeman</t></t> has been canceled.</span>
     </p>
     <div style="margin: 32px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Details</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Details</h2>
         <table cellpadding="0" cellspacing="0" border="0" style="font-size: 13px; color: #374151;">
             <tr>
                 <td style="width: 100px; color: #676F7B;">Date &amp; Time</td>
@@ -200,7 +200,7 @@
         </table>
     </div>
     <div style="margin: 32px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Attendees</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Attendees</h2>
         <div t-foreach="object.attendee_ids" t-as="attendee" style="margin-bottom: 5px;">
             <img t-if="attendee.state" t-attf-src="/calendar/static/src/img/state_{{ attendee.state }}.png" style="border:0; width: 15px; height: 15px; vertical-align: text-bottom;" />
             <t t-if="attendee.common_name">
@@ -212,7 +212,7 @@
         </div>
     </div>
     <div t-if="not is_html_empty(object.description)" style="margin: 32px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Description of the event</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Description of the event</h2>
         <div t-out="object.description"/>
     </div>
 </div>
@@ -274,10 +274,10 @@
     <div style="text-align: center; padding: 16px 0px 16px 0px;">
         <t t-if="object.state != 'accepted'">
             <a t-attf-href="/calendar/meeting/accept?token={{object.access_token}}&amp;id={{object.event_id.id}}"
-                t-attf-style="display: inline-block; padding: 7px 14px; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; text-decoration: none; background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; border-radius: 3px">
+                t-attf-style="display: inline-block; padding: 7px 14px; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; text-decoration: none; background-color: {{user.company_id.email_secondary_color or '#004455'}}; border-radius: 3px">
                 Accept</a>
             <a t-attf-href="/calendar/meeting/decline?token={{object.access_token}}&amp;id={{object.event_id.id}}"
-                t-attf-style="display: inline-block; margin-left: 6px; padding: 7px 14px; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; text-decoration: none; background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; border-radius: 3px">
+                t-attf-style="display: inline-block; margin-left: 6px; padding: 7px 14px; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; text-decoration: none; background-color: {{user.company_id.email_secondary_color or '#004455'}}; border-radius: 3px">
                 Decline</a>
         </t>
         <a t-if="not target_responsible and not target_customer" t-attf-href="/calendar/meeting/view?token={{object.access_token}}&amp;id={{object.event_id.id}}"
@@ -286,7 +286,7 @@
             t-attf-style="display: inline-block; margin-left: 12px; padding: 5px 10px; color: #111827; text-decoration: none; background-color: #E7E9ED; border-radius: 3px; border-radius: 3px">View</a>
     </div>
     <div style="margin: 16px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Details</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Details</h2>
         <table cellpadding="0" cellspacing="0" border="0" style="font-size: 13px; color: #374151;">
             <tr>
                 <td style="width: 100px; color: #676F7B;">Date &amp; Time</td>
@@ -340,7 +340,7 @@
                 </td>
                 <td style="padding-top: 6px;">
                     <a t-attf-href="{{ object.event_id.videocall_redirection }}" target="_blank" style="color: #008f8c;">
-                        <t t-if="object.event_id.videocall_source == 'discuss'">Odoo Discuss</t>
+                        <t t-if="object.event_id.videocall_source == 'discuss'">Insilos Discuss</t>
                         <t t-else="">Video meeting</t>
                     </a>
                 </td>
@@ -348,7 +348,7 @@
         </table>
     </div>
     <div style="margin: 32px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Attendees</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Attendees</h2>
         <div t-foreach="object.event_id.attendee_ids" t-as="attendee" style="margin-bottom: 5px;">
             <img t-if="attendee.state" t-attf-src="/calendar/static/src/img/state_{{ attendee.state }}.png" style="border:0; width: 15px; height: 15px; vertical-align: text-bottom;" />
             <t t-if="attendee != object">
@@ -360,17 +360,17 @@
         </div>
     </div>
     <div t-if="not is_html_empty(object.event_id.description)" style="margin: 32px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Description of the event</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Description of the event</h2>
         <div t-out="object.event_id.description"/>
     </div>
     <div t-if="target_customer" style="margin: 32px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Make change to this event</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Make change to this event</h2>
         <a t-attf-href="/calendar/meeting/view?token={{object.access_token}}&amp;id={{object.event_id.id}}" style="color: color: #008f8c; text-decoration: underline;">Reschedule</a>
     </div>
     <t t-set="upcoming_appointments"
         t-value="(object.event_id.appointment_booker_id.upcoming_appointment_ids - object.event_id).sorted('start')"/>
     <div t-if="upcoming_appointments" style="margin: 32px 0 0;">
-        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};">Your Other Upcoming Appointment(s)</h2>
+        <h2 t-attf-style="margin-bottom: 12px; font-size: 14px; font-weight: bold; color: {{user.company_id.email_secondary_color or '#004455'}};">Your Other Upcoming Appointment(s)</h2>
         <ul style="margin: 6px 0 0; padding: 0 18px;">
             <li style="margin-top: 6px;" t-foreach="upcoming_appointments" t-as="upcoming_appointment">
                 <span t-out="upcoming_appointment.appointment_type_id.name or ''">Technical Demo</span>

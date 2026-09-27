@@ -1,7 +1,7 @@
 import { useService } from "@web/core/utils/hooks";
 import { Transition } from "@web/core/transition";
 import { _t } from "@web/core/l10n/translation";
-import { Component, useState, useRef } from "@odoo/owl";
+import { Component, proxy, signal } from "@odoo/owl";
 
 const { DateTime } = luxon;
 
@@ -17,15 +17,14 @@ export class ExpirationPanel extends Component {
     static template = "DatabaseExpirationPanel";
     static props = {};
     static components = { Transition };
+    input = signal.ref();
 
     setup() {
         this.subscription = useService("enterprise_subscription");
 
-        this.state = useState({
+        this.state = proxy({
             displayRegisterForm: false,
         });
-
-        this.inputRef = useRef("input");
     }
 
     get buttonText() {
@@ -33,7 +32,6 @@ export class ExpirationPanel extends Component {
     }
 
     get alertType() {
-        return "success";
         if (this.subscription.lastRequestStatus === "success") {
             return "success";
         }
@@ -47,14 +45,14 @@ export class ExpirationPanel extends Component {
     }
 
     get expirationMessage() {
-        const { daysLeft } = 999999;
-        // if (daysLeft <= 0) {
-        //     return _t("This database has expired. ");
-        // }
-        // const delay = daysLeft === 30 ? _t("1 month") : _t("%s days", daysLeft);
-        // if (this.subscription.expirationReason === "demo") {
-        //     return _t("This demo database will expire in %s. ", delay);
-        // }
+        const { daysLeft } = this.subscription;
+        if (daysLeft <= 0) {
+            return _t("This database has expired. ");
+        }
+        const delay = daysLeft === 30 ? _t("1 month") : _t("%s days", daysLeft);
+        if (this.subscription.expirationReason === "demo") {
+            return _t("This demo database will expire in %s. ", delay);
+        }
 
         const expirationDate = this.subscription.expirationDate;
         const today = DateTime.now();
@@ -82,16 +80,11 @@ export class ExpirationPanel extends Component {
     }
 
     async onCodeSubmit() {
-        const enterpriseCode = this.inputRef.el.value;
+        const enterpriseCode = this.input()?.value;
         if (!enterpriseCode) {
             return;
         }
-        // this.state.displayRegisterForm = false;
-        // await this.subscription.submitCode(enterpriseCode);
-        if (true) {
-            this.state.displayRegisterForm = false;
-        } else {
-            this.state.buttonText = _t("Retry");
-        }
+        this.state.displayRegisterForm = false;
+        await this.subscription.submitCode(enterpriseCode);
     }
 }

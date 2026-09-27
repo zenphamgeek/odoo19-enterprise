@@ -1,6 +1,6 @@
-import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
+import { getActiveHotkey } from "@web/core/hotkeys/hotkey_utils";
 
-import { useEffect, useRef } from "@odoo/owl";
+import { useLayoutEffect, useRef } from "@odoo/owl";
 
 export function useInputHook(params) {
     const inputRef = params.ref || useRef(params.refName || "input");
@@ -70,7 +70,7 @@ export function useInputHook(params) {
         }
     }
 
-    useEffect(
+    useLayoutEffect(
         (inputEl) => {
             if (inputEl) {
                 inputEl.addEventListener("input", onInput);
@@ -92,7 +92,7 @@ export function useInputHook(params) {
      * we need to do nothing.
      * If it is not such a case, we update the field with the new value.
      */
-    useEffect(() => {
+    useLayoutEffect(() => {
         const isInvalid = params.isInvalid ? params.isInvalid() : false;
         if (inputRef.el && !isDirty && !isInvalid) {
             inputRef.el.value = params.getValue();

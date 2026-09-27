@@ -10,7 +10,7 @@ Schedule your teams and employees with shift.
     'category': 'Human Resources/Planning',
     'sequence': 130,
     'version': '1.0',
-    'depends': ['hr', 'hr_hourly_cost', 'web_gantt', 'digest'],
+    'depends': ['hr', 'web_gantt', 'digest'],
     'data': [
         'security/planning_security.xml',
         'security/ir.model.access.csv',

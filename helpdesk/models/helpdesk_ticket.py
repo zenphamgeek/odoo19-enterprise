@@ -935,9 +935,9 @@ class HelpdeskTicket(models.Model):
         self.ensure_one()
         return self.name
 
-    def _message_post_after_hook(self, message, msg_vals):
+    def _message_post_after_hook(self, message):
         if not self.partner_email:
-            return super()._message_post_after_hook(message, msg_vals)
+            return super()._message_post_after_hook(message)
 
         if self.partner_id and not self.partner_id.email:
             self.partner_id.email = self.partner_email
@@ -962,27 +962,33 @@ class HelpdeskTicket(models.Model):
         if (
             not self.description
             and message.subtype_id == self._creation_subtype()
-            and msg_vals.get('message_type') == 'email'
+            and message.message_type == 'email'
             and tools.email_normalize(self.partner_email) == tools.email_normalize(message.email_from)
-            and msg_vals.get('body')
+            and message.body
         ):
             # Remove the signature from the email body
-            source_html = msg_vals.get('body')
-            doc = html.fromstring(source_html)
+            source_html = message.body
+            try:
+                doc = html.fromstring(source_html)
 
-            signature_xpath = (
-                '//*[@id="Signature"] | '
-                '//*[@data-smartmail="gmail_signature"] | '
-                '//span[normalize-space(.) = "--"]'
-            )
+                signature_xpath = (
+                    '//*[@id="Signature"] | '
+                    '//*[@data-smartmail="gmail_signature"] | '
+                    '//*[@data-o-mail-quote="1"] | '
+                    '//*[@data-o-mail-quote-container="1"] | '
+                    '//*[contains(@class, "gmail_signature")] | '
+                    '//span[normalize-space(.) = "--"]'
+                )
 
-            for element in doc.xpath(signature_xpath):
-                element.getparent().remove(element)
+                for element in doc.xpath(signature_xpath):
+                    element.getparent().remove(element)
 
-            cleaned_html = html.tostring(doc, encoding='unicode').strip()
-            self.description = html_sanitize(cleaned_html)
+                cleaned_html = html.tostring(doc, encoding='unicode').strip()
+                self.description = html_sanitize(cleaned_html)
+            except Exception:
+                self.description = html_sanitize(source_html)
 
-        return super()._message_post_after_hook(message, msg_vals)
+        return super()._message_post_after_hook(message)
 
     def _send_email_notify_to_cc(self, partners_to_notify):
         # TDE TODO: this should be removed with email-like recipients management

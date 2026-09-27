@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models
+from odoo.tools import SQL
 
 from odoo.addons.sale.models.sale_order import SALE_ORDER_STATE
 from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_PROGRESS_STATE, SUBSCRIPTION_STATES
@@ -165,8 +166,8 @@ class SaleOrderLogReport(models.Model):
         """
 
     @property
-    def _table_query(self):
-        return self._query()
+    def _table_sql(self) -> SQL:
+        return SQL("(%s)", SQL(self._query()))
 
     def _query(self):
         return f"""

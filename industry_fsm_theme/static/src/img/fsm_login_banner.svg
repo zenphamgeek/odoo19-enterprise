@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+    <defs>
+        <linearGradient id="fsm-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0B2E64"/>
+            <stop offset="40%" stop-color="#1E3A8A"/>
+            <stop offset="100%" stop-color="#091E42"/>
+        </linearGradient>
+        <linearGradient id="fsm-accent" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#0284C7" stop-opacity="0.4"/>
+        </linearGradient>
+    </defs>
+    
+    <rect width="1200" height="800" fill="url(#fsm-bg)"/>
+    
+    <!-- FSM Technical Grid & Compass Circles -->
+    <g stroke="rgba(56, 189, 248, 0.15)" stroke-width="1.5" fill="none">
+        <circle cx="600" cy="400" r="350" stroke-dasharray="8 8"/>
+        <circle cx="600" cy="400" r="250"/>
+        <circle cx="600" cy="400" r="150" stroke-dasharray="4 4"/>
+        <line x1="100" y1="400" x2="1100" y2="400"/>
+        <line x1="600" y1="50" x2="600" y2="750"/>
+    </g>
+
+    <!-- Map Pin GPS Location Nodes -->
+    <g transform="translate(600, 320)" fill="url(#fsm-accent)" filter="drop-shadow(0px 10px 20px rgba(0,0,0,0.5))">
+        <!-- Central Field Service Location Pin -->
+        <path d="M 0 -80 C -45 -80 -80 -45 -80 0 C -80 60 0 120 0 120 C 0 120 80 60 80 0 C 80 -45 45 -80 0 -80 Z M 0 -20 C -15 -20 -27 -32 -27 -47 C -27 -62 -15 -74 0 -74 C 15 -74 27 -62 27 -47 C 27 -32 15 -20 0 -20 Z" fill="#38BDF8"/>
+    </g>
+
+    <!-- Satellite Route Dispatch Trajectory -->
+    <path d="M 250 600 Q 600 200 950 500" fill="none" stroke="#38BDF8" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12"/>
+
+    <!-- Dispatch Field Team Nodes -->
+    <circle cx="250" cy="600" r="14" fill="#38BDF8"/>
+    <circle cx="950" cy="500" r="14" fill="#38BDF8"/>
+    <circle cx="600" cy="310" r="18" fill="#60A5FA"/>
+
+    <!-- Field Tech Wrench / Tool Badge Icon -->
+    <g transform="translate(850, 180)" opacity="0.8">
+        <rect x="-40" y="-40" width="80" height="80" rx="20" fill="rgba(255, 255, 255, 0.1)" stroke="#38BDF8" stroke-width="2"/>
+        <path d="M -15 -15 L 15 15 M 10 -15 C 20 -25 30 -10 20 0 L -10 30 L -25 30 L -25 15 L 0 -10 C 10 -20 -5 -25 -15 -15" fill="none" stroke="#E0F2FE" stroke-width="3" stroke-linecap="round"/>
+    </g>
+</svg>

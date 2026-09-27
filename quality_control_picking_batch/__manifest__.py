@@ -8,7 +8,7 @@
     'summary': 'Support of quality control into batch transfers',
     'depends': [
         'quality_control',
-        'stock_picking_batch',
+        'stock',
     ],
     'data': [
         'views/stock_picking_batch_views.xml',

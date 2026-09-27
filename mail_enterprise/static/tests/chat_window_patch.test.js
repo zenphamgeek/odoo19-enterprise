@@ -48,16 +48,13 @@ test("[technical] chat window should properly override the back button", async (
 
     await click(".o_menu_systray i[aria-label='Messages']");
     await contains(".o-mail-MessagingMenu");
+    await click(".o-mail-MessagingMenu-tab:has(:text('Channels'))");
     await click(".o-mail-NotificationItem", { text: "test" });
     await contains(".o-mail-ChatWindow");
     await contains(".o-mail-MessagingMenu", { count: 0 });
     expect(overrideBackButton).toBe(true);
-
     await click(".o-mail-ChatWindow [title*='Close']");
     await contains(".o-mail-MessagingMenu");
-    // The messaging menu is re-open when a chat window is closed,
-    // so we need to close it because it overrides the back button too.
-    // As long as something overrides the back button, it can't be disabled.
     await click(".o_menu_systray i[aria-label='Messages']");
     await contains(".o-mail-ChatWindow", { count: 0 });
     await contains(".o-mail-MessagingMenu", { count: 0 });

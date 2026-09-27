@@ -28,7 +28,7 @@ class EmployerRegistration(models.Model):
         default=lambda self: self.env.company.l10n_au_payroll_mode,
     )
     odoo_disclaimer_check = fields.Boolean(
-        string="I have read and signed Odoo Terms and Conditions provided",
+        string="I have read and signed Insilos Terms and Conditions provided",
         compute="_compute_authorisation_checks",
     )
     superchoice_dda_check = fields.Boolean(
@@ -72,7 +72,7 @@ class EmployerRegistration(models.Model):
                 registration.registration_fields.get("odoo_disclaimer_check") and
                 registration.registration_fields.get("superchoice_dda_check")
             ):
-                raise ValidationError(_("You must accept the Odoo Terms & Conditions and Super Choice DDA to proceed with the registration!"))
+                raise ValidationError(_("You must accept the Insilos Terms & Conditions and Super Choice DDA to proceed with the registration!"))
 
     def action_confirm(self, registration_mode):
         """ Confirm the registration and set the status to registered """

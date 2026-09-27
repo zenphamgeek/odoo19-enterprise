@@ -18,12 +18,12 @@
                 >
                     <div class="d-flex align-items-center gap-1">
                         <label>From </label>
-                        <span class="o_gantt_picker o_input cursor-pointer px-1" t-ref="start-picker" t-on-click="() => this.startPicker.open()">
-                            <t t-esc="this.getFormattedDate(this.pickerValues.startDate)" />
+                        <span class="o_gantt_picker o_input cursor-pointer px-1" t-ref="this.startPickerRef" t-on-click="() => this.startPicker.open()">
+                            <t t-out="this.getFormattedDate(this.pickerValues.startDate)" />
                         </span>
                         <label>to </label>
-                        <span class="o_gantt_picker o_input cursor-pointer px-1" t-ref="stop-picker" t-on-click="() => this.stopPicker.open()">
-                            <t t-esc="this.getFormattedDate(this.pickerValues.stopDate)" />
+                        <span class="o_gantt_picker o_input cursor-pointer px-1" t-ref="this.stopPickerRef" t-on-click="() => this.stopPicker.open()">
+                            <t t-out="this.getFormattedDate(this.pickerValues.stopDate)" />
                         </span>
                         <button class="btn btn-sm btn-primary ms-1" t-on-click="() => this.onApply()">Apply</button>
                     </div>

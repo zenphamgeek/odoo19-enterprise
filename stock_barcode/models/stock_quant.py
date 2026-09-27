@@ -7,6 +7,7 @@ class StockQuant(models.Model):
     dummy_id = fields.Char(compute='_compute_dummy_id', inverse='_inverse_dummy_id')
     image_1920 = fields.Image(related="product_id.image_1920")
     product_reference_code = fields.Char(related="product_id.code", string="Product Reference Code")
+    product_uom_id = fields.Many2one(related='uom_id', readonly=True)
 
     def _compute_dummy_id(self):
         self.dummy_id = ''

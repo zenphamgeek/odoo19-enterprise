@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_kg_export_triples_wizard_form" model="ir.ui.view">
+        <field name="name">kg.export.triples.wizard.form</field>
+        <field name="model">kg.export.triples.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Export Knowledge Graph Triples">
+                <group>
+                    <group>
+                        <field name="company_id"/>
+                        <field name="relation_filter" placeholder="e.g. HAS_ITEM, HAS_SUPPLIER"/>
+                    </group>
+                    <group>
+                        <field name="export_format" widget="radio"/>
+                    </group>
+                </group>
+                <div class="alert alert-info" role="alert">
+                    <strong>Export Standards:</strong>
+                    <ul>
+                        <li><strong>JSON-LD:</strong> Linked Data format for graph databases, enterprise ontology visualizers, and AI agents.</li>
+                        <li><strong>N-Triples:</strong> Standard W3C RDF triple format.</li>
+                        <li><strong>CSV:</strong> Tabular representation for spreadsheet auditing and data pipeline validation.</li>
+                    </ul>
+                </div>
+                <footer>
+                    <button string="Export Graph" name="action_export" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_kg_export_triples_wizard" model="ir.actions.act_window">
+        <field name="name">Export Graph Triples</field>
+        <field name="res_model">kg.export.triples.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

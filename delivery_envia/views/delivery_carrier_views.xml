@@ -47,14 +47,14 @@
                                 <img src="/delivery_envia/static/src/img/carriers.png" alt="Add New Carriers in Envia" title="Add New Carriers in Envia"/>
                             </li>
                             <li>You should also make sure that if you export to other countries, you have to select who will pay for customs duties.</li>
-                            <li>You can also preselect which services will be used, our recommendation is to not limit this as we will pick them in Odoo anyway.</li>
+                            <li>You can also preselect which services will be used, our recommendation is to not limit this as we will pick them in Insilos anyway.</li>
                             <li>For any carriers you'd like to use that are not activated, be sure to activate it here.</li>
-                            <li>Don't worry about the printing options, just note which ones exist for your favorite carrier as we will select them in Odoo.</li>
+                            <li>Don't worry about the printing options, just note which ones exist for your favorite carrier as we will select them in Insilos.</li>
                             <br/>
-                            <li>Lastly, head to the Developers / API Keys section and generate a new API Key. This will be used by Odoo to communicate with Envia so note it down for later.</li>
+                            <li>Lastly, head to the Developers / API Keys section and generate a new API Key. This will be used by Insilos to communicate with Envia so note it down for later.</li>
                         </ul>
                     </group>
-                    <group string="Setup In Odoo" invisible="delivery_type != 'envia'">
+                    <group string="Setup In Insilos" invisible="delivery_type != 'envia'">
                         <ul>
                             <li>Copy over the API Key from Envia into either the sandbox or production field in Delivery Methods.</li>
                             <li>Specify the Origin country that this connector will ship from. By default this is the company's country.</li>

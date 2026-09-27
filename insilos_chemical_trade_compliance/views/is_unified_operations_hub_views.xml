@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Unified 5-Station Supply Chain & Compliance Command Center View -->
+    <record id="view_is_unified_operations_hub_form" model="ir.ui.view">
+        <field name="name">is.unified.operations.hub.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form string="Unified Operations Command Center" create="false" edit="false">
+                <sheet class="w-100">
+                    <!-- Header Banner -->
+                    <div class="p-4 mb-4 rounded bg-primary text-white shadow-sm w-100">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-12 col-md-9">
+                                <span class="badge bg-warning text-dark px-3 py-1 mb-2 fw-bold">Enterprise E2E Architecture</span>
+                                <h2 class="fw-bold text-white mb-2">Trung tâm Điều hành Hợp nhất: Ngoại thương, Hải quan, Hóa chất, HSE &amp; Bảo trì Hiện trường</h2>
+                                <p class="mb-0 text-white-50 small">
+                                    Tập hợp dữ liệu nội bộ cho các bước tiếp nhận chứng từ, đối soát, rà soát tuân thủ, chuẩn bị khai báo NSW, HSE và bảo trì; người phụ trách xác nhận từng bước.
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-3 text-md-end">
+                                <div class="bg-white bg-opacity-10 p-3 rounded text-center">
+                                    <span class="fs-4 fw-bold text-white d-block">5 TRẠM</span>
+                                    <small class="text-white-50">E2E Workbench</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Flow Diagram 5 Stations -->
+                    <div class="row g-3 mb-4 w-100">
+                        <!-- Station 1 -->
+                        <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                            <div class="card h-100 border shadow-sm rounded text-center p-3">
+                                <div class="badge rounded-pill bg-primary mb-2 mx-auto">1</div>
+                                <h6 class="fw-bold mb-1 text-primary">Logistics IDP</h6>
+                                <p class="text-muted small mb-3 flex-grow-1">Tiếp nhận &amp; Bóc tách OCR Invoice, B/L, Tờ khai</p>
+                                <div class="d-grid gap-1 mt-auto">
+                                    <button name="%(insilos_logistics_idp.action_logistics_documents)d" string="Inbox" type="action" class="btn btn-sm btn-outline-primary"/>
+                                    <button name="%(insilos_logistics_idp.action_logistics_cases)d" string="Control Tower" type="action" class="btn btn-sm btn-primary"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Station 2 -->
+                        <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                            <div class="card h-100 border shadow-sm rounded text-center p-3">
+                                <div class="badge rounded-pill bg-info text-dark mb-2 mx-auto">2</div>
+                                <h6 class="fw-bold mb-1 text-info">HS &amp; Customs</h6>
+                                <p class="text-muted small mb-3 flex-grow-1">Biểu thuế 8 số &amp; Phán quyết TCHQ</p>
+                                <div class="d-grid gap-1 mt-auto">
+                                    <button name="%(insilos_hs_sync.action_is_hs_tariff)d" string="Tariff Schedule" type="action" class="btn btn-sm btn-outline-info text-dark"/>
+                                    <button name="%(insilos_hs_sync.action_is_customs_ruling)d" string="Customs Rulings" type="action" class="btn btn-sm btn-info text-dark"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Station 3 -->
+                        <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                            <div class="card h-100 border shadow-sm rounded text-center p-3">
+                                <div class="badge rounded-pill bg-warning text-dark mb-2 mx-auto">3</div>
+                                <h6 class="fw-bold mb-1 text-warning">Chemical Trade</h6>
+                                <p class="text-muted small mb-3 flex-grow-1">Rà soát bộ quy tắc nội bộ, dữ liệu NSW &amp; sổ hạn ngạch</p>
+                                <div class="d-grid gap-1 mt-auto">
+                                    <button name="%(action_is_chemical_obligation_simulator)d" string="Simulator" type="action" class="btn btn-sm btn-outline-warning text-dark"/>
+                                    <button name="%(action_is_chemical_compliance_dossier)d" string="NSW Dossiers" type="action" class="btn btn-sm btn-warning text-dark"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Station 4 -->
+                        <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                            <div class="card h-100 border shadow-sm rounded text-center p-3">
+                                <div class="badge rounded-pill bg-success mb-2 mx-auto">4</div>
+                                <h6 class="fw-bold mb-1 text-success">HSE Suite</h6>
+                                <p class="text-muted small mb-3 flex-grow-1">SDS 16 phần, Giấy phép &amp; Sổ tuân thủ</p>
+                                <div class="d-grid gap-1 mt-auto">
+                                    <button name="%(insilos_hse_compliance.action_is_hse_chemical_substance)d" string="Search SDS/GHS" type="action" class="btn btn-sm btn-outline-success"/>
+                                    <button name="%(insilos_hse_compliance.action_is_hse_legal_register)d" string="HSE Register" type="action" class="btn btn-sm btn-success"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Station 5 -->
+                        <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                            <div class="card h-100 border shadow-sm rounded text-center p-3">
+                                <div class="badge rounded-pill bg-secondary mb-2 mx-auto">5</div>
+                                <h6 class="fw-bold mb-1 text-secondary">Field Service FSM</h6>
+                                <p class="text-muted small mb-3 flex-grow-1">Bảo trì hiện trường &amp; Sổ theo dõi 5 bước</p>
+                                <div class="d-grid gap-1 mt-auto">
+                                    <button name="%(project.action_view_task)d" string="Task List" type="action" class="btn btn-sm btn-outline-secondary"/>
+                                    <button name="%(action_is_chemical_usage_tracking)d" string="5-Stage Usage" type="action" class="btn btn-sm btn-secondary"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Quick Operations -->
+                    <div class="row g-3 w-100">
+                        <div class="col-12 col-md-6">
+                            <div class="card border shadow-sm rounded p-3 bg-light h-100">
+                                <h6 class="fw-bold mb-2 text-primary">Thao tác Nhanh Khấu trừ &amp; Hạn ngạch:</h6>
+                                <p class="text-muted small">Rà soát số dư và lịch sử trừ lùi trong sổ hạn ngạch nội bộ theo từng chứng từ; đối chiếu với chứng từ có thẩm quyền khi cần.</p>
+                                <button name="%(action_is_chemical_permit_quota)d" string="Open Quota Ledger &amp; History" type="action" class="btn btn-outline-primary w-100 mt-auto"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="card border shadow-sm rounded p-3 bg-light h-100">
+                                <h6 class="fw-bold mb-2 text-primary">Mô phỏng &amp; Tra cứu Nội bộ:</h6>
+                                <p class="text-muted small">Rà soát danh mục và cảnh báo theo bộ quy tắc nội bộ được cấu hình; xác nhận nguồn, hiệu lực và phạm vi trước khi sử dụng.</p>
+                                <button name="%(action_is_chemical_obligation_simulator)d" string="Launch Chemical Simulator" type="action" class="btn btn-outline-warning text-dark w-100 mt-auto"/>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Unified Operations Hub -->
+    <record id="action_is_unified_operations_hub" model="ir.actions.act_window">
+        <field name="name">Unified Operations Command Center</field>
+        <field name="path">unified-operations</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="view_id" ref="view_is_unified_operations_hub_form"/>
+    </record>
+
+    <!-- Top-Level Apps Drawer App: Unified Operations -->
+    <menuitem id="menu_unified_operations_root"
+              name="Unified Operations"
+              web_icon="insilos_chemical_trade_compliance,static/description/unified_ops.svg"
+              action="action_is_unified_operations_hub"
+              sequence="18"/>
+
+    <!-- Station Submenus -->
+    <menuitem id="menu_unified_operations_center"
+              name="Command Center"
+              parent="menu_unified_operations_root"
+              action="action_is_unified_operations_hub"
+              sequence="1"/>
+
+    <menuitem id="menu_unified_operations_dossiers"
+              name="Compliance Dossiers"
+              parent="menu_unified_operations_root"
+              action="action_is_chemical_compliance_dossier"
+              sequence="10"/>
+
+    <menuitem id="menu_unified_operations_quotas"
+              name="Permits &amp; Quotas"
+              parent="menu_unified_operations_root"
+              action="action_is_chemical_permit_quota"
+              sequence="20"/>
+
+    <menuitem id="menu_unified_operations_simulator"
+              name="Obligation Simulator"
+              parent="menu_unified_operations_root"
+              action="action_is_chemical_obligation_simulator"
+              sequence="30"/>
+</odoo>

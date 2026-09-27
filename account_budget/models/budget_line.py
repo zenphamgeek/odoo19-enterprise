@@ -92,9 +92,19 @@ class BudgetLine(models.Model):
             )
         return super()._field_to_sql(alias, field_expr, query)
 
-    def _read_group_select(self, aggregate_spec, query):
+    def _read_group_select(self, *args, **kwargs):
         # flag achieved_amount/theoritical_amount as aggregatable
         # and manually sum the values from the records in the group
+        if len(args) >= 2 and isinstance(args[0], str):
+            aggregate_spec, query = args[0], args[1]
+            is_odoo19 = True
+        elif len(args) >= 2:
+            table, aggregate_spec = args[0], args[1]
+            is_odoo19 = False
+        else:
+            aggregate_spec = kwargs.get('aggregate_spec') or (args[0] if args else None)
+            is_odoo19 = False
+
         if aggregate_spec in (
             'achieved_amount:sum',
             'achieved_amount:sum_currency',
@@ -102,8 +112,11 @@ class BudgetLine(models.Model):
             'theoritical_amount:sum_currency',
             'theoritical_percentage:avg'
         ):
-            return super()._read_group_select('id:recordset', query)
-        return super()._read_group_select(aggregate_spec, query)
+            if is_odoo19:
+                return super()._read_group_select('id:recordset', query)
+            else:
+                return super()._read_group_select(args[0], 'id:recordset')
+        return super()._read_group_select(*args, **kwargs)
 
     def _read_group_postprocess_aggregate(self, aggregate_spec, raw_values):
         if aggregate_spec in (

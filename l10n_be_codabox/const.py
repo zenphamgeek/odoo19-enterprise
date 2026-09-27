@@ -4,8 +4,8 @@ _lt = LazyTranslate(__name__)
 
 PROXY_ERROR_CODES = {
     "error_codabox_not_configured": _lt("CodaBox is not configured. Please check your configuration."),
-    "error_connecting_iap": _lt("An error occurred while connecting to the IAP server. Please contact Odoo support."),
-    "error_connecting_codabox": _lt("An error occurred while connecting to CodaBox. Please contact Odoo support."),
+    "error_connecting_iap": _lt("An error occurred while connecting to the IAP server. Please contact Insilos support."),
+    "error_connecting_codabox": _lt("An error occurred while connecting to CodaBox. Please contact Insilos support."),
     "error_connection_not_found": _lt("No connection exists with these VAT/Company ID number(s). Please check your configuration."),
     "error_consent_not_valid": _lt("It seems that your CodaBox connection is not valid anymore.  Please connect again."),
     "error_invalid_fidu_password": _lt("The provided password is not valid for this VAT/Company ID number."),
@@ -27,8 +27,8 @@ def get_error_msg(error):
     error_type = error.get("type")
     codabox_error_code = error.get("codabox_error_code")
     if error_type == 'error_connecting_codabox' and codabox_error_code:
-        return CODABOX_ERROR_CODES.get(codabox_error_code, _lt("Unknown error %s while contacting CodaBox. Please contact Odoo support.", codabox_error_code))
-    return PROXY_ERROR_CODES.get(error_type, _lt("Unknown error %s while contacting CodaBox. Please contact Odoo support.", error_type))
+        return CODABOX_ERROR_CODES.get(codabox_error_code, _lt("Unknown error %s while contacting CodaBox. Please contact Insilos support.", codabox_error_code))
+    return PROXY_ERROR_CODES.get(error_type, _lt("Unknown error %s while contacting CodaBox. Please contact Insilos support.", error_type))
 
 
 def get_iap_endpoint(env):

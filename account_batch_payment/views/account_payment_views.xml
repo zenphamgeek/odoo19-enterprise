@@ -28,7 +28,7 @@
                             context="{'group_by': 'batch_payment_id'}"/>
                 </filter>
 
-                <filter name="reconciled" position="after">
+                <filter name="outstanding" position="after">
                     <filter string="Not reconciled" name="not_reconciled" domain="[('is_reconciled', '=', False)]"/>
                 </filter>
 

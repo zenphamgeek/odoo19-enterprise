@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 1. Report Action: Giấy phép / Giấy chứng nhận An toàn Hóa chất & Môi trường -->
+    <record id="action_report_hse_product_permit" model="ir.actions.report">
+        <field name="name">In Giấy phép / Giấy chứng nhận HSE</field>
+        <field name="model">is.hse.product.permit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_hse_compliance.report_hse_product_permit_doc</field>
+        <field name="report_file">insilos_hse_compliance.report_hse_product_permit_doc</field>
+        <field name="print_report_name">'Giay_Phep_HSE_' + (object.permit_number or object.name).replace('/', '_')</field>
+        <field name="binding_model_id" ref="model_is_hse_product_permit"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- 2. Report Action: Phiếu Tóm tắt An toàn Hóa chất & Quy trình SOP Khẩn cấp -->
+    <record id="action_report_hse_chemical_safety_sop" model="ir.actions.report">
+        <field name="name">In Phiếu Tóm tắt An toàn &amp; SOP Khẩn cấp</field>
+        <field name="model">is.hse.chemical.substance</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_hse_compliance.report_hse_chemical_safety_sop_doc</field>
+        <field name="report_file">insilos_hse_compliance.report_hse_chemical_safety_sop_doc</field>
+        <field name="print_report_name">'Phieu_An_Toan_SOP_' + (object.cas_number or object.name).replace('/', '_')</field>
+        <field name="binding_model_id" ref="model_is_hse_chemical_substance"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- 3. Report Action: Biên bản Đánh giá Tuân thủ Quy chuẩn HSE -->
+    <record id="action_report_hse_legal_compliance_audit" model="ir.actions.report">
+        <field name="name">In Biên bản Đánh giá Tuân thủ Quy chuẩn HSE</field>
+        <field name="model">is.hse.legal.register</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_hse_compliance.report_hse_legal_compliance_audit_doc</field>
+        <field name="report_file">insilos_hse_compliance.report_hse_legal_compliance_audit_doc</field>
+        <field name="print_report_name">'Bien_Ban_Danh_Gia_HSE_' + (object.name or '').replace('/', '_')</field>
+        <field name="binding_model_id" ref="model_is_hse_legal_register"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

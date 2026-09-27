@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+
+    <!-- Marks first, then thresholds. Evaluating alerts against yesterday's
+         prices would produce breaches nobody can act on and misses nobody can
+         explain, so the two crons are ordered and the scan reads whatever the
+         refresh managed to stamp. -->
+    <record id="cron_refresh_marks" model="ir.cron">
+        <field name="name">Capital Markets: refresh portfolio marks</field>
+        <field name="model_id" ref="model_capital_portfolio"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_refresh_all_marks()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="False"/>
+    </record>
+
+    <record id="cron_scan_alerts" model="ir.cron">
+        <field name="name">Capital Markets: scan alert rules</field>
+        <field name="model_id" ref="model_capital_alert_rule"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_scan_alerts()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="False"/>
+    </record>
+
+</odoo>

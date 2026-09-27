@@ -1,0 +1,196 @@
+/* ==========================================================================
+   Insilos Control Panel & Action Bar Restructure
+   Segmented View Switchers, Pill Actions, Facets & Pager
+   ========================================================================== */
+
+.o_control_panel {
+  background-color: var(--insilos-bg-header, #ffffff) !important;
+  border-bottom: 1px solid var(--insilos-border-subtle) !important;
+  padding: 10px 24px !important;
+  transition: var(--insilos-transition-fast);
+
+  /* Breadcrumbs */
+  .o_breadcrumb {
+    .o_breadcrumb_item {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--insilos-text-secondary);
+
+      &.active, &:last-child {
+        font-weight: 650;
+        color: var(--insilos-text-primary);
+      }
+
+      a {
+        color: var(--insilos-text-secondary);
+        text-decoration: none;
+        transition: var(--insilos-transition-fast);
+
+        &:hover {
+          color: var(--insilos-primary);
+        }
+      }
+    }
+  }
+
+  /* Control Panel Action Buttons (Create, Save, Discard, Generate) */
+  .o_cp_buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .btn-primary {
+      background: var(--insilos-primary) !important;
+      border: 1px solid var(--insilos-primary) !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      padding: 6px 18px !important;
+      border-radius: var(--insilos-radius-full) !important;
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25) !important;
+      transition: var(--insilos-transition-fast);
+
+      &:hover {
+        background: var(--insilos-primary-hover) !important;
+        border-color: var(--insilos-primary-hover) !important;
+        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35) !important;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .btn-secondary {
+      background: var(--insilos-bg-surface, #ffffff) !important;
+      border: 1px solid var(--insilos-border-medium) !important;
+      color: var(--insilos-text-primary) !important;
+      font-weight: 550 !important;
+      font-size: 13px !important;
+      padding: 6px 16px !important;
+      border-radius: var(--insilos-radius-full) !important;
+      transition: var(--insilos-transition-fast);
+
+      &:hover {
+        background: var(--insilos-bg-hover) !important;
+        border-color: var(--insilos-border-strong) !important;
+        color: var(--insilos-text-primary) !important;
+      }
+    }
+  }
+
+  /* Search Facets (Pills inside Search View) */
+  .o_searchview_facet {
+    background-color: var(--insilos-primary-subtle) !important;
+    border: 1px solid var(--insilos-primary-border) !important;
+    border-radius: var(--insilos-radius-full) !important;
+    padding: 2px 10px !important;
+    margin: 2px 4px 2px 0 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    .o_searchview_facet_label {
+      background: transparent !important;
+      color: var(--insilos-primary) !important;
+      font-size: 11.5px !important;
+      font-weight: 600 !important;
+      padding: 0 4px 0 0 !important;
+      border: none !important;
+    }
+
+    .o_facet_values {
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      color: var(--insilos-text-primary) !important;
+    }
+
+    .o_facet_remove {
+      color: var(--insilos-primary) !important;
+      opacity: 0.7;
+      transition: opacity var(--insilos-transition-fast);
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  /* Segmented View Switchers (Kanban, List, Calendar, Pivot, Graph, Activity) */
+  .o_cp_switch_buttons {
+    background: var(--insilos-bg-hover, #f1f5f9) !important;
+    border: 1px solid var(--insilos-border-subtle) !important;
+    border-radius: var(--insilos-radius-full) !important;
+    padding: 3px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+
+    .o_switch_view,
+    button.btn {
+      background: transparent !important;
+      border: none !important;
+      border-radius: var(--insilos-radius-full) !important;
+      color: var(--insilos-text-muted) !important;
+      padding: 5px 10px !important;
+      font-size: 13px !important;
+      line-height: 1 !important;
+      transition: var(--insilos-transition-fast);
+      box-shadow: none !important;
+
+      &:hover {
+        color: var(--insilos-text-primary) !important;
+        background: rgba(255, 255, 255, 0.6) !important;
+      }
+
+      &.active {
+        background: var(--insilos-bg-surface, #ffffff) !important;
+        color: var(--insilos-primary) !important;
+        font-weight: 600 !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+      }
+    }
+  }
+
+  /* Pager Navigation */
+  .o_pager {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    .o_pager_value {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--insilos-text-secondary);
+    }
+
+    .btn-group {
+      background: var(--insilos-bg-hover, #f1f5f9);
+      border: 1px solid var(--insilos-border-subtle);
+      border-radius: var(--insilos-radius-full);
+      padding: 2px;
+
+      button.btn {
+        background: transparent !important;
+        border: none !important;
+        border-radius: var(--insilos-radius-full) !important;
+        color: var(--insilos-text-secondary) !important;
+        padding: 4px 8px !important;
+        font-size: 11px !important;
+        transition: var(--insilos-transition-fast);
+
+        &:hover:not(:disabled) {
+          background: var(--insilos-bg-surface, #ffffff) !important;
+          color: var(--insilos-text-primary) !important;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+        }
+
+        &:disabled {
+          opacity: 0.35;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,607 @@
+/* ==========================================================================
+   Insilos Settings Hub Restructure (Scoped to .o_base_settings_view)
+   2-Column Responsive Card Grid + Clean Single Scrollbar + Flawless Switches & Radios
+   ========================================================================== */
+
+.o_base_settings_view {
+  background-color: var(--insilos-bg-canvas);
+  color: var(--insilos-text-primary);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  /* --------------------------------------------------------------------------
+     1. Control Panel Restyle (Save/Discard & Search)
+     -------------------------------------------------------------------------- */
+  .o_control_panel {
+    background-color: var(--insilos-bg-surface);
+    border-bottom: 1px solid var(--insilos-border-subtle);
+    box-shadow: var(--insilos-shadow-sm);
+    padding: 10px 24px !important;
+    margin-bottom: 0 !important;
+
+    /* Main buttons (Save / Discard) */
+    .o_control_panel_main_buttons,
+    .o_cp_buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      /* Primary Save Button */
+      button.btn-primary,
+      button.o_form_button_save {
+        background: var(--insilos-primary) !important;
+        border: 1px solid var(--insilos-primary) !important;
+        color: #ffffff !important;
+        font-weight: 600;
+        font-size: 13px;
+        padding: 6px 18px;
+        border-radius: var(--insilos-radius-full);
+        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
+        transition: var(--insilos-transition-fast);
+        white-space: nowrap;
+
+        &:hover {
+          background: var(--insilos-primary-hover) !important;
+          border-color: var(--insilos-primary-hover) !important;
+          box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+          transform: translateY(-1px);
+        }
+      }
+
+      /* Discard Button */
+      button.btn-secondary,
+      button.o_form_button_cancel {
+        background: transparent !important;
+        border: 1px solid var(--insilos-border-medium) !important;
+        color: var(--insilos-text-secondary) !important;
+        font-weight: 500;
+        font-size: 13px;
+        padding: 6px 16px;
+        border-radius: var(--insilos-radius-full);
+        transition: var(--insilos-transition-fast);
+        white-space: nowrap;
+
+        &:hover {
+          background: var(--insilos-bg-hover) !important;
+          color: var(--insilos-text-primary) !important;
+          border-color: var(--insilos-border-strong) !important;
+        }
+      }
+    }
+
+    /* Search Box (Single Pill Capsule, Zero Duplicate Borders) */
+    .o_searchview {
+      background: var(--insilos-bg-hover) !important;
+      border: 1px solid var(--insilos-border-subtle) !important;
+      border-radius: var(--insilos-radius-full) !important;
+      padding: 6px 16px !important;
+      box-shadow: none !important;
+      transition: var(--insilos-transition-fast);
+
+      &:focus-within {
+        background: var(--insilos-bg-surface) !important;
+        border-color: var(--insilos-primary) !important;
+        box-shadow: 0 0 0 3px var(--insilos-primary-subtle) !important;
+      }
+
+      .o_searchview_input_container {
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+
+        input,
+        .o_searchview_input {
+          background: transparent !important;
+          border: none !important;
+          border-radius: 0 !important;
+          outline: none !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+          font-size: 13px;
+          color: var(--insilos-text-primary);
+
+          &::placeholder {
+            color: var(--insilos-text-tertiary);
+          }
+        }
+      }
+
+      .o_searchview_icon {
+        color: var(--insilos-text-muted);
+      }
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     2. Form Renderer & Setting Container (Prevent Double Scrollbars!)
+     -------------------------------------------------------------------------- */
+  .o_form_renderer {
+    height: 100%;
+    overflow: hidden !important; /* Kills outer scrollbar */
+    background-color: var(--insilos-bg-canvas);
+    display: flex;
+    flex-direction: column;
+
+    .o_setting_container {
+      height: 100%;
+      flex: 1 1 auto;
+      overflow: hidden !important;
+      background-color: var(--insilos-bg-canvas);
+      display: flex;
+
+      /* ----------------------------------------------------------------------
+         2.1. Sidebar Navigation (.settings_tab)
+         ---------------------------------------------------------------------- */
+      .settings_tab {
+        width: 250px;
+        min-width: 250px;
+        background: var(--insilos-bg-surface);
+        border-right: 1px solid var(--insilos-border-subtle);
+        padding: 16px 10px;
+        gap: 2px;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto !important;
+
+        .tab {
+          height: 38px;
+          line-height: 38px;
+          padding: 0 14px;
+          border-radius: var(--insilos-radius-md);
+          font-size: 13.5px;
+          font-weight: 500;
+          color: var(--insilos-text-secondary);
+          transition: var(--insilos-transition-fast);
+          display: flex;
+          align-items: center;
+          position: relative;
+          user-select: none;
+
+          .icon {
+            width: 20px;
+            min-width: 20px;
+            margin-right: 10px;
+            opacity: 0.75;
+            transition: var(--insilos-transition-fast);
+          }
+
+          &:hover {
+            background-color: var(--insilos-bg-hover);
+            color: var(--insilos-text-primary);
+
+            .icon {
+              opacity: 1;
+            }
+          }
+
+          &.selected {
+            background-color: var(--insilos-primary-subtle) !important;
+            color: var(--insilos-primary) !important;
+            font-weight: 600;
+            box-shadow: none !important;
+
+            &::before {
+              content: '';
+              position: absolute;
+              left: 0;
+              top: 7px;
+              bottom: 7px;
+              width: 3.5px;
+              border-radius: 0 3px 3px 0;
+              background-color: var(--insilos-primary);
+            }
+
+            .icon {
+              opacity: 1;
+              filter: saturate(1.2);
+            }
+          }
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         2.2. Main Settings Content Area (.settings) - 2-Column Responsive Grid
+         ---------------------------------------------------------------------- */
+      .settings {
+        background-color: var(--insilos-bg-canvas);
+        border: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        padding: 24px 36px 80px;
+        overflow-y: auto !important;
+        flex: 1 1 auto;
+
+        > .app_settings_block {
+          max-width: 1280px;
+          margin: 0 auto;
+
+          /* Section header */
+          h2 {
+            background: transparent !important;
+            color: var(--insilos-text-primary) !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.015em;
+            padding: 16px 0 10px 0 !important;
+            margin: 20px 0 14px 0 !important;
+            border-bottom: 2px solid var(--insilos-border-subtle);
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: -2px;
+              left: 0;
+              width: 50px;
+              height: 2.5px;
+              background: var(--insilos-primary);
+              border-radius: 2px;
+            }
+          }
+
+          h3 {
+            background: transparent !important;
+            color: var(--insilos-text-muted) !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            padding: 0 0 8px 0 !important;
+            margin: 0 0 6px 0 !important;
+          }
+
+          /* ------------------------------------------------------------------
+             2.3. The 2-Column Card Grid Container (.o_settings_container)
+             ------------------------------------------------------------------ */
+          .o_settings_container {
+            display: flex !important;
+            flex-flow: row wrap !important;
+            column-gap: 16px !important;
+            row-gap: 16px !important;
+            margin: 0 0 28px 0 !important;
+            padding: 0 !important;
+            max-width: 100% !important;
+
+            /* ----------------------------------------------------------------
+               2.4. Setting Box: 2 COLUMNS ON DESKTOP
+               ---------------------------------------------------------------- */
+            .o_setting_box {
+              width: 100% !important;
+              flex: 0 0 100% !important;
+              max-width: 100% !important;
+              margin: 0 !important;
+
+              @media (min-width: 992px) {
+                width: calc(50% - 8px) !important;
+                flex: 0 0 calc(50% - 8px) !important;
+                max-width: calc(50% - 8px) !important;
+              }
+
+              /* Modern Card Appearance */
+              background: var(--insilos-bg-card);
+              border: 1px solid var(--insilos-border-subtle);
+              border-radius: var(--insilos-radius-lg);
+              padding: 18px 20px;
+              box-shadow: var(--insilos-shadow-card);
+              transition: var(--insilos-transition-normal);
+              display: flex !important;
+              flex-direction: row !important;
+              align-items: flex-start !important;
+              position: relative;
+              box-sizing: border-box !important;
+              overflow: visible !important;
+
+              &:hover {
+                border-color: var(--insilos-border-medium);
+                box-shadow: var(--insilos-shadow-hover);
+              }
+
+              /* --------------------------------------------------------------
+                 2.5. Left Pane: Main Toggle Switch (CLEAN - NO ARTIFACTS!)
+                 -------------------------------------------------------------- */
+              .o_setting_left_pane {
+                background: transparent !important;
+                float: none !important;
+                margin-right: 14px;
+                padding-top: 2px;
+                flex-shrink: 0;
+
+                /* Toggle Switch (ONLY for Checkboxes, NEVER for Radios!) */
+                .form-check-input[type="checkbox"],
+                input[type="checkbox"] {
+                  cursor: pointer;
+                  width: 38px !important;
+                  height: 22px !important;
+                  min-width: 38px !important;
+                  border-radius: 22px !important;
+                  background-color: var(--insilos-border-strong) !important;
+                  background-image: none !important; /* CRITICAL: Clears Bootstrap default checkmark SVG */
+                  background-repeat: no-repeat !important;
+                  background-position: center !important;
+                  background-size: 0 0 !important;
+                  border: none !important;
+                  outline: none !important;
+                  position: relative !important;
+                  transition: var(--insilos-transition-fast);
+                  appearance: none !important;
+                  -webkit-appearance: none !important;
+                  display: inline-block;
+                  vertical-align: middle;
+                  box-shadow: none !important;
+                  margin: 0 !important;
+
+                  /* White Knob */
+                  &::before {
+                    content: '' !important;
+                    position: absolute !important;
+                    width: 16px !important;
+                    height: 16px !important;
+                    border-radius: 50% !important;
+                    top: 3px !important;
+                    left: 3px !important;
+                    background-color: #ffffff !important;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+                    transition: var(--insilos-transition-fast) !important;
+                    transform: none !important;
+                  }
+
+                  &::after {
+                    display: none !important;
+                  }
+
+                  &:checked {
+                    background-color: var(--insilos-primary) !important;
+                    background-image: none !important; /* CRITICAL: Must be none when checked too! */
+
+                    &::before {
+                      transform: translateX(16px) !important;
+                    }
+                  }
+
+                  &:focus {
+                    box-shadow: 0 0 0 3px var(--insilos-primary-subtle) !important;
+                  }
+                }
+              }
+
+              /* --------------------------------------------------------------
+                 2.6. Right Pane: Title, Description, Inputs, Radios
+                 -------------------------------------------------------------- */
+              .o_setting_right_pane {
+                border-left: none !important;
+                margin-left: 0 !important;
+                padding-left: 0 !important;
+                flex: 1;
+                min-width: 0;
+
+                .o_form_label {
+                  font-size: 14px;
+                  font-weight: 650;
+                  color: var(--insilos-text-primary);
+                  margin-bottom: 2px;
+                  letter-spacing: -0.01em;
+                  display: block;
+                }
+
+                .text-muted,
+                .o_form_label + div {
+                  font-size: 12.5px;
+                  color: var(--insilos-text-secondary);
+                  line-height: 1.45;
+                }
+
+                /* Sub-options container */
+                .mt-3.d-flex,
+                .content-group {
+                  margin-top: 10px !important;
+                  padding-top: 8px;
+                  border-top: 1px dashed var(--insilos-border-subtle);
+
+                  /* Nested sub-checkboxes (Normal square checkboxes) */
+                  .form-check-input[type="checkbox"],
+                  input[type="checkbox"] {
+                    width: 16px !important;
+                    height: 16px !important;
+                    min-width: 16px !important;
+                    border-radius: 4px !important;
+                    background-color: var(--insilos-bg-surface) !important;
+                    border: 1px solid var(--insilos-border-medium) !important;
+                    margin-right: 8px;
+                    appearance: auto !important;
+                    -webkit-appearance: auto !important;
+                    cursor: pointer;
+
+                    &::before, &::after {
+                      display: none !important;
+                    }
+
+                    &:checked {
+                      accent-color: var(--insilos-primary);
+                    }
+                  }
+
+                  label {
+                    font-size: 12.5px;
+                    font-weight: 600;
+                    color: var(--insilos-text-primary);
+                    cursor: pointer;
+                  }
+
+                  .text-muted {
+                    font-size: 11.5px;
+                  }
+                }
+
+                /* ------------------------------------------------------------
+                   2.7. True Radio Buttons (Crisp and Modern)
+                   ------------------------------------------------------------ */
+                input[type="radio"],
+                .form-check-input[type="radio"],
+                .o_radio_input {
+                  width: 18px !important;
+                  height: 18px !important;
+                  min-width: 18px !important;
+                  border-radius: 50% !important;
+                  border: 2px solid var(--insilos-border-medium) !important;
+                  background-color: var(--insilos-bg-surface) !important;
+                  background-image: none !important;
+                  position: relative !important;
+                  cursor: pointer !important;
+                  appearance: none !important;
+                  -webkit-appearance: none !important;
+                  margin-right: 8px !important;
+                  vertical-align: middle !important;
+                  box-shadow: none !important;
+                  transition: var(--insilos-transition-fast);
+                  display: inline-block;
+
+                  &::before {
+                    display: none !important;
+                  }
+
+                  &:checked {
+                    border-color: var(--insilos-primary) !important;
+                    background-color: var(--insilos-bg-surface) !important;
+                    background-image: none !important;
+
+                    &::after {
+                      content: '' !important;
+                      display: block !important;
+                      position: absolute !important;
+                      width: 8px !important;
+                      height: 8px !important;
+                      border-radius: 50% !important;
+                      top: 50% !important;
+                      left: 50% !important;
+                      transform: translate(-50%, -50%) !important;
+                      background-color: var(--insilos-primary) !important;
+                    }
+                  }
+
+                  &:focus {
+                    box-shadow: 0 0 0 3px var(--insilos-primary-subtle) !important;
+                  }
+                }
+
+                .form-check.o_radio_item,
+                .form-check {
+                  display: flex;
+                  align-items: center;
+                  margin-bottom: 6px;
+
+                  label.form-check-label {
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: var(--insilos-text-primary);
+                    cursor: pointer;
+                    margin-bottom: 0;
+                  }
+                }
+
+                /* Inputs inside Right Pane */
+                .o_field_widget {
+                  input.o_input,
+                  select.o_input,
+                  .o_input_dropdown > .o_input {
+                    background: var(--insilos-bg-surface);
+                    border: 1px solid var(--insilos-border-medium);
+                    border-radius: var(--insilos-radius-sm);
+                    padding: 6px 12px;
+                    font-size: 13px;
+                    color: var(--insilos-text-primary);
+                    transition: var(--insilos-transition-fast);
+
+                    &:focus {
+                      outline: none;
+                      border-color: var(--insilos-primary);
+                      box-shadow: 0 0 0 3px var(--insilos-primary-subtle);
+                    }
+                  }
+                }
+
+                /* Action buttons & links */
+                button.btn-primary {
+                  border-radius: var(--insilos-radius-full);
+                  font-size: 12px;
+                  font-weight: 600;
+                  padding: 5px 14px;
+                }
+
+                button.btn-link,
+                a.oe-link {
+                  font-size: 12.5px;
+                  font-weight: 550;
+                  color: var(--insilos-primary);
+                  text-decoration: none;
+                  margin-top: 4px;
+                  display: inline-flex;
+                  align-items: center;
+
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                }
+              }
+            }
+          }
+
+          /* ------------------------------------------------------------------
+             2.8. Developer Tools & About on the Same Div Row (.o_dev_about_row)
+             ------------------------------------------------------------------ */
+          .o_dev_about_row {
+            display: flex !important;
+            flex-flow: row wrap !important;
+            column-gap: 16px !important;
+            row-gap: 16px !important;
+            margin-top: 10px !important;
+            margin-bottom: 28px !important;
+
+            .o_dev_col,
+            .o_about_col {
+              width: 100% !important;
+              flex: 0 0 100% !important;
+              max-width: 100% !important;
+
+              @media (min-width: 992px) {
+                width: calc(50% - 8px) !important;
+                flex: 0 0 calc(50% - 8px) !important;
+                max-width: calc(50% - 8px) !important;
+              }
+
+              display: flex;
+              flex-direction: column;
+
+              h2 {
+                margin-top: 0 !important;
+              }
+
+              .o_widget,
+              #developer_tool,
+              #about,
+              .o_settings_container {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: flex;
+                flex-direction: column;
+                flex: 1 1 auto;
+              }
+
+              .o_setting_box {
+                width: 100% !important;
+                max-width: 100% !important;
+                flex: 1 1 100% !important;
+                margin: 0 !important;
+                min-height: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

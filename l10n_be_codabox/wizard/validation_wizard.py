@@ -15,7 +15,7 @@ class L10n_Be_CodaboxValidationWizard(models.TransientModel):
     l10n_be_codabox_is_connected = fields.Boolean(related='company_id.l10n_be_codabox_is_connected')
     fidu_password = fields.Char(
         string='Password',
-        help='This is the password you have received from Odoo the first time you connected to CodaBox.',
+        help='This is the password you have received from Insilos the first time you connected to CodaBox.',
     )
     confirmation_url = fields.Char(required=True)
     pasted_password = fields.Char(store=False)

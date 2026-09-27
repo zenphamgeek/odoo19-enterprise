@@ -5,7 +5,7 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='button_validate'][hasclass('o_btn_validate')]" position="before">
+            <xpath expr="//button[@name='button_validate'][1]" position="before">
                 <button string="Quality Checks" name="check_quality" type="object" class="oe_highlight" data-hotkey="shift+z"
                         invisible="not quality_check_todo or state in ('done', 'cancel')" groups="quality.group_quality_user"/>
                 <button name="button_quality_alert" groups="quality.group_quality_user" type="object" string="Quality Alert" context="{'default_picking_id': id}" class="oe_highlight" invisible="not quality_check_fail or quality_alert_count != 0" data-hotkey="shift+q"/>

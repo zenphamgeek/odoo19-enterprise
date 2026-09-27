@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- List View: Chemical Environmental Impact -->
+        <record id="view_is_esg_chemical_impact_tree" model="ir.ui.view">
+            <field name="name">is.esg.chemical.impact.list</field>
+            <field name="model">is.esg.chemical.impact</field>
+            <field name="arch" type="xml">
+                <list string="Chemical Environmental Impacts &amp; Scope 1 Process Emissions" decoration-danger="environmental_hazard_rating in ('high', 'critical')" decoration-warning="environmental_hazard_rating == 'moderate'">
+                    <field name="name"/>
+                    <field name="chemical_substance_id"/>
+                    <field name="cas_number"/>
+                    <field name="reporting_year"/>
+                    <field name="total_consumed_kg" string="Consumed (kg)"/>
+                    <field name="voc_emissions_kg" string="VOC Emissions (kg)"/>
+                    <field name="process_ghg_emissions_kg_co2e" string="Scope 1 GHG (kgCO₂e)" class="fw-bold text-primary"/>
+                    <field name="is_ghs_environmental" widget="boolean_toggle"/>
+                    <field name="environmental_hazard_rating" widget="badge" decoration-danger="environmental_hazard_rating in ('high', 'critical')" decoration-warning="environmental_hazard_rating == 'moderate'" decoration-success="environmental_hazard_rating == 'low'"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View: Chemical Impact -->
+        <record id="view_is_esg_chemical_impact_form" model="ir.ui.view">
+            <field name="name">is.esg.chemical.impact.form</field>
+            <field name="model">is.esg.chemical.impact</field>
+            <field name="arch" type="xml">
+                <form string="Chemical Environmental Footprint &amp; Process Emissions">
+                    <header>
+                        <button name="action_post_to_esg_scope1" string="Scope 1 Posting Unavailable Pending Verification" type="object" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <div class="w_title">
+                            <label for="name" string="Impact Analysis Code"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="1. Chemical &amp; Usage Source">
+                                <field name="tracking_id"/>
+                                <field name="chemical_substance_id"/>
+                                <field name="cas_number"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="facility_id"/>
+                                <field name="reporting_year"/>
+                            </group>
+                            <group string="2. GHS Hazard &amp; Material Classification">
+                                <field name="is_ghs_environmental" widget="boolean_toggle"/>
+                                <field name="ghs_signal_word"/>
+                                <field name="environmental_hazard_rating" widget="badge" decoration-danger="environmental_hazard_rating in ('high', 'critical')" decoration-warning="environmental_hazard_rating == 'moderate'" decoration-success="environmental_hazard_rating == 'low'"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group string="3. Manufacturing Consumption &amp; Loss">
+                                <field name="total_consumed_kg"/>
+                                <field name="process_loss_kg"/>
+                                <field name="volatile_organic_fraction"/>
+                            </group>
+                            <group string="4. Scope 1 Process GHG Emissions">
+                                <field name="voc_emissions_kg"/>
+                                <field name="gwp_factor"/>
+                                <field name="process_ghg_emissions_kg_co2e" class="fw-bold fs-4 text-danger"/>
+                                <field name="esg_other_emission_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_is_esg_chemical_impact_search" model="ir.ui.view">
+            <field name="name">is.esg.chemical.impact.search</field>
+            <field name="model">is.esg.chemical.impact</field>
+            <field name="arch" type="xml">
+            <search><field name="name"/><field name="chemical_substance_id"/><field name="cas_number"/></search></field>
+        </record>
+
+        <!-- Action Window: Chemical Impact -->
+        <record id="action_is_esg_chemical_impact" model="ir.actions.act_window">
+            <field name="name">Chemical Material ESG Impact</field>
+            <field name="res_model">is.esg.chemical.impact</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>

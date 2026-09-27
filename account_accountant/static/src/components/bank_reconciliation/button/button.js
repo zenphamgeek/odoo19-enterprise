@@ -11,10 +11,14 @@ export class BankRecButton extends Component {
         toReview: { type: Boolean, optional: true },
         classes: { type: String, optional: true },
     };
-    static defaultProps = {
-        primary: false,
-        classes: "",
-    };
+
+    get primary() {
+        return this.props.primary ?? false;
+    }
+
+    get classes() {
+        return this.props.classes ?? "";
+    }
 
     setup() {
         this.ui = useService("ui");

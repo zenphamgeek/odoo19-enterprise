@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Legal Provision List & Form Views -->
+        <record id="view_is_hse_legal_provision_tree" model="ir.ui.view">
+            <field name="name">is.hse.legal.provision.list</field>
+            <field name="model">is.hse.legal.provision</field>
+            <field name="arch" type="xml">
+                <list string="Legal Provisions">
+                    <field name="sequence" widget="handle"/>
+                    <field name="document_code"/>
+                    <field name="article_number"/>
+                    <field name="title"/>
+                    <field name="authority_level"/>
+                    <field name="category"/>
+                    <field name="summary"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_hse_legal_provision_form" model="ir.ui.view">
+            <field name="name">is.hse.legal.provision.form</field>
+            <field name="model">is.hse.legal.provision</field>
+            <field name="arch" type="xml">
+                <form string="Legal Provision">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="document_id"/>
+                                <field name="article_number"/>
+                                <field name="title"/>
+                            </group>
+                            <group>
+                                <field name="authority_level"/>
+                                <field name="category"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Obligation Summary" name="summary">
+                                <field name="summary" placeholder="Summary of required compliance actions or limits..."/>
+                            </page>
+                            <page string="Full Legal Text" name="full_text">
+                                <field name="full_text" placeholder="Full statutory text of article..."/>
+                            </page>
+                            <page string="Sanctions &amp; Penalties" name="sanctions">
+                                <field name="sanction_summary" placeholder="Penalties and enforcement terms per Vietnamese law..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Legal Document Form, List & Search Views -->
+        <record id="view_is_hse_legal_document_tree" model="ir.ui.view">
+            <field name="name">is.hse.legal.document.list</field>
+            <field name="model">is.hse.legal.document</field>
+            <field name="arch" type="xml">
+                <list string="HSE Legal Documents &amp; Standards" decoration-muted="state == 'repealed'" decoration-success="state == 'active'" decoration-info="state == 'amended'">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="authority_level"/>
+                    <field name="category"/>
+                    <field name="issuer"/>
+                    <field name="effective_date"/>
+                    <field name="provision_count"/>
+                    <field name="state" widget="badge" decoration-success="state == 'active'" decoration-warning="state == 'amended'" decoration-danger="state == 'repealed'"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_hse_legal_document_form" model="ir.ui.view">
+            <field name="name">is.hse.legal.document.form</field>
+            <field name="model">is.hse.legal.document</field>
+            <field name="arch" type="xml">
+                <form string="HSE Legal Document">
+                    <header>
+                        <button name="action_activate" string="Activate Document" type="object" class="w_highlight" invisible="state == 'active'"/>
+                        <button name="action_repeal" string="Mark Repealed" type="object" invisible="state == 'repealed'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,amended,repealed"/>
+                    </header>
+                    <sheet>
+                        <div class="w_title">
+                            <label for="code" string="Document Code"/>
+                            <h1>
+                                <field name="code" placeholder="e.g. QCVN 05:2023/BTNMT, 44/2016/NĐ-CP"/>
+                            </h1>
+                            <h3>
+                                <field name="name" placeholder="Official Legal Title"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group string="Classification &amp; Authority">
+                                <field name="authority_level"/>
+                                <field name="category"/>
+                                <field name="issuer"/>
+                                <field name="source_url" widget="url"/>
+                            </group>
+                            <group string="Validity &amp; Dates">
+                                <field name="issued_date"/>
+                                <field name="effective_date"/>
+                                <field name="repeal_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Provisions &amp; Articles" name="provisions">
+                                <field name="provision_ids">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="article_number"/>
+                                        <field name="title"/>
+                                        <field name="summary"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Executive Summary" name="summary">
+                                <field name="summary" placeholder="Scope of application, target entities, key regulatory highlights..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_is_hse_legal_document_search" model="ir.ui.view">
+            <field name="name">is.hse.legal.document.search</field>
+            <field name="model">is.hse.legal.document</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="issuer"/>
+                    <filter name="filter_active" string="Active &amp; Effective" domain="[('state', '=', 'active')]"/>
+                    <filter name="filter_mandatory" string="Mandatory Laws &amp; QCVN" domain="[('authority_level', 'in', ('A1_MANDATORY_LAW', 'A2_MANDATORY_TECH_REG'))]"/>
+                    <separator/>
+                    <filter name="filter_safety" string="Safety" domain="[('category', '=', 'safety')]"/>
+                    <filter name="filter_health" string="Health" domain="[('category', '=', 'health')]"/>
+                    <filter name="filter_env" string="Environment (BVMT)" domain="[('category', '=', 'environment')]"/>
+                    <filter name="filter_chem" string="Chemicals" domain="[('category', '=', 'chemical')]"/>
+                    <group>
+                        <filter name="group_authority" string="Authority Level" context="{'group_by': 'authority_level'}"/>
+                        <filter name="group_category" string="Category" context="{'group_by': 'category'}"/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_is_hse_legal_document_kanban" model="ir.ui.view">
+            <field name="name">is.hse.legal.document.kanban</field>
+            <field name="model">is.hse.legal.document</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" class="w_kanban_small_column" sample="1">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="authority_level"/>
+                    <field name="category"/>
+                    <field name="effective_date"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="d-flex flex-column gap-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary"><field name="code"/></strong>
+                                    <field name="state" widget="badge" decoration-success="state == 'active'" decoration-warning="state == 'amended'" decoration-danger="state == 'repealed'"/>
+                                </div>
+                                <div class="fw-bold text-truncate"><field name="name"/></div>
+                                <div class="text-muted small"><field name="authority_level"/> • <field name="category"/></div>
+                                <div class="text-muted small">Effective: <field name="effective_date"/></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_is_hse_legal_document" model="ir.actions.act_window">
+            <field name="name">Manage HSE Regulatory &amp; Legal Documents</field>
+            <field name="path">hse-documents</field>
+            <field name="res_model">is.hse.legal.document</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="search_view_id" ref="view_is_hse_legal_document_search"/>
+            <field name="context">{'search_default_filter_active': 1}</field>
+            <field name="help" type="html">
+                <p class="w_view_nocontent_smiling_face">
+                    Register and manage Vietnamese HSE Laws, QCVN Technical Regulations, and ISO Standards.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

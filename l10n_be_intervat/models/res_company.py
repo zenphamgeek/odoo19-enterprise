@@ -59,7 +59,7 @@ _lt = LazyTranslate(__name__)
 IAP_ERROR_MESSAGE = {
     'error_subscription': _lt("An error has occurred when trying to verify your subscription."),
     'dbuuid_not_exist': _lt("Your database UUID does not exist."),
-    'not_enterprise': _lt("You do not have an Odoo Enterprise subscription."),
+    'not_enterprise': _lt("You do not have an Insilos Enterprise subscription."),
     'not_prod_env': _lt("Your database is not used for a production environment."),
     'not_active_db': _lt("Your database is not yet activated."),
     'limit_call_reached': _lt("You reached the call limit. Please try again in a moment."),

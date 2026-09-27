@@ -6,10 +6,10 @@ class ProjectTemplateCreateWizard(models.TransientModel):
 
     database_hosting = fields.Selection(
         selection=[
-            ('saas', 'Odoo Online'),
-            ('paas', 'Odoo.sh'),
+            ('saas', 'Insilos Online'),
+            ('paas', 'Insilos Cloud'),
             ('premise', 'On Premise'),
-            ('other', 'Outside of Odoo'),
+            ('other', 'Outside of Insilos'),
         ],
         string='Hosting',
     )

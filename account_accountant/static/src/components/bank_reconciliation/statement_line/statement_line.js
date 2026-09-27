@@ -6,7 +6,7 @@ import { formatMonetary } from "@web/views/fields/formatters";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
-import { onWillStart, useState, useRef } from "@odoo/owl";
+import { onWillStart, proxy, signal } from "@odoo/owl";
 import { useBankReconciliation } from "../bank_reconciliation_service";
 
 export class BankRecStatementLine extends KanbanRecord {
@@ -17,17 +17,22 @@ export class BankRecStatementLine extends KanbanRecord {
         DropdownItem,
         BankRecReconciledLineName,
     };
-    static props = [...KanbanRecord.props];
+    static props = [...(KanbanRecord.props || []), "*"];
+
+    root = signal.ref();
+
+    get statementLineRootRef() {
+        return { el: this.root() };
+    }
 
     setup() {
         super.setup();
         this.orm = useService("orm");
         this.ui = useService("ui");
         this.bankReconciliation = useBankReconciliation();
-        this.state = useState({
+        this.state = proxy({
             isUnfolded: false,
         });
-        this.statementLineRootRef = useRef("root");
         if (this.env.model.config.context?.default_st_line_id === this.props.record.resId) {
             this.state.isUnfolded = true;
             this.bankReconciliation.selectStatementLine(this.props.record);

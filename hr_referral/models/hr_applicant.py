@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import base64
 import json
 from markupsafe import Markup, escape
 
@@ -147,7 +148,7 @@ class HrApplicant(models.Model):
                 subject = _('Referral: %(partner)s (%(applicant)s)', partner=self.partner_name, applicant=self.display_name)
             else:
                 subject = _('Referral: %s', self.display_name)
-            action_url = f'/odoo/action-{action_value}?active_model={self._name}'
+            action_url = f'/insilos/action-{action_value}?active_model={self._name}'
             body = Markup("<a class='o_document_link' href=%s>%s</a><br>%s") % (action_url, subject, body)
             odoobot = self.env.ref('base.partner_root')
             # Do *not* notify on `self` as it will lead to unintended behavior.
@@ -222,7 +223,7 @@ class HrApplicant(models.Model):
                     gained=gained_points,
                     new_line=Markup('<br/>'),
                     total=available_points,
-                    link1=Markup('<a href="/odoo/action-hr_referral.action_hr_referral_reward?active_model=hr.referral.reward">'),
+                    link1=Markup('<a href="/insilos/action-hr_referral.action_hr_referral_reward?active_model=hr.referral.reward">'),
                     link2=Markup('</a>'),
                 )
             if new_state.use_in_referral:
@@ -244,10 +245,20 @@ class HrApplicant(models.Model):
             # Use sudo, user has normaly not the right to write on applicant
             self_sudo.write({'friend_id': friend_id})
 
+    @staticmethod
+    def _to_base64_str(val):
+        if not val:
+            return ''
+        if hasattr(val, 'to_base64'):
+            return val.to_base64()
+        if isinstance(val, (bytes, bytearray, memoryview)):
+            return base64.b64encode(val).decode('ascii')
+        return str(val)
+
     def _get_onboarding_steps(self):
         return [{
             'text': onboarding.text,
-            'image': onboarding.image
+            'image': self._to_base64_str(onboarding.image)
         } for onboarding in self.env['hr.referral.onboarding'].search([])]
 
     def _get_friends(self, applicant_names):
@@ -256,7 +267,7 @@ class HrApplicant(models.Model):
             'friend': applicant_names.get(friend.id, ''),
             'name': applicant_names.get(friend.id, friend.name),
             'position': friend.position,
-            'image': friend.image,
+            'image': self._to_base64_str(friend.image),
         } for friend in self.env['hr.referral.friend'].search([]) if friend.id in applicant_names]
 
     def _get_friends_head(self, applicant_names):
@@ -264,7 +275,7 @@ class HrApplicant(models.Model):
             'id': friend.id,
             'friend': applicant_names.get(friend.id, ''),
             'name': friend.name,
-            'image': friend.image_head,
+            'image': self._to_base64_str(friend.image_head),
         } for friend in self.env['hr.referral.friend'].search([])]
 
     @api.model
@@ -313,7 +324,7 @@ class HrApplicant(models.Model):
         next_level = self.env['hr.referral.level'].search([('points', '>', current_level.points)], order='points asc', limit=1)
 
         result['level'] = {
-            'image': current_level.image,
+            'image': self._to_base64_str(current_level.image),
             'name': current_level.name,
             'points': current_level.points
         }
@@ -345,7 +356,7 @@ class HrApplicant(models.Model):
             if message.onclick == 'url':
                 msg['url'] = message.url
             elif message.onclick == 'all_jobs':
-                msg['url'] = '/odoo/action-hr_referral.action_hr_job_employee_referral'
+                msg['url'] = '/insilos/action-hr_referral.action_hr_job_employee_referral'
             result['message'].append(msg)
 
         return result

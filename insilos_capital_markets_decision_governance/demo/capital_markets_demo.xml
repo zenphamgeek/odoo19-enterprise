@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="demo_issuer_partner" model="res.partner">
+        <field name="name">Demo Issuer Corp</field>
+        <field name="is_company" eval="True"/>
+    </record>
+
+    <!-- A live workspace copied from the template, so UAT exercises the real
+         path instead of running cases inside the template. -->
+    <record id="demo_project_desk" model="project.project">
+        <field name="name">Demo Desk — Decision Cases</field>
+        <field name="type_ids" eval="[(6, 0, [
+            ref('insilos_capital_markets_decision_governance.stage_intake'),
+            ref('insilos_capital_markets_decision_governance.stage_evidence'),
+            ref('insilos_capital_markets_decision_governance.stage_review'),
+            ref('insilos_capital_markets_decision_governance.stage_rework'),
+            ref('insilos_capital_markets_decision_governance.stage_approval'),
+            ref('insilos_capital_markets_decision_governance.stage_closed'),
+        ])]"/>
+    </record>
+
+    <record id="demo_case_new_position" model="project.task">
+        <field name="name">New position — Demo Issuer Corp</field>
+        <field name="project_id" ref="demo_project_desk"/>
+        <field name="stage_id" ref="insilos_capital_markets_decision_governance.stage_review"/>
+        <field name="partner_id" ref="demo_issuer_partner"/>
+        <field name="tag_ids" eval="[(6, 0, [
+            ref('insilos_capital_markets_decision_governance.tag_archetype_new_position'),
+            ref('insilos_capital_markets_decision_governance.tag_materiality_medium'),
+            ref('insilos_capital_markets_decision_governance.tag_risk_standard'),
+            ref('insilos_capital_markets_decision_governance.tag_source_official'),
+        ])]"/>
+        <field name="description" type="html">
+            <div>
+                <p>Thesis: demo case used for UAT only. No investment meaning.</p>
+                <p>Counter-thesis and missing information sections are intentionally
+                left for the reviewer to complete during the walkthrough.</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="demo_case_exit_cii" model="project.task">
+        <field name="name">Reduce CII — concentration above policy</field>
+        <field name="project_id" ref="demo_project_desk"/>
+        <field name="stage_id" ref="insilos_capital_markets_decision_governance.stage_evidence"/>
+        <field name="tag_ids" eval="[(6, 0, [
+            ref('insilos_capital_markets_decision_governance.tag_archetype_exit'),
+            ref('insilos_capital_markets_decision_governance.tag_materiality_high'),
+            ref('insilos_capital_markets_decision_governance.tag_risk_elevated'),
+            ref('insilos_capital_markets_decision_governance.tag_source_vendor'),
+        ])]"/>
+        <field name="description" type="html">
+            <div>
+                <p>Thesis: CII sits above the 40% single-name weight the desk policy allows,
+                so the case proposes trimming back to policy. Synthetic UAT data only.</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="demo_case_limit_breach_hbc" model="project.task">
+        <field name="name">HBC limit breach — stale mark blocks the alert</field>
+        <field name="project_id" ref="demo_project_desk"/>
+        <field name="stage_id" ref="insilos_capital_markets_decision_governance.stage_intake"/>
+        <field name="tag_ids" eval="[(6, 0, [
+            ref('insilos_capital_markets_decision_governance.tag_archetype_limit_breach'),
+            ref('insilos_capital_markets_decision_governance.tag_materiality_medium'),
+            ref('insilos_capital_markets_decision_governance.tag_risk_elevated'),
+            ref('insilos_capital_markets_decision_governance.tag_source_unverified'),
+        ])]"/>
+        <field name="description" type="html">
+            <div>
+                <p>The HBC mark is stale, so the price alert stays suppressed rather than
+                firing on an unusable number. The case exists to show that suppression.</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="demo_evidence_note" model="documents.document">
+        <field name="name">Demo filing extract</field>
+        <field name="type">url</field>
+        <field name="url">https://example.invalid/demo-filing</field>
+        <field name="folder_id" ref="insilos_capital_markets_decision_governance.folder_evidence_filings"/>
+    </record>
+
+    <record id="demo_portfolio_vn_equity" model="capital.portfolio">
+        <field name="name">Vietnam Infrastructure &amp; Utilities — Synthetic</field>
+        <field name="broker_account_ref">DEMO-NON-LIVE</field>
+        <field name="freshness_hours">24</field>
+        <field name="currency_id" ref="base.VND"/>
+    </record>
+
+    <record id="demo_instrument_hbc" model="capital.instrument">
+        <field name="symbol">HBC</field>
+        <field name="exchange">HOSE</field>
+        <field name="currency_id" ref="base.VND"/>
+    </record>
+    <record id="demo_instrument_ree" model="capital.instrument">
+        <field name="symbol">REE</field>
+        <field name="exchange">HOSE</field>
+        <field name="currency_id" ref="base.VND"/>
+    </record>
+    <record id="demo_instrument_cii" model="capital.instrument">
+        <field name="symbol">CII</field>
+        <field name="exchange">HOSE</field>
+        <field name="currency_id" ref="base.VND"/>
+    </record>
+
+    <record id="demo_position_hbc" model="capital.position">
+        <field name="portfolio_id" ref="demo_portfolio_vn_equity"/>
+        <field name="instrument_id" ref="demo_instrument_hbc"/>
+        <field name="quantity">1000</field>
+        <field name="average_cost">15000</field>
+        <field name="last_price">12000</field>
+        <field name="price_as_of">2020-01-01 00:00:00</field>
+        <field name="price_refreshed_at">2020-01-01 00:00:00</field>
+        <field name="price_source">Synthetic fixture — non-live</field>
+    </record>
+    <record id="demo_position_ree" model="capital.position">
+        <field name="portfolio_id" ref="demo_portfolio_vn_equity"/>
+        <field name="instrument_id" ref="demo_instrument_ree"/>
+        <field name="quantity">500</field>
+        <field name="average_cost">65000</field>
+        <field name="last_price">72000</field>
+        <field name="price_as_of" eval="DateTime.now()"/>
+        <field name="price_refreshed_at" eval="DateTime.now()"/>
+        <field name="price_source">Synthetic fixture — non-live</field>
+    </record>
+    <record id="demo_position_cii" model="capital.position">
+        <field name="portfolio_id" ref="demo_portfolio_vn_equity"/>
+        <field name="instrument_id" ref="demo_instrument_cii"/>
+        <field name="quantity">2000</field>
+        <field name="average_cost">20000</field>
+        <field name="last_price">17500</field>
+        <field name="price_as_of" eval="DateTime.now()"/>
+        <field name="price_refreshed_at" eval="DateTime.now()"/>
+        <field name="price_source">Synthetic fixture — non-live</field>
+    </record>
+
+    <!-- One envelope per position, canonical-JSON encoded with the same 11 fields
+         the sidecar contract requires, so the demo exercises the real evidence
+         shape instead of a placeholder blob. -->
+    <record id="demo_synthetic_market_evidence" model="ir.attachment">
+        <field name="name">HBC-20260115T090000Z-synthetic.json</field>
+        <field name="datas">eyJhc09mIjoiMjAyNi0wMS0xNVQwOTowMDowMFoiLCJjYWNoZVN0YXR1cyI6Im1pc3MiLCJkYXRhIjp7ImN1cnJlbmN5IjoiVk5EIiwibm9uTGl2ZSI6dHJ1ZSwicHJpY2UiOjEyMDAwLjAsInN5bWJvbCI6IkhCQyJ9LCJlbmRwb2ludENsYXNzIjoicHVibGljLXJlYWQiLCJpbnN0cnVtZW50IjoiSEJDIiwibGljZW5zZUNsYXNzaWZpY2F0aW9uIjoicHVibGljLXNvdXJjZSIsInByb3ZpZGVyIjoic3ludGhldGljLWZpeHR1cmUiLCJyZXF1ZXN0RmluZ2VycHJpbnQiOiJkZW1vaGJjIiwicmV0cmlldmVkQXQiOiIyMDI2LTAxLTE1VDA5OjA1OjAwWiIsInNvdXJjZSI6InF1b3RlIiwid2FybmluZ3MiOlsiU3ludGhldGljIGRlbW8gZml4dHVyZTsgbm90IG1hcmtldCBkYXRhLiJdfQ==</field>
+        <field name="mimetype">application/json</field>
+        <field name="res_model">capital.position</field>
+        <field name="res_id" eval="ref('demo_position_hbc')"/>
+    </record>
+    <record id="demo_synthetic_market_evidence_ree" model="ir.attachment">
+        <field name="name">REE-20260115T090000Z-synthetic.json</field>
+        <field name="datas">eyJhc09mIjoiMjAyNi0wMS0xNVQwOTowMDowMFoiLCJjYWNoZVN0YXR1cyI6Im1pc3MiLCJkYXRhIjp7ImN1cnJlbmN5IjoiVk5EIiwibm9uTGl2ZSI6dHJ1ZSwicHJpY2UiOjcyMDAwLjAsInN5bWJvbCI6IlJFRSJ9LCJlbmRwb2ludENsYXNzIjoicHVibGljLXJlYWQiLCJpbnN0cnVtZW50IjoiUkVFIiwibGljZW5zZUNsYXNzaWZpY2F0aW9uIjoicHVibGljLXNvdXJjZSIsInByb3ZpZGVyIjoic3ludGhldGljLWZpeHR1cmUiLCJyZXF1ZXN0RmluZ2VycHJpbnQiOiJkZW1vcmVlIiwicmV0cmlldmVkQXQiOiIyMDI2LTAxLTE1VDA5OjA1OjAwWiIsInNvdXJjZSI6InF1b3RlIiwid2FybmluZ3MiOlsiU3ludGhldGljIGRlbW8gZml4dHVyZTsgbm90IG1hcmtldCBkYXRhLiJdfQ==</field>
+        <field name="mimetype">application/json</field>
+        <field name="res_model">capital.position</field>
+        <field name="res_id" eval="ref('demo_position_ree')"/>
+    </record>
+    <record id="demo_synthetic_market_evidence_cii" model="ir.attachment">
+        <field name="name">CII-20260115T090000Z-synthetic.json</field>
+        <field name="datas">eyJhc09mIjoiMjAyNi0wMS0xNVQwOTowMDowMFoiLCJjYWNoZVN0YXR1cyI6Im1pc3MiLCJkYXRhIjp7ImN1cnJlbmN5IjoiVk5EIiwibm9uTGl2ZSI6dHJ1ZSwicHJpY2UiOjE3NTAwLjAsInN5bWJvbCI6IkNJSSJ9LCJlbmRwb2ludENsYXNzIjoicHVibGljLXJlYWQiLCJpbnN0cnVtZW50IjoiQ0lJIiwibGljZW5zZUNsYXNzaWZpY2F0aW9uIjoicHVibGljLXNvdXJjZSIsInByb3ZpZGVyIjoic3ludGhldGljLWZpeHR1cmUiLCJyZXF1ZXN0RmluZ2VycHJpbnQiOiJkZW1vY2lpIiwicmV0cmlldmVkQXQiOiIyMDI2LTAxLTE1VDA5OjA1OjAwWiIsInNvdXJjZSI6InF1b3RlIiwid2FybmluZ3MiOlsiU3ludGhldGljIGRlbW8gZml4dHVyZTsgbm90IG1hcmtldCBkYXRhLiJdfQ==</field>
+        <field name="mimetype">application/json</field>
+        <field name="res_model">capital.position</field>
+        <field name="res_id" eval="ref('demo_position_cii')"/>
+    </record>
+    <record id="demo_synthetic_market_document" model="documents.document">
+        <field name="name">Synthetic market evidence — non-live</field>
+        <field name="attachment_id" ref="demo_synthetic_market_evidence"/>
+        <field name="folder_id" ref="insilos_capital_markets_decision_governance.folder_evidence_vendor"/>
+        <field name="access_internal">view</field>
+    </record>
+
+    <record id="demo_alert_hbc_stale" model="capital.alert.rule">
+        <field name="name">HBC below 13,000 — stale mark suppressed</field>
+        <field name="portfolio_id" ref="demo_portfolio_vn_equity"/>
+        <field name="symbol">HBC</field>
+        <field name="kind">price_below</field>
+        <field name="threshold">13000</field>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_alert_ree_above" model="capital.alert.rule">
+        <field name="name">REE above 70,000 — rearm scenario</field>
+        <field name="portfolio_id" ref="demo_portfolio_vn_equity"/>
+        <field name="symbol">REE</field>
+        <field name="kind">price_above</field>
+        <field name="threshold">70000</field>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_alert_cii_weight" model="capital.alert.rule">
+        <field name="name">CII weight above 40% — concentration</field>
+        <field name="portfolio_id" ref="demo_portfolio_vn_equity"/>
+        <field name="symbol">CII</field>
+        <field name="kind">position_weight_above</field>
+        <field name="threshold">40</field>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="demo_corporate_action_evidence" model="ir.attachment">
+        <field name="name">synthetic-ree-corporate-action.txt</field>
+        <field name="datas">U3ludGhldGljIGRlbW8gY29ycG9yYXRlIGFjdGlvbi4gTm90IGFuIG9mZmljaWFsIGZpbGluZy4=</field>
+        <field name="mimetype">text/plain</field>
+    </record>
+    <record id="demo_corporate_action_ree" model="capital.corporate.action">
+        <field name="name">Demo REE cash dividend — synthetic</field>
+        <field name="instrument_id" ref="demo_instrument_ree"/>
+        <field name="action_type">dividend</field>
+        <field name="effective_date">2026-01-15</field>
+        <field name="cash_amount">1000</field>
+        <field name="currency_id" ref="base.VND"/>
+        <field name="evidence_attachment_id" ref="demo_corporate_action_evidence"/>
+        <field name="state">approved</field>
+        <field name="reviewer_id" ref="base.user_admin"/>
+        <field name="approver_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="demo_reconciliation_csv" model="ir.attachment">
+        <field name="name">synthetic-broker-reconciliation.csv</field>
+        <field name="datas">c3ltYm9sLHF1YW50aXR5LGNvc3QKSEJDLDEwMDAsMTUwMDAwMDAKUkVFLDUwMCwzMjUwMDAwMApDSUksMTkwMCwzODAwMDAwMAo=</field>
+        <field name="mimetype">text/csv</field>
+    </record>
+    <record id="demo_reconciliation_vn_equity" model="capital.reconciliation.import">
+        <field name="portfolio_id" ref="demo_portfolio_vn_equity"/>
+        <field name="broker">Synthetic broker export — non-live</field>
+        <field name="as_of">2026-01-15 16:00:00</field>
+        <field name="currency_id" ref="base.VND"/>
+        <field name="csv_attachment_id" ref="demo_reconciliation_csv"/>
+        <field name="state">approved</field>
+        <field name="reviewer_id" ref="base.user_admin"/>
+        <field name="approver_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_reconciliation_line_hbc" model="capital.reconciliation.line">
+        <field name="import_id" ref="demo_reconciliation_vn_equity"/>
+        <field name="instrument_id" ref="demo_instrument_hbc"/>
+        <field name="broker_quantity">1000</field>
+        <field name="broker_cost">15000000</field>
+        <field name="note">Synthetic matched quantity; stale price remains intentionally suppressed.</field>
+    </record>
+    <record id="demo_reconciliation_line_ree" model="capital.reconciliation.line">
+        <field name="import_id" ref="demo_reconciliation_vn_equity"/>
+        <field name="instrument_id" ref="demo_instrument_ree"/>
+        <field name="broker_quantity">500</field>
+        <field name="broker_cost">32500000</field>
+    </record>
+    <record id="demo_reconciliation_line_cii" model="capital.reconciliation.line">
+        <field name="import_id" ref="demo_reconciliation_vn_equity"/>
+        <field name="instrument_id" ref="demo_instrument_cii"/>
+        <field name="broker_quantity">1900</field>
+        <field name="broker_cost">38000000</field>
+        <field name="note">Broker shows 1,900 against 2,000 internal; the import stays unapplied until the break is resolved.</field>
+    </record>
+
+    <!-- The break above is corrected by a new import rather than by editing the
+         approved one; the original points at its replacement. -->
+    <record id="demo_reconciliation_csv_correction" model="ir.attachment">
+        <field name="name">synthetic-broker-reconciliation-correction.csv</field>
+        <field name="datas">c3ltYm9sLHF1YW50aXR5LGNvc3QKSEJDLDEwMDAsMTUwMDAwMDAKUkVFLDUwMCwzMjUwMDAwMApDSUksMjAwMCw0MDAwMDAwMAo=</field>
+        <field name="mimetype">text/csv</field>
+    </record>
+    <record id="demo_reconciliation_correction" model="capital.reconciliation.import">
+        <field name="portfolio_id" ref="demo_portfolio_vn_equity"/>
+        <field name="broker">Synthetic broker export — corrected, non-live</field>
+        <field name="as_of">2026-01-16 16:00:00</field>
+        <field name="currency_id" ref="base.VND"/>
+        <field name="csv_attachment_id" ref="demo_reconciliation_csv_correction"/>
+    </record>
+    <record id="demo_reconciliation_vn_equity" model="capital.reconciliation.import">
+        <field name="superseded_by_id" ref="demo_reconciliation_correction"/>
+    </record>
+
+    <record id="demo_review_activity" model="mail.activity">
+        <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+        <field name="summary">Independent review: record counter-thesis and dissent</field>
+        <field name="res_model_id" ref="project.model_project_task"/>
+        <field name="res_id" ref="demo_case_new_position"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_deadline" eval="(DateTime.today() + relativedelta(days=3)).strftime('%Y-%m-%d')"/>
+    </record>
+
+</odoo>

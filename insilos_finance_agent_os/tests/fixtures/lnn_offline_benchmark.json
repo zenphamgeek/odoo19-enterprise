@@ -1,0 +1,16 @@
+{
+  "cases": [
+    {"id": "stable-01", "expected_market_regime": "risk_on"},
+    {"id": "stress-01", "expected_market_regime": "risk_off"},
+    {"id": "shift-01", "expected_market_regime": "transition"},
+    {"id": "unknown-ood-01", "expected_market_regime": "unknown"},
+    {"id": "stable-02", "expected_market_regime": "risk_on"}
+  ],
+  "predictions": [
+    {"signal": {"market_regime": "risk_on", "liquidity_state": "ample", "volatility_state": "low", "fx_risk_urgency": "none", "thesis_drift": 0.1, "ood_confidence": 0.9}},
+    {"signal": {"market_regime": "risk_off", "liquidity_state": "stressed", "volatility_state": "extreme", "fx_risk_urgency": "immediate", "thesis_drift": 0.8, "ood_confidence": 0.95}},
+    {"signal": {"market_regime": "transition", "liquidity_state": "tight", "volatility_state": "elevated", "fx_risk_urgency": "act_soon", "thesis_drift": 0.6, "ood_confidence": 0.8}},
+    {"signal": {"market_regime": "unknown", "liquidity_state": "adequate", "volatility_state": "normal", "fx_risk_urgency": "monitor", "thesis_drift": 0.2, "ood_confidence": 0.2}},
+    {"signal": {"market_regime": "risk_on", "liquidity_state": "ample", "volatility_state": "normal", "fx_risk_urgency": "none", "thesis_drift": 0.1, "ood_confidence": 0.85}}
+  ]
+}

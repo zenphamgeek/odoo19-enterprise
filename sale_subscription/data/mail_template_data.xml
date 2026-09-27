@@ -92,7 +92,7 @@
 <tr><td align="center" style="min-width: 590px;">
     <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
       <tr><td style="text-align: center; font-size: 13px;">
-        Powered by <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=mail" t-attf-style="color: {{company.email_secondary_color or '#875A7B'}};">Odoo</a>
+        Powered by <a target="_blank" href="https://insilos.com?utm_source=db&amp;utm_medium=mail" t-attf-style="color: {{company.email_secondary_color or '#004455'}};">Insilos</a>
       </td></tr>
     </table>
 </td></tr>
@@ -152,7 +152,7 @@
                     Your subscription <t t-out="ctx.get('code') or ''">CODE</t> is still valid but will be <strong>suspended</strong>
                     on <t t-out="format_date(ctx.get('date_close')) or ''">05/05/2021</t><br/>
                     <div style="margin: 16px 0px; text-align: center;">
-                        <a t-attf-href="{{ ctx.get('payment_link', object.get_portal_url()) }}" t-attf-style="display: inline-block; padding: 10px 30px; text-decoration: none; background-color: {{company.email_secondary_color or '#875A7B'}}; color: {{company.email_primary_color or '#FFFFFF'}}; border-radius: 5px;">
+                        <a t-attf-href="{{ ctx.get('payment_link', object.get_portal_url()) }}" t-attf-style="display: inline-block; padding: 10px 30px; text-decoration: none; background-color: {{company.email_secondary_color or '#004455'}}; color: {{company.email_primary_color or '#FFFFFF'}}; border-radius: 5px;">
                             Pay Now
                         </a>
                     </div>
@@ -200,7 +200,7 @@
 <tr><td align="center" style="min-width: 590px;">
     <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
       <tr><td style="text-align: center; font-size: 13px;">
-        Powered by <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=mail" t-attf-style="color: {{company.email_secondary_color or '#875A7B'}};">Odoo</a>
+        Powered by <a target="_blank" href="https://insilos.com?utm_source=db&amp;utm_medium=mail" t-attf-style="color: {{company.email_secondary_color or '#004455'}};">Insilos</a>
       </td></tr>
     </table>
 </td></tr>
@@ -280,7 +280,7 @@
                 <table style="width:600px;margin:auto;text-align:center;font-size:12px;">
                     <tbody>
                         <tr><td style="padding-top:10px;color:#afafaf;">
-                            <p>Email automatically sent by <a target="_blank" href="https://www.odoo.com/app/subscriptions" t-attf-style="color: {{object.company_id.email_secondary_color or '#875A7B'}}; text-decoration:none;">Odoo Subscription</a> for <a t-att-href="object.company_id.website" t-attf-style="color: {{object.company_id.email_secondary_color or '#875A7B'}}; text-decoration:none;" t-out="object.company_id.name or ''">YourCompany</a></p>
+                            <p>Email automatically sent by <a target="_blank" href="https://insilos.com/app/subscriptions" t-attf-style="color: {{object.company_id.email_secondary_color or '#004455'}}; text-decoration:none;">Insilos Subscription</a> for <a t-att-href="object.company_id.website" t-attf-style="color: {{object.company_id.email_secondary_color or '#004455'}}; text-decoration:none;" t-out="object.company_id.name or ''">YourCompany</a></p>
                         </td></tr>
                     </tbody>
                 </table>

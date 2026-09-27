@@ -3,10 +3,10 @@
 {
     'name': 'Point of Sale Mobile',
     'category': 'Hidden',
-    'summary': 'Odoo Mobile Point of Sale module',
+    'summary': 'Insilos Mobile Point of Sale module',
     'version': '1.0',
     'description': """
-This module provides the point of sale function of the Odoo Mobile App.
+This module provides the point of sale function of the Insilos Mobile App.
         """,
     'depends': [
         'pos_enterprise',

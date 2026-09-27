@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         OUTBOUND EVENT — LIST VIEW
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="view_pubsub_outbound_event_list" model="ir.ui.view">
+        <field name="name">is.pubsub.outbound.event.list</field>
+        <field name="model">is.pubsub.outbound.event</field>
+        <field name="arch" type="xml">
+            <list string="Outbound Deliveries" decoration-success="state == 'sent'" decoration-danger="state == 'dead'" decoration-warning="state == 'retrying'" decoration-muted="state == 'pending'">
+                <field name="create_date" string="Queued At"/>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="event_type"/>
+                <field name="source_model"/>
+                <field name="source_res_id"/>
+                <field name="destination"/>
+                <field name="correlation_id" optional="show"/>
+                <field name="trace_id" optional="hide"/>
+                <field name="http_status"/>
+                <field name="retry_count" string="Attempts"/>
+                <field name="next_retry_at" optional="show"/>
+                <field name="error_class" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'sent'" decoration-danger="state == 'dead'" decoration-warning="state == 'retrying'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         OUTBOUND EVENT — FORM VIEW
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="view_pubsub_outbound_event_kanban" model="ir.ui.view">
+        <field name="name">is.pubsub.outbound.event.kanban</field>
+        <field name="model">is.pubsub.outbound.event</field>
+        <field name="arch" type="xml">
+            <kanban><field name="state"/><templates><t t-name="card"><field name="name"/><field name="event_type"/><field name="state" widget="badge"/></t></templates></kanban>
+        </field>
+    </record>
+
+    <record id="view_pubsub_outbound_event_form" model="ir.ui.view">
+        <field name="name">is.pubsub.outbound.event.form</field>
+        <field name="model">is.pubsub.outbound.event</field>
+        <field name="arch" type="xml">
+            <form string="Outbound Event Details">
+                <header>
+                    <button name="action_publish" type="object" string="Publish Now" class="btn-primary" groups="insilos_pubsub_bridge.group_pubsub_manager" invisible="state not in ('pending', 'retrying')"/>
+                    <button name="action_retry" type="object" string="Requeue Delivery" class="btn-warning" groups="insilos_pubsub_bridge.group_pubsub_manager" invisible="state not in ('retrying', 'dead')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="pending,processing,retrying,sent,dead"/>
+                </header>
+                <sheet>
+                    <div class="w_title">
+                        <label for="name" string="Event Reference"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Event Origin">
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="event_type"/>
+                            <field name="source_model"/>
+                            <field name="source_res_id"/>
+                            <field name="source_record_ref"/>
+                        </group>
+                        <group string="Delivery Target">
+                            <field name="target_url" widget="url"/>
+                            <field name="http_method"/>
+                            <field name="auth_header" password="True"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Delivery Status">
+                            <field name="http_status"/>
+                            <field name="latency_ms"/>
+                            <field name="retry_count"/>
+                            <field name="max_retries"/>
+                            <field name="next_retry_at"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Payload (JSON)" name="payload">
+                            <field name="payload" widget="ace" options="{'mode': 'json'}"/>
+                        </page>
+                        <page string="Response" name="response">
+                            <field name="response_body" readonly="1"/>
+                        </page>
+                        <page string="Error Diagnostics" name="errors" invisible="not error_message">
+                            <field name="error_message" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         OUTBOUND EVENT — SEARCH VIEW
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="view_pubsub_outbound_event_search" model="ir.ui.view">
+        <field name="name">is.pubsub.outbound.event.search</field>
+        <field name="model">is.pubsub.outbound.event</field>
+        <field name="arch" type="xml">
+            <search string="Search Outbound Events">
+                <field name="name"/>
+                <field name="source_model"/>
+                <field name="target_url"/>
+                <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                <filter string="Sent" name="sent" domain="[('state', '=', 'sent')]"/>
+                <filter string="Failed" name="failed" domain="[('state', '=', 'failed')]"/>
+                <separator/>
+                <group name="group_by">
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Event Type" name="group_event_type" context="{'group_by': 'event_type'}"/>
+                    <filter string="Source Model" name="group_source_model" context="{'group_by': 'source_model'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pubsub_outbound_event" model="ir.actions.act_window">
+        <field name="name">Outbound Events</field>
+        <field name="res_model">is.pubsub.outbound.event</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No outbound events published yet.
+            </p>
+            <p>
+                Outbound events are created when ERP record changes trigger configured outbound rules, pushing data to external partner systems.
+            </p>
+        </field>
+    </record>
+
+</odoo>

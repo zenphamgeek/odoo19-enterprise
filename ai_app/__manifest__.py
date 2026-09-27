@@ -5,7 +5,7 @@
     'category': 'Hidden',
     'summary': """
         A powerful suite of AI tools and agents
-        integrated directly into your Odoo environment.""",
+        integrated directly into your Insilos environment.""",
     'description': """
         * Create and manage AI agents for various business tasks
         * Integrate with popular AI models and services

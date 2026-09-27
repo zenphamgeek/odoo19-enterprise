@@ -44,7 +44,7 @@
                         For the time being, you <t t-if="timesheet_hours != 0">only</t> logged <t t-out="'%d' %int(timesheet_hours)">2</t><t t-if="timesheet_hours % 1 != 0" t-out="':%02d' % (round(timesheet_hours % 1 * 60))">:30</t> hours on the <t t-out="'%d' %int(working_hours)">8</t><t t-if="working_hours % 1 != 0" t-out="':%02d' % (round(working_hours % 1 * 60))">:30</t> requested.<br/>
                         <div t-if="ctx.get('action_url')" style="margin: 16px 0px 16px 0px;">
                             <a t-att-href="ctx.get('action_url')"
-                                t-attf-style="background-color: {{object.company_id.email_secondary_color or '#875A7B'}};; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size: 13px;">Fill in your timesheet</a>
+                                t-attf-style="background-color: {{object.company_id.email_secondary_color or '#004455'}};; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size: 13px;">Fill in your timesheet</a>
                         </div>
                         <br/>Thank you,<br/>
                         <t t-if="user.signature">
@@ -84,7 +84,7 @@
 <tr><td align="center" style="min-width: 590px;">
     <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
       <tr><td style="text-align: center; font-size: 13px;">
-        Powered by <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=mail" t-attf-style="color: {{object.company_id.email_secondary_color or '#875A7B'}};">Odoo</a>
+        Powered by <a target="_blank" href="https://insilos.com?utm_source=db&amp;utm_medium=mail" t-attf-style="color: {{object.company_id.email_secondary_color or '#004455'}};">Insilos</a>
       </td></tr>
     </table>
 </td></tr>
@@ -133,7 +133,7 @@
                         This is a friendly reminder to approve your team's timesheets for the following period: <t t-out="ctx.get('date_start') or ''">05/05/2021</t> - <t t-out="ctx.get('date_stop') or ''">06/05/2021</t>.<br/>
                         <div t-if="ctx.get('action_url')" style="margin: 16px 0px 16px 0px;">
                             <a t-att-href="ctx.get('action_url')"
-                                t-attf-style="background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size: 13px;">Validate the Timesheets</a>
+                                t-attf-style="background-color: {{object.company_id.email_secondary_color or '#004455'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size: 13px;">Validate the Timesheets</a>
                         </div>
                         <br />Thank you,<br/>
                         <t t-if="user.signature">
@@ -173,7 +173,7 @@
 <tr><td align="center" style="min-width: 590px;">
     <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
       <tr><td style="text-align: center; font-size: 13px;">
-        Powered by <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=mail" t-attf-style="color: {{object.company_id.email_secondary_color or '#875A7B'}};">Odoo</a>
+        Powered by <a target="_blank" href="https://insilos.com?utm_source=db&amp;utm_medium=mail" t-attf-style="color: {{object.company_id.email_secondary_color or '#004455'}};">Insilos</a>
       </td></tr>
     </table>
 </td></tr>

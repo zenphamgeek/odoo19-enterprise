@@ -4,13 +4,13 @@
         <xpath expr="//Layout" position="attributes">
             <attribute name="className">'o_documents_content'</attribute>
         </xpath>
-        <xpath expr="//t[@t-set-slot='control-panel-create-button']" position="inside">
+        <xpath expr="//t[@t-set-slot='control-panel-buttons' or @t-set-slot='control-panel-create-button']" position="inside">
             <t t-call="documents.DocumentsViews.ControlPanel"/>
         </xpath>
-        <xpath expr="//Layout/t[@t-component='props.Renderer']" position="attributes">
+        <xpath expr="//Layout/t[@t-component='this.props.Renderer' or @t-component='props.Renderer']" position="attributes">
             <attribute name="previewStore">documentStates.previewStore</attribute>
         </xpath>
-        <xpath expr="//div[@t-if='hasSelectedRecords']" position="attributes">
+        <xpath expr="//div[@t-if='this.hasSelectedRecords' or @t-if='hasSelectedRecords']" position="attributes">
             <attribute name="t-if">hasSelectedRecords and !rightPanelState.previewedDocument</attribute>
         </xpath>
         <xpath expr="//ActionMenus" position="attributes">

@@ -1280,6 +1280,7 @@ class StudioApprovalRequest(models.Model):
                                         required=True, index=True, inverse="_inverse_mail_activity_id")
     rule_id = fields.Many2one('studio.approval.rule', string='Approval Rule', ondelete='cascade',
                               required=True, index=True)
+    model = fields.Char(string='Model Name', related="rule_id.model_name", store=True)
     res_id = fields.Many2oneReference(string='Record ID', model_field='model', required=True)
 
     def _inverse_mail_activity_id(self):

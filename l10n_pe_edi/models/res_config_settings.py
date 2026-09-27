@@ -12,7 +12,7 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.l10n_pe_edi_provider",
         help="""
         Selector for the service we are going to use to report the invoices:\n
-        - IAP: This is an odoo service that will send the unsigned documents to a PSE and process their response.\n
+        - IAP: This is an insilos service that will send the unsigned documents to a PSE and process their response.\n
         - Estela (formerly DIGIFLOW): With the certified that digiflow provide you, user and password you will report the invoices to them.\n
         - SUNAT: You will report the invoices directly to them using your own certified, user and password.\n
         """)

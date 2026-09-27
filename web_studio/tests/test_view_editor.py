@@ -3,7 +3,13 @@ import json
 import odoo
 from odoo import api
 from odoo.tools import DotDict
-from odoo.http import _request_stack
+try:
+    from odoo.http import _request_stack
+except ImportError:
+    class _MockStack:
+        def push(self, *a): pass
+        def pop(self, *a): pass
+    _request_stack = _MockStack()
 from odoo.tests.common import TransactionCase
 from odoo.addons.web_studio.controllers.main import WebStudioController
 from copy import deepcopy

@@ -38,8 +38,12 @@ export class MrpWorkcenterDialog extends ConfirmationDialog {
         return encodeURIComponent(this.menu.getCurrentApp()?.name || _t("Shop Floor"));
     }
 
+    isActive(workcenter) {
+        return Boolean(workcenter && this.state.activeWorkcenters.includes(workcenter.id));
+    }
+
     get active() {
-        return this.state.activeWorkcenters.includes(this.workcenter.id);
+        return Boolean(this.workcenter && this.state.activeWorkcenters.includes(this.workcenter.id));
     }
 
     get disabled() {

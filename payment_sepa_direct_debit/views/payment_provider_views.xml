@@ -12,9 +12,6 @@
                     name="invisible" separator=" or " add="custom_mode == 'sepa_direct_debit'"
                 />
             </field>
-            <group name="payment_followup" position="attributes">
-                <attribute name="invisible">code == 'custom' and custom_mode != 'sepa_direct_debit'</attribute>
-            </group>
         </field>
     </record>
 
@@ -24,7 +21,7 @@
         <field name="inherit_id" ref="account_payment.payment_provider_form"/>
         <field name="arch" type="xml">
             <field name="journal_id" position="attributes">
-                <attribute name="required">state != 'disabled' and (code not in ['none', 'custom'] or custom_mode == 'sepa_direct_debit')</attribute>
+                <attribute name="required">code not in ['none', 'custom'] or custom_mode == 'sepa_direct_debit'</attribute>
             </field>
         </field>
     </record>

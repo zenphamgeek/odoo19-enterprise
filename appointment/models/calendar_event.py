@@ -362,7 +362,7 @@ class CalendarEvent(models.Model):
     def _search_resource_ids(self, operator, value):
         return [('appointment_resource_ids', operator, value)]
 
-    def _read_group_groupby(self, alias, groupby_spec, query):
+    def _read_group_groupby(self, table, groupby_spec: str):
         """ Simulate group_by on resource_ids by using appointment_resource_ids.
             appointment_resource_ids is only used to store the data through the appointment_booking_line
             table. All computation on the resources and the capacity reserved is done with capacity_reserved.
@@ -371,8 +371,8 @@ class CalendarEvent(models.Model):
             with the field capacity_reserved required leading to ValidationError.
         """
         if groupby_spec == 'resource_ids':
-            return super()._read_group_groupby(alias, 'appointment_resource_ids', query)
-        return super()._read_group_groupby(alias, groupby_spec, query)
+            return super()._read_group_groupby(table, 'appointment_resource_ids')
+        return super()._read_group_groupby(table, groupby_spec)
 
     def _read_group_appointment_resource_ids(self, resources, domain):
         if not self.env.context.get('appointment_booking_gantt_show_all_resources'):

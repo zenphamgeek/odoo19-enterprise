@@ -22,7 +22,7 @@
     <record id="view_project_kanban_inherit_industry_fsm_report" model="ir.ui.view">
         <field name="name">project.project.kanban.inherit.industry.fsm.report</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="inherit_id" ref="project.view_project_card"/>
         <field name="arch" type="xml">
             <xpath expr="//span[@name='partner_name']" position="before">
                 <span t-if="record.worksheet_template_id.value" class="text-muted text-truncate" invisible="not context.get('fsm_mode', False)">

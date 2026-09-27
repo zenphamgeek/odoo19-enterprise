@@ -2,7 +2,7 @@
 {
     'name': "Grid View",
 
-    'summary': "Basic 2D Grid view for odoo",
+    'summary': "Basic 2D Grid view for Insilos",
     'category': 'Hidden',
     'version': '0.1',
     'depends': ['web'],
@@ -17,6 +17,7 @@
             'web_grid/static/src/**/*.dark.scss',
         ],
         'web.assets_unit_tests': [
+            'web_grid/static/src/**/*.scss',
             'web_grid/static/tests/**/*.test.js',
             'web_grid/static/tests/grid_mock_server.js',
         ],

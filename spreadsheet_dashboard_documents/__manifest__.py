@@ -18,11 +18,7 @@
     "license": "OEEL-1",
     "assets": {
         "spreadsheet.o_spreadsheet": [
-            (
-                "after",
-                "spreadsheet/static/src/o_spreadsheet/o_spreadsheet.js",
-                "spreadsheet_dashboard_documents/static/src/bundle/**/*.js",
-            ),
+            "spreadsheet_dashboard_documents/static/src/bundle/**/*.js",
         ],
         'web.assets_backend': [
             'spreadsheet_dashboard_documents/static/src/assets/**/*.js',

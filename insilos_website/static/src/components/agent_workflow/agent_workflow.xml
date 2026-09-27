@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="insilos_website.AgentWorkflow">
+        <div class="ins-agent">
+            <div class="ins-agent__head">
+                <div>
+                    <span class="ins-live-dot"></span>
+                    <small>AGENT WORKFLOW · LIVE SIMULATION</small>
+                </div>
+                <button type="button" class="ins-agent__play" t-on-click="togglePlayback"
+                        t-att-aria-label="state.playing ? 'Tạm dừng mô phỏng' : 'Tiếp tục mô phỏng'">
+                    <t t-if="state.playing">Ⅱ</t>
+                    <t t-else="">▶</t>
+                </button>
+            </div>
+
+            <div class="ins-agent__steps" role="tablist" aria-label="Các bước của AI agent">
+                <t t-foreach="steps" t-as="step" t-key="step.name">
+                    <button type="button"
+                            role="tab"
+                            t-att-class="'ins-agent__step ' + (state.active === step_index ? 'is-active' : '')"
+                            t-att-aria-selected="state.active === step_index ? 'true' : 'false'"
+                            t-on-click="() => this.selectStep(step_index)">
+                        <span t-esc="step_index + 1"/>
+                        <small t-esc="step.name"/>
+                    </button>
+                </t>
+            </div>
+
+            <div class="ins-agent__body">
+                <div class="ins-agent__copy">
+                    <div class="ins-agent__eyebrow" t-esc="activeStep.eyebrow"/>
+                    <h3 t-esc="activeStep.title"/>
+                    <p t-esc="activeStep.text"/>
+                </div>
+                <div class="ins-agent__terminal">
+                    <div class="ins-agent__terminal-top"><i></i><i></i><i></i><span>insilos-agent.log</span></div>
+                    <div class="ins-agent__terminal-line"><span>08:42:11</span><b t-esc="activeStep.event"/></div>
+                    <div class="ins-agent__terminal-line is-muted"><span>08:42:12</span><b>Trace and evidence recorded</b></div>
+                    <div class="ins-agent__progress"><span t-att-style="'width:' + ((state.active + 1) / steps.length * 100) + '%'"/></div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

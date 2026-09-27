@@ -27,7 +27,7 @@ export class Footer extends Component {
     get footers() {
         Heading.resetIndex();
         const headings = [
-            new Heading(_t("Powered by Odoo")),
+            new Heading(_t("Powered by Insilos")),
             new Heading(this.order.name),
             new Heading(formatDateTime(this.order.date_order)),
         ];

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_hse_compliance" model="ir.ui.view">
+            <field name="name">rs.config.settings.view.form.inherit.hse.compliance</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <block name="integration" position="inside">
+                    <setting id="hse_knowledge_endpoint_setting" string="HSE Knowledge Engine API" help="Deterministic HSE Knowledge Service endpoint for legal, QCVN and chemical data queries">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="hse_knowledge_endpoint" string="API Base URL:" class="col-lg-3 w_light_label"/>
+                                <field name="hse_knowledge_endpoint" placeholder="https://hse.insilos.com"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="hse_api_key" string="API Token:" class="col-lg-3 w_light_label"/>
+                                <field name="hse_api_key" password="True" placeholder="Enter API key..."/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting id="hse_webhook_secret_setting" string="HSE Webhook Security" help="Shared secret key to verify HMAC-SHA256 signatures on /webhooks/hse-events">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="hse_webhook_secret" string="Webhook Secret:" class="col-lg-3 w_light_label"/>
+                                <field name="hse_webhook_secret" password="True" placeholder="sec_hse_2026"/>
+                            </div>
+                            <div class="text-muted mt8">
+                                Inbound Webhook URL: <code>/webhooks/hse-events</code>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </field>
+        </record>
+
+        <record id="action_hse_compliance_config_settings" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="path">hse-settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+            <field name="context">{'module': 'insilos_hse_compliance'}</field>
+        </record>
+    </data>
+</odoo>

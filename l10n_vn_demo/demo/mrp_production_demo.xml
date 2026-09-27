@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================================ -->
+        <!-- LỆNH SẢN XUẤT CÔNG NGHIỆP TRỰC TIẾP (MANUFACTURING ORDERS)    -->
+        <!-- ============================================================ -->
+
+        <!-- Lệnh 1: Sản xuất Xe kéo hàng điện nhà xưởng V-LIFT 2500E (2 chiếc) -->
+        <record id="mrp_production_vn_1" model="mrp.production">
+            <field name="product_id" ref="product_vn_1"/>
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="product_qty">2.0</field>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="date_start" eval="datetime.now().strftime('%Y-%m-%d 08:00:00')"/>
+        </record>
+
+        <!-- Lệnh 2: Sản xuất Sơ mi rơ moóc container 40ft VT-SEMITRAIL 40 (1 chiếc) -->
+        <record id="mrp_production_vn_2" model="mrp.production">
+            <field name="product_id" ref="product_vn_2"/>
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="product_qty">1.0</field>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="date_start" eval="(datetime.now() + relativedelta(days=1)).strftime('%Y-%m-%d 08:00:00')"/>
+        </record>
+
+        <!-- Lệnh 3: Sản xuất Bán thành phẩm Khung gầm Chassis V-LIFT Frame (4 cụm) -->
+        <record id="mrp_production_vn_3" model="mrp.production">
+            <field name="product_id" ref="product_vn_4"/>
+            <field name="bom_id" ref="mrp_bom_chassis"/>
+            <field name="product_qty">4.0</field>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="date_start" eval="(datetime.now() - relativedelta(days=1)).strftime('%Y-%m-%d 08:00:00')"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- XÁC NHẬN, ĐIỀU ĐỘ GANTT & PHÂN BỔ NGUYÊN VẬT LIỆU            -->
+        <!-- ============================================================ -->
+
+        <!-- Xác nhận Lệnh sản xuất (Tạo Stock Moves & Work Orders) -->
+        <function model="mrp.production" name="action_confirm">
+            <value eval="[
+                ref('mrp_production_vn_1'),
+                ref('mrp_production_vn_2'),
+                ref('mrp_production_vn_3'),
+            ]"/>
+        </function>
+
+        <!-- Kiểm tra và Giữ chỗ Vật tư Tồn kho (Check Availability) -->
+        <function model="mrp.production" name="action_assign">
+            <value eval="[
+                ref('mrp_production_vn_1'),
+                ref('mrp_production_vn_2'),
+                ref('mrp_production_vn_3'),
+            ]"/>
+        </function>
+
+        <!-- Lập kế hoạch Điều độ trên Gantt Chart & Work Centers -->
+        <function model="mrp.production" name="button_plan">
+            <value eval="[
+                ref('mrp_production_vn_1'),
+                ref('mrp_production_vn_2'),
+                ref('mrp_production_vn_3'),
+            ]"/>
+        </function>
+
+        <!-- Khởi động công đoạn đang thực thi trực tiếp trên Màn hình Shop Floor / Tablet -->
+        <!-- Lệnh 1: Bắt đầu lắp ráp cơ điện tại Xưởng Lắp ráp -->
+        <function model="mrp.workorder" name="button_start">
+            <value model="mrp.workorder" eval="obj().env['mrp.workorder'].search([
+                ('production_id', '=', obj().env.ref('l10n_vn_demo.mrp_production_vn_1').id),
+                ('state', '=', 'ready'),
+            ], limit=1).ids"/>
+        </function>
+
+        <!-- Lệnh 3: Bắt đầu công đoạn cắt Laser CNC tại Xưởng Cắt Fiber Laser -->
+        <function model="mrp.workorder" name="button_start">
+            <value model="mrp.workorder" eval="obj().env['mrp.workorder'].search([
+                ('production_id', '=', obj().env.ref('l10n_vn_demo.mrp_production_vn_3').id),
+                ('state', '=', 'ready'),
+            ], limit=1).ids"/>
+        </function>
+
+    </data>
+</odoo>

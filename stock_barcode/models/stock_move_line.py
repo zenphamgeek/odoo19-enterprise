@@ -24,6 +24,7 @@ class StockMoveLine(models.Model):
     electronic_product_code = fields.Char(compute='_compute_electronic_product_code')
     packaging_uom_id = fields.Many2one('uom.uom', related='move_id.packaging_uom_id', string='Packaging Unit of Measure')
     packaging_uom_qty = fields.Float(related='move_id.packaging_uom_qty', string='Packaging Quantity')
+    product_uom_id = fields.Many2one(related='uom_id', readonly=True)
     outermost_result_package_id = fields.Many2one('stock.package', compute="_compute_outermost_result_package_id", inverse="_inverse_outermost_result_package_id")
 
     @api.depends('result_package_id')

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+
+    <!-- Catalog record owned by this module. The finance category belongs to
+         industry_templates; we reference it, never rewrite it, so uninstalling
+         this module leaves that module's data untouched. -->
+    <record id="industry_capital_markets_decision_governance"
+            model="insilos.industry.template">
+        <field name="name">Capital Markets Decision Governance</field>
+        <!-- Set explicitly. The auto-slug would be the whole name, and the
+             tenant this template serves runs on capital.insilos.com. -->
+        <field name="slug">capital</field>
+        <field name="description">Investment decision governance: intake, evidence, independent review and approval with a source-grounded AI research agent</field>
+        <field name="icon">ph-duotone ph-scales</field>
+        <field name="category_id" ref="industry_templates.industry_cat_finance"/>
+        <field name="sequence">35</field>
+        <field name="synonyms">capital markets,investment committee,decision governance,ic memo,securities,portfolio</field>
+        <field name="module_names">project,documents,knowledge,ai,insilos_capital_markets_decision_governance</field>
+        <field name="intro_text">Auditable Investment Decision Governance</field>
+    </record>
+
+</odoo>

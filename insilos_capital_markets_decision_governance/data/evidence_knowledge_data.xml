@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+
+    <!-- Evidence lives in Documents folders, one level under a module-owned root
+         so uninstall removes our folders without touching the tenant's own. -->
+    <record id="folder_evidence_root" model="documents.document">
+        <field name="name">Decision Evidence</field>
+        <field name="type">folder</field>
+        <field name="access_internal">edit</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="folder_evidence_filings" model="documents.document">
+        <field name="name">Official Filings</field>
+        <field name="type">folder</field>
+        <field name="access_internal">edit</field>
+        <field name="folder_id" ref="folder_evidence_root"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="folder_evidence_vendor" model="documents.document">
+        <field name="name">Licensed Vendor Data</field>
+        <field name="type">folder</field>
+        <field name="access_internal">edit</field>
+        <field name="folder_id" ref="folder_evidence_root"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="folder_evidence_memos" model="documents.document">
+        <field name="name">IC Memos</field>
+        <field name="type">folder</field>
+        <field name="access_internal">edit</field>
+        <field name="folder_id" ref="folder_evidence_root"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Runbook. Article, not a hardcoded prompt, so governance can amend the
+         policy without a module upgrade. -->
+    <record id="article_governance_runbook" model="knowledge.article">
+        <field name="name">Capital Markets Decision Governance — Runbook</field>
+        <field name="icon">⚖️</field>
+        <!-- Knowledge requires a writer somewhere on the tree. Internal users
+             get write on the runbook root because governance amends policy
+             here; the alternative is a member list this module cannot know. -->
+        <field name="internal_permission">write</field>
+        <field name="article_member_ids" eval="[(0, 0, {'partner_id': ref('base.partner_admin'), 'permission': 'write'})]"/>
+        <field name="is_article_visible_by_everyone" eval="True"/>
+        <field name="body" type="html">
+            <div>
+                <h1>Decision Governance Runbook</h1>
+
+                <h2>Separation of duties</h2>
+                <p>Requester, reviewer and approver are three people. A requester
+                cannot approve their own case. If only two people are available,
+                the case waits; it does not get a shortcut.</p>
+
+                <h2>Evidence classification</h2>
+                <ul>
+                    <li><b>Fact</b> — has a source. State the source and its as-of date.
+                    Without a source it is not a fact, it is Unverified.</li>
+                    <li><b>Calculation</b> — state the formula, the inputs and the input
+                    versions. A number without its inputs cannot be re-derived.</li>
+                    <li><b>Inference</b> — state the reasoning and its limits.</li>
+                    <li><b>Recommendation</b> — state what would change your mind.</li>
+                </ul>
+
+                <h2>Source tiers</h2>
+                <p>Official filing beats licensed vendor beats public commentary.
+                Tag the case with the <i>weakest</i> tier it relies on, not the
+                strongest. A case relying on an unverified source does not enter
+                Approval.</p>
+
+                <h2>Conflicting sources</h2>
+                <p>When two sources disagree, record both. Do not silently pick one.
+                The disagreement is itself evidence about confidence.</p>
+
+                <h2>Use of the AI research agent</h2>
+                <p>The agent drafts, summarises, finds gaps and argues the other
+                side. It does not approve, does not move stages and does not
+                replace a reviewer. Every claim it produces carries a source or is
+                marked Unverified. An agent draft is an input to review, never the
+                review itself.</p>
+
+                <h2>Market data</h2>
+                <p>Market data reaches a case as attached evidence with its own
+                as-of and retrieval timestamps. Data pulled at an unknown time is
+                not evidence. Public sources may inform a case but do not on their
+                own support a controlled decision when policy requires licensed
+                data.</p>
+
+                <h2>Audit trail</h2>
+                <p>Challenge, dissent, disposition and rationale go in the case
+                chatter. A decision whose reasoning lives in a private channel
+                cannot be audited and is treated as undocumented.</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="article_ic_memo_outline" model="knowledge.article">
+        <field name="name">IC Memo — Outline</field>
+        <field name="icon">📝</field>
+        <field name="parent_id" ref="article_governance_runbook"/>
+        <field name="body" type="html">
+            <div>
+                <h1>IC Memo Outline</h1>
+                <ol>
+                    <li><b>Decision requested</b> — the specific action and size.</li>
+                    <li><b>Thesis</b> — why, in one paragraph.</li>
+                    <li><b>Evidence</b> — each item with source, as-of date and tier.</li>
+                    <li><b>Calculations</b> — formula, inputs, input versions.</li>
+                    <li><b>Counter-thesis</b> — the strongest case against.</li>
+                    <li><b>Key risks and limits</b> — including position and mandate limits.</li>
+                    <li><b>What would change our mind</b> — explicit falsifiers.</li>
+                    <li><b>Missing information</b> — gaps, and whether they block.</li>
+                    <li><b>Recommendation and disposition</b>.</li>
+                </ol>
+                <p>Sections 5, 7 and 8 are not optional. A memo without a
+                counter-thesis or without stated gaps is incomplete regardless of
+                its length.</p>
+            </div>
+        </field>
+    </record>
+
+</odoo>

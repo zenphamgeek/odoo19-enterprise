@@ -10,7 +10,7 @@
                 <field name="push_reminder_posts" invisible="1" />
                 <button name="action_edit_reminder" string="Edit Push Reminder" type="object" groups="social.group_social_manager" invisible="not push_reminder_posts" />
             </xpath>
-            <xpath expr="//field[@name='active']" position="after">
+            <xpath expr="//field[@name='wishlisted_by_default']" position="after">
                 <field name="firebase_enable_push_notifications" invisible="1" />
                 <label for="push_reminder" string="Push Reminder" invisible="not firebase_enable_push_notifications" />
                 <div class="o_row" invisible="not firebase_enable_push_notifications">

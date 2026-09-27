@@ -1,13 +1,12 @@
 import { describe, expect, test } from "@odoo/hoot";
 import { click } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
-import { mountWithCleanup, defineModels } from "@web/../tests/web_test_helpers";
-import { mailModels } from "@mail/../tests/mail_test_helpers";
+import { mountWithCleanup } from "@web/../tests/web_test_helpers";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 
 import { BankRecButton } from "@account_accountant/components/bank_reconciliation/button/button";
 
-// Due to dependency with mail module, we have to define their models for our tests.
-defineModels(mailModels);
+defineMailModels();
 
 describe.current.tags("desktop");
 

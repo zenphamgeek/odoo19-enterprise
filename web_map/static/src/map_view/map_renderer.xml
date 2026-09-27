@@ -2,13 +2,13 @@
 <templates id="template" xml:space="preserve">
 
     <t t-name="web_map.MapRenderer">
-        <t t-if="env.isSmall">
+        <t t-if="isSmall">
             <div class="row g-0 o-sm-pin-list-container" t-att-class="{ 'h-100': expendedPinList }">
                 <t t-call="{{ subTemplates.PinListContainer }}"/>
             </div>
         </t>
         <div class="o-map-renderer row g-0" t-att-class="{ 'd-none': expendedPinList }">
-            <t t-if="!env.isSmall">
+            <t t-if="!isSmall">
                 <t t-call="{{ subTemplates.PinListContainer }}"/>
             </t>
             <div class="h-100 col col-md-10">
@@ -36,7 +36,7 @@
 
         <div class="alert alert-info alert-dismissible col col-md-10 px-5 mb-0 text-center position-absolute o-map-renderer--alert" role="status">
             To get routing on your map, you first need to set up your MapBox token. It's free.
-            <a href="/odoo/action-base_setup.action_general_configuration" class="ml8">
+            <a href="/insilos/action-base_setup.action_general_configuration" class="ml8">
                 <i class="oi oi-arrow-right"/>
                 Set up token
             </a>
@@ -54,39 +54,33 @@
                         t-on-click="togglePinList">
                     <i class="fa fa-list me-2 text-primary"/>
                     <span class="fs-6 fw-bold text-truncate" t-out="props.model.metaData.panelTitle"/>
-                    <i t-if="env.isSmall" class="fa float-end ms-auto" t-att-class="{
+                    <i t-if="isSmall" class="fa float-end ms-auto" t-att-class="{
                         'fa-caret-down': expendedPinList,
                         'fa-caret-left': !expendedPinList
                     }"/>
                 </header>
             </t>
             <t t-if="canDisplayPinList and props.model.data.isGrouped">
-                <t t-foreach="props.model.data.recordGroups" t-as="groupId" t-key="groupId">
+                <t t-foreach="props.model.data.recordGroups || []" t-as="groupId" t-key="groupId">
                     <div class="o-map-renderer--pin-list-group mb-1">
                         <t t-set="group" t-value="props.model.data.recordGroups[groupId]"/>
                         <div class="o-map-renderer--pin-list-group-header d-flex align-items-baseline"
                              t-on-click="() => this.toggleGroup(groupId)">
                             <i t-attf-class="fa fa-caret-{{ state.closedGroupIds.includes(groupId) ? 'right' : 'down' }}"/>
                             <span class="ms-1" t-att-style="'color:' + getGroupColor(groupId)">
-                                <t t-call="web_map.pinSVG">
-                                    <t t-set="numbering" t-value="props.model.metaData.numbering" />
-                                </t>
+                                <t t-call="web_map.pinSVG" numbering="props.model.metaData.numbering"/>
                             </span>
-                            <t t-if="group.name" t-esc="group.name"/>
+                            <t t-if="group.name" t-out="group.name"/>
                             <t t-else="">Undefined</t>
                         </div>
                         <t t-if="!state.closedGroupIds.includes(groupId)">
-                            <t t-call="{{ subTemplates.PinList }}">
-                                <t t-set="records" t-value="group.records"/>
-                            </t>
+                            <t t-call="{{ subTemplates.PinList }}" records="group.records"/>
                         </t>
                     </div>
                 </t>
             </t>
             <t t-elif="canDisplayPinList">
-                <t t-call="{{ subTemplates.PinList }}">
-                    <t t-set="records" t-value="props.model.data.records"/>
-                </t>
+                <t t-call="{{ subTemplates.PinList }}" records="props.model.data.records"/>
             </t>
         </div>
     </t>
@@ -96,16 +90,16 @@
            t-att-class="{'o-map-renderer--pin-located': !props.model.metaData.numbering}"
            class="o-map-renderer--pin-list-details ps-0 pb-0 o-map-renderer--handle"
            t-ref="pinList">
-            <t t-call="{{ subTemplates.PinListItems }}"/>
+            <t t-call="{{ subTemplates.PinListItems }}" records="records"/>
         </t>
     </t>
 
     <t t-name="web_map.MapRenderer.PinListItems">
-        <t t-foreach="records" t-as="record" t-key="record.id">
+        <t t-foreach="records || []" t-as="record" t-key="record.id">
             <t t-set="latitude" t-value="record.partner and record.partner.partner_latitude"/>
             <t t-set="longitude" t-value="record.partner and record.partner.partner_longitude"/>
             <li t-att-data-id="record.id" t-if="latitude and longitude" t-on-click.prevent="() => this.centerAndOpenPin(record)" class="cursor-pointer d-flex align-items-center justify-content-between o-map-renderer--pin-located py-1">
-                <span class="text-truncate flex-grow-1"> <t t-if="props.model.metaData.numbering" t-esc="record_index + 1 + '.'"/> <t t-esc="record.display_name"/> </span>
+                <span class="text-truncate flex-grow-1"> <t t-if="props.model.metaData.numbering" t-out="record_index + 1 + '.'"/> <t t-out="record.display_name"/> </span>
                 <span class="o_row_handle oi oi-draggable" t-if="this.props.model.canResequence" t-on-click.stop=""/>
             </li>
         </t>
@@ -114,7 +108,7 @@
     <t t-name="web_map.MapRenderer.RountingUnavailable">
         <div class="alert alert-warning alert-dismissible col col-md-10 px-5 mb-0 text-center position-absolute o-map-renderer--alert" role="status">
             <strong>Unsuccessful routing request: </strong>
-            <t t-esc="props.model.data.routingError"/>
+            <t t-out="props.model.data.routingError"/>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </t>
@@ -129,13 +123,13 @@
 
     <t t-name="web_map.markerBadge">
         <div class="badge text-bg-danger rounded-pill o-map-renderer--marker-badge d-flex justify-content-center" t-att-style="color and `background-color: ${color} !important`">
-            <t t-esc="count"/>
+            <t t-out="count"/>
         </div>
     </t>
 
     <t t-name="web_map.markerNumber">
         <p class="o-map-renderer--marker-number position-relative text-center">
-            <t t-esc="number"/>
+            <t t-out="number"/>
             <t t-if="count gt 1">
                 <t t-call="web_map.markerBadge"/>
             </t>
@@ -153,13 +147,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr t-foreach="data" t-as="field" t-key="field.id">
+                    <tr t-foreach="data || []" t-as="field" t-key="field.id">
                         <td class="o-map-renderer--popup-table-content-name fw-bold text-nowrap align-baseline">
-                            <t t-esc="field.string"/>
+                            <t t-out="field.string"/>
                         </td>
                         <td class="o-map-renderer--popup-table-space"></td>
                         <td class="o-map-renderer--popup-table-content-value align-baseline">
-                            <t t-esc="field.value"/>
+                            <t t-out="field.value"/>
                         </td>
                     </tr>
                 </tbody>

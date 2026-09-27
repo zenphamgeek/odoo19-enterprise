@@ -6,7 +6,7 @@ import { formatFloat } from "@web/core/utils/numbers";
 import { parseInteger, parseFloat } from "@web/views/fields/parsers";
 import { useInputHook } from "@web_grid/hooks/input_hook";
 
-import { Component, useEffect, useRef, useState } from "@odoo/owl";
+import { Component, useLayoutEffect, proxy, signal } from "@odoo/owl";
 import { useGridCell, useMagnifierGlass } from "@web_grid/hooks/grid_cell_hook";
 
 export const standardGridCellProps = {
@@ -30,21 +30,28 @@ export const standardGridCellProps = {
 export class GridCell extends Component {
     static template = "web_grid.Cell";
     static props = standardGridCellProps;
-    static defaultProps = {
-        readonly: true,
-        editMode: false,
-    };
+
+    rootRef = signal.ref();
+    inputRef = signal.ref();
+
+    get root() {
+        return this.rootRef;
+    }
+
+    get numpadDecimal() {
+        return this.inputRef;
+    }
 
     setup() {
-        this.rootRef = useRef("root");
-        this.state = useState({
-            edit: this.props.editMode,
+        this.state = proxy({
+            edit: this.props.editMode ?? false,
             invalid: false,
             cell: null,
         });
         this.discardChanges = false;
         this.magnifierGlassHook = useMagnifierGlass();
-        this.inputRef = useInputHook({
+        this.inputRefHook = useInputHook({
+            ref: this.inputRef,
             getValue: () => this.formattedValue,
             refName: "numpadDecimal",
             parse: this.parse.bind(this),
@@ -60,10 +67,10 @@ export class GridCell extends Component {
             },
             isInvalid: () => this.state.invalid,
         });
-        useNumpadDecimal();
+        useNumpadDecimal(() => this.inputRef?.el);
 
         useGridCell();
-        useEffect(
+        useLayoutEffect(
             (edit, inputEl, cellEl) => {
                 if (inputEl) {
                     inputEl.value = this.formattedValue;
@@ -111,8 +118,9 @@ export class GridCell extends Component {
     }
 
     isEditable(props = this.props) {
+        const readonly = props.readonly ?? true;
         return (
-            !props.readonly && this.state.cell?.readonly === false && !this.state.cell.row.isSection
+            !readonly && this.state.cell?.readonly === false && !this.state.cell.row.isSection
         );
     }
 

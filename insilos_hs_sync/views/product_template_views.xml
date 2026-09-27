@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_hs_sync" model="ir.ui.view">
+        <field name="name">product.template.form.hs.sync</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_customs_rulings" type="object" class="w_stat_button" icon="fa-certificate" invisible="not hs_code_customs">
+                    <field name="customs_ruling_count" widget="statinfo" string="Customs Rulings"/>
+                </button>
+            </div>
+            <notebook position="inside">
+                <page string="Customs &amp; HS Code" name="customs_hs_sync">
+                    <group>
+                        <group string="Customs Classification (Vietnam HS Code)">
+                            <field name="hs_code_customs" placeholder="e.g. 8471.30.20"/>
+                            <field name="import_duty_rate"/>
+                            <field name="vat_rate"/>
+                            <field name="hs_last_synced" readonly="1"/>
+                            <div>
+                                <button name="action_fetch_tariff_from_hermes" type="object" string="Fetch Tariff" icon="fa-refresh" class="btn-secondary" invisible="not hs_code_customs"/>
+                            </div>
+                        </group>
+                        <group string="Specialized Regulations">
+                            <field name="specialized_management_notes" placeholder="Regulatory notes, permits, inspection requirements..."/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="product_template_search_hs_sync" model="ir.ui.view">
+        <field name="name">product.template.search.hs.sync</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="hs_code_customs"/>
+            </field>
+            <filter name="goods" position="after">
+                <filter name="has_hs_code" string="Has Customs HS Code" domain="[('hs_code_customs', '!=', False)]"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

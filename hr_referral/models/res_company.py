@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from base64 import encodebytes
+from base64 import b64encode
 
 from odoo import fields, models
 from odoo.tools.misc import file_open
@@ -11,7 +11,7 @@ class ResCompany(models.Model):
 
     def _get_default_referral_background(self):
         with file_open('hr_referral/static/src/img/bg.jpg', 'rb') as f:
-            return encodebytes(f.read())
+            return b64encode(f.read())
 
     hr_referral_background = fields.Image(string='Referral Background', default=_get_default_referral_background, required=True)
 

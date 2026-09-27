@@ -9,11 +9,11 @@
     <t t-name="hr_payroll.MoreInfoCardPopover">
         <t t-if="env.isSmall">
             <Dialog title.translate="Additional Information">
-                <t t-call="{{ constructor.subTemplates.body }}" />
+                <t t-call="{{ this.constructor.subTemplates.body }}" />
             </Dialog>
         </t>
         <t t-else="">
-            <t t-call="{{ constructor.subTemplates.popover }}" />
+            <t t-call="{{ this.constructor.subTemplates.popover }}" />
         </t>
     </t>
 
@@ -22,7 +22,7 @@
             <span class="popover-header border-0 text-truncate fw-medium bg-transparent" t-esc="'Additional Information'" t-att-data-tooltip="'Additional Information'"/>
         </div>
         <div class="o_cw_body">
-            <t t-call="{{ constructor.subTemplates.body }}" />
+            <t t-call="{{ this.constructor.subTemplates.body }}" />
         </div>
     </t>
 

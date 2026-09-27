@@ -110,7 +110,7 @@ class CzechVIESReportTest(CzechReportsCommon):
 
         generated_xml = self.env['l10n_cz.vies.summary.report.handler'].export_to_xml(options)['file_content']
         expected_xml = f"""
-            <Pisemnost nazevSW="Odoo SA" verzeSW="{release.version}">
+            <Pisemnost nazevSW="Insilos" verzeSW="{release.version}">
             <DPHSHV verzePis="02.01">
                 <VetaD shvies_forma="N" dokument="SHV" k_uladis="DPH" mesic="11" rok="2019"/>
                 <VetaP typ_ds="P" zkrobchjm="company_1_data" c_pracufo="2001" c_ufo="451" dic="12345679" email="info@company.czexample.com"/>
@@ -137,7 +137,7 @@ class CzechVIESReportTest(CzechReportsCommon):
 
         generated_xml = self.env['l10n_cz.vies.summary.report.handler'].export_to_xml(options)['file_content']
         expected_xml = f"""
-            <Pisemnost nazevSW="Odoo SA" verzeSW="{release.version}">
+            <Pisemnost nazevSW="Insilos" verzeSW="{release.version}">
             <DPHSHV verzePis="02.01">
                 <VetaD shvies_forma="N" dokument="SHV" k_uladis="DPH" ctvrt="3" rok="2018"/>
                 <VetaP typ_ds="F" zkrobchjm="company_1_data" c_pracufo="2001" c_ufo="451" dic="12345679" email="info@company.czexample.com"/>

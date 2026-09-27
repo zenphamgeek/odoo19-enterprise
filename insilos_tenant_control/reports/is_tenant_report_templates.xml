@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_tenant_health_audit_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 12px; line-height: 1.5;">
+                        <!-- Header Banner -->
+                        <div class="row mb-4" style="background: linear-gradient(135deg, #0B2E64 0%, #1a4f8c 100%); color: white; padding: 20px 25px; border-radius: 6px;">
+                            <div class="col-8">
+                                <h2 style="margin: 0; font-weight: 700;">TENANT FLEET HEALTH &amp; AUDIT REPORT</h2>
+                                <p style="margin: 5px 0 0 0; opacity: 0.85;">
+                                    <t t-esc="o.name"/> (<code><t t-esc="o.slug"/>.insilos.com</code>)
+                                </p>
+                            </div>
+                            <div class="col-4 text-end">
+                                <span style="font-size: 14px; font-weight: 600;">
+                                    State: <t t-esc="dict(o._fields['observed_state'].selection).get(o.observed_state)"/>
+                                </span><br/>
+                                <span style="opacity: 0.8;">Env: <t t-esc="dict(o._fields['environment'].selection).get(o.environment)"/></span>
+                            </div>
+                        </div>
+
+                        <!-- Tenant Deployment Profile -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px;">
+                            1. Infrastructure &amp; Deployment Profile
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%;"><strong>Database Name</strong></td>
+                                    <td><code><t t-esc="o.db_name"/></code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Primary Domain</strong></td>
+                                    <td><t t-esc="o.primary_domain"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>DB UUID</strong></td>
+                                    <td><code><t t-esc="o.db_uuid"/></code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cluster &amp; Region</strong></td>
+                                    <td><t t-esc="o.cluster"/> (<t t-esc="o.region"/>)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Industry Template</strong></td>
+                                    <td><t t-esc="o.template_id.name"/> (Release <t t-esc="o.release_id.name"/>)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Subscription & Trial Lifecycle -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px;">
+                            2. Subscription &amp; Billing Lifecycle
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%;"><strong>Tenant Type</strong></td>
+                                    <td><t t-esc="dict(o._fields['tenant_type'].selection).get(o.tenant_type)"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Billing State</strong></td>
+                                    <td><t t-esc="dict(o._fields['billing_state'].selection).get(o.billing_state)"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Trial Period</strong></td>
+                                    <td><t t-esc="o.trial_started_at"/> → <t t-esc="o.trial_ends_at"/> (<t t-esc="o.trial_days_left"/> days remaining)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Last Reconciled</strong></td>
+                                    <td><t t-esc="o.last_reconciled_at or 'Pending'"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Operation Log History -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px;">
+                            3. Fleet Operations History
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 10px;">
+                            <thead style="background: #f0f4f8;">
+                                <tr>
+                                    <th>Operation Type</th>
+                                    <th>Status</th>
+                                    <th>Created Date</th>
+                                    <th>Evidence URI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.operation_ids" t-as="op">
+                                    <tr>
+                                        <td><t t-esc="op.name or op.operation_type"/></td>
+                                        <td><t t-esc="op.state"/></td>
+                                        <td><t t-esc="op.create_date"/></td>
+                                        <td><t t-esc="op.evidence_uri or 'N/A'"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- Footer -->
+                        <div class="text-muted text-center mt-4" style="font-size: 9px; border-top: 1px solid #dee2e6; padding-top: 8px;">
+                            Generated by Insilos SaaS Fleet Controller — <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

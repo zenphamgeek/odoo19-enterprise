@@ -36,12 +36,11 @@ export const homeMenuService = {
             }
             get homeMenuProps() {
                 const homemenuConfig = JSON.parse(user.settings?.homemenu_config || "null");
-                const apps = reactive(
-                    computeAppsAndMenuItems(this.menus.getMenuAsTree("root")).apps
-                );
+                const rawApps = computeAppsAndMenuItems(this.menus.getMenuAsTree("root")).apps;
                 if (homemenuConfig) {
-                    reorderApps(apps, homemenuConfig);
+                    reorderApps(rawApps, homemenuConfig);
                 }
+                const apps = reactive(rawApps);
                 return {
                     apps,
                     reorderApps: (order) => reorderApps(apps, order),

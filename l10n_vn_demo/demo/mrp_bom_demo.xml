@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============================================================ -->
+        <!-- 1. BOM ĐA TẦNG CHO XE KÉO ĐIỆN CÔNG NGHIỆP V-LIFT 2500E        -->
+        <!-- ============================================================ -->
+
+        <record id="mrp_bom_vlift" model="mrp.bom">
+            <field name="product_tmpl_id" ref="product_vn_1_product_template"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="code">BOM-VLIFT-2500E-V1</field>
+            <field name="type">normal</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <!-- Nguyên vật liệu / Cụm chi tiết cấu thành V-LIFT 2500E -->
+        <record id="mrp_bom_vlift_line_1" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="product_id" ref="product_vn_4"/>
+            <field name="product_qty">1</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="mrp_bom_vlift_line_2" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="product_id" ref="product_vn_5"/>
+            <field name="product_qty">1</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="mrp_bom_vlift_line_3" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="product_id" ref="product_vn_6"/>
+            <field name="product_qty">1</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="mrp_bom_vlift_line_4" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="product_id" ref="product_vn_7"/>
+            <field name="product_qty">1</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="mrp_bom_vlift_line_5" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="product_id" ref="product_vn_14"/>
+            <field name="product_qty">1</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="mrp_bom_vlift_line_6" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="product_id" ref="product_vn_12"/>
+            <field name="product_qty">15</field>
+            <field name="uom_id" ref="uom.product_uom_meter"/>
+            <field name="sequence">60</field>
+        </record>
+
+        <!-- Công đoạn sản xuất (Routings / Operations) V-LIFT 2500E -->
+        <record id="mrp_op_vlift_1" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="workcenter_id" ref="mrp_workcenter_assembly"/>
+            <field name="name">Lắp ráp cụm khung gầm &amp; cầu dẫn động vi sai AC</field>
+            <field name="time_cycle_manual">120</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="mrp_op_vlift_2" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="workcenter_id" ref="mrp_workcenter_assembly"/>
+            <field name="name">Tích hợp bộ nguồn Pin LiFePO4 &amp; Đấu nối dây điện CADIVI 3 pha</field>
+            <field name="time_cycle_manual">90</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="mrp_op_vlift_3" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="workcenter_id" ref="mrp_workcenter_assembly"/>
+            <field name="name">Nạp firmware bo điều khiển ARM Cortex &amp; Căn chỉnh cảm biến</field>
+            <field name="time_cycle_manual">60</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="mrp_op_vlift_4" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_vlift"/>
+            <field name="workcenter_id" ref="mrp_workcenter_pdi_test"/>
+            <field name="name">Kiểm chuẩn chất lượng PDI, thử phanh con lăn &amp; Thử tải kéo động 2.5T</field>
+            <field name="time_cycle_manual">45</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 2. BOM BÁN THÀNH PHẨM: CỤM KHUNG GẦM CHASSIS HÀN GIA CÔNG     -->
+        <!-- ============================================================ -->
+
+        <record id="mrp_bom_chassis" model="mrp.bom">
+            <field name="product_tmpl_id" ref="product_vn_4_product_template"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="code">BOM-CHASSIS-25E-V1</field>
+            <field name="type">normal</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="mrp_bom_chassis_line_1" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_chassis"/>
+            <field name="product_id" ref="product_vn_9"/>
+            <field name="product_qty">450</field>
+            <field name="uom_id" ref="uom.product_uom_kgm"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="mrp_bom_chassis_line_2" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_chassis"/>
+            <field name="product_id" ref="product_vn_10"/>
+            <field name="product_qty">24</field>
+            <field name="uom_id" ref="uom.product_uom_meter"/>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="mrp_bom_chassis_line_3" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_chassis"/>
+            <field name="product_id" ref="product_vn_11"/>
+            <field name="product_qty">18</field>
+            <field name="uom_id" ref="uom.product_uom_kgm"/>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- Công đoạn sản xuất Khung Gầm Chassis -->
+        <record id="mrp_op_chassis_1" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_chassis"/>
+            <field name="workcenter_id" ref="mrp_workcenter_laser_cnc"/>
+            <field name="name">Cắt phôi thép SS400 bằng máy Laser CNC &amp; Đột dập lỗ định vị</field>
+            <field name="time_cycle_manual">75</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="mrp_op_chassis_2" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_chassis"/>
+            <field name="workcenter_id" ref="mrp_workcenter_bending_cnc"/>
+            <field name="name">Chấn gấp định hình góc chữ U và tạo gân gia cường dầm chịu lực</field>
+            <field name="time_cycle_manual">45</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="mrp_op_chassis_3" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_chassis"/>
+            <field name="workcenter_id" ref="mrp_workcenter_robot_weld"/>
+            <field name="name">Gá đồ gá &amp; Hàn liên kết khung gầm bằng Robot tự động Yaskawa</field>
+            <field name="time_cycle_manual">90</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="mrp_op_chassis_4" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_chassis"/>
+            <field name="workcenter_id" ref="mrp_workcenter_powder_coat"/>
+            <field name="name">Tẩy dầu phốt phát nano, sấy khô &amp; Phun sơn tĩnh điện Epoxy Jotun</field>
+            <field name="time_cycle_manual">60</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 3. BOM CHO SƠ MI RƠ MOÓC CHỞ CONTAINER 40FT VT-SEMITRAIL 40   -->
+        <!-- ============================================================ -->
+
+        <record id="mrp_bom_semitrailer" model="mrp.bom">
+            <field name="product_tmpl_id" ref="product_vn_2_product_template"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="code">BOM-TRAIL-40HC-V1</field>
+            <field name="type">normal</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="mrp_bom_trail_line_1" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="product_id" ref="product_vn_8"/>
+            <field name="product_qty">1</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="mrp_bom_trail_line_2" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="product_id" ref="product_vn_9"/>
+            <field name="product_qty">1200</field>
+            <field name="uom_id" ref="uom.product_uom_kgm"/>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="mrp_bom_trail_line_3" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="product_id" ref="product_vn_10"/>
+            <field name="product_qty">72</field>
+            <field name="uom_id" ref="uom.product_uom_meter"/>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="mrp_bom_trail_line_4" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="product_id" ref="product_vn_11"/>
+            <field name="product_qty">45</field>
+            <field name="uom_id" ref="uom.product_uom_kgm"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="mrp_bom_trail_line_5" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="product_id" ref="product_vn_15"/>
+            <field name="product_qty">12</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="mrp_bom_trail_line_6" model="mrp.bom.line">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="product_id" ref="product_vn_16"/>
+            <field name="product_qty">6</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">60</field>
+        </record>
+
+        <!-- Công đoạn sản xuất Rơ Moóc 40ft -->
+        <record id="mrp_op_trailer_1" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="workcenter_id" ref="mrp_workcenter_laser_cnc"/>
+            <field name="name">Cắt xả băng dầm chính I-beam thép SS400 &amp; Đột lỗ xương rơ moóc</field>
+            <field name="time_cycle_manual">150</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="mrp_op_trailer_2" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="workcenter_id" ref="mrp_workcenter_robot_weld"/>
+            <field name="name">Gá dầm chính trên sàn gá &amp; Hàn dầm chịu lực, lắp 12 gù xoay Twist-Lock</field>
+            <field name="time_cycle_manual">180</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="mrp_op_trailer_3" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="workcenter_id" ref="mrp_workcenter_powder_coat"/>
+            <field name="name">Bắn bi làm sạch rỉ sét SA 2.5 &amp; Phun sơn bảo vệ gầm tĩnh điện 3 lớp</field>
+            <field name="time_cycle_manual">120</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="mrp_op_trailer_4" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="workcenter_id" ref="mrp_workcenter_assembly"/>
+            <field name="name">Lắp ráp cụm 3 trục Fuwa 13T, chân chống 28T, phanh WABCO &amp; dàn lốp Bridgestone</field>
+            <field name="time_cycle_manual">90</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="mrp_op_trailer_5" model="mrp.routing.workcenter">
+            <field name="bom_id" ref="mrp_bom_semitrailer"/>
+            <field name="workcenter_id" ref="mrp_workcenter_pdi_test"/>
+            <field name="name">Kiểm định an toàn kỹ thuật xuất xưởng &amp; Cân kiểm tra tải trọng phân bổ trục</field>
+            <field name="time_cycle_manual">60</field>
+            <field name="sequence">50</field>
+        </record>
+
+    </data>
+</odoo>

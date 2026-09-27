@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Template 1: Portfolio Position Report
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <template id="report_capital_portfolio_position_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 12px; line-height: 1.5;">
+                        <!-- Header Banner -->
+                        <div class="row mb-4" style="background: linear-gradient(135deg, #0B2E64 0%, #1a4f8c 100%); color: white; padding: 20px 25px; border-radius: 6px;">
+                            <div class="col-8">
+                                <h2 style="margin: 0; font-weight: 700;">PORTFOLIO POSITION REPORT</h2>
+                                <p style="margin: 5px 0 0 0; opacity: 0.85;">
+                                    <t t-esc="o.display_name"/>
+                                </p>
+                            </div>
+                            <div class="col-4 text-end">
+                                <span style="font-size: 14px; font-weight: 600;"><t t-esc="o.company_id.name"/></span><br/>
+                                <span style="opacity: 0.8;">As of <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></span>
+                            </div>
+                        </div>
+
+                        <!-- Portfolio Summary -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px;">
+                            Portfolio Summary
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%;"><strong>Base Currency</strong></td>
+                                    <td><t t-esc="o.currency_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Market Value</strong></td>
+                                    <td><strong><t t-esc="'{:,.2f}'.format(o.total_market_value)"/></strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Cost Basis</strong></td>
+                                    <td><t t-esc="'{:,.2f}'.format(o.total_cost_value)"/></td>
+                                </tr>
+                                <tr style="background: #f0f4f8;">
+                                    <td><strong>Unrealised P&amp;L</strong></td>
+                                    <td><strong><t t-esc="'{:,.2f}'.format(o.total_market_value - o.total_cost_value)"/></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Positions Table -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px;">
+                            Held Positions
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 10px;">
+                            <thead style="background: #f0f4f8;">
+                                <tr>
+                                    <th>Instrument</th>
+                                    <th>Symbol</th>
+                                    <th class="text-end">Quantity</th>
+                                    <th class="text-end">Avg Cost</th>
+                                    <th class="text-end">Market Value</th>
+                                    <th class="text-end">P&amp;L</th>
+                                    <th>Mark Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.position_ids" t-as="pos">
+                                    <tr>
+                                        <td><t t-esc="pos.instrument_id.display_name"/></td>
+                                        <td><t t-esc="pos.instrument_id.symbol"/></td>
+                                        <td class="text-end"><t t-esc="'{:,.4f}'.format(pos.quantity)"/></td>
+                                        <td class="text-end"><t t-esc="'{:,.2f}'.format(pos.average_cost)"/></td>
+                                        <td class="text-end"><t t-esc="'{:,.2f}'.format(pos.base_market_value)"/></td>
+                                        <td class="text-end">
+                                            <t t-set="pnl" t-value="pos.base_market_value - pos.base_cost_value"/>
+                                            <span t-att-style="'color: %s;' % ('green' if pnl >= 0 else 'red')">
+                                                <t t-esc="'{:,.2f}'.format(pnl)"/>
+                                            </span>
+                                        </td>
+                                        <td><t t-esc="pos.mark_status"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- Footer -->
+                        <div class="text-muted text-center mt-4" style="font-size: 9px; border-top: 1px solid #dee2e6; padding-top: 8px;">
+                            Generated by Insilos Capital Markets Decision Governance — <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Template 2: Reconciliation Import Summary
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <template id="report_capital_reconciliation_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 12px; line-height: 1.5;">
+                        <!-- Header -->
+                        <div class="row mb-4" style="background: linear-gradient(135deg, #4a148c 0%, #7b1fa2 100%); color: white; padding: 20px 25px; border-radius: 6px;">
+                            <div class="col-8">
+                                <h2 style="margin: 0; font-weight: 700;">RECONCILIATION IMPORT SUMMARY</h2>
+                                <p style="margin: 5px 0 0 0; opacity: 0.85;">
+                                    <t t-esc="o.name"/>
+                                </p>
+                            </div>
+                            <div class="col-4 text-end">
+                                <span style="font-size: 14px; font-weight: 600;">
+                                    State: <t t-esc="dict(o._fields['state'].selection).get(o.state)"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Import Metadata -->
+                        <h4 style="color: #4a148c; border-bottom: 2px solid #4a148c; padding-bottom: 4px;">
+                            Import Details
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%;"><strong>Portfolio</strong></td>
+                                    <td><t t-esc="o.portfolio_id.display_name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Import Date</strong></td>
+                                    <td><t t-esc="o.import_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Source</strong></td>
+                                    <td><t t-esc="o.source_description or 'Manual Upload'"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Lines</strong></td>
+                                    <td><t t-esc="len(o.line_ids)"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Reconciliation Lines -->
+                        <h4 style="color: #4a148c; border-bottom: 2px solid #4a148c; padding-bottom: 4px;">
+                            Reconciliation Lines
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 10px;">
+                            <thead style="background: #f3e5f5;">
+                                <tr>
+                                    <th>Instrument</th>
+                                    <th class="text-end">Expected Qty</th>
+                                    <th class="text-end">Actual Qty</th>
+                                    <th class="text-end">Variance</th>
+                                    <th>Match</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.line_ids" t-as="line">
+                                    <tr>
+                                        <td><t t-esc="line.instrument_id.display_name"/></td>
+                                        <td class="text-end"><t t-esc="'{:,.4f}'.format(line.expected_quantity)"/></td>
+                                        <td class="text-end"><t t-esc="'{:,.4f}'.format(line.actual_quantity)"/></td>
+                                        <td class="text-end">
+                                            <t t-set="var" t-value="line.actual_quantity - line.expected_quantity"/>
+                                            <span t-att-style="'color: %s;' % ('green' if abs(var) &lt; 0.01 else 'red')">
+                                                <t t-esc="'{:,.4f}'.format(var)"/>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <t t-if="abs(line.actual_quantity - line.expected_quantity) &lt; 0.01">✅</t>
+                                            <t t-if="abs(line.actual_quantity - line.expected_quantity) >= 0.01">⚠️</t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- Footer -->
+                        <div class="text-muted text-center mt-4" style="font-size: 9px; border-top: 1px solid #dee2e6; padding-top: 8px;">
+                            Generated by Insilos Capital Markets Decision Governance — <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Template 3: Corporate Action Memo
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <template id="report_capital_corporate_action_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 12px; line-height: 1.5;">
+                        <!-- Header -->
+                        <div class="row mb-4" style="background: linear-gradient(135deg, #b71c1c 0%, #e53935 100%); color: white; padding: 20px 25px; border-radius: 6px;">
+                            <div class="col-8">
+                                <h2 style="margin: 0; font-weight: 700;">CORPORATE ACTION MEMO</h2>
+                                <p style="margin: 5px 0 0 0; opacity: 0.85;">
+                                    <t t-esc="o.display_name"/>
+                                </p>
+                            </div>
+                            <div class="col-4 text-end">
+                                <span style="font-size: 14px; font-weight: 600;">
+                                    <t t-esc="dict(o._fields['state'].selection).get(o.state)"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Action Details -->
+                        <h4 style="color: #b71c1c; border-bottom: 2px solid #b71c1c; padding-bottom: 4px;">
+                            Corporate Action Details
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%;"><strong>Instrument</strong></td>
+                                    <td><t t-esc="o.instrument_id.display_name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Action Type</strong></td>
+                                    <td><t t-esc="dict(o._fields['action_type'].selection).get(o.action_type)"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ex-Date</strong></td>
+                                    <td><t t-esc="o.ex_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Record Date</strong></td>
+                                    <td><t t-esc="o.record_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ratio / Amount</strong></td>
+                                    <td><t t-esc="o.ratio or o.amount_per_share or 'N/A'"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Approval Chain -->
+                        <h4 style="color: #b71c1c; border-bottom: 2px solid #b71c1c; padding-bottom: 4px;">
+                            Approval Chain
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%;"><strong>Submitted By</strong></td>
+                                    <td><t t-esc="o.create_uid.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Approved By</strong></td>
+                                    <td><t t-esc="o.approved_by_id.name if o.approved_by_id else 'Pending'"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Evidence Attachment</strong></td>
+                                    <td><t t-esc="o.evidence_attachment_id.name if o.evidence_attachment_id else 'None'"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Footer -->
+                        <div class="text-muted text-center mt-4" style="font-size: 9px; border-top: 1px solid #dee2e6; padding-top: 8px;">
+                            Generated by Insilos Capital Markets Decision Governance — <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

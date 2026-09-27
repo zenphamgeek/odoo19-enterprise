@@ -1,5 +1,5 @@
 import { _t } from "@web/core/l10n/translation";
-import { Chatter } from "@mail/chatter/web_portal/chatter";
+import { Chatter } from "@mail/chatter/web_portal_project/chatter";
 import { COMMANDS } from "@barcodes/barcode_handlers";
 import BarcodePickingModel from "@stock_barcode/models/barcode_picking_model";
 import BarcodeQuantModel from "@stock_barcode/models/barcode_quant_model";
@@ -17,15 +17,15 @@ import {
     isBarcodeScannerSupported,
 } from "@web/core/barcode/barcode_video_scanner";
 import { url } from "@web/core/utils/urls";
-import { utils as uiUtils } from "@web/core/ui/ui_service";
+import { utils as uiUtils } from "@web/core/ui/ui_utils";
+import { useSubEnv } from "@web/owl2/utils";
 import {
     Component,
     EventBus,
     onPatched,
     onWillStart,
     onWillUnmount,
-    useState,
-    useSubEnv,
+    proxy,
 } from "@odoo/owl";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
@@ -105,8 +105,9 @@ class MainComponent extends Component {
             dialog: this.dialog,
         });
         this._scrollBehavior = "smooth";
-        this.isMobile = uiUtils.isSmall();
-        this.state = useState({
+        this.ui = useService("ui");
+        this.isMobile = this.ui.isSmall;
+        this.state = proxy({
             cameraScannedEnabled: false,
             view: "barcodeLines", // Could be also 'printMenu' or 'editFormView'.
             displayNote: false,
@@ -606,7 +607,7 @@ class MainComponent extends Component {
     get scrapViewProps() {
         const context = this.env.model.scrapContext;
         return {
-            resModel: "stock.scrap",
+            resModel: "stock.move",
             context: context,
             viewId: this.env.model.scrapViewId,
             display: { controlPanel: false },

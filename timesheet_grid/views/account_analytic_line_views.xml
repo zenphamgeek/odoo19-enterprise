@@ -102,27 +102,26 @@
                     <field name="display_timer" invisible="1"/>
                     <field name="is_timer_running" invisible="1"/>
                 </xpath>
-                <xpath expr="//footer/div" position="replace"/>
                 <field name="name" position="attributes">
                     <attribute name="required">0</attribute>
                 </field>
-                <xpath expr="//div/span[@t-att-title='record.employee_id.value']" position="attributes">
-                    <attribute name="invisible">1</attribute>
+                <xpath expr="//div[@name='ts_footer']" position="replace">
+                    <div class="o_ts_kanban_card_amount d-flex ms-auto align-self-end" name="ts_footer">
+                        <field name="employee_id" widget="many2one_avatar_employee" class="align-self-end"/>
+                        <div invisible="readonly_timesheet or display_timer" class="ms-auto text-nowrap">
+                            <field name="unit_amount" string="Time Spent" widget="timesheet_uom" options="{'force_button': true}"/>
+                        </div>
+                        <div invisible="readonly_timesheet or not display_timer" class="ms-auto text-nowrap">
+                            <field name="unit_amount" widget="timesheet_uom_timer" decoration-danger="unit_amount &gt; 24 or unit_amount &lt; 0"
+                                decoration-muted="unit_amount == 0" readonly="1"
+                                class="d-flex align-items-center justify-content-center"/>
+                        </div>
+                        <div invisible="not readonly_timesheet" class="ms-auto text-nowrap">
+                            <field name="unit_amount" widget="timesheet_uom" decoration-danger="unit_amount &gt; 24 or unit_amount &lt; 0"
+                                decoration-muted="unit_amount == 0" readonly="1"/>
+                        </div>
+                    </div>
                 </xpath>
-                <xpath expr="//div/div" position="after">
-                    <div invisible="readonly_timesheet or display_timer" class="ms-auto text-nowrap">
-                        <field name="unit_amount" string="Time Spent" widget="timesheet_uom" options="{'force_button': true}"/>
-                    </div>
-                    <div invisible="readonly_timesheet or not display_timer" class="ms-auto text-nowrap">
-                        <field name="unit_amount" widget="timesheet_uom_timer" decoration-danger="unit_amount &gt; 24 or unit_amount &lt; 0"
-                            decoration-muted="unit_amount == 0" readonly="1"
-                            class="d-flex align-items-center justify-content-center"/>
-                    </div>
-                    <div invisible="not readonly_timesheet" class="ms-auto text-nowrap">
-                        <field name="unit_amount" widget="timesheet_uom" decoration-danger="unit_amount &gt; 24 or unit_amount &lt; 0"
-                            decoration-muted="unit_amount == 0" readonly="1"/>
-                    </div>
-                 </xpath>
                 <xpath expr="//field[@name='task_id']" position="attributes">
                     <attribute name="context">{'default_project_id': project_id, 'search_default_my_tasks': True, 'search_default_open_tasks': True}</attribute>
                 </xpath>

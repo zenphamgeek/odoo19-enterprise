@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_industry_template_spec" model="ir.actions.report">
+        <field name="name">Industry Template Specification Sheet</field>
+        <field name="model">insilos.industry.template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">industry_templates.report_industry_template_spec_doc</field>
+        <field name="report_file">industry_templates.report_industry_template_spec_doc</field>
+        <field name="print_report_name">'Template_Spec_' + (object.slug or object.name or '').replace('/', '_')</field>
+        <field name="binding_model_id" ref="model_insilos_industry_template"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

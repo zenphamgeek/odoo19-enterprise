@@ -4,6 +4,6 @@ from odoo import fields, models
 
 
 class HrLeaveType(models.Model):
-    _inherit = "hr.leave.type"
+    _inherit = "hr.work.entry.type"
 
     l10n_us_show_on_payslip = fields.Boolean(string="Show On Payslip", default=True)

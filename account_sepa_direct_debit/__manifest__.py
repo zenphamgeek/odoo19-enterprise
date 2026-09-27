@@ -30,7 +30,7 @@ available for generating a payment on the selected invoice.
 
     'category': 'Accounting/Accounting',
 
-    'depends': ['base_iban', 'account_batch_payment', 'account'],
+    'depends': ['account_batch_payment', 'account'],
 
     'data': [
         'security/account_sepa_direct_debit_security.xml',

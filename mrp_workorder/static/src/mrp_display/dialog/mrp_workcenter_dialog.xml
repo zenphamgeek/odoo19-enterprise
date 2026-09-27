@@ -7,7 +7,7 @@
                         <t t-foreach="workcenters" t-as="workcenter" t-key="workcenter.id">
                             <div class="col">
                                 <div class="o_workcenter_button form-check btn btn-outline-secondary d-flex align-items-center py-3 w-100 h-100 text-start"
-                                     t-att-class="{'active' : active}"
+                                     t-att-class="{'active' : this.isActive(workcenter)}"
                                      t-on-click.prevent="() => this.selectWorkcenter(workcenter)">
                                     <label class="form-check-label cursor-pointer"
                                            t-out="workcenter.display_name"
@@ -15,7 +15,7 @@
                                     <input class="form-check-input ms-auto"
                                            type="checkbox"
                                            t-att-id="'o_workcenter_checkbox_' + workcenter.id"
-                                           t-att-checked="active"/>
+                                           t-att-checked="this.isActive(workcenter)"/>
                                 </div>
                             </div>
                         </t>

@@ -1,0 +1,3713 @@
+{
+  "schema_version": "1.1",
+  "generated_at_utc": "2026-08-25T21:57:41Z",
+  "run_started_at_utc": "2026-08-25T21:52:36Z",
+  "run_ended_at_utc": "2026-08-25T21:57:41Z",
+  "start_ns": 1787466372321813331,
+  "end_ns": 1787467928341344380,
+  "elapsed_ns": 1556019531049,
+  "limit_ns": 14400000000000,
+  "within_4h": true,
+  "environment": {
+    "scope": "SOLO_DEV_LOCAL",
+    "database": "insilos_migration_digiforce_v2",
+    "module": "insilos_logistics_idp",
+    "module_version": "19.0.1.3.11",
+    "non_production": true,
+    "external_calls": false
+  },
+  "commit_sha": "6a55dfdb63174542474ce9475d7f87468004025a",
+  "scope": [
+    "WP0",
+    "WP1",
+    "WP2",
+    "WP3",
+    "WP4",
+    "security_hardening"
+  ],
+  "exclusions": [
+    "WP5 durable activation",
+    "TC-GOV-006 completion",
+    "production",
+    "deployment",
+    "external authority/provider calls",
+    "legal certification",
+    "tariff",
+    "sanctions",
+    "FTA qualification",
+    "export control"
+  ],
+  "artifact_type": "tc_gov_requirement_delta",
+  "status": "PASS_RECONCILED_NO_AGGREGATE_UPLIFT",
+  "commands": [
+    "python3 tools/with_local_credentials.py --solo-dev-db -- python3 insilos/insilos-bin -c insilos.conf -d insilos_migration_digiforce_v2 --test-enable --stop-after-init --workers=0 --max-cron-threads=0 --addons-path=insilos/addons,insilos/apps --http-port=18179 --log-level=test --test-tags /insilos_logistics_idp:TestLogisticsIdpRuntime",
+    "python3 /home/zen/insilos_ee/insilos/apps/insilos_logistics_idp/tests/golden/build_sanitized_corpus.py --verify"
+  ],
+  "expected": {
+    "unique_srs_ids": 310,
+    "explicitly_numbered": 198,
+    "stable_unnumbered": 112,
+    "achieved": 69,
+    "partial": 89,
+    "missing": 152,
+    "duplicate_tc_gov_ids": 0,
+    "tc_gov_006_complete": false
+  },
+  "actual": {
+    "achieved": 69,
+    "partial": 89,
+    "missing": 152,
+    "out_of_scope": 0,
+    "deferred": 0,
+    "total": 310,
+    "explicitly_numbered": 198,
+    "stable_unnumbered": 112,
+    "capability_specific_covered": 33,
+    "unique_srs_ids": 310,
+    "duplicate_tc_gov_ids": 0,
+    "tc_gov_006_complete": false,
+    "corpus_manifest_sha256": "05ea0bdd04e172f8bcd7bf70e70d6c97e5bcd451e76f046a459b6e9f1a5381a6",
+    "authority_sha256": "5f278ff2291ab9d531d8857b6f2408036f91f6c9812ec5d902a694e6ec9a1e2f",
+    "local_captures": {
+      "runtime": {
+        "passed": 136,
+        "failed": 0,
+        "errors": 0,
+        "total": 136
+      },
+      "corpus": {
+        "verified": true,
+        "manifest_sha256": "56e9509580f8352e722bb242bfb7c79f17d3b9c18339985d5b7f8f8d669e5141",
+        "cases": 198
+      }
+    }
+  },
+  "run": {
+    "focused_orm_tests": {
+      "passed": 1,
+      "failed": 0,
+      "framework_stats": 3
+    },
+    "deterministic_corpus": {
+      "detailed": 198,
+      "golden": 48
+    }
+  },
+  "cumulative": {
+    "achieved": 69,
+    "partial": 89,
+    "missing": 152,
+    "out_of_scope": 0,
+    "deferred": 0,
+    "total": 310,
+    "explicitly_numbered": 198,
+    "stable_unnumbered": 112,
+    "capability_specific_covered": 37
+  },
+  "requirement_delta": [
+    {
+      "srs_id": "AI-001",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "c61be73cf2bd74aff83ac05f631bee2dab65879e26a892bdd70d6f95fa0f5e5f",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "AI-002",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "8ae6fcab821e2387f31cfc435ce907e5268788b7a3b825b11689c958210f4d7f",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "AI-003",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "IAPDocumentProcessor.process",
+        "extraction_response_schema"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_ws2_ocr_quality.TestWs2OcrQuality.test_iap_strict_ocr_persists_canonical_run_and_rejects_invalid_geometry"
+      ],
+      "evidence_hash": "9c506bbe42eca4359ff5dfc1b497ac330673a0392fa9ec0e50b00481d56eabee",
+      "remaining_or_deferred_reason": "direct strict IAP test requests typed strict JSON schema and rejects schema-invalid payloads before use"
+    },
+    {
+      "srs_id": "AI-004",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "2a01659182eacf94620571cbd1564dbedf5ce776afdb5ba182e1ea448e113e01",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "AI-005",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.add_extraction"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_extraction_low_confidence_routes_review"
+      ],
+      "evidence_hash": "25f138bd50b14e0fa4d402977b7c6621d548b57b15bbc3e1b81a3df8801ad86f",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "AI-006",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsDocument.process",
+        "LogisticsExtractionRun.create"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_processed_viewer_exposes_current_payload_and_attempt_history"
+      ],
+      "evidence_hash": "11768c4eddb3f679decdd314ce0a9b5e7c59087c5faa2a649a1eacc7ce0a0163",
+      "remaining_or_deferred_reason": "exact processing/reprocess unittest PASS; atomic retry_count allocation, completed-run immutability, persisted processing metadata/version asserted"
+    },
+    {
+      "srs_id": "AI-007",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "7e804c2793ad609675ff3d940a91c03a29d4d53bdef8326b6862669e4ab1bb51",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "AI-008",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "9f3b5d66c822f4f7a426821d121344f26b08d3a9d04ebf2f577f04ae9cf9b2b5",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "AI-009",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "6fd6cd50f4b9259240d1830b7e1f3008097c49b5fa2bd34afa93ca55233bac1f",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "AI-010",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "bd15843d9400d96169203f9a00f4a4b9aede2db38847f50a5722b2265b95e0d8",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "DUP-001",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsDocument.intake_content"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_dossier_exact_duplicate_disposition_is_durable_and_company_safe"
+      ],
+      "evidence_hash": "63a5f44b8f08f07aec0f4ce4b3086399b4cc2a0741769d0c8d21d88e17c5dba2",
+      "remaining_or_deferred_reason": "same-content cross-case intake reuses the canonical document and persists its SHA-256 exact-duplicate disposition"
+    },
+    {
+      "srs_id": "DUP-002",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "9b1428a8358118f0a3095eef3371f87119e661b711d7cd3a09d097ed7017ad46",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "DUP-003",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsDocument.intake_content"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_dossier_exact_duplicate_disposition_is_durable_and_company_safe"
+      ],
+      "evidence_hash": "63d3c24eb33eeb4b4d63607c8c6437e8f66ed212ff47853f356c2ff853209505",
+      "remaining_or_deferred_reason": "same-content cross-case intake links the canonical document through one durable excluded-from-aggregation duplicate disposition"
+    },
+    {
+      "srs_id": "DUP-004",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.mark_semantic_duplicate"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_semantic_duplicate_links_canonical_case"
+      ],
+      "evidence_hash": "35e90ae49f21edc27a1478cb9142c7a69188188ac8df066a1622bf1e3c354f8c",
+      "remaining_or_deferred_reason": "manager closure sets Closed-Duplicated with its canonical case reference and immutable paired semantic-duplicate evidence"
+    },
+    {
+      "srs_id": "EXC-001",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5e34251697e74f16cfea14145a394ba04d4b4b015fd28fee8efc0c438216f938",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "EXC-002",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "eab911b9543ec29525258ba91a086df1ab05e7142c3d5838e89e1bb708d7f744",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "EXC-003",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "3766969cad27f20b2e0666ce9f4a3ef591550c969f238b6528f1025f960d8c00",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-100",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "d646ae3329d248146c509952716a874c35ee65649ff3c17c80ee107945d61485",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-1000",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "b79ebab0daf79f40d86c71f5ed60b65b906758a886dcba9af45b4ac354ee265d",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-1001",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_gate_pass"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr1102_controlled_manager_approval_required_checks_current_override"
+      ],
+      "evidence_hash": "8b683eb3cd0c687f7a6f65e4b06763be0589c7a3b0c23700f3d1b86cfb728c8a",
+      "remaining_or_deferred_reason": "current canonical test proves Gate Pass prerequisites: current manager-approved Shipping Plan and valid required checks; revocation blocks generation"
+    },
+    {
+      "srs_id": "FR-1002",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_shipping_plan"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr1002_full_mapping_template_values"
+      ],
+      "evidence_hash": "348e44a83d46bfe585ccc1ea186a89b8d20791b6e25e2faf9496b866090fd9c1",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed; no deterministic hash design is defined for this delta artifact"
+    },
+    {
+      "srs_id": "FR-1003",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_shipping_plan"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr1003_trusted_provenance_late_declaration_supersession_idempotency"
+      ],
+      "evidence_hash": "72ea6fcc656ecc33e2cd917e47219bd9e9a2c55981ffaffdc4087cef3f6b36ef",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed; no deterministic hash design is defined for this delta artifact"
+    },
+    {
+      "srs_id": "FR-101",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5eca572124ff33bfa4de497225033158fee9a35ae9ebbe8e1d7c69f792a92ff5",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-102",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.action_open_upload_wizard",
+        "LogisticsDocument.upload_intake",
+        "LogisticsDocumentUploadWizard.action_upload"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr102_upload_case_inbox_dedup_and_boundaries"
+      ],
+      "evidence_hash": "45eacae4fced57007a4f8f7ac0ccf87a3e458d62a3e1d475b050faf78767d990",
+      "remaining_or_deferred_reason": "direct case/inbox user workflow covered by focused ORM test; no external provider is invoked synchronously"
+    },
+    {
+      "srs_id": "FR-103",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5556c3f1eb30a6292efb3308847482eb172588e4c5aacc65090dbfe0723fa9c7",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-104",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsInboundJob._process_one",
+        "LogisticsDocument.process"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr104_supplier_email_filename_is_audit_only_until_content_classification"
+      ],
+      "evidence_hash": "829bc064af31f9a30be38748ee6f302741078f6a54e277322c4ffe0b02febcb7",
+      "remaining_or_deferred_reason": "supplier-email queued intake boundary only; no assertion of external provider parity"
+    },
+    {
+      "srs_id": "FR-105",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.intake"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_intake_exact_idempotency_and_deterministic_correlation"
+      ],
+      "evidence_hash": "1aad0caf3ff60e17236452d8ead4bcbb4d6e09126c0a45b80a3b5c1bf9a29b8d",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-106",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase._record_same_subject_thread_entry",
+        "LogisticsEmailThreadEntry"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr106_same_normalized_subject_keeps_latest_active_history_and_replay",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_security.TestLogisticsIdpSecurity.test_fr106_thread_history_is_company_scoped_and_intake_controlled"
+      ],
+      "evidence_hash": "1e3ae1d5d56b3fa35ef24d0106a97420dc08e9752bcb02e10b95a87b0db7c6ba",
+      "remaining_or_deferred_reason": "focused local runtime and security tests cover newest-active immutable same-subject history, idempotent replay, and company/ACL controls; no provider or external parity claim"
+    },
+    {
+      "srs_id": "FR-107",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase._schedule_different_subject_review",
+        "LogisticsCase.action_select_active_thread"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr107_different_subject_requires_idempotent_review_and_explicit_active_thread_selection",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_security.TestLogisticsIdpSecurity.test_fr107_active_thread_selection_denies_unauthorized_and_cross_company"
+      ],
+      "evidence_hash": "9e7101d026c471e58614298bdcb76b71a093a37e735a3618c71f75fe9f17146f",
+      "remaining_or_deferred_reason": "focused runtime and security tests cover idempotent review plus explicit same-company nonterminal related-thread selection"
+    },
+    {
+      "srs_id": "FR-108",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_case_fails_to_review_and_source_identity_is_unique"
+      ],
+      "evidence_hash": "e00ed66a827e390a173a87425a1f39dadcd813e892ed9d1a6ccf5bf8be0649f5",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-109",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a12b7f7332212833d1deb29c3b5a245731f9d9cb2ce026b1fc401e51bacefef3",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-1100",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "adbdf163d23e56fa9dc74f3f659032856dad0ce1bb50ea7d1317402100e9ef0a",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-1101",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.select_effective_pack"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_legacy_customer_reference_is_read_only_operational_runtime_configuration"
+      ],
+      "evidence_hash": "05766bbdb19a021bc07615c65c51d16a7b805f57638f41c5dc557a23dfcdbeac",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-1102",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_gate_pass"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr1102_controlled_manager_approval_required_checks_current_override"
+      ],
+      "evidence_hash": "942444eae4a6af57348974ddbafbeeb6ef35f131e764350fb7da388c752e512e",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed; no deterministic hash design is defined for this delta artifact"
+    },
+    {
+      "srs_id": "FR-1103",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_gate_pass"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr1103_gate_template_semantic_fields"
+      ],
+      "evidence_hash": "42c1aba982d570c0a5917e3318e0414ac2ecb67429fcee35bb3b774e454c31e5",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed; no deterministic hash design is defined for this delta artifact"
+    },
+    {
+      "srs_id": "FR-1104",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.queue_gate_pass_distribution"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr1104_native_gate_pass_distribution_is_manager_scoped_configured_and_versioned"
+      ],
+      "evidence_hash": "14b4092e7a865b40fcc2bca6087bc513a1e84a76fa66f3e18ae25ff69ff4581f",
+      "remaining_or_deferred_reason": "native manager-only queue binds active Gate Pass output/version/hash and approved Shipping Plan, resolves one same-company profile, preserves immutable queue evidence, reuses replay, and queues a fresh intent after supersession"
+    },
+    {
+      "srs_id": "FR-200",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "46f3c862787b9152bf8aa2313d1a0577e74f2b41fbe5f23e2a6e8be10003eb3f",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-201",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "document_schemas.validate",
+        "document_processor.extraction_response_schema"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_phase_1_3.TestLogisticsIdpPurePhase13.test_fr201_purchase_order_missing_invalid_and_low_confidence_review"
+      ],
+      "evidence_hash": "0207348e0f3864677b4d410430cd329788149d09ed9716859f83714965b6a23e",
+      "remaining_or_deferred_reason": "synthetic processor missing, invalid, and low-confidence review paths cover Supplier Name, Supplier Address, Supplier Number, Total Value, PO Date, Currency, Material Code, Description, Unit Price, Quantity, UoM, Value, and Custom Code; runtime critical-check positive path is not evidenced"
+    },
+    {
+      "srs_id": "FR-202",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPoSnapshot.import_batch"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr202_batch_chunks_larger_than_100_and_reports_created"
+      ],
+      "evidence_hash": "7ce5cc2b42d983f1bb7b89b9eea8a9f26483999ca9b05ab7702719aa980ef74b",
+      "remaining_or_deferred_reason": "direct executor safely imports 101 PO snapshots and reports created rows"
+    },
+    {
+      "srs_id": "FR-203",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPoSnapshot.import_upsert"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr203_latest_snapshot_closes_absent_material_without_mutating_prior"
+      ],
+      "evidence_hash": "a66e86a62fc1d4497a13efd2c8c1e751fc0794e2d3c292e5c7bb2fc0014d4bcd",
+      "remaining_or_deferred_reason": "direct executor closes absent latest-snapshot material without mutating the prior snapshot"
+    },
+    {
+      "srs_id": "FR-204",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.intake"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_intake_exact_idempotency_and_deterministic_correlation"
+      ],
+      "evidence_hash": "d03ab677587a790179d24f202d700bcf136f839354bdb87e7a3c30e2f980ce44",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-205",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPoSnapshot.import_batch"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr205_material_reference_failures_and_no_material_line"
+      ],
+      "evidence_hash": "2186ab35054d5c70ea5c6c30e7068fc64ba429eb4b1ab22c44f30882548d4dbd",
+      "remaining_or_deferred_reason": "direct executor surfaces missing Master Data/DSNVL and permits explicit no-material lines"
+    },
+    {
+      "srs_id": "FR-300",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "769062852bfac4e9b1ad9bd8a10553453f32258c2970afb0ce4d2dc8288745d2",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-301",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.reconcile_documents",
+        "validate_draft_invoice_policy",
+        "draft_invoice_mode_check"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr301_supplier_draft_invoice_policy_modes_effectivity_isolation_and_replay"
+      ],
+      "evidence_hash": "dcb8cc0f7999ddd3eecaade573bcf04178caa85777d995bd2516b6cca4de3b12",
+      "remaining_or_deferred_reason": "local deterministic supplier draft-invoice policy only; missing, invalid, cross-company, out-of-window, or ambiguous profiles fail closed to review"
+    },
+    {
+      "srs_id": "FR-302",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "validate_draft_invoice_policy",
+        "reconcile_documents"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_phase_1_3.TestLogisticsIdpPurePhase13.test_fr302_draft_identity_final_number_policy_is_scoped"
+      ],
+      "evidence_hash": "d83183ea8e8f2243fdc16b2ec11ed2b786fb06bb5c72cf9319addbcb81f286ac",
+      "remaining_or_deferred_reason": "local deterministic reconciliation only: final number is preserved as observed evidence and returns REVIEW when disallowed; no legal, provider, or external authority assertion"
+    },
+    {
+      "srs_id": "FR-303",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.reconcile_documents"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_draft_po_multiline_identity_unmatched_evidence_is_persisted"
+      ],
+      "evidence_hash": "515dd01a8dff2fcfc7352b3fd5335ea4a81b1de6a6be055ea9b09c27c5ca4ba3",
+      "remaining_or_deferred_reason": "direct executor covers draft PO reconciliation; no deterministic delta artifact hash is designed"
+    },
+    {
+      "srs_id": "FR-304",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.reconcile_documents"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr304_draft_result_persists_differences_warnings_and_evidence"
+      ],
+      "evidence_hash": "9a525b93617bd1455b4f595738979d817267b7276b1ac96d0035a258a354cbb8",
+      "remaining_or_deferred_reason": "direct executor covers reconciliation differences, warnings, and evidence; no deterministic delta artifact hash is designed"
+    },
+    {
+      "srs_id": "FR-305",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.queue_supplier_result_reply",
+        "LogisticsCase.record_supplier_result_reply_delivery",
+        "MailMail.send"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr305_supplier_result_reply_is_configured_threaded_authorized_and_idempotent"
+      ],
+      "evidence_hash": "701038f1de5a1b6f182199539fc0683461d1f3cca7c5d7f208d46b938b86abae",
+      "remaining_or_deferred_reason": "exact SRS evidence: manager-only native queue accepts only one actual supplier-email intake draft VAT invoice with valid email_attachment evidence, matching content hash, and immutable audit_service/source intake_supplier_email markers; forged controlled evidence causes no side effect; native mail.send automatically emits exactly-one sent/exception evidence without raw failure reason, preserves force_send=False, advisory-lock idempotency, and exception-mail reuse"
+    },
+    {
+      "srs_id": "FR-306",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.recheck"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_po_invoice_reconciliation_and_recheck_preserve_runs"
+      ],
+      "evidence_hash": "c7ed35bde4f3c26e334e1afca9d401b4b4f714283c27be6de0e9e3a67be0dfa6",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-400",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5897ab94155bfcab0810c3e2e8ddd1c8316d1ced8d641a009de74d28fc5c13e6",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-401",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "94b3d328bceb3cf1e596d7b79efd3c81c0eb84dd00289c4ac62899488f9c6f86",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-402",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "line_regime_decisions",
+        "reconcile_documents"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_phase_1_3.TestLogisticsIdpPurePhase13.test_fr402_no_material_default_is_policy_driven_not_core"
+      ],
+      "evidence_hash": "1565f9d484106408cb75c5ff022e53e33149acaddeff1cb76ca9bb50b7490b91",
+      "remaining_or_deferred_reason": "no-material-code invoice lines without regime follow the effective no_material_behavior policy: custom_code with a single allowed_regimes value assigns that regime, passes the regime check, and enters declaration-group validation; review default or absent/multi-value rule keeps missing-customs-regime review; pure local test without provider/IAP"
+    },
+    {
+      "srs_id": "FR-403",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "logistics.idp.case.reconcile_documents",
+        "reconcile_documents"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr403_missing_regime_persists_review_and_replay_is_side_effect_free"
+      ],
+      "evidence_hash": "7300869e7a0d4eb34c22d59ac9c1440c9bea61d88e41e3e5cddf84facb3607be",
+      "remaining_or_deferred_reason": ""
+    },
+    {
+      "srs_id": "FR-404",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "declaration_group_check",
+        "LogisticsCase.reconcile_documents"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr404_runtime_declaration_groups_bind_manifest_and_replay"
+      ],
+      "evidence_hash": "78ec8635849c91aaa5d2a50d05963fcef5ecd160b3622b5e16042ccda1e0dcb0",
+      "remaining_or_deferred_reason": "local deterministic runtime scope: exact normalized declaration groups bind the manifest; mismatch blocks, absent/out-of-window/ambiguous rules review fail-closed, and replay is side-effect-free"
+    },
+    {
+      "srs_id": "FR-405",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "line_regime_decisions",
+        "reconcile_documents"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_phase_1_3.TestLogisticsIdpPurePhase13.test_fr405_line_regimes_use_explicit_po_and_invoice_lines"
+      ],
+      "evidence_hash": "019e5e2f1f68fd18a54769291d8b46503a3209f9eb473a3826eecf3f27ba6974",
+      "remaining_or_deferred_reason": "explicit PO/invoice line comparison blocks customs-regime mismatches, routes missing or conflicting regimes to review; no legal inference"
+    },
+    {
+      "srs_id": "FR-406",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "customs_checks",
+        "LogisticsCase._final_export_hs_checks",
+        "LogisticsCase.reconcile_documents",
+        "LogisticsException.open_or_reuse"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr406_final_export_hs_reconciliation_is_immutable_idempotent_and_scoped"
+      ],
+      "evidence_hash": "02752acd0f5216678582f156352d51746181da5ae6798636fc13911270467371",
+      "remaining_or_deferred_reason": "final export declaration extraction is observed-only; DSNVL/master is never overwritten. Match, mismatch, and missing inputs create immutable scoped decisions; mismatch reuses one canonical case/company exception."
+    },
+    {
+      "srs_id": "FR-500",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "3557dc732f3055850a1dbc9b9ab53f08b85965ac8c267e78fe95808e53036f12",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-501",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "main_invoice_check",
+        "validate_main_invoice_policy",
+        "reconcile_documents",
+        "LogisticsIdpCase.reconcile_documents"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr501_main_invoice_policy_effectivity_isolation_and_replay"
+      ],
+      "evidence_hash": "9b1e0d681d1d31834dc8716750ce937d6b3e796d59d227d4d0efa5725e34b783",
+      "remaining_or_deferred_reason": "local deterministic policy defaults to numbered main VAT invoices; exact profile substitutes only; invalid, ambiguous, out-of-window, or foreign profiles review fail-closed; replay reuses matching reconciliation evidence"
+    },
+    {
+      "srs_id": "FR-502",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.reconcile_documents",
+        "reconcile_draft_main"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr502_main_invoice_requires_exact_approved_draft_snapshot_and_replay"
+      ],
+      "evidence_hash": "e488b34d4cb4fb492d8e2f137e4dbed124f5eb04d7657968b53b9bdec044c43c",
+      "remaining_or_deferred_reason": "same-case approved draft VAT selection is exact and deterministic; manifest snapshots selected draft/current run; supplier, identity, quantity, unit price and line total mismatch blocks; missing, ambiguous or unapproved draft reviews; replay reuses immutable semantic evidence"
+    },
+    {
+      "srs_id": "FR-503",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.reconcile_documents",
+        "reconcile_draft_main"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr503_skipped_profile_reconciles_main_directly_and_never_compares_draft"
+      ],
+      "evidence_hash": "cb4bb93d5c3e834eadb2f7b0d35ad2c0f73a41447273bcbbdc4b8f43241d0539",
+      "remaining_or_deferred_reason": "effective same-company skipped draft policy validates a numbered main VAT invoice directly against PO/reference; evidence/manifest draft_main is false, valid draft input does not invoke FR-502 comparison, critical PO mismatch blocks, and identical replay reuses immutable evidence"
+    },
+    {
+      "srs_id": "FR-504",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsDocument.process",
+        "LocalDocumentProcessor.process"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr504_same_type_logical_invoices_preserve_each_payload_and_replay_runs"
+      ],
+      "evidence_hash": "78e242becc88711467b7dda4d6d288fb8250d4fdffa0e45714e82366bc1ddf4b",
+      "remaining_or_deferred_reason": "local synthetic logical-document splitting only: two same-type invoices retain distinct normalized invoice numbers, stable children append one run each on replay, and provider/IAP is not invoked; no legal or provider claim"
+    },
+    {
+      "srs_id": "FR-505",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "batch_structure"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_phase_1_3.TestLogisticsIdpPurePhase13.test_smart_filename_classifier_and_batch_structure"
+      ],
+      "evidence_hash": "48f30f82a1d2707dd09412b5d7a9d3f172298d391ad3061ce979bba259fe07df",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-506",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "batch_structure"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_phase_1_3.TestLogisticsIdpPurePhase13.test_smart_filename_classifier_and_batch_structure"
+      ],
+      "evidence_hash": "0d9cfc6437e745e0f007d357b650ff0511151a618178a54f34d12f364e028dcc",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-507",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_sap_erp_output"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr507_variance_blocks_before_artifact"
+      ],
+      "evidence_hash": "36d4735a15e9d5ecab6a380029cffda8a83397f3c805dce76c243cb488e36452",
+      "remaining_or_deferred_reason": "mismatch blocks before artifact; exact tolerance boundary permits local artifact generation; does not certify SAP external transport or acknowledgement"
+    },
+    {
+      "srs_id": "FR-600",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "c37cacba2b3a5a99407097b16819ecec199b0b84011038eeb3b96aac7ed42044",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-601",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_sap_erp_output"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr601_template_positions_sheet_and_style_preserved"
+      ],
+      "evidence_hash": "a0627c25b22a0d26e3ff48b472a4d0011b336245321ec87bd934bf4d54147a61",
+      "remaining_or_deferred_reason": "direct local deterministic template generation preserves SAP sheet, positions, and style; no live SAP transport or customer approval"
+    },
+    {
+      "srs_id": "FR-602",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_sap_erp_output"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr602_field_level_configured_default_sources"
+      ],
+      "evidence_hash": "a0f2aea94596e3b36b2b714db5498f19af0dceed737bf551fee150dc361202be",
+      "remaining_or_deferred_reason": "direct local deterministic configured field-source defaults and provenance only; no live SAP transport or customer approval"
+    },
+    {
+      "srs_id": "FR-603",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_sap_erp_output"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr603_missing_source_blocks_without_output"
+      ],
+      "evidence_hash": "d13629daf4467543368f3cf536e66654f2d857188bc78f81337ab281fee509a7",
+      "remaining_or_deferred_reason": "direct executor blocks SAP output on missing authoritative PO source"
+    },
+    {
+      "srs_id": "FR-604",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_sap_erp_output"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr604_blank_invoice_and_po_material_use_configured_po_code_template"
+      ],
+      "evidence_hash": "21ab8bf78e1af69479bb34f751f22e7a326c205e289990dd4ebb88bb258ce2e6",
+      "remaining_or_deferred_reason": "direct executor uses configured PO number/item custom-code template when material is absent"
+    },
+    {
+      "srs_id": "FR-604A",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.action_open_final_customs_upload_wizard",
+        "LogisticsDocument.upload_final_customs_document",
+        "LogisticsDocument.action_reclassify"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr604a_supplemental_final_customs_upload_reuses_case_and_preserves_history"
+      ],
+      "evidence_hash": "89e1a8363b3e9322676f6ab174fea22d5a5b64f6f2ccac0e60d359aef511077c",
+      "remaining_or_deferred_reason": "authorized same-company nonterminal supplemental upload reuses the case, preserves immutable history and provenance, classifies final declaration, and processes only the new document"
+    },
+    {
+      "srs_id": "FR-605",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "compare_line",
+        "reconcile_documents"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_matching_uses_identity_not_sequence_and_price_per"
+      ],
+      "evidence_hash": "7195ac7a22b34b5d30fdffa0cb08f358c23c7679da573ed87595974da500f33d",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-605A",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.validate_policy_payload"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_legacy_customer_reference_is_read_only_operational_runtime_configuration"
+      ],
+      "evidence_hash": "f0a22fd52121c0c104a50be30b707aace4fa441a7432ff734c24fd7f48cfa59e",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-606",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_sap_erp_output"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr606_stable_po_order_and_idempotency"
+      ],
+      "evidence_hash": "655f385b4a6ab94d29c495a0232e3f49284bd355c2342c351d657093e010cd58",
+      "remaining_or_deferred_reason": "focused exact unittest PASS; PO-authoritative identity mapping verifies deterministic order, idempotency, and zero-output failures"
+    },
+    {
+      "srs_id": "FR-607",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_sap_erp_output"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr607_configured_custom_code_format"
+      ],
+      "evidence_hash": "971846e80ba0bf0e9b350c8c75d2f9954445ceb4277e449ed822364118e4c17a",
+      "remaining_or_deferred_reason": "direct local deterministic configured custom-code format and price normalization only; no live SAP transport or customer approval"
+    },
+    {
+      "srs_id": "FR-608",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_sap_erp_output"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr608_source_mapping_version_and_provenance"
+      ],
+      "evidence_hash": "535fd5b5b694ce58db88df7f6edfc61cd0d715dcd2c0ccb4240bda3a60a4aefe",
+      "remaining_or_deferred_reason": "direct local deterministic SAP field-source mapping version and provenance only; no live SAP transport or customer approval"
+    },
+    {
+      "srs_id": "FR-609",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase._authoritative_reference",
+        "LogisticsCase.generate_sap_erp_output",
+        "LogisticsCase.generate_customs_output",
+        "LogisticsCase.reconcile_import_declaration"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_sap_erp_output_uses_authoritative_sources_and_persists_provenance",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr609_policy_blocks_missing_ambiguous_and_unbound_before_evidence",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr609_legacy_sap_requires_explicit_rule",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr609_changed_profile_hash_rejects_stale_customs_outputs",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr609_legacy_sap_reconciliation_requires_explicit_contract",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr609_policy_rule_selection_and_binding_tamper_fail_closed",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr609_profile_effectivity_fails_closed"
+      ],
+      "evidence_hash": "18c0f896444c3cf23d7193f68bc9849d497d358848eaf95c5705fce62f17c98d",
+      "remaining_or_deferred_reason": "focused FR-609 runtime coverage passed"
+    },
+    {
+      "srs_id": "FR-700",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "cb37d498021c9f233280c63895f52e41f9df5c322d0d3f2d02aad4fc32d1c097",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-701",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "2b41c7a1e6dd9246d623cf5ef124632ebaf78bf7bef1f72e8e2b891bb4dbe87c",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-702",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "8c0e42e90ae86e2631af0c8079a943be2d17251c3d12b5b85608167b83b07ac2",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-703",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "7c617c4f3581b6ca93f17203fad115dd6afb21f1249c1d054e4795582791d072",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-704",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f5fe7042617357b2633e5d3c395a6cc027498e1d8c56b31d9fba9c1ad31d3648",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-705",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "3782cadc300a95d594f85b0b1b25457ac56475dc12d5caf1b13103facd60a572",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-706",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.reconcile_import_declaration"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_vietnam_outputs_import_reference_shipping_and_gate_pass"
+      ],
+      "evidence_hash": "3d418cb0ae05f93fb050a0a804fa976c05708ca03340822fab4c9a5800be76fe",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-800",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "588e9f90159d4f233819c53015c5ee3fe3effd81fb421cbd358ead6633846ecc",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-801",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "051a42949dd0e6c6620cc43869d94345c45f344e9efe6a098c323fcf440c579e",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "FR-802",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsOutput.generate"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_phase_1_3.TestLogisticsIdpPhase13.test_output_is_idempotent_versioned_and_superseding"
+      ],
+      "evidence_hash": "c3678d47cdfbd3308a4b8bc0846924cf19bc5a1b34f9945e2198eb758c7f7375",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-803",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "d59718fb3a02c9a7a1eef0aea448e1859b3a6240015a27a29a1e87cc72aaf716",
+      "remaining_or_deferred_reason": "no current capability executor after registry cleanup; requirement is not fully supported by an exact current test"
+    },
+    {
+      "srs_id": "FR-804",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.queue_broker_email",
+        "MailMail.send"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr804_native_broker_email_queue_is_configured_idempotent_and_auditable"
+      ],
+      "evidence_hash": "8314a16c7bcc02f95be648a897c87eca458bd423deac1424fb40843e7df38b21",
+      "remaining_or_deferred_reason": "focused exact unittest covers authorization, invalid configuration no effects, advisory-lock idempotency recheck, package attachment, native terminal sent/exception evidence, failure values, and no direct module send."
+    },
+    {
+      "srs_id": "FR-900",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "20664a5a81117f453db3c86534d7c7dc9f861ccd5f5603443362ee11faadaaaf",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "FR-901",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.reconcile_import_declaration"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_vietnam_outputs_import_reference_shipping_and_gate_pass"
+      ],
+      "evidence_hash": "4497b99f84224e4e0cb89fdc91780a15c3b2899d7eabccebc49b0614b906e007",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-902",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.reconcile_import_declaration"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr902_full_import_declaration_canonical_evidence_and_mismatches"
+      ],
+      "evidence_hash": "541c4b295b1b4ee7df46e18f1fd2fc7f1fc57a730f77b2e7555f09d52941bfca",
+      "remaining_or_deferred_reason": "canonical import-declaration extraction and generated E13/E15 output hashes are retained; exact post_install test asserts full matching and each mismatch"
+    },
+    {
+      "srs_id": "FR-903",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.generate_customs_output"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_vietnam_outputs_import_reference_shipping_and_gate_pass"
+      ],
+      "evidence_hash": "b5a16c9f4a237cab755e015fcbf4a0a784471f384071b215001b25d21af5df8d",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "FR-904",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase._derive_lifecycle",
+        "LogisticsCase.apply_override",
+        "LogisticsCase.action_complete"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_derived_stage_requires_terminal_checks_and_no_processing_before_completion"
+      ],
+      "evidence_hash": "72cfc9678d711aff4810248e49e0bc4580c8ffbf76260130963d5ef61ba99b9c",
+      "remaining_or_deferred_reason": "direct executor covers required terminal checks, manager override, and completion; no deterministic delta artifact hash is designed"
+    },
+    {
+      "srs_id": "INT-001",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "8cadc4767fe40691a8e6ccf2512596c8b90f982abdf008ce44d8ceaa46d15578",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "INT-002",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "6bc004ac1c8df5565ed6cd144282f9487cbbc550b039a627482b3a154f46bc75",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "INT-003",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "215a784e40e207e3da3876cef6f8021c3a84250065e80ba8c0862f6257180f09",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "INT-004",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "085c6f69fa815a27ea450f47108ee9be3b1e4b96d04b14c3ce14551bd48411a1",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "INT-005",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a3bf6190907cc4f446205bb772b8f6d109430b955256b9f2aa3309b0c4185b27",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "INT-006",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "05b504232b94d4cfcf793f28bc35082fb37eed60ae3ad3a15b7256749812fe33",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "INT-007",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "758995f2b7612272f00fd12a4d72c27f02a1093aa6e22d2a77caf8041268824a",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "INT-008",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "15218246774bd0d3c7ed7368acaed72de79479e0caa2b20acc04edc7c431ab6f",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "INT-009",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "2c059365a8de7305bb233c1b3608aa92dac1e6c5e145cc76275a6245fd591ccd",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "INT-010",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "c00965148e2eaf3eb6fa069ed9b258b47c3f50d2318a41ed90f520829ec772df",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "INT-011",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "e514d22d8adccae99caf6415778f8e66c61b245190792f41c264cc2a34e9bae5",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "NFR-001",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "6d8e241b6862c3ace3de6c727cc5eb576655fa90d9cf5bade838fe16d9218b7f",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "NFR-002",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsInboundJob.create",
+        "LogisticsInboundJob.write",
+        "LogisticsInboundJob.intake_supplier_email",
+        "LogisticsInboundJob._process_one",
+        "LogisticsInboundJob._record_terminal_failure"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_inbound_terminal_failure_is_safe_immutable_idempotent_and_quiet",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_supplier_email_intake_is_private_idempotent_and_keeps_pdf_hint_nonterminal",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_supplier_email_unsupported_attachment_has_safe_terminal_manifest_evidence",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_generic_inbound_attachment_payload_is_rejected",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_generic_inbound_attachment_m2m_is_rejected_on_create_and_write"
+      ],
+      "evidence_hash": "8cf748cc3516b108a5c09f25a8142ac2929409ba346c5461ed9511fc1d145b53",
+      "remaining_or_deferred_reason": "exact post_install tests passed: generic payload attachment metadata and direct M2M linking on create/write are rejected; attachment-free synthetic jobs remain valid; supplier-email controlled intake alone links attachments; terminal failure emits safe immutable evidence."
+    },
+    {
+      "srs_id": "NFR-003",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsDocument.process",
+        "LogisticsDocument._create_extraction_critical_check",
+        "LogisticsCase._derive_lifecycle"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_nfr003_critical_inputs_are_run_bound_and_never_silent_pass"
+      ],
+      "evidence_hash": "18544091f6e194a8215c3d315d03e4cb039386ffa993410b3d3045ae99bf8e5d",
+      "remaining_or_deferred_reason": "exact post_install test passed: each completed extraction run has one immutable run-bound canonical critical-input check; configured missing header/line fields, warnings, confidence, unknown/ambiguous classification review-block lifecycle completion; later runs retain prior checks."
+    },
+    {
+      "srs_id": "NFR-004",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "db1db2d144820af820481be7099234a92945b1e970b6e02930ec927fb75f46ec",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "NFR-005",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "6bc1021bdad313555b298ebf37200c47104e1b361f133625305d1f0da390d2e3",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "NFR-006",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "26ddc2a446cc665cd8cdb3d9c7266776196d402ad489ccd55e675c10d1e108f7",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "NFR-007",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "61c30ebb7b525bd9c56bf1268bfcd9b0c43dba52f89036b24c7b3af7798fa3da",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "NFR-008",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "da1afa9aad7e8090e40a97a06ba10c5e396f1e0639ab714826e897c3f5c72ac0",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "NFR-009",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.queue_broker_email",
+        "LogisticsCase.record_broker_email_delivery",
+        "MailMail.send"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_fr804_native_broker_email_queue_is_configured_idempotent_and_auditable"
+      ],
+      "evidence_hash": "a91533756a490cc8650e9d3bef393e961b71b81ae8140b447a7cfe1146293c7c",
+      "remaining_or_deferred_reason": "Native preparation serializes RFC822 evidence when a sender is configured; this runtime has no sender, so MIME evidence is truthfully absent. FR-804 queue/idempotency and automatic terminal delivery evidence remain covered."
+    },
+    {
+      "srs_id": "NFR-010",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "566b88796aa946b7c3704f7a23f4fd93569bf2035a1125ebe11be330a975d481",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "NFR-011",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "aedc410be729443be5d2a3400b6ad318d34e6b9614a6d9956db1431317ec2cd5",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "NFR-012",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5b9de03a65cf4ef52a01b3538919583eaba06c5880c39908a15dcf0c36a401ac",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RPT-001",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "abc9979bc53c8c267e4a4d2946becc28a75a7db595c045814f28f168789bcc8d",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RPT-002",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "840ca3a4dec675a66a49edcd15c3f3782c42d7f7349b7f6f31af8b954d331b43",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RPT-003",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "6272138b1e753d9a74e0ce7dd254175ea60897486d79993e88019ad500e6f4c2",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RPT-004",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5c5909597ac7d5ba80619d3ce88fe5389d32cd49cfcdd0e5427dea14bf8e5415",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RPT-005",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "13e5e10641df6590186d07c2c57edce369a7710a6fef50433545ec8db1e28ba5",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RPT-006",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a9604df17ff7699b80a62806b3f7ee1ff77ea97f85bd91aa48135b6e62e70a44",
+      "remaining_or_deferred_reason": "no current capability executor after registry cleanup; requirement is not fully supported by an exact current test"
+    },
+    {
+      "srs_id": "RULE-001",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "fdb22b7e23d1f021b50c324e56053c92df2d65df52f4da8053ee7885c8c81a33",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RULE-002",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f342b7370735a8102bf2d498460291bd34b453e497499ec3ed6d5dec68fcb7c2",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RULE-003",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "fc70904f5347576b7ffb9b137075306fcaf24a990626fd095de8feaf69a961be",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RULE-004",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "19b1a1e5088ddfaf94ac38811f74e2f5630ef2b06af01429186924925b9e9e2e",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RULE-005",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5ca83ab82aa49dbbc1d5f8b43bb0e7b4f63e780fd97e836d74df1d7c7b26c620",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "RULE-006",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5720d86bc6ad17c35273f7a416909986340a25890052daec731195330b7ddec1",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "SEC-001",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_security.TestLogisticsIdpSecurity.test_unassigned_operator_cannot_read_case"
+      ],
+      "evidence_hash": "2fae178775ca953a179be6c634a9c246b4cef7c044ad01ccff1f04401861d399",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "SEC-002",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "1a9c57aeb1c534f00303ae9d6aff86ba1f326b8ebc6027b60676b213a64590d8",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "SEC-003",
+      "baseline_status": "achieved",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "ImmutableSnapshot.write",
+        "ImmutableSnapshot.unlink"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_snapshot_is_canonical_deduplicated_and_immutable"
+      ],
+      "evidence_hash": "5a307d0d6a1d47c0c515ca5d0c86b21da2870e0d4ecfb506cf627cb070c22f1d",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "SEC-004",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f5c42b5df0d622fa307528dca48ea1eb73e0fbf4e66581563db8e6aa37e5b377",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "SEC-005",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a6b455ebfb64ce8fa804207274f8dfc9c3579528c0c1e84c871b47edaf2d6335",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "SEC-006",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "71069b606c2e7e2b5eef8490a6b02f8e2fef8fa4f040362de410cd4c7cf9f4a6",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "SEC-007",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [
+        "TC-GOV-003",
+        "TC-GOV-007",
+        "TC-GOV-008"
+      ],
+      "implementation_symbols": [
+        "LogisticsCase.reconcile_documents",
+        "LogisticsPolicyDecision.create"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_sec007_decision_manifest_binds_inputs_and_recheck_appends",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_sec007_decision_sql_update_is_rejected"
+      ],
+      "evidence_hash": "994cd7354ba15de80da75388fe062aa86c93c5a69e660fea5562406a7f8abe39",
+      "remaining_or_deferred_reason": "focused exact unittest PASS; direct executor binds immutable input manifest and appends rechecks; migration trigger rejects direct SQL UPDATE/DELETE with SQLSTATE 55000"
+    },
+    {
+      "srs_id": "SEC-008",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "7e7d86d0ca97da889c8cb70d751a7bbdd473b47c1c910d7c47b9508b23047b29",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "SLA-001",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "56b2cc182dc939f409ff5300ed56cce96583cb04f544ce6297a3662d73b472f5",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "SLA-002",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "6d90f84d6bda2e676c42ee6d2451225c88f0a0ebc131d64916e22a7f66867532",
+      "remaining_or_deferred_reason": "no current capability executor after registry cleanup; business-day calendar behavior is not fully supported by an exact current test"
+    },
+    {
+      "srs_id": "SLA-003",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "259cf2ef9544903cf3952dacedcdf4a46ec9475cf2ac5d4d608cc9fe7c779a3a",
+      "remaining_or_deferred_reason": "no current capability executor after registry cleanup; requirement is not fully supported by an exact current test"
+    },
+    {
+      "srs_id": "SLA-004",
+      "baseline_status": "partial",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase._record_counterpart_alert_intent",
+        "LogisticsCase.evaluate_compliance_deadlines"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_sla004_counterpart_alert_intents_are_idempotent_cadenced_and_suppressed"
+      ],
+      "evidence_hash": "bea8f726dda11293fed4b5be984a6d6567c6c85ed2e7915a5e3ce2d1569b9c03",
+      "remaining_or_deferred_reason": "counterpart deadline alert intents retain deterministic immutable receipts, replay without duplication, create configured cadence successors, cap reminders, suppress no-send states, and never send mail; mail sending remains disabled"
+    },
+    {
+      "srs_id": "SRS-DOC-9-DOCUMENT-TYPES",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "351328de567d27d7aeeee3833cc6899170b7b76bfcf0e751c54f1ffdc23a7a0b",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-DOD-27-DEFINITION-OF-DONE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "7b9509d4b5806a5fa4c79d3e82fd588966e00e5c84ffc5d436eeff6fcb0ca08c",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-PHASE-PHASE-0-REPOSITORY-MODEL-DISCOVERY",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a9e825aa24edc2f489ae6d7c5df6d133ea8159c3aad1ba1b839f857b4269f287",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-PHASE-PHASE-1-VERTICAL-SHELL-AND-CONTROL-TOWER",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "9bfb47eb7090aa5633cd4e5b10181b49911a9c23c555649dd25cfdd32ec048bf",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-PHASE-PHASE-2-INTAKE-AI-EXTRACTION",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "066fc77b42fa79a51a143831340b5da9b596b1cd7b35f877b22a1631e15e762b",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-PHASE-PHASE-3-PO-INVOICE-RECONCILIATION",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5bb8b3b637788510baddc51684404957560c9293619d2f389bacfd0914c65873",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-PHASE-PHASE-4-VIETNAM-TRADE-CONTROLS-AND-OUTPUTS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "2283fc9b66c6becf3f10f29662e1f9a4762174d32fe41abe72a142d3c5318324",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-PHASE-PHASE-5-ENTERPRISE-HARDENING",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a02f4b10d23b4d3296c89365ed11d0b3c1d09438502e8a5843832822a96df68f",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-PHASE-PHASE-6-PRODUCTIZATION",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f2ffa32326e2ad23a9a7368475995f7380e74f92b42f71a0c4caf90a6a7c6a80",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-ROLE-INTEGRATION-SERVICE-ACCOUNT",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "3daa62a2df12dd1db381c26d1b3e5517e3317c8e662fbf4972da7769d0c0e54f",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-ROLE-LOGISTICS-MANAGER",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "39a8692bad6de4b229c0037c716d9422beee41075b10515d699dd373a7081919",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-ROLE-LOGISTICS-OPERATOR",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "c8bc0b7e4fbfd89f12245d9983f9db28a8aad691a3f0d17b75d844685482ba39",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-ROLE-LOGISTICS-TRADE-COMPLIANCE-REVIEWER",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "c3631035be0ac1a4c430eb10602839f54fb89477c3e67f2690a173f5acfdb52c",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-ROLE-MASTER-DATA-STEWARD",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "95e93985b49a481766b9484ab062538386ca5c6c364703ed7d47aadb96d5a5c5",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-ROLE-READ-ONLY-AUDITOR",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "59b92ba603c6e5a92f0a5d0010d4ca02f9400c5471aff37b2fecb411f79a031c",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-ROLE-SYSTEM-VERTICAL-ADMINISTRATOR",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "9d7de92725c1d41aed1f665d16156fd6097dad1b83cae982df54eec3f458c344",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-0-EXECUTION-CONTRACT-FOR-VIBE-AGENT",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "fff67c75f73a82827c739c265e67a49bc65b28a563eb63d882b987e5ece12acb",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-1-PURPOSE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "dd4a61753443e4d2a31b20ca27188d993fb1dbed6679ca4b11db22043bc929f1",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-10-END-TO-END-PROCESS-REQUIREMENTS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "70115409a30c8833a9c73a8c2a8510802f987614ee42224ebdfda3df6a6b1d7e",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-11-1-DETERMINISTIC-STRATEGY-CASCADE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "0f531b3bac1343b3d40e0c24ecf915fcaa8f4281314a602e84462ee9df03763a",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-11-2-DESCRIPTION-MATCHING",
+      "baseline_status": "missing",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "description_similarity_candidates",
+        "reconcile_documents"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_phase_1_3.TestLogisticsIdpPurePhase13.test_srs_11_2_description_similarity_is_candidate_only_never_pass"
+      ],
+      "evidence_hash": "e34f3100cd99c41671b608fd74719432bf523530823947d36b4bc58578424b95",
+      "remaining_or_deferred_reason": "normalized-description similarity yields candidate suggestions only and never a standalone pass; below-threshold, disabled, or absent configuration produces no candidates and leaves the verdict unchanged"
+    },
+    {
+      "srs_id": "SRS-SECTION-11-3-QUANTITY-RULE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f65cd48219a73ef78a35adb7ea313b79651d98b2241a838cb59d21af156e7ad1",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-11-4-PRICE-RULE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "3916dc24cec36577b240c052daad096a0ea47650640364d9456d1c944d85ba64",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-11-5-SUPPLIER-RULE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "fae77738a98429074646dc4445832948281baaa4480b4e645f055e9e42aacaef",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-11-6-SAME-MATERIAL-AGGREGATION",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "b0a6bbb90e12600f0f25f11e881fc4ee784d6a52213b60026e1fa72d188dfb11",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-11-7-AMBIGUITY",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "6db7ad8ab4a057d49d088cde79b03c62e49fd39e21b4912def95ebc4ec9ccfe8",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-11-8-SEQUENCE-ORDER-POLICY",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "0cfd2749e868c79e9db2e505f52b01682a20bd12dc0321eab734ecd91b0eeeaa",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-11-MATCHING-AND-RECONCILIATION-ENGINE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "bb0cb6b64fd4a41c3870b78eac832cc04f2c89231072c2b38c5d49724a21e519",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-12-SUPPLIER-PROCESSING-PROFILE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "c0b8a389b2fb650fc8376c32dfe93c1bd782ca1766285c6cccdc394ee8316953",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-13-AI-INTELLIGENT-DOCUMENT-PROCESSING-REQUIREMENTS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "92043f395f8d912fcd2fc4bc25a6cfb440b0edbb244fdc518c4701dadf656e51",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-14-RULE-ENGINE-REQUIREMENTS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "30c17052b496e5bd56d0482b188070b6436bb115fcfeaffea1011043b3d1464c",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-15-EXCEPTION-MANAGEMENT",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "56e996fa5ce13a84fdee50e311768a13a8f416358190eec8ad9a9b79c9817f94",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-16-DUPLICATE-DETECTION",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "d608f36635cb99773817546d87cfc8a6de515bd883a3c7854f912e1295355715",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-17-SLA-CALENDAR-AND-ALERTS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "ba81a875f4c72cbedf716ef06cbfec18dc7b8feae42dcad94e00c55e8ba90d58",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-18-NOTIFICATIONS-AND-EMAIL-AUTOMATION",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "9931c384ee99a6c050ab64b0b241363ab84cbe36606665408cc9c971721240a8",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-19-5-TRADE-COMPLIANCE-CONTROL-TOWER",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "b98f90228da092eea7bd2c5fd57246a40704a0b8e7aaa8ce1ceff9b2c9142517",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-19-REPORTING",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "4e84d71088a4fb5fe57f9a7fef095bc67560297da8d9bfd10cb9bd946ffdb0f7",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-2-1-SOURCE-FILES",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "c6e9551bde9feca7fdfa1191b931f48870b439261ab0e7d786ec49f4a6865f4a",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-2-2-SOURCE-DERIVED-BASELINE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "22eff4cbe08a00c72f03bb4dbc10e3f5f13456a00238de8fc1b684b39f628581",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-2-3-PRODUCTIZATION-RULE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "3a34b654a666f93c6559384bea72b098606d6979b2aea970016d27cf39e9b8ae",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-2-SOURCE-BASELINE-AND-PRODUCTIZATION",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "53970f8e88062382e7db5afd23647e19313fe61ba37c5ab94e60b1835c5d450f",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-20-INTEGRATION-REQUIREMENTS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5b80034b7ecc0528c3f798b92ea638cf69a59f8ddd5e2f8709283711ee60c37b",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-21-SECURITY-AND-AUDIT",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f5f9e539d30c08fc0a50e732ff1c5f50020bfcc9a4db272d51da45d242662670",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-22-NON-FUNCTIONAL-REQUIREMENTS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "926415581b5860694771fb1c6420263fd5a47cb04f34009a5be49d3afecdf86f",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-23-AI-QUALITY-AND-ACCEPTANCE-TARGETS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a2ef00d27aa3c3929fc61e1ffe379543efa80d31c5888ae6cdf3b954a45194fb",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-24-GOLDEN-UAT-SCENARIOS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "698e07378e411481fb85837c57a1f7cdba8331274c197675bcf559857e866648",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-1-LOGISTICSIDPCORE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "8937d933686b412483af13cc524a041ca88f395a93dd18b9d09cb89b480a30d2",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-10-CUSTOMER-PROFILE-DATA",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "bc32b4b107035d711a0d4f3947c48a63cd0f892c2e187d3c784cece67f945533",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-2-LOGISTICSIDPVNTRADE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "fcdc6ea344b597adf71f36670196ddd707c2fba6bba74e5ee95f5cbdf6274495",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-3-TRADECOMPLIANCECORE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "341d57fd3d940b0dce48a0deda648ac65cef347c7e8f25af91df1140241c6f68",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-4-TRADECOMPLIANCEVNCUSTOMS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "db89b9ce14a49f9750360743688d52c42c9653a9e81ebd0d66294a81965a2e2c",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-5-TRADECOMPLIANCEORIGINFTA",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "8f0d37726868b8b0c3bbbb3e3d17b1a6e6aeec192d1ccd32b39189e9cbbc0909",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-6-TRADECOMPLIANCESCREENING",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "6fb3df9d15dc4056c3dbbe2062b200f7237e22e0777eadcaa94743784b6bedf7",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-7-TRADECOMPLIANCEEXPORTCONTROL",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "d54b924acaf8a8572911ea715b72ba8272213ec2bfe808e0f5c3c50b328c85f4",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-8-TRADECOMPLIANCESUSTAINABILITYBORDER",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "95fc4c72d871caec25c0e39dbd7da8edef3e2893bf5f1e73375c46b9815dc888",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-9-GEOPOLITICALTRADERISK",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "2afc403cd9fa3c3496b3cb1e9e35cf3d4e1ae6a5ad925a0d5a38aae2d9b5d520",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-25-CONFIGURATION-DATA-PACKS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "eb2acf51f73c0f32afcf34e846ff3345e4c999a0ddfe8f92e6aacd1c8eac0e4d",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-26-IMPLEMENTATION-PHASES",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "13ec4d77b4b6f098a1a4a2b40c1e09eebf0af617f9cb9b5047e148d52053ad45",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-28-VIBE-AGENT-IMPLEMENTATION-RULES",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "67795c819b47f7cd7343e4dcc658100c125e47494329304d552e00514061fc34",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-29-REQUIRED-RULE-CATALOG-INITIAL",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a13c4807adfb04144c7adffb0a7c93c0dbddebc84bed0f7985d141a905b84b2b",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-3-1-IN-SCOPE-FOR-V1",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "ce34055ac7c56474e04e5c8d4773a472a14bc4cf94721acc15656b0cf395fde3",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-3-2-EXPLICITLY-OUT-OF-SCOPE-FOR-V1",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "77b590b1ac145542a9d7cc9c8ad893f26c875f80c98aa26b412534ec09db479c",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-3-PRODUCT-SCOPE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "4390c40b9b68f137dece46dd80579ac47269a3c60684a2937e178c95643c4bf0",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-30-OPEN-DESIGN-DECISIONS-THAT-VIBE-AGENT-MUST-NOT-GUESS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "b880864fee95847a4dc55f68da93e4b833d1432b62891564f1da0a248730da12",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-1-FROM-IDP-TO-TRADE-COMPLIANCE-INTELLIGENCE",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.validate_policy_payload",
+        "LogisticsPolicySource.preview_impact",
+        "LogisticsPolicySource.compute_resilience_metrics",
+        "reconciliation.customs_checks",
+        "reconciliation.compare_line"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_idp_to_trade_compliance_intelligence_evolution_chain"
+      ],
+      "evidence_hash": "80d9c0622d478ba5ef949c2fad6c8b854c5575e1354330defa7422d548f48e14",
+      "remaining_or_deferred_reason": "evolution chain (document automation, cross-document control, customs compliance, trade compliance, regulatory change intelligence, geopolitical resilience) proven end to end above the evidence acquisition layer; global legal-content coverage remains phased by design"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-10-AI-ROLE",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.import_candidate",
+        "LogisticsPolicyActivation.submit",
+        "LogisticsPolicyActivation.decide",
+        "LogisticsPolicySource.write",
+        "LogisticsPolicySource.select_effective_pack"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_ai_role_guardrails_hold"
+      ],
+      "evidence_hash": "4140a65198a7f635241b144f5e8f229dc9175fc03c7ea2e685a2c1f4cf573ecd",
+      "remaining_or_deferred_reason": "AI guardrails enforced: drafted candidates stay draft, maker/checker separation blocks self-activation, authoritative dates immutable, conflicting active packs fail closed; AI discovery/classification/summarization surfaces remain unproven"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-2-TRADE-COMPLIANCE-KNOWLEDGE-GRAPH-LOGICAL-GRAPH-NOT-MANDATORY-NEW-GRAPH-DATABASE",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsProjection.project_case"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_knowledge_graph.tests.test_logistics_projection.TestLogisticsProjection.test_312_lineage_projection_is_deterministic_provenance_bounded_and_company_isolated"
+      ],
+      "evidence_hash": "fdec7b6025eb34491f970fc8fbb378eea383aa172a870c20d2c5ec9a4eb8ad20",
+      "remaining_or_deferred_reason": "logical case-centric graph now projects available case, document, extraction, evidence, check, policy source, policy decision, supplier profile, PO material/HS, and exception links; origin/FTA/license/sanction/tariff nodes have no structured source data yet, and trade/legal retrieval remains disabled pending legal gates"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-3-CUSTOMS-COMPLIANCE",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.evaluate_taxable_value",
+        "LogisticsCase.evaluate_compliance_deadlines",
+        "reconciliation.customs_checks",
+        "reconciliation.compare_line"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_customs_compliance_capabilities_are_deterministic_and_fail_closed"
+      ],
+      "evidence_hash": "9daaed2fb4d01ae19a129bcac13baea3c3bedbf83b47f05acb2041c9613198bd",
+      "remaining_or_deferred_reason": "customs regime/HS comparison, valuation with explicit effective FX, declaration line consistency and counterpart deadlines are deterministic and fail closed; licenses/permits/certificates, safeguard/anti-dumping/countervailing duty rates and post-entry review need approved legal sources"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-4-ORIGIN-FTA-C-O",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "reconciliation.evaluate_origin_evidence"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_origin_evidence_evaluator_is_deterministic_and_fail_closed"
+      ],
+      "evidence_hash": "4d0a3e21af8fe9161422ded1f16af0a7e1b9432a1354bc753b9890749c79a596",
+      "remaining_or_deferred_reason": "structural intake and deterministic review-only evaluator implemented; legal qualification, approved origin/FTA rule pack, authoritative policy dataset, and legal PASS/BLOCK remain blocked"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-5-RESTRICTED-PARTY-SANCTIONS-COMPLIANCE",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase._restricted_party_screening",
+        "screen_parties"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_restricted_party.TestRestrictedPartyRuntime.test_screening_hit_routes_review_and_is_idempotent"
+      ],
+      "evidence_hash": "eaeca3c377a1d21a8f90b107226e0a11959625d00489041c0a1b872b6b1b2b58",
+      "remaining_or_deferred_reason": "provider-neutral synthetic lists fuzzy-screen transaction parties from active policy overlays with idempotent review routing and company isolation; vessel, aircraft, address and ID-number screening, ownership rules, and disposition automation remain deferred until structured party evidence and approved list sources exist"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-6-EXPORT-CONTROLS",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.validate_policy_payload",
+        "LogisticsPolicySource.evaluate_export_controls"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_export_controls_contract_and_fail_closed_evaluator"
+      ],
+      "evidence_hash": "ff28645f574c7169bda7bedb46523253f53c3cf675cdad41d60df9a593753e15",
+      "remaining_or_deferred_reason": "optional canonical country/end-use/license schema and strict export_controls overlay are deterministic and fail closed; synthetic non-authoritative matches remain review-only; approved jurisdiction legal pack, product controls, destination rules, license exceptions/validity and re-export enforcement remain BLOCKED_APPROVED_POLICY_DATASET"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-7-TARIFF-TRADE-REMEDIES-AND-ECONOMIC-SECURITY-MEASURES",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "evaluate_tariff_remedy_security"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_tariff_remedy_security_evaluator_is_deterministic_and_fail_closed"
+      ],
+      "evidence_hash": "673644a3ae4fa68fa6709c6d2bd63ad1ef937d0b147cbfbe505680e1573edc6e",
+      "remaining_or_deferred_reason": "policy engine is pack-family driven: impact preview, deadline evaluation, intake and extraction metadata derive the pack from the policy payload instead of a hardcoded pack name, and a tariff-duty demo pack evaluates through the same engine without core-flow changes; real tariff schedules, trade remedy duty rates and economic security measures remain deferred until approved legal rate sources exist"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-8-REGULATORY-IMPACT-INTELLIGENCE",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.evaluate_applicability",
+        "LogisticsPolicySource.validate_policy_payload",
+        "LogisticsPolicySource.preview_impact",
+        "build_regulatory_change_notification"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_applicability_predicate_selectors_are_deterministic",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_impact_preview_applicability_selectors_gate_cases"
+      ],
+      "evidence_hash": "5ffabf5528c64dce206c3215c4b1992288d2f0b8f51d48059a27da501d897c68",
+      "remaining_or_deferred_reason": "deterministic applicability selectors gate impact preview; structural regulatory-change notification intent is hash-bound, pending_review, no-send and no auto activation; missing facts remain insufficient_context, unsupported origin/destination/FTA selectors remain deferred until entity fields exist"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-9-GEOPOLITICAL-TRADE-RESILIENCE",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.compute_resilience_metrics"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_resilience_metrics_are_deterministic_and_scoped"
+      ],
+      "evidence_hash": "87c45f8ffdbcd559cf68ad82ec407cece36c02d3171caff80af4b0fc7def9649",
+      "remaining_or_deferred_reason": "deterministic resilience metrics computed from persisted governance snapshots: source freshness, publication-to-ingestion detection latency, publication-to-activation latency, open impact assessments and unresolved stale-policy exposures; time-to-clear, avoided manual re-screening and lane-coverage KPIs remain deferred until lane/country entity fields and case-resolution timestamps exist"
+    },
+    {
+      "srs_id": "SRS-SECTION-31-STRATEGIC-ROADMAP-TRADE-COMPLIANCE-INTELLIGENCE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f1d37832a8375f60fab300fbc2366719c4cd047d72e1d442ade9e57ea759cf23",
+      "remaining_or_deferred_reason": "strategic narrative without runtime behavior; per-row coverage evidenced by SRS-SECTION-31-* delta rows, phased global legal-content coverage by design (BLOCKED_APPROVED_POLICY_DATASET)"
+    },
+    {
+      "srs_id": "SRS-SECTION-32-FINAL-PRODUCT-ACCEPTANCE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "8487303ac95acec2907ba2a06b949fe91144409b612d939a4c2d8c93a781bd24",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-32A-REVISION-NOTES-V1-1",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "cd3ac620b752b82f1c1bfafd8eddb382b5877d1c41ddf7f7409fbafb29dfa97f",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-32B-REVISION-NOTES-V1-3-TRADE-COMPLIANCE-GEOPOLITICAL-RESILIENCE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "867ee2ba86c1f14b435362d10284592b4680435400b8df78be304c49a2ff8516",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-33-PRODUCT-NORTH-STAR",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "e42794cb1d76dce6166c8dff0608dabf535db667e489fe5ee41b31968cdb9092",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-4-1-NATIVE-ERP-MODE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "cbf9d4e917467db3a32250ded09aeb2e16093dbd8de4b00ddd1a0f14d188c905",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-4-2-EXTERNAL-ERP-COEXISTENCE-MODE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "c394ad9870e5c0505ec7084e67d7cc0fc2455e0ffe691085f983eb61c3008afa",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-4-3-FIVE-LAYER-LOGICAL-REFERENCE-ARCHITECTURE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "27597db5696f8aede669d8912bd25cdf841223254354742daf453fe51825fd00",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-4-DEPLOYMENT-MODES-AND-REFERENCE-ARCHITECTURE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f6aa823768be95abdc87533ee738fe0b150da2dafb34e1fdc6dccf426663320c",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-4A-1-CORE-PRINCIPLE-POLICY-AS-DATA",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.validate_policy_payload",
+        "LogisticsPolicySource.import_candidate",
+        "LogisticsPolicySource.select_effective_pack"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_policy_candidate_import_is_draft_idempotent_and_diff_is_read_only"
+      ],
+      "evidence_hash": "60cc0f940c3a291a08663ddfbc739d3508981ba2d989ed8ef6b855330d50dd36",
+      "remaining_or_deferred_reason": "partial local import-bound metadata/hash/effective selection; full policy-as-data remains unproven"
+    },
+    {
+      "srs_id": "SRS-SECTION-4A-2-TRADE-COMPLIANCE-CONTEXT",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.validate_compliance_context"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_trade_g1_context_timezone_and_missing_contract",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_security.TestLogisticsIdpSecurity.test_trade_g1_extraction_provenance_and_multicompany_binding_fail_closed"
+      ],
+      "evidence_hash": "ab3e6c8a527bd51efb9b07f4364ced35d3a1179b3e965e5c484e4165fba6e931",
+      "remaining_or_deferred_reason": "Proven locally: schema/provenance/hash/time/company isolation via canonical compliance context and two Trade G1 tests. Missing: approved external legal dataset, active blocking-rule authorization, and full typed pack-specific semantic resolution over optional dimensions."
+    },
+    {
+      "srs_id": "SRS-SECTION-4A-3-SEPARATE-THREE-CONCEPTS",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.record_operational_exposure"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_operational_exposure_is_separate_candidate_evidence_and_idempotent"
+      ],
+      "evidence_hash": "93cc9742ed3d68314fab98094bd73ff6c01d402b2d1687f5170b0643f30132af",
+      "remaining_or_deferred_reason": "partial separate tier4/internal signal no mutating legal/document states, no external ingestion/authority"
+    },
+    {
+      "srs_id": "SRS-SECTION-4A-4-REGULATORY-SOURCE-TRUST-TIERS",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource._compute_governance_status"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_trade_compliance_authority_and_context_contract"
+      ],
+      "evidence_hash": "d2e4b12af153029e6f53d3d758224e38f71938797ab2c3db7d00a978565295ca",
+      "remaining_or_deferred_reason": "Proven locally: trust-tier routing through governance status and authority/context test. Missing: approved external legal dataset, active blocking-rule authorization, and full typed pack-specific semantic resolution over optional dimensions."
+    },
+    {
+      "srs_id": "SRS-SECTION-4A-5-REGULATORY-CHANGE-LIFECYCLE",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [
+        "TC-007"
+      ],
+      "implementation_symbols": [
+        "LogisticsPolicyActivation.decide",
+        "LogisticsPolicyActivation._append_reevaluations",
+        "LogisticsPolicySource.preview_impact"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_srs_4a5_activation_reevaluates_only_bound_affected_cases"
+      ],
+      "evidence_hash": "a2728bbc37a25ff771f26b99a35603a72721876c69f7fd46a51d216393c0ae36",
+      "remaining_or_deferred_reason": "proven only: governed activation; exact affected-only, open, same-company, preview-window selection; immutable decision/evidence lineage; replay idempotency. Missing: approved legal source, full Detect→Acquire→Normalize→Diff→Classify→Determine applicability→Simulate impact→Human review/approve→Schedule effective date→Activate→Re-evaluate→Notify→Audit lifecycle, notifications, and broad applicability/impact facets."
+    },
+    {
+      "srs_id": "SRS-SECTION-4A-6-BITEMPORAL-EFFECTIVE-DATE-BEHAVIOR",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.select_effective",
+        "LogisticsPolicySource.audit_effective"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_policy_impact_preview_is_deterministic_read_only_and_fails_closed"
+      ],
+      "evidence_hash": "5daa25a6677482486555b4d2f08570f8dd4a4a6666b23f8c38c9539ea866bba5",
+      "remaining_or_deferred_reason": "Proven only: deterministic legal-effective plus recorded-as-of selection/audit over immutable policy snapshots. Historical case-decision explanation remains limited to existing decision lineage."
+    },
+    {
+      "srs_id": "SRS-SECTION-4A-7-REGULATORY-IMPACT-ENGINE",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.preview_impact"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_policy_impact_preview_is_deterministic_read_only_and_fails_closed"
+      ],
+      "evidence_hash": "cb30bfbf7b57c3fde2b92a5aef56cd118483f72b9adef4f8c5a6ec0f352456f8",
+      "remaining_or_deferred_reason": "Proven only: open cases plus evidence; unsupported SRS dimensions explicitly return insufficient_context because no entity model is invented."
+    },
+    {
+      "srs_id": "SRS-SECTION-4A-8-SCENARIO-SHOCK-SIMULATION",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.simulate_scenario"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_srs_4a8_simulation_is_test_only_deterministic_read_only_and_non_legal"
+      ],
+      "evidence_hash": "4427e0d2eaea80a4127c422982e6f18982cf24817fe853e70754360ad0e22908",
+      "remaining_or_deferred_reason": "Proven only: local test-enabled, non-production hypothetical simulation with deterministic input/output hashes and counts, zero writes, explicit candidate binding, read-only mode, and legal_authority=false. No legal, production, activation, policy authority, or content claim."
+    },
+    {
+      "srs_id": "SRS-SECTION-4A-9-STANDARDS-ALIGNMENT",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsPolicySource.normalize_cross_border_context",
+        "LogisticsPolicySource.validate_compliance_context"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_configuration.TestLogisticsIdpConfiguration.test_srs_4a9_cross_border_context_is_canonical_deterministic_and_fail_closed"
+      ],
+      "evidence_hash": "eaa0078754de17fb5e6c2c974c0d8f601ce76d1cc6d9d4d440d5042d13018b61",
+      "remaining_or_deferred_reason": "Partial: deterministic optional context normalization, structural validation, alias conflict rejection, extension isolation, and hash-bound mapping evidence only; no external, legal, standards, tariff, sanctions, FTA, or export-control claim."
+    },
+    {
+      "srs_id": "SRS-SECTION-4A-TRADE-COMPLIANCE-GEOPOLITICAL-RESILIENCE-ARCHITECTURE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "e52c8e8effc4ac4a008d9cb6ea3d47d07a85408edee4559c9313fbb0399406b9",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-5-1-ROLES",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase._upgrade_migration_service_principal",
+        "LogisticsCase.action_complete",
+        "LogisticsCase.action_set_waiting"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_security.TestLogisticsIdpSecurity.test_srs_5_1_security_matrix_fails_closed",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_security.TestLogisticsIdpSecurity.test_migration_principal_upgrade_is_idempotent"
+      ],
+      "evidence_hash": "12b20b633adfad1bc9805692f078b20d196d43e97e67c21fd2fbc96891d1d134",
+      "remaining_or_deferred_reason": "Partial: deterministic matrix proves existing action/ACL boundaries for operator, reviewer, manager, master-data steward, administrator, auditor, and integration; migration principal loses manager membership. Exception override remains manager-only immediate and is not mapped as reviewer approval/rejection: immutable override snapshots lack a safe pending decision lifecycle, so maker/checker reviewer approval/rejection and completed-case reopening remain deferred."
+    },
+    {
+      "srs_id": "SRS-SECTION-5-USERS-AND-ROLES",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "913435bc2c634870bc1d340d1f68f6f2ae448af206bf97c2d4d53b8a48712056",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-6-1-METADATA-STRATEGY",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "0eb34013e5eff455d5dac558f4c32be2218f012e97447d154c315a82b435cbaf",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-6-2-TYPED-CANONICAL-EXTRACTED-SCHEMAS",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "extraction_response_schema",
+        "document_schemas.validate"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_ws2_ocr_quality.TestWs2OcrQuality.test_typed_seven_role_schemas_normalize_null_and_reject_malformed_provider",
+        "insilos.addons.insilos_logistics_idp.tests.test_ws2_ocr_quality.TestWs2OcrQuality.test_iap_strict_ocr_persists_canonical_run_and_rejects_invalid_geometry",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_phase_1_3.TestLogisticsIdpPurePhase13.test_processor_mimes_and_typed_validation"
+      ],
+      "evidence_hash": "cdc3fbc3a303c592c714f10abaaabb5ad3ca5c540db7725dbf948825234316b7",
+      "remaining_or_deferred_reason": "provider/model cross-version coverage and full independent reference parity remain absent; local deterministic coverage does not complete all document types or provider behavior"
+    },
+    {
+      "srs_id": "SRS-SECTION-6-LOGICAL-DATA-MODEL-AND-MODEL-REUSE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "86bd686337b9827f1b3cb75183509c0765a23acc4b49e416b6149c9f8f85b4e1",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-7-1-LOGISTICS-IDP-CONTROL-TOWER",
+      "baseline_status": "missing",
+      "after_status": "achieved",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase.get_dashboard_data",
+        "LogisticsCase.dashboard_drilldown"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_srs_section_7_1_control_tower_available_kpis_and_required_drilldowns"
+      ],
+      "evidence_hash": "929fcbff0b63cd7dda3b8a55a1dced8aedc918b93ca10bd1fd3020fb5c9f9f94",
+      "remaining_or_deferred_reason": "focused exact unittest PASS and static guards passed"
+    },
+    {
+      "srs_id": "SRS-SECTION-7-2-DOCUMENT-INBOX",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsDocument._compute_inbox_projections",
+        "LogisticsDocument.action_open_source_email"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_srs_section_7_2_open_source_email_is_persisted_same_company_read_only",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_srs_section_7_2_inbox_projects_extracted_supplier_unique_case_candidate_without_mutation",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_srs_section_7_2_inbox_ambiguous_or_foreign_candidate_requires_review_without_mutation",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_security.TestLogisticsIdpSecurity.test_open_source_email_denies_missing_ambiguous_cross_company_non_email_and_unauthorized",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_security.TestLogisticsIdpSecurity.test_inbox_candidate_projection_excludes_foreign_company_and_cannot_reassign"
+      ],
+      "evidence_hash": "5b75da596630a47024e5ba4b13ae1d155baf2f036a9bd9db44948d1c6e9dd887",
+      "remaining_or_deferred_reason": "partial: inbox projects stored normalized supplier and a unique same-company PO/thread candidate without auto-linking. Email-source documents resolve exactly one persisted same-company incoming mail.message by stored reference and return a read-only form; missing, ambiguous, cross-company, non-email, and unauthorized access deny without mutation or external mail. Whole §7.2 remains partial: other inbox acceptance is unproven."
+    },
+    {
+      "srs_id": "SRS-SECTION-7-3-LOGISTICS-CASE-WORKSPACE",
+      "baseline_status": "missing",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [
+        "LogisticsCase"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_srs_section_7_3_case_workspace_cockpit_navigation_contract"
+      ],
+      "evidence_hash": "65dcd1875732cdaf2fc3138525c3916ee2f645a96969141ba33c5d2f0a1ebdab",
+      "remaining_or_deferred_reason": "case-scoped cockpit XML/action navigation is directly tested; PO, email-source, broker, and import dedicated tabs are absent, so full acceptance remains partial"
+    },
+    {
+      "srs_id": "SRS-SECTION-7-4-MASTER-DATA-RULES",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "ca63c0fea7605156273074d6a4101a7c7b39e0b114b17889a4d62607b0c31edb",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-7-5-EXCEPTION-AUDIT-CENTER",
+      "baseline_status": "missing",
+      "after_status": "achieved",
+      "tc_gov_ids": [
+        "tc_gov_requirement_delta",
+        "tc_gov_security_negative"
+      ],
+      "implementation_symbols": [
+        "LogisticsCase.exception_audit_domain",
+        "LogisticsCase.action_open_exception_audit_center"
+      ],
+      "executable_test_ids": [
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_runtime.TestLogisticsIdpRuntime.test_srs_section_7_5_exception_audit_center_projects_persisted_categories_read_only",
+        "insilos.addons.insilos_logistics_idp.tests.test_logistics_idp_security.TestLogisticsIdpSecurity.test_exception_audit_center_excludes_foreign_company_and_exposes_no_write_context"
+      ],
+      "evidence_hash": "ad770312a4b9844d0981528e17791bd62ad711a56728da78f41c48383472ffa5",
+      "remaining_or_deferred_reason": "read-only projection only; no unified mutable entity or legal-truth inference"
+    },
+    {
+      "srs_id": "SRS-SECTION-7-WORKSPACES-UI",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "955cdf141b4d4d535e9b0a41b228bdf5a382132007d02f937ee607cea99c8486",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-8-1-HIGH-LEVEL-CASE-STAGES",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5f8b153babc67b99e898c77144aa41a365e5d2b1d9afdb3276a464eb6d4a4b7d",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-8-2-INDEPENDENT-CHECK-STATUS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a7c0ff747870a7de23e2efde6574f6b88247853be213f5db532c22d3c3c7577f",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-8-3-DERIVED-STAGE-RULE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "4a5fd918b73af2c59e7881a0933961df2d3d2d3ec4095d137bb2786fa0627db3",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-8-CASE-LIFECYCLE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "4e2a79378dc29b2d15f5631d3acd8e6cb4bb829d157e1e3426a21d55a0c4a9ba",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-A-1-AGENT-SOURCE-CHECK-RULE",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "bce0e4144991b62c146f770c4a842be4007d2133b2d4346e126cf1fea3eae213",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-APPENDIX-A-FULL-WORKBOOK-SOURCE-SHEET-AUDIT-MATRIX",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "8ba6a12be35e32cc4d9cb0fa757ed6c29bfef4a895f9ddd1ff9f71398e859c03",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-INSILOS-VERTICAL-APP-INTELLIGENT-DOCUMENT-PROCESSING-FOR-LOGISTICS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "3b98bea926582eed8b80069f5f4592dd45d29c7e233d87e4a2625b3a709f4d8e",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "SRS-SECTION-SOFTWARE-REQUIREMENTS-SPECIFICATION-SRS",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "3eebb90a09b672d354ddaecf9364e4e8b5c388d4fe404e65961f159e0de399fc",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-01",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "8d0b6c2cd0f332c78cc8ce2f7ed780fecbd72629ed10ae42cb36636486e3732d",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-02",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "0bf39330e99d558dec72a28cea31cbb8686ec780f5f374a49e0c32f60a23734b",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-03",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "e475b698f86bbcc7b5c723e093f919baeb0fa332d38928602ad1d74065bf8a26",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-04",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "732f511ec561b2800f25d9acbf4c3bfc788ea83aa965f0eb061caa9e6375d74f",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-05",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "2ce447cc9b4facb8b202fe87650fea13a7b8b60249a996c8113793e1c4da0c45",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-06",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "db460ac116521794527f830bef369e58c149e71f56c72058c4ef1ae420488ecb",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-07",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "3dc3b81cd5427de3de7f8324a7efac67051debf99591f031f900a540c87e3933",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-08",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "4529d46cf7453f7231e9706d71f0eb5ca4e293b9a78519ce64429205acd6aa67",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-09",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "4c36708cff55a61ad7d9991ffd1012cc0bcfd483fe18da040eea331bd5187721",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-10",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f18f770ccba1395a13cd1bb4f693a210df3e862445a153aae943fba39b3df262",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-11",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "87cfa5042183ee73337ff93adf491a623de4f382fe29345726617def6ed90f42",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-12",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "bcab3525d4c8199567e0f0420f289304606cf994863aa6080c355b442c6158dd",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-13",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "328eb632c8f568a254d285942410cc577a984428568462e5083c2ecd5734dd45",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-14",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "b884e3c12e08fa2f51424b5257930ef033245c40b3b46b15c1fc6e304de8a913",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-15",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "180d9396bef024c2d75a323872776e3541e0a0a0ac6445e45ae94e92582f4e2e",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-16",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "99ea77aed79be8cc503b01f42d7d5098ad21ab8d27e7f2c18b0fa73ab53329f1",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-17",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "b31a62ec0a5045d739a20385e0a4eb47d7f031454b1b9de482752525424553c2",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-18",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "2f5fe8a63aefc1a127f12aac18f2246f2588d3de3fc52a19855b19fa98d1fadd",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-19",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "77776f77a80234a93b31a80abee30a10d78e6af16b623082e95c84d1b8c6f336",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-20",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "1b6466f7af752756227e5775566743ff6f46c4e54d83991520262a74e6d260cc",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-21",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "d2fbe1041ac3e21a0c4843b64ec016092a8249284bf290275a945fe9bc728f15",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-22",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "5d1597323e8c400e5c12bfb0d620604780135eda892755290b98924edf5018a9",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-23",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "6df350c17bb22f4a714c51729a62c2ffbdc873e53ae89c872134fe40f8c4c1ef",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-24",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "43f5fed5881a17e95eeb0cef35665e7556b62479a832855cb9edee677d360374",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-25",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "786bde30c5e2dbb7c2f05a730022e61febe9e5c25b03135582b24dbb096ec970",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-26",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "41a8ce80a9edc3f230d65039351ff161ad03533ff8508a3c207f141ce962c7cc",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-27",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "50a4a72d2cc0ae1c04f7b9c2bce86eb3e71cf20c9d259ae6aa0575006b7e4ae3",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-28",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f4c2aa9b57806bfb484ec80d6033d7145370717df1350d65dfbf3a07f6215d23",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-29",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "570d09306b0bbdde2800fbf0af76f5277d9e1f09d16b9b441797e54fae059ef6",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-30",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "db2c89ae8d74062f5c2fb3903a163d486165f94708c3556531efa9c1f67aa0d6",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-31",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "111c0bc6641d4e0119a25b1c69b8aaaa210c0a733764766b4434140f1a877452",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-32",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "ab0f0cb0100c880a948fee09bdbbc3124afdb34feda3f2aea7fd9bc9b2bf7e22",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-33",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "46f18d7230c4f4037e5fefa3199a48002f8578d9294cbda0dc7a9b7bc6ac0d45",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-34",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "055a4ab7ec584017f0d2e63087eec163f62f5b64eb32fb862f233571a5a39f14",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-35",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "61ac7013e7bab3aec6cc8eda2ee50fe366938179d9ea20d3d09ec51b32a0aa86",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-36",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "e84b9187f0c666036d5635a39c77ea18986df9b823e04afd01d329975309fddd",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-37",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a4be8b4a2fea1405c71806c86bfbb6c3e6e30ca774aa81cd0c64f1db54fb6d0b",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-38",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "e19619d1aaba453cbc614c2adfefe9826a958f6d94cd9a0b5f0af8ad506ce18a",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-39",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "0098f2cc893abd3ba358d275b2e9be98d25a0af87f98fbe64da0fc36e8c6100b",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-40",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [
+        "TC-GOV-004",
+        "TC-GOV-007"
+      ],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "2442c8a3eb8f78ef6f9b53f6e0e29e7231552e8408765cfce3318148688a0d6c",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-41",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "e135b66e259f26b0c24ff4562369564e61138601468dae0dbd7b73202c0300dd",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-42",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "74fb2937b6a4dda5fe5e671c1294cbd0530ef95de973bbe7f001a9d27fd957c2",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-43",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "9288641f82aabc465bf1161d5589b57eae0344219f53417b4670bcf797f590e7",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-44",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "06c5d58803b93bdc498bdcf9a36de2c97d5e23c5aed0f89148adb4b8269844c0",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-45",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "0dcfa908bfd5eb0a72028ecacc489d28e9f753df3dd3cd4bacf5ed7000eaa59e",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "UAT-46",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "c6f2e85fcebfe92a99198595c61105dea5170b1f71f047da595aba92fea88a2e",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-47",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [
+        "TC-GOV-004",
+        "TC-GOV-007"
+      ],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "ed1d82e6a3d50a66677cc751f66d339e98e10ed79e0db2a1077bc9c37785e636",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "UAT-48",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "c42bef9b90fa03552952847895e4504c84e2fd5268cf12e6e88c7acc2e699eda",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "VA-01",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "a2be65a20d83340da1c06f8a4cd3b9ba9ea057fc637f8b815d23955d499c6e8e",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "VA-02",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "2e4043fadccd3a6d3a9b106c3f69bc7d93cadbfdf05bebb504394140a9e00b02",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "VA-03",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "f6201ee1354fc5915f802db17cb093fa397f64866e4db18690894cc8df2098ab",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "VA-04",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "1b857bbd810059340d9f4ae11346068e037eff8fe00c8c4a33bd7757f88eab06",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "VA-05",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "0cb4dca297a58c4a64cf35e405f20ea44c4f9731481595b3ddfdae96f0bb5c16",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "VA-06",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "ea3b0707954f1bd40971a9c1b8b809760d2002671caf0a15172efa6696c5ec75",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "VA-07",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "16c77ea7d141a51eec52e0464aefb5b8d0ddb7814d272a70e1c85c1040f46b3e",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "VA-08",
+      "baseline_status": "partial",
+      "after_status": "partial",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "4a59eb3ed01594501378963c1679a4ce6edec0452fa6b2f178d7a343888c2c76",
+      "remaining_or_deferred_reason": "generic corpus case has no capability-specific executor/assertion"
+    },
+    {
+      "srs_id": "VA-09",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "eae12162c393b5392053b499f181202bf82ec49489edce9c18f2a31e6823ec3b",
+      "remaining_or_deferred_reason": "no executable mapping"
+    },
+    {
+      "srs_id": "VA-10",
+      "baseline_status": "missing",
+      "after_status": "missing",
+      "tc_gov_ids": [],
+      "implementation_symbols": [],
+      "executable_test_ids": [],
+      "evidence_hash": "0dffd339c868a34de4ddc4cd4b567ef2124afdfba6677efc0def80aabed65f3a",
+      "remaining_or_deferred_reason": "no executable mapping"
+    }
+  ],
+  "failures": [],
+  "blockers": [
+    "BLOCKED_MODEL_GAP_APPROVAL",
+    "BLOCKED_APPROVED_POLICY_DATASET"
+  ],
+  "artifact_sha256_scope": "canonical JSON excluding artifact_sha256",
+  "artifact_sha256": "dbaea5548ab95d42bd699522ae281808635765a2d122421138700390e98ba8a8",
+  "worktree_dirty": true,
+  "worktree_hash_scope": "module_excluding_tc_gov_artifacts",
+  "worktree_status_sha256": "861aabcfa96f837ae84dfbfda9736b67195d71b34eb851f2436b7cf74c4eaf81",
+  "worktree_diff_sha256": "d8fd2bc77312d996fb191cceea4d8879e6e5cc6fd24eedf4d71a55407ae79965",
+  "source_sha256": {
+    "__manifest__.py": "a9fd00b4a72b4fd33938e5fe46638df347052a19e29fa97cac025dfafd6a06a0",
+    "services/reconciliation.py": "0dfc90278a71fb9ecd573539d221d3dd8cc4478fc99eec1931087816a11465d3",
+    "tests/golden/build_sanitized_corpus.py": "3e283ea2457641767921c5f89b3f2e3ccb21c6f22d2a1a72e44f2a3d615cf9db",
+    "tests/test_logistics_idp_phase_1_3.py": "0b580164f1d2cf60bc7423a17b4bb68497a14d85fc0fec4e6c37f32e434fea1a",
+    "tests/test_logistics_idp_runtime.py": "b14eebaf03022e3413355e9193d3cb55f3fa86c3d1eea0b3ffb626f373b0dfa4",
+    "docs/tests/srs_canonical_crosswalk_v1.json": "3d1a540159a7336cc92ff3ea0265ba0f3282bd5fbd11a9517b4a40bca9bb7bc3"
+  }
+}

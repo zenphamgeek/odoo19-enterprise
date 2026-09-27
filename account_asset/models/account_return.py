@@ -19,7 +19,7 @@ class AccountReturn(models.Model):
             if not fixed_assets_exist:
                 checks.append({
                     'name': _("Fixed Assets"),
-                    'message': _("Odoo manages depreciation for your fixed assets. No depreciation was recorded for this period. Ensure assets are properly registered for automatic depreciation calculation."),
+                    'message': _("Insilos manages depreciation for your fixed assets. No depreciation was recorded for this period. Ensure assets are properly registered for automatic depreciation calculation."),
                     'code': 'check_fixed_assets',
                     'result': 'todo',
                 })

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_openrouter_domain_tree" model="ir.ui.view">
+        <field name="name">openrouter.domain.tree</field>
+        <field name="model">openrouter.domain</field>
+        <field name="arch" type="xml">
+            <list string="Insilos AI Domain Routers">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="provider" widget="badge"
+                       decoration-info="provider == 'openrouter'"
+                       decoration-success="provider == 'lmstudio'"
+                       decoration-warning="provider == 'anthropic'"
+                       decoration-primary="provider == 'gemini'"
+                       decoration-muted="provider == 'auto'"/>
+                <field name="primary_model_id"/>
+                <field name="is_local" widget="boolean_toggle"/>
+                <field name="require_free"/>
+                <field name="max_temperature"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_openrouter_domain_form" model="ir.ui.view">
+        <field name="name">openrouter.domain.form</field>
+        <field name="model">openrouter.domain</field>
+        <field name="arch" type="xml">
+            <form string="Insilos AI Domain Configuration">
+                <sheet>
+                    <div class="we_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Domain Name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identity">
+                            <field name="code"/>
+                            <field name="sequence"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="AI Provider">
+                            <field name="provider" widget="radio" options="{'horizontal': true}"/>
+                            <field name="provider_model_override"
+                                   placeholder="e.g. claude-3-5-haiku-20241022"
+                                   invisible="provider == 'auto'"/>
+                            <field name="is_local" widget="boolean_toggle" readonly="1"
+                                   string="Local GPU Inference (Free)"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Model Routing (OpenRouter)">
+                            <field name="primary_model_id"
+                                   invisible="provider not in ('openrouter', 'auto')"/>
+                            <field name="require_free"
+                                   invisible="provider not in ('openrouter', 'auto')"/>
+                            <field name="max_temperature"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Fallback Chain">
+                            <field name="fallback_model_ids"/>
+                        </page>
+                        <page string="System Prompt &amp; Specs">
+                            <field name="system_prompt" placeholder="Default system prompt template for this domain..."/>
+                            <field name="description" placeholder="Description of business domain purpose..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_openrouter_domain" model="ir.actions.act_window">
+        <field name="name">AI Domain Router</field>
+        <field name="res_model">openrouter.domain</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

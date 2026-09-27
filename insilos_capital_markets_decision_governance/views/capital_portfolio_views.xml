@@ -1,0 +1,254 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="view_capital_portfolio_list" model="ir.ui.view">
+        <field name="name">capital.portfolio.list</field>
+        <field name="model">capital.portfolio</field>
+        <field name="arch" type="xml">
+            <list string="Portfolios">
+                <field name="name"/>
+                <field name="manager_id"/>
+                <field name="position_count" string="Positions"/>
+                <field name="cost_value" widget="monetary"/>
+                <field name="market_value" widget="monetary"/>
+                <field name="unrealised_pnl" widget="monetary" decoration-danger="unrealised_pnl &lt; 0" decoration-success="unrealised_pnl &gt; 0"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_capital_portfolio_form" model="ir.ui.view">
+        <field name="name">capital.portfolio.form</field>
+        <field name="model">capital.portfolio</field>
+        <field name="arch" type="xml">
+            <form string="Portfolio">
+                <header>
+                    <button name="action_refresh_marks" type="object" string="Refresh Marks &amp; Capture Evidence"
+                            class="btn-primary"
+                            help="Re-mark positions from public market data. Every mark is stamped with its source and as-of date."/>
+                </header>
+                <sheet>
+                    <div class="we_title">
+                        <h1><field name="name" placeholder="e.g. Core Equity Book"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="manager_id"/>
+                            <field name="currency_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="broker_account_ref" placeholder="Reference only"/>
+                            <field name="freshness_hours"/>
+                            <field name="cost_value" widget="monetary"/>
+                            <field name="market_value" widget="monetary"/>
+                            <field name="nav" widget="monetary"/>
+                            <field name="unrealised_pnl" widget="monetary"/>
+                        </group>
+                    </group>
+                    <group string="Book Health">
+                        <group>
+                            <field name="stale_position_count"/>
+                            <field name="open_alert_count"/>
+                        </group>
+                        <group>
+                            <field name="fx_freshness_hours"/>
+                            <field name="reconciliation_status"/>
+                            <field name="ic_threshold"/>
+                            <field name="open_quarantine_count" decoration-danger="open_quarantine_count &gt; 0"/>
+                        </group>
+                    </group>
+                    <group string="Benchmark">
+                        <group>
+                            <field name="benchmark_id"/>
+                        </group>
+                        <group>
+                            <field name="benchmark_return_pct" widget="percentage"/>
+                            <field name="benchmark_status" readonly="1" decoration-danger="benchmark_status == 'missing'" decoration-warning="benchmark_status == 'stale'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Positions" name="positions">
+                            <field name="position_ids">
+                                <list editable="bottom">
+                                    <field name="instrument_id"/>
+                                    <field name="symbol" readonly="1"/>
+                                    <field name="quantity"/>
+                                    <field name="average_cost" widget="monetary"/>
+                                    <field name="last_price" widget="monetary"/>
+                                    <field name="price_as_of" optional="show"/>
+                                    <field name="mark_status" readonly="1" decoration-danger="mark_status in ('missing', 'error')" decoration-warning="mark_status == 'stale'"/>
+                                    <field name="fx_rate_id" optional="show"/>
+                                    <field name="price_source" optional="hide"/>
+                                    <field name="price_gap_pct" optional="hide"/>
+                                    <field name="price_gap_reason" optional="show" decoration-warning="price_gap_reason == 'economic'"/>
+                                    <field name="evidence_hash" optional="hide"/>
+                                    <field name="evidence_document_id" optional="show"/>
+                                    <field name="market_value" widget="monetary"/>
+                                    <field name="base_market_value" optional="show"/>
+                                    <field name="unrealised_pnl" widget="monetary" decoration-danger="unrealised_pnl &lt; 0"/>
+                                    <field name="unrealised_pnl_pct" widget="percentage"/>
+                                    <field name="decision_case_id" optional="show"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Alert Rules" name="alerts">
+                            <field name="alert_rule_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="symbol"/>
+                                    <field name="kind"/>
+                                    <field name="threshold"/>
+                                    <field name="user_id"/>
+                                    <field name="triggered" widget="boolean_toggle" readonly="1"/>
+                                    <field name="last_triggered_on" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_capital_portfolio" model="ir.actions.act_window">
+        <field name="name">Portfolios</field>
+        <field name="res_model">capital.portfolio</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first portfolio</p>
+            <p>A portfolio groups the positions governed together. Marks are stamped with
+               their source and as-of date so a valuation can always be re-derived.</p>
+        </field>
+    </record>
+
+    <record id="view_capital_position_list" model="ir.ui.view">
+        <field name="name">capital.position.list</field>
+        <field name="model">capital.position</field>
+        <field name="arch" type="xml">
+            <list string="Positions">
+                <field name="portfolio_id"/>
+                <field name="instrument_id"/>
+                <field name="symbol"/>
+                <field name="exchange" optional="show"/>
+                <field name="quantity"/>
+                <field name="average_cost" widget="monetary"/>
+                <field name="last_price" widget="monetary"/>
+                <field name="price_as_of"/>
+                <field name="mark_status" decoration-danger="mark_status in ('missing', 'error')" decoration-warning="mark_status == 'stale'"/>
+                <field name="fx_rate_id" optional="show"/>
+                <field name="fx_rate_as_of" optional="show"/>
+                <field name="market_value" widget="monetary"/>
+                <field name="base_market_value" optional="show"/>
+                <field name="evidence_count" optional="show"/>
+                <field name="unrealised_pnl" widget="monetary" decoration-danger="unrealised_pnl &lt; 0"/>
+                <field name="unrealised_pnl_pct" widget="percentage"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_capital_position_form" model="ir.ui.view">
+        <field name="name">capital.position.form</field>
+        <field name="model">capital.position</field>
+        <field name="arch" type="xml">
+            <form string="Position">
+                <sheet>
+                    <div class="we_button_box" name="button_box">
+                        <button name="action_open_evidence" type="object" class="we_stat_button" icon="fa-shield">
+                            <field name="evidence_count" widget="statinfo" string="Evidence"/>
+                        </button>
+                    </div>
+                    <div class="we_title">
+                        <h1><field name="symbol" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="portfolio_id"/>
+                            <field name="instrument_id"/>
+                            <field name="exchange"/>
+                            <field name="quantity"/>
+                            <field name="average_cost" widget="monetary"/>
+                            <field name="currency_id"/>
+                        </group>
+                        <group>
+                            <field name="last_price" widget="monetary"/>
+                            <field name="price_as_of"/>
+                            <field name="mark_status"/>
+                            <field name="price_source"/>
+                            <field name="evidence_hash"/>
+                            <field name="evidence_document_id"/>
+                        </group>
+                    </group>
+                    <group string="Valuation">
+                        <group>
+                            <field name="fx_rate_id"/>
+                            <field name="fx_rate_as_of"/>
+                            <field name="portfolio_currency_id"/>
+                        </group>
+                        <group>
+                            <field name="market_value" widget="monetary"/>
+                            <field name="base_market_value"/>
+                            <field name="unrealised_pnl" widget="monetary"/>
+                            <field name="decision_case_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_capital_position" model="ir.actions.act_window">
+        <field name="name">Positions</field>
+        <field name="res_model">capital.position</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_capital_alert_rule_list" model="ir.ui.view">
+        <field name="name">capital.alert.rule.list</field>
+        <field name="model">capital.alert.rule</field>
+        <field name="arch" type="xml">
+            <list string="Alert Rules">
+                <field name="name"/>
+                <field name="portfolio_id"/>
+                <field name="symbol"/>
+                <field name="kind"/>
+                <field name="threshold"/>
+                <field name="user_id"/>
+                <field name="triggered" widget="boolean_toggle" readonly="1"/>
+                <field name="last_triggered_on"/>
+                <field name="last_triggered_value" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_capital_alert_rule" model="ir.actions.act_window">
+        <field name="name">Alert Rules</field>
+        <field name="res_model">capital.alert.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Define your first alert rule</p>
+            <p>An alert is a threshold breach, not a recommendation. It raises an activity
+               so a human decides whether a decision case is warranted.</p>
+        </field>
+    </record>
+
+    <record id="action_capital_market_data_health" model="ir.actions.server">
+        <field name="name">Market Data Health</field>
+        <field name="model_id" ref="model_capital_market_data"/>
+        <field name="state">code</field>
+        <field name="code">action = env['capital.market.data'].action_health_status()</field>
+    </record>
+
+    <menuitem id="menu_capital_root" name="Capital Markets" web_icon="insilos_capital_markets_decision_governance,static/description/icon.svg" sequence="95"/>
+    <menuitem id="menu_capital_portfolio" name="Portfolios" parent="menu_capital_root" action="action_capital_portfolio" sequence="10"/>
+    <menuitem id="menu_capital_position" name="Positions" parent="menu_capital_root" action="action_capital_position" sequence="20"/>
+    <menuitem id="menu_capital_alert_rule" name="Alert Rules" parent="menu_capital_root" action="action_capital_alert_rule" sequence="30"/>
+    <menuitem id="menu_capital_market_data_health" name="Market Data Health" parent="menu_capital_root"
+              action="action_capital_market_data_health" groups="insilos_capital_markets_decision_governance.group_governance_admin" sequence="90"/>
+
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_task_form2_inherit_hse" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.hse</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_check_safety_permits" string="Check HSE Safety Permits" type="object" class="btn-secondary" icon="fa-shield" invisible="not has_hazardous_materials"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_sds_cards" type="object" class="w_stat_button" icon="fa-flask" invisible="not has_hazardous_materials">
+                    <div class="w_stat_info">
+                        <span class="w_stat_text">SDS &amp; GHS</span>
+                        <span class="w_stat_text text-warning fw-bold">An toàn</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//sheet/group" position="before">
+                <field name="has_hazardous_materials" invisible="1"/>
+                <field name="permit_warning" invisible="1"/>
+                <div class="alert alert-danger mb-3" role="alert" invisible="not permit_warning">
+                    <i class="fa fa-exclamation-triangle me-2"/>
+                    <field name="permit_warning" readonly="1" class="fw-bold"/>
+                </div>
+            </xpath>
+            <xpath expr="//group//field[@name='user_ids']" position="after">
+                <field name="hse_facility_id" placeholder="Select HSE Facility..."/>
+                <field name="chemical_substance_ids" widget="many2many_tags" invisible="not has_hazardous_materials" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

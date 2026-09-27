@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.1",
+  "generated_at_utc": "2026-09-05T16:08:46Z",
+  "run_started_at_utc": "2026-09-05T15:57:38Z",
+  "run_ended_at_utc": "2026-09-05T16:08:46Z",
+  "start_ns": 1787466372321813331,
+  "end_ns": 1787467928341344380,
+  "elapsed_ns": 1556019531049,
+  "limit_ns": 14400000000000,
+  "within_4h": true,
+  "environment": {
+    "scope": "SOLO_DEV_LOCAL",
+    "database": "insilos_migration_digiforce_v2",
+    "module": "insilos_logistics_idp",
+    "module_version": "19.0.1.3.11",
+    "non_production": true,
+    "external_calls": false
+  },
+  "commit_sha": "bcbca5c3376a4e95f39464a1e3bc12b090cff5d5",
+  "scope": [
+    "WP0",
+    "WP1",
+    "WP2",
+    "WP3",
+    "WP4",
+    "security_hardening"
+  ],
+  "exclusions": [
+    "WP5 durable activation",
+    "TC-GOV-006 completion",
+    "production",
+    "deployment",
+    "external authority/provider calls",
+    "legal certification",
+    "tariff",
+    "sanctions",
+    "FTA qualification",
+    "export control"
+  ],
+  "artifact_type": "tc_gov_security_negative",
+  "status": "PASS_SCOPED_WITH_ACTIVATION_CONTAINED",
+  "commands": [
+    "python3 tools/with_local_credentials.py --solo-dev-db -- python3 insilos/insilos-bin -c insilos.conf -d insilos_migration_digiforce_v2 --test-enable --stop-after-init --workers=0 --max-cron-threads=0 --addons-path=insilos/addons,insilos/apps --http-port=18179 --log-level=test --test-tags /insilos_logistics_idp:TestLogisticsIdpSecurity",
+    "python3 tools/with_local_credentials.py --solo-dev-db -- python3 insilos/insilos-bin -c insilos.conf -d insilos_migration_digiforce_v2 --test-enable --stop-after-init --workers=0 --max-cron-threads=0 --addons-path=insilos/addons,insilos/apps --http-port=18179 --log-level=test --test-tags /insilos_logistics_idp:TestLogisticsIdpConfiguration"
+  ],
+  "requirements": [
+    "TC-GOV-001",
+    "TC-GOV-002",
+    "TC-GOV-008"
+  ],
+  "expected": {
+    "unauthorized_import": "blocked",
+    "cross_company": "blocked",
+    "fake_evidence_ids": "blocked",
+    "activation_all_users_tiers": "blocked",
+    "raw_secrets_or_pii": 0,
+    "orphan_records": 0
+  },
+  "actual": {
+    "security_tests_passed": 14,
+    "security_tests_failed": 0,
+    "negative_paths": [
+      "operator/reviewer/integration import denied",
+      "cross-company context denied before normalization",
+      "fake document/run mismatch denied",
+      "unsafe citation denied",
+      "oversize/malformed/unknown fields denied",
+      "auditor mutation denied",
+      "snapshot fabrication denied",
+      "all users and authority tiers activation denied",
+      "retire privilege/class/state enforced"
+    ],
+    "orphan_records": 0,
+    "redaction": {
+      "raw_payloads": "omitted",
+      "pii": "omitted",
+      "secrets": "omitted",
+      "local_quarantine_paths": "omitted"
+    },
+    "concurrency": {
+      "focused_class_selected": true,
+      "framework_selected_tests_total": 30,
+      "activation_concurrency": "not implemented; fail-closed containment"
+    },
+    "local_captures": {
+      "security": {
+        "passed": 31,
+        "failed": 0,
+        "errors": 0,
+        "total": 31
+      },
+      "configuration": {
+        "passed": 52,
+        "failed": 0,
+        "errors": 0,
+        "total": 52
+      }
+    }
+  },
+  "run": {
+    "passed": 14,
+    "failed": 0
+  },
+  "cumulative": {
+    "focused_suite_passed": 30,
+    "focused_suite_failed": 0
+  },
+  "failures": [],
+  "blockers": [
+    "BLOCKED_APPROVED_POLICY_DATASET for legally approved content and independent oracle; G5 concurrency mechanism passed"
+  ],
+  "artifact_sha256_scope": "canonical JSON excluding artifact_sha256",
+  "artifact_sha256": "5f1cecee90fe8e9976c6d952b88b6718f070b8cbceab0a7e3ddeede0c6838e15",
+  "worktree_dirty": true,
+  "worktree_hash_scope": "module_excluding_tc_gov_artifacts",
+  "worktree_status_sha256": "861aabcfa96f837ae84dfbfda9736b67195d71b34eb851f2436b7cf74c4eaf81",
+  "worktree_diff_sha256": "d8fd2bc77312d996fb191cceea4d8879e6e5cc6fd24eedf4d71a55407ae79965",
+  "source_sha256": {
+    "__manifest__.py": "a9fd00b4a72b4fd33938e5fe46638df347052a19e29fa97cac025dfafd6a06a0",
+    "models/logistics_idp.py": "b251d395d45c455b0e9e30455e35aecd41d6aa9951423c3f66fa79d8da55e99a",
+    "tests/test_logistics_idp_configuration.py": "be5318a215558bac7be457a4d14badee08374fcc2685ad21724b4411b6d339db",
+    "tests/test_logistics_idp_security.py": "91fcb9f93c974d77cb9320b678c99b02f9b12f5f0578dc1cb2eb5774bb6fa11d"
+  }
+}

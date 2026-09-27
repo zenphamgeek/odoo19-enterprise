@@ -14,7 +14,7 @@
                             <p class="m-0">Set up to calculate taxes and issue electronic invoices with Avalara AvaTax Brazil.</p>
                             <ul>
                                 <li>
-                                    The Avatax portal email is used to create an Avalara account from Odoo. Complete the account setup in the
+                                    The Avatax portal email is used to create an Avalara account from Insilos. Complete the account setup in the
                                     <t invisible="l10n_br_avalara_environment != 'sandbox'">
                                         <a target="_blank" href="https://portal.sandbox.avalarabrasil.com.br">sandbox Avalara portal</a>.
                                     </t>
@@ -24,8 +24,8 @@
                                     Click <i>Meu primeiro acesso</i>, enter the email used here, and request a password.
                                 </li>
                                 <li>Accounts in sandbox and production are independent. Create a new account in each environment when needed. It is not recommended to use sandbox credentials on a production database.</li>
-                                <li>Finish the Avalara setup before using Odoo.</li>
-                                <li>See <a target="_blank" href="https://www.odoo.com/documentation/latest/applications/finance/fiscal_localizations/brazil.html">the Odoo documentation</a> for detailed setup instructions and the onboarding process.</li>
+                                <li>Finish the Avalara setup before using Insilos.</li>
+                                <li>See <a target="_blank" href="https://www.insilos.com/documentation/latest/applications/finance/fiscal_localizations/brazil.html">the Insilos documentation</a> for detailed setup instructions and the onboarding process.</li>
                             </ul>
                         </div>
                     </setting>
@@ -50,7 +50,7 @@
                                     <button name="create_account" type="object" class="btn-link" noSaveDialog="1"
                                             invisible="not l10n_br_avatax_show_overwrite_warning"
                                             groups="base.group_no_one"
-                                            confirm="Creating a new account will permanently remove your current Avatax account from Odoo, but it won't delete the account on the Avatax side. Do you wish to proceed?">
+                                            confirm="Creating a new account will permanently remove your current Avatax account from Insilos, but it won't delete the account on the Avatax side. Do you wish to proceed?">
                                         <i title="Create a new account" role="img" aria-label="Create a new account"
                                            class="fa fa-plug fa-fw"/>
                                         Create a new account
@@ -93,7 +93,7 @@
                         <div groups="base.group_no_one">
                             <span class="o_form_label">Transfer Avalara API credentials</span>
                             <div class="text-muted">
-                                Use this only when you already created an Avalara account in another Odoo database or company and wish to reuse it.
+                                Use this only when you already created an Avalara account in another Insilos database or company and wish to reuse it.
                             </div>
                             <div class="content-group">
                                 <div class="row">

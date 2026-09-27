@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_treasury_ic_pack_task_form" model="ir.ui.view">
+        <field name="name">project.task.treasury.ic.pack.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Treasury IC Pack" name="treasury_ic_pack">
+                    <group><group><field name="treasury_decision_value"/><field name="treasury_decision_currency_id"/><field name="treasury_recommendation"/><field name="treasury_alternatives"/></group><group><field name="treasury_independent_challenge"/><field name="treasury_assumptions_unknowns"/><field name="treasury_evidence_references"/></group></group>
+                    <field name="treasury_scorecard_json"/>
+                    <group string="Dual Signature"><field name="treasury_sign_status" readonly="1"/><field name="treasury_sign_request_count" readonly="1"/><field name="treasury_signer_count" readonly="1"/></group>
+                    <field name="treasury_approval_request_ids"><list><field name="name"/><field name="category_id"/><field name="request_status"/></list></field>
+                </page>
+            </xpath>
+            <xpath expr="//header" position="inside"><button name="action_generate_treasury_ic_pack" type="object" string="Generate IC Pack"/><button name="action_send_treasury_ic_pack_for_signature" type="object" string="Send IC Pack for Signature"/></xpath>
+        </field>
+    </record>
+    <record id="view_treasury_ic_pack_approval_form" model="ir.ui.view">
+        <field name="name">approval.request.treasury.case.form</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='request_main']" position="inside"><field name="treasury_task_id"/></xpath></field>
+    </record>
+    <record id="view_generate_treasury_ic_pack_wizard" model="ir.ui.view">
+        <field name="name">treasury.generate.ic.pack.wizard.form</field><field name="model">treasury.generate.ic.pack.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate IC Pack"><group><field name="task_id"/></group><footer><button name="action_generate" type="object" string="Generate" class="btn-primary"/><button string="Cancel" special="cancel"/></footer></form></field>
+    </record>
+    <record id="action_generate_treasury_ic_pack" model="ir.actions.act_window"><field name="name">Generate IC Pack</field><field name="res_model">treasury.generate.ic.pack.wizard</field><field name="view_mode">form</field><field name="target">new</field><field name="context">{'default_task_id': active_id}</field></record>
+</odoo>

@@ -72,7 +72,7 @@ class L10n_AuPayrollRegister(models.TransientModel):
         compute="_compute_attachment_ids",
         help="Attachments provided by the user to support the registration.",
     )
-    odoo_disclaimer_check = fields.Boolean(string="I have read and signed Odoo Terms and Conditions provided")
+    odoo_disclaimer_check = fields.Boolean(string="I have read and signed Insilos Terms and Conditions provided")
     superchoice_dda_check = fields.Boolean(string="I have read and signed Super Choice FSG PDS DDA provided")
 
     # -------------------------------------------------------------------------

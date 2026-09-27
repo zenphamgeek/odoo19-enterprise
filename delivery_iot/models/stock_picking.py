@@ -14,10 +14,10 @@ class StockPickingType(models.Model):
     )
     auto_print_carrier_labels = fields.Boolean(
         "Auto Print Carrier Labels",
-        help="If this checkbox is ticked, Odoo will automatically print the carrier labels of the picking when they are created. Note this requires a printer to be assigned to this report.")
+        help="If this checkbox is ticked, Insilos will automatically print the carrier labels of the picking when they are created. Note this requires a printer to be assigned to this report.")
     auto_print_export_documents = fields.Boolean(
         "Auto Print Export Documents",
-        help="If this checkbox is ticked, Odoo will automatically print the export documents of the picking when they are created. Availability of export documents depends on the carrier and the destination. Note this requires a printer to be assigned to this report. ")
+        help="If this checkbox is ticked, Insilos will automatically print the export documents of the picking when they are created. Availability of export documents depends on the carrier and the destination. Note this requires a printer to be assigned to this report. ")
 
 
 class StockPicking(models.Model):

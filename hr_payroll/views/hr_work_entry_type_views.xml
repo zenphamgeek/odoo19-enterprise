@@ -25,11 +25,11 @@
         <field name="model">hr.work.entry.type</field>
         <field name="inherit_id" ref="hr_work_entry.hr_work_entry_type_view_form"/>
         <field name="arch" type="xml">
-            <group name="time_off" position="after">
+            <xpath expr="//page[@id='work_entry_payroll_tab']" position="inside">
                 <group string="Reporting" class="o_form_fw_labels">
                     <field name="is_unforeseen"/>
                 </group>
-            </group>
+            </xpath>
         </field>
     </record>
 </odoo>

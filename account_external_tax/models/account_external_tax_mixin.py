@@ -17,7 +17,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
     is_tax_computed_externally = fields.Boolean(
         compute='_compute_is_tax_computed_externally',
-        help='Technical field to determine if tax is calculated using an external service instead of Odoo.'
+        help='Technical field to determine if tax is calculated using an external service instead of Insilos.'
     )
 
     # Methods to be extended by tax calculation integrations (e.g. Avatax)

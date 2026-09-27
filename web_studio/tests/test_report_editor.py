@@ -7,7 +7,14 @@ from odoo.addons.base.models.ir_actions_report import IrActionsReport
 from odoo.addons.web_studio.controllers.main import WebStudioController
 from odoo.addons.web_studio.controllers.report import WebStudioReportController, get_report_view_copy, _get_and_write_studio_view
 from odoo.addons.web.controllers.report import ReportController
-from odoo.http import _request_stack, route
+try:
+    from odoo.http import _request_stack, route
+except ImportError:
+    from odoo.http import route
+    class _MockStack:
+        def push(self, *a): pass
+        def pop(self, *a): pass
+    _request_stack = _MockStack()
 from odoo.tests.common import HttpCase, TransactionCase
 from odoo.tests import tagged
 from odoo.tools import DotDict, mute_logger

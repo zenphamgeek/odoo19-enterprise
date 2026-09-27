@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         PRE-CONFIGURED CHANNELS
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="channel_gmail_push" model="is.pubsub.channel">
+        <field name="name">Gmail Real-Time Push Notifications</field>
+        <field name="channel_type">gmail_push</field>
+        <field name="sequence">1</field>
+        <field name="gcp_project_id">project-3e385278-cd08-450</field>
+        <field name="topic_name">gmail-notifications</field>
+        <field name="subscription_name">gmail-notifications-sub</field>
+        <field name="monitored_email">inteligentsilos@gmail.com</field>
+        <field name="state">active</field>
+        <field name="last_status_message">Connected to Google Cloud Pub/Sub — Gmail Watch active.</field>
+        <field name="auto_renew_watch" eval="True"/>
+    </record>
+
+    <record id="channel_hermes_event_bus" model="is.pubsub.channel">
+        <field name="name">Hermes AI Agent Event Bus</field>
+        <field name="channel_type">hermes_event_bus</field>
+        <field name="sequence">2</field>
+        <field name="gcp_project_id">project-3e385278-cd08-450</field>
+        <field name="topic_name">hermes-agent-events</field>
+        <field name="subscription_name">hermes-events-sub</field>
+        <field name="monitored_email">inteligentsilos@gmail.com</field>
+        <field name="state">active</field>
+        <field name="last_status_message">Hermes Agent connected — AI analysis pipeline operational.</field>
+    </record>
+
+    <record id="channel_outbound_erp" model="is.pubsub.channel">
+        <field name="name">Outbound ERP Event Stream</field>
+        <field name="channel_type">outbound_topic</field>
+        <field name="sequence">3</field>
+        <field name="gcp_project_id">project-3e385278-cd08-450</field>
+        <field name="topic_name">erp-outbound-events</field>
+        <field name="subscription_name">erp-outbound-sub</field>
+        <field name="state">active</field>
+        <field name="last_status_message">Outbound event publisher ready.</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         PRE-CONFIGURED AUTOMATION RULES
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="rule_auto_route_crm" model="is.pubsub.automation.rule">
+        <field name="name">Auto-Route Quotation Inquiries → CRM Leads</field>
+        <field name="sequence">1</field>
+        <field name="event_type_filter">email.inbound.crm_lead</field>
+        <field name="action_type">route_model</field>
+        <field name="target_model">crm.lead</field>
+        <field name="call_forward_enabled" eval="False"/>
+        <field name="telegram_alert_enabled" eval="True"/>
+        <field name="telegram_chat_id">1431349185</field>
+        <field name="state">active</field>
+    </record>
+
+    <record id="rule_forward_to_hermes" model="is.pubsub.automation.rule">
+        <field name="name">Forward All Events → Hermes AI Agent</field>
+        <field name="sequence">5</field>
+        <field name="event_type_filter">all</field>
+        <field name="action_type">call_forward</field>
+        <field name="call_forward_enabled" eval="True"/>
+        <field name="forward_url">http://10.123.214.1:5678/webhook/ingest</field>
+        <field name="forward_http_method">POST</field>
+        <field name="forward_timeout_sec">10</field>
+        <field name="telegram_alert_enabled" eval="False"/>
+        <field name="state">active</field>
+    </record>
+
+    <record id="rule_telegram_urgent" model="is.pubsub.automation.rule">
+        <field name="name">Telegram Alert — High Priority &amp; Urgent Events</field>
+        <field name="sequence">10</field>
+        <field name="event_type_filter">all</field>
+        <field name="keyword_filter">URGENT,HIGH,critical,compliance</field>
+        <field name="action_type">telegram_alert</field>
+        <field name="call_forward_enabled" eval="False"/>
+        <field name="telegram_alert_enabled" eval="True"/>
+        <field name="telegram_chat_id">1431349185</field>
+        <field name="state">active</field>
+    </record>
+
+    <record id="rule_sds_compliance" model="is.pubsub.automation.rule">
+        <field name="name">Chemical SDS → HSE Compliance Auto-Register</field>
+        <field name="sequence">15</field>
+        <field name="event_type_filter">email.inbound.chemical_sds</field>
+        <field name="action_type">multi_action</field>
+        <field name="target_model">is.hse.sds</field>
+        <field name="call_forward_enabled" eval="True"/>
+        <field name="forward_url">http://10.123.214.1:5678/webhook/sds-compliance</field>
+        <field name="forward_http_method">POST</field>
+        <field name="telegram_alert_enabled" eval="True"/>
+        <field name="telegram_chat_id">1431349185</field>
+        <field name="state">active</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SAMPLE EVENT LOGS (showing event lifecycle)
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="demo_event_crm_lead" model="is.pubsub.event.log">
+        <field name="event_id">demo-evt-crm-001</field>
+        <field name="event_type">email.inbound.crm_lead</field>
+        <field name="source">gmail.pubsub</field>
+        <field name="state">processed</field>
+        <field name="priority">HIGH</field>
+        <field name="sender_email">procurement@hapag-lloyd.com</field>
+        <field name="sender_name">Hapag-Lloyd Procurement</field>
+        <field name="subject">RFQ: Chemical Logistics Container Rate 40HC HCM → Hamburg</field>
+        <field name="ai_summary">Quotation request for 40HC container shipping rate from Ho Chi Minh City to Hamburg. Estimated 25 TEU monthly volume. Requested transit time &lt;28 days.</field>
+        <field name="target_model">crm.lead</field>
+    </record>
+
+    <record id="demo_event_vendor_quote" model="is.pubsub.event.log">
+        <field name="event_id">demo-evt-vendor-002</field>
+        <field name="event_type">email.inbound.vendor_quote</field>
+        <field name="source">gmail.pubsub</field>
+        <field name="state">processed</field>
+        <field name="priority">NORMAL</field>
+        <field name="sender_email">sales@basf.com</field>
+        <field name="sender_name">BASF Chemical Distribution</field>
+        <field name="subject">Price Revision: Toluene CAS 108-88-3 — Q3/2026 Contract</field>
+        <field name="ai_summary">Updated pricing for Toluene (CAS 108-88-3), $780/MT CFR HCMC, MOQ 20MT, validity until Sep 30, 2026. GHS02 flammable liquid.</field>
+    </record>
+
+    <record id="demo_event_sds" model="is.pubsub.event.log">
+        <field name="event_id">demo-evt-sds-003</field>
+        <field name="event_type">email.inbound.chemical_sds</field>
+        <field name="source">hermes-agent-event-bus</field>
+        <field name="state">processed</field>
+        <field name="priority">NORMAL</field>
+        <field name="sender_email">compliance@dow.com</field>
+        <field name="sender_name">Dow Chemical Compliance</field>
+        <field name="subject">SDS Update: Methanol CAS 67-56-1 — GHS Rev 8</field>
+        <field name="ai_summary">Safety Data Sheet revision 8 for Methanol. Updated first-aid measures and fire-fighting procedures per GHS Rev 8. GHS02, GHS06, GHS08.</field>
+    </record>
+
+    <record id="demo_event_logistics" model="is.pubsub.event.log">
+        <field name="event_id">demo-evt-logistics-004</field>
+        <field name="event_type">email.inbound.logistics_idp</field>
+        <field name="source">hermes-agent-event-bus</field>
+        <field name="state">processed</field>
+        <field name="priority">HIGH</field>
+        <field name="sender_email">docs@maersk.com</field>
+        <field name="sender_name">Maersk Shipping Documentation</field>
+        <field name="subject">B/L MAEU-2026081234 — Container TRIU-4567890 — HCM → Rotterdam</field>
+        <field name="ai_summary">Bill of Lading for container TRIU-4567890, 40HC carrying 22MT Ethanol (HS 2207.10), sailing date 2026-08-25, ETA Rotterdam 2026-09-22.</field>
+    </record>
+
+    <record id="demo_event_invoice" model="is.pubsub.event.log">
+        <field name="event_id">demo-evt-inv-006</field>
+        <field name="event_type">finance.inbound.invoice</field>
+        <field name="source">hermes-agent-event-bus</field>
+        <field name="state">processed</field>
+        <field name="priority">HIGH</field>
+        <field name="sender_email">billing@vopak.com</field>
+        <field name="sender_name">Vopak Terminal Vietnam</field>
+        <field name="subject">E-Invoice #VPK-2026-0899 — Bulk Liquid Storage Fee August 2026</field>
+        <field name="ai_summary">Vendor bill from Vopak for bulk chemical storage terminal capacity. Total Amount: $45,000 USD (VAT 10% included). Due Date: 2026-09-15. Bank: CitiBank HCMC.</field>
+        <field name="target_model">account.move</field>
+    </record>
+
+    <record id="demo_event_payment" model="is.pubsub.event.log">
+        <field name="event_id">demo-evt-pay-007</field>
+        <field name="event_type">finance.inbound.payment_advice</field>
+        <field name="source">gmail.pubsub</field>
+        <field name="state">processed</field>
+        <field name="priority">NORMAL</field>
+        <field name="sender_email">treasury@petrovietnam.vn</field>
+        <field name="sender_name">PetroVietnam Gas Treasury</field>
+        <field name="subject">Payment Remittance Advice: Ref TXN-9982314 — $120,500 USD</field>
+        <field name="ai_summary">Wire transfer confirmation for ISO Tank delivery contract #PVG-2026-044. Amount: $120,500 USD transferred to Insilos Operating Account at Vietcombank.</field>
+    </record>
+
+    <record id="demo_event_customs" model="is.pubsub.event.log">
+        <field name="event_id">demo-evt-customs-008</field>
+        <field name="event_type">logistics.customs.declaration</field>
+        <field name="source">hermes-agent-event-bus</field>
+        <field name="state">processed</field>
+        <field name="priority">HIGH</field>
+        <field name="sender_email">vnaccs-gateway@customs.gov.vn</field>
+        <field name="sender_name">Vietnam Customs VNACCS Gateway</field>
+        <field name="subject">Customs Clearance Clearance Notice: TKHQ 105882910030 / Cat Lai Port</field>
+        <field name="ai_summary">VNACCS Green Channel clearance approved for Declaration #105882910030, 50MT Propylene Glycol USP, Duty Rate: 0% (VKFTA), Customs Sub-department Zone II Cat Lai.</field>
+        <field name="target_model">logistics.idp.case</field>
+    </record>
+
+    <record id="demo_event_cems" model="is.pubsub.event.log">
+        <field name="event_id">demo-evt-cems-009</field>
+        <field name="event_type">esg.emissions.cems_alert</field>
+        <field name="source">custom-webhook</field>
+        <field name="state">processed</field>
+        <field name="priority">URGENT</field>
+        <field name="sender_email">cems-telemetry@plant-dinhvu.vn</field>
+        <field name="sender_name">Dinh Vu Facility CEMS Telemetry</field>
+        <field name="subject">CRITICAL ALERT: Stack #2 SO2 Exceedance (485 mg/Nm3 vs Limit 400 mg/Nm3)</field>
+        <field name="ai_summary">CEMS Continuous Emission Monitoring sensor #2 recorded SO2 concentration at 485 mg/Nm3 for 18 consecutive minutes, exceeding QCVN 19:2009/BTNMT column B limit (400 mg/Nm3). Auto-CAPA task dispatched.</field>
+        <field name="target_model">project.task</field>
+    </record>
+
+    <record id="demo_event_failed" model="is.pubsub.event.log">
+        <field name="event_id">demo-evt-failed-005</field>
+        <field name="event_type">general.event</field>
+        <field name="source">custom-webhook</field>
+        <field name="state">failed</field>
+        <field name="priority">LOW</field>
+        <field name="sender_email">noreply@partner-system.com</field>
+        <field name="sender_name">Partner Webhook</field>
+        <field name="subject">Unrecognized Event Type — partner.inventory.sync</field>
+        <field name="ai_summary">Event could not be routed: unknown event_type partner.inventory.sync. Requires manual rule configuration.</field>
+        <field name="error_message">No matching workflow route for event_type 'partner.inventory.sync'. Event logged for manual review.</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SAMPLE OUTBOUND RULE
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <record id="outbound_rule_crm_created" model="is.pubsub.outbound.rule">
+        <field name="name">Notify Hermes Agent on New CRM Leads</field>
+        <field name="sequence">1</field>
+        <field name="model_name">crm.lead</field>
+        <field name="trigger_action">create</field>
+        <field name="target_url">http://10.123.214.1:5678/webhook/erp-events</field>
+        <field name="http_method">POST</field>
+        <field name="max_retries">3</field>
+        <field name="include_full_record" eval="True"/>
+    </record>
+
+</odoo>

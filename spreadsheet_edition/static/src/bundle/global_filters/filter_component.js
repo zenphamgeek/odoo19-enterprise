@@ -4,8 +4,8 @@ import { Component, onWillStart, onWillUnmount } from "@odoo/owl";
 import { getFacetInfo } from "@spreadsheet/global_filters/helpers";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { useService } from "@web/core/utils/hooks";
-import { FilterValuesList } from "@spreadsheet/global_filters/components/filter_values_list/filter_values_list";
 import { Dialog } from "@web/core/dialog/dialog";
+import { FilterValuesList } from "./filter_values_list";
 
 const { Menu } = spreadsheet;
 

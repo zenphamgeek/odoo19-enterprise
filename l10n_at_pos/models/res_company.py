@@ -14,7 +14,7 @@ class ResCompany(models.Model):
     l10n_at_fiskaly_api_secret = fields.Char(string="Fiskaly API Secret (AUT)", copy=False)
     l10n_at_fiskaly_access_token = fields.Char(string="API Access Token", copy=False)
     l10n_at_fiskaly_organization_id = fields.Char(string="Fiskaly organization identifier", copy=False)
-    l10n_at_is_odoo_managed_org = fields.Boolean(string="Managed By Odoo", default=True, copy=False)
+    l10n_at_is_odoo_managed_org = fields.Boolean(string="Managed By Insilos", default=True, copy=False)
     # FON fields
     l10n_at_fon_participant_id = fields.Char(string="Participation Identifier", copy=False)
     l10n_at_fon_user_id = fields.Char(string="User Identifier", copy=False)

@@ -1,0 +1,61 @@
+<odoo>
+    <record id="view_preferential_origin_scenario_list" model="ir.ui.view">
+        <field name="name">preferential.origin.scenario.list</field>
+        <field name="model">preferential.origin.scenario</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="recommendation_rank"/>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="explanation"/>
+                <field name="selected"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_preferential_origin_scenarios" model="ir.actions.act_window">
+        <field name="name">FTA Recommendations</field>
+        <field name="res_model">preferential.origin.scenario</field>
+        <field name="view_mode">list</field>
+    </record>
+    <record id="view_preferential_origin_working_paper_list" model="ir.ui.view">
+        <field name="name">preferential.origin.working.paper.list</field>
+        <field name="model">preferential.origin.working.paper</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="watermark"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_preferential_origin_working_paper_form" model="ir.ui.view">
+        <field name="name">preferential.origin.working.paper.form</field>
+        <field name="model">preferential.origin.working.paper</field>
+        <field name="arch" type="xml">
+            <form string="FTA Working Paper">
+                <sheet>
+                    <div class="alert alert-warning" role="alert">
+                        <field name="watermark" readonly="1"/>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="assessment_id" readonly="1"/>
+                        <field name="template_id" readonly="1"/>
+                        <field name="state" readonly="1"/>
+                        <field name="missing_fields_json" readonly="1"/>
+                    </group>
+                    <field name="values_json"/>
+                    <field name="lineage_json"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_preferential_origin_working_papers" model="ir.actions.act_window">
+        <field name="name">FTA Working Papers</field>
+        <field name="res_model">preferential.origin.working.paper</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_preferential_origin_root" name="Preferential Origin" sequence="90" action="action_preferential_origin_scenarios" web_icon="insilos_preferential_origin,static/description/icon.svg"/>
+    <menuitem id="menu_preferential_origin_scenarios" name="FTA Recommendations" parent="menu_preferential_origin_root" action="action_preferential_origin_scenarios"/>
+    <menuitem id="menu_preferential_origin_working_papers" name="FTA Working Papers" parent="menu_preferential_origin_root" action="action_preferential_origin_working_papers"/>
+</odoo>

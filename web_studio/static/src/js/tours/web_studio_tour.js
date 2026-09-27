@@ -134,7 +134,7 @@ registry.category("web_tour.tours").add("web_studio_new_app_tour", {
             trigger: ".o_web_studio_leave",
             content: markup(
                 _t(
-                    "Let's check the result. Close Odoo Studio to get an <b>overview of your app</b>."
+                    "Let's check the result. Close Insilos Studio to get an <b>overview of your app</b>."
                 )
             ),
             tooltipPosition: "left",
@@ -158,7 +158,7 @@ registry.category("web_tour.tours").add("web_studio_new_app_tour", {
             trigger: ".o_web_studio_navbar_item",
             content: markup(
                 _t(
-                    "Wow, nice! And I'm sure you can make it even better! Use this icon to open <b>Odoo Studio</b> and customize any screen."
+                    "Wow, nice! And I'm sure you can make it even better! Use this icon to open <b>Insilos Studio</b> and customize any screen."
                 )
             ),
             tooltipPosition: "bottom",

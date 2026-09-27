@@ -511,10 +511,11 @@ class KnowledgeArticle(models.Model):
             is not member with 'none' access
         """
         KnowledgeArticle = self.env["knowledge.article"]
-        # The ORM will optimize the domain leaf
-        # before calling the search method:
-        # = True | != False -> in [True]
-        # != True | = False -> not in [True]
+        if operator in ('=', '!='):
+            if (operator == '=' and value) or (operator == '!=' and not value):
+                operator = 'in'
+            else:
+                operator = 'not in'
         if operator not in ('in', 'not in'):
             return NotImplemented
 
@@ -554,12 +555,17 @@ class KnowledgeArticle(models.Model):
 
     def _search_user_has_write_access(self, operator, value):
         KnowledgeArticle = self.env["knowledge.article"]
+        if operator in ('=', '!='):
+            if (operator == '=' and value) or (operator == '!=' and not value):
+                operator = 'in'
+            else:
+                operator = 'not in'
         if operator not in ('in', 'not in'):
             return NotImplemented
 
         # share is never allowed to write
         if self.env.user.share:
-            return Domain(operator == 'in')
+            return [('id', '=', 0)] if operator == 'in' else []
 
         articles_with_access = KnowledgeArticle._get_internal_permission(filter_domain=[('internal_permission', '=', 'write')])
         member_permissions = KnowledgeArticle._get_partner_member_permissions(self.env.user.partner_id)
@@ -2467,7 +2473,9 @@ class KnowledgeArticle(models.Model):
             query = self.with_context(active_test=False)._search(filter_domain or [], bypass_access=True)
             where_clause = query.where_clause
             if where_clause:
-                where_clause = SQL(where_clause.code.replace(query.table, "article_perms"), *where_clause.params)
+                table_alias = query.table._alias if hasattr(query.table, '_alias') else str(query.table)
+                code = where_clause.code.replace(f'"{table_alias}"', '"article_perms"').replace(table_alias, "article_perms")
+                where_clause = SQL(code, *where_clause.params)
                 where_clause = SQL('WHERE %s', where_clause)
 
         return dict(self.env.execute_query(SQL('''

@@ -8,7 +8,7 @@
 Accounting Reports
 ==================
     """,
-    'depends': ['account_accountant'],
+    'depends': ['account_accountant', 'mail_tracking'],
     'data': [
         'security/account_reports_security.xml',
         'security/ir.model.access.csv',

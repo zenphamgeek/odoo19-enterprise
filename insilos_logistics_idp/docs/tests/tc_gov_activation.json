@@ -1,0 +1,167 @@
+{
+  "schema_version": "1.1",
+  "generated_at_utc": "2026-09-05T16:08:46Z",
+  "run_started_at_utc": "2026-09-05T15:57:38Z",
+  "run_ended_at_utc": "2026-09-05T16:08:46Z",
+  "start_ns": 1787466372321813331,
+  "end_ns": 1787467928341344380,
+  "elapsed_ns": 1556019531049,
+  "limit_ns": 14400000000000,
+  "within_4h": true,
+  "environment": {
+    "scope": "SOLO_DEV_LOCAL",
+    "database": "insilos_migration_digiforce_v2",
+    "module": "insilos_logistics_idp",
+    "module_version": "19.0.1.3.11",
+    "non_production": true,
+    "external_calls": false
+  },
+  "commit_sha": "bcbca5c3376a4e95f39464a1e3bc12b090cff5d5",
+  "worktree_dirty": true,
+  "worktree_hash_scope": "module_excluding_tc_gov_artifacts",
+  "worktree_diff_sha256": "d8fd2bc77312d996fb191cceea4d8879e6e5cc6fd24eedf4d71a55407ae79965",
+  "worktree_status_sha256": "861aabcfa96f837ae84dfbfda9736b67195d71b34eb851f2436b7cf74c4eaf81",
+  "source_sha256": {
+    "__manifest__.py": "a9fd00b4a72b4fd33938e5fe46638df347052a19e29fa97cac025dfafd6a06a0",
+    "models/logistics_idp.py": "b251d395d45c455b0e9e30455e35aecd41d6aa9951423c3f66fa79d8da55e99a",
+    "tests/test_logistics_idp_configuration.py": "be5318a215558bac7be457a4d14badee08374fcc2685ad21724b4411b6d339db",
+    "tests/test_logistics_idp_concurrency.py": "0098258e170b09abeac3aaa6af2680176d10357823efa8406f0898e6063f7ad4",
+    "tests/test_logistics_idp_security.py": "91fcb9f93c974d77cb9320b678c99b02f9b12f5f0578dc1cb2eb5774bb6fa11d"
+  },
+  "artifact_type": "tc_gov_activation",
+  "status": "BLOCKED_APPROVED_POLICY_DATASET",
+  "mechanism_status": "DONE_RUNTIME",
+  "content_status": "BLOCKED_APPROVED_POLICY_DATASET",
+  "activation_scope": {
+    "synthetic_authority_test_activation": true,
+    "vn_legal_activation": false
+  },
+  "commands": [
+    "python3 tools/with_local_credentials.py --solo-dev-db -- python3 insilos/insilos-bin -c insilos.conf -d insilos_migration_digiforce_v2 --test-enable --stop-after-init --workers=0 --max-cron-threads=0 --addons-path=insilos/addons,insilos/apps --http-port=18179 --log-level=test --test-tags /insilos_logistics_idp:TestLogisticsIdpConfiguration",
+    "python3 tools/with_local_credentials.py --solo-dev-db -- python3 insilos/insilos-bin -c insilos.conf -d insilos_migration_digiforce_v2 --test-enable --stop-after-init --workers=0 --max-cron-threads=0 --addons-path=insilos/addons,insilos/apps --http-port=18179 --log-level=test --test-tags /insilos_logistics_idp:TestLogisticsIdpSecurity"
+  ],
+  "requirements": [
+    "TC-GOV-006",
+    "TC-GOV-008"
+  ],
+  "actual": {
+    "focused_module_tests": {
+      "selected": 34,
+      "failed": 0,
+      "errors": 0
+    },
+    "full_module_tests": {
+      "selected": 84,
+      "failed": 0,
+      "errors": 0
+    },
+    "standalone_scripts": {
+      "executed": 1,
+      "failed": 0
+    },
+    "same_event_same_uuid": [
+      [
+        "ok",
+        53,
+        "activated"
+      ],
+      [
+        "ok",
+        53,
+        "activated"
+      ]
+    ],
+    "overlapping_candidates": [
+      [
+        "ok",
+        54,
+        "activated"
+      ],
+      [
+        "error",
+        "ValidationError: Activation binding is stale or overlapping active policies exist."
+      ]
+    ],
+    "database_invariants": "PASS",
+    "cleanup": "PASS",
+    "blocker_first": [
+      [
+        "ok",
+        11778,
+        "critical"
+      ],
+      [
+        "error",
+        "ValidationError: Activation binding is stale, mismatched, or has unresolved blockers."
+      ]
+    ],
+    "activation_first": [
+      [
+        "ok",
+        55,
+        "activated"
+      ],
+      [
+        "ok",
+        11779,
+        "high"
+      ]
+    ],
+    "activation_first_evidence_order": "activation_terminal.create_date <= exception.create_date",
+    "unrelated_low_medium_non_blocking": "PASS",
+    "approve_reject_same_envelope": [
+      [
+        "ok",
+        56,
+        "activated"
+      ],
+      [
+        "error",
+        "ValidationError: Activation envelope already has a conflicting terminal outcome."
+      ]
+    ],
+    "same_decision_replay": "same terminal event id",
+    "hardening": {
+      "passed": 28,
+      "total": 28
+    },
+    "module": {
+      "passed": 101,
+      "total": 101
+    },
+    "trade_configuration": {
+      "passed": 27,
+      "total": 27
+    },
+    "tier4": {
+      "passed": 12,
+      "total": 12
+    },
+    "local_captures": {
+      "configuration": {
+        "passed": 52,
+        "failed": 0,
+        "errors": 0,
+        "total": 52
+      },
+      "security": {
+        "passed": 31,
+        "failed": 0,
+        "errors": 0,
+        "total": 31
+      }
+    }
+  },
+  "run": {
+    "mechanism_passed": 1,
+    "failed": 0
+  },
+  "blockers": [
+    "BLOCKED_APPROVED_POLICY_DATASET"
+  ],
+  "artifact_sha256_scope": "canonical JSON excluding artifact_sha256",
+  "artifact_sha256": "b7b9fd83f76bc2652130e5e2d24a3c727b1c35b93cfead26ec22e849dbd31c6a",
+  "expected": {},
+  "failures": [],
+  "exclusions": []
+}

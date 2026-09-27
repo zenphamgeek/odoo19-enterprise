@@ -86,7 +86,7 @@ class StockPicking(models.Model):
                 'params': {
                     'title': _("Shipping Label Not Ready"),
                     'message': _(
-                        "Shopee is processing the shipping label. Odoo will try fetching the"
+                        "Shopee is processing the shipping label. Insilos will try fetching the"
                         " shipping label again later."
                     ),
                     'type': 'warning',

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_template_form_hse_compliance" model="ir.ui.view">
+            <field name="name">product.template.form.hse.compliance</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button name="action_view_hse_permits" type="object" class="w_stat_button" icon="fa-certificate" invisible="not is_hazardous_chemical and permit_count == 0">
+                        <field name="permit_count" widget="statinfo" string="Permits"/>
+                    </button>
+                </div>
+                <notebook position="inside">
+                    <page string="HSE &amp; Chemical Safety" name="hse_chemical_safety">
+                        <group>
+                            <group string="Hazardous Classification &amp; CAS">
+                                <field name="is_hazardous_chemical"/>
+                                <field name="chemical_substance_id"/>
+                                <field name="cas_number"/>
+                                <field name="un_number"/>
+                                <field name="sds_id"/>
+                            </group>
+                            <group string="GHS Hazard Labels &amp; Pictograms">
+                                <field name="ghs_signal_word"/>
+                                <field name="ghs_flammable"/>
+                                <field name="ghs_corrosive"/>
+                                <field name="ghs_toxic"/>
+                                <field name="ghs_health_hazard"/>
+                                <field name="ghs_environmental"/>
+                            </group>
+                        </group>
+                        <group string="Accompanying Permits &amp; Regulatory Licenses">
+                            <field name="permit_ids" widget="many2many_tags"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="product_template_search_hse_compliance" model="ir.ui.view">
+            <field name="name">product.template.search.hse.compliance</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="cas_number"/>
+                    <field name="chemical_substance_id"/>
+                </field>
+                <filter name="goods" position="after">
+                    <filter name="filter_hazardous_chemicals" string="Hazardous Chemicals" domain="[('is_hazardous_chemical', '=', True)]"/>
+                </filter>
+            </field>
+        </record>
+    </data>
+</odoo>

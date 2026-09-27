@@ -2,11 +2,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': "Studio",
-    'summary': "Create and customize your Odoo apps",
-    'website': 'https://www.odoo.com/app/studio',
+    'summary': "Create and customize your Insilos apps",
+    'website': 'https://insilos.com',
     'description': """
-Studio - Customize Odoo
-=======================
+Studio - Customize Insilos
+==========================
 
 This addon allows the user to customize most element of the user interface, in a
 simple and graphical way. It has two main features:

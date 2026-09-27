@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%" style="background: linear-gradient(135deg, #051824 0%, #083344 50%, #04202C 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="pharma-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06D6A0" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#118AB2" stop-opacity="0.5"/>
+    </linearGradient>
+    <linearGradient id="cyan-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="card-pharma" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E4455" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#082A36" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="gold-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#D97706" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="edge-pharma" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06D6A0" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#22D3EE" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow-pharma" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="shadow-pharma" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Pattern -->
+    <pattern id="grid-pharma" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#155E75" stroke-width="0.75" stroke-opacity="0.25"/>
+      <circle cx="40" cy="40" r="1.5" fill="#06D6A0" fill-opacity="0.3"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="960" height="540" fill="url(#grid-pharma)"/>
+
+  <!-- Ambient Light Orbs -->
+  <circle cx="220" cy="200" r="160" fill="#06D6A0" opacity="0.12" filter="url(#glow-pharma)"/>
+  <circle cx="740" cy="340" r="180" fill="#22D3EE" opacity="0.12" filter="url(#glow-pharma)"/>
+
+  <!-- Top Title Banner -->
+  <g transform="translate(60, 45)">
+    <rect x="0" y="0" width="840" height="44" rx="8" fill="#082A36" stroke="#0E7490" stroke-width="1.2" filter="url(#shadow-pharma)"/>
+    <circle cx="24" cy="22" r="6" fill="#06D6A0" filter="url(#glow-pharma)"/>
+    <text x="40" y="27" fill="#FFFFFF" font-size="14" font-weight="700" letter-spacing="1">INSILOS GxP OPERATIONAL AI &amp; BATCH PROCESS INTELLIGENCE</text>
+    <rect x="650" y="10" width="170" height="24" rx="12" fill="#064E3B" stroke="#06D6A0" stroke-width="1"/>
+    <text x="735" y="26" fill="#06D6A0" font-size="11" font-weight="600" text-anchor="middle">FDA 21 CFR PART 11 &amp; GAMP 5</text>
+  </g>
+
+  <!-- Flow Connecting Lines -->
+  <path d="M 240 200 L 360 200" stroke="#06D6A0" stroke-width="2.5" stroke-dasharray="6,4" opacity="0.8"/>
+  <path d="M 560 200 L 670 200" stroke="#22D3EE" stroke-width="2.5" stroke-dasharray="6,4" opacity="0.8"/>
+  <path d="M 460 290 L 460 350" stroke="#06D6A0" stroke-width="2" stroke-dasharray="4,4" opacity="0.7"/>
+
+  <!-- Node 1: Bioreactor & Process Analytical Technology (PAT) -->
+  <g transform="translate(60, 115)" filter="url(#shadow-pharma)">
+    <rect width="190" height="165" rx="12" fill="url(#card-pharma)" stroke="url(#edge-pharma)" stroke-width="1.5"/>
+    <rect x="15" y="15" width="34" height="34" rx="8" fill="#083344" stroke="#06D6A0" stroke-width="1"/>
+    <!-- Bioreactor / Flask Icon -->
+    <path d="M 28 22 L 36 22 M 32 22 L 32 30 L 24 40 L 40 40 L 32 30" stroke="#06D6A0" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <text x="60" y="30" fill="#FFFFFF" font-size="14" font-weight="700">PAT Telemetry</text>
+    <text x="60" y="44" fill="#67E8F9" font-size="10" font-weight="500">Bioreactor &amp; SCADA</text>
+
+    <line x1="15" y1="62" x2="175" y2="62" stroke="#155E75" stroke-width="0.8"/>
+    
+    <text x="15" y="82" fill="#E2E8F0" font-size="11">🔬 pH / DO / Glucose Drift</text>
+    <text x="150" y="82" fill="#06D6A0" font-size="10" font-weight="700">100Hz</text>
+    <text x="15" y="104" fill="#E2E8F0" font-size="11">🌡️ Cold-Chain Telemetry</text>
+    <text x="150" y="104" fill="#22D3EE" font-size="10" font-weight="700">-80°C</text>
+    <text x="15" y="126" fill="#E2E8F0" font-size="11">🧪 Critical Quality (CQA)</text>
+    <text x="150" y="126" fill="#F59E0B" font-size="10" font-weight="700">Auto</text>
+    <text x="15" y="148" fill="#E2E8F0" font-size="11">📋 LIMS &amp; MES Sync</text>
+    <text x="150" y="148" fill="#06D6A0" font-size="10" font-weight="700">Realtime</text>
+  </g>
+
+  <!-- Node 2: Golden Batch Analytics & Deviation Assistant -->
+  <g transform="translate(360, 105)" filter="url(#shadow-pharma)">
+    <rect width="200" height="185" rx="14" fill="#073B4C" stroke="#06D6A0" stroke-width="2"/>
+    <rect x="18" y="16" width="36" height="36" rx="8" fill="#0E4455" stroke="#F59E0B" stroke-width="1.2"/>
+    <!-- Golden Wave Chart Icon -->
+    <path d="M 26 36 Q 32 24 38 30 T 46 26" stroke="#F59E0B" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <text x="64" y="31" fill="#FFFFFF" font-size="15" font-weight="700">Golden Batch AI</text>
+    <text x="64" y="46" fill="#06D6A0" font-size="11" font-weight="600">Deviation &amp; Root Cause</text>
+
+    <line x1="18" y1="64" x2="182" y2="64" stroke="#155E75" stroke-width="0.8"/>
+
+    <g transform="translate(18, 76)">
+      <rect width="164" height="24" rx="6" fill="#0C4A60"/>
+      <text x="8" y="16" fill="#FFFFFF" font-size="11">Batch Consistency Index</text>
+      <text x="140" y="16" fill="#06D6A0" font-size="11" font-weight="700">99.4%</text>
+    </g>
+    <g transform="translate(18, 106)">
+      <rect width="164" height="24" rx="6" fill="#0C4A60"/>
+      <text x="8" y="16" fill="#FFFFFF" font-size="11">Yield Optimization Delta</text>
+      <text x="140" y="16" fill="#F59E0B" font-size="11" font-weight="700">+14.2%</text>
+    </g>
+    <g transform="translate(18, 136)">
+      <rect width="164" height="24" rx="6" fill="#0C4A60"/>
+      <text x="8" y="16" fill="#FFFFFF" font-size="11">Investigation Resolution</text>
+      <text x="140" y="16" fill="#22D3EE" font-size="11" font-weight="700">-70% time</text>
+    </g>
+  </g>
+
+  <!-- Node 3: ALCOA+ Data Integrity & Human Governance -->
+  <g transform="translate(670, 115)" filter="url(#shadow-pharma)">
+    <rect width="230" height="165" rx="12" fill="url(#card-pharma)" stroke="url(#edge-pharma)" stroke-width="1.5"/>
+    <rect x="16" y="15" width="34" height="34" rx="8" fill="#083344" stroke="#22D3EE" stroke-width="1"/>
+    <!-- Lock & Audit Trail Icon -->
+    <path d="M 28 28 L 28 25 A 5 5 0 0 1 38 25 L 38 28 M 25 28 L 41 28 L 41 41 L 25 41 Z" stroke="#22D3EE" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <text x="60" y="30" fill="#FFFFFF" font-size="14" font-weight="700">GxP Compliance</text>
+    <text x="60" y="44" fill="#22D3EE" font-size="10" font-weight="600">ALCOA+ &amp; Audit Trail</text>
+
+    <line x1="16" y1="62" x2="214" y2="62" stroke="#155E75" stroke-width="0.8"/>
+
+    <text x="16" y="82" fill="#E2E8F0" font-size="11">🔒 Electronic Signature (e-Sign)</text>
+    <text x="185" y="82" fill="#06D6A0" font-size="10" font-weight="700">21 CFR</text>
+    <text x="16" y="104" fill="#E2E8F0" font-size="11">📜 Immutable Batch Record</text>
+    <text x="185" y="104" fill="#22D3EE" font-size="10" font-weight="700">Audit-Ready</text>
+    <text x="16" y="126" fill="#E2E8F0" font-size="11">🧬 Provenance &amp; Raw Lineage</text>
+    <text x="185" y="126" fill="#06D6A0" font-size="10" font-weight="700">100%</text>
+    <text x="16" y="148" fill="#E2E8F0" font-size="11">👥 Dual Human Sign-off</text>
+    <text x="185" y="148" fill="#F59E0B" font-size="10" font-weight="700">Enforced</text>
+  </g>
+
+  <!-- Bottom Panel: Real-time Pharma KPIs -->
+  <g transform="translate(60, 360)" filter="url(#shadow-pharma)">
+    <rect width="840" height="135" rx="14" fill="#052430" stroke="#0E7490" stroke-width="1.2"/>
+    
+    <!-- KPI 1 -->
+    <g transform="translate(40, 25)">
+      <text x="0" y="18" fill="#67E8F9" font-size="12" font-weight="600">BATCH CONSISTENCY</text>
+      <text x="0" y="58" fill="#06D6A0" font-size="34" font-weight="800">99.9%</text>
+      <text x="0" y="80" fill="#94A3B8" font-size="11">Zero Golden Batch Drift</text>
+    </g>
+
+    <line x1="240" y1="20" x2="240" y2="115" stroke="#0E4455" stroke-width="1"/>
+
+    <!-- KPI 2 -->
+    <g transform="translate(280, 25)">
+      <text x="0" y="18" fill="#67E8F9" font-size="12" font-weight="600">DEVIATION INVESTIGATION</text>
+      <text x="0" y="58" fill="#FFFFFF" font-size="34" font-weight="800">-70%</text>
+      <text x="0" y="80" fill="#06D6A0" font-size="11">RCA Evidence Gathering</text>
+    </g>
+
+    <line x1="510" y1="20" x2="510" y2="115" stroke="#0E4455" stroke-width="1"/>
+
+    <!-- KPI 3 -->
+    <g transform="translate(550, 25)">
+      <text x="0" y="18" fill="#67E8F9" font-size="12" font-weight="600">ALCOA+ DATA INTEGRITY</text>
+      <text x="0" y="58" fill="#22D3EE" font-size="34" font-weight="800">100%</text>
+      <text x="0" y="80" fill="#94A3B8" font-size="11">Automated Audit Trail</text>
+    </g>
+
+    <line x1="740" y1="20" x2="740" y2="115" stroke="#0E4455" stroke-width="1"/>
+
+    <!-- KPI 4 -->
+    <g transform="translate(770, 25)">
+      <text x="0" y="18" fill="#67E8F9" font-size="12" font-weight="600">CLEANROOM AVAILABILITY</text>
+      <text x="0" y="58" fill="#F59E0B" font-size="34" font-weight="800">99.6%</text>
+      <text x="0" y="80" fill="#06D6A0" font-size="11">Predictive HVAC &amp; Utilities</text>
+    </g>
+  </g>
+</svg>

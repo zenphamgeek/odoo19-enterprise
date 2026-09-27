@@ -19,7 +19,7 @@
         <record model="ir.ui.view" id="view_product_uom_form_unspsc">
             <field name="name">view.uom.uom.unspsc.form</field>
             <field name="model">uom.uom</field>
-            <field name="inherit_id" ref="uom.product_uom_form_view"/>
+            <field name="inherit_id" ref="uom.uom_uom_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//div[@name='relative_factor']" position="after">
                     <field name="unspsc_code_id" readonly="(context.get('product_id') or context.get('product_ids')) and id"/>

@@ -1,8 +1,8 @@
 import { patch } from '@web/core/utils/patch';
 import { patchDynamicContent } from '@web/public/utils';
-import { WebsiteSale } from '@website_sale/interactions/website_sale';
+import { ProductPage } from '@website_sale/interactions/product_page';
 
-patch(WebsiteSale.prototype, {
+patch(ProductPage.prototype, {
     setup() {
         super.setup();
         patchDynamicContent(this.dynamicContent, {

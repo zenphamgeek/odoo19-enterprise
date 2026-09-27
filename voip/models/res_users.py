@@ -23,7 +23,7 @@ class ResUsers(models.Model):
     )
     how_to_call_on_mobile = fields.Selection(
         [
-            ("voip", "Call with Odoo Phone"),
+            ("voip", "Call with Insilos Phone"),
             ("phone", "Call with phone's default app"),
             ("ask", "Always ask before calling"),
         ],

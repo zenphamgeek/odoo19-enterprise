@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Template 1: ESG Facility Scorecard (CEMS + GHG + Water + Safety)
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <template id="report_esg_facility_scorecard_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 12px; line-height: 1.5;">
+                        <!-- Header Banner -->
+                        <div class="row mb-4" style="background: linear-gradient(135deg, #0B2E64 0%, #1a4f8c 100%); color: white; padding: 20px 25px; border-radius: 6px;">
+                            <div class="col-8">
+                                <h2 style="margin: 0; font-weight: 700; letter-spacing: 0.5px;">ESG FACILITY SCORECARD</h2>
+                                <p style="margin: 5px 0 0 0; opacity: 0.85; font-size: 13px;">
+                                    <t t-esc="o.facility_id.name"/> — <t t-esc="o.reporting_year"/>
+                                    (<t t-esc="dict(o._fields['reporting_period'].selection).get(o.reporting_period)"/>)
+                                </p>
+                            </div>
+                            <div class="col-4 text-end">
+                                <span style="font-size: 28px; font-weight: 800;"><t t-esc="o.name"/></span><br/>
+                                <span style="opacity: 0.8;"><t t-esc="o.company_id.name"/></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3" style="border: 1px solid #0B2E64; padding: 8px 10px; font-size: 10px;">
+                            <strong>Workflow state:</strong> <t t-esc="dict(o._fields['state'].selection).get(o.state)"/>.
+                            <strong>Evidence status:</strong>
+                            <t t-if="o.evidence_attachment_ids and o.evidence_summary">Internal supporting evidence recorded.</t>
+                            <t t-else="">No complete internal supporting evidence recorded.</t>
+                            <br/>Metrics and rating use recorded internal data; no legal, regulatory, or standards conformance is represented.
+                            <br/>No independent third-party conclusion is represented.
+                            <t t-if="o.state != 'published'"><br/><strong>NON-DISCLOSURE DRAFT — not published for external use.</strong></t>
+                        </div>
+
+                        <!-- Section 1: Carbon &amp; GHG Emissions -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px; margin-top: 15px;">
+                            1. Carbon &amp; GHG Emissions (Scope 1 + 2)
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <thead style="background: #f0f4f8;">
+                                <tr>
+                                    <th style="width: 50%;">Indicator</th>
+                                    <th class="text-end" style="width: 25%;">Value</th>
+                                    <th style="width: 25%;">Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Scope 1:</strong> Direct GHG Emissions</td>
+                                    <td class="text-end"><t t-esc="'%.2f' % o.scope1_direct_co2e"/></td>
+                                    <td>tCO₂e</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Scope 2:</strong> Location-Based Electricity GHG</td>
+                                    <td class="text-end"><t t-esc="'%.2f' % o.scope2_indirect_co2e"/></td>
+                                    <td>tCO₂e</td>
+                                </tr>
+                                <tr style="background: #e8f5e9; font-weight: bold;">
+                                    <td>Total Scope 1 + 2 GHG</td>
+                                    <td class="text-end"><t t-esc="'%.2f' % o.total_scope1_2_co2e"/></td>
+                                    <td>tCO₂e</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Section 2: CEMS Air Pollutants -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px;">
+                            2. CEMS Air Emission Monitoring
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <thead style="background: #f0f4f8;">
+                                <tr>
+                                    <th>Pollutant</th>
+                                    <th class="text-end">Emission</th>
+                                    <th>Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>SO₂ Sulfur Dioxide</td>
+                                    <td class="text-end"><t t-esc="'%.1f' % o.cems_so2_emissions_kg"/></td>
+                                    <td>kg</td>
+                                </tr>
+                                <tr>
+                                    <td>NOₓ Nitrogen Oxides</td>
+                                    <td class="text-end"><t t-esc="'%.1f' % o.cems_nox_emissions_kg"/></td>
+                                    <td>kg</td>
+                                </tr>
+                                <tr>
+                                    <td>TSP Total Suspended Particulate</td>
+                                    <td class="text-end"><t t-esc="'%.1f' % o.cems_tsp_dust_kg"/></td>
+                                    <td>kg</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Section 3: Industrial Wastewater -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px;">
+                            3. Industrial Wastewater Metrics
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <thead style="background: #f0f4f8;">
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th class="text-end">Value</th>
+                                    <th>Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>COD Chemical Oxygen Demand Load</td>
+                                    <td class="text-end"><t t-esc="'%.1f' % o.wastewater_cod_kg"/></td>
+                                    <td>kg</td>
+                                </tr>
+                                <tr>
+                                    <td>BOD₅ Biological Oxygen Demand Load</td>
+                                    <td class="text-end"><t t-esc="'%.1f' % o.wastewater_bod_kg"/></td>
+                                    <td>kg</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Wastewater Discharged</td>
+                                    <td class="text-end"><t t-esc="'%.1f' % o.wastewater_discharged_m3"/></td>
+                                    <td>m³</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Section 4: Safety LTIFR -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px;">
+                            4. Occupational Health &amp; Safety
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%;"><strong>LTIFR</strong> (Lost Time Injury Frequency Rate)</td>
+                                    <td class="text-end"><t t-esc="'%.2f' % o.ltifr_safety_rate"/></td>
+                                    <td>per 1M work-hours</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Safety &amp; HSE Training</strong></td>
+                                    <td class="text-end"><t t-esc="'%.2f' % o.safety_training_hours_per_worker"/></td>
+                                    <td>hours/worker</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Internal ESG Score -->
+                        <div class="row mt-4 mb-3">
+                            <div class="col-12 text-center">
+                                <h4 style="margin-bottom: 3px;">Internal Sustainability Score: <strong style="color: #0B2E64; font-size: 22px;"><t t-esc="'%.1f' % o.environmental_score"/>/100</strong></h4>
+                                <p class="text-muted" style="font-size: 10px;">Auto-calculated from recorded CEMS, wastewater, safety and carbon metrics.</p>
+                            </div>
+                        </div>
+
+                        <!-- Footer timestamp -->
+                        <div class="text-muted text-center mt-4" style="font-size: 9px; border-top: 1px solid #dee2e6; padding-top: 8px;">
+                            Generated by Insilos ESG Intelligence Module — <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Template 2: CBAM Carbon Tariff Advisory Report
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <template id="report_esg_cbam_declaration_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 12px; line-height: 1.5;">
+                        <!-- Header -->
+                        <div class="row mb-4" style="background: linear-gradient(135deg, #1b5e20 0%, #388e3c 100%); color: white; padding: 20px 25px; border-radius: 6px;">
+                            <div class="col-8">
+                                <h2 style="margin: 0; font-weight: 700;">CBAM CARBON TARIFF ADVISORY</h2>
+                                <p style="margin: 5px 0 0 0; opacity: 0.85;">
+                                    Internal carbon tariff assessment from recorded data
+                                </p>
+                            </div>
+                            <div class="col-4 text-end">
+                                <span style="font-size: 24px; font-weight: 800;"><t t-esc="o.name"/></span><br/>
+                                <span style="opacity: 0.8;">HS <t t-esc="o.hs_code"/></span>
+                            </div>
+                        </div>
+
+                        <!-- CBAM Applicability -->
+                        <h4 style="color: #1b5e20; border-bottom: 2px solid #1b5e20; padding-bottom: 4px;">
+                            1. CBAM Scope Assessment
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 40%;"><strong>HS Tariff Item</strong></td>
+                                    <td><t t-esc="o.hs_code"/> — <t t-esc="o.description_vi"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Subject to CBAM?</strong></td>
+                                    <td>
+                                        <t t-if="o.is_cbam_applicable"><span class="badge" style="background: #c62828; color: white;">YES — Included in Internal Estimate</span></t>
+                                        <t t-if="not o.is_cbam_applicable"><span class="badge" style="background: #2e7d32; color: white;">NO — Excluded from Internal Estimate</span></t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CBAM Sector</strong></td>
+                                    <td><t t-esc="dict(o._fields['cbam_sector'].selection).get(o.cbam_sector)"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Internal Reporting Frequency</strong></td>
+                                    <td><t t-esc="dict(o._fields['reporting_frequency'].selection).get(o.reporting_frequency)"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Carbon Intensity -->
+                        <h4 style="color: #1b5e20; border-bottom: 2px solid #1b5e20; padding-bottom: 4px;">
+                            2. Embedded Carbon Intensity
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <thead style="background: #e8f5e9;">
+                                <tr>
+                                    <th>Component</th>
+                                    <th class="text-end">Intensity</th>
+                                    <th>Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Direct Process Emissions</td>
+                                    <td class="text-end"><t t-esc="'%.3f' % o.direct_embedded_emissions_t_per_t"/></td>
+                                    <td>tCO₂e/ton product</td>
+                                </tr>
+                                <tr>
+                                    <td>Indirect Electricity Emissions</td>
+                                    <td class="text-end"><t t-esc="'%.3f' % o.indirect_embedded_emissions_t_per_t"/></td>
+                                    <td>tCO₂e/ton product</td>
+                                </tr>
+                                <tr style="background: #fff3e0; font-weight: bold;">
+                                    <td>Total Embedded Carbon</td>
+                                    <td class="text-end"><t t-esc="'%.3f' % o.total_embedded_emissions_t_per_t"/></td>
+                                    <td>tCO₂e/ton product</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Financial Impact -->
+                        <h4 style="color: #1b5e20; border-bottom: 2px solid #1b5e20; padding-bottom: 4px;">
+                            3. Financial Impact Estimate
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%;"><strong>Recorded Carbon Price</strong></td>
+                                    <td class="text-end"><strong>€<t t-esc="'%.2f' % o.eu_carbon_certificate_price_eur"/>/tCO₂e</strong></td>
+                                </tr>
+                                <tr style="background: #ffebee;">
+                                    <td><strong>Estimated Carbon Cost per Ton</strong></td>
+                                    <td class="text-end"><strong style="color: #c62828;">€<t t-esc="'%.2f' % o.estimated_cbam_cost_per_ton_eur"/>/ton</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Decarbonization Scenarios -->
+                        <h4 style="color: #1b5e20; border-bottom: 2px solid #1b5e20; padding-bottom: 4px;">
+                            4. Decarbonization Scenario
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%;">Renewable Energy Share</td>
+                                    <td class="text-end"><t t-esc="'%.1f' % o.renewable_energy_share_pct"/>%</td>
+                                </tr>
+                                <tr>
+                                    <td>Mitigated Indirect Emissions</td>
+                                    <td class="text-end"><t t-esc="'%.3f' % o.mitigated_indirect_emissions"/> tCO₂e/ton</td>
+                                </tr>
+                                <tr style="background: #e8f5e9; font-weight: bold;">
+                                    <td>Projected Carbon Cost After Mitigation</td>
+                                    <td class="text-end"><strong style="color: #2e7d32;">€<t t-esc="'%.2f' % o.projected_cbam_cost_after_mitigation_eur"/>/ton</strong></td>
+                                </tr>
+                                <tr style="background: #e8f5e9;">
+                                    <td><strong>Estimated Carbon Cost Savings</strong></td>
+                                    <td class="text-end"><strong style="color: #2e7d32;">€<t t-esc="'%.2f' % o.potential_savings_per_ton_eur"/>/ton exported</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Footer -->
+                        <div class="text-muted text-center mt-4" style="font-size: 9px; border-top: 1px solid #dee2e6; padding-top: 8px;">
+                            Generated by Insilos Carbon Estimate Engine — <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                            <br/>Internal data estimate only — not a legal, regulatory, or official declaration.
+                            <br/>No source provenance, supporting evidence, independent verification, maker-checker approval, or publication status is recorded for this estimate.
+                            <br/>No source provenance, supporting evidence, independent verification, maker-checker approval, or publication status is recorded for this estimate.
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Template 3: Scope 3 Freight Carbon Internal Assessment
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <template id="report_esg_freight_carbon_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 12px; line-height: 1.5;">
+                        <!-- Header -->
+                        <div class="row mb-4" style="background: linear-gradient(135deg, #004d40 0%, #00796b 100%); color: white; padding: 20px 25px; border-radius: 6px;">
+                            <div class="col-8">
+                                <h2 style="margin: 0; font-weight: 700;">SCOPE 3 FREIGHT CARBON INTERNAL DRAFT</h2>
+                                <p style="margin: 5px 0 0 0; opacity: 0.85;">
+                                    Internal upstream transportation and distribution estimate
+                                </p>
+                            </div>
+                            <div class="col-4 text-end">
+                                <span style="font-size: 24px; font-weight: 800;"><t t-esc="o.name"/></span><br/>
+                                <span style="opacity: 0.8;"><t t-esc="o.date"/></span>
+                            </div>
+                        </div>
+
+                        <!-- Shipment Details -->
+                        <h4 style="color: #004d40; border-bottom: 2px solid #004d40; padding-bottom: 4px;">
+                            1. Shipment Information
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 35%;"><strong>Logistics IDP Case</strong></td>
+                                    <td><t t-esc="o.case_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Transport Mode</strong></td>
+                                    <td><t t-esc="dict(o._fields['transport_mode'].selection).get(o.transport_mode)"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Route</strong></td>
+                                    <td><t t-esc="o.origin_port_or_city"/> → <t t-esc="o.destination_port_or_city"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Transport Distance</strong></td>
+                                    <td><t t-esc="'%.0f' % o.estimated_distance_km"/> km</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cargo Weight</strong></td>
+                                    <td><t t-esc="'%.2f' % o.cargo_weight_ton"/> tonnes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Carbon Calculation -->
+                        <h4 style="color: #004d40; border-bottom: 2px solid #004d40; padding-bottom: 4px;">
+                            2. Carbon Footprint Calculation
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%;"><strong>Recorded Emission Factor</strong></td>
+                                    <td class="text-end"><t t-esc="'%.4f' % o.emission_factor_kg_per_tkm"/> kgCO₂e/t-km</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Activity (weight × distance)</strong></td>
+                                    <td class="text-end"><t t-esc="'%.0f' % (o.cargo_weight_ton * o.estimated_distance_km)"/> t-km</td>
+                                </tr>
+                                <tr style="background: #e0f2f1; font-weight: bold;">
+                                    <td><strong>Total Carbon Footprint</strong></td>
+                                    <td class="text-end"><strong style="color: #004d40; font-size: 14px;"><t t-esc="'%.3f' % o.gross_freight_emissions_kg_co2e"/> kgCO₂e</strong></td>
+                                </tr>
+                                <tr style="background: #e0f2f1;">
+                                    <td><strong>Carbon Footprint (metric tons)</strong></td>
+                                    <td class="text-end"><strong><t t-esc="'%.4f' % o.gross_freight_emissions_t_co2e"/> tCO₂e</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Paperless IDP Offset -->
+                        <t t-if="o.paperless_carbon_offset_kg">
+                            <h4 style="color: #004d40; border-bottom: 2px solid #004d40; padding-bottom: 4px;">
+                                3. Paperless IDP Carbon Offset
+                            </h4>
+                            <table class="table table-sm table-bordered" style="font-size: 11px;">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 50%;">Paperless Document Processing Offset</td>
+                                        <td class="text-end"><t t-esc="'%.3f' % o.paperless_carbon_offset_kg"/> kgCO₂e avoided</td>
+                                    </tr>
+                                    <tr style="background: #e8f5e9; font-weight: bold;">
+                                        <td>Net Carbon Footprint After Offset</td>
+                                        <td class="text-end"><t t-esc="'%.3f' % o.net_logistics_carbon_kg_co2e"/> kgCO₂e</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+
+                        <!-- Footer -->
+                        <div class="text-muted text-center mt-4" style="font-size: 9px; border-top: 1px solid #dee2e6; padding-top: 8px;">
+                            Generated by Insilos ESG Scope 3 Engine — <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                            <br/><strong>WARNING: Internal draft estimate only.</strong> Not for ESG ledger posting, external reporting, or certification.
+                            <br/>Calculated from recorded internal shipment data and emission factors; no standards conformance is represented.
+                            <br/>Emission-factor provenance, unit validation, Scope 3 source mapping, supporting evidence, and independent verification are not recorded for this draft.
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

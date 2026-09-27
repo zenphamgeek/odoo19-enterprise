@@ -6,14 +6,19 @@ from odoo import fields, models, api, release
 class PosPaymentMethod(models.Model):
     _inherit = "pos.payment.method"
 
+    def _get_terminal_provider_selection(self):
+        return super()._get_terminal_provider_selection() + [("tyro", "Tyro")]
+
     def _get_payment_terminal_selection(self):
-        return super()._get_payment_terminal_selection() + [("tyro", "Tyro")]
+        return super()._get_payment_terminal_selection() + [("tyro", "Tyro")] if hasattr(super(), '_get_payment_terminal_selection') else [("tyro", "Tyro")]
+
+    use_payment_terminal = fields.Selection(related="payment_provider")
 
     tyro_mode = fields.Selection([("prod", "Production Mode"), ("test", "Test Mode"), ("simulator", "Simulator Mode")], default="prod")
     tyro_merchant_id = fields.Char("Tyro Merchant ID")
     tyro_terminal_id = fields.Char("Tyro Terminal ID")
     tyro_integration_key = fields.Char("Integration Key")
-    tyro_integrated_receipts = fields.Boolean("Integrated Receipts", default=True, help="If enabled, the Tyro receipt will be embedded in the Odoo receipt. Otherwise the terminal will print a separate payment receipt.")
+    tyro_integrated_receipts = fields.Boolean("Integrated Receipts", default=True, help="If enabled, the Tyro receipt will be embedded in the Insilos receipt. Otherwise the terminal will print a separate payment receipt.")
     tyro_always_print_merchant_receipt = fields.Boolean("Always print merchant receipts", help="By default, merchant copies are only printed when a signature is required. Enable this setting to always print the merchant copy.")
     tyro_surcharge_product_id = fields.Many2one("product.product", string="Surcharge Product", default=lambda self: self._get_default_tyro_surcharge_product())
 

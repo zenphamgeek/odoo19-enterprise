@@ -21,7 +21,7 @@ class EsgEmployeeReport(models.Model):
     country_id = fields.Many2one("res.country", readonly=True)
     wage = fields.Float("Wage", aggregator="avg", readonly=True, groups="hr.group_hr_manager")
     job_id = fields.Many2one("hr.job", string="Job Position", readonly=True, groups="hr.group_hr_user")
-    contract_type_id = fields.Many2one("hr.contract.type", string="Contract Type", readonly=True, groups="hr.group_hr_manager")
+    contract_type_id = fields.Many2one("hr.employee.type", string="Contract Type", readonly=True, groups="hr.group_hr_manager")
 
     def _select(self):
         return """
@@ -45,7 +45,7 @@ class EsgEmployeeReport(models.Model):
             comprp.country_id,
             v.wage,
             v.job_id,
-            v.contract_type_id
+            v.employee_type_id AS contract_type_id
         """
 
     def _from(self):
@@ -77,7 +77,7 @@ class EsgEmployeeReport(models.Model):
             comprp.country_id,
             v.wage,
             v.job_id,
-            v.contract_type_id
+            v.employee_type_id
         """
 
     def _leadership_level_subquery(self):

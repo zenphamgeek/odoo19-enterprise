@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="spreadsheet_edition.FilterValuesList">
+        <div class="o-filter-values d-flex flex-column gap-3 w-100">
+            <t t-foreach="this.filters" t-as="filter" t-key="filter.id">
+                <div class="d-flex align-items-center justify-content-between gap-2">
+                    <span class="fw-bold me-2 text-truncate" t-esc="filter.label"/>
+                    <div class="flex-grow-1">
+                        <FilterValue
+                            filter="filter"
+                            model="this.props.model"
+                            setGlobalFilterValue.bind="this.setGlobalFilterValue"
+                        />
+                    </div>
+                </div>
+            </t>
+            <div class="d-flex justify-content-end gap-2 mt-3" t-if="this.props.openFiltersEditor">
+                <button class="btn btn-secondary" t-on-click="this.props.openFiltersEditor">
+                    Edit Filters
+                </button>
+            </div>
+        </div>
+    </t>
+</templates>

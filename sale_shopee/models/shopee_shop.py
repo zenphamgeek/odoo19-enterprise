@@ -90,8 +90,8 @@ class ShopeeShop(models.Model):
     status = fields.Selection(
         help="The shop status on Shopee."
              "- Inactive: The shop is not yet approved by Shopee."
-             "- Active: The shop is active and can be synchronized with Odoo."
-             "- Error: The shop is banned and cannot be synchronized with Odoo.",
+             "- Active: The shop is active and can be synchronized with Insilos."
+             "- Error: The shop is banned and cannot be synchronized with Insilos.",
         selection=[
             ('inactive', "Inactive"),
             ('active', "Active"),
@@ -109,7 +109,7 @@ class ShopeeShop(models.Model):
     last_orders_sync_date = fields.Datetime(
         string="Last Order Synchronization Date",
         help="The last time the orders were synchronized with Shopee. Orders whose status has "
-             "not changed since this date will not be created nor updated in Odoo.",
+             "not changed since this date will not be created nor updated in Insilos.",
         required=True,
         default=fields.Datetime.now,
     )

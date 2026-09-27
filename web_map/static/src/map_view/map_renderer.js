@@ -10,11 +10,12 @@ import {
     onWillUnmount,
     onWillUpdateProps,
     useEffect,
-    useRef,
-    useState,
+    proxy,
+    signal,
 } from "@odoo/owl";
 
 import { useSortable } from "@web/core/utils/sortable_owl";
+import { useService } from "@web/core/utils/hooks";
 
 const apiTilesRouteWithToken =
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}";
@@ -25,22 +26,24 @@ const colors = [
     "#6CC1ED",
     "#F7CD1F",
     "#814968",
-    "#30C381",
-    "#D6145F",
-    "#475577",
-    "#F4A460",
+    "#307B3B",
     "#EB7E7F",
     "#2C8397",
+    "#4F2A6D",
+    "#C82221",
+    "#A0CADB",
+    "#EEC485",
+    "#A9C682",
+    "#984F70",
+    "#B04632",
+    "#296245",
+    "#9F65BF",
 ];
 
-const mapTileAttribution = `
-    © <a href="https://www.mapbox.com/about/maps/">Mapbox</a>
-    © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>
-    <strong>
-        <a href="https://www.mapbox.com/map-feedback/" target="_blank">
-            Improve this map
-        </a>
-    </strong>`;
+const mapTileAttribution =
+    '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> ' +
+    '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a> ' +
+    '<a class="mapbox-improve-map" href="https://www.mapbox.com/map-feedback/">Improve this map</a>';
 
 export class MapRenderer extends Component {
     static template = "web_map.MapRenderer";
@@ -63,19 +66,26 @@ export class MapRenderer extends Component {
     }
 
     setup() {
+        this.ui = useService("ui");
         this.leafletMap = null;
         this.markers = [];
         this.polylines = [];
-        this.mapContainerRef = useRef("mapContainer");
-        this.state = useState({
+        this.mapContainer = signal.ref();
+        Object.defineProperty(this.mapContainer, "el", { get: () => this.mapContainer() });
+        this.mapContainerRef = this.mapContainer;
+        this.state = proxy({
             closedGroupIds: [],
             expendedPinList: false,
         });
         this.nextId = 1;
 
-        useEffect(
-            () => {
-                this.leafletMap = L.map(this.mapContainerRef.el, {
+        useEffect(() => {
+            const containerEl = this.mapContainer();
+            if (!containerEl) {
+                return;
+            }
+            if (!this.leafletMap) {
+                this.leafletMap = L.map(containerEl, {
                     maxBounds: [L.latLng(180, -180), L.latLng(-180, 180)],
                 });
                 this.leafletMap.attributionControl.setPrefix(
@@ -90,17 +100,16 @@ export class MapRenderer extends Component {
                     id: "mapbox/streets-v11",
                     accessToken: this.props.model.metaData.mapBoxToken,
                 }).addTo(this.leafletMap);
-            },
-            () => []
-        );
-        useEffect(() => {
+            }
             this.updateMap();
         });
 
-        this.pinListRef = useRef("pinList");
+        this.pinList = signal.ref();
+        Object.defineProperty(this.pinList, "el", { get: () => this.pinList() });
+        this.pinListRef = this.pinList;
         useSortable({
             enable: () => this.props.model.canResequence,
-            ref: this.pinListRef,
+            ref: this.pinList,
             elements: ".o-map-renderer--pin-located",
             handle: ".o_row_handle",
             onDrop: async (params) => {
@@ -489,11 +498,15 @@ export class MapRenderer extends Component {
         this.state.expendedPinList = !this.state.expendedPinList;
     }
 
+    get isSmall() {
+        return Boolean(this.ui?.isSmall || this.env?.isSmall);
+    }
+
     get expendedPinList() {
-        return this.env.isSmall ? this.state.expendedPinList : false;
+        return this.isSmall ? this.state.expendedPinList : false;
     }
 
     get canDisplayPinList() {
-        return !this.env.isSmall || this.expendedPinList;
+        return !this.isSmall || this.expendedPinList;
     }
 }

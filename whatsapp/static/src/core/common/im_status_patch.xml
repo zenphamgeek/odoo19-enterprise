@@ -2,8 +2,8 @@
 <templates xml:space="preserve">
 
     <t t-name="whatsapp.ImStatus" t-inherit="mail.ImStatus" t-inherit-mode="extension">
-        <xpath expr="//i[@title='Bot']" position="after">
-            <i t-elif="props.member?.eq(props.member.channel_id.whatsappMember)"
+        <xpath expr="//t[@name='icon']" position="inside">
+            <i t-if="props.member?.eq(props.member.channel_id.whatsappMember)"
                 class="fa fa-whatsapp text-success" title="WhatsApp User"
                 role="img" aria-label="WhatsApp User" />
         </xpath>

@@ -1,7 +1,7 @@
 import { Component } from "@odoo/owl";
 import { useBankReconciliation } from "../bank_reconciliation_service";
 import { useService } from "@web/core/utils/hooks";
-import { x2ManyCommands } from "@web/core/orm_service";
+import { x2ManyCommands } from "@web/core/orm_plugin";
 
 export class BankRecReconciledLineName extends Component {
     static template = "account_accountant.BankRecReconciledLineName";

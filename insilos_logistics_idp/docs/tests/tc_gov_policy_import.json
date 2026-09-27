@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.1",
+  "generated_at_utc": "2026-09-05T16:08:46Z",
+  "run_started_at_utc": "2026-09-05T15:57:38Z",
+  "run_ended_at_utc": "2026-09-05T16:08:46Z",
+  "start_ns": 1787466372321813331,
+  "end_ns": 1787467928341344380,
+  "elapsed_ns": 1556019531049,
+  "limit_ns": 14400000000000,
+  "within_4h": true,
+  "environment": {
+    "scope": "SOLO_DEV_LOCAL",
+    "database": "insilos_migration_digiforce_v2",
+    "module": "insilos_logistics_idp",
+    "module_version": "19.0.1.3.11",
+    "non_production": true,
+    "external_calls": false
+  },
+  "commit_sha": "bcbca5c3376a4e95f39464a1e3bc12b090cff5d5",
+  "scope": [
+    "WP0",
+    "WP1",
+    "WP2",
+    "WP3",
+    "WP4",
+    "security_hardening"
+  ],
+  "exclusions": [
+    "WP5 durable activation",
+    "TC-GOV-006 completion",
+    "production",
+    "deployment",
+    "external authority/provider calls",
+    "legal certification",
+    "tariff",
+    "sanctions",
+    "FTA qualification",
+    "export control"
+  ],
+  "artifact_type": "tc_gov_policy_import",
+  "status": "PASS_DRAFT_ONLY",
+  "commands": [
+    "python3 tools/with_local_credentials.py --solo-dev-db -- python3 insilos/insilos-bin -c insilos.conf -d insilos_migration_digiforce_v2 --test-enable --stop-after-init --workers=0 --max-cron-threads=0 --addons-path=insilos/addons,insilos/apps --http-port=18179 --log-level=test --test-tags /insilos_logistics_idp:TestLogisticsIdpConfiguration",
+    "python3 tools/with_local_credentials.py --solo-dev-db -- python3 insilos/insilos-bin -c insilos.conf -d insilos_migration_digiforce_v2 --test-enable --stop-after-init --workers=0 --max-cron-threads=0 --addons-path=insilos/addons,insilos/apps --http-port=18179 --log-level=test --test-tags /insilos_logistics_idp:TestLogisticsIdpSecurity"
+  ],
+  "requirements": [
+    "TC-GOV-001",
+    "TC-GOV-002",
+    "TC-GOV-003",
+    "TC-GOV-008"
+  ],
+  "expected": {
+    "valid_sanitized_candidate": "draft and idempotent only when payload_hash and audit_input_hash match",
+    "invalid_inputs": "rejected, including governance races and malformed or naive captured_at",
+    "equivalent_timestamp_offsets": "canonical UTC identity",
+    "active_state_created": false
+  },
+  "actual": {
+    "tests": [
+      "test_trade_compliance_authority_and_context_contract",
+      "test_policy_candidate_import_is_draft_idempotent_and_diff_is_read_only",
+      "test_policy_candidate_import_rejects_trust_boundary_failures"
+    ],
+    "policy_rows": 5,
+    "active_rows": 1,
+    "draft_rows_after_transactional_run": 0,
+    "legacy_official_rows": 0,
+    "validation": [
+      "schema",
+      "canonical hash",
+      "safe citation",
+      "authority tier",
+      "effective range",
+      "provenance",
+      "context evidence",
+      "timezone-aware ISO 8601 provenance timestamp",
+      "UTC timestamp canonicalization",
+      "payload plus governance hash race identity"
+    ],
+    "candidate_persistence": "transaction rolled back",
+    "new_activation": false,
+    "local_captures": {
+      "configuration": {
+        "passed": 52,
+        "failed": 0,
+        "errors": 0,
+        "total": 52
+      },
+      "security": {
+        "passed": 31,
+        "failed": 0,
+        "errors": 0,
+        "total": 31
+      }
+    }
+  },
+  "run": {
+    "module_tests_passed": 90,
+    "module_tests_failed": 0,
+    "hardening_passed": 25,
+    "hardening_failed": 0,
+    "corpus_detailed_passed": 198,
+    "corpus_golden_passed": 41,
+    "corpus_golden_partial": 7
+  },
+  "cumulative": {
+    "module_tests_passed": 101,
+    "module_tests_failed": 0,
+    "trade_configuration_passed": 27,
+    "trade_configuration_failed": 0,
+    "tier4_passed": 12,
+    "tier4_failed": 0
+  },
+  "failures": [],
+  "blockers": [
+    "BLOCKED_APPROVED_POLICY_DATASET for activation content/oracle"
+  ],
+  "artifact_sha256_scope": "canonical JSON excluding artifact_sha256",
+  "artifact_sha256": "a00ad9ebfcbf79ca2ee33c11ddf92a6ae39a6c9c03c7da068c7fb3c6325fb0a3",
+  "worktree_dirty": true,
+  "worktree_hash_scope": "module_excluding_tc_gov_artifacts",
+  "worktree_status_sha256": "861aabcfa96f837ae84dfbfda9736b67195d71b34eb851f2436b7cf74c4eaf81",
+  "worktree_diff_sha256": "d8fd2bc77312d996fb191cceea4d8879e6e5cc6fd24eedf4d71a55407ae79965",
+  "source_sha256": {
+    "__manifest__.py": "a9fd00b4a72b4fd33938e5fe46638df347052a19e29fa97cac025dfafd6a06a0",
+    "models/logistics_idp.py": "b251d395d45c455b0e9e30455e35aecd41d6aa9951423c3f66fa79d8da55e99a",
+    "tests/test_logistics_idp_configuration.py": "be5318a215558bac7be457a4d14badee08374fcc2685ad21724b4411b6d339db",
+    "tests/test_logistics_idp_security.py": "91fcb9f93c974d77cb9320b678c99b02f9b12f5f0578dc1cb2eb5774bb6fa11d"
+  }
+}

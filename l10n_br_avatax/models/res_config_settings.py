@@ -123,7 +123,7 @@ class ResConfigSettings(models.TransientModel):
                     result = json.loads(result['message'])
                 except JSONDecodeError:
                     if 'unhandled error occurred' in result['message']:
-                        raise UserError(_('The Avatax platform failed to create your account. Please ensure the address on your company is correct. If it is please contact support at odoo.com/help.'))
+                        raise UserError(_('The Avatax platform failed to create your account. Please ensure the address on your company is correct. If it is please contact support at insilos.com/help.'))
                     else:
                         raise UserError(result['message'])
 

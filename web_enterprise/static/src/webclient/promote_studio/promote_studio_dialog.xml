@@ -8,8 +8,8 @@
                     class="d-flex flex-row align-items-center flex-wrap">
                     <div id="studio_dialog_pitch"
                         class="w-100 w-md-50">
-                        <h4>Want to tailor-make your Odoo?</h4>
-                        <p>Unleash the power of Odoo Studio:</p>
+                        <h4>Want to tailor-make your system?</h4>
+                        <p>Unleash the power of Studio:</p>
                         <ul>
                             <li>Create automation rules</li>
                             <li>Customize any screen</li>
@@ -20,22 +20,24 @@
                             <li>and more!</li>
                         </ul>
                         <a role="button" class="btn btn-secondary btn-block"
-                            href="https://www.odoo.com/app/studio" target="_blank"> Learn More <i
+                            href="https://insilos.com" target="_blank"> Learn More <i
                                 class="fa fa-external-link" />
                         </a>
                     </div>
-                    <div id="studio_video" class="o_video_embed w-100 w-md-50 ratio ratio-16x9">
-                        <iframe class="embed-responsive-item"
-                            t-attf-src="https://www.youtube.com/embed/IRbj-SzTcrY?autoplay=1"
-                            allow="autoplay" frameborder="0" allowfullscreen="true" />
+                    <div id="studio_video" class="o_video_embed w-100 w-md-50 ratio ratio-16x9 d-flex align-items-center justify-content-center bg-light rounded border text-muted">
+                        <div class="text-center p-3">
+                            <i class="oi oi-large mb-2" data-icon="wrench"/>
+                            <div class="fw-bold">Studio Customization</div>
+                            <small>Build and customize apps visually in minutes</small>
+                        </div>
                     </div>
                 </div>
 
                 <t t-set-slot="footer">
                     <button class="btn btn-primary btn-block o_install_studio"
                         t-on-click.stop="onClickInstallStudio"
-                        data-tooltip="Install Odoo Studio and its dependencies">
-                        Start using Odoo Studio
+                        data-tooltip="Install Studio and its dependencies">
+                        Start using Studio
                     </button>
 
                     <button class="btn btn-secondary btn-block"

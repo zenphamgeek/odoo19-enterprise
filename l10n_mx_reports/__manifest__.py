@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    "name": "Odoo Mexican Localization Reports",
+    "name": "Mexican Localization Reports",
     "description": """
 Electronic accounting reports
     - COA

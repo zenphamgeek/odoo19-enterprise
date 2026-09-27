@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_kg_node_lineage_doc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 12px; line-height: 1.5;">
+                        <!-- Header Banner -->
+                        <div class="row mb-4" style="background: linear-gradient(135deg, #0B2E64 0%, #1a4f8c 100%); color: white; padding: 20px 25px; border-radius: 6px;">
+                            <div class="col-8">
+                                <h2 style="margin: 0; font-weight: 700;">ENTITY LINEAGE &amp; AUDIT TRAIL</h2>
+                                <p style="margin: 5px 0 0 0; opacity: 0.85;">
+                                    Enterprise Knowledge Graph Projection &amp; Provenance
+                                </p>
+                            </div>
+                            <div class="col-4 text-end">
+                                <span style="font-size: 14px; font-weight: 600;"><t t-esc="o.company_id.name"/></span><br/>
+                                <span style="opacity: 0.8;">Projected: <t t-esc="o.projected_at"/></span>
+                            </div>
+                        </div>
+
+                        <!-- Node Identity -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px;">
+                            Entity Node Identity
+                        </h4>
+                        <table class="table table-sm table-bordered" style="font-size: 11px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 30%;"><strong>Entity URN</strong></td>
+                                    <td><code><t t-esc="o.urn"/></code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Source Model</strong></td>
+                                    <td><t t-esc="o.source_model"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Source Record ID</strong></td>
+                                    <td><t t-esc="o.source_id"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Source Payload Hash</strong></td>
+                                    <td><code><t t-esc="o.source_hash or 'N/A'"/></code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Outbound Graph Relationships -->
+                        <h4 style="color: #0B2E64; border-bottom: 2px solid #0B2E64; padding-bottom: 4px; margin-top: 20px;">
+                            Connected Graph Relationships (Edges)
+                        </h4>
+                        <t t-set="out_edges" t-value="request.env['kg.edge'].search([('from_node_id', '=', o.id)])"/>
+                        <t t-if="out_edges">
+                            <table class="table table-sm table-bordered" style="font-size: 10px;">
+                                <thead style="background: #f0f4f8;">
+                                    <tr>
+                                        <th>Relation (Predicate)</th>
+                                        <th>Target Node URN</th>
+                                        <th>Confidence</th>
+                                        <th>Verified</th>
+                                        <th>Evidence Ref</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="out_edges" t-as="e">
+                                        <tr>
+                                            <td><strong><t t-esc="e.relation"/></strong></td>
+                                            <td><code><t t-esc="e.to_node_id.urn"/></code></td>
+                                            <td><t t-esc="'%.2f' % e.confidence"/></td>
+                                            <td><t t-if="e.verified">✅ Verified</t><t t-if="not e.verified">⏳ Projected</t></td>
+                                            <td><t t-esc="e.evidence_reference or e.source_reference or 'N/A'"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-if="not out_edges">
+                            <p class="text-muted fst-italic">No outbound relationships currently projected.</p>
+                        </t>
+
+                        <!-- Footer -->
+                        <div class="text-muted text-center mt-4" style="font-size: 9px; border-top: 1px solid #dee2e6; padding-top: 8px;">
+                            Generated by Insilos Enterprise Knowledge Graph Engine — <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

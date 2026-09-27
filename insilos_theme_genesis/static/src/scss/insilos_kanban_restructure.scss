@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Insilos Kanban View & Card Restructure
+   Column headers, floating cards with micro-elevation, refined badges
+   ========================================================================== */
+
+.o_kanban_view:not(.o_modules_kanban) {
+  background-color: var(--insilos-bg-canvas, #f8fafc) !important;
+
+  .o_kanban_renderer {
+    padding: 18px 24px;
+    gap: 16px;
+
+    /* Kanban Column Groups */
+    .o_kanban_group {
+      background-color: rgba(241, 245, 249, 0.6);
+      border: 1px solid var(--insilos-border-subtle);
+      border-radius: var(--insilos-radius-lg);
+      padding: 12px;
+      transition: var(--insilos-transition-fast);
+
+      /* Column Header */
+      .o_kanban_header {
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--insilos-border-subtle);
+
+        .o_kanban_header_title {
+          font-size: 13.5px;
+          font-weight: 700;
+          color: var(--insilos-text-primary);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        /* Column Progress Bar */
+        .o_kanban_counter {
+          margin-top: 6px;
+        }
+      }
+
+      /* Kanban Cards Inside Column */
+      .o_kanban_record {
+        background: var(--insilos-bg-surface, #ffffff);
+        border: 1px solid var(--insilos-border-subtle);
+        border-radius: var(--insilos-radius-md);
+        box-shadow: var(--insilos-shadow-card);
+        padding: 14px;
+        margin-bottom: 10px;
+        transition: transform var(--insilos-transition-fast), box-shadow var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
+
+        &:hover {
+          transform: translateY(-2px);
+          border-color: var(--insilos-border-medium);
+          box-shadow: var(--insilos-shadow-hover);
+        }
+
+        /* Priority Stars */
+        .o_priority_star {
+          color: #fbbf24;
+          font-size: 14px;
+          transition: transform var(--insilos-transition-fast);
+
+          &:hover {
+            transform: scale(1.15);
+          }
+        }
+
+        /* Tags / Badges inside Kanban */
+        .badge {
+          border-radius: var(--insilos-radius-full);
+          font-weight: 500;
+          font-size: 11px;
+          padding: 3px 8px;
+        }
+
+        /* Activity / Clock Icons */
+        .o_activity_color_today {
+          color: var(--insilos-warning);
+        }
+        .o_activity_color_planned {
+          color: var(--insilos-success);
+        }
+        .o_activity_color_overdue {
+          color: var(--insilos-danger);
+        }
+      }
+
+      /* Quick Create Record Button */
+      .o_kanban_quick_create {
+        border-radius: var(--insilos-radius-md);
+        border: 1px dashed var(--insilos-border-strong);
+        background: transparent;
+        padding: 10px;
+        transition: var(--insilos-transition-fast);
+
+        &:hover {
+          background: var(--insilos-bg-surface);
+          border-color: var(--insilos-primary);
+        }
+      }
+    }
+  }
+}

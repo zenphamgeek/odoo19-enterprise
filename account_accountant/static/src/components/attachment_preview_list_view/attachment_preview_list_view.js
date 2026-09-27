@@ -3,10 +3,10 @@ import { AccountAttachmentView } from "./account_attachment_view";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { listView } from "@web/views/list/list_view";
-import { ListRenderer } from "@web/views/list/list_renderer";
+import { ListRenderer, listRendererProps } from "@web/views/list/list_renderer";
 import { ListController } from "@web/views/list/list_controller";
-import { SIZES } from "@web/core/ui/ui_service";
-import { useChildSubEnv, useState } from "@odoo/owl";
+import { SIZES } from "@web/core/ui/ui_utils";
+import { useChildSubEnv, proxy, signal, t, useProps } from "@odoo/owl";
 
 export class AttachmentPreviewListController extends ListController {
     static template = "account_accountant.AttachmentPreviewListView";
@@ -20,16 +20,22 @@ export class AttachmentPreviewListController extends ListController {
         this.store = useService("mail.store");
         this.ui = useService("ui");
         this.mailPopoutService = useService("mail.popout");
-        this.attachmentPreviewState = useState({
+        this.attachmentPreviewState = proxy({
             displayAttachment: localStorage.getItem(this.previewerStorageKey) !== "false",
             selectedRecord: false,
             thread: null,
         });
-        this.popout = useState({ active: false });
+        this.thread = signal(null);
+        this.popout = proxy({ active: false });
 
         useChildSubEnv({
             setPopout: this.setPopout.bind(this),
+            setSelectedRecord: (record) => this.setSelectedRecord(record),
         });
+    }
+
+    async setSelectedRecord(record) {
+        this.attachmentPreviewState.selectedRecord = record;
     }
 
     get previewEnabled() {
@@ -63,9 +69,11 @@ export class AttachmentPreviewListController extends ListController {
         const attachments = lineData?.data[attachmentField]?.records || [];
         if (!lineData || !attachments.length) {
             this.attachmentPreviewState.thread = null;
+            this.thread.set(null);
             return;
         }
-        const thread = this.store.Thread.insert({
+        const threadModel = this.store["mail.thread"] || this.store.Thread;
+        const thread = threadModel.insert({
             attachments: attachments.map((attachment) => ({
                 id: attachment.resId,
                 mimetype: attachment.data.mimetype,
@@ -77,13 +85,19 @@ export class AttachmentPreviewListController extends ListController {
             thread.update({ message_main_attachment_id: thread.attachmentsInWebClientView[0] });
         }
         this.attachmentPreviewState.thread = thread;
+        this.thread.set(thread);
     }
 }
 
 export class AttachmentPreviewListRenderer extends ListRenderer {
-    static props = [...ListRenderer.props, "setSelectedRecord"];
+    props = useProps({
+        ...listRendererProps,
+        setSelectedRecord: t.any().optional(),
+    });
+
     async onCellClicked(record, column, ev) {
-        this.props.setSelectedRecord(record);
+        const setRec = this.props.setSelectedRecord || this.env.setSelectedRecord;
+        setRec?.(record);
         await super.onCellClicked(record, column, ev);
     }
 
@@ -92,7 +106,8 @@ export class AttachmentPreviewListRenderer extends ListRenderer {
         if (futureCell) {
             const dataPointId = futureCell.closest("tr").dataset.id;
             const record = this.props.list.records.filter((x) => x.id === dataPointId)[0];
-            this.props.setSelectedRecord(record);
+            const setRec = this.props.setSelectedRecord || this.env.setSelectedRecord;
+            setRec?.(record);
         }
         return futureCell;
     }

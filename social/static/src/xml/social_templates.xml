@@ -462,17 +462,17 @@
 
     <t t-name="social.SocialKanbanView" t-inherit="web.KanbanView" t-inherit-mode="primary">
         <xpath expr="//Layout" position="attributes">
-            <attribute name="className">model.useSampleModel ? 'o_view_sample_data o_social_stream_post_kanban_view_wrapper'
+            <attribute name="className">this.model.useSampleModel ? 'o_view_sample_data o_social_stream_post_kanban_view_wrapper'
                 : 'o_social_stream_post_kanban_view_wrapper'</attribute>
         </xpath>
-        <xpath expr="//t[@t-component='props.Renderer']" position="before">
+        <xpath expr="//t[@t-component='this.props.Renderer' or @t-component='props.Renderer']" position="before">
             <NewContentRefreshBanner
-                refreshRequired="state.refreshRequired"
-                onClickRefresh.bind="_refreshView"
+                refreshRequired="this.state.refreshRequired"
+                onClickRefresh.bind="this._refreshView"
             />
             <StreamPostDashboard
-                accounts="accounts"
-                isSocialManager="isSocialManager"
+                accounts="this.accounts"
+                isSocialManager="this.isSocialManager"
             />
         </xpath>
     </t>

@@ -97,7 +97,7 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr_work_entry.hr_employee_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='action_open_work_entries']" position="attributes">
+            <xpath expr="//group[@name='exports']" position="attributes">
                 <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
             </xpath>
         </field>
@@ -120,7 +120,7 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
         <field name="arch" type="xml">
-            <xpath expr="//main/div[@t-if='record.contract_date_start.raw_value']" position="attributes">
+            <xpath expr="//main/div[@t-if='record.first_contract_date.raw_value']" position="attributes">
                 <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
             </xpath>
         </field>
@@ -135,9 +135,6 @@
                 <field name="registration_number" string="Employee Reference"/>
             </xpath>
             <xpath expr="//field[@name='contract_date_start']" position="attributes">
-                <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='in_contract']" position="attributes">
                 <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
             </xpath>
             <xpath expr="//filter[@name='out_of_contract']" position="attributes">

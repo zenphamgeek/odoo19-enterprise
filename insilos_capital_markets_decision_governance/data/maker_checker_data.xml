@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+
+    <!-- Separation of duties has to be enforced, not merely written down. The
+         three role groups are labels; without this rule nothing stops the
+         person who raised a case from dragging it into Approval themselves.
+
+         An automation rule is the zero-schema way to say it: a record rule
+         filters which records you may touch, it cannot express "not this
+         transition, not by you". -->
+    <record id="automation_no_self_approval" model="base.automation">
+        <field name="name">Decision Governance: block self-approval</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="trigger">on_create_or_write</field>
+        <!-- Workspace/role-aware SoD lives in CapitalGovernanceTask.write().
+             Stage IDs are not Project IDs, so XML filter_domain cannot scope
+             this generic project.task automation safely. Keep the legacy
+             record inert for stable external IDs; never let it govern every
+             project task. -->
+        <field name="active" eval="False"/>
+    </record>
+
+    <record id="action_no_self_approval" model="ir.actions.server">
+        <field name="name">Refuse self-approval</field>
+        <field name="base_automation_id" ref="automation_no_self_approval"/>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="state">code</field>
+        <field name="code">
+gate_stages = (
+    env.ref('insilos_capital_markets_decision_governance.stage_approval')
+    + env.ref('insilos_capital_markets_decision_governance.stage_closed')
+)
+for task in records:
+    if task.stage_id in gate_stages and task.create_uid.id == env.uid:
+        raise UserError(
+            "You raised this decision case, so you cannot move it into %s. "
+            "Approval belongs to someone who did not request it."
+            % task.stage_id.name
+        )
+        </field>
+    </record>
+
+</odoo>

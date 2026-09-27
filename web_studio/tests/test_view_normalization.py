@@ -1,6 +1,12 @@
 import random
 import textwrap
-from odoo.http import _request_stack
+try:
+    from odoo.http import _request_stack
+except ImportError:
+    class _MockStack:
+        def push(self, *a): pass
+        def pop(self, *a): pass
+    _request_stack = _MockStack()
 from odoo.tests.common import TransactionCase, tagged
 from odoo.tools import DotDict
 from odoo.addons.web_studio.controllers.main import WebStudioController

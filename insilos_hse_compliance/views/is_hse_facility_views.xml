@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_is_hse_facility_tree" model="ir.ui.view">
+            <field name="name">is.hse.facility.list</field>
+            <field name="model">is.hse.facility</field>
+            <field name="arch" type="xml">
+                <list string="Industrial Facilities &amp; Plants">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="industry_type"/>
+                    <field name="worker_count"/>
+                    <field name="emission_classification"/>
+                    <field name="fire_hazard_category"/>
+                    <field name="has_hazardous_chemicals" widget="boolean_toggle"/>
+                    <field name="legal_register_count"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_hse_facility_form" model="ir.ui.view">
+            <field name="name">is.hse.facility.form</field>
+            <field name="model">is.hse.facility</field>
+            <field name="arch" type="xml">
+                <form string="Industrial Facility Profile">
+                    <header>
+                        <button name="action_create_legal_register" string="Create Legal Register" type="object" class="w_highlight"/>
+                    </header>
+                    <sheet>
+                        <div class="w_title">
+                            <label for="code" string="Facility Code"/>
+                            <h1>
+                                <field name="code" placeholder="e.g. FAC-HCM-01"/>
+                            </h1>
+                            <h3>
+                                <field name="name" placeholder="Facility Name (e.g. Tan Binh Manufacturing Plant)"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group string="Operational Context">
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="warehouse_id"/>
+                                <field name="address"/>
+                                <field name="industry_type"/>
+                                <field name="worker_count"/>
+                            </group>
+                            <group string="Environmental &amp; Safety Profile">
+                                <field name="wastewater_capacity_m3_day"/>
+                                <field name="emission_classification"/>
+                                <field name="environmental_permit_code"/>
+                                <field name="environmental_permit_date"/>
+                                <field name="environmental_permit_expiry"/>
+                                <field name="fire_hazard_category"/>
+                                <field name="has_hazardous_chemicals"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Legal Registers" name="registers">
+                                <field name="legal_register_ids">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="year"/>
+                                        <field name="evaluation_date"/>
+                                        <field name="compliance_score" widget="progressbar"/>
+                                        <field name="state"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_is_hse_facility_search" model="ir.ui.view">
+            <field name="name">is.hse.facility.search</field>
+            <field name="model">is.hse.facility</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="industry_type"/>
+                    <filter name="filter_hazardous_chemicals" string="Has Hazardous Chemicals" domain="[('has_hazardous_chemicals', '=', True)]"/>
+                    <group>
+                        <filter name="group_industry" string="Industry Type" context="{'group_by': 'industry_type'}"/>
+                        <filter name="group_emission" string="Emission Classification" context="{'group_by': 'emission_classification'}"/>
+                        <filter name="group_fire" string="Fire Hazard Category" context="{'group_by': 'fire_hazard_category'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_is_hse_facility" model="ir.actions.act_window">
+            <field name="name">Manage Operating Plants &amp; Chemical Storage Facilities</field>
+            <field name="path">hse-facilities</field>
+            <field name="res_model">is.hse.facility</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_is_hse_facility_search"/>
+        </record>
+    </data>
+</odoo>

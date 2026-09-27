@@ -77,7 +77,7 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
                     cancel: () => {},
                     cancelLabel: _t("Discard"),
                     documentId: mainDocumentOrTarget.resId,
-                    confirmLabel: _t("Open with Odoo Spreadsheet"),
+                    confirmLabel: _t("Open with Insilos Spreadsheet"),
                 });
             }
         } else {

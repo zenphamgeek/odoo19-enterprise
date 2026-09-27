@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action Report: Hồ sơ dữ liệu hóa chất nội bộ -->
+    <record id="action_report_chemical_dossier_application" model="ir.actions.report">
+        <field name="name">Hồ sơ dữ liệu hóa chất nội bộ</field>
+        <field name="model">is.chemical.compliance.dossier</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">insilos_chemical_trade_compliance.report_chemical_dossier_application_doc</field>
+        <field name="report_file">insilos_chemical_trade_compliance.report_chemical_dossier_application_doc</field>
+        <field name="print_report_name">'Ho-so-du-lieu-hoa-chat-noi-bo-%s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_is_chemical_compliance_dossier"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

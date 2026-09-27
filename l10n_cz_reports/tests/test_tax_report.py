@@ -59,7 +59,7 @@ class CzechTaxReportTest(CzechReportsCommon):
 
         generated_xml = self.env['l10n_cz.tax.report.handler'].export_to_xml(options)['file_content']
         expected_xml = f"""
-            <Pisemnost nazevSW="Odoo SA" verzeSW="{release.version}">
+            <Pisemnost nazevSW="Insilos" verzeSW="{release.version}">
             <DPHDP3 verzePis="02.01">
                 <VetaD dapdph_forma="B" dokument="DP3" k_uladis="DPH" typ_platce="P" mesic="11" rok="2019"/>
                 <VetaP zkrobchjm="company_1_data" c_pracufo="2001" c_ufo="451" dic="12345679" typ_ds="P" email="info@company.czexample.com"/>
@@ -85,7 +85,7 @@ class CzechTaxReportTest(CzechReportsCommon):
 
         generated_xml = self.env['l10n_cz.tax.report.handler'].export_to_xml(options)['file_content']
         expected_xml = f"""
-            <Pisemnost nazevSW="Odoo SA" verzeSW="{release.version}">
+            <Pisemnost nazevSW="Insilos" verzeSW="{release.version}">
             <DPHDP3 verzePis="02.01">
                 <VetaD dapdph_forma="B" dokument="DP3" k_uladis="DPH" typ_platce="P" ctvrt="2" rok="2017"/>
                 <VetaP zkrobchjm="company_1_data" c_pracufo="2001" c_ufo="451" dic="12345679" typ_ds="F" email="info@company.czexample.com"/>

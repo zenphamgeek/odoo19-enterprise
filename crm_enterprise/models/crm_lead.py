@@ -9,6 +9,7 @@ from odoo.addons.crm_enterprise.tools.business_card_scanner import BusinessCardS
 class CrmLead(models.Model):
     _inherit = 'crm.lead'
 
+    stage_id_color = fields.Integer(string='Stage Color')
     days_to_convert = fields.Float('Days To Convert', compute='_compute_days_to_convert', store=True)
     days_exceeding_closing = fields.Float('Exceeded Closing Days', compute='_compute_days_exceeding_closing', store=True)
 

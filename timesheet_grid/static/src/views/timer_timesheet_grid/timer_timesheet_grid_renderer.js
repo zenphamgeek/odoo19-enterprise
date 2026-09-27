@@ -351,9 +351,10 @@ export class TimerTimesheetGridRenderer extends TimesheetGridRenderer {
         this.lastValidatedTimesheetDate = res && deserializeDate(res);
     }
 
-    get displayAddLine() {
+    displayAddLine(row) {
+        const parentRes = typeof super.displayAddLine === "function" ? super.displayAddLine(row) : super.displayAddLine;
         return (
-            super.displayAddLine &&
+            parentRes &&
             (!this.lastValidatedTimesheetDate ||
                 this.lastValidatedTimesheetDate.startOf("day") <
                     this.props.model.navigationInfo.periodEnd.startOf("day"))

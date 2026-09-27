@@ -1,4 +1,4 @@
-import { useComponent, useEffect } from "@odoo/owl";
+import { useComponent, useLayoutEffect } from "@odoo/owl";
 
 export function useMagnifierGlass() {
     const component = useComponent();
@@ -12,7 +12,7 @@ export function useMagnifierGlass() {
 
 export function useGridCell() {
     const component = useComponent();
-    useEffect(
+    useLayoutEffect(
         /** @param {HTMLElement | null} cellEl */
         (cellEl) => {
             if (!cellEl) {
@@ -23,19 +23,27 @@ export function useGridCell() {
                 cellEl.dataset.row,
                 cellEl.dataset.column
             );
-            Object.assign(component.rootRef.el.style, {
-                "grid-row": cellEl.style["grid-row"],
-                "grid-column": cellEl.style["grid-column"],
-                "z-index": 1,
-            });
-            component.rootRef.el.dataset.gridRow = cellEl.dataset.gridRow;
-            component.rootRef.el.dataset.gridColumn = cellEl.dataset.gridColumn;
-            cellEl.querySelector(".o_grid_cell_readonly").classList.add("d-none");
-            component.rootRef.el.classList.toggle(
-                "o_field_cursor_disabled",
-                !component.state.cell.row.isSection && !component.isEditable()
-            );
-            component.rootRef.el.classList.toggle("fw-bold", Boolean(component.state.cell.row.isSection));
+            if (component.rootRef?.el) {
+                Object.assign(component.rootRef.el.style, {
+                    "grid-row": cellEl.style["grid-row"],
+                    "grid-column": cellEl.style["grid-column"],
+                    "z-index": 1,
+                });
+                component.rootRef.el.dataset.gridRow = cellEl.dataset.gridRow;
+                component.rootRef.el.dataset.gridColumn = cellEl.dataset.gridColumn;
+                component.rootRef.el.classList.toggle(
+                    "o_field_cursor_disabled",
+                    !component.state.cell.row.isSection && !component.isEditable()
+                );
+                component.rootRef.el.classList.toggle("fw-bold", Boolean(component.state.cell.row.isSection));
+            }
+            const readonlyEl = cellEl.querySelector(".o_grid_cell_readonly");
+            if (readonlyEl) {
+                readonlyEl.classList.add("d-none");
+                return () => {
+                    readonlyEl.classList.remove("d-none");
+                };
+            }
         },
         () => [component.props.reactive.cell]
     );

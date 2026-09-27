@@ -4,7 +4,6 @@
     'version': '0.1',
     'depends': [
         'l10n_it_edi',
-        'base_iban',
         'account_batch_payment'
     ],
     'auto_install': ['l10n_it_edi'],

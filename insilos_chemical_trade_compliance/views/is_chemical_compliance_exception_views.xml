@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_is_chemical_compliance_exception_tree" model="ir.ui.view">
+        <field name="name">is.chemical.compliance.exception.tree</field>
+        <field name="model">is.chemical.compliance.exception</field>
+        <field name="arch" type="xml">
+            <list string="Compliance Data Exceptions &amp; Anomalies" sample="1" decoration-danger="severity == 'critical'" decoration-warning="severity == 'warning'" decoration-info="severity == 'info'">
+                <field name="name"/>
+                <field name="exception_type"/>
+                <field name="severity" widget="badge" decoration-danger="severity == 'critical'" decoration-warning="severity == 'warning'" decoration-info="severity == 'info'"/>
+                <field name="product_tmpl_id"/>
+                <field name="chemical_substance_id"/>
+                <field name="dossier_id"/>
+                <field name="state" widget="badge" decoration-danger="state == 'open'" decoration-success="state == 'resolved'" decoration-muted="state == 'ignored'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_is_chemical_compliance_exception_form" model="ir.ui.view">
+        <field name="name">is.chemical.compliance.exception.form</field>
+        <field name="model">is.chemical.compliance.exception</field>
+        <field name="arch" type="xml">
+            <form string="Compliance Data Exception">
+                <header>
+                    <button name="action_quick_fix_mapping" string="Quick Fix Mapping" type="object" class="btn-primary" invisible="state == 'resolved' or not product_tmpl_id"/>
+                    <button name="action_resolve_exception" string="Mark as Resolved" type="object" class="btn-success" invisible="state == 'resolved'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="open,resolved,ignored"/>
+                </header>
+                <sheet>
+                    <div class="w_title">
+                        <label for="name" string="Exception Title"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Classification &amp; Severity">
+                            <field name="exception_type"/>
+                            <field name="severity" widget="badge"/>
+                            <field name="dossier_id"/>
+                            <field name="purchase_order_id"/>
+                        </group>
+                        <group string="Affected Material">
+                            <field name="product_tmpl_id"/>
+                            <field name="chemical_substance_id"/>
+                            <field name="resolved_by" readonly="1" invisible="state != 'resolved'"/>
+                            <field name="resolved_date" readonly="1" invisible="state != 'resolved'"/>
+                        </group>
+                    </group>
+                    <group string="Anomaly Description">
+                        <field name="description" placeholder="Detailed description of data discrepancy or missing fields..."/>
+                    </group>
+                    <group string="Logistics Officer Action Guide">
+                        <field name="resolution_guide" placeholder="Standardized data resolution instructions..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_is_chemical_compliance_exception_kanban" model="ir.ui.view">
+        <field name="name">is.chemical.compliance.exception.kanban</field>
+        <field name="model">is.chemical.compliance.exception</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="w_kanban_small_column" sample="1">
+                <field name="name"/>
+                <field name="exception_type"/>
+                <field name="severity"/>
+                <field name="product_tmpl_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex flex-column gap-1">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong class="text-primary"><field name="name"/></strong>
+                                <field name="severity" widget="badge" decoration-danger="severity == 'critical'" decoration-warning="severity == 'warning'" decoration-info="severity == 'info'"/>
+                            </div>
+                            <div class="text-muted small"><field name="exception_type"/></div>
+                            <div class="fw-bold text-truncate" t-if="record.product_tmpl_id.value"><field name="product_tmpl_id"/></div>
+                            <div class="mt-1">
+                                <field name="state" widget="badge" decoration-danger="state == 'open'" decoration-success="state == 'resolved'" decoration-muted="state == 'ignored'"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_is_chemical_compliance_exception_search" model="ir.ui.view">
+        <field name="name">is.chemical.compliance.exception.search</field>
+        <field name="model">is.chemical.compliance.exception</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="exception_type"/>
+                <field name="product_tmpl_id"/>
+                <field name="chemical_substance_id"/>
+                <field name="dossier_id"/>
+                <filter name="filter_open" string="Open Exceptions" domain="[('state', '=', 'open')]"/>
+                <filter name="filter_critical" string="Critical Severity" domain="[('severity', '=', 'critical')]"/>
+                <group>
+                    <filter name="group_type" string="Exception Type" context="{'group_by': 'exception_type'}"/>
+                    <filter name="group_severity" string="Severity" context="{'group_by': 'severity'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_is_chemical_compliance_exception" model="ir.actions.act_window">
+        <field name="name">Audit Chemical Compliance Exceptions &amp; Holds</field>
+        <field name="path">chemical-exceptions</field>
+        <field name="res_model">is.chemical.compliance.exception</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_is_chemical_compliance_exception_search"/>
+        <field name="help" type="html">
+            <p class="w_view_nocontent_smiling_face">
+                Automated exception detection for missing mappings, UoM ratios, Purpose of Use, and SDS.
+            </p>
+        </field>
+    </record>
+</odoo>

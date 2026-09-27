@@ -1,0 +1,409 @@
+/* ==========================================================================
+   INSILOS EXECUTIVE GLASSMORPHISM MEGA-MENU & INTERACTIVE HEADER EFFECTS
+   ==========================================================================
+   Compliant with:
+   - C3.ai Industrial Sovereign AI Design Standard
+   - Odoo 20 Native SCSS Architecture & Color System
+   - Strict 0 Inline Styles & 100% Brand Orange #FF8000 Unified Buttons
+   ========================================================================== */
+
+// 1. Executive Glassmorphism Header Container
+header#top,
+header.o_header_standard,
+.ins-glass-header {
+    backdrop-filter: blur(16px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+    background: rgba(7, 11, 20, 0.85) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1030 !important;
+    transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &.o_header_is_scrolled {
+        background: rgba(7, 11, 20, 0.95) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55),
+                    0 0 40px rgba(255, 128, 0, 0.04) !important;
+    }
+}
+
+// 2. Desktop Navigation Layout & Indicator Sheen
+.ins-nav-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+// Top Menu Container
+#top_menu {
+    position: relative;
+}
+
+// Dynamic Indicator Pill Sheen (Interpolates to hovered/active item)
+.ins-nav-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-radius: 9999px;
+    background: rgba(255, 128, 0, 0.12);
+    border: 1px solid rgba(255, 128, 0, 0.38);
+    box-shadow: 0 0 16px rgba(255, 128, 0, 0.22),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1;
+    transform: translateZ(0);
+    transition: left 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                top 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                height 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.2s ease;
+    will-change: left, top, width, height, opacity;
+}
+
+// Navigation Items & Links
+.ins-nav-item {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+
+    .nav-link {
+        color: rgba(255, 255, 255, 0.78) !important;
+        font-weight: 500;
+        font-size: 0.925rem;
+        padding: 0.42rem 0.92rem !important;
+        border-radius: 9999px;
+        transition: color 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        line-height: 1.2;
+        gap: 0.25rem;
+        cursor: pointer;
+
+        > span {
+            display: inline-flex;
+            align-items: center;
+            line-height: 1.2;
+            vertical-align: middle;
+        }
+
+        &:hover,
+        &.active,
+        &.show {
+            color: #FFFFFF !important;
+        }
+
+        svg {
+            transition: transform 0.2s ease;
+            vertical-align: middle;
+        }
+    }
+
+    &.is-open .nav-link svg.ph-caret-down {
+        transform: rotate(180deg);
+    }
+}
+
+// 3. Mega-Menu Dropdown Panel (Full Width Executive Glassmorphism)
+.ins-megamenu-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: rgba(7, 11, 20, 0.96);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 28px 64px rgba(0, 0, 0, 0.72),
+                0 0 100px rgba(255, 128, 0, 0.06);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.2s;
+    pointer-events: none;
+    z-index: 1025;
+
+    &.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+}
+
+// Mega-Menu Column Headers
+.ins-megamenu-col-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.65rem;
+
+    .ins-col-eyebrow {
+        letter-spacing: 0.05em;
+        font-size: 0.725rem;
+    }
+
+    h5 {
+        font-size: 1.05rem;
+        letter-spacing: -0.01em;
+    }
+}
+
+// Mega-Menu Solution / Vertical Item Row
+.ins-menu-link-item {
+    display: flex;
+    text-decoration: none !important;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    transition: background 0.18s ease,
+                border-color 0.18s ease,
+                transform 0.18s ease;
+
+    &:hover,
+    &.is-active {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 128, 0, 0.28);
+        transform: translateX(3px);
+
+        .ins-menu-icon-box {
+            background: rgba(255, 128, 0, 0.18);
+            border-color: rgba(255, 128, 0, 0.45);
+            box-shadow: 0 0 14px rgba(255, 128, 0, 0.32);
+            color: #FFA033;
+        }
+
+        .ins-menu-item-title {
+            color: #FFFFFF !important;
+        }
+    }
+
+    .ins-menu-icon-box {
+        width: 42px;
+        height: 42px;
+        border-radius: 0.625rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 128, 0, 0.08);
+        border: 1px solid rgba(255, 128, 0, 0.22);
+        color: var(--ins-orange);
+        transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
+
+        svg {
+            width: 22px;
+            height: 22px;
+        }
+    }
+
+    .ins-menu-item-title {
+        font-size: 0.925rem;
+        line-height: 1.3;
+        transition: color 0.18s ease;
+    }
+
+    .ins-menu-item-desc {
+        font-size: 0.775rem;
+        line-height: 1.35;
+        color: rgba(255, 255, 255, 0.55);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+// Subtle Pill Badges
+.ins-badge-subtle {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.675rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.02em;
+}
+
+// 4. Live Interactive Preview Card (Col 3)
+.ins-preview-card {
+    background: rgba(14, 23, 38, 0.78) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                0 16px 40px rgba(0, 0, 0, 0.5) !important;
+    position: relative;
+    overflow: hidden;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+
+    // Mouse Spotlight Sheen
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(380px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 128, 0, 0.12), transparent 70%);
+        pointer-events: none;
+        opacity: 1;
+        transition: opacity 0.25s ease;
+    }
+
+    .ins-card-pictogram {
+        width: 52px;
+        height: 52px;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 128, 0, 0.12);
+        border: 1px solid rgba(255, 128, 0, 0.35);
+        color: var(--ins-orange);
+
+        svg {
+            width: 28px;
+            height: 28px;
+        }
+    }
+
+    .ins-pill-badge {
+        background: rgba(255, 128, 0, 0.12);
+        color: var(--ins-orange);
+        border: 1px solid rgba(255, 128, 0, 0.35);
+        border-radius: 9999px;
+        padding: 0.25rem 0.65rem;
+        letter-spacing: 0.03em;
+    }
+
+    h4 {
+        font-size: 1.15rem;
+        letter-spacing: -0.01em;
+    }
+
+    p {
+        line-height: 1.45;
+        min-height: 2.9rem;
+    }
+
+    .ins-metric-cell {
+        background: rgba(7, 11, 20, 0.68);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.25rem;
+
+        .ins-metric-val {
+            font-size: 0.95rem;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+        }
+
+        .ins-metric-lbl {
+            font-size: 0.65rem;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+// 5. Industry Cluster Links (Col 2 of Industries)
+.ins-cluster-link {
+    display: block;
+    padding: 0.22rem 0.45rem;
+    border-radius: 0.375rem;
+    color: rgba(255, 255, 255, 0.68) !important;
+    transition: color 0.15s ease, background 0.15s ease, padding-left 0.15s ease;
+
+    &:hover {
+        color: #FFFFFF !important;
+        background: rgba(255, 255, 255, 0.05);
+        padding-left: 0.75rem;
+    }
+}
+
+.ins-action-link {
+    transition: color 0.18s ease, transform 0.18s ease;
+
+    &:hover {
+        color: var(--ins-orange-hover) !important;
+        transform: translateX(3px);
+    }
+}
+
+// 6. Mobile Drawer (< 992px)
+#top_menu_collapse_mobile,
+.ins-mobile-drawer {
+    background: rgba(7, 11, 20, 0.98) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+    .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+        opacity: 0.75;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .accordion-button {
+        background: transparent !important;
+        color: #FFFFFF !important;
+        font-size: 1.05rem;
+        font-weight: 600;
+        box-shadow: none !important;
+
+        &::after {
+            filter: invert(1);
+            transition: transform 0.2s ease;
+        }
+
+        &:not(.collapsed) {
+            color: var(--ins-orange) !important;
+
+            &::after {
+                filter: invert(55%) sepia(85%) saturate(2200%) hue-rotate(5deg);
+            }
+        }
+    }
+
+    .ins-mobile-menu-link {
+        padding: 0.35rem 0.5rem;
+        border-radius: 0.45rem;
+        transition: background 0.15s ease, color 0.15s ease;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--ins-orange) !important;
+        }
+    }
+}
+
+// Supporting Semantic Accents
+.text-mint {
+    color: #10B981 !important;
+}
+
+.text-cyan {
+    color: #06B6D4 !important;
+}
+
+.text-orange {
+    color: #FF8000 !important;
+}
+
+.x-small {
+    font-size: 0.7rem !important;
+}

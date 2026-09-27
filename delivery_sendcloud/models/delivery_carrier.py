@@ -23,7 +23,7 @@ class DeliveryCarrier(models.Model):
     sendcloud_shipping_name = fields.Char(related='sendcloud_shipping_id.name', string="Sendcloud Shipping Product")
     sendcloud_return_name = fields.Char(related='sendcloud_return_id.name', string="Sendcloud Return Shipping Product")
     sendcloud_shipping_rules = fields.Boolean(string="Use Sendcloud shipping rules",
-                                              help="Depending your Sendcloud account type, through rules you can define the shipping method to use depending on different conditions like destination, weight, value, etc.\nRules can override shipping product selected in Odoo")
+                                              help="Depending your Sendcloud account type, through rules you can define the shipping method to use depending on different conditions like destination, weight, value, etc.\nRules can override shipping product selected in Insilos")
     sendcloud_product_functionalities = fields.Json(string="Functionalities")
     sendcloud_has_custom_functionalities = fields.Boolean(
         related="sendcloud_shipping_id.can_customize_functionalities")

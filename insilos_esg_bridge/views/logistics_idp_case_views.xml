@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Logistics IDP Case Form: Add ESG Freight Carbon & 1-Click Multi-App Orchestrator -->
+        <record id="view_logistics_idp_case_form_esg" model="ir.ui.view">
+            <field name="name">logistics.idp.case.form.esg</field>
+            <field name="model">logistics.idp.case</field>
+            <field name="inherit_id" ref="insilos_logistics_idp.view_logistics_case_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_execute_enterprise_orchestration" string="⚡ 1-Click Multi-App Orchestrate" type="object" class="btn-primary fw-bold" icon="fa-bolt" invisible="is_orchestrated"/>
+                </xpath>
+                <xpath expr="//sheet" position="before">
+                    <div class="alert alert-success d-flex align-items-center mb-2" role="status" invisible="not is_orchestrated">
+                        <i class="ph-duotone ph-check-circle fs-4 me-2"/>
+                        <div>
+                            <strong>Enterprise Orchestration Completed:</strong> ERP Purchase Order, NSW Customs Declaration, Scope 3 Freight Carbon, and Treasury Risk Task have been atomically synchronized across the Enterprise Knowledge Graph.
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="ESG Freight Carbon Footprint" name="esg_carbon">
+                        <group>
+                            <group string="Logistics Carbon Summary">
+                                <field name="total_freight_carbon_kg" class="fw-bold fs-4 text-primary"/>
+                                <field name="paperless_pages_saved"/>
+                            </group>
+                            <group string="Enterprise Orchestrated Links">
+                                <field name="is_orchestrated" widget="boolean_toggle" readonly="1"/>
+                                <field name="orchestrated_po_id" readonly="1"/>
+                                <field name="orchestrated_nsw_dossier_id" readonly="1"/>
+                                <field name="orchestrated_treasury_task_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <field name="freight_carbon_ids">
+                            <list>
+                                <field name="name"/>
+                                <field name="transport_mode"/>
+                                <field name="cargo_weight_ton"/>
+                                <field name="estimated_distance_km"/>
+                                <field name="gross_freight_emissions_t_co2e" string="Carbon (tCO₂e)"/>
+                                <field name="paperless_pages_processed"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

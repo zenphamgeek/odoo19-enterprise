@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, _
+from odoo.tools import SQL
 
 
 class IrAttachmentReport(models.Model):
@@ -23,8 +24,8 @@ class IrAttachmentReport(models.Model):
                 attachment.name = False
 
     @property
-    def _table_query(self):
-        return """
+    def _table_sql(self) -> SQL:
+        return SQL("""(
 SELECT
     min(id) AS id,
     res_model,
@@ -38,7 +39,7 @@ WHERE
 GROUP BY
     res_model,
     res_id
-"""
+)""")
 
     def action_attachment_detail(self):
         self.ensure_one()

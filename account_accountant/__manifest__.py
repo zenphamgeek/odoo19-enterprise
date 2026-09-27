@@ -21,7 +21,7 @@ It gives the Administrator user access to important invoicing features such as b
         'data/account_accountant_tour.xml',
         'data/ir_config_parameters.xml',
 
-        'security/ir.model.access.csv',
+        'security/ir.access.csv',
         'security/account_accountant_security.xml',
 
         'views/account_account_views.xml',

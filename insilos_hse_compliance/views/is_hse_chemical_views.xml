@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- OEL List View -->
+        <record id="view_is_hse_oel_tree" model="ir.ui.view">
+            <field name="name">is.hse.oel.list</field>
+            <field name="model">is.hse.oel</field>
+            <field name="arch" type="xml">
+                <list string="Occupational Exposure Limits (OELs)">
+                    <field name="substance_id"/>
+                    <field name="authority"/>
+                    <field name="twa_mg_m3"/>
+                    <field name="twa_ppm"/>
+                    <field name="stel_mg_m3"/>
+                    <field name="stel_ppm"/>
+                    <field name="ceiling_mg_m3"/>
+                    <field name="notes"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- SDS Form & List Views -->
+        <record id="view_is_hse_sds_tree" model="ir.ui.view">
+            <field name="name">is.hse.sds.list</field>
+            <field name="model">is.hse.sds</field>
+            <field name="arch" type="xml">
+                <list string="Safety Data Sheets (SDS)">
+                    <field name="name"/>
+                    <field name="substance_id"/>
+                    <field name="supplier_name"/>
+                    <field name="issue_date"/>
+                    <field name="version"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_hse_sds_form" model="ir.ui.view">
+            <field name="name">is.hse.sds.form</field>
+            <field name="model">is.hse.sds</field>
+            <field name="arch" type="xml">
+                <form string="Safety Data Sheet (16-Section)">
+                    <sheet>
+                        <div class="w_title">
+                            <label for="name" string="SDS Title"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Acetone 99.5% Safety Data Sheet"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Identification">
+                                <field name="substance_id"/>
+                                <field name="supplier_name"/>
+                            </group>
+                            <group string="Version &amp; Governance">
+                                <field name="issue_date"/>
+                                <field name="version"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Sections 1-4" name="sec_1_4">
+                                <group>
+                                    <field name="sec1_identification"/>
+                                    <field name="sec2_hazard_identification"/>
+                                    <field name="sec3_composition"/>
+                                    <field name="sec4_first_aid"/>
+                                </group>
+                            </page>
+                            <page string="Sections 5-8 (Safety &amp; PPE)" name="sec_5_8">
+                                <group>
+                                    <field name="sec5_fire_fighting"/>
+                                    <field name="sec6_accidental_release"/>
+                                    <field name="sec7_handling_storage"/>
+                                    <field name="sec8_exposure_controls"/>
+                                </group>
+                            </page>
+                            <page string="Sections 9-12 (Properties &amp; Tox)" name="sec_9_12">
+                                <group>
+                                    <field name="sec9_physical_chemical"/>
+                                    <field name="sec10_stability_reactivity"/>
+                                    <field name="sec11_toxicological"/>
+                                    <field name="sec12_ecological"/>
+                                </group>
+                            </page>
+                            <page string="Sections 13-16 (Disposal &amp; Transport)" name="sec_13_16">
+                                <group>
+                                    <field name="sec13_disposal"/>
+                                    <field name="sec14_transport"/>
+                                    <field name="sec15_regulatory"/>
+                                    <field name="sec16_other"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Chemical Substance Form & List Views -->
+        <record id="view_is_hse_chemical_substance_tree" model="ir.ui.view">
+            <field name="name">is.hse.chemical.substance.list</field>
+            <field name="model">is.hse.chemical.substance</field>
+            <field name="arch" type="xml">
+                <list string="Chemical Substances Master">
+                    <field name="cas_number"/>
+                    <field name="name"/>
+                    <field name="formula"/>
+                    <field name="un_number"/>
+                    <field name="hazard_classification"/>
+                    <field name="ghs_signal_word" widget="badge" decoration-danger="ghs_signal_word == 'danger'" decoration-warning="ghs_signal_word == 'warning'"/>
+                    <field name="sds_count"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_is_hse_chemical_substance_form" model="ir.ui.view">
+            <field name="name">is.hse.chemical.substance.form</field>
+            <field name="model">is.hse.chemical.substance</field>
+            <field name="arch" type="xml">
+                <form string="Chemical Substance">
+                    <header>
+                        <button name="%(action_report_hse_chemical_safety_sop)d" string="Print Safety Data &amp; Emergency SOP" type="action" class="btn-primary" icon="fa-print"/>
+                    </header>
+                    <sheet>
+                        <div class="w_title">
+                            <label for="cas_number" string="CAS Registry Number"/>
+                            <h1>
+                                <field name="cas_number" placeholder="e.g. 67-64-1"/>
+                            </h1>
+                            <h3>
+                                <field name="name" placeholder="Chemical / IUPAC Name (e.g. Acetone)"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group string="Chemical Identification">
+                                <field name="formula"/>
+                                <field name="un_number"/>
+                                <field name="hazard_classification"/>
+                            </group>
+                            <group string="GHS Hazard Classification">
+                                <field name="ghs_signal_word"/>
+                                <field name="ghs_flammable"/>
+                                <field name="ghs_corrosive"/>
+                                <field name="ghs_toxic"/>
+                                <field name="ghs_health_hazard"/>
+                                <field name="ghs_environmental"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Occupational Exposure Limits (OELs)" name="oels">
+                                <field name="oel_ids">
+                                    <list editable="bottom">
+                                        <field name="authority"/>
+                                        <field name="twa_mg_m3"/>
+                                        <field name="twa_ppm"/>
+                                        <field name="stel_mg_m3"/>
+                                        <field name="stel_ppm"/>
+                                        <field name="ceiling_mg_m3"/>
+                                        <field name="notes"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Safety Data Sheets (SDS)" name="sds_list">
+                                <field name="sds_ids">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="supplier_name"/>
+                                        <field name="issue_date"/>
+                                        <field name="version"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Chemical Substance Search View -->
+        <record id="view_is_hse_chemical_substance_search" model="ir.ui.view">
+            <field name="name">is.hse.chemical.substance.search</field>
+            <field name="model">is.hse.chemical.substance</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="cas_number"/>
+                    <field name="un_number"/>
+                    <field name="formula"/>
+                    <filter name="filter_danger" string="GHS Danger" domain="[('ghs_signal_word', '=', 'danger')]"/>
+                    <filter name="filter_warning" string="GHS Warning" domain="[('ghs_signal_word', '=', 'warning')]"/>
+                    <separator/>
+                    <filter name="filter_flammable" string="Flammable" domain="[('ghs_flammable', '=', True)]"/>
+                    <filter name="filter_toxic" string="Toxic" domain="[('ghs_toxic', '=', True)]"/>
+                    <filter name="filter_health_hazard" string="Health Hazard" domain="[('ghs_health_hazard', '=', True)]"/>
+                    <group>
+                        <filter name="group_signal_word" string="GHS Signal Word" context="{'group_by': 'ghs_signal_word'}"/>
+                        <filter name="group_hazard_class" string="Hazard Classification" context="{'group_by': 'hazard_classification'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- SDS Search View -->
+        <record id="view_is_hse_sds_search" model="ir.ui.view">
+            <field name="name">is.hse.sds.search</field>
+            <field name="model">is.hse.sds</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="substance_id"/>
+                    <field name="supplier_name"/>
+                    <group>
+                        <filter name="group_substance" string="Chemical Substance" context="{'group_by': 'substance_id'}"/>
+                        <filter name="group_supplier" string="Supplier" context="{'group_by': 'supplier_name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_is_hse_chemical_substance" model="ir.actions.act_window">
+            <field name="name">Manage Chemical Master Data &amp; Safety Data Sheets (SDS)</field>
+            <field name="path">hse-chemicals</field>
+            <field name="res_model">is.hse.chemical.substance</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_is_hse_chemical_substance_search"/>
+        </record>
+
+        <record id="action_is_hse_sds" model="ir.actions.act_window">
+            <field name="name">Manage Safety Data Sheets (SDS Repository)</field>
+            <field name="path">hse-sds-repository</field>
+            <field name="res_model">is.hse.sds</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_is_hse_sds_search"/>
+        </record>
+    </data>
+</odoo>

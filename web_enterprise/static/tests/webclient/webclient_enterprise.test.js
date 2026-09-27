@@ -178,7 +178,7 @@ beforeEach(() => {
 // Those tests rely on hidden view to be in CSS: display: none
 describe("basic flow with home menu", () => {
     stepAllNetworkCalls();
-    onRpc("partner", "get_formview_action", () => ({
+    onRpc("partner", "get_record_default_action", () => ({
         type: "ir.actions.act_window",
         res_model: "partner",
         view_type: "form",
@@ -255,7 +255,7 @@ describe("basic flow with home menu", () => {
         await contains('.o_field_widget[name="parent_id"] .o_external_button', {
             visible: false,
         }).click();
-        expect.verifySteps(["get_formview_action", "get_views", "web_read"]);
+        expect.verifySteps(["get_record_default_action", "get_views", "web_read"]);
         expect(".o_form_view").toHaveCount(1);
         expect(".o_breadcrumb .active").toHaveText("Second record");
         // The third one is the active one
@@ -280,7 +280,7 @@ describe("basic flow with home menu", () => {
         await contains('.o_field_widget[name="parent_id"] .o_external_button', {
             visible: false,
         }).click();
-        expect.verifySteps(["get_formview_action", "get_views", "web_read"]);
+        expect.verifySteps(["get_record_default_action", "get_views", "web_read"]);
         await goToHomeMenu();
         expect.verifySteps([]);
         expect(".o_menu_toggle").toHaveClass("o_menu_toggle_back");
@@ -307,7 +307,7 @@ describe("basic flow with home menu", () => {
         await contains('.o_field_widget[name="parent_id"] .o_external_button', {
             visible: false,
         }).click();
-        expect.verifySteps(["get_formview_action", "get_views", "web_read"]);
+        expect.verifySteps(["get_record_default_action", "get_views", "web_read"]);
         await contains(".o_menu_toggle").click();
 
         // can't click again too soon because of the mutex in home_menu
@@ -582,7 +582,6 @@ test("url state is well handled when going in and out of the HomeMenu", async ()
                     displayName: "Home",
                 },
             ],
-            globalState: {},
         },
         { message: "actionStack was restored" }
     );
@@ -717,7 +716,7 @@ test("Share URL item is present in the user menu when running as PWA", async () 
     registry.category("user_menuitems").add("share_url", shareUrlMenuItem);
 
     await mountWithCleanup(UserMenu);
-    await contains(".o_user_menu button").click();
+    await contains(".o_user_menu").click();
 
     expect(".o-dropdown--menu .dropdown-item").toHaveCount(1);
     expect(".o-dropdown--menu .dropdown-item").toHaveText("Share");
@@ -730,7 +729,7 @@ test("Share URL item is not present in the user menu when not running as PWA", a
     registry.category("user_menuitems").add("share_url", shareUrlMenuItem);
 
     await mountWithCleanup(UserMenu);
-    await contains(".o_user_menu button").click();
+    await contains(".o_user_menu").click();
 
     expect(".o-dropdown--menu .dropdown-item").not.toHaveCount();
 });

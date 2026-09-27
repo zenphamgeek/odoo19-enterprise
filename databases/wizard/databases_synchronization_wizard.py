@@ -138,7 +138,7 @@ class DatabasesSynchronizationWizard(models.TransientModel):
         dbs_ignored = existing_databases - dbs_to_update
         for db in dbs_ignored:
             self.error_message += self.env._(
-                "The database %(url)s is registered as a saas database in odoo.com. As it seems to be configured we have left it as is.\n",
+                "The database %(url)s is registered as a saas database in insilos.com. As it seems to be configured we have left it as is.\n",
                 url=db.database_url,
             )
 

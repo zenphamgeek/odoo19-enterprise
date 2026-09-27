@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_is_hs_sync_log_list" model="ir.ui.view">
+        <field name="name">is.hs.sync.log.list</field>
+        <field name="model">is.hs.sync.log</field>
+        <field name="arch" type="xml">
+            <list create="0" delete="0" decoration-danger="status == 'error'" decoration-success="status == 'success'" decoration-muted="status == 'ignored'">
+                <field name="timestamp"/>
+                <field name="event_id"/>
+                <field name="event_type"/>
+                <field name="direction" widget="badge"/>
+                <field name="status" widget="badge" decoration-success="status == 'success'" decoration-danger="status == 'error'" decoration-muted="status == 'ignored'"/>
+                <field name="payload_summary"/>
+                <field name="remote_ip" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_is_hs_sync_log_form" model="ir.ui.view">
+        <field name="name">is.hs.sync.log.form</field>
+        <field name="model">is.hs.sync.log</field>
+        <field name="arch" type="xml">
+            <form create="0" delete="0">
+                <header>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Event Identifiers">
+                            <field name="event_id"/>
+                            <field name="event_type"/>
+                            <field name="direction"/>
+                        </group>
+                        <group string="Audit Metadata">
+                            <field name="timestamp"/>
+                            <field name="remote_ip"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Event Summary">
+                        <field name="payload_summary" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Raw Payload Data">
+                            <field name="raw_payload" widget="text" nolabel="1"/>
+                        </page>
+                        <page string="Error Information" invisible="not error_message">
+                            <field name="error_message" widget="text" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_is_hs_sync_log_search" model="ir.ui.view">
+        <field name="name">is.hs.sync.log.search</field>
+        <field name="model">is.hs.sync.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="event_id"/>
+                <field name="event_type"/>
+                <field name="payload_summary"/>
+                <field name="error_message"/>
+                <filter name="success_logs" string="Success" domain="[('status', '=', 'success')]"/>
+                <filter name="error_logs" string="Errors" domain="[('status', '=', 'error')]"/>
+                <separator/>
+                <filter name="inbound_logs" string="Inbound Webhooks" domain="[('direction', '=', 'inbound_webhook')]"/>
+                <filter name="outbound_logs" string="Outbound API Calls" domain="[('direction', '=', 'outbound_api')]"/>
+                <group>
+                    <filter name="group_event_type" string="Event Type" context="{'group_by': 'event_type'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_timestamp" string="Date" context="{'group_by': 'timestamp:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_is_hs_sync_log" model="ir.actions.act_window">
+        <field name="name">Audit Tariff Sync &amp; Regulatory Delta Logs</field>
+        <field name="path">hs-sync-logs</field>
+        <field name="res_model">is.hs.sync.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_is_hs_sync_log_search"/>
+        <field name="help" type="html">
+            <p class="w_view_nocontent_smiling_face">
+                No sync audit logs recorded yet.
+            </p>
+        </field>
+    </record>
+</odoo>

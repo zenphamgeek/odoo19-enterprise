@@ -3,8 +3,8 @@
 {
     'name': 'WhatsApp-Sign',
     'category': 'WhatsApp',
-    'summary': 'This module enables users to send signature requests via WhatsApp in Odoo Sign',
-    'description': """This module allows users to send signature requests via WhatsApp using Odoo Sign""",
+    'summary': 'This module enables users to send signature requests via WhatsApp in Insilos Sign',
+    'description': """This module allows users to send signature requests via WhatsApp using Insilos Sign""",
     'depends': ['sign', 'whatsapp'],
     'data': [
         'data/sign_request_whatsapp_templates.xml',

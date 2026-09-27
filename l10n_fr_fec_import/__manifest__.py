@@ -25,7 +25,6 @@ https://github.com/DGFiP/Test-Compta-Demat
     "category": "Accounting/Accounting",
     "depends": [
         "account_accountant",
-        "base_vat",
         "l10n_fr_account",
         "l10n_fr_reports",
         "account_base_import"

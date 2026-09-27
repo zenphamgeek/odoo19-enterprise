@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hse_chemical_import_wizard_form" model="ir.ui.view">
+        <field name="name">is.hse.chemical.import.wizard.form</field>
+        <field name="model">is.hse.chemical.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Chemical Substances">
+                <group invisible="is_imported">
+                    <group>
+                        <field name="import_file" filename="file_name"/>
+                        <field name="file_name" invisible="1"/>
+                        <field name="import_mode"/>
+                    </group>
+                    <group>
+                        <div class="alert alert-info" role="alert">
+                            <strong>CSV Format:</strong> chemical_name, cas_number, un_number, formula, hazard_classification, signal_word, flammable, corrosive, toxic, health_hazard, environmental
+                        </div>
+                    </group>
+                </group>
+                <group invisible="not is_imported">
+                    <group string="Import Results">
+                        <field name="result_created"/>
+                        <field name="result_updated"/>
+                        <field name="result_skipped"/>
+                    </group>
+                    <group string="Errors" invisible="not result_errors">
+                        <field name="result_errors" nolabel="1"/>
+                    </group>
+                </group>
+                <field name="is_imported" invisible="1"/>
+                <footer>
+                    <button string="Import" name="action_import" type="object" class="btn-primary" invisible="is_imported"/>
+                    <button string="Download Template" name="action_download_template" type="object" class="btn-secondary" invisible="is_imported"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hse_chemical_import_wizard" model="ir.actions.act_window">
+        <field name="name">Import Chemical Substances</field>
+        <field name="res_model">is.hse.chemical.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

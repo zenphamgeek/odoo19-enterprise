@@ -12,9 +12,10 @@ class Home(web_home.Home):
     def _web_client_readonly(self, rule, args):
         """ Force a read/write cursor for documents.access """
         path = request.httprequest.path
+        subpath = path.removeprefix('/odoo/documents').lstrip('/')
         if (
-            path.startswith('/odoo/documents')
-            and (request.httprequest.args.get('access_token') or path.removeprefix('/odoo/documents/'))
+            path.startswith('/odoo/documents/')
+            and (request.httprequest.args.get('access_token') or subpath)
             and request.session.uid
         ):
             return False
@@ -33,8 +34,12 @@ class Home(web_home.Home):
         Goal: Allow to share directly the backend URL of a document.
         """
         subpath = kw.get('subpath', '')
-        access_token = request.params.get('access_token') or subpath.removeprefix('documents/')
-        if not subpath.startswith('documents') or not access_token or '/' in access_token:
+        if subpath.startswith('documents/'):
+            access_token = request.params.get('access_token') or subpath.removeprefix('documents/')
+        else:
+            access_token = request.params.get('access_token')
+
+        if not access_token or '/' in access_token:
             return super().web_client(s_action, **kw)
 
         # This controller should be auth='public' but it actually is
