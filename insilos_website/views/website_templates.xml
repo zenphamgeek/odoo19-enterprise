@@ -330,7 +330,7 @@
                         <!-- Col 3: Live Interactive Preview Card -->
                         <div class="col-lg-4">
                             <div class="card h-100 p-4 rounded-4 border border-secondary border-opacity-25 d-flex flex-column justify-content-between ins-preview-card" id="ins_sol_preview_card">
-                                <div>
+                                <div class="ins-preview-content">
                                     <div class="d-flex justify-content-between align-items-start mb-3">
                                         <div class="ins-card-pictogram ins-pictogram-lg ins-sol-preview-icon">
                                             <svg class="ph-duotone ph-file-text ph-xl"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
@@ -385,13 +385,13 @@
                             <div class="d-flex flex-column gap-2">
                                 <!-- Ind 1: Logistics & Ports -->
                                 <a href="/industries/logistics" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3 is-active"
-                                   data-badge="Cát Lái Port Case Study"
-                                   data-title="Logistics &amp; Seaport Operations"
+                                   data-badge="WCO SAFE · Cát Lái Port"
+                                   data-title="Logistics &amp; Cảng Biển"
                                    data-icon="ph-anchor"
-                                   data-m1-val="-18.4%" data-m1-lbl="Demurrage Loss"
-                                   data-m2-val="100%" data-m2-lbl="Serial Trace"
-                                   data-m3-val="VAS 156" data-m3-lbl="Accounting Match"
-                                   data-desc="Loại bỏ phí lưu bãi container, tối ưu luồng xếp dỡ bãi và kiểm soát vận tải lạnh tại Cát Lái."
+                                   data-m1-val="-88%" data-m1-lbl="Phí Lưu Bãi Container"
+                                   data-m2-val="99.8%" data-m2-lbl="Độ Chính Xác STP"
+                                   data-m3-val="VAS 200/133" data-m3-lbl="Chuẩn Đối Soát Thuế"
+                                   data-desc="Triệt tiêu 88% phí lưu bãi container (DEM/DET), tự động hóa bóc tách lệnh giao hàng và đối soát 3 chiều WCO SAFE tại Cát Lái."
                                    data-href="/industries/logistics">
                                     <div class="ins-menu-icon-box flex-shrink-0">
                                         <svg class="ph-duotone ph-anchor ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-anchor"/></svg>
@@ -399,20 +399,20 @@
                                     <div class="flex-grow-1 min-w-0">
                                         <div class="d-flex align-items-center justify-content-between mb-1">
                                             <span class="ins-menu-item-title fw-semibold text-white">Logistics &amp; Cảng Biển</span>
-                                            <span class="badge ins-badge-subtle">Cát Lái Port</span>
+                                            <span class="badge ins-badge-subtle">WCO SAFE</span>
                                         </div>
-                                        <p class="ins-menu-item-desc text-secondary small mb-0">Loại bỏ phí lưu bãi container, tối ưu luồng xếp dỡ</p>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">-88% phí lưu bãi container, đối soát WCO SAFE Cát Lái</p>
                                     </div>
                                 </a>
                                 <!-- Ind 2: Pharma & GxP -->
                                 <a href="/industries/pharma" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
-                                   data-badge="GxP &amp; FDA 21 CFR 11"
-                                   data-title="Pharma &amp; Life Sciences"
+                                   data-badge="FDA 21 CFR Part 11 · GMP"
+                                   data-title="Dược Phẩm &amp; Khoa Học Đời Sống"
                                    data-icon="ph-pill"
-                                   data-m1-val="99.9%" data-m1-lbl="Cleanroom Uptime"
-                                   data-m2-val="0 lỗi" data-m2-lbl="Batch Audit"
-                                   data-m3-val="GMP-WHO" data-m3-lbl="Compliance"
-                                   data-desc="Giám sát phòng sạch, phân tích độ lệch mẻ Golden Batch và khóa cứng hồ sơ lô điện tử."
+                                   data-m1-val="+4.6%" data-m1-lbl="Sản Lượng Mẻ (Golden Yield)"
+                                   data-m2-val="0h" data-m2-lbl="Dừng Máy Ngoài Kế Hoạch"
+                                   data-m3-val="FDA 21 CFR" data-m3-lbl="Khóa Cứng Hồ Sơ Lô"
+                                   data-desc="Kiểm soát phòng sạch, phân tích độ lệch mẻ Golden Batch thời gian thực và khóa cứng hồ sơ lô điện tử (eBR) chống can thiệp."
                                    data-href="/industries/pharma">
                                     <div class="ins-menu-icon-box flex-shrink-0">
                                         <svg class="ph-duotone ph-pill ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-pill"/></svg>
@@ -422,18 +422,18 @@
                                             <span class="ins-menu-item-title fw-semibold text-white">Dược Phẩm &amp; GxP</span>
                                             <span class="badge ins-badge-subtle">FDA 21 CFR 11</span>
                                         </div>
-                                        <p class="ins-menu-item-desc text-secondary small mb-0">Kiểm soát phòng sạch, Golden Batch yield deviation</p>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">+4.6% sản lượng mẻ Golden Batch, 0h dừng phòng sạch</p>
                                     </div>
                                 </a>
                                 <!-- Ind 3: Energy & Utilities -->
                                 <a href="/industries/energy" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
-                                   data-badge="EVN Genco 3 Verified Proof"
-                                   data-title="Energy &amp; Power Generation"
+                                   data-badge="IEC 61850 · EVN Genco 3"
+                                   data-title="Năng Lượng &amp; Lưới Điện Thông Minh"
                                    data-icon="ph-lightning"
-                                   data-m1-val="99.8%" data-m1-lbl="Grid Reliability"
-                                   data-m2-val="14 ngày" data-m2-lbl="Turbine Warning"
-                                   data-m3-val="IEC 61850" data-m3-lbl="SCADA Standard"
-                                   data-desc="Giám sát rung động tuabin điện, số hóa trạm biến áp IEC 61850 và điều độ nguồn điện."
+                                   data-m1-val="99.8%" data-m1-lbl="Độ Tin Cậy Lưới Điện"
+                                   data-m2-val="14 ngày" data-m2-lbl="Cảnh Báo Tuabin Sớm"
+                                   data-m3-val="IEC 61850" data-m3-lbl="SCADA Substation"
+                                   data-desc="Giám sát rung động tuabin nhiệt điện theo ISO 10816, chuẩn hóa IEC 61850 và điều độ nguồn điện phân tán không trễ."
                                    data-href="/industries/energy">
                                     <div class="ins-menu-icon-box flex-shrink-0">
                                         <svg class="ph-duotone ph-lightning ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lightning"/></svg>
@@ -443,18 +443,18 @@
                                             <span class="ins-menu-item-title fw-semibold text-white">Năng Lượng &amp; Utilities</span>
                                             <span class="badge ins-badge-subtle">EVN Genco 3</span>
                                         </div>
-                                        <p class="ins-menu-item-desc text-secondary small mb-0">Giám sát tuabin nhiệt điện, chuẩn hóa IEC 61850</p>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Giám sát rung động tuabin EVN Genco 3, chuẩn hóa IEC 61850</p>
                                     </div>
                                 </a>
                                 <!-- Ind 4: Field Service & Machinery -->
                                 <a href="/industries/fsm" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
-                                   data-badge="Heavy Machinery Fleet"
-                                   data-title="Field Service &amp; Machinery"
+                                   data-badge="FSM &amp; CAT Komatsu Fleet"
+                                   data-title="Dịch Vụ Hiện Trường &amp; Cơ Giới"
                                    data-icon="ph-truck"
-                                   data-m1-val="94.8%" data-m1-lbl="First-Time Fix"
-                                   data-m2-val="0h" data-m2-lbl="Fleet Stop"
-                                   data-m3-val="ISO 55000" data-m3-lbl="Asset Health"
-                                   data-desc="Bảo trì cơ giới nặng CAT/Komatsu, lập lịch phụ tùng tự động và nhật ký kỹ thuật số."
+                                   data-m1-val="94.8%" data-m1-lbl="Xử Lý Lần Đầu (FTFR)"
+                                   data-m2-val="0h" data-m2-lbl="Dừng Máy Ngoài Kế Hoạch"
+                                   data-m3-val="ISO 55000" data-m3-lbl="Sức Khỏe Đội Xe"
+                                   data-desc="Bảo trì dự đoán cơ giới nặng CAT/Komatsu, tự động đặt linh kiện thay thế OEM và phân bổ kỹ thuật viên theo chứng chỉ."
                                    data-href="/industries/fsm">
                                     <div class="ins-menu-icon-box flex-shrink-0">
                                         <svg class="ph-duotone ph-truck ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg>
@@ -462,9 +462,9 @@
                                     <div class="flex-grow-1 min-w-0">
                                         <div class="d-flex align-items-center justify-content-between mb-1">
                                             <span class="ins-menu-item-title fw-semibold text-white">Dịch Vụ Hiện Trường</span>
-                                            <span class="badge ins-badge-subtle">94.8% FTFR</span>
+                                            <span class="badge ins-badge-subtle">0h Downtime</span>
                                         </div>
-                                        <p class="ins-menu-item-desc text-secondary small mb-0">Bảo trì thiết bị nặng, lập lịch phụ tùng tự động</p>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">94.8% xử lý lần đầu FTFR, 0h dừng cơ giới CAT/Komatsu</p>
                                     </div>
                                 </a>
                             </div>
@@ -476,24 +476,130 @@
                                 <h5 class="text-white fw-bold mb-0">11 Cụm Ngành Công Nghiệp</h5>
                             </div>
                             <div class="row g-2 mb-3">
-                                <div class="col-6">
-                                    <ul class="list-unstyled mb-0 d-flex flex-column gap-2 small">
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Chế Tạo Công Nghiệp</a></li>
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Tài Chính &amp; Ngân Hàng</a></li>
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Công Nghệ &amp; Viễn Thông</a></li>
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Bán Lẻ &amp; FMCG Chuỗi</a></li>
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Năng Lượng &amp; Mỏ</a></li>
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Y Tế &amp; Dược Phẩm</a></li>
-                                    </ul>
+                                <div class="col-6 d-flex flex-column gap-1">
+                                    <a href="/industries#manufacturing" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="Smart MES &amp; ISO 9001"
+                                       data-title="Chế Tạo &amp; Công Nghiệp Nặng"
+                                       data-icon="ph-factory"
+                                       data-m1-val="+4.6%" data-m1-lbl="Sản Lượng Mẻ"
+                                       data-m2-val="0h" data-m2-lbl="Dừng Máy Ngoài Kế Hoạch"
+                                       data-m3-val="99.8%" data-m3-lbl="Chính Xác BOM"
+                                       data-desc="Tối ưu dây chuyền dập cán thép, cân bằng phụ tải máy chấn và truy xuất phế liệu đa tầng."
+                                       data-href="/industries#manufacturing">
+                                        <span class="small text-secondary ins-cluster-name">Chế Tạo Công Nghiệp</span>
+                                    </a>
+                                    <a href="/industries#finance" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="VAS 200/133 · SBV Compliance"
+                                       data-title="Tài Chính &amp; Ngân Hàng Số"
+                                       data-icon="ph-bank"
+                                       data-m1-val="99.8%" data-m1-lbl="Độ Chính Xác STP"
+                                       data-m2-val="&lt; 15ms" data-m2-lbl="Độ Trễ Khớp Lệnh"
+                                       data-m3-val="FIPS 140-3" data-m3-lbl="Bảo Mật HSM"
+                                       data-desc="Tự động hóa đối soát giao dịch liên ngân hàng, phòng chống rửa tiền và báo cáo NHNN."
+                                       data-href="/industries#finance">
+                                        <span class="small text-secondary ins-cluster-name">Tài Chính &amp; Ngân Hàng</span>
+                                    </a>
+                                    <a href="/industries#telecom" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="MobiFone 50M CDR"
+                                       data-title="Công Nghệ &amp; Viễn Thông"
+                                       data-icon="ph-broadcast"
+                                       data-m1-val="50M+" data-m1-lbl="CDR Xử Lý / 4h"
+                                       data-m2-val="99.99%" data-m2-lbl="SLA Trạm BTS"
+                                       data-m3-val="VAS 200" data-m3-lbl="Hóa Đơn Thuế"
+                                       data-desc="Xử lý 50 triệu bản ghi cước viễn thông, dự báo suy hao cáp quang và tối ưu trạm phát sóng."
+                                       data-href="/industries#telecom">
+                                        <span class="small text-secondary ins-cluster-name">Công Nghệ &amp; Viễn Thông</span>
+                                    </a>
+                                    <a href="/industries#retail" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="Chuỗi Bán Lẻ &amp; FMCG"
+                                       data-title="Bán Lẻ &amp; Phân Phối Chuỗi"
+                                       data-icon="ph-shopping-cart"
+                                       data-m1-val="-42%" data-m1-lbl="Tồn Kho Ảo"
+                                       data-m2-val="99.8%" data-m2-lbl="Khớp Đơn Tự Động"
+                                       data-m3-val="POS-Sync" data-m3-lbl="Đồng Bộ Bán Lẻ"
+                                       data-desc="Đồng bộ tồn kho đa kênh thời gian thực, tự động dự báo bổ hàng và quét mã vạch GS1."
+                                       data-href="/industries#retail">
+                                        <span class="small text-secondary ins-cluster-name">Bán Lẻ &amp; FMCG Chuỗi</span>
+                                    </a>
+                                    <a href="/industries#mining" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="Mỏ Khoáng &amp; Luyện Kim"
+                                       data-title="Khai Khoáng &amp; Luyện Kim"
+                                       data-icon="ph-fire"
+                                       data-m1-val="-12.5%" data-m1-lbl="Tiêu Hao Nhiên Liệu"
+                                       data-m2-val="0h" data-m2-lbl="Dừng Lò Bất Thường"
+                                       data-m3-val="ISO 45001" data-m3-lbl="An Toàn Mỏ"
+                                       data-desc="Giám sát lò cao nung quặng, điều độ đội xe tải tự hành và cảnh báo khí độc hầm lò."
+                                       data-href="/industries#mining">
+                                        <span class="small text-secondary ins-cluster-name">Năng Lượng &amp; Mỏ</span>
+                                    </a>
+                                    <a href="/industries#healthcare" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="FDA 21 CFR Part 11"
+                                       data-title="Y Tế &amp; Dược Phẩm Sinh Học"
+                                       data-icon="ph-first-aid"
+                                       data-m1-val="+4.6%" data-m1-lbl="Sản Lượng Mẻ"
+                                       data-m2-val="0 lỗi" data-m2-lbl="Thanh Tra GxP"
+                                       data-m3-val="WHO-GMP" data-m3-lbl="Chuẩn Phòng Sạch"
+                                       data-desc="Hồ sơ bệnh án điện tử an toàn, giám sát nhiệt độ kho lạnh vắc-xin và truy xuất thuốc."
+                                       data-href="/industries#healthcare">
+                                        <span class="small text-secondary ins-cluster-name">Y Tế &amp; Dược Phẩm</span>
+                                    </a>
                                 </div>
-                                <div class="col-6">
-                                    <ul class="list-unstyled mb-0 d-flex flex-column gap-2 small">
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Logistics &amp; Cảng Biển</a></li>
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Xây Dựng &amp; BĐS</a></li>
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Nông Nghiệp &amp; Thực Phẩm</a></li>
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Khu Vực Công &amp; Hạ Tầng</a></li>
-                                        <li><a href="/industries" class="ins-cluster-link text-secondary text-decoration-none">Dịch Vụ Chuyên Sâu</a></li>
-                                    </ul>
+                                <div class="col-6 d-flex flex-column gap-1">
+                                    <a href="/industries/logistics" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="WCO SAFE · Cát Lái"
+                                       data-title="Logistics &amp; Cảng Biển Quốc Tế"
+                                       data-icon="ph-anchor"
+                                       data-m1-val="-88%" data-m1-lbl="Phí Lưu Bãi (DEM)"
+                                       data-m2-val="99.8%" data-m2-lbl="Độ Chính Xác STP"
+                                       data-m3-val="VAS 200/133" data-m3-lbl="Hải Quan Điện Tử"
+                                       data-desc="Điều hành cầu tàu tự động, đồng bộ dữ liệu AIS hàng hải và triệt tiêu phí phạt container."
+                                       data-href="/industries/logistics">
+                                        <span class="small text-secondary ins-cluster-name">Logistics &amp; Cảng Biển</span>
+                                    </a>
+                                    <a href="/industries#construction" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="BIM &amp; Tổng Thầu EPC"
+                                       data-title="Xây Dựng &amp; Bất Động Sản"
+                                       data-icon="ph-buildings"
+                                       data-m1-val="100%" data-m1-lbl="Kiểm Soát Tiến Độ"
+                                       data-m2-val="-15%" data-m2-lbl="Hao Hụt Vật Tư"
+                                       data-m3-val="Thông Tư 78" data-m3-lbl="Nghiệm Thu Điện Tử"
+                                       data-desc="Quản lý định mức sắt thép bê tông theo bản vẽ BIM, khóa cứng tiến độ nghiệm thu công trình."
+                                       data-href="/industries#construction">
+                                        <span class="small text-secondary ins-cluster-name">Xây Dựng &amp; BĐS</span>
+                                    </a>
+                                    <a href="/industries#agriculture" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="VietGAP &amp; GlobalGAP"
+                                       data-title="Nông Nghiệp &amp; Chế Biến Thực Phẩm"
+                                       data-icon="ph-plant"
+                                       data-m1-val="100%" data-m1-lbl="Nguồn Gốc Nông Sản"
+                                       data-m2-val="-25%" data-m2-lbl="Thất Thoát Bảo Quản"
+                                       data-m3-val="HACCP" data-m3-lbl="An Toàn Vệ Sinh"
+                                       data-desc="Truy xuất nguồn gốc trang trại đến bàn ăn, giám sát IoT độ ẩm đất và kiểm soát chuỗi cung ứng lạnh."
+                                       data-href="/industries#agriculture">
+                                        <span class="small text-secondary ins-cluster-name">Nông Nghiệp &amp; Thực Phẩm</span>
+                                    </a>
+                                    <a href="/industries#public_sector" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="Chính Phủ Số &amp; Hạ Tầng"
+                                       data-title="Khu Vực Công &amp; Hạ Tầng Đô Thị"
+                                       data-icon="ph-landmark"
+                                       data-m1-val="99.8%" data-m1-lbl="STP Thủ Tục Hành Chính"
+                                       data-m2-val="&lt; 3.2s" data-m2-lbl="Xử Lý Dữ Liệu Dân Cư"
+                                       data-m3-val="Nghị Định 13" data-m3-lbl="Bảo Vệ Dữ Liệu"
+                                       data-desc="Trung tâm điều hành IOC đô thị thông minh, tích hợp camera giao thông AI và số hóa thủ tục."
+                                       data-href="/industries#public_sector">
+                                        <span class="small text-secondary ins-cluster-name">Khu Vực Công &amp; Hạ Tầng</span>
+                                    </a>
+                                    <a href="/industries#professional_services" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
+                                       data-badge="Big 4 Audit &amp; Legal Tech"
+                                       data-title="Dịch Vụ Chuyên Sâu &amp; Tư Vấn"
+                                       data-icon="ph-briefcase"
+                                       data-m1-val="99.8%" data-m1-lbl="Đối Soát Chứng Từ"
+                                       data-m2-val="-70%" data-m2-lbl="Thời Gian Bóc Tách"
+                                       data-m3-val="VAS 200/133" data-m3-lbl="Báo Cáo Tài Chính"
+                                       data-desc="Tự động hóa rà soát hợp đồng pháp lý, kiểm toán đối chiếu chứng từ và phát hiện rủi ro thuế."
+                                       data-href="/industries#professional_services">
+                                        <span class="small text-secondary ins-cluster-name">Dịch Vụ Chuyên Sâu</span>
+                                    </a>
                                 </div>
                             </div>
                             <div class="pt-2 border-top border-secondary border-opacity-25">
@@ -506,40 +612,40 @@
                         <!-- Col 3: Dynamic Industry Preview Card -->
                         <div class="col-lg-4">
                             <div class="card h-100 p-4 rounded-4 border border-secondary border-opacity-25 d-flex flex-column justify-content-between ins-preview-card" id="ins_ind_preview_card">
-                                <div>
+                                <div class="ins-preview-content">
                                     <div class="d-flex justify-content-between align-items-start mb-3">
                                         <div class="ins-card-pictogram ins-pictogram-lg ins-ind-preview-icon">
                                             <svg class="ph-duotone ph-anchor ph-xl"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-anchor"/></svg>
                                         </div>
-                                        <span class="badge ins-pill-badge small fw-semibold ins-ind-preview-badge">EVN Genco 3 &amp; Cát Lái</span>
+                                        <span class="badge ins-pill-badge small fw-semibold ins-ind-preview-badge">WCO SAFE · Cát Lái Port</span>
                                     </div>
-                                    <h4 class="text-white fw-bold mb-2 ins-ind-preview-title">Năng Lực Triển Khai Thực Chiến</h4>
-                                    <p class="text-secondary small mb-3 ins-ind-preview-desc">Kiểm chứng tại các tập đoàn hạ tầng then chốt: EVN Genco 3, MobiFone và hệ thống cảng biển quốc tế.</p>
+                                    <h4 class="text-white fw-bold mb-2 ins-ind-preview-title">Logistics &amp; Cảng Biển</h4>
+                                    <p class="text-secondary small mb-3 ins-ind-preview-desc">Triệt tiêu 88% phí lưu bãi container (DEM/DET), tự động hóa bóc tách lệnh giao hàng và đối soát 3 chiều WCO SAFE tại Cát Lái.</p>
                                     <!-- Live SLA Metrics Grid -->
                                     <div class="row g-2 mb-3">
                                         <div class="col-4">
                                             <div class="ins-metric-cell p-2 rounded-3 text-center">
-                                                <div class="ins-metric-val fw-bold text-mint ins-ind-m1-val">99.8%</div>
-                                                <div class="ins-metric-lbl text-secondary x-small ins-ind-m1-lbl">Uptime SLA</div>
+                                                <div class="ins-metric-val fw-bold text-mint ins-ind-m1-val">-88%</div>
+                                                <div class="ins-metric-lbl text-secondary x-small ins-ind-m1-lbl">Phí Lưu Bãi Container</div>
                                             </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="ins-metric-cell p-2 rounded-3 text-center">
-                                                <div class="ins-metric-val fw-bold text-cyan ins-ind-m2-val">50M+</div>
-                                                <div class="ins-metric-lbl text-secondary x-small ins-ind-m2-lbl">CDR / 4h</div>
+                                                <div class="ins-metric-val fw-bold text-cyan ins-ind-m2-val">99.8%</div>
+                                                <div class="ins-metric-lbl text-secondary x-small ins-ind-m2-lbl">Độ Chính Xác STP</div>
                                             </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="ins-metric-cell p-2 rounded-3 text-center">
-                                                <div class="ins-metric-val fw-bold text-orange ins-ind-m3-val">VAS 200</div>
-                                                <div class="ins-metric-lbl text-secondary x-small ins-ind-m3-lbl">Compliance</div>
+                                                <div class="ins-metric-val fw-bold text-orange ins-ind-m3-val">VAS 200/133</div>
+                                                <div class="ins-metric-lbl text-secondary x-small ins-ind-m3-lbl">Chuẩn Đối Soát Thuế</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mt-auto pt-3 border-top border-secondary border-opacity-25">
-                                    <a href="/industries" class="btn btn-primary rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 ins-ind-preview-btn">
-                                        <span>Xem Hồ Sơ Ngành</span>
+                                    <a href="/industries/logistics" class="btn btn-primary rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 ins-ind-preview-btn">
+                                        <span>Khám Phá Hồ Sơ Ngành</span>
                                         <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                     </a>
                                 </div>

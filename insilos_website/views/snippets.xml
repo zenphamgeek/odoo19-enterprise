@@ -1301,6 +1301,374 @@
 
 
 
+    <!-- Snippet 14: Operational Pain-vs-Gain & GRC Compliance Matrix -->
+    <template id="s_insilos_grc_matrix" name="GRC Compliance &amp; Operational Matrix">
+        <section class="s_comparisons o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_comparisons" data-name="GRC Compliance &amp; Operational Matrix" data-bs-theme="dark">
+            <div class="container">
+                <!-- Section Header -->
+                <div class="text-center mb-5 col-lg-9 mx-auto">
+                    <div class="ins-pill-badge mb-2">
+                        <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                        <span>Enterprise Governance, Risk &amp; Compliance</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                        Ma Trận Đối Chiếu Vận Hành &amp;<br class="d-none d-sm-inline"/> Chuẩn Mực Tuân Thủ GRC
+                    </h2>
+                    <p class="lead text-secondary ins-lead-balance">
+                        Đối sánh trực diện giữa rủi ro phân mảnh dữ liệu truyền thống và sức mạnh điều phối tự động của nền tảng Sovereign Industrial AI.
+                    </p>
+                </div>
+
+                <!-- Matrix Table Container -->
+                <div class="card border border-secondary border-opacity-25 rounded-4 overflow-hidden mb-4">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0 align-middle ins-grc-table">
+                            <thead>
+                                <tr class="border-bottom border-secondary border-opacity-25 bg-black bg-opacity-50">
+                                    <th class="py-3 px-4 text-secondary font-monospace small ins-col-w20">TRỤ CỘT VẬN HÀNH</th>
+                                    <th class="py-3 px-4 text-danger font-monospace small ins-col-w40">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-warning-circle ph-sm text-danger"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-warning-circle"/></svg>
+                                            <span>MÔ HÌNH PHÂN MẢNH TRUYỀN THỐNG (PAIN POINTS)</span>
+                                        </div>
+                                    </th>
+                                    <th class="py-3 px-4 text-cyan font-monospace small ins-col-w40">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <span>SOVEREIGN INDUSTRIAL AI (INSILOS GAIN)</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row 1: Pháp lý & Hóa đơn TT 78 / VAS 200 -->
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-4 px-4 align-top">
+                                        <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small d-block mb-1">01 // PHÁP LÝ &amp; THUẾ</span>
+                                        <strong class="text-white small d-block">Hóa Đơn &amp; Giá Thành</strong>
+                                        <span class="text-secondary smaller font-monospace">TT 78/2021 &amp; VAS 200</span>
+                                    </td>
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <svg class="ph-duotone ph-x-circle ph-sm text-danger flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg>
+                                            <p class="text-secondary small mb-0">Nhập tay hóa đơn XML, lệch mã chứng từ hàng về trước hóa đơn về sau. Hạch toán giá thành TK 154 bị trễ 15-30 ngày sau kỳ kế toán, rủi ro phạt truy thu thuế và loại trừ chi phí hợp lệ.</p>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <div>
+                                                <p class="text-white small mb-1">Đối soát 3 chiều (PO - GRN - Invoice) tự động khớp mã vật tư theo Thông tư 78. Hạch toán tự động phân bổ chi phí nguyên vật liệu, nhân công sang TK 154 và TK 632 trong ngày.</p>
+                                                <span class="badge bg-success-subtle text-emerald font-monospace smaller">STP 99.8% // 0.00 VNĐ SAI LỆCH THUẾ</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 2: Hải quan & Cảng biển (WCO SAFE) -->
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-4 px-4 align-top">
+                                        <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small d-block mb-1">02 // HẢI QUAN &amp; CẢNG</span>
+                                        <strong class="text-white small d-block">Chứng Từ Vận Tải</strong>
+                                        <span class="text-secondary smaller font-monospace">WCO SAFE TIER-3</span>
+                                    </td>
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <svg class="ph-duotone ph-x-circle ph-sm text-danger flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg>
+                                            <p class="text-secondary small mb-0">Tắc nghẽn bốc dỡ B/L giấy và Packing List tại Tân Cảng Cát Lái và Cái Mép. Sai mã HS code gây luồng Đỏ, phát sinh phí lưu container DET/DEM từ 1.200.000 đến 3.500.000 VNĐ/cont/ngày.</p>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <div>
+                                                <p class="text-white small mb-1">AI-OCR bóc tách bộ chứng từ đa phương thức trong 3.2 giây, tự động xác minh mã HS Code và tối ưu hóa điều phối drayage liên cảng, cắt giảm triệt để rủi ro phát sinh phụ phí cảng.</p>
+                                                <span class="badge bg-success-subtle text-emerald font-monospace smaller">-88% PHÍ DET/DEM // &lt; 18M THÔNG QUAN</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 3: Định mức vật tư & BOM Đa tầng -->
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-4 px-4 align-top">
+                                        <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small d-block mb-1">03 // SẢN XUẤT &amp; BOM</span>
+                                        <strong class="text-white small d-block">Định Mức Nguyên Liệu</strong>
+                                        <span class="text-secondary smaller font-monospace">SUB-BOM CHASSIS / MES</span>
+                                    </td>
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <svg class="ph-duotone ph-x-circle ph-sm text-danger flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg>
+                                            <p class="text-secondary small mb-0">BOM phân xưởng cơ khí và kho cáp bị lệch giữa bản vẽ CAD và lệnh sản xuất MO. Thất thoát phế liệu thép tấm Hòa Phát và tồn kho ảo dây cáp CADIVI không thể truy cứu trách nhiệm.</p>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <div>
+                                                <p class="text-white small mb-1">Khóa cứng định mức BOM 2 cấp liên kết trực tiếp với máy cắt Laser CNC. Quét mã Barcode truy vết số lô mẩu thừa dưới 1.5m, lưu vết phả hệ dữ liệu Merkle DAG bất biến.</p>
+                                                <span class="badge bg-success-subtle text-emerald font-monospace smaller">100% MERKLE DAG LINEAGE // 0% TỒN KHO ẢO</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 4: Vận hành lưới điện & An toàn máy biến áp -->
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-4 px-4 align-top">
+                                        <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small d-block mb-1">04 // BẢO TRÌ &amp; SLA</span>
+                                        <strong class="text-white small d-block">Độ Tin Cậy Thiết Bị</strong>
+                                        <span class="text-secondary smaller font-monospace">IEC 61850 &amp; ISO 10816</span>
+                                    </td>
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <svg class="ph-duotone ph-x-circle ph-sm text-danger flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg>
+                                            <p class="text-secondary small mb-0">Bảo trì bị động sau khi thiết bị quá nhiệt hoặc rung lắc vượt ngưỡng. Nguy cơ nổ máy biến áp 500kV, dừng máy ngoài kế hoạch gây thiệt hại 45.000 USD/giờ và bị phạt vi phạm Grid Code.</p>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <div>
+                                                <p class="text-white small mb-1">Hệ thống Digital Twin theo dõi liên tục rung động FFT và khí hòa tan DGA 24/7 theo chuẩn IEC 61850. Cảnh báo sớm hư hỏng trước 14 ngày, tự động cô lập sự cố trong 40ms.</p>
+                                                <span class="badge bg-success-subtle text-emerald font-monospace smaller">99.8% UPTIME // CẢNH BÁO SỚM 14 NGÀY</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 5: Tính toàn vẹn dữ liệu & Kiểm toán ALCOA+ -->
+                                <tr>
+                                    <td class="py-4 px-4 align-top">
+                                        <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small d-block mb-1">05 // TOÀN VẸN DỮ LIỆU</span>
+                                        <strong class="text-white small d-block">Kiểm Toán Dược Phẩm</strong>
+                                        <span class="text-secondary smaller font-monospace">FDA 21 CFR PART 11</span>
+                                    </td>
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <svg class="ph-duotone ph-x-circle ph-sm text-danger flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg>
+                                            <p class="text-secondary small mb-0">Nhật ký mẻ (batch record) ghi tay hoặc file Excel không có audit trail. Rủi ro mất trắng lô vắc-xin/thuốc sinh học 250.000 USD và bị đình chỉ chứng nhận EU-GMP/WHO-GMP khi thanh tra.</p>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <div>
+                                                <p class="text-white small mb-1">Sổ mẻ điện tử eBR tuân thủ ALCOA+ với chữ ký điện tử kép, tự động khóa quy trình khi thông số hạt vi mô phòng sạch lệch ngưỡng Grade A, trích xuất báo cáo thanh tra tức thì.</p>
+                                                <span class="badge bg-success-subtle text-emerald font-monospace smaller">100% AUDIT TRAIL // 0 LÔ LỖI OOS/OOT</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Call to Action Footer -->
+                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 p-4 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="ins-card-pictogram ins-pictogram-md">
+                            <svg class="ph-duotone ph-file-arrow-down ph-lg text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-arrow-down"/></svg>
+                        </div>
+                        <div>
+                            <strong class="text-white d-block">Yêu Cầu Bộ Hồ Sơ Đối Soát GRC Chi Tiết Theo Ngành</strong>
+                            <span class="text-secondary small">Bao gồm ma trận rủi ro VAS 200, tài liệu kỹ thuật API và bản quyền phần mềm Sovereign AI.</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                        <a href="/request-demo" class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2">
+                            <span>Đăng Ký Live Audit</span>
+                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                        </a>
+                        <a href="/platform" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+                            <span>Sơ Đồ Kiến Trúc</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+
+    <!-- Snippet 15: Executive Customer Case Dossiers -->
+    <template id="s_insilos_case_dossier" name="Executive Customer Case Dossiers">
+        <section class="s_features o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_features" data-name="Executive Customer Case Dossiers" data-bs-theme="dark">
+            <div class="container">
+                <!-- Section Header -->
+                <div class="text-center mb-5 col-lg-9 mx-auto">
+                    <div class="ins-pill-badge mb-2">
+                        <svg class="ph-duotone ph-certificate ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-certificate"/></svg>
+                        <span>Audited Production Proof</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                        Hồ Sơ Kiểm Chứng Thực Địa Cấp Điều Hành
+                    </h2>
+                    <p class="lead text-secondary ins-lead-balance">
+                        Dẫn chứng số liệu kiểm toán cụ thể từ các dự án trọng điểm quốc gia và doanh nghiệp sản xuất FDI hàng đầu tại Việt Nam.
+                    </p>
+                </div>
+
+                <!-- 4-Card Multi-Column Grid with Strict HBox Baseline Symmetry -->
+                <div class="row g-4 ins-card-row-balanced">
+                    <!-- Case 1: EVN Genco 3 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-case-card">
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">EVN_GENCO3_500KV</span>
+                                    <span class="ins-live-ping ins-live-ping--emerald"/>
+                                </div>
+                                <h3 class="h5 fw-bold text-white mb-1 card-title">EVN Genco 3</h3>
+                                <div class="ins-ind-title text-cyan font-monospace small mb-2">Tổ Hợp Nhiệt Điện Phú Mỹ</div>
+                                <p class="card-text text-secondary small mb-3">
+                                    Giám sát rung động FFT và nhiệt độ cuộn dây máy biến áp 500kV theo chuẩn ISO 10816, cảnh báo hư hỏng trước 14 ngày.
+                                </p>
+                                <div class="p-3 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-3 mb-3">
+                                    <div class="d-flex justify-content-between font-monospace small mb-1">
+                                        <span class="text-secondary">Uptime Rate:</span>
+                                        <span class="text-emerald fw-bold">99.8%</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between font-monospace small mb-1">
+                                        <span class="text-secondary">Early Warning:</span>
+                                        <span class="text-white fw-bold">14 Days</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between font-monospace small">
+                                        <span class="text-secondary">Fault Isolation:</span>
+                                        <span class="text-cyan fw-bold">&lt; 40ms</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                                <a href="/industries/energy" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                    <span>Hồ Sơ Năng Lượng</span>
+                                    <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                </a>
+                                <span class="badge bg-white-10 text-secondary font-monospace smaller">IEC 61850</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Case 2: MobiFone Global -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-case-card">
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">MOBIFONE_FSM_BTS</span>
+                                    <span class="ins-live-ping ins-live-ping--emerald"/>
+                                </div>
+                                <h3 class="h5 fw-bold text-white mb-1 card-title">MobiFone Global</h3>
+                                <div class="ins-ind-title text-cyan font-monospace small mb-2">Mạng Lưới 1.200 Trạm BTS</div>
+                                <p class="card-text text-secondary small mb-3">
+                                    Điều phối tác vụ hiện trường tự động, tích hợp ký hóa đơn điện tử TT 78 trực tiếp từ ứng dụng mobile, triệt tiêu 100% sai lệch tồn kho.
+                                </p>
+                                <div class="p-3 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-3 mb-3">
+                                    <div class="d-flex justify-content-between font-monospace small mb-1">
+                                        <span class="text-secondary">CDR Processing:</span>
+                                        <span class="text-emerald fw-bold">50M+ &lt; 4h</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between font-monospace small mb-1">
+                                        <span class="text-secondary">Rev Leakage:</span>
+                                        <span class="text-white fw-bold">0.00 VNĐ</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between font-monospace small">
+                                        <span class="text-secondary">Dispatch SLA:</span>
+                                        <span class="text-cyan fw-bold">&lt; 45s</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                                <a href="/industries/fsm" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                    <span>Hồ Sơ Viễn Thông</span>
+                                    <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                </a>
+                                <span class="badge bg-white-10 text-secondary font-monospace smaller">TT 78/2021</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Case 3: Tân Cảng Cát Lái (SNP) -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-case-card">
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">SNP_LOGISTICS_18B</span>
+                                    <span class="ins-live-ping ins-live-ping--emerald"/>
+                                </div>
+                                <h3 class="h5 fw-bold text-white mb-1 card-title">Tân Cảng Cát Lái</h3>
+                                <div class="ins-ind-title text-cyan font-monospace small mb-2">Cảng Container Trọng Điểm</div>
+                                <p class="card-text text-secondary small mb-3">
+                                    AI-OCR bóc tách 100% chứng từ B/L, tự động điều phối xe kéo drayage liên cảng, kiểm soát gói thầu SNP 18.675 Tỷ VNĐ minh bạch.
+                                </p>
+                                <div class="p-3 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-3 mb-3">
+                                    <div class="d-flex justify-content-between font-monospace small mb-1">
+                                        <span class="text-secondary">Audit Package:</span>
+                                        <span class="text-emerald fw-bold">18.675 Tỷ</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between font-monospace small mb-1">
+                                        <span class="text-secondary">Demurrage Fee:</span>
+                                        <span class="text-white fw-bold">-88% DET/DEM</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between font-monospace small">
+                                        <span class="text-secondary">Gate Turnaround:</span>
+                                        <span class="text-cyan fw-bold">&lt; 18 Phút</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                                <a href="/industries/logistics" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                    <span>Hồ Sơ Cảng Biển</span>
+                                    <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                </a>
+                                <span class="badge bg-white-10 text-secondary font-monospace smaller">WCO SAFE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Case 4: FDI Bonfiglioli -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-case-card">
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">FDI_BONFIGLIOLI_MES</span>
+                                    <span class="ins-live-ping ins-live-ping--emerald"/>
+                                </div>
+                                <h3 class="h5 fw-bold text-white mb-1 card-title">FDI Bonfiglioli</h3>
+                                <div class="ins-ind-title text-cyan font-monospace small mb-2">Sản Xuất Động Cơ &amp; Hộp Số</div>
+                                <p class="card-text text-secondary small mb-3">
+                                    Tích hợp dữ liệu SCADA máy chấn và robot hàn vào BOM 2 cấp, kiểm soát chặt chẽ giá thành phân xưởng và chất lượng thành phẩm.
+                                </p>
+                                <div class="p-3 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-3 mb-3">
+                                    <div class="d-flex justify-content-between font-monospace small mb-1">
+                                        <span class="text-secondary">First-Time Fix:</span>
+                                        <span class="text-emerald fw-bold">94.8% FTFR</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between font-monospace small mb-1">
+                                        <span class="text-secondary">MTTR Reduction:</span>
+                                        <span class="text-white fw-bold">-65% Dừng Máy</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between font-monospace small">
+                                        <span class="text-secondary">Standard Lineage:</span>
+                                        <span class="text-cyan fw-bold">ISO 10816</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                                <a href="/solutions" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                    <span>Hồ Sơ Chế Tạo</span>
+                                    <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                </a>
+                                <span class="badge bg-white-10 text-secondary font-monospace smaller">VAS 200</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+
+
     <!-- ================================================================= -->
     <!-- 2. INHERIT WEBSITE SNIPPETS PALETTE                               -->
     <!-- ================================================================= -->
@@ -1319,6 +1687,9 @@
             <t t-snippet="insilos_website.s_c3ai_code_studio" string="C3.ai Architecture Code Studio" group="content"/>
             <t t-snippet="insilos_website.s_c3ai_3d_cockpit" string="C3.ai 3D Cockpit Stack" group="content"/>
             <t t-snippet="insilos_website.s_ins_platform_topology" string="Platform Topology Diagram" group="content"/>
+            <t t-snippet="insilos_website.s_insilos_grc_matrix" string="GRC Compliance Matrix" group="content"/>
+            <t t-snippet="insilos_website.s_insilos_case_dossier" string="Executive Case Dossiers" group="columns"/>
         </xpath>
     </template>
 </odoo>
+

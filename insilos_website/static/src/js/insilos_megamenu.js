@@ -38,7 +38,7 @@
             }
         });
 
-        function positionIndicator(target) {
+        function positionIndicator(target, immediate = false) {
             if (!indicator || !target) return;
             const linkRect = target.getBoundingClientRect();
             const parent = indicator.offsetParent || target.closest('.ins-nav-wrapper') || target.parentElement;
@@ -49,17 +49,29 @@
             const width = linkRect.width;
             const height = linkRect.height;
 
-            indicator.style.left = `${left}px`;
-            indicator.style.top = `${top}px`;
-            indicator.style.width = `${width}px`;
-            indicator.style.height = `${height}px`;
+            const isInitial = immediate || indicator.style.opacity === '0' || !indicator.style.opacity;
+            if (isInitial) {
+                const originalTransition = indicator.style.transition;
+                indicator.style.transition = 'none';
+                indicator.style.left = `${left}px`;
+                indicator.style.top = `${top}px`;
+                indicator.style.width = `${width}px`;
+                indicator.style.height = `${height}px`;
+                void indicator.offsetHeight; // Force reflow to commit coordinates before enabling transition
+                indicator.style.transition = originalTransition;
+            } else {
+                indicator.style.left = `${left}px`;
+                indicator.style.top = `${top}px`;
+                indicator.style.width = `${width}px`;
+                indicator.style.height = `${height}px`;
+            }
             indicator.style.opacity = '1';
         }
 
-        function resetIndicator() {
+        function resetIndicator(immediate = false) {
             if (!indicator) return;
             if (activeLink) {
-                positionIndicator(activeLink);
+                positionIndicator(activeLink, immediate);
             } else {
                 indicator.style.opacity = '0';
             }
@@ -67,7 +79,7 @@
 
         // Initialize indicator position
         requestAnimationFrame(() => {
-            resetIndicator();
+            resetIndicator(true);
         });
 
         navLinks.forEach((link) => {
@@ -80,11 +92,15 @@
             resetIndicator();
         });
 
+        let scrollRaf = null;
         window.addEventListener('resize', () => {
-            resetIndicator();
+            resetIndicator(true);
         });
         window.addEventListener('scroll', () => {
-            resetIndicator();
+            if (scrollRaf) cancelAnimationFrame(scrollRaf);
+            scrollRaf = requestAnimationFrame(() => {
+                resetIndicator();
+            });
         }, { passive: true });
 
         // -----------------------------------------------------------------
@@ -196,10 +212,8 @@
         });
 
         // -----------------------------------------------------------------
-        // 3. Hover Preview Card Switching (80ms Debounce)
+        // 3. Hover Preview Card Switching (50ms Debounce with Race-Condition Token)
         // -----------------------------------------------------------------
-        let previewDebounceTimer = null;
-
         function setupPreviewCards(containerSelector, cardId, prefix) {
             const container = document.querySelector(containerSelector);
             if (!container) return;
@@ -207,6 +221,7 @@
             const card = document.getElementById(cardId);
             if (!card) return;
 
+            const contentWrapper = card.querySelector('.ins-preview-content') || card;
             const items = container.querySelectorAll('.ins-menu-link-item');
             if (!items.length) return;
 
@@ -223,24 +238,28 @@
             const m3Lbl = card.querySelector(`.${prefix}-m3-lbl`);
             const btnEl = card.querySelector(`.${prefix}-preview-btn`);
 
-            function updateCard(item) {
-                const badge = item.dataset.badge || '';
-                const title = item.dataset.title || '';
-                const desc = item.dataset.desc || '';
-                const icon = item.dataset.icon || 'ph-cube';
-                const m1v = item.dataset.m1Val || '';
-                const m1l = item.dataset.m1Lbl || '';
-                const m2v = item.dataset.m2Val || '';
-                const m2l = item.dataset.m2Lbl || '';
-                const m3v = item.dataset.m3Val || '';
-                const m3l = item.dataset.m3Lbl || '';
-                const href = item.dataset.href || item.getAttribute('href') || '/';
+            let activeToken = 0;
+            let hoverDebounceTimer = null;
 
-                // Subtle micro-fade transition
-                card.style.opacity = '0.4';
-                card.style.transform = 'translateY(2px)';
+            function applyUpdate(item) {
+                const currentToken = ++activeToken;
+                contentWrapper.classList.add('is-switching');
 
                 setTimeout(() => {
+                    if (currentToken !== activeToken) return; // Prevent race conditions from rapid scrubbing
+
+                    const badge = item.dataset.badge || '';
+                    const title = item.dataset.title || '';
+                    const desc = item.dataset.desc || '';
+                    const icon = item.dataset.icon || 'ph-cube';
+                    const m1v = item.dataset.m1Val || '';
+                    const m1l = item.dataset.m1Lbl || '';
+                    const m2v = item.dataset.m2Val || '';
+                    const m2l = item.dataset.m2Lbl || '';
+                    const m3v = item.dataset.m3Val || '';
+                    const m3l = item.dataset.m3Lbl || '';
+                    const href = item.dataset.href || item.getAttribute('href') || '/';
+
                     if (badgeEl) badgeEl.textContent = badge;
                     if (titleEl) titleEl.textContent = title;
                     if (descEl) descEl.textContent = desc;
@@ -255,14 +274,13 @@
                     if (m3Lbl) m3Lbl.textContent = m3l;
                     if (btnEl) btnEl.setAttribute('href', href);
 
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
+                    contentWrapper.classList.remove('is-switching');
 
                     // Emit custom interface contract event
                     document.dispatchEvent(new CustomEvent('insilos-menu-preview-change', {
-                        detail: { title, badge, description: desc, href, icon }
+                        detail: { title, badge, description: desc, href, icon, prefix }
                     }));
-                }, 60);
+                }, 50);
 
                 items.forEach((it) => it.classList.remove('is-active'));
                 item.classList.add('is-active');
@@ -270,10 +288,10 @@
 
             items.forEach((item) => {
                 item.addEventListener('mouseenter', () => {
-                    clearTimeout(previewDebounceTimer);
-                    previewDebounceTimer = setTimeout(() => {
-                        updateCard(item);
-                    }, 80);
+                    clearTimeout(hoverDebounceTimer);
+                    hoverDebounceTimer = setTimeout(() => {
+                        applyUpdate(item);
+                    }, 50); // Snappy 50ms executive debounce
                 });
             });
         }
@@ -282,20 +300,31 @@
         setupPreviewCards('.ins-megamenu-industries', 'ins_ind_preview_card', 'ins-ind');
 
         // -----------------------------------------------------------------
-        // 4. Cursor Tracking & Mouse Spotlight Radial Gradient
+        // 4. Cursor Tracking & Mouse Spotlight Radial Gradient (Cached Geometry for 60 FPS)
         // -----------------------------------------------------------------
         const previewCards = document.querySelectorAll('.ins-preview-card');
         previewCards.forEach((card) => {
+            let cardRect = null;
             let rafId = null;
+
+            card.addEventListener('mouseenter', () => {
+                // Cache geometry once on enter to eliminate getBoundingClientRect from mousemove
+                cardRect = card.getBoundingClientRect();
+            });
+
             card.addEventListener('mousemove', (e) => {
+                if (!cardRect) cardRect = card.getBoundingClientRect();
                 if (rafId) cancelAnimationFrame(rafId);
                 rafId = requestAnimationFrame(() => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
+                    const x = e.clientX - cardRect.left;
+                    const y = e.clientY - cardRect.top;
                     card.style.setProperty('--mouse-x', `${x}px`);
                     card.style.setProperty('--mouse-y', `${y}px`);
                 });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                cardRect = null;
             });
         });
 

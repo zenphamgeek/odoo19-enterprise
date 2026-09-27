@@ -1476,30 +1476,30 @@ pre, code, kbd, samp {
 .ins-card-row-balanced, .ins-row-balanced {
     // Sibling column stretch & uniform layout
     > [class*="col-"] {
-        display: flex;
-        flex-direction: column;
+        display: flex !important;
+        flex-direction: column !important;
 
-        > .card, > .ins-proof-anchor-card, > .ins-glass-card, > .ins-faq-card, > a.card, > .ins-card-equal, > .ins-bento-card, > .ins-ind-card, > .ins-pricing-card, > .ins-solution-card, > .ins-media-card {
-            height: 100%;
+        > .card, > .ins-proof-anchor-card, > .ins-glass-card, > .ins-faq-card, > a.card, > .ins-card-equal, > .ins-bento-card, > .ins-ind-card, > .ins-pricing-card, > .ins-solution-card, > .ins-media-card, > .ins-case-card, > .ins-dossier-card, > .ins-grc-card {
+            height: 100% !important;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
 
-            .card-body, .ins-card-body, .ins-bento-body, .ins-ind-body, .ins-pricing-body, .ins-solution-body, .p-4, .p-xl-5 {
+            .card-body, .ins-card-body, .ins-bento-body, .ins-ind-body, .ins-pricing-body, .ins-solution-body, .ins-case-body, .ins-dossier-body, .p-4, .p-xl-5 {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 flex-grow: 1;
             }
 
-            .card-footer, .ins-card-action, .border-top, .mt-auto {
+            .card-footer, .ins-card-action, .ins-case-footer, .ins-dossier-footer, .border-top, .mt-auto, [class*="card-footer"] {
                 margin-top: auto !important;
             }
         }
     }
 
-    .card-title, .ins-card-title, .ins-bento-title, h3, h4, h5, .h3, .h4, .h5 {
+    .card-title, .ins-card-title, .ins-bento-title, .ins-case-title, .ins-dossier-title, h3, h4, h5, .h3, .h4, .h5 {
         min-height: 2.85rem; // Locks a uniform 2-line title height across the entire horizontal row
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -1517,7 +1517,7 @@ pre, code, kbd, samp {
         text-wrap: balance;
     }
 
-    .card-text, .ins-card-desc, .ins-proof-desc, .ins-faq-answer, p.text-secondary, p.text-muted {
+    .card-text, .ins-card-desc, .ins-proof-desc, .ins-faq-answer, .ins-case-desc, .ins-dossier-desc, p.text-secondary, p.text-muted {
         min-height: 4.25rem; // Locks uniform baseline rhythm for descriptions
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -1941,7 +1941,7 @@ pre, code, kbd, samp {
     cursor: pointer;
     transition: all 0.2s ease;
 
-    &:hover, &.btn-cyan, &.btn-orange {
+    &:hover, &.btn-orange, &.active {
         border-color: var(--ins-orange);
         color: var(--ins-orange);
         background: rgba(255, 128, 0, 0.12);
@@ -3959,5 +3959,41 @@ pre, code, kbd, samp {
         }
     }
 }
+
+// =============================================================================
+// GRC Matrix & Executive Case Dossier Component Utilities
+// =============================================================================
+.ins-col-w20 { width: 20%; }
+.ins-col-w25 { width: 25%; }
+.ins-col-w30 { width: 30%; }
+.ins-col-w40 { width: 40%; }
+.ins-col-w50 { width: 50%; }
+
+.ins-lead-balance {
+    text-wrap: pretty;
+}
+
+.ins-grc-table {
+    th, td {
+        border-color: rgba(255, 255, 255, 0.08);
+    }
+    tbody tr {
+        transition: background-color 0.2s ease;
+        &:hover {
+            background-color: rgba(255, 128, 0, 0.05) !important;
+        }
+    }
+}
+
+.ins-case-card {
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255, 128, 0, 0.35) !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 128, 0, 0.15);
+    }
+}
+
 
 
