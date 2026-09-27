@@ -7,6 +7,13 @@
         </svg>
     </template>
 
+    <!-- Optimize Core Web Vitals: Eliminate unused Material Symbols font preload -->
+    <template id="insilos_icons_fonts_preload" name="Insilos Icons Fonts Preload Optimizer" inherit_id="web.frontend_layout" priority="25">
+        <xpath expr="//t[@t-call-assets='web.material_symbols_outlined']" position="replace">
+            <t t-elif="icon_font_family == 'Material Symbols Outlined'" t-call-assets="web.material_symbols_outlined" t-binary="True"/>
+        </xpath>
+    </template>
+
     <!-- Global CTA — C3.ai dark slate aesthetic -->
     <template id="insilos_global_cta" name="Insilos Global CTA">
         <section class="s_call_to_action o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_call_to_action" data-name="Call to Action" data-bs-theme="dark">
