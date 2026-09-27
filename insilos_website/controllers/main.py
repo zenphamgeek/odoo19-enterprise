@@ -857,6 +857,37 @@ COMPANY_SIZE_SELECTIONS = [
 ]
 
 EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
+SLUG_RE = re.compile(r"^[a-zA-Z0-9_-]+$")
+STATIC_PAGE_PATHS = {
+    "/",
+    "/platform",
+    "/solutions",
+    "/industries",
+    "/resources",
+    "/pricing",
+    "/about",
+    "/media-credits",
+    "/request-demo",
+    "/thank-you",
+    "/showcase-3d",
+}
+DEDICATED_SOLUTION_SLUGS = {
+    "trade-compliance",
+    "vertical-idp",
+    "enterprise-knowledge-graph",
+    "field-service-intelligence",
+}
+DEDICATED_INDUSTRY_SLUGS = {"logistics", "pharma", "energy", "fsm"}
+
+
+def _is_valid_slug(slug: str) -> bool:
+    if not slug or not isinstance(slug, str):
+        return False
+    if ".." in slug or "/" in slug or "\\" in slug:
+        return False
+    return bool(SLUG_RE.match(slug))
+
+
 STATIC_URLS = [
     "/",
     "/platform",
@@ -911,11 +942,14 @@ class InsilosWebsite(http.Controller):
         # Website Designer chỉ gắn branding (data-oe-model) khi main_object là
         # website.page (xem website/models/is_qweb.py:50-55). Route Python tự
         # render thì main_object mặc định là chính view, nên block bị khoá.
-        page = request.env["website.page"].sudo().search(
-            [("url", "=", request.httprequest.path)], limit=1
-        )
-        if page:
-            values["main_object"] = page
+        # Only query website.page for registered top-level static pages to avoid redundant DB roundtrips
+        current_path = request.httprequest.path
+        if current_path in STATIC_PAGE_PATHS:
+            page = request.env["website.page"].sudo().search(
+                [("url", "=", current_path)], limit=1
+            )
+            if page:
+                values["main_object"] = page
         values.update(extra)
         return values
 
@@ -932,13 +966,16 @@ class InsilosWebsite(http.Controller):
         return request.render("insilos_website.insilos_solutions_page", self._base_values())
 
     @http.route(
-        "/solutions/<string:solution>",
+        ["/solutions/<string:solution>", "/solutions/<path:solution>"],
         type="http",
         auth="public",
         website=True,
         sitemap=sitemap_solutions,
     )
     def solution_detail(self, solution, **kwargs):
+        if not _is_valid_slug(solution):
+            return request.not_found()
+
         solution_aliases = {
             "autonomous-trade-compliance": "/solutions/trade-compliance",
             "fsm": "/solutions/field-service-intelligence",
@@ -958,8 +995,8 @@ class InsilosWebsite(http.Controller):
         if not solution_data:
             return request.not_found()
         related_industries = [(key, INDUSTRIES.get(key, INDUSTRY_101_REGISTRY.get(key))) for key in solution_data["industry_keys"] if key in INDUSTRIES or key in INDUSTRY_101_REGISTRY]
-        template_name = f"insilos_website.insilos_solution_{solution.replace('-', '_')}_page"
-        if request.env['ir.ui.view'].sudo().search([('key', '=', template_name)], limit=1):
+        if solution in DEDICATED_SOLUTION_SLUGS:
+            template_name = f"insilos_website.insilos_solution_{solution.replace('-', '_')}_page"
             return request.render(
                 template_name,
                 self._base_values(solution=solution_data, solution_key=solution, related_industries=related_industries),
@@ -974,13 +1011,21 @@ class InsilosWebsite(http.Controller):
         return request.render("insilos_website.insilos_industries_page", self._base_values())
 
     @http.route(
-        ["/industries/<string:industry>", "/industry/<string:industry>"],
+        [
+            "/industries/<string:industry>",
+            "/industry/<string:industry>",
+            "/industries/<path:industry>",
+            "/industry/<path:industry>",
+        ],
         type="http",
         auth="public",
         website=True,
         sitemap=sitemap_industries,
     )
     def industry(self, industry, **kwargs):
+        if not _is_valid_slug(industry):
+            return request.not_found()
+
         industry_data = INDUSTRY_101_REGISTRY.get(industry) or INDUSTRIES.get(industry)
         if not industry_data:
             return request.not_found()
@@ -989,8 +1034,8 @@ class InsilosWebsite(http.Controller):
             for key, solution in SOLUTIONS.items()
             if industry in solution.get("industry_keys", [])
         ]
-        template_name = f"insilos_website.insilos_industry_{industry.replace('-', '_')}_page"
-        if request.env['ir.ui.view'].sudo().search([('key', '=', template_name)], limit=1):
+        if industry in DEDICATED_INDUSTRY_SLUGS:
+            template_name = f"insilos_website.insilos_industry_{industry.replace('-', '_')}_page"
             return request.render(
                 template_name,
                 self._base_values(
@@ -1009,12 +1054,19 @@ class InsilosWebsite(http.Controller):
         )
 
     @http.route(
-        ["/industry/<string:industry>/brochure", "/industries/<string:industry>/brochure"],
+        [
+            "/industry/<string:industry>/brochure",
+            "/industries/<string:industry>/brochure",
+            "/industry/<path:industry>/brochure",
+            "/industries/<path:industry>/brochure",
+        ],
         type="http",
         auth="public",
         website=True,
     )
     def industry_brochure(self, industry, **kwargs):
+        if not _is_valid_slug(industry):
+            return request.not_found()
         ind_data = INDUSTRY_101_REGISTRY.get(industry) or INDUSTRIES.get(industry)
         if not ind_data:
             return request.not_found()
@@ -1095,13 +1147,15 @@ class InsilosWebsite(http.Controller):
         return request.render("insilos_website.insilos_resources_page", self._base_values())
 
     @http.route(
-        "/resources/<string:article>",
+        ["/resources/<string:article>", "/resources/<path:article>"],
         type="http",
         auth="public",
         website=True,
         sitemap=sitemap_articles,
     )
     def resource_article(self, article, **kwargs):
+        if not _is_valid_slug(article):
+            return request.not_found()
         article_aliases = {
             "predictive-maintenance-whitepaper": "/resources/operational-ai",
             "whitepaper": "/resources/operational-ai",

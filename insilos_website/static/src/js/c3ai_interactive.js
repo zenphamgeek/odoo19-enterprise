@@ -1337,6 +1337,186 @@ function initInsilosInteractive() {
         });
     }
     
+    // ── Insilos 12 Gold Master Suite Controller & Cinema Theater Modal ──
+    function initGoldMasterSuite() {
+        const suite = document.querySelector('#insilos-gold-suite');
+        if (!suite) return;
+
+        // 1. Domain Category Filter Tabs
+        const filterBtns = suite.querySelectorAll('.ins-gold-filter-btn');
+        const cardCols = suite.querySelectorAll('.ins-gold-card-col');
+
+        filterBtns.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const targetCategory = btn.getAttribute('data-filter') || 'all';
+
+                cardCols.forEach((col) => {
+                    const cardCategory = col.getAttribute('data-category');
+                    if (targetCategory === 'all' || cardCategory === targetCategory) {
+                        col.classList.remove('d-none');
+                        col.classList.add('ins-card-visible');
+                    } else {
+                        col.classList.add('d-none');
+                        col.classList.remove('ins-card-visible');
+                    }
+                });
+            });
+        });
+
+        // 2. Cinema Theater Video Modal Controller
+        const modalEl = document.getElementById('insilosGoldVideoModal');
+        if (!modalEl) return;
+
+        const modalVideo = document.getElementById('insilosGoldVideoPlayer');
+        const modalSource = document.getElementById('insilosGoldVideoSource');
+        const modalEpisode = document.getElementById('ins-gold-modal-episode');
+        const modalIndustryText = document.getElementById('ins-gold-modal-industry-text');
+        const modalTitle = document.getElementById('insilosGoldVideoModalLabel');
+        const modalMetricText = document.getElementById('ins-gold-modal-metric-text');
+        const modalLufsText = document.getElementById('ins-gold-modal-lufs-text');
+        const modalDesc = document.getElementById('ins-gold-modal-desc');
+
+        function openCinemaModal(card) {
+            if (!card) return;
+            const videoSrc = card.getAttribute('data-video-src');
+            const poster = card.getAttribute('data-poster');
+            const episode = card.getAttribute('data-episode');
+            const title = card.getAttribute('data-title');
+            const industry = card.getAttribute('data-industry');
+            const metric = card.getAttribute('data-metric');
+            const lufs = card.getAttribute('data-lufs');
+            const desc = card.getAttribute('data-desc');
+
+            if (modalEpisode && episode) modalEpisode.textContent = episode;
+            if (modalIndustryText && industry) modalIndustryText.textContent = industry;
+            if (modalTitle && title) modalTitle.textContent = title;
+            if (modalMetricText && metric) modalMetricText.textContent = metric;
+            if (modalLufsText && lufs) modalLufsText.textContent = lufs;
+            if (modalDesc && desc) modalDesc.textContent = desc;
+
+            if (modalVideo && videoSrc) {
+                if (poster) {
+                    modalVideo.setAttribute('poster', poster);
+                } else {
+                    modalVideo.removeAttribute('poster');
+                }
+                if (modalSource) {
+                    modalSource.setAttribute('src', videoSrc);
+                } else {
+                    modalVideo.setAttribute('src', videoSrc);
+                }
+                modalVideo.load();
+                const playPromise = modalVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch((err) => {
+                        console.warn('Cinema modal autoplay prevented or deferred:', err);
+                    });
+                }
+            }
+
+            if (window.bootstrap && window.bootstrap.Modal) {
+                const modalInstance = window.bootstrap.Modal.getOrCreateInstance(modalEl);
+                modalInstance.show();
+            } else {
+                modalEl.classList.add('show');
+                modalEl.style.display = 'block';
+                document.body.classList.add('modal-open');
+            }
+        }
+
+        // Card & Theater Trigger Clicks
+        const cards = suite.querySelectorAll('.ins-gold-card');
+        cards.forEach((card) => {
+            const trigger = card.querySelector('.ins-theater-trigger');
+            const cardTitle = card.querySelector('.card-title');
+
+            if (trigger) {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openCinemaModal(card);
+                });
+                trigger.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openCinemaModal(card);
+                    }
+                });
+            }
+
+            if (cardTitle) {
+                cardTitle.style.cursor = 'pointer';
+                cardTitle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openCinemaModal(card);
+                });
+            }
+        });
+
+        // Modal hidden event -> pause, reset playback, clear src
+        modalEl.addEventListener('hidden.bs.modal', () => {
+            if (modalVideo) {
+                modalVideo.pause();
+                modalVideo.currentTime = 0;
+                if (modalSource) {
+                    modalSource.removeAttribute('src');
+                }
+                modalVideo.removeAttribute('src');
+                modalVideo.load();
+            }
+        });
+
+        // Close on dismiss buttons
+        modalEl.querySelectorAll('[data-bs-dismiss="modal"]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                if (modalVideo) {
+                    modalVideo.pause();
+                    modalVideo.currentTime = 0;
+                }
+                if (!window.bootstrap || !window.bootstrap.Modal) {
+                    modalEl.classList.remove('show');
+                    modalEl.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                }
+            });
+        });
+
+        // Close on backdrop click (if manual fallback)
+        modalEl.addEventListener('click', (e) => {
+            if (e.target === modalEl) {
+                if (modalVideo) {
+                    modalVideo.pause();
+                    modalVideo.currentTime = 0;
+                }
+                if (!window.bootstrap || !window.bootstrap.Modal) {
+                    modalEl.classList.remove('show');
+                    modalEl.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                }
+            }
+        });
+
+        // Close on ESC key (if manual fallback)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalEl.classList.contains('show')) {
+                if (modalVideo) {
+                    modalVideo.pause();
+                    modalVideo.currentTime = 0;
+                }
+                if (!window.bootstrap || !window.bootstrap.Modal) {
+                    modalEl.classList.remove('show');
+                    modalEl.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                }
+            }
+        });
+    }
+
+    initGoldMasterSuite();
     initPlatformTopology();
 }
 

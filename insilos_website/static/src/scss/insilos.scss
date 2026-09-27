@@ -3995,5 +3995,152 @@ pre, code, kbd, samp {
     }
 }
 
+// =============================================================================
+// Gold Master Suite 12-Video Showcase & Cinema Theater Video Modal
+// =============================================================================
+
+// 1. Domain Category Filter Tabs
+.ins-gold-filter-bar {
+    z-index: 3;
+}
+
+.ins-gold-filter-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #94A3B8;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    letter-spacing: 0.02em;
+
+    svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+        vertical-align: -3px;
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 128, 0, 0.5);
+        color: #FFFFFF;
+        transform: translateY(-1px);
+    }
+
+    &.active {
+        background: linear-gradient(135deg, rgba(255, 128, 0, 0.25), rgba(255, 128, 0, 0.08));
+        border-color: var(--ins-orange, #FF8000);
+        color: #FFFFFF;
+        box-shadow: 0 0 16px rgba(255, 128, 0, 0.35);
+    }
+}
+
+// 2. Video Card Hover & Transition
+.ins-gold-card {
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255, 128, 0, 0.45) !important;
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 128, 0, 0.2) !important;
+    }
+}
+
+.ins-gold-card-col {
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &.ins-card-visible {
+        animation: insGoldCardFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+}
+
+@keyframes insGoldCardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// 3. Interactive Theater Trigger & Glowing Neon Play Button
+.ins-theater-trigger {
+    cursor: pointer;
+    overflow: hidden;
+
+    video {
+        pointer-events: none; // Forward clicks to theater trigger
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    &:hover video {
+        transform: scale(1.05);
+    }
+
+    .ins-theater-scrim {
+        background: rgba(0, 0, 0, 0.35);
+        transition: background 0.3s ease;
+        z-index: 2;
+    }
+
+    &:hover .ins-theater-scrim {
+        background: rgba(0, 0, 0, 0.15);
+    }
+
+    .ins-play-btn {
+        width: 58px;
+        height: 58px;
+        background: rgba(15, 23, 42, 0.85);
+        border: 2px solid var(--ins-orange, #FF8000);
+        box-shadow: 0 0 20px rgba(255, 128, 0, 0.6), inset 0 0 10px rgba(255, 128, 0, 0.3);
+        color: #FFFFFF;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+        svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            margin-left: 3px;
+        }
+    }
+
+    &:hover .ins-play-btn {
+        transform: scale(1.15);
+        background: var(--ins-orange, #FF8000);
+        box-shadow: 0 0 35px rgba(255, 128, 0, 0.95), 0 0 70px rgba(255, 128, 0, 0.5);
+        color: #000000;
+    }
+}
+
+// 4. Cinema Theater Video Modal (#insilosGoldVideoModal)
+.ins-cinema-modal {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(3, 7, 18, 0.8) !important;
+
+    .modal-dialog {
+        max-width: 1140px;
+    }
+
+    .ins-cinema-modal-content {
+        background: rgba(11, 17, 33, 0.94) !important;
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.14) !important;
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 50px rgba(0, 229, 255, 0.12) !important;
+    }
+
+    .ins-cinema-player-box {
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: #000000;
+    }
+}
+
+
 
 

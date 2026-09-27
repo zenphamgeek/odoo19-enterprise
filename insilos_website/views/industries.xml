@@ -2164,7 +2164,7 @@
                                         </div>
                                         <div class="d-flex flex-wrap gap-2 flex-shrink-0 align-items-center">
                                             <span class="ins-pill-badge small font-monospace">
-                                                <svg class="ph-duotone ph-activity ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-activity"/></svg>
+                                                <svg class="ph-duotone ph-pulse ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-pulse"/></svg>
                                                 <span>PAT Lấy Mẫu 100Hz</span>
                                             </span>
                                             <span class="ins-pill-badge small font-monospace">
@@ -2983,6 +2983,44 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- C-Suite Marketing Hook: 500kV Transformer Blowout, Grid Code TT 25/30 & A0/AGC Penalties -->
+                        <div class="row mt-5">
+                            <div class="col-12">
+                                <div class="ins-glass-card p-4 p-lg-5 rounded-4 border border-secondary border-opacity-25 shadow-lg position-relative overflow-hidden">
+                                    <div class="row align-items-center g-4">
+                                        <div class="col-lg-8">
+                                            <div class="d-flex align-items-center gap-2 mb-2">
+                                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 font-monospace small">CRITICAL GRID OPERATIONAL RISK</span>
+                                                <span class="badge bg-white-10 text-white border border-white-10 font-monospace small">GRID CODE TT 25/30-BCT / IEC 61850</span>
+                                            </div>
+                                            <h3 class="h3 fw-bold text-white mb-2 ins-title-balance">
+                                                Ngăn Ngừa Nguy Cơ Nổ Biến Áp 500kV $1.2M &amp; Án Phạt Lệch Lưới A0<br class="d-none d-md-inline"/> Với Tự Động Hóa IEC 61850 &amp; Cô Lập Ngắn Mạch &lt; 40ms
+                                            </h3>
+                                            <p class="text-secondary mb-0 small">
+                                                Rủi ro sinh tử của đơn vị phát điện: Hỏng cách điện máy biến áp 500kV gây thiệt hại 1.2 triệu USD với thời gian đặt hàng thay thế 14 tháng, vi phạm Thông tư 25/30/TT-BCT quy định vận hành hệ thống điện truyền tải, và án phạt nặng từ A0 do sai lệch công suất phát. Nền tảng Insilos kết nối trực tiếp SCADA trạm biến áp, phân tích DGA/FFT 24/7 cảnh báo sớm 14 ngày, phản hồi AGC &lt; 2s và cô lập sự cố trong 40ms — bảo toàn tuyệt đối dòng doanh thu PPA với EVN EPTC.
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="d-flex flex-column gap-2">
+                                                <div class="d-flex align-items-center justify-content-between p-2 rounded bg-black bg-opacity-25 border border-secondary border-opacity-25">
+                                                    <span class="small text-secondary">Cô Lập Ngắn Mạch Trạm</span>
+                                                    <span class="font-monospace text-cyan fw-bold">&lt; 40ms SLA</span>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-between p-2 rounded bg-black bg-opacity-25 border border-secondary border-opacity-25">
+                                                    <span class="small text-secondary">Dự Báo Sản Lượng 24h</span>
+                                                    <span class="font-monospace text-mint fw-bold">98.4% Acc.</span>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-between p-2 rounded bg-black bg-opacity-25 border border-secondary border-opacity-25">
+                                                    <span class="small text-secondary">Phản Hồi Lệnh A0 / AGC</span>
+                                                    <span class="font-monospace text-warning fw-bold">&lt; 2 Giây</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -3174,51 +3212,158 @@
                     </div>
                 </section>
 
-                <!-- Benchmark Comparison Table — s_comparisons chuẩn -->
-                <section class="s_comparisons pt80 pb80 o_colored_level o_cc o_cc5" data-vcss="001" data-vxml="001" data-snippet="s_comparisons" data-name="Comparisons">
+                <!-- Operational Pain-vs-Gain & GRC Compliance Matrix Table — s_comparisons chuẩn -->
+                <section class="s_comparisons pt80 pb80 o_colored_level o_cc o_cc5" data-vcss="001" data-vxml="001" data-snippet="s_comparisons" data-name="Energy GRC Compliance Matrix">
                     <div class="container s_allow_columns">
                         <div class="row text-center mb-5">
                             <div class="col-lg-8 mx-auto">
-                                <span class="badge bg-primary-subtle text-cyan text-uppercase px-3 py-2 mb-2 rounded-pill fw-bold font-monospace">Smart Grid Benchmark</span>
-                                <h2 class="display-4-fs fw-bold text-white">Vận Hành Năng Lượng Rời Rạc vs. Insilos Smart Grid AI</h2>
-                                <p class="lead text-secondary">Khác biệt đột phá giữa giám sát thụ động truyền thống và trung tâm điều độ thông minh tự chủ.</p>
+                                <span class="badge bg-primary-subtle text-cyan text-uppercase px-3 py-2 mb-2 rounded-pill fw-bold font-monospace">Operational Pain-vs-Gain &amp; GRC Matrix</span>
+                                <h2 class="display-4-fs fw-bold text-white ins-title-balance">Ma Trận Tuân Thủ Grid Code &amp; Vận Hành Năng Lượng 6 Chiều</h2>
+                                <p class="lead text-secondary">So sánh trực diện giữa phương thức vận hành thụ động truyền thống và trung tâm điều độ tự chủ Insilos Smart Grid AI.</p>
                             </div>
                         </div>
                         <div class="table-responsive ins-glass-card rounded-4 border border-secondary border-opacity-25 p-4 text-white shadow-lg">
                             <table class="table table-hover align-middle mb-0 text-white">
                                 <thead class="border-bottom border-secondary border-opacity-50">
                                     <tr>
-                                        <th scope="col" class="py-3 text-secondary text-uppercase font-monospace small ins-col-w28">Tiêu Chí Vận Hành</th>
-                                        <th scope="col" class="py-3 text-danger text-uppercase font-monospace small ins-col-w36">Hệ Thống SCADA Truyền Thống</th>
+                                        <th scope="col" class="py-3 text-secondary text-uppercase font-monospace small ins-col-w28">Chiều Vận Hành &amp; Tuân Thủ GRC</th>
+                                        <th scope="col" class="py-3 text-danger text-uppercase font-monospace small ins-col-w36">Hệ Thống SCADA / Vận Hành Truyền Thống</th>
                                         <th scope="col" class="py-3 text-cyan text-uppercase font-monospace small ins-col-w36">
                                             <svg class="ph-duotone ph-lightning ph-sm text-cyan me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lightning"/></svg>
-                                            <span>Insilos Smart Grid Intelligence</span>
+                                            <span>Nền Tảng Insilos Smart Grid AI</span>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="border-top-0">
                                     <tr>
-                                        <td class="fw-bold text-white">Dự báo sản lượng phát điện</td>
-                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Sai số 12-18% do dựa vào dữ liệu khí tượng chung</td>
-                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Độ chính xác 98.4%, mô hình vi khí hậu riêng từng cánh đồng</td>
+                                        <td class="fw-bold text-white">1. Dự Báo Sản Lượng Phát Điện (AI Micro-Climate)</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Sai số 12–18% do dùng khí tượng chung, bị phạt sai lệch công suất phát A0 hàng tháng</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Độ chính xác 98.4%, mô hình vi khí hậu riêng từng cánh đồng gió/solar, tối ưu hóa biểu đồ phụ tải</td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold text-white">Bảo trì máy biến áp &amp; turbine</td>
-                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Định kỳ kiểm tra mẫu dầu 6 tháng, dễ bỏ lọt sự cố</td>
-                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Phân tích DGA và quang phổ rung động 24/7 cảnh báo sớm 14 ngày</td>
+                                        <td class="fw-bold text-white">2. Bảo Trì Máy Biến Áp &amp; Tuabin (DGA &amp; FFT)</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Lấy mẫu dầu thủ công 6 tháng/lần, không bắt được quá nhiệt cục bộ dẫn đến nổ biến áp $1.2M</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Giám sát khí hòa tan DGA và quang phổ rung động FFT 24/7, phát hiện phóng điện cục bộ trước 14 ngày</td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold text-white">Tuân thủ điều độ A0 / AGC</td>
-                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Điều chỉnh setpoint chậm 5-15 phút, phát sinh phạt sai lệch</td>
-                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Phản hồi lệnh AGC &lt; 2 giây, giảm 42.0% chi phí phạt công suất</td>
+                                        <td class="fw-bold text-white">3. Tuân Thủ Điều Độ A0 / AGC &amp; Grid Code</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Phản hồi setpoint chậm 5–15 phút, nguy cơ vi phạm Thông tư 25/30/TT-BCT và cắt giảm phát điện</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Phản hồi setpoint AGC &lt; 2 giây tự động, giảm 42.0% chi phí phạt sai lệch, duy trì tần số chuẩn 50.02 Hz</td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold text-white">Tiêu chuẩn truyền thông trạm</td>
-                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Modbus/RTU rời rạc, trễ cao, thiếu bảo mật</td>
-                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> IEC 61850 MMS/GOOSE native, mã hóa chuẩn an ninh NERC CIP</td>
+                                        <td class="fw-bold text-white">4. Bảo Vệ Chống Rã Lưới Diện Rộng (Blackout Prevention)</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Rơ-le bảo vệ cục bộ rời rạc, nguy cơ nhảy dây chuyền gây rã lưới diện rộng thiệt hại triệu USD</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Khóa liên động tự động cô lập ngắn mạch trong 40 mili-giây, duy trì an toàn lưới truyền tải 500kV</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">5. Hạch Toán Doanh Thu Bán Điện EVN EPTC</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Đối soát chỉ số công tơ 3 giá thủ công, chậm lập hóa đơn điện tử TT 78, đọng công nợ TK 131 với EPTC</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Tự động đối soát công tơ ranh giới, đồng bộ hợp đồng PPA, xuất hóa đơn điện tử TT 78 và ghi nhận VAS 200</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">6. Tiêu Chuẩn Truyền Tin &amp; An Ninh Trạm (IEC 61850)</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Giao thức Modbus/RTU cổ điển, đường truyền trễ cao, không có cơ chế mã hóa chống tấn công mạng OT</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Chuẩn IEC 61850 MMS/GOOSE native, mã hóa chuẩn an ninh NERC CIP, Edge Node vận hành cách ly Air-Gapped</td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Executive Customer Case Dossier: EVN Genco 3 — s_media_list chuẩn -->
+                <section class="s_media_list pt80 pb80 o_colored_level o_cc o_cc5 border-top border-secondary border-opacity-25" data-snippet="s_media_list" data-name="EVN Genco 3 Customer Case Dossier">
+                    <div class="container s_allow_columns">
+                        <div class="row text-center mb-5">
+                            <div class="col-lg-8 mx-auto">
+                                <span class="badge bg-primary-subtle text-cyan text-uppercase px-3 py-2 mb-2 rounded-pill fw-bold font-monospace">Audited Enterprise Proof</span>
+                                <h2 class="display-4-fs fw-bold text-white ins-title-balance">Hồ Sơ Khách Hàng Tiêu Biểu: <span class="ins-gradient-headline">EVN Genco 3</span></h2>
+                                <p class="lead text-secondary">Bảo vệ tổ máy phát điện truyền tải, tối ưu hóa thị trường điện và ngăn chặn rủi ro dừng máy khẩn cấp.</p>
+                            </div>
+                        </div>
+                        <div class="row align-items-stretch g-4 ins-card-row-balanced">
+                            <div class="col-lg-7">
+                                <div class="card h-100 p-4 p-lg-5 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-glass-card text-white">
+                                    <div>
+                                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="ins-card-pictogram ins-pictogram-md">
+                                                    <svg class="ph-duotone ph-lightning ph-lg text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lightning"/></svg>
+                                                </div>
+                                                <div>
+                                                    <h3 class="h5 fw-bold mb-0">Tổng Công Ty Phát Điện 3 (EVN Genco 3)</h3>
+                                                    <span class="text-secondary small font-monospace">Lưới Truyền Tải 500kV &amp; Cụm Nhà Máy Điện Khí / Năng Lượng Tái Tạo</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-cyan-subtle text-cyan border border-cyan-subtle px-3 py-2 font-monospace small">IEC 61850 CERTIFIED</span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <h4 class="h6 text-uppercase text-secondary font-monospace mb-2">Thách Thức Vận Hành &amp; Rủi Ro Tuân Thủ</h4>
+                                            <p class="text-secondary small">
+                                                Quản lý cụm tổ máy phát điện công suất lớn kết nối lưới truyền tải 500kV đối mặt với nguy cơ suy giảm cách điện máy biến áp chính (chi phí quấn lại 1.2 triệu USD/máy với thời gian chờ 14 tháng), biến động công suất phát ngẫu nhiên từ năng lượng tái tạo gây lệch lệnh điều độ A0, và nguy cơ sự cố lan truyền dẫn đến rã lưới diện rộng theo Thông tư 25/30/TT-BCT.
+                                            </p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <h4 class="h6 text-uppercase text-secondary font-monospace mb-2">Kiến Trúc Giải Pháp Triển Khai</h4>
+                                            <p class="text-secondary small">
+                                                Insilos tích hợp trực tiếp lớp SCADA trạm qua chuẩn IEC 61850 MMS/GOOSE native, phân tích quang phổ rung động FFT và nồng độ khí hòa tan DGA liên tục 24/7. Đồng thời, module AI Micro-Climate dự báo công suất phát trước 24h và thuật toán tự động phản hồi lệnh điều độ AGC trong dưới 2 giây.
+                                            </p>
+                                        </div>
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-30 border border-secondary border-opacity-25">
+                                            <p class="fst-italic text-white-80 small mb-1">
+                                                "Thuật toán Insilos bắt chính xác hiện tượng phóng điện cục bộ trong máy biến áp trước 14 ngày, cô lập sự cố trong 40 mili-giây và loại bỏ hoàn toàn các khoản phạt điều độ sai lệch công suất phát từ A0."
+                                            </p>
+                                            <span class="text-cyan small fw-bold font-monospace">— Ban Kỹ Thuật &amp; Điều Độ Vận Hành, EVN Genco 3</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                        <span class="text-secondary small font-monospace">Audited Metric Assurance: EVN EPTC / A0 Dispatch Log</span>
+                                        <a href="/request-demo" class="btn btn-outline-secondary rounded-pill px-4 py-2 text-white small d-inline-flex align-items-center gap-2">
+                                            <span>Xem Báo Cáo Kỹ Thuật SCADA</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="row g-3 h-100 ins-card-row-balanced">
+                                    <div class="col-sm-6">
+                                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-glass-card text-center">
+                                            <div class="display-5 fw-bold text-mint font-monospace mb-1">99.8%</div>
+                                            <div class="text-white fw-bold small mb-1">Uptime Tổ Máy</div>
+                                            <div class="text-secondary small mt-auto">Duy trì sẵn sàng vận hành liên tục cho lưới truyền tải 500kV</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-glass-card text-center">
+                                            <div class="display-5 fw-bold text-cyan font-monospace mb-1">14 Ngày</div>
+                                            <div class="text-white fw-bold small mb-1">Cảnh Báo Sớm DGA/FFT</div>
+                                            <div class="text-secondary small mt-auto">Phát hiện sớm phóng điện &amp; suy giảm cách điện biến áp</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-glass-card text-center">
+                                            <div class="display-5 fw-bold text-mint font-monospace mb-1">40ms</div>
+                                            <div class="text-white fw-bold small mb-1">Cô Lập Ngắn Mạch</div>
+                                            <div class="text-secondary small mt-auto">Khóa liên động chống rã lưới diện rộng dây chuyền</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-glass-card text-center">
+                                            <div class="display-5 fw-bold text-warning font-monospace mb-1">-42.0%</div>
+                                            <div class="text-white fw-bold small mb-1">Phạt Lệch Điều Độ A0</div>
+                                            <div class="text-secondary small mt-auto">Phản hồi lệnh AGC &lt; 2s triệt tiêu sai số công suất</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card h-100 p-4 border border-primary border-opacity-30 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-glass-card text-center">
+                                            <div class="display-5 fw-bold text-warning font-monospace mb-1">$45,000 / Giờ</div>
+                                            <div class="text-white fw-bold small mb-1">Chi Phí Dừng Máy Khẩn Cấp Đã Ngăn Ngừa</div>
+                                            <div class="text-secondary small mt-auto">Bảo toàn dòng tiền PPA theo hợp đồng mua bán điện EVN EPTC</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -3653,6 +3798,44 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- C-Suite Marketing Hook: Repeat Truck Rolls, BTS Telecom Outage & Circular 78 Field Billing -->
+                        <div class="row mt-5">
+                            <div class="col-12">
+                                <div class="ins-glass-card p-4 p-lg-5 rounded-4 border border-secondary border-opacity-25 shadow-lg position-relative overflow-hidden">
+                                    <div class="row align-items-center g-4">
+                                        <div class="col-lg-8">
+                                            <div class="d-flex align-items-center gap-2 mb-2">
+                                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 font-monospace small">CRITICAL FIELD SERVICE RISK</span>
+                                                <span class="badge bg-white-10 text-white border border-white-10 font-monospace small">CIRCULAR 78 E-INVOICE / SLA &lt; 45S</span>
+                                            </div>
+                                            <h3 class="h3 fw-bold text-white mb-2 ins-title-balance">
+                                                Chấm Dứt Thiệt Hại Từ Chuyến Xe Lặp Lại $350 &amp; Phạt SLA Ngắt Sóng BTS<br class="d-none d-md-inline"/> Với Điều Phối Tự Chủ &lt; 45s &amp; Tỷ Lệ Xử Lý Dứt Điểm FTFR 94.8%
+                                            </h3>
+                                            <p class="text-secondary mb-0 small">
+                                                Thất thoát âm ỉ của giám đốc vận hành hiện trường: 35-48% chuyến xe kỹ thuật lặp lại (Repeat Truck Rolls) do mang nhầm linh kiện hoặc phân sai tay nghề kỹ thuật viên gây tốn kém $180–$350 mỗi chuyến phát sinh, đi kèm án phạt vi phạm hợp đồng viễn thông lên tới $5,000/giờ khi trạm BTS mất nguồn phát sóng. Insilos FSM tự động ghép nối chứng chỉ chuyên môn, phụ tùng trên xe và lộ trình GPS trong dưới 45 giây — nâng FTFR lên 94.8%, hạ MTTR xuống 1.7 giờ và kích hoạt hóa đơn điện tử TT 78 ngay khi nghiệm thu.
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="d-flex flex-column gap-2">
+                                                <div class="d-flex align-items-center justify-content-between p-2 rounded bg-black bg-opacity-25 border border-secondary border-opacity-25">
+                                                    <span class="small text-secondary">First-Time Fix Rate (FTFR)</span>
+                                                    <span class="font-monospace text-mint fw-bold">94.8% SLA</span>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-between p-2 rounded bg-black bg-opacity-25 border border-secondary border-opacity-25">
+                                                    <span class="small text-secondary">Mean Time To Repair (MTTR)</span>
+                                                    <span class="font-monospace text-cyan fw-bold">1.7h (-65%)</span>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-between p-2 rounded bg-black bg-opacity-25 border border-secondary border-opacity-25">
+                                                    <span class="small text-secondary">Tốc Độ Điều Phối &amp; Lộ Trình</span>
+                                                    <span class="font-monospace text-warning fw-bold">&lt; 45 Giây</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -3844,51 +4027,224 @@
                     </div>
                 </section>
 
-                <!-- Benchmark Comparison Table — s_comparisons chuẩn -->
-                <section class="s_comparisons pt80 pb80 o_colored_level o_cc o_cc5" data-vcss="001" data-vxml="001" data-snippet="s_comparisons" data-name="Comparisons">
+                <!-- Operational Pain-vs-Gain & GRC Compliance Matrix Table — s_comparisons chuẩn -->
+                <section class="s_comparisons pt80 pb80 o_colored_level o_cc o_cc5" data-vcss="001" data-vxml="001" data-snippet="s_comparisons" data-name="FSM GRC Compliance Matrix">
                     <div class="container s_allow_columns">
                         <div class="row text-center mb-5">
                             <div class="col-lg-8 mx-auto">
-                                <span class="badge bg-primary-subtle text-cyan text-uppercase px-3 py-2 mb-2 rounded-pill fw-bold font-monospace">FSM Service Benchmark</span>
-                                <h2 class="display-4-fs fw-bold text-white">Bảo Trì Thụ Động Truyền Thống vs. Insilos Closed-Loop FSM</h2>
-                                <p class="lead text-secondary">Chuyển đổi từ khắc phục sự cố sau hư hỏng sang điều hành dịch vụ hiện trường chủ động và chuẩn xác.</p>
+                                <span class="badge bg-primary-subtle text-cyan text-uppercase px-3 py-2 mb-2 rounded-pill fw-bold font-monospace">Operational Pain-vs-Gain &amp; GRC Matrix</span>
+                                <h2 class="display-4-fs fw-bold text-white ins-title-balance">Ma Trận Hiệu Quả Điều Phối Hiện Trường &amp; Tuân Thủ 6 Chiều</h2>
+                                <p class="lead text-secondary">So sánh trực diện giữa mô hình bảo trì thủ công thụ động và nền tảng Insilos Closed-Loop FSM Intelligence.</p>
                             </div>
                         </div>
                         <div class="table-responsive ins-glass-card rounded-4 border border-secondary border-opacity-25 p-4 text-white shadow-lg">
                             <table class="table table-hover align-middle mb-0 text-white">
                                 <thead class="border-bottom border-secondary border-opacity-50">
                                     <tr>
-                                        <th scope="col" class="py-3 text-secondary text-uppercase font-monospace small ins-col-w28">Tiêu Chí Hoạt Động</th>
-                                        <th scope="col" class="py-3 text-danger text-uppercase font-monospace small ins-col-w36">Quản Lý FSM Thủ Công</th>
+                                        <th scope="col" class="py-3 text-secondary text-uppercase font-monospace small ins-col-w28">Chiều Vận Hành &amp; Tuân Thủ GRC</th>
+                                        <th scope="col" class="py-3 text-danger text-uppercase font-monospace small ins-col-w36">Quản Lý Hiện Trường Thủ Công</th>
                                         <th scope="col" class="py-3 text-cyan text-uppercase font-monospace small ins-col-w36">
                                             <svg class="ph-duotone ph-lightning ph-sm text-cyan me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lightning"/></svg>
-                                            <span>Insilos Closed-Loop Intelligence</span>
+                                            <span>Insilos Closed-Loop FSM AI</span>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="border-top-0">
                                     <tr>
-                                        <td class="fw-bold text-white">Tỷ lệ xử lý dứt điểm (FTFR)</td>
-                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Đạt 52-65%, thiếu phụ tùng hoặc không đúng bậc thợ</td>
-                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Đạt 94.8% (+42%), tự động đối soát kỹ năng và linh kiện trên xe</td>
+                                        <td class="fw-bold text-white">1. Tỷ Lệ Xử Lý Dứt Điểm (FTFR)</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Đạt 52–65%, thiếu phụ tùng hoặc không đúng bậc thợ, 35-48% chuyến xe lặp lại gây tốn $180-$350/lần</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Đạt 94.8% (+42%), tự động đối soát chứng chỉ chuyên môn và lượng phụ tùng sẵn sàng trên xe công tác</td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold text-white">Thời gian khắc phục (MTTR)</td>
-                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Mất 4.8 - 8.5 giờ tra cứu tài liệu và xin hỗ trợ chuyên gia</td>
-                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Rút ngắn còn 1.7 giờ (-65%), trợ lý AI hiện trường và SOP 3D tương tác</td>
+                                        <td class="fw-bold text-white">2. Thời Gian Khắc Phục (MTTR)</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Mất 4.8 – 8.5 giờ tra cứu tài liệu giấy và gọi điện xin hỗ trợ kỹ thuật chuyên gia</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Rút ngắn còn 1.7 giờ (-65%), trợ lý AI hiện trường, phân tích âm thanh chẩn đoán và SOP 3D ngoại tuyến</td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold text-white">Lộ trình điều phối đội xe</td>
-                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Phân công cảm tính theo cụm tĩnh, quãng đường trùng lặp</td>
-                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Thuật toán GPS đa điểm thời gian thực, giảm 38% chi phí nhiên liệu</td>
+                                        <td class="fw-bold text-white">3. Lộ Trình Điều Phối Đội Xe &amp; Nhiên Liệu</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Phân công cảm tính theo cụm tĩnh, quãng đường trùng lặp, kẹt xe làm trễ cam kết SLA trạm viễn thông</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Thuật toán GPS đa điểm thời gian thực, điều phối dưới 45 giây, cắt giảm 38% chi phí nhiên liệu và thời gian di chuyển</td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold text-white">Đồng bộ dữ liệu tài sản EAM</td>
-                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Biên bản giấy trễ 3-7 ngày, lịch sử bảo dưỡng rời rạc</td>
-                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Ghi nhận tức thì vào SAP PM / Maximo, tự động tính lại tuổi thọ RUL</td>
+                                        <td class="fw-bold text-white">4. Hóa Đơn Dịch Vụ TT 78 &amp; VietQR Khi Nghiệm Thu</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Ký giấy chuyển về phòng kế toán đối soát thủ công 15–30 ngày, đọng vốn lưu động TK 131</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Ký nghiệm thu điện tử trên app di động, tự động xuất hóa đơn điện tử TT 78 và mã VietQR thanh toán tức thì</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">5. Quản Lý Tồn Kho Xe Dịch Vụ Lưu Động (TK 153/152)</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Tồn kho xe công tác kiểm kê định kỳ tháng, thất thoát linh kiện, không kiểm soát được vật tư trên đường</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Quản lý kho di động gắn biển số xe thời gian thực, tự động trừ kho TK 152/153 theo mã phụ tùng khớp Work Order</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">6. Đồng Bộ Dữ Liệu Tài Sản EAM (SAP PM / Maximo)</td>
+                                        <td class="text-secondary"><svg class="ph-duotone ph-x-circle ph-sm text-danger me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg> Biên bản sửa chữa giấy trễ 3–7 ngày, lịch sử bảo dưỡng rời rạc, không cập nhật được tuổi thọ máy</td>
+                                        <td class="text-mint fw-semibold"><svg class="ph-duotone ph-check-circle ph-sm text-mint me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg> Vòng lặp khép kín đồng bộ tức thì vào SAP PM / IBM Maximo, tính toán tuổi thọ còn lại RUL tự động</td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Executive Customer Case Dossiers: MobiFone & FDI Bonfiglioli — s_media_list chuẩn -->
+                <section class="s_media_list pt80 pb80 o_colored_level o_cc o_cc5 border-top border-secondary border-opacity-25" data-snippet="s_media_list" data-name="FSM Customer Case Dossiers">
+                    <div class="container s_allow_columns">
+                        <div class="row text-center mb-5">
+                            <div class="col-lg-8 mx-auto">
+                                <span class="badge bg-primary-subtle text-cyan text-uppercase px-3 py-2 mb-2 rounded-pill fw-bold font-monospace">Audited Enterprise Proof</span>
+                                <h2 class="display-4-fs fw-bold text-white ins-title-balance">Hồ Sơ Triển Khai Tiêu Biểu: <span class="ins-gradient-headline">MobiFone &amp; FDI Bonfiglioli</span></h2>
+                                <p class="lead text-secondary">Chứng thực hiệu quả vận hành thực địa tại các tập đoàn viễn thông và nhà sản xuất công nghiệp hàng đầu.</p>
+                            </div>
+                        </div>
+                        <div class="row align-items-stretch g-4 ins-card-row-balanced">
+                            <!-- Case 1: MobiFone Telecommunications -->
+                            <div class="col-lg-6">
+                                <div class="card h-100 p-4 p-lg-5 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-glass-card text-white">
+                                    <div>
+                                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="ins-card-pictogram ins-pictogram-md">
+                                                    <svg class="ph-duotone ph-broadcast ph-lg text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-broadcast"/></svg>
+                                                </div>
+                                                <div>
+                                                    <h3 class="h5 fw-bold mb-0">Tổng Công Ty Viễn Thông MobiFone</h3>
+                                                    <span class="text-secondary small font-monospace">Hạ Tầng Trạm BTS Toàn Quốc &amp; Trung Tâm Dữ Liệu</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-cyan-subtle text-cyan border border-cyan-subtle px-3 py-2 font-monospace small">TELCO SLA GUARANTEED</span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <h4 class="h6 text-uppercase text-secondary font-monospace mb-2">Thách Thức Vận Hành &amp; Rủi Ro Phạt SLA</h4>
+                                            <p class="text-secondary small">
+                                                Vận hành mạng lưới hàng nghìn trạm thu phát sóng BTS trải dài trên nhiều địa hình phức tạp đối mặt với nguy cơ cúp điện lưới, sụt áp ắc quy tủ nguồn gây gián đoạn liên lạc diện rộng (chịu chế tài phạt SLA tới $5,000/giờ), cùng thách thức xử lý hàng chục triệu bản ghi cước dữ liệu CDR mỗi ngày mà không để xảy ra sai lệch thất thoát doanh thu.
+                                            </p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <h4 class="h6 text-uppercase text-secondary font-monospace mb-2">Giải Pháp Insilos Closed-Loop FSM</h4>
+                                            <p class="text-secondary small">
+                                                Triển khai telemetry IoT thu thập tình trạng ắc quy và nguồn nổ máy phát, thuật toán AI dự báo sớm suy thoái ắc quy trước 7 ngày, điều phối kỹ thuật viên ứng cứu hiện trường dưới 45 giây và module đối soát tự động xử lý hơn 50 triệu bản ghi CDR trong dưới 4 giờ.
+                                            </p>
+                                        </div>
+                                        <div class="row g-2 mb-4 ins-card-row-balanced">
+                                            <div class="col-sm-6">
+                                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-30 text-center">
+                                                    <div class="h4 fw-bold text-mint font-monospace mb-1">50M+ CDR</div>
+                                                    <div class="text-white small fw-bold">Đối Soát &lt; 4 Giờ</div>
+                                                    <div class="text-secondary small mt-auto">Tự động hóa toàn diện</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-30 text-center">
+                                                    <div class="h4 fw-bold text-cyan font-monospace mb-1">0.00 VNĐ</div>
+                                                    <div class="text-white small fw-bold">Rò Rỉ Doanh Thu</div>
+                                                    <div class="text-secondary small mt-auto">100% đối soát hóa đơn TT 78</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-30 text-center">
+                                                    <div class="h4 fw-bold text-warning font-monospace mb-1">&lt; 45 Giây</div>
+                                                    <div class="text-white small fw-bold">SLA Điều Phối BTS</div>
+                                                    <div class="text-secondary small mt-auto">Cứu hộ trạm phát sóng tức thì</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-30 text-center">
+                                                    <div class="h4 fw-bold text-mint font-monospace mb-1">7 Ngày</div>
+                                                    <div class="text-white small fw-bold">Dự Báo Ắc Quy Trạm</div>
+                                                    <div class="text-secondary small mt-auto">Cảnh báo tụt áp tủ nguồn sớm</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-30 border border-secondary border-opacity-25">
+                                            <p class="fst-italic text-white-80 small mb-1">
+                                                "Insilos giúp MobiFone tối ưu hóa toàn bộ quy trình cứu hộ trạm phát sóng BTS dưới 45 giây và giải quyết triệt để bài toán đối soát 50 triệu CDR hàng ngày với độ chính xác tuyệt đối 0.00 VNĐ sai lệch."
+                                            </p>
+                                            <span class="text-cyan small fw-bold font-monospace">— Trung Tâm Vận Hành Khai Thác Mạng Lưới, MobiFone</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                        <span class="text-secondary small font-monospace">Audited Metric Assurance: MobiFone Telco NOC</span>
+                                        <a href="/request-demo" class="btn btn-outline-secondary rounded-pill px-4 py-2 text-white small d-inline-flex align-items-center gap-2">
+                                            <span>Xem Case Study Viễn Thông</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Case 2: FDI Bonfiglioli Vietnam -->
+                            <div class="col-lg-6">
+                                <div class="card h-100 p-4 p-lg-5 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-glass-card text-white">
+                                    <div>
+                                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="ins-card-pictogram ins-pictogram-md">
+                                                    <svg class="ph-duotone ph-wrench ph-lg text-warning"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-wrench"/></svg>
+                                                </div>
+                                                <div>
+                                                    <h3 class="h5 fw-bold mb-0">FDI Bonfiglioli (Việt Nam)</h3>
+                                                    <span class="text-secondary small font-monospace">Sản Xuất Động Cơ Giảm Tốc &amp; Truyền Động Cơ Khí Nặng</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2 font-monospace small">ISO 10816 VIBRATION</span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <h4 class="h6 text-uppercase text-secondary font-monospace mb-2">Thách Thức Dịch Vụ Cơ Khí Hiện Trường</h4>
+                                            <p class="text-secondary small">
+                                                Hỗ trợ kỹ thuật cho hàng trăm nhà máy công nghiệp nặng sử dụng hộp giảm tốc Bonfiglioli gặp trở ngại do tỷ lệ sửa chữa dứt điểm lần đầu thấp (FTFR chỉ 60%), kỹ thuật viên thiếu tài liệu hướng dẫn chuyên sâu tại chỗ và tình trạng xuất kho nhầm mã phụ tùng vòng bi đặc thù, kéo dài thời gian dừng máy của khách hàng.
+                                            </p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <h4 class="h6 text-uppercase text-secondary font-monospace mb-2">Giải Pháp Insilos Closed-Loop FSM</h4>
+                                            <p class="text-secondary small">
+                                                Trang bị ứng dụng di động Offline-First với thư viện SOP 3D tương tác, tính năng phân tích rung động cơ khí chuẩn ISO 10816 qua micro âm thanh điện thoại, tự động đối soát giữ chỗ 100% phụ tùng cần thiết trên xe service van (TK 153) và xuất hóa đơn TT 78 kèm VietQR ngay khi khách hàng ký nghiệm thu.
+                                            </p>
+                                        </div>
+                                        <div class="row g-2 mb-4 ins-card-row-balanced">
+                                            <div class="col-sm-6">
+                                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-30 text-center">
+                                                    <div class="h4 fw-bold text-mint font-monospace mb-1">94.8%</div>
+                                                    <div class="text-white small fw-bold">First-Time Fix Rate</div>
+                                                    <div class="text-secondary small mt-auto">Xử lý dứt điểm lần đầu (+42%)</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-30 text-center">
+                                                    <div class="h4 fw-bold text-cyan font-monospace mb-1">1.7 Giờ</div>
+                                                    <div class="text-white small fw-bold">MTTR (-65%)</div>
+                                                    <div class="text-secondary small mt-auto">Rút ngắn thời gian sửa chữa</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-30 text-center">
+                                                    <div class="h4 fw-bold text-warning font-monospace mb-1">ISO 10816</div>
+                                                    <div class="text-white small fw-bold">Phổ Rung Động Ổ Bi</div>
+                                                    <div class="text-secondary small mt-auto">Chẩn đoán âm học chuẩn xác</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-30 text-center">
+                                                    <div class="h4 fw-bold text-mint font-monospace mb-1">100%</div>
+                                                    <div class="text-white small fw-bold">Khớp Lệnh Phụ Tùng</div>
+                                                    <div class="text-secondary small mt-auto">Tự động giữ chỗ kho xe lưu động</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-30 border border-secondary border-opacity-25">
+                                            <p class="fst-italic text-white-80 small mb-1">
+                                                "Nhờ Insilos FSM, kỹ thuật viên Bonfiglioli luôn có mặt đúng giờ với 100% phụ tùng khớp lệnh. Tỷ lệ xử lý thành công ngay lần đầu nâng lên 94.8%, củng cố niềm tin tuyệt đối của các đối tác sản xuất lớn."
+                                            </p>
+                                            <span class="text-cyan small fw-bold font-monospace">— Giám Đốc Dịch Vụ Khách Hàng, Bonfiglioli Việt Nam</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                        <span class="text-secondary small font-monospace">Audited Metric Assurance: Bonfiglioli Field Service Audit</span>
+                                        <a href="/request-demo" class="btn btn-outline-secondary rounded-pill px-4 py-2 text-white small d-inline-flex align-items-center gap-2">
+                                            <span>Xem Báo Cáo Bảo Trì Cơ Khí</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
