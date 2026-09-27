@@ -303,23 +303,81 @@
                 <!-- ============================================================= -->
                 <!-- LAYOUT 2: PLATFORM TOPOLOGY (MODEL-DRIVEN ARCHITECTURE)       -->
                 <!-- ============================================================= -->
-                <section id="architecture" class="s_cover o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_cover" data-name="Platform Topology Diagram" data-bs-theme="dark">
-                    <div class="container">
+                <section id="architecture" class="s_cover o_colored_level o_cc o_cc5 pt80 pb80 position-relative ins-radial-glow overflow-hidden" data-snippet="s_cover" data-name="Platform Topology Diagram" data-bs-theme="dark">
+                    <div class="ins-hero-scanlines o_not_editable"/>
+                    <div class="container position-relative">
                         <div class="text-center mb-5 col-lg-8 mx-auto">
                             <div class="ins-pill-badge mb-2">
                                 <span class="ins-live-ping ins-live-ping--emerald"/>
                                 <span>MODEL-DRIVEN ARCHITECTURE</span>
                             </div>
-                            <h2 class="display-4 fw-bold text-white mb-2">Bản Đồ Cấu Trúc Vận Hành Toàn Diện</h2>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">Bản Đồ Cấu Trúc Vận Hành Toàn Diện</h2>
                             <p class="lead text-secondary">
                                 Khám phá 5 tầng kiến trúc liên kết thời gian thực: từ giao thức kết nối dữ liệu đến tri thức quan hệ, mạng lưới tác nhân tự chủ và hạ tầng đa đám mây.
                             </p>
                         </div>
+
+                        <!-- Live Telemetry Status Strip -->
+                        <div class="ins-telemetry-strip d-flex flex-wrap align-items-center justify-content-between p-3 rounded-3 border border-secondary border-opacity-25 bg-black bg-opacity-60 mb-3 gap-2 font-monospace">
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="d-flex align-items-center gap-2 text-mint small fw-bold">
+                                    <span class="ins-live-ping ins-live-ping--emerald"/>
+                                    <span>LIVE BUS // 50.02 Hz</span>
+                                </span>
+                                <span class="text-secondary small d-none d-md-inline">|</span>
+                                <span class="text-white-50 small d-none d-md-inline">THROUGHPUT: <strong class="text-cyan">12,410 PTS/S</strong></span>
+                                <span class="text-secondary small d-none d-lg-inline">|</span>
+                                <span class="text-white-50 small d-none d-lg-inline">P99 LATENCY: <strong class="text-mint">&lt; 11.2ms</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-secondary bg-opacity-25 text-cyan border border-white-10 small">ZERO-DRIFT ACTIVE</span>
+                                <span class="badge bg-white-10 text-white border border-white-10 small">W3C OWL // MERKLE DAG</span>
+                            </div>
+                        </div>
+
+                        <!-- Animated SVG Telemetry Data-Flow Path Connecting 5 Layers -->
+                        <div class="ins-cockpit-bus-wrap mb-4 d-none d-md-block overflow-hidden rounded-3 border border-secondary border-opacity-25 bg-black bg-opacity-40 p-2">
+                            <svg class="w-100 ins-cockpit-bus-svg" viewBox="0 0 1000 48" preserveAspectRatio="none" fill="none">
+                                <defs>
+                                    <linearGradient id="topoBusGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#FF8000" stop-opacity="0.8"/>
+                                        <stop offset="25%" stop-color="#00D2FF" stop-opacity="0.8"/>
+                                        <stop offset="50%" stop-color="#10B981" stop-opacity="0.8"/>
+                                        <stop offset="75%" stop-color="#F59E0B" stop-opacity="0.8"/>
+                                        <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.8"/>
+                                    </linearGradient>
+                                </defs>
+                                <line x1="50" y1="24" x2="950" y2="24" stroke="url(#topoBusGrad)" stroke-width="2" stroke-dasharray="6 4" class="ins-bus-flow-pulse"/>
+                                <circle cx="100" cy="24" r="6" fill="#FF8000" class="ins-bus-node-pulse"/>
+                                <circle cx="100" cy="24" r="10" stroke="#FF8000" stroke-width="1.5" stroke-opacity="0.4" class="ins-bus-ring-pulse"/>
+                                <text x="100" y="42" fill="#FFA033" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">L1: INGESTION</text>
+
+                                <circle cx="300" cy="24" r="6" fill="#00D2FF" class="ins-bus-node-pulse"/>
+                                <circle cx="300" cy="24" r="10" stroke="#00D2FF" stroke-width="1.5" stroke-opacity="0.4" class="ins-bus-ring-pulse"/>
+                                <text x="300" y="42" fill="#00D2FF" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">L2: GRAPH</text>
+
+                                <circle cx="500" cy="24" r="6" fill="#10B981" class="ins-bus-node-pulse"/>
+                                <circle cx="500" cy="24" r="10" stroke="#10B981" stroke-width="1.5" stroke-opacity="0.4" class="ins-bus-ring-pulse"/>
+                                <text x="500" y="42" fill="#10B981" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">L3: AGENTS</text>
+
+                                <circle cx="700" cy="24" r="6" fill="#F59E0B" class="ins-bus-node-pulse"/>
+                                <circle cx="700" cy="24" r="10" stroke="#F59E0B" stroke-width="1.5" stroke-opacity="0.4" class="ins-bus-ring-pulse"/>
+                                <text x="700" y="42" fill="#F59E0B" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">L4: CLOSED-LOOP</text>
+
+                                <circle cx="900" cy="24" r="6" fill="#06B6D4" class="ins-bus-node-pulse"/>
+                                <circle cx="900" cy="24" r="10" stroke="#06B6D4" stroke-width="1.5" stroke-opacity="0.4" class="ins-bus-ring-pulse"/>
+                                <text x="900" y="42" fill="#06B6D4" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">L5: CLOUD</text>
+                            </svg>
+                        </div>
+
                         <div class="ins-platform-topology" data-topology-title="INSILOS · Sovereign Operational AI" data-topology-tag="MODEL-DRIVEN ARCHITECTURE" data-row1-label="Ingestion &amp; IDP Streaming" data-row1-tag="100+ CONNECTORS" data-row1-icon="plugs-connected" data-row1-items="SAP ECC / S4HANA,Oracle EBS,Kafka Stream,IoT OPC-UA,Scanned PDFs &amp; Invoices,REST / GraphQL API,SFTP Batch,Edge Gateway" data-row2-label="Knowledge Graph &amp; Digital Twin" data-row2-tag="&lt; 15ms QUERY" data-row2-icon="graph" data-row2-items="Entity Resolution,W3C OWL/RDF Ontology,1.4M Enterprise Triples,Real-Time SPARQL,Temporal Versioning,Merkle DAG Lineage" data-row3-label="Autonomous Operational Agents" data-row3-tag="97.4% STP" data-row3-icon="robot" data-row3-items="HS Code Classifier,FTA/RoO Matrix,3D Bin Packing,Predictive FSM,Anomaly Detection,Auto-Remediation" data-row4-label="Closed-Loop Execution" data-row4-tag="AUDIT VERIFIED" data-row4-icon="check-circle" data-row4-items="ERP Write-Back,Cryptographic Dossier,Human Gatekeeper,Blockchain Anchor,Compliance Snapshot,Zero Drift Guard" data-row5-label="Infrastructure &amp; Cloud" data-row5-tag="MULTI-CLOUD" data-row5-icon="cloud" data-row5-items="Google Cloud,AWS,Azure,On-Premise K8s,Edge Compute">
 
                             <!-- Topbar -->
                             <div class="ins-topology-topbar">
-                                <div class="ins-topology-eyebrow">INSILOS · Sovereign Operational AI</div>
+                                <div class="ins-topology-eyebrow d-flex align-items-center gap-2">
+                                    <span>INSILOS · Sovereign Operational AI</span>
+                                    <span class="badge bg-white-10 text-cyan font-monospace small">TELEMETRY SYNCHRONIZED</span>
+                                </div>
                                 <div class="ins-topology-hint">
                                     <span class="ins-topology-dot"/>
                                     <span>Click any layer to expand</span>
@@ -336,7 +394,7 @@
                                             <svg class="ph-duotone ph-plugs-connected ph-lg"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-plugs-connected"/></svg>
                                         </div>
                                         <div class="ins-topology-row-label">Ingestion &amp; IDP Streaming</div>
-                                        <div class="ins-topology-row-tag">100+ CONNECTORS</div>
+                                        <div class="ins-topology-row-tag">100+ CONNECTORS · 12.4k pts/s</div>
                                         <svg class="ins-topology-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </div>
                                     <div class="ins-topology-row-panel">
@@ -361,7 +419,7 @@
                                             <svg class="ph-duotone ph-graph ph-lg"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-graph"/></svg>
                                         </div>
                                         <div class="ins-topology-row-label">Knowledge Graph &amp; Digital Twin</div>
-                                        <div class="ins-topology-row-tag">&lt; 15ms QUERY</div>
+                                        <div class="ins-topology-row-tag">&lt; 15ms QUERY · 1.4M TRIPLES</div>
                                         <svg class="ins-topology-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </div>
                                     <div class="ins-topology-row-panel">
@@ -384,7 +442,7 @@
                                             <svg class="ph-duotone ph-robot ph-lg"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-robot"/></svg>
                                         </div>
                                         <div class="ins-topology-row-label">Autonomous Operational Agents</div>
-                                        <div class="ins-topology-row-tag">97.4% STP</div>
+                                        <div class="ins-topology-row-tag">97.4% STP · SUB-45S SLA</div>
                                         <svg class="ins-topology-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </div>
                                     <div class="ins-topology-row-panel">
@@ -407,7 +465,7 @@
                                             <svg class="ph-duotone ph-check-circle ph-lg"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
                                         </div>
                                         <div class="ins-topology-row-label">Closed-Loop Execution</div>
-                                        <div class="ins-topology-row-tag">AUDIT VERIFIED</div>
+                                        <div class="ins-topology-row-tag">AUDIT VERIFIED · ZERO DRIFT</div>
                                         <svg class="ins-topology-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </div>
                                     <div class="ins-topology-row-panel">
@@ -430,7 +488,7 @@
                                             <svg class="ph-duotone ph-cloud ph-lg"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cloud"/></svg>
                                         </div>
                                         <div class="ins-topology-row-label">Infrastructure &amp; Cloud</div>
-                                        <div class="ins-topology-row-tag">MULTI-CLOUD</div>
+                                        <div class="ins-topology-row-tag">MULTI-CLOUD · AIR-GAPPED READY</div>
                                         <svg class="ins-topology-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </div>
                                     <div class="ins-topology-row-panel">
@@ -2154,7 +2212,7 @@
                         </div>
                         <div class="row g-4 ins-card-row-balanced">
                             <t t-foreach="solution['capabilities']" t-as="capability">
-                                <div class="col-lg-6" data-name="Capability">
+                                <div t-attf-class="col-lg-#{'7' if capability_index % 4 in [0, 3] else '5'} col-12" data-name="Capability">
                                     <div class="s_card o_colored_level o_cc o_cc5 card h-100 border rounded-4 shadow-sm p-4 ins-light-card ins-card-equal" data-vxml="001" data-snippet="s_card" data-name="Card">
                                         <div class="card-body p-0 d-flex flex-column justify-content-between h-100">
                                             <div class="flex-grow-1">
@@ -2892,6 +2950,171 @@
                     </div>
                 </section>
 
+                <!-- ============================================================= -->
+                <!-- LIVE CYPHER/SPARQL TERMINAL & OWL ONTOLOGY CONSOLE           -->
+                <!-- ============================================================= -->
+                <section id="graph-terminal-console" class="s_text_image o_colored_level o_cc o_cc5 pt80 pb80 position-relative ins-radial-glow overflow-hidden" data-snippet="s_text_image" data-name="Knowledge Graph Terminal &amp; Ontology Console" data-bs-theme="dark">
+                    <div class="ins-hero-scanlines o_not_editable"/>
+                    <div class="container position-relative">
+                        <div class="text-center mb-5 col-lg-8 mx-auto">
+                            <div class="ins-pill-badge mb-2">
+                                <span class="ins-live-ping ins-live-ping--emerald"/>
+                                <span>SPARQL &amp; CYPHER GRAPH ENGINE</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">Giao Diện Truy Vấn SPARQL/Cypher &amp;<br class="d-none d-sm-inline"/> <span class="o_text_highlight o_text_highlight_underline text-emerald position-relative">Mô Hình Tri Thức Vận Hành Sống</span></h2>
+                            <p class="lead text-secondary">
+                                Trực quan hóa đồ thị tri thức 1.4M triples, thực thi câu lệnh Cypher/SPARQL thời gian thực với độ trễ P99 &lt; 15ms và duyệt cấu trúc W3C OWL/RDF ontology.
+                            </p>
+                        </div>
+
+                        <!-- Real-Time Graph Node Metrics Bar -->
+                        <div class="ins-telemetry-strip d-flex flex-wrap align-items-center justify-content-between p-3 rounded-3 border border-secondary border-opacity-25 bg-black bg-opacity-60 mb-3 gap-2 font-monospace">
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="d-flex align-items-center gap-2 text-mint small fw-bold">
+                                    <span class="ins-live-ping ins-live-ping--emerald"/>
+                                    <span>GRAPH CLUSTER // 1,418,920 TRIPLES</span>
+                                </span>
+                                <span class="text-secondary small d-none d-md-inline">|</span>
+                                <span class="text-white-50 small d-none d-md-inline">ACTIVE NODES: <strong class="text-cyan">428,510</strong></span>
+                                <span class="text-secondary small d-none d-lg-inline">|</span>
+                                <span class="text-white-50 small d-none d-lg-inline">P99 QUERY: <strong class="text-mint">&lt; 11.4ms</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-secondary bg-opacity-25 text-mint border border-white-10 small">W3C OWL/RDF &amp; ISA-95</span>
+                                <span class="badge bg-white-10 text-cyan border border-white-10 small">BITEMPORAL SYNC</span>
+                            </div>
+                        </div>
+
+                        <!-- Dark Terminal Command Box -->
+                        <div class="ins-command-box mx-auto col-lg-11 p-0">
+                            <div class="ins-console-header d-flex flex-wrap align-items-center justify-content-between p-3 border-bottom border-secondary border-opacity-25 gap-2">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="ins-console-dots"><span/><span/><span/></div>
+                                    <div class="ins-console-tabs nav nav-pills gap-1">
+                                        <button type="button" class="ins-console-tab active" data-tab="cypher-query">CYPHER TERMINAL</button>
+                                        <button type="button" class="ins-console-tab" data-tab="sparql-query">SPARQL QUERY</button>
+                                        <button type="button" class="ins-console-tab" data-tab="owl-ontology">OWL ONTOLOGY VIEWER</button>
+                                        <button type="button" class="ins-console-tab" data-tab="domino-gnn">DOMINO IMPACT GNN</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-secondary bg-opacity-25 text-mint font-monospace small">&lt; 15ms P99 // 1.4M TRIPLES</span>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary font-monospace py-0 px-2 ins-copy-btn" title="Copy Graph Query">COPY</button>
+                                </div>
+                            </div>
+                            <div class="ins-console-body p-4 bg-black font-monospace">
+                                <!-- Pane 1: Cypher Terminal -->
+                                <div class="ins-console-pane active" data-pane="cypher-query">
+                                    <div class="text-secondary small mb-2">// Multi-Hop Supply Chain Traversal &amp; Turbine Asset Dependency</div>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="text-cyan">$</span>
+                                        <span class="text-white">insilos graph query --database=sovereign_twin_prod --timeout=50ms</span>
+                                    </div>
+                                    <div class="ins-code-block my-2">
+                                        <div class="ins-code-header">
+                                            <span class="ins-code-title">
+                                                <svg class="ph-duotone ph-terminal ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-terminal"/></svg>
+                                                <span>asset_lineage_traversal.cypher</span>
+                                            </span>
+                                            <span class="ins-code-lang">CYPHER</span>
+                                        </div>
+                                        <div class="ins-code-body">
+                                            <pre><code class="token-string"><span class="token-keyword">MATCH</span> (s:<span class="token-class">Shipment</span> {id: <span class="token-string">"SHP-2026-VN09"</span>})-[:<span class="token-property">CONTAINS</span>]-&gt;(p:<span class="token-class">Part</span>)
+<span class="token-keyword">MATCH</span> (p)-[:<span class="token-property">SUPPLIED_BY</span>]-&gt;(v:<span class="token-class">Vendor</span>)
+<span class="token-keyword">MATCH</span> (p)-[:<span class="token-property">INSTALLED_ON</span>]-&gt;(a:<span class="token-class">Asset</span> {facility: <span class="token-string">"EVN_GENCO3_TURBINE_04"</span>})
+<span class="token-keyword">RETURN</span> s.carrier, p.sku, v.tier1_rating, a.health_score, a.mtbf_hours
+<span class="token-keyword">ORDER BY</span> a.health_score <span class="token-keyword">ASC</span> <span class="token-keyword">LIMIT</span> <span class="token-number">10</span>;</code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="ins-command-output p-3 my-3">
+                                        <div class="text-mint small mb-1">✔ Traversal Completed: 42 graph relationships expanded across 5 topological hops</div>
+                                        <div class="text-slate-light small mb-1">✔ Query Execution Time: 11.42ms (Memory footprint: 1.84 MB)</div>
+                                        <div class="text-slate-light small mb-1">✔ Target Entity: EVN_GENCO3_TURBINE_04 (Health Index: 94.2%, Vibration: 2.1mm/s)</div>
+                                        <div class="text-cyan small">✔ Status: 0 Orphaned Entities · 100% Merkle Provenance Verified</div>
+                                    </div>
+                                </div>
+
+                                <!-- Pane 2: SPARQL Query -->
+                                <div class="ins-console-pane" data-pane="sparql-query">
+                                    <div class="text-secondary small mb-2">// W3C RDF Triplestore Semantic Query (SPARQL 1.1 Federated Protocol)</div>
+                                    <div class="ins-code-block my-2">
+                                        <div class="ins-code-header">
+                                            <span class="ins-code-title">
+                                                <svg class="ph-duotone ph-graph ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-graph"/></svg>
+                                                <span>ripple_risk_inference.rq</span>
+                                            </span>
+                                            <span class="ins-code-lang">SPARQL</span>
+                                        </div>
+                                        <div class="ins-code-body">
+                                            <pre><code class="token-string"><span class="token-keyword">PREFIX</span> insilos: &lt;https://ontology.insilos.com/core#&gt;
+<span class="token-keyword">PREFIX</span> rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+<span class="token-keyword">PREFIX</span> rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+<span class="token-keyword">SELECT</span> ?asset ?subcomponent ?supplier ?riskScore
+<span class="token-keyword">WHERE</span> {
+  ?asset rdf:type insilos:IndustrialTurbine ;
+         insilos:operationalStatus <span class="token-string">"ONLINE"</span> ;
+         insilos:hasComponent ?subcomponent .
+  ?subcomponent insilos:sourcedFrom ?supplier .
+  ?supplier insilos:geoVulnerabilityIndex ?riskScore .
+  <span class="token-keyword">FILTER</span> (?riskScore &gt; <span class="token-number">0.75</span>)
+}
+<span class="token-keyword">ORDER BY</span> <span class="token-keyword">DESC</span>(?riskScore)</code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="text-mint small">✔ SPARQL reasoner returned 3 vulnerable component chains in 9.8ms.</div>
+                                </div>
+
+                                <!-- Pane 3: OWL Ontology Viewer -->
+                                <div class="ins-console-pane" data-pane="owl-ontology">
+                                    <div class="text-secondary small mb-2">// Sovereign Industrial Digital Twin Ontology (W3C OWL 2 DL / ISA-95 Turtle)</div>
+                                    <div class="ins-code-block my-2">
+                                        <div class="ins-code-header">
+                                            <span class="ins-code-title">
+                                                <svg class="ph-duotone ph-tree-structure ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-tree-structure"/></svg>
+                                                <span>insilos_ontology_v2026.ttl</span>
+                                            </span>
+                                            <span class="ins-code-lang">TURTLE</span>
+                                        </div>
+                                        <div class="ins-code-body">
+                                            <pre><code class="token-string">@prefix : &lt;https://ontology.insilos.com/industrial#&gt; .
+@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+
+:IndustrialAsset a owl:Class ;
+    rdfs:label <span class="token-string">"Tài sản công nghiệp vật lý"</span>@vi ;
+    rdfs:subClassOf :PhysicalEntity .
+
+:hasVibrationTelemetry a owl:DatatypeProperty ;
+    rdfs:domain :IndustrialAsset ;
+    rdfs:range xsd:decimal ;
+    :isoStandard <span class="token-string">"ISO 10816-3 Class III"</span> .
+
+:MerkleCryptographicDossier a owl:Class ;
+    rdfs:label <span class="token-string">"Hồ sơ mật mã bất biến"</span>@vi ;
+    owl:equivalentClass [ a owl:Restriction ; owl:onProperty :hasSha256Digest ; owl:cardinality 1 ] .</code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="text-cyan small mt-2">✔ Validated against OWL 2 Direct Semantics reasoner: 0 inconsistent axioms.</div>
+                                </div>
+
+                                <!-- Pane 4: Domino GNN -->
+                                <div class="ins-console-pane" data-pane="domino-gnn">
+                                    <div class="text-secondary small mb-2">// Graph Neural Network (GNN) Ripple Impact Predictor · PyTorch Geometric Engine</div>
+                                    <div class="p-3 rounded mb-3 border border-warning border-opacity-25 bg-warning bg-opacity-10">
+                                        <div class="text-warning small fw-bold mb-1">CASCADING FAILURE PREDICTION (SIMULATION ID: GNN-SIM-0x88)</div>
+                                        <div class="text-slate-light small">Root Trigger: Congestion at Cái Mép Port (+48h Vessel Dwell)</div>
+                                        <div class="text-slate-light small">1st Degree Hop: Steel Plate PO #VN-PO2026-001 delayed by 36h (Confidence: 94.2%)</div>
+                                        <div class="text-slate-light small">2nd Degree Hop: Assembly Station #04 Work-in-Progress idle risk: 68.4%</div>
+                                        <div class="text-mint small mt-2">✔ Automated AI Recommendation: Re-route 25T coil from backup warehouse Đình Vũ (Saves 42h · Zero line downtime).</div>
+                                    </div>
+                                    <div class="text-secondary small">// Graph inferencing latency: 14.2ms · Evaluated on 12-layer Graph Convolutional Network.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- 3.5. TREASURY LIQUIDITY & FX GRAPH REASONING — s_text_image chuẩn -->
                 <section class="s_text_image pt96 pb96 o_colored_level o_cc o_cc5 bg-dark" data-snippet="s_text_image" data-name="Treasury Graph Showcase">
                     <div class="container">
@@ -3520,8 +3743,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Bento Row 2 Left: Reconciliation (col-lg-6) -->
-                            <div class="col-lg-6" data-name="Capability">
+                            <!-- Bento Row 2 Left: Reconciliation (col-lg-5) -->
+                            <div class="col-lg-5" data-name="Capability">
                                 <div class="s_card o_colored_level o_cc o_cc5 card h-100 border rounded-4 shadow-sm p-4 ins-light-card ins-card-equal" data-vxml="001" data-snippet="s_card" data-name="Card">
                                     <div class="card-body p-0 d-flex flex-column justify-content-between h-100">
                                         <div class="flex-grow-1">
@@ -3549,8 +3772,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Bento Row 2 Right: Audit Lineage (col-lg-6) -->
-                            <div class="col-lg-6" data-name="Capability">
+                            <!-- Bento Row 2 Right: Audit Lineage (col-lg-7) -->
+                            <div class="col-lg-7" data-name="Capability">
                                 <div class="s_card o_colored_level o_cc o_cc5 card h-100 border rounded-4 shadow-sm p-4 ins-light-card ins-card-equal" data-vxml="001" data-snippet="s_card" data-name="Card">
                                     <div class="card-body p-0 d-flex flex-column justify-content-between h-100">
                                         <div class="flex-grow-1">
@@ -3575,6 +3798,212 @@
                                                 <span>Sẵn sàng 100% hồ sơ cho kiểm tra sau thông quan (Post-Clearance Audit).</span>
                                             </li>
                                         </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- LIVE OCR/IDP TELEMETRY CONSOLE & MERKLE LINEAGE               -->
+                <!-- ============================================================= -->
+                <section id="idp-telemetry-console" class="s_text_image o_colored_level o_cc o_cc5 pt80 pb80 position-relative ins-radial-glow overflow-hidden" data-snippet="s_text_image" data-name="Live OCR/IDP Telemetry Console" data-bs-theme="dark">
+                    <div class="ins-hero-scanlines o_not_editable"/>
+                    <div class="container position-relative">
+                        <div class="text-center mb-5 col-lg-8 mx-auto">
+                            <div class="ins-pill-badge mb-2">
+                                <span class="ins-live-ping"/>
+                                <span>DOCUMENT INTELLIGENCE TELEMETRY</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">Bảng Điều Khiển Telemetry IDP &amp;<br class="d-none d-sm-inline"/> <span class="o_text_highlight o_text_highlight_underline text-cyan position-relative">Đối Soát Chứng Từ Thời Gian Thực</span></h2>
+                            <p class="lead text-secondary">
+                                Giám sát trực tiếp luồng trích xuất dữ liệu, định vị bounding box, đối chiếu chéo 3 chiều B/L vs Hóa đơn và xác thực chữ ký số Merkle DAG theo chuẩn WCO SAFE.
+                            </p>
+                        </div>
+
+                        <!-- Telemetry Flow Status Strip -->
+                        <div class="ins-telemetry-strip d-flex flex-wrap align-items-center justify-content-between p-3 rounded-3 border border-secondary border-opacity-25 bg-black bg-opacity-60 mb-3 gap-2 font-monospace">
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="d-flex align-items-center gap-2 text-mint small fw-bold">
+                                    <span class="ins-live-ping ins-live-ping--emerald"/>
+                                    <span>STREAMING OCR // 1,420 DOCS/HR</span>
+                                </span>
+                                <span class="text-secondary small d-none d-md-inline">|</span>
+                                <span class="text-white-50 small d-none d-md-inline">STP LATENCY: <strong class="text-cyan">0.382s</strong></span>
+                                <span class="text-secondary small d-none d-lg-inline">|</span>
+                                <span class="text-white-50 small d-none d-lg-inline">FIELD CONFIDENCE: <strong class="text-mint">99.84%</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-secondary bg-opacity-25 text-cyan border border-white-10 small">WCO SAFE READY</span>
+                                <span class="badge bg-white-10 text-white border border-white-10 small">MERKLE ROOT VERIFIED</span>
+                            </div>
+                        </div>
+
+                        <!-- Animated SVG Data-Flow Path -->
+                        <div class="ins-cockpit-bus-wrap mb-4 d-none d-md-block overflow-hidden rounded-3 border border-secondary border-opacity-25 bg-black bg-opacity-40 p-2">
+                            <svg class="w-100 ins-cockpit-bus-svg" viewBox="0 0 1000 48" preserveAspectRatio="none" fill="none">
+                                <defs>
+                                    <linearGradient id="idpBusGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#00D2FF" stop-opacity="0.8"/>
+                                        <stop offset="33%" stop-color="#10B981" stop-opacity="0.8"/>
+                                        <stop offset="66%" stop-color="#FF8000" stop-opacity="0.8"/>
+                                        <stop offset="100%" stop-color="#00D2FF" stop-opacity="0.8"/>
+                                    </linearGradient>
+                                </defs>
+                                <line x1="50" y1="24" x2="950" y2="24" stroke="url(#idpBusGrad)" stroke-width="2" stroke-dasharray="6 4" class="ins-bus-flow-pulse"/>
+                                <circle cx="120" cy="24" r="6" fill="#00D2FF" class="ins-bus-node-pulse"/>
+                                <circle cx="120" cy="24" r="10" stroke="#00D2FF" stroke-width="1.5" stroke-opacity="0.4" class="ins-bus-ring-pulse"/>
+                                <text x="120" y="42" fill="#00D2FF" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">1. INGESTION (PDF/EDI)</text>
+
+                                <circle cx="370" cy="24" r="6" fill="#10B981" class="ins-bus-node-pulse"/>
+                                <circle cx="370" cy="24" r="10" stroke="#10B981" stroke-width="1.5" stroke-opacity="0.4" class="ins-bus-ring-pulse"/>
+                                <text x="370" y="42" fill="#10B981" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">2. DUAL OCR &amp; VISION</text>
+
+                                <circle cx="630" cy="24" r="6" fill="#FF8000" class="ins-bus-node-pulse"/>
+                                <circle cx="630" cy="24" r="10" stroke="#FF8000" stroke-width="1.5" stroke-opacity="0.4" class="ins-bus-ring-pulse"/>
+                                <text x="630" y="42" fill="#FFA033" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">3. 3-WAY MATCHING</text>
+
+                                <circle cx="880" cy="24" r="6" fill="#00D2FF" class="ins-bus-node-pulse"/>
+                                <circle cx="880" cy="24" r="10" stroke="#00D2FF" stroke-width="1.5" stroke-opacity="0.4" class="ins-bus-ring-pulse"/>
+                                <text x="880" y="42" fill="#00D2FF" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">4. ERP WRITE-BACK</text>
+                            </svg>
+                        </div>
+
+                        <!-- Dark Terminal Command Box -->
+                        <div class="ins-command-box mx-auto col-lg-11 p-0">
+                            <div class="ins-console-header d-flex flex-wrap align-items-center justify-content-between p-3 border-bottom border-secondary border-opacity-25 gap-2">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="ins-console-dots"><span/><span/><span/></div>
+                                    <div class="ins-console-tabs nav nav-pills gap-1">
+                                        <button type="button" class="ins-console-tab active" data-tab="ocr-stream">STREAMING OCR</button>
+                                        <button type="button" class="ins-console-tab" data-tab="3way-match">3-WAY MATCHING</button>
+                                        <button type="button" class="ins-console-tab" data-tab="merkle-dag">MERKLE DAG PROOF</button>
+                                        <button type="button" class="ins-console-tab" data-tab="wco-safe">WCO SAFE AUDIT</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-secondary bg-opacity-25 text-mint font-monospace small">STP 0.382s // 99.84%</span>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary font-monospace py-0 px-2 ins-copy-btn" title="Copy Telemetry Output">COPY</button>
+                                </div>
+                            </div>
+                            <div class="ins-console-body p-4 bg-black font-monospace">
+                                <!-- Pane 1: Streaming OCR -->
+                                <div class="ins-console-pane active" data-pane="ocr-stream">
+                                    <div class="text-secondary small mb-2">// Inbound Document: BILL_OF_LADING_VN9021.PDF (Multi-Page Maritime Stream)</div>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="text-cyan">$</span>
+                                        <span class="text-white">insilos idp process --stream=kafka://maritime.docs.inbound --model=dual-vision-v4</span>
+                                    </div>
+                                    <div class="ins-command-output p-3 my-3">
+                                        <div class="text-mint small mb-1">✔ Ingestion Status: 2,410 KB stream buffered in 18ms (Deskew: +1.4° corrected)</div>
+                                        <div class="text-slate-light small mb-1">✔ Bounding Box [x:142, y:280, w:420, h:38] ➔ B/L Number: "VN-BL-2026-098" (Confidence: 0.9992)</div>
+                                        <div class="text-slate-light small mb-1">✔ Bounding Box [x:142, y:340, w:310, h:24] ➔ Container ID: "TCKU-982145-0" (ISO 6346 Checksum: PASS)</div>
+                                        <div class="text-slate-light small mb-1">✔ Bounding Box [x:620, y:480, w:180, h:24] ➔ Gross Weight: "24,500.00 KG" (Net: 22,150.00 KG)</div>
+                                        <div class="text-slate-light small mb-1">✔ Bounding Box [x:620, y:520, w:240, h:24] ➔ Vessel / Voyage: "CMA CGM MARCO POLO / 092E"</div>
+                                        <div class="text-cyan small">✔ Dual-Engine Verification: Optical OCR ⨁ Vision LLM consensus reached in 0.382s</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center text-secondary small pt-2 border-top border-secondary border-opacity-25">
+                                        <span>Parser Node: idp-worker-sgp-02</span>
+                                        <span>Cryptographic Nonce: 0x7E1A...F49B</span>
+                                    </div>
+                                </div>
+
+                                <!-- Pane 2: 3-Way Match -->
+                                <div class="ins-console-pane" data-pane="3way-match">
+                                    <div class="text-secondary small mb-2">// Autonomous 3-Way Cross Check: B/L ↔ Commercial Invoice ↔ Packing List</div>
+                                    <div class="table-responsive my-3">
+                                        <table class="table table-dark table-sm table-bordered border-secondary border-opacity-25 small mb-0 font-monospace">
+                                            <thead>
+                                                <tr class="text-secondary">
+                                                    <th>Attribute</th>
+                                                    <th>Bill of Lading (#VN-BL-098)</th>
+                                                    <th>Invoice (#INV-2026-8801)</th>
+                                                    <th>Packing List (#PL-9021)</th>
+                                                    <th>Variance</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-white">Container ID</td>
+                                                    <td class="text-cyan">TCKU-982145-0</td>
+                                                    <td class="text-cyan">TCKU-982145-0</td>
+                                                    <td class="text-cyan">TCKU-982145-0</td>
+                                                    <td class="text-mint">0</td>
+                                                    <td><span class="badge bg-success bg-opacity-25 text-mint">MATCH</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-white">Total Packages</td>
+                                                    <td class="text-cyan">1,200 CTNS</td>
+                                                    <td class="text-cyan">1,200 CTNS</td>
+                                                    <td class="text-cyan">1,200 CTNS</td>
+                                                    <td class="text-mint">0</td>
+                                                    <td><span class="badge bg-success bg-opacity-25 text-mint">MATCH</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-white">Gross Weight</td>
+                                                    <td class="text-cyan">24,500.00 KG</td>
+                                                    <td class="text-cyan">24,500.00 KG</td>
+                                                    <td class="text-cyan">24,500.00 KG</td>
+                                                    <td class="text-mint">0.00 KG</td>
+                                                    <td><span class="badge bg-success bg-opacity-25 text-mint">MATCH</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-white">Invoice Value</td>
+                                                    <td class="text-secondary">N/A (Ocean)</td>
+                                                    <td class="text-cyan">$184,500.00 USD</td>
+                                                    <td class="text-secondary">Declared Values</td>
+                                                    <td class="text-mint">$0.00</td>
+                                                    <td><span class="badge bg-success bg-opacity-25 text-mint">MATCH</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-mint small">✔ 3-Way Reconciliation passed with 0 Variance. Ready for VNACCS e-manifest submission.</div>
+                                </div>
+
+                                <!-- Pane 3: Merkle DAG Lineage -->
+                                <div class="ins-console-pane" data-pane="merkle-dag">
+                                    <div class="text-secondary small mb-2">// Immutable Governance Audit Trail · W3C Verifiable Credential Schema</div>
+                                    <div class="p-3 rounded mb-3 border border-success border-opacity-25 bg-success bg-opacity-10">
+                                        <div class="text-mint small fw-bold mb-1">MERKLE ROOT HASH: 0x4f8b2c91de3a0b81f28e67a992c4d156b820f12c8e390ab12f0a1c9472e3a098</div>
+                                        <div class="text-slate-light small">Block Height: #2,491,802 · Consensus: Dual HSM Witness (Raft Zero-Knowledge)</div>
+                                        <div class="text-slate-light small">Document Digest: sha256("BILL_OF_LADING_VN9021.PDF") = 0x9e8a71...4412</div>
+                                        <div class="text-cyan small mt-1">Signer Certificate: CN=Insilos Sovereign Root CA, O=Insilos JSC, C=VN</div>
+                                    </div>
+                                    <div class="text-secondary small">// Cryptographic audit proof permanently anchored to prevent post-clearance disputes.</div>
+                                </div>
+
+                                <!-- Pane 4: WCO SAFE Audit -->
+                                <div class="ins-console-pane" data-pane="wco-safe">
+                                    <div class="text-secondary small mb-2">// Regulatory Compliance Envelope: WCO SAFE Framework &amp; Circular 78</div>
+                                    <div class="ins-code-block my-2">
+                                        <div class="ins-code-header">
+                                            <span class="ins-code-title">
+                                                <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                                <span>wco_safe_manifest_0x9021.json</span>
+                                            </span>
+                                            <span class="ins-code-lang">JSON</span>
+                                        </div>
+                                        <div class="ins-code-body">
+                                            <pre><code class="token-string">{
+  <span class="token-property">"customs_framework"</span>: <span class="token-string">"WCO_SAFE_PILLAR_2"</span>,
+  <span class="token-property">"electronic_manifest_id"</span>: <span class="token-string">"VNACCS_EDI_2026_0982"</span>,
+  <span class="token-property">"security_status"</span>: <span class="token-keyword">"GREEN_CHANNEL_AUTO_CLEARED"</span>,
+  <span class="token-property">"circular_78_einvoice"</span>: {
+    <span class="token-property">"tax_code"</span>: <span class="token-string">"0109827364"</span>,
+    <span class="token-property">"invoice_symbol"</span>: <span class="token-string">"1C26TBB"</span>,
+    <span class="token-property">"invoice_number"</span>: <span class="token-string">"00004582"</span>,
+    <span class="token-property">"cqt_auth_code"</span>: <span class="token-string">"TCT-0x789A...VALID"</span>
+  },
+  <span class="token-property">"vas_200_mapping"</span>: {
+    <span class="token-property">"dr_account"</span>: <span class="token-string">"1561"</span>,
+    <span class="token-property">"cr_account"</span>: <span class="token-string">"331"</span>,
+    <span class="token-property">"matched_entry"</span>: <span class="token-keyword">true</span>
+  }
+}</code></pre>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -4226,6 +4655,176 @@
                                             </li>
                                         </ul>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- CUSTOMS COMPLIANCE & REGULATORY DOSSIER CONSOLE (TT78/VAS200) -->
+                <!-- ============================================================= -->
+                <section id="trade-compliance-dossier-console" class="s_text_image o_colored_level o_cc o_cc5 pt80 pb80 position-relative ins-radial-glow overflow-hidden" data-snippet="s_text_image" data-name="Customs Compliance &amp; Regulatory Dossier Console" data-bs-theme="dark">
+                    <div class="ins-hero-scanlines o_not_editable"/>
+                    <div class="container position-relative">
+                        <div class="text-center mb-5 col-lg-8 mx-auto">
+                            <div class="ins-pill-badge mb-2">
+                                <span class="ins-live-ping"/>
+                                <span>CUSTOMS REGULATORY ENGINE // CIRCULAR 78 &amp; VAS 200</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">Hồ Sơ Tuân Thủ Pháp Lý &amp;<br class="d-none d-sm-inline"/> <span class="o_text_highlight o_text_highlight_underline text-cyan position-relative">Kiểm Toán Mật Mã Bất Biến</span></h2>
+                            <p class="lead text-secondary">
+                                Bảo chứng 100% căn cứ giải trình phân loại mã HS 8 số, đối chiếu chuẩn mực Thông tư 78/2021, hạch toán VAS 200 và đóng dấu niêm phong số SHA-256 phục vụ thanh tra sau thông quan.
+                            </p>
+                        </div>
+
+                        <!-- Regulatory Compliance Status Strip -->
+                        <div class="ins-telemetry-strip d-flex flex-wrap align-items-center justify-content-between p-3 rounded-3 border border-secondary border-opacity-25 bg-black bg-opacity-60 mb-3 gap-2 font-monospace">
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="d-flex align-items-center gap-2 text-mint small fw-bold">
+                                    <span class="ins-live-ping ins-live-ping--emerald"/>
+                                    <span>REGULATORY ENGINE // TT 78 &amp; VAS 200</span>
+                                </span>
+                                <span class="text-secondary small d-none d-md-inline">|</span>
+                                <span class="text-white-50 small d-none d-md-inline">HS CLASSIFICATION: <strong class="text-cyan">8-DIGIT AUDIT (99.8%)</strong></span>
+                                <span class="text-secondary small d-none d-lg-inline">|</span>
+                                <span class="text-white-50 small d-none d-lg-inline">PCA READINESS: <strong class="text-mint">100% VERIFIED</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-secondary bg-opacity-25 text-cyan border border-white-10 small">WCO SAFE GRI 1-6</span>
+                                <span class="badge bg-white-10 text-white border border-white-10 small">SHA-256 SEALED</span>
+                            </div>
+                        </div>
+
+                        <!-- Dark Terminal Command Box -->
+                        <div class="ins-command-box mx-auto col-lg-11 p-0">
+                            <div class="ins-console-header d-flex flex-wrap align-items-center justify-content-between p-3 border-bottom border-secondary border-opacity-25 gap-2">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="ins-console-dots"><span/><span/><span/></div>
+                                    <div class="ins-console-tabs nav nav-pills gap-1">
+                                        <button type="button" class="ins-console-tab active" data-tab="hs-code-audit">HS-8 AUDIT TRAIL</button>
+                                        <button type="button" class="ins-console-tab" data-tab="circular-78">CIRCULAR 78 E-INVOICE</button>
+                                        <button type="button" class="ins-console-tab" data-tab="vas-200">VAS 200 ACCOUNTING</button>
+                                        <button type="button" class="ins-console-tab" data-tab="crypto-seal">SHA-256 SEAL &amp; DAG</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-secondary bg-opacity-25 text-mint font-monospace small">WCO SAFE PILLAR 2</span>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary font-monospace py-0 px-2 ins-copy-btn" title="Copy Compliance Dossier">COPY</button>
+                                </div>
+                            </div>
+                            <div class="ins-console-body p-4 bg-black font-monospace">
+                                <!-- Pane 1: HS-8 Audit Trail -->
+                                <div class="ins-console-pane active" data-pane="hs-code-audit">
+                                    <div class="text-secondary small mb-2">// Automated WCO 8-Digit HS Code Determination &amp; Legal Justification</div>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="text-cyan">$</span>
+                                        <span class="text-white">insilos compliance classify --item="Thép cuộn cán nóng hợp kim SS400" --origin="JP"</span>
+                                    </div>
+                                    <div class="ins-command-output p-3 my-3">
+                                        <div class="text-mint small mb-1">✔ Assigned 8-Digit HS Code: 7208.38.00 (Thép không hợp kim cán phẳng dạng cuộn, chiều dày &gt;= 3mm)</div>
+                                        <div class="text-slate-light small mb-1">✔ Legal Reasoning: WCO GRI Rule 1 (Heading 7208) &amp; GRI Rule 6 (Subheading 7208.38)</div>
+                                        <div class="text-slate-light small mb-1">✔ Customs Explanatory Notes: Section XV Note 1(f) - Carbon content &lt; 0.25%, Width &gt; 600mm</div>
+                                        <div class="text-slate-light small mb-1">✔ Applicable Tariffs: MFN: 0.00% · VJEPA: 0.00% · CPTPP: 0.00% · VAT: 10.00%</div>
+                                        <div class="text-cyan small">✔ Classification Confidence Score: 99.84% (Precedent Ruling: HQ-VN-2025-0814)</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center text-secondary small pt-2 border-top border-secondary border-opacity-25">
+                                        <span>Tariff Schedule: Vietnam Master Tariff 2026.3</span>
+                                        <span>Statutory Authority: Circular 31/2022/TT-BTC</span>
+                                    </div>
+                                </div>
+
+                                <!-- Pane 2: Circular 78 E-Invoice -->
+                                <div class="ins-console-pane" data-pane="circular-78">
+                                    <div class="text-secondary small mb-2">// Circular 78/2021/TT-BTC &amp; Decree 123/2020/ND-CP Canonicalization</div>
+                                    <div class="ins-code-block my-2">
+                                        <div class="ins-code-header">
+                                            <span class="ins-code-title">
+                                                <svg class="ph-duotone ph-file-code ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-code"/></svg>
+                                                <span>einvoice_tt78_verified.xml</span>
+                                            </span>
+                                            <span class="ins-code-lang">XML</span>
+                                        </div>
+                                        <div class="ins-code-body">
+                                            <pre><code class="token-string">&lt;<span class="token-keyword">HDon</span>&gt;
+  &lt;<span class="token-property">TTChung</span>&gt;
+    &lt;<span class="token-property">PBan</span>&gt;2.0.0&lt;/<span class="token-property">PBan</span>&gt;
+    &lt;<span class="token-property">THDon</span>&gt;HÓA ĐƠN GIÁ TRỊ GIA TĂNG (THÔNG TƯ 78)&lt;/<span class="token-property">THDon</span>&gt;
+    &lt;<span class="token-property">KHMSHDon</span>&gt;1&lt;/<span class="token-property">KHMSHDon</span>&gt;
+    &lt;<span class="token-property">KHHDon</span>&gt;C26TBB&lt;/<span class="token-property">KHHDon</span>&gt;
+    &lt;<span class="token-property">SHDon</span>&gt;00004582&lt;/<span class="token-property">SHDon</span>&gt;
+    &lt;<span class="token-property">NLap</span>&gt;2026-09-27&lt;/<span class="token-property">NLap</span>&gt;
+    &lt;<span class="token-property">MCQT</span>&gt;00F972A8B01C26TBB00004582&lt;/<span class="token-property">MCQT</span>&gt;
+  &lt;/<span class="token-property">TTChung</span>&gt;
+  &lt;<span class="token-property">DSCKS</span>&gt;
+    &lt;<span class="token-property">SignatureStatus</span>&gt;<span class="token-keyword">VALID_AUTHENTICATED</span>&lt;/<span class="token-property">SignatureStatus</span>&gt;
+    &lt;<span class="token-property">TimestampAuthority</span>&gt;VNPT-CA / TSA-2026&lt;/<span class="token-property">TimestampAuthority</span>&gt;
+  &lt;/<span class="token-property">DSCKS</span>&gt;
+&lt;/<span class="token-keyword">HDon</span>&gt;</code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="text-mint small">✔ Tax Authority Code (Mã CQT) verified against General Department of Taxation Portal.</div>
+                                </div>
+
+                                <!-- Pane 3: VAS 200 Accounting -->
+                                <div class="ins-console-pane" data-pane="vas-200">
+                                    <div class="text-secondary small mb-2">// Vietnamese Accounting Standard VAS 200/2014 Multi-Leg Journal Ledger</div>
+                                    <div class="table-responsive my-3">
+                                        <table class="table table-dark table-sm table-bordered border-secondary border-opacity-25 small mb-0 font-monospace">
+                                            <thead>
+                                                <tr class="text-secondary">
+                                                    <th>Account Code</th>
+                                                    <th>Account Name (VAS 200)</th>
+                                                    <th>Debit (VNĐ)</th>
+                                                    <th>Credit (VNĐ)</th>
+                                                    <th>Customs Reference</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-cyan">TK 1561</td>
+                                                    <td class="text-white">Giá mua hàng hóa nhập khẩu (SS400)</td>
+                                                    <td class="text-mint">537,500,000</td>
+                                                    <td class="text-secondary">0</td>
+                                                    <td class="text-secondary">PO #VN-PO2026-001</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-cyan">TK 1331</td>
+                                                    <td class="text-white">Thuế GTGT hàng nhập khẩu khấu trừ (10%)</td>
+                                                    <td class="text-mint">53,750,000</td>
+                                                    <td class="text-secondary">0</td>
+                                                    <td class="text-secondary">Tờ khai HQ #104928</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-cyan">TK 331</td>
+                                                    <td class="text-white">Phải trả nhà cung cấp nước ngoài (JFE Steel)</td>
+                                                    <td class="text-secondary">0</td>
+                                                    <td class="text-mint">537,500,000</td>
+                                                    <td class="text-secondary">Invoice #INV-2026-8801</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-cyan">TK 3333</td>
+                                                    <td class="text-white">Thuế xuất nhập khẩu phải nộp ngân sách</td>
+                                                    <td class="text-secondary">0</td>
+                                                    <td class="text-mint">0 (Ưu đãi 0%)</td>
+                                                    <td class="text-secondary">C/O Form VJEPA</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-mint small">✔ Balanced Ledger: Total Debit = 591,250,000 VNĐ == Total Credit (0 Discrepancy).</div>
+                                </div>
+
+                                <!-- Pane 4: SHA-256 Seal & DAG -->
+                                <div class="ins-console-pane" data-pane="crypto-seal">
+                                    <div class="text-secondary small mb-2">// Immutable Post-Clearance Audit Dossier Seal · SHA-256 Digest Tree</div>
+                                    <div class="p-3 rounded mb-3 border border-success border-opacity-25 bg-success bg-opacity-10">
+                                        <div class="text-mint small fw-bold mb-1">DOSSIER SHA-256 SEAL: 0x9c3f1b4e8a7d26e951fa0b4c810d29e347b592f6c018a4d7e92381f7c20a4b91</div>
+                                        <div class="text-slate-light small">Hardware Security Module: Thales Luna HSM PCIe (FIPS 140-2 Level 3 Validated)</div>
+                                        <div class="text-slate-light small">Document Bundle: 1x B/L, 1x Invoice, 1x Packing List, 1x C/O Form VJEPA, 1x VNACCS E-Declaration</div>
+                                        <div class="text-cyan small mt-1">Verification URL: https://dossier.insilos.com/verify/0x9c3f1b4e... (Tamper-Proof)</div>
+                                    </div>
+                                    <div class="text-secondary small">// 100% compliant with Post-Clearance Audit (PCA) statutory retention period of 5 years.</div>
                                 </div>
                             </div>
                         </div>
@@ -4957,6 +5556,175 @@
                                                 <span>Nâng cao độ chính xác của các mô hình dự báo tương lai lên 99.4%.</span>
                                             </li>
                                         </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3.4. INDUSTRIAL SUBSTATION TELEMETRY & DISPATCH CONSOLE -->
+                <section id="fsm-telemetry-console" class="s_text_image o_colored_level o_cc o_cc5 pt80 pb80 position-relative ins-radial-glow overflow-hidden" data-snippet="s_text_image" data-name="Substation Telemetry &amp; Dispatch Console" data-bs-theme="dark">
+                    <div class="ins-hero-scanlines o_not_editable"/>
+                    <div class="container position-relative">
+                        <div class="text-center mb-5 col-lg-8 mx-auto">
+                            <div class="ins-pill-badge mb-2">
+                                <span class="ins-live-ping"/>
+                                <span>IEC 61850 SUBSTATION TELEMETRY &amp; PREDICTIVE FSM</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">Giám Sát Telemetry Trạm Điện &amp;<br class="d-none d-sm-inline"/> <span class="o_text_highlight o_text_highlight_underline text-cyan position-relative">Điều Phối Thiết Bị Hiện Trường</span></h2>
+                            <p class="lead text-secondary">
+                                Thu nạp dữ liệu SCADA thời gian thực theo chuẩn IEC 61850-8-1, chẩn đoán phổ rung động ISO 10816-3 và tự động phát lệnh điều phối kỹ thuật viên với SLA dưới 45 giây.
+                            </p>
+                        </div>
+
+                        <!-- Substation Telemetry Status Strip -->
+                        <div class="ins-telemetry-strip d-flex flex-wrap align-items-center justify-content-between p-3 rounded-3 border border-secondary border-opacity-25 bg-black bg-opacity-60 mb-3 gap-2 font-monospace">
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="d-flex align-items-center gap-2 text-mint small fw-bold">
+                                    <span class="ins-live-ping ins-live-ping--emerald"/>
+                                    <span>SUBSTATION BUS // BAY CONTROLLER BCU-T1</span>
+                                </span>
+                                <span class="text-secondary small d-none d-md-inline">|</span>
+                                <span class="text-white-50 small d-none d-md-inline">SAMPLING: <strong class="text-cyan">50.02 Hz (12.4k pts/s)</strong></span>
+                                <span class="text-secondary small d-none d-lg-inline">|</span>
+                                <span class="text-white-50 small d-none d-lg-inline">VIBRATION RMS: <strong class="text-mint">2.84 mm/s (ZONE B)</strong></span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-secondary bg-opacity-25 text-mint border border-white-10 small">FTFR: 94.8%</span>
+                                <span class="badge bg-white-10 text-white border border-white-10 small">DISPATCH SLA: &lt; 45S</span>
+                            </div>
+                        </div>
+
+                        <!-- Dark Terminal Command Box -->
+                        <div class="ins-command-box mx-auto col-lg-11 p-0">
+                            <div class="ins-console-header d-flex flex-wrap align-items-center justify-content-between p-3 border-bottom border-secondary border-opacity-25 gap-2">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="ins-console-dots"><span/><span/><span/></div>
+                                    <div class="ins-console-tabs nav nav-pills gap-1">
+                                        <button type="button" class="ins-console-tab active" data-tab="iec61850-stream">IEC 61850 GOOSE/MMS</button>
+                                        <button type="button" class="ins-console-tab" data-tab="iso10816-fft">ISO 10816-3 FFT SPECTRUM</button>
+                                        <button type="button" class="ins-console-tab" data-tab="fsm-dispatch">DYNAMIC DISPATCH &amp; ROUTING</button>
+                                        <button type="button" class="ins-console-tab" data-tab="cmms-writeback">CMMS CLOSED-LOOP WRITEBACK</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-secondary bg-opacity-25 text-mint font-monospace small">SUBSTATION T1 ACTIVE</span>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary font-monospace py-0 px-2 ins-copy-btn" title="Copy Telemetry Stream">COPY</button>
+                                </div>
+                            </div>
+                            <div class="ins-console-body p-4 bg-black font-monospace">
+                                <!-- Pane 1: IEC 61850 Stream -->
+                                <div class="ins-console-pane active" data-pane="iec61850-stream">
+                                    <div class="text-secondary small mb-2">// IEC 61850-8-1 GOOSE / MMS Substation Telemetry Stream (PTP IEEE 1588 Sync)</div>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="text-cyan">$</span>
+                                        <span class="text-white">insilos fsm telemetry stream --ied="BCU_TRANSFORMER_T1" --dataset="T1_MEAS/LLN0$GO$gcb01" --freq=50.02Hz</span>
+                                    </div>
+                                    <div class="ins-command-output p-3 my-3">
+                                        <div class="text-mint small mb-1">✔ Substation Bay Controller: BCU_TRANSFORMER_T1 [110kV/22kV - 40MVA]</div>
+                                        <div class="text-slate-light small mb-1">✔ PTP IEEE 1588 Clock Quality: Class 6 (Grandmaster GPS Locked, Jitter: 0.84 µs)</div>
+                                        <div class="text-slate-light small mb-1">✔ Phase Voltages: Va=63.51 kV (0°), Vb=63.48 kV (-120.1°), Vc=63.53 kV (119.9°)</div>
+                                        <div class="text-slate-light small mb-1">✔ Phase Currents: Ia=342.1 A, Ib=340.8 A, Ic=341.9 A (Unbalance: 0.38%)</div>
+                                        <div class="text-slate-light small mb-1">✔ Active Power (P): 32.48 MW · Reactive Power (Q): 4.12 MVAR · Cos(φ): 0.992</div>
+                                        <div class="text-cyan small">✔ DGA Real-Time Oil Telemetry: Top Oil Temp: 58.4°C · H2: 18 ppm · C2H2: 0.2 ppm (NORMAL)</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center text-secondary small pt-2 border-top border-secondary border-opacity-25">
+                                        <span>Protocol: IEC 61850-8-1 MMS/GOOSE &amp; Modbus TCP</span>
+                                        <span>Frame Latency: 1.84 ms</span>
+                                    </div>
+                                </div>
+
+                                <!-- Pane 2: ISO 10816-3 FFT Spectrum -->
+                                <div class="ins-console-pane" data-pane="iso10816-fft">
+                                    <div class="text-secondary small mb-2">// ISO 10816-3 Mechanical Vibration FFT Spectral Analysis &amp; Bearing RUL</div>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="text-cyan">$</span>
+                                        <span class="text-white">insilos fsm vibration analyze --asset="TURBO_COMPRESSOR_C04" --sensor="ACCEL_DE_AXIAL" --window=hanning</span>
+                                    </div>
+                                    <div class="ins-command-output p-3 my-3">
+                                        <div class="text-warning small mb-1">▲ Vibration Velocity RMS: 2.84 mm/s [ISO 10816-3 Class III: Zone B (Permissible)]</div>
+                                        <div class="text-slate-light small mb-1">✔ Fundamental Harmonic 1X (24.8 Hz): 0.82 mm/s (Rotor unbalance minimal)</div>
+                                        <div class="text-slate-light small mb-1">✔ Harmonic 2X (49.6 Hz): 1.14 mm/s (Coupling angular misalignment nominal)</div>
+                                        <div class="text-cyan small mb-1">✔ High-Frequency Demodulation (BPFO 142.3 Hz): 2.15 mm/s (Bearing outer raceway micro-pitting)</div>
+                                        <div class="text-mint small mb-1">✔ Kurtosis Metric: 3.42 (Baseline: 3.0) · Crest Factor: 3.88</div>
+                                        <div class="text-warning small">▲ Weibull RUL Prediction: 4,820 operating hours remaining before replacement threshold (4.5 mm/s)</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center text-secondary small pt-2 border-top border-secondary border-opacity-25">
+                                        <span>Sensor Sample Rate: 10,240 samples/s</span>
+                                        <span>Spectral Resolution: 0.125 Hz (FFT 8192-point)</span>
+                                    </div>
+                                </div>
+
+                                <!-- Pane 3: Dynamic Dispatch & Routing -->
+                                <div class="ins-console-pane" data-pane="fsm-dispatch">
+                                    <div class="text-secondary small mb-2">// Automated Field Dispatch Routing &amp; Inventory Pre-allocation</div>
+                                    <div class="ins-code-block my-2">
+                                        <div class="ins-code-header">
+                                            <span class="ins-code-title">
+                                                <svg class="ph-duotone ph-file-code ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-code"/></svg>
+                                                <span>fsm_dispatch_manifest_WO-2026-0418.json</span>
+                                            </span>
+                                            <span class="ins-code-lang">JSON</span>
+                                        </div>
+                                        <div class="ins-code-body">
+                                            <pre><code class="token-string">{
+  <span class="token-property">"work_order_id"</span>: <span class="token-string">"WO-2026-FSM-0418"</span>,
+  <span class="token-property">"trigger"</span>: <span class="token-string">"PREDICTIVE_VIBRATION_ZONE_B"</span>,
+  <span class="token-property">"asset_id"</span>: <span class="token-string">"AST-COMP-2026-C04"</span>,
+  <span class="token-property">"target_location"</span>: { <span class="token-property">"site"</span>: <span class="token-string">"Substation T1 - Bay 04"</span>, <span class="token-property">"lat"</span>: 10.7769, <span class="token-property">"lng"</span>: 106.7009 },
+  <span class="token-property">"matched_technician"</span>: {
+    <span class="token-property">"employee_id"</span>: <span class="token-string">"TECH-7412"</span>,
+    <span class="token-property">"name"</span>: <span class="token-string">"Nguyễn Văn Bình (Bậc 4/4 Điện - Cơ Khí)"</span>,
+    <span class="token-property">"certifications"</span>: [<span class="token-string">"IEC_61850_SPECIALIST"</span>, <span class="token-string">"ISO_18436_CAT_II_VIB"</span>],
+    <span class="token-property">"current_distance_km"</span>: 8.4,
+    <span class="token-property">"estimated_eta_mins"</span>: 18,
+    <span class="token-property">"dispatch_sla_seconds"</span>: 42
+  },
+  <span class="token-property">"pre_allocated_inventory"</span>: [
+    { <span class="token-property">"sku"</span>: <span class="token-string">"BRG-SKF-7314-BECBM"</span>, <span class="token-property">"qty"</span>: 2, <span class="token-property">"warehouse_bay"</span>: <span class="token-string">"WH-CENTRAL-04A"</span> },
+    { <span class="token-property">"sku"</span>: <span class="token-string">"LUB-MOBIL-SHC-634"</span>, <span class="token-property">"qty"</span>: 1, <span class="token-property">"warehouse_bay"</span>: <span class="token-string">"WH-CENTRAL-12B"</span> }
+  ],
+  <span class="token-property">"first_time_fix_probability"</span>: <span class="token-string">"96.4%"</span>
+}</code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center text-secondary small pt-2 border-top border-secondary border-opacity-25">
+                                        <span>Dispatch Optimizer: Dijkstra Multi-Constraint VRP</span>
+                                        <span>SLA: 42.1s (&lt; 45s Guaranteed)</span>
+                                    </div>
+                                </div>
+
+                                <!-- Pane 4: CMMS Writeback -->
+                                <div class="ins-console-pane" data-pane="cmms-writeback">
+                                    <div class="text-secondary small mb-2">// Closed-Loop Digital Twin &amp; ERP CMMS Synchronous Writeback</div>
+                                    <div class="ins-code-block my-2">
+                                        <div class="ins-code-header">
+                                            <span class="ins-code-title">
+                                                <svg class="ph-duotone ph-file-code ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-code"/></svg>
+                                                <span>cmms_closeout_receipt.json</span>
+                                            </span>
+                                            <span class="ins-code-lang">JSON</span>
+                                        </div>
+                                        <div class="ins-code-body">
+                                            <pre><code class="token-string">{
+  <span class="token-property">"event"</span>: <span class="token-string">"CMMS_JOB_COMPLETED_AND_SEALED"</span>,
+  <span class="token-property">"work_order"</span>: <span class="token-string">"WO-2026-FSM-0418"</span>,
+  <span class="token-property">"post_service_vibration_rms"</span>: <span class="token-string">"0.92 mm/s (ZONE A - EXCELLENT)"</span>,
+  <span class="token-property">"asset_health_score_delta"</span>: { <span class="token-property">"before"</span>: 87.2, <span class="token-property">"after"</span>: 96.8 },
+  <span class="token-property">"erp_updates"</span>: {
+    <span class="token-property">"odoo_maintenance_request"</span>: <span class="token-string">"REQ-09412 (STATUS: DONE)"</span>,
+    <span class="token-property">"sap_pm_order"</span>: <span class="token-string">"40092144 (CONFIRMED)"</span>,
+    <span class="token-property">"wms_stock_move"</span>: <span class="token-string">"SM-2026-08194 (CONSUMED: 2x SKF-7314)"</span>
+  },
+  <span class="token-property">"merkle_dag_block_hash"</span>: <span class="token-string">"0x7b4a92c019d85e43a9f1480b03e481c5d9b62a"</span>,
+  <span class="token-property">"technician_digital_signature"</span>: <span class="token-string">"ECDSA_SHA256:0x39a1fe...verified"</span>
+}</code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center text-secondary small pt-2 border-top border-secondary border-opacity-25">
+                                        <span>ERP Connectors: Odoo Maintenance 20.0 · SAP S/4HANA PM</span>
+                                        <span>Status: Two-Way Synchronized</span>
                                     </div>
                                 </div>
                             </div>

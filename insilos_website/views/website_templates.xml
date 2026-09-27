@@ -8,9 +8,10 @@
     </template>
 
     <!-- Optimize Core Web Vitals: Eliminate unused Material Symbols font preload -->
+    <!-- Insilos uses Phosphor SVG icons, not Material Symbols — suppress the font preload entirely -->
     <template id="insilos_icons_fonts_preload" name="Insilos Icons Fonts Preload Optimizer" inherit_id="web.frontend_layout" priority="25">
         <xpath expr="//t[@t-call-assets='web.material_symbols_outlined']" position="replace">
-            <t t-elif="icon_font_family == 'Material Symbols Outlined'" t-call-assets="web.material_symbols_outlined" t-binary="True"/>
+            <t t-if="False"/>
         </xpath>
     </template>
 
@@ -66,35 +67,268 @@
     <!-- Preconnect, High-Performance Vietnamese Typography Stack & Brand Metadata -->
     <template id="insilos_vietnamese_fonts" inherit_id="website.layout" priority="1">
         <xpath expr="//head" position="inside">
+            <t t-set="curr_path" t-value="request.httprequest.path if request and request.httprequest else '/'"/>
             <meta name="theme-color" content="#FF8000"/>
             <meta name="msapplication-TileColor" content="#FF8000"/>
             <meta property="og:site_name" content="Insilos Sovereign AI"/>
+            <meta property="og:type" content="website"/>
+            <meta property="og:url" t-attf-content="https://insilos.ai{{ curr_path }}"/>
+            <meta property="og:image" content="https://insilos.ai/insilos_website/static/src/img/c3ai/c3ai_hero_control_room.webp"/>
+            <meta property="og:image:width" content="1200"/>
+            <meta property="og:image:height" content="630"/>
+            <meta property="og:locale" content="vi_VN"/>
+            <meta property="og:locale:alternate" content="en_US"/>
             <meta name="twitter:card" content="summary_large_image"/>
+            <meta name="twitter:site" content="@insilos_ai"/>
+            <meta name="twitter:creator" content="@insilos_ai"/>
+            <meta name="twitter:image" content="https://insilos.ai/insilos_website/static/src/img/c3ai/c3ai_hero_control_room.webp"/>
+            <link rel="canonical" t-attf-href="https://insilos.ai{{ curr_path }}"/>
             <link rel="preconnect" href="https://fonts.googleapis.com"/>
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap&amp;subset=latin,latin-ext,vietnamese" rel="stylesheet"/>
-            <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "SoftwareApplication",
-                "name": "Insilos Sovereign AI Platform",
-                "operatingSystem": "Linux, Cloud, On-Premises, Air-Gapped",
-                "applicationCategory": "BusinessApplication",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "0",
-                    "priceCurrency": "VND"
-                },
-                "publisher": {
-                    "@type": "Organization",
-                    "name": "Insilos",
-                    "url": "https://insilos.ai",
-                    "logo": "https://insilos.ai/addons/web/static/img/insilos_logo.svg"
-                },
-                "description": "Sovereign Industrial AI Operating System uniting Vertical IDP, Enterprise Knowledge Graph, Trade Compliance, and Field Service Management for APAC enterprises."
-            }
-            </script>
+
+            <!-- Route Specific JSON-LD Structured Data Schemas -->
+            <!-- 1. Root Homepage (/): Organization + WebSite Schemas -->
+            <t t-if="curr_path == '/'">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@graph": [
+                        {
+                            "@type": "Organization",
+                            "@id": "https://insilos.ai/#organization",
+                            "name": "Insilos Sovereign AI",
+                            "legalName": "Công ty Cổ phần Insilos Sovereign AI",
+                            "url": "https://insilos.ai",
+                            "logo": {
+                                "@type": "ImageObject",
+                                "url": "https://insilos.ai/insilos_website/static/src/icons/phosphor-duotone.svg"
+                            },
+                            "description": "Sovereign Industrial AI Operating System uniting Vertical IDP, Enterprise Knowledge Graph, Trade Compliance, and Field Service Management for APAC enterprises.",
+                            "foundingDate": "2018",
+                            "address": {
+                                "@type": "PostalAddress",
+                                "addressLocality": "Hồ Chí Minh &amp; Hà Nội",
+                                "addressCountry": "VN"
+                            },
+                            "contactPoint": {
+                                "@type": "ContactPoint",
+                                "telephone": "+84-28-7100-8888",
+                                "contactType": "sales",
+                                "email": "contact@insilos.ai",
+                                "availableLanguage": ["Vietnamese", "English"]
+                            },
+                            "sameAs": [
+                                "https://www.linkedin.com/company/insilos-ai",
+                                "https://twitter.com/insilos_ai"
+                            ]
+                        },
+                        {
+                            "@type": "WebSite",
+                            "@id": "https://insilos.ai/#website",
+                            "url": "https://insilos.ai",
+                            "name": "Insilos Sovereign AI",
+                            "description": "Hệ điều hành Trí tuệ Nhân tạo Công nghiệp có Chủ quyền cho Doanh nghiệp APAC",
+                            "publisher": {"@id": "https://insilos.ai/#organization"},
+                            "potentialAction": {
+                                "@type": "SearchAction",
+                                "target": "https://insilos.ai/resources?q={search_term_string}",
+                                "query-input": "required name=search_term_string"
+                            }
+                        }
+                    ]
+                }
+                </script>
+            </t>
+
+            <!-- 2. Platform Route (/platform): SoftwareApplication Schema -->
+            <t t-if="curr_path.startswith('/platform')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "SoftwareApplication",
+                    "name": "Insilos Sovereign AI Platform",
+                    "applicationCategory": "BusinessApplication",
+                    "applicationSubCategory": "Industrial AI Operating System",
+                    "operatingSystem": "Linux, Cloud, On-Premises, Air-Gapped",
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "VND",
+                        "availability": "https://schema.org/InStock"
+                    },
+                    "featureList": [
+                        "Model-Driven Architecture (MDA)",
+                        "W3C OWL/RDF Deterministic Knowledge Graph",
+                        "Vertical Intelligent Document Processing (IDP)",
+                        "Merkle DAG Cryptographic Audit Trail",
+                        "Sub-15ms P99 Query Latency",
+                        "Air-Gapped &amp; Sovereign Deployment",
+                        "IEC 61850 &amp; WCO SAFE Industrial Compliance"
+                    ],
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "Insilos Sovereign AI",
+                        "url": "https://insilos.ai"
+                    },
+                    "description": "Sovereign Industrial AI Operating System uniting Vertical IDP, Enterprise Knowledge Graph, Trade Compliance, and Field Service Management for APAC enterprises."
+                }
+                </script>
+            </t>
+
+            <!-- 3. Pricing Route (/pricing): FAQPage Schema -->
+            <t t-if="curr_path.startswith('/pricing')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "FAQPage",
+                    "mainEntity": [
+                        {
+                            "@type": "Question",
+                            "name": "Insilos có hỗ trợ triển khai hoàn toàn Offline (Air-Gapped) không?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Có. Insilos hỗ trợ triển khai 100% On-Premises và Air-Gapped độc lập, đáp ứng nghiêm ngặt các quy chuẩn an toàn lưới điện EVN, quân sự và ngân hàng Nhà nước, không gửi bất kỳ byte dữ liệu nào ra Internet."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Chi phí bản quyền và mô hình tính giá được xác định như thế nào?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Insilos áp dụng mô hình cấp phép module linh hoạt theo nhu cầu vận hành thực tế (Vertical IDP, Knowledge Graph, Trade Compliance, FSM) kết hợp khối lượng chứng từ xử lý hàng tháng, giúp doanh nghiệp tối ưu chi phí và hoàn vốn trong 3-6 tháng."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Thời gian triển khai một dự án PoC hoặc Pilot thường kéo dài bao lâu?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Một đợt triển khai Pilot chuẩn của Insilos diễn ra trong 2-4 tuần với dữ liệu thực nghiệm của khách hàng để chứng minh tỷ lệ STP vượt 97.4% và độ trễ phản hồi dưới 15ms trước khi nghiệm thu."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Hệ thống có tuân thủ chuẩn kế toán Thông tư 200 và hóa đơn Thông tư 78 không?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "100% tuân thủ. Insilos tích hợp sẵn các luật đối soát kế toán Thông tư 200/2014/TT-BTC, chuẩn hóa hóa đơn điện tử Thông tư 78/2021/TT-BTC và đối soát 3 chiều tự động giữa PO, B/L và Hóa đơn."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Chính sách cam kết SLA thời gian sẵn sàng (Uptime) ra sao?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Insilos cam kết SLA thời gian sẵn sàng 99.8% đối với môi trường sản xuất công nghiệp trọng yếu, hỗ trợ kỹ thuật 24/7/365 và thời gian phản hồi sự cố mức độ nghiêm trọng P1 dưới 15 phút."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Doanh nghiệp có quyền sở hữu mô hình AI và đồ thị tri thức sau khi huấn luyện không?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Tuyệt đối có. Khách hàng sở hữu 100% bản quyền mô hình, trọng số fine-tuned và ontology đồ thị tri thức được xây dựng trên dữ liệu của doanh nghiệp, cam kết không bị khóa vào nhà cung cấp độc quyền (Zero Lock-In)."
+                            }
+                        }
+                    ]
+                }
+                </script>
+            </t>
+
+            <!-- 4. Solutions Routes (/solutions/*): BreadcrumbList Schema -->
+            <t t-if="curr_path.startswith('/solutions')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Giải Pháp",
+                            "item": "https://insilos.ai/solutions"
+                        }
+                    ]
+                }
+                </script>
+            </t>
+
+            <!-- 5. Industries Routes (/industries/*): BreadcrumbList Schema -->
+            <t t-if="curr_path.startswith('/industries')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Ngành Trọng Điểm",
+                            "item": "https://insilos.ai/industries"
+                        }
+                    ]
+                }
+                </script>
+            </t>
+
+            <!-- 6. About Route (/about): AboutPage Schema -->
+            <t t-if="curr_path.startswith('/about')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "AboutPage",
+                    "name": "Về Insilos Sovereign AI",
+                    "description": "Lịch sử hình thành, đội ngũ lãnh đạo và sứ mệnh kiến tạo hệ điều hành AI công nghiệp có chủ quyền.",
+                    "url": "https://insilos.ai/about",
+                    "mainEntity": {
+                        "@type": "Organization",
+                        "name": "Insilos Sovereign AI",
+                        "url": "https://insilos.ai"
+                    }
+                }
+                </script>
+            </t>
+
+            <!-- 7. Resources Route (/resources): CollectionPage Schema -->
+            <t t-if="curr_path.startswith('/resources')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "CollectionPage",
+                    "name": "Trung Tâm Tài Liệu &amp; Chuyên Khảo Insilos",
+                    "description": "Kho tài liệu chuyên khảo Whitepapers, Case Studies, bài giảng kỹ thuật và tài liệu đặc tả API.",
+                    "url": "https://insilos.ai/resources"
+                }
+                </script>
+            </t>
+
+            <!-- 8. Request Demo Route (/request-demo): ContactPage Schema -->
+            <t t-if="curr_path.startswith('/request-demo')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "ContactPage",
+                    "name": "Đăng Ký Khảo Sát &amp; Trải Nghiệm Demo Insilos",
+                    "description": "Đặt lịch tư vấn kiến trúc 1-1 với Kỹ sư trưởng và khởi tạo môi trường thử nghiệm Sandbox 48h.",
+                    "url": "https://insilos.ai/request-demo"
+                }
+                </script>
+            </t>
         </xpath>
+
     </template>
 
     <!-- Glassmorphism Header Class Attribute -->

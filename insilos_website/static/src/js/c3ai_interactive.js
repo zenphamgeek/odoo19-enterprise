@@ -143,68 +143,117 @@ function initInsilosInteractive() {
         });
     });
 
-    // 6. Interactive ROI & Volume Calculator
-    document.querySelectorAll(".ins-roi-calculator").forEach((calc) => {
-        const pills = calc.querySelectorAll(".ins-calc-pill");
-        const valSavings = calc.querySelector(".ins-calc-val-savings");
-        const valHours = calc.querySelector(".ins-calc-val-hours");
-        const valStp = calc.querySelector(".ins-calc-val-stp");
-        const valUnit = calc.querySelector(".ins-calc-val-unit");
+    // 6. Interactive Multi-Slider ROI & TCO Engine
+    function initRoiCalculator() {
+        const calculators = document.querySelectorAll(".ins-roi-calculator, #roi-calculator, .ins-calculator-wrapper");
+        if (!calculators.length) return;
 
-        const dataTiers = {
-            "5k": {
-                savings: "₫38,500,000",
-                hours: "140 Giờ / Tháng",
-                stp: "99.2%",
-                unit: "0.05 Credits"
-            },
-            "25k": {
-                savings: "₫192,500,000",
-                hours: "710 Giờ / Tháng",
-                stp: "99.82%",
-                unit: "0.038 Credits"
-            },
-            "100k": {
-                savings: "₫770,000,000",
-                hours: "2,840 Giờ / Tháng",
-                stp: "99.95%",
-                unit: "0.024 Credits"
-            },
-            "500k": {
-                savings: "₫3,850,000,000",
-                hours: "14,200 Giờ / Tháng",
-                stp: "99.99%",
-                unit: "0.015 Credits"
+        calculators.forEach((calc) => {
+            if (calc.__roi_initialized) return;
+            calc.__roi_initialized = true;
+
+            // Sliders & inputs
+            const sliderIntegrations = calc.querySelector("#ins_slider_integrations, input[name='integrations'], .ins-slider-integrations");
+            const sliderVolume = calc.querySelector("#ins_slider_volume, input[name='volume'], .ins-slider-volume");
+            const sliderError = calc.querySelector("#ins_slider_error, input[name='error_rate'], .ins-slider-error");
+
+            // Value badge indicators
+            const badgeIntegrations = calc.querySelector("#ins_badge_integrations, .ins-badge-integrations");
+            const badgeVolume = calc.querySelector("#ins_badge_volume, .ins-badge-volume");
+            const badgeError = calc.querySelector("#ins_badge_error, .ins-badge-error");
+
+            // Currency toggle
+            let currentCurrency = "VND"; // "VND" or "USD"
+            const currencyBtns = calc.querySelectorAll(".ins-currency-pill-btn, .ins-calc-currency-btn, [data-currency]");
+
+            // Output metrics elements
+            const valSavings = calc.querySelector(".ins-calc-val-savings, #ins_roi_annual_savings");
+            const valHours = calc.querySelector(".ins-calc-val-hours, #ins_roi_hours_saved");
+            const valStp = calc.querySelector(".ins-calc-val-stp, #ins_roi_stp_rate");
+            const valUnit = calc.querySelector(".ins-calc-val-unit, #ins_roi_unit_cost");
+            const valPayback = calc.querySelector(".ins-calc-val-payback, #ins_roi_payback, .ins-payback-val");
+
+            // Legacy pills compatibility (5k, 25k, 100k, 500k)
+            const pills = calc.querySelectorAll(".ins-calc-pill");
+
+            function calculateAndRender() {
+                const integrations = sliderIntegrations ? parseInt(sliderIntegrations.value, 10) : 3;
+                const volume = sliderVolume ? parseInt(sliderVolume.value, 10) : 25000;
+                const errorRate = sliderError ? parseFloat(sliderError.value) : 4.5;
+
+                // Update badge numbers if elements exist
+                if (badgeIntegrations) badgeIntegrations.textContent = `${integrations} ERPs`;
+                if (badgeVolume) badgeVolume.textContent = `${volume.toLocaleString()} vận đơn/th`;
+                if (badgeError) badgeError.textContent = `${errorRate.toFixed(1)}%`;
+
+                // Formula:
+                // Labor: 0.08h per doc at 45,000 VND/h eliminated by 95%
+                const monthlyLaborSavings = volume * 0.08 * 45000 * 0.95;
+                // Errors: 350,000 VND per error resolved by 98%
+                const monthlyErrorSavings = volume * (errorRate / 100) * 350000 * 0.98;
+                // ERP integration maintenance: 15,000,000 VND per system per month
+                const monthlyIntegrationSavings = integrations * 15000000;
+                const totalMonthlyVnd = Math.round(monthlyLaborSavings + monthlyErrorSavings + monthlyIntegrationSavings);
+                const totalAnnualVnd = totalMonthlyVnd * 12;
+                const totalAnnualUsd = Math.round(totalAnnualVnd / 25000);
+
+                const monthlyHoursSaved = Math.round((volume * 0.08 * 0.95) + (volume * (errorRate / 100) * 1.5 * 0.98));
+                const stpRate = Math.min(99.99, (98.2 + (volume >= 50000 ? 1.4 : 0.9) + (errorRate <= 3.0 ? 0.35 : 0.1))).toFixed(2) + "%";
+                const creditRate = (volume >= 100000 ? "0.018" : volume >= 25000 ? "0.032" : "0.045") + " Credits";
+                const paybackMonths = Math.max(1.8, Math.min(6.2, 450000000 / (totalMonthlyVnd * 0.35))).toFixed(1);
+
+                // Render metrics with smooth micro-animation
+                if (valSavings) {
+                    valSavings.textContent = (currentCurrency === "USD")
+                        ? `$${totalAnnualUsd.toLocaleString()} USD / Năm`
+                        : `₫${totalAnnualVnd.toLocaleString()} / Năm`;
+                }
+                if (valHours) valHours.textContent = `${monthlyHoursSaved.toLocaleString()} Giờ / Tháng`;
+                if (valStp) valStp.textContent = stpRate;
+                if (valUnit) valUnit.textContent = creditRate;
+                if (valPayback) valPayback.textContent = `${paybackMonths} Tháng`;
             }
-        };
 
-        pills.forEach((pill) => {
-            pill.addEventListener("click", () => {
-                pills.forEach(p => p.classList.remove("active"));
-                pill.classList.add("active");
-                const vol = pill.getAttribute("data-vol");
-                const data = dataTiers[vol];
-                if (data) {
-                    const metricEls = [valSavings, valHours, valStp, valUnit].filter(Boolean);
-                    metricEls.forEach(el => {
-                        el.style.opacity = "0.35";
-                        el.style.transform = "translateY(2px)";
-                        el.style.transition = "all 0.12s ease";
-                    });
-                    setTimeout(() => {
-                        if (valSavings) valSavings.innerText = data.savings;
-                        if (valHours) valHours.innerText = data.hours;
-                        if (valStp) valStp.innerText = data.stp;
-                        if (valUnit) valUnit.innerText = data.unit;
-                        metricEls.forEach(el => {
-                            el.style.opacity = "1";
-                            el.style.transform = "none";
-                        });
-                    }, 120);
+            // Slider listeners for real-time reactivity
+            [sliderIntegrations, sliderVolume, sliderError].forEach((slider) => {
+                if (slider) {
+                    slider.addEventListener("input", calculateAndRender);
+                    slider.addEventListener("change", calculateAndRender);
                 }
             });
+
+            // Currency toggle listeners
+            currencyBtns.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const c = btn.getAttribute("data-currency") || (btn.id.includes("usd") ? "USD" : "VND");
+                    currentCurrency = c.toUpperCase();
+                    currencyBtns.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    calculateAndRender();
+                });
+            });
+
+            // Legacy pill buttons mapping
+            const pillVolMap = { "5k": 5000, "25k": 25000, "100k": 100000, "500k": 500000 };
+            pills.forEach((pill) => {
+                pill.addEventListener("click", () => {
+                    pills.forEach(p => p.classList.remove("active"));
+                    pill.classList.add("active");
+                    const volKey = pill.getAttribute("data-vol");
+                    if (pillVolMap[volKey]) {
+                        if (sliderVolume) {
+                            sliderVolume.value = pillVolMap[volKey];
+                        }
+                        calculateAndRender();
+                    }
+                });
+            });
+
+            // Initial calculation
+            calculateAndRender();
         });
-    });
+    }
+    initRoiCalculator();
 
     // 7. Tactical Card Mouse-Tracking Spotlight Effect (Vercel/Stripe Sheen)
     const spotlightCards = document.querySelectorAll(
@@ -289,12 +338,12 @@ function initInsilosInteractive() {
         let transitionTimerIds = [];
 
         const fxBadge = document.getElementById("ins-current-fx-badge");
-        const fxButtons = heroShowcase.querySelectorAll(".ins-btn-fx");
+        let fxButtons = heroShowcase.querySelectorAll(".ins-btn-fx");
 
-        const FX_MODES = ["blade", "glitch", "iris", "warp", "luma", "shutter"];
+        const FX_MODES = ["blade", "glitch", "iris", "warp", "luma", "shutter", "matrix", "circuit"];
 
-        // 6-Mode Active Effects Rotation Cycle (Full Rotation across all 6 modes)
-        const FX_ROTATION_CYCLE = ["blade", "glitch", "iris", "warp", "luma", "shutter"];
+        // 8-Mode Active Effects Rotation Cycle (Full Rotation across all 8 modes)
+        const FX_ROTATION_CYCLE = ["blade", "glitch", "iris", "warp", "luma", "shutter", "matrix", "circuit"];
         let fxCycleStep = 0;
 
         const ACT_FX_MAP = {
@@ -303,7 +352,9 @@ function initInsilosInteractive() {
             3: "glitch",   // Cybernetic Glitch & RGB Split
             4: "warp",     // Quantum Warp Hyper-Zoom
             5: "luma",     // Anamorphic Luma Light Leak & Solar Flare
-            6: "shutter"   // Bi-Directional Vault Shutter
+            6: "shutter",  // Bi-Directional Vault Shutter
+            7: "matrix",   // Digital Rain Matrix Cascade
+            8: "circuit"   // Circuit Trace Conductive Route Wipe
         };
 
         const FX_NAMES = {
@@ -313,8 +364,27 @@ function initInsilosInteractive() {
             iris: "RADIAL IRIS",
             warp: "QUANTUM WARP",
             luma: "LUMA FLARE",
-            shutter: "VAULT SHUTTER"
+            shutter: "VAULT SHUTTER",
+            matrix: "DIGITAL RAIN",
+            circuit: "CIRCUIT TRACE"
         };
+
+        // Ensure transition overlay stage elements exist for matrix and circuit
+        const stageEl = document.getElementById("ins_scene_transition_stage");
+        if (stageEl) {
+            if (!document.getElementById("ins_matrix_cascade")) {
+                const matrixNode = document.createElement("div");
+                matrixNode.className = "ins-matrix-rain-cascade";
+                matrixNode.id = "ins_matrix_cascade";
+                stageEl.appendChild(matrixNode);
+            }
+            if (!document.getElementById("ins_circuit_trace")) {
+                const circuitNode = document.createElement("div");
+                circuitNode.className = "ins-circuit-trace-grid";
+                circuitNode.id = "ins_circuit_trace";
+                stageEl.appendChild(circuitNode);
+            }
+        }
 
         const FX_ELEMENTS = {
             blade: document.getElementById("ins_blade_beam"),
@@ -322,7 +392,9 @@ function initInsilosInteractive() {
             iris: document.getElementById("ins_iris_ring"),
             warp: document.getElementById("ins_warp_tunnel"),
             luma: document.getElementById("ins_luma_flare"),
-            shutter: document.getElementById("ins_shutter_line")
+            shutter: document.getElementById("ins_shutter_line"),
+            matrix: document.getElementById("ins_matrix_cascade"),
+            circuit: document.getElementById("ins_circuit_trace")
         };
 
         function clearAllTransitionTimers() {
@@ -395,7 +467,9 @@ function initInsilosInteractive() {
                 warp: 1050,
                 blade: 1100,
                 luma: 1100,
-                shutter: 1150
+                shutter: 1150,
+                matrix: 950,
+                circuit: 1100
             };
             const duration = durationMap[effectName] || 1100;
 
@@ -591,7 +665,30 @@ function initInsilosInteractive() {
             });
         });
 
-        // Scene Transition FX Buttons (CYCLE, BLADE, GLITCH, IRIS, WARP, LUMA, SHUTTER)
+        // Scene Transition FX Buttons (CYCLE, BLADE, GLITCH, IRIS, WARP, LUMA, SHUTTER, MATRIX, CIRCUIT)
+        const fxControlsGroup = heroShowcase.querySelector("#ins_scene_fx_controls");
+        if (fxControlsGroup) {
+            if (!fxControlsGroup.querySelector('[data-fx="matrix"]')) {
+                const btnM = document.createElement("button");
+                btnM.type = "button";
+                btnM.className = "btn ins-btn-fx";
+                btnM.setAttribute("data-fx", "matrix");
+                btnM.title = "Mưa ma trận Digital Rain Matrix Cascade";
+                btnM.textContent = "MATRIX";
+                fxControlsGroup.appendChild(btnM);
+            }
+            if (!fxControlsGroup.querySelector('[data-fx="circuit"]')) {
+                const btnC = document.createElement("button");
+                btnC.type = "button";
+                btnC.className = "btn ins-btn-fx";
+                btnC.setAttribute("data-fx", "circuit");
+                btnC.title = "Đường dẫn mạch quang PCB Circuit Trace Wipe";
+                btnC.textContent = "CIRCUIT";
+                fxControlsGroup.appendChild(btnC);
+            }
+            fxButtons = heroShowcase.querySelectorAll(".ins-btn-fx");
+        }
+
         fxButtons.forEach(btn => {
             btn.addEventListener("click", () => {
                 const mode = btn.getAttribute("data-fx");
@@ -1516,8 +1613,296 @@ function initInsilosInteractive() {
         });
     }
 
+    // ── Interactive Pricing Configurator Controller ────────────────────────
+    function initPricingConfigurator() {
+        const configurators = document.querySelectorAll(
+            ".ins-modular-configurator, #ins_pricing_configurator, .ins-pricing-section, #pricing"
+        );
+        if (!configurators.length) return;
+
+        configurators.forEach((cfg) => {
+            if (cfg.__pricing_initialized) return;
+            cfg.__pricing_initialized = true;
+
+            const billingBtns = cfg.querySelectorAll(".ins-billing-btn, [data-billing]");
+            const moduleCheckboxes = cfg.querySelectorAll(".ins-mod-check, input[type='checkbox'][data-price-month]");
+            const dynPriceVnd = cfg.querySelector(".ins-dyn-price, #ins_pricing_total_vnd");
+            const dynPriceUsd = cfg.querySelector(".ins-dyn-price-usd, #ins_pricing_total_usd");
+            const dynSavings = cfg.querySelector(".ins-dyn-savings, #ins_pricing_net_savings");
+            const paybackLabel = cfg.querySelector(".ins-payback-label, #ins_pricing_payback_label");
+            const roiProgressFill = cfg.querySelector(".ins-roi-progress-fill, #ins_pricing_roi_bar");
+
+            let billingCycle = "monthly"; // "monthly" or "annual"
+
+            function updatePricing() {
+                let monthlyBase = 0;
+                let activeCount = 0;
+
+                moduleCheckboxes.forEach((chk) => {
+                    const price = parseInt(chk.getAttribute("data-price-month") || "0", 10);
+                    const card = chk.closest(".ins-module-card") || chk.closest("label");
+                    if (chk.checked) {
+                        monthlyBase += price;
+                        activeCount++;
+                        if (card) card.classList.add("ins-module-card--active");
+                    } else {
+                        if (card) card.classList.remove("ins-module-card--active");
+                    }
+                });
+
+                // Fallback baseline if no checkboxes are placed on the page
+                if (monthlyBase === 0 && moduleCheckboxes.length === 0) {
+                    monthlyBase = 42000000;
+                }
+
+                const multiplier = (billingCycle === "annual") ? 0.8 : 1.0;
+                const effectiveMonthly = Math.round(monthlyBase * multiplier);
+                const usdEquiv = Math.round(effectiveMonthly / 25000);
+                const annualSavings = Math.round(effectiveMonthly * 4.4 * 12);
+
+                const paybackMonths = (3.2 * (monthlyBase / 42000000)).toFixed(1);
+                const roiPercent = Math.min(95, Math.max(35, Math.round(85 - (monthlyBase / 80000000) * 20)));
+
+                if (dynPriceVnd) {
+                    dynPriceVnd.textContent = `₫${effectiveMonthly.toLocaleString()}`;
+                }
+                if (dynPriceUsd) {
+                    dynPriceUsd.textContent = `$${usdEquiv.toLocaleString()} USD/mo`;
+                }
+                if (dynSavings) {
+                    dynSavings.textContent = `₫${annualSavings.toLocaleString()} VNĐ`;
+                }
+                if (paybackLabel) {
+                    paybackLabel.innerHTML = `Điểm hòa vốn: <strong>${paybackMonths} Tháng</strong>`;
+                }
+                if (roiProgressFill) {
+                    roiProgressFill.style.width = `${roiPercent}%`;
+                    roiProgressFill.setAttribute("aria-valuenow", roiPercent);
+                }
+            }
+
+            // Billing switch listeners
+            billingBtns.forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    billingBtns.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    const cycle = btn.getAttribute("data-billing") || "monthly";
+                    billingCycle = cycle;
+                    updatePricing();
+                });
+            });
+
+            // Checkbox listeners
+            moduleCheckboxes.forEach((chk) => {
+                chk.addEventListener("change", updatePricing);
+            });
+
+            updatePricing();
+        });
+    }
+
+    // ── Filterable Resource Hub Controller ─────────────────────────────────
+    function initResourceFilters() {
+        const filterBars = document.querySelectorAll(
+            ".ins-resource-filter-group, [data-name='Resources Category Filter'], #resources-grid"
+        );
+        if (!filterBars.length) return;
+
+        const filterBtns = document.querySelectorAll(".ins-res-filter-btn, [data-filter]");
+        const searchInput = document.getElementById("ins_resource_search") || document.querySelector(".ins-resource-search-input");
+        const cards = document.querySelectorAll(
+            ".ins-resource-card, .ins-dossier-card, .ins-thumbnail-card, .ins-download-gate-card, [data-category]"
+        );
+
+        let activeFilter = "all";
+        let searchQuery = "";
+
+        function applyFilters() {
+            cards.forEach((card) => {
+                const category = (card.getAttribute("data-category") || "").toLowerCase();
+                const cardText = (card.textContent || "").toLowerCase();
+                const container = card.closest(".col-lg-4, .col-md-6, .col-12, .col") || card;
+
+                const matchesCategory = (activeFilter === "all") || (category === activeFilter) || category.includes(activeFilter);
+                const matchesSearch = (!searchQuery) || cardText.includes(searchQuery);
+
+                if (matchesCategory && matchesSearch) {
+                    container.classList.remove("d-none");
+                    card.classList.add("ins-card-visible");
+                } else {
+                    container.classList.add("d-none");
+                    card.classList.remove("ins-card-visible");
+                }
+            });
+        }
+
+        filterBtns.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                filterBtns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                activeFilter = (btn.getAttribute("data-filter") || "all").toLowerCase();
+                applyFilters();
+            });
+        });
+
+        if (searchInput) {
+            let debounceTimer = null;
+            searchInput.addEventListener("input", (e) => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    searchQuery = e.target.value.trim().toLowerCase();
+                    applyFilters();
+                }, 150);
+            });
+        }
+    }
+
+    // ── 3-Step Demo Request Wizard Controller ──────────────────────────────
+    function initDemoWizard() {
+        const wizardForms = document.querySelectorAll(
+            ".ins-step-wizard, #ins_demo_wizard, form[action='/request-demo']"
+        );
+        if (!wizardForms.length) return;
+
+        wizardForms.forEach((root) => {
+            const form = root.tagName === "FORM" ? root : root.querySelector("form") || document.querySelector("form[action='/request-demo']");
+            if (!form || form.__wizard_initialized) return;
+            form.__wizard_initialized = true;
+
+            const stepItems = document.querySelectorAll(".ins-step-item[data-step]");
+            const stepPanes = form.querySelectorAll(".ins-step-pane[data-step]");
+            const nextBtns = form.querySelectorAll(".ins-btn-step-next, [data-action='next-step']");
+            const prevBtns = form.querySelectorAll(".ins-btn-step-prev, [data-action='prev-step']");
+
+            if (!stepPanes.length) return;
+
+            let currentStep = 1;
+            const totalSteps = stepPanes.length;
+
+            function showStep(stepNum) {
+                currentStep = stepNum;
+                stepPanes.forEach((pane) => {
+                    const s = parseInt(pane.getAttribute("data-step"), 10);
+                    pane.classList.toggle("active", s === currentStep);
+                    pane.classList.toggle("d-none", s !== currentStep);
+                });
+
+                stepItems.forEach((item) => {
+                    const s = parseInt(item.getAttribute("data-step"), 10);
+                    item.classList.toggle("active", s === currentStep);
+                    item.classList.toggle("completed", s < currentStep);
+                });
+            }
+
+            function validateStep(stepNum) {
+                const pane = form.querySelector(`.ins-step-pane[data-step='${stepNum}']`);
+                if (!pane) return true;
+                const requiredInputs = pane.querySelectorAll("input[required], select[required], textarea[required]");
+                let isValid = true;
+                requiredInputs.forEach((input) => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.classList.add("is-invalid");
+                        input.addEventListener("input", () => input.classList.remove("is-invalid"), { once: true });
+                    }
+                });
+                return isValid;
+            }
+
+            nextBtns.forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    if (validateStep(currentStep)) {
+                        if (currentStep < totalSteps) {
+                            showStep(currentStep + 1);
+                        }
+                    }
+                });
+            });
+
+            prevBtns.forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    if (currentStep > 1) {
+                        showStep(currentStep - 1);
+                    }
+                });
+            });
+
+            stepItems.forEach((item) => {
+                item.addEventListener("click", () => {
+                    const targetStep = parseInt(item.getAttribute("data-step"), 10);
+                    if (targetStep < currentStep || validateStep(currentStep)) {
+                        showStep(targetStep);
+                    }
+                });
+            });
+
+            showStep(1);
+        });
+    }
+
+    // ── Animated Tech Proof Counters Controller ────────────────────────────
+    function initAnimatedCounters() {
+        const counterEls = document.querySelectorAll(
+            ".ins-counter-val, [data-counter-target], .ins-tech-stat-val, .ins-proof-stat, .ins-metric-val"
+        );
+        if (!counterEls.length) return;
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    obs.unobserve(el);
+
+                    const originalText = (el.getAttribute("data-counter-target") || el.textContent || "").trim();
+                    // Match prefix, numeric portion, and suffix
+                    const match = originalText.match(/^([<>\-\+~]*)?\s*([\d\.,]+)\s*([%a-zA-Z\+\/]*)$/);
+                    if (!match) return;
+
+                    const prefix = match[1] ? match[1] + " " : "";
+                    const rawNumStr = match[2].replace(/,/g, ".");
+                    const suffix = match[3] || "";
+                    const targetNum = parseFloat(rawNumStr);
+                    if (isNaN(targetNum)) return;
+
+                    const isDecimal = rawNumStr.includes(".");
+                    const decimals = isDecimal ? (rawNumStr.split(".")[1] || "").length : 0;
+                    const duration = 1800; // ms
+                    const startTime = performance.now();
+
+                    function updateFrame(now) {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        // EaseOutCubic: 1 - pow(1 - x, 3)
+                        const easeProgress = 1 - Math.pow(1 - progress, 3);
+                        const currentVal = (targetNum * easeProgress).toFixed(decimals);
+
+                        el.textContent = `${prefix}${currentVal}${suffix}`;
+
+                        if (progress < 1) {
+                            requestAnimationFrame(updateFrame);
+                        } else {
+                            el.textContent = originalText;
+                        }
+                    }
+
+                    requestAnimationFrame(updateFrame);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        counterEls.forEach(el => observer.observe(el));
+    }
+
     initGoldMasterSuite();
     initPlatformTopology();
+    initPricingConfigurator();
+    initResourceFilters();
+    initDemoWizard();
+    initAnimatedCounters();
 }
 
 if (!window.__insilos_bootstrap_registered) {
@@ -1529,3 +1914,19 @@ if (!window.__insilos_bootstrap_registered) {
     }
 }
 window.insilosInitInteractive = initInsilosInteractive;
+window.initRoiCalculator = function() {
+    if (typeof window.insilosInitInteractive === "function") window.insilosInitInteractive();
+};
+window.initPricingConfigurator = function() {
+    if (typeof window.insilosInitInteractive === "function") window.insilosInitInteractive();
+};
+window.initResourceFilters = function() {
+    if (typeof window.insilosInitInteractive === "function") window.insilosInitInteractive();
+};
+window.initDemoWizard = function() {
+    if (typeof window.insilosInitInteractive === "function") window.insilosInitInteractive();
+};
+window.initAnimatedCounters = function() {
+    if (typeof window.insilosInitInteractive === "function") window.insilosInitInteractive();
+};
+

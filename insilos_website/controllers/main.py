@@ -869,7 +869,6 @@ STATIC_PAGE_PATHS = {
     "/media-credits",
     "/request-demo",
     "/thank-you",
-    "/showcase-3d",
 }
 DEDICATED_SOLUTION_SLUGS = {
     "trade-compliance",
@@ -927,6 +926,10 @@ def sitemap_articles(env, rule, qs):
         loc = f"/resources/{key}"
         if not qs or qs.lower() in loc.lower():
             yield {"loc": loc}
+
+
+_SHOWCASE_HTML_CACHE = {}
+_SHOWCASE_CACHE_TTL = 300.0
 
 
 class InsilosWebsite(http.Controller):
@@ -1302,9 +1305,33 @@ class InsilosWebsite(http.Controller):
 
     @http.route(["/showcase-3d", "/solutions/industrial-showcase"], type="http", auth="public", website=True, sitemap=True)
     def showcase_3d(self, **kwargs):
-        return request.render("insilos_website.insilos_showcase_3d_page", self._base_values(
-            submitted=bool(kwargs.get("submitted"))
-        ))
+        submitted = bool(kwargs.get("submitted"))
+        now = time.time()
+        is_public = request.env.user._is_public() if hasattr(request.env, "user") else True
+        if is_public and submitted in _SHOWCASE_HTML_CACHE:
+            cached_html, cache_time = _SHOWCASE_HTML_CACHE[submitted]
+            if now - cache_time < _SHOWCASE_CACHE_TTL:
+                csrf_token = request.csrf_token() if hasattr(request, "csrf_token") else ""
+                html = re.sub(
+                    r'(name="csrf_token"\s+value=")[^"]*(")',
+                    r'\g<1>' + csrf_token + r'\g<2>',
+                    cached_html,
+                )
+                return request.make_response(html, [("Content-Type", "text/html; charset=utf-8")])
+
+        values = self._base_values(submitted=submitted)
+        response = request.render("insilos_website.insilos_showcase_3d_page", values)
+        if is_public:
+            try:
+                rendered_content = response.render()
+                if isinstance(rendered_content, bytes):
+                    rendered_html = rendered_content.decode("utf-8")
+                else:
+                    rendered_html = str(rendered_content)
+                _SHOWCASE_HTML_CACHE[submitted] = (rendered_html, now)
+            except Exception:
+                pass
+        return response
 
     @http.route("/insilos/lead-submit", type="http", auth="public", methods=["POST"], website=True, csrf=True)
     def lead_submit(self, **post):
