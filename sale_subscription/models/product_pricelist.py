@@ -31,11 +31,18 @@ class ProductPricelist(models.Model):
         copy=True,
     )
 
-    def _get_applicable_rules(self, products, date, *, plan_id=None, **kwargs):
+    def _get_applicable_rules(self, products, *args, plan_id=None, **kwargs):
         if not self:
             return self.env['product.pricelist.item']
 
         self.ensure_one()
+
+        date = kwargs.get('date')
+        if not date:
+            if len(args) >= 2:
+                date = args[1]
+            elif len(args) == 1:
+                date = args[0]
 
         recurring_rules = self.env['product.pricelist.item']
         if plan_id:
@@ -47,7 +54,7 @@ class ProductPricelist(models.Model):
             ).with_context(self.env.context)
 
         # Do not give plan_id to super call
-        return recurring_rules | super()._get_applicable_rules(products, date, **kwargs)
+        return recurring_rules | super()._get_applicable_rules(products, *args, **kwargs)
 
     def _get_applicable_rules_domain(self, *args, plan_id=None, any_plan=False, **kwargs):
         # Filter out subscription-rules targeting other products
