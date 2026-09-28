@@ -1,0 +1,1122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ================================================================= -->
+    <!-- DEDICATED SOVEREIGN TRUST & SECURITY PAGE: /trust                 -->
+    <!-- ================================================================= -->
+    <template id="insilos_trust_page" name="Sovereign Trust &amp; Security">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Insilos — Sovereign Trust &amp; Industrial Security</t>
+            <t t-set="meta_description">Trung tâm An ninh &amp; Chủ quyền Dữ liệu Công nghiệp: Kiến trúc Air-Gapped K8s, Merkle DAG Cryptographic Lineage, và Giám sát SLA 99.995% cho hạ tầng trọng yếu.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
+                <div class="oe_structure oe_empty" id="oe_structure_trust_top"/>
+
+                <!-- Section 1: Executive Sovereign Trust Cover -->
+                <section class="s_cover o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_cover" data-name="Trust Hero" data-bs-theme="dark">
+                    <div class="container position-relative py-lg-4">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-8 mx-auto text-center">
+                                <div class="ins-pill-badge mb-3">
+                                    <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                    <span>SOVEREIGN OPERATIONAL TRUST // APAC INFRASTRUCTURE</span>
+                                </div>
+                                <h1 class="display-3 fw-bold text-white mb-3 ins-title-balance">
+                                    Chủ Quyền Dữ Liệu Tuyệt Đối &amp;<br class="d-none d-md-inline"/> <span class="o_text_highlight o_text_highlight_underline text-cyan position-relative">100% On-Premises &amp; Air-Gapped</span>
+                                </h1>
+                                <p class="lead text-secondary mb-4 mx-auto col-lg-10 ins-proof-desc">
+                                    Không gửi một byte dữ liệu ra ngoài biên giới. Độc lập chủ quyền số tuyệt đối cho hạ tầng công nghiệp quốc gia, lưới điện truyền tải và các tập đoàn sản xuất trọng yếu tại Việt Nam.
+                                </p>
+                                <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                                    <span class="badge bg-white-10 text-cyan border border-white-10 small font-monospace px-3 py-2">
+                                        <svg class="ph-duotone ph-hard-drives ph-sm me-1 text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-hard-drives"/></svg>
+                                        <span>AIR-GAPPED K8S</span>
+                                    </span>
+                                    <span class="badge bg-white-10 text-mint border border-white-10 small font-monospace px-3 py-2">
+                                        <svg class="ph-duotone ph-buildings ph-sm me-1 text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-buildings"/></svg>
+                                        <span>GOVCLOUD VIỆT NAM</span>
+                                    </span>
+                                    <span class="badge bg-white-10 text-warning border border-white-10 small font-monospace px-3 py-2">
+                                        <svg class="ph-duotone ph-cpu ph-sm me-1 text-warning"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
+                                        <span>SCADA DATA DIODE</span>
+                                    </span>
+                                    <span class="badge bg-white-10 text-white border border-white-10 small font-monospace px-3 py-2">
+                                        <svg class="ph-duotone ph-shield ph-sm me-1 text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield"/></svg>
+                                        <span>ZERO TELEMETRY LEAKAGE</span>
+                                    </span>
+                                </div>
+                                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                                    <a href="/request-demo" class="btn btn-primary rounded-pill px-5 py-3 fw-bold">
+                                        <span>Yêu Cầu Rà Soát Bảo Mật</span>
+                                        <svg class="ph-duotone ph-arrow-right ph-sm ms-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                    </a>
+                                    <a href="#sovereign-stack" class="btn btn-outline-light rounded-pill px-4 py-3">
+                                        <span>Khám Phá Kiến Trúc 3 Tầng</span>
+                                        <svg class="ph-duotone ph-caret-down ph-sm ms-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Sovereign Architecture Stack (3-Tier Visualization) -->
+                <section id="sovereign-stack" class="s_features o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_sovereign_stack" data-name="Sovereign Architecture Stack" data-bs-theme="dark">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <div class="ins-pill-badge mb-2">
+                                <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                <span>SOVEREIGN ARCHITECTURE STACK</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                                Kiến Trúc 3 Tầng Cách Ly &amp;<br class="d-none d-sm-inline"/> Bảo Vệ Chủ Quyền Số Quốc Gia
+                            </h2>
+                            <p class="lead text-secondary mx-auto col-lg-8">
+                                Triển khai độc lập hoàn toàn, triệt tiêu mọi nguy cơ gián đoạn do sự cố cáp quang biển quốc tế hoặc lệnh trừng phạt từ các nền tảng đám mây ngoại quốc.
+                            </p>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced">
+                            <!-- Tier 1: Air-gapped Private K8s -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace fw-semibold">TẦNG 1: COMPUTING CÁCH LY</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-hard-drives ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-hard-drives"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2 ins-title-balance">Cụm Private Kubernetes Không Internet</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            Chạy độc lập 100% trong mạng nội bộ on-premises, triệt tiêu hoàn toàn luồng telemetry outbound với vi phân mạng Cilium eBPF và xác thực chữ ký Cosign.
+                                        </p>
+                                        <ul class="list-unstyled text-secondary small mb-4">
+                                            <li class="d-flex align-items-start gap-2 mb-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Zero Ingress/Egress ngoại vi (Không mở cổng kết nối Internet công cộng)</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2 mb-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Vi phân bảo mật mức kernel với Cilium eBPF Network Security Policies</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2 mb-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Harbor Container Registry nội bộ ký số mật mã Cosign / Notary</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Tương thích 100% Bare-Metal vật lý hoặc cụm ảo hóa VMware vSphere</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">AIR-GAPPED READY</span>
+                                        <a href="/request-demo" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                            <span>Rà Soát Cụm K8s</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tier 2: Sovereign GovCloud National Data Center -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace fw-semibold">TẦNG 2: HẠ TẦNG TRUNG TÂM</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-buildings ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-buildings"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2 ins-title-balance">GovCloud Trung Tâm Dữ Liệu Quốc Gia</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            Hạ tầng điện toán chủ quyền định hướng theo Nghị quyết 175/NQ-CP (Trung tâm Dữ liệu Quốc gia tại Hòa Lạc) kết hợp mạng lưới Private VPC tại các Data Center chuẩn Tier III (Viettel Pháp Vân, VNPT Thăng Long, FPT Tân Thuận).
+                                        </p>
+                                        <ul class="list-unstyled text-secondary small mb-4">
+                                            <li class="d-flex align-items-start gap-2 mb-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Chiến lược dữ liệu quốc gia theo NQ 175/NQ-CP &amp; chuẩn TIA-942 / Uptime Tier III</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2 mb-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Đường truyền chuyên dụng MetroNet mã hóa phần cứng MACsec Layer 2</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2 mb-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Cơ chế Active-Active đa vùng với độ trễ đồng bộ mạng quang &lt; 4ms</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Tuân thủ toàn diện Nghị định 13/2023/NĐ-CP &amp; Thỏa thuận Xử lý Dữ liệu DPA</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">NQ 175/NQ-CP · TIER III</span>
+                                        <a href="/request-demo" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                            <span>Khảo Sát VPC</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tier 3: Edge SCADA Physical Isolation -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace fw-semibold">TẦNG 3: HIỆN TRƯỜNG OT</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-cpu ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2 ins-title-balance">Cách Ly Vật Lý Hiện Trường SCADA</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            Phần cứng Data Diode một chiều (Hardware Unidirectional Diode) trích xuất dữ liệu cảm biến mà không cho phép bất kỳ lệnh ngược chiều nào xâm nhập mạng PLC/DCS.
+                                        </p>
+                                        <ul class="list-unstyled text-secondary small mb-4">
+                                            <li class="d-flex align-items-start gap-2 mb-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Hardware Data Diode quang học đơn hướng (Unidirectional Optical Diode)</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2 mb-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Hỗ trợ native giao thức công nghiệp IEC 61850, OPC-UA, Modbus TCP</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2 mb-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Xác thực thiết bị hai chiều mTLS 1.3 với chip mật mã phần cứng TPM 2.0</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2">
+                                                <svg class="ph-duotone ph-check-circle ph-sm text-mint mt-1 flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Miễn nhiễm 100% trước tấn công mạng OT từ xa (IEC 62443-4-2 SL-4)</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">IEC 62443 SL-4</span>
+                                        <a href="/request-demo" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                            <span>Xem Cấu Hình Diode</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Cryptographic Lineage Dossier (Merkle DAG Simulation) -->
+                <section class="s_text_image o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_merkle_dossier" data-name="Cryptographic Lineage Dossier" data-bs-theme="dark">
+                    <div class="container">
+                        <div class="row align-items-center g-5">
+                            <!-- Left: Theory & Zero-Knowledge Architecture -->
+                            <div class="col-lg-5">
+                                <div class="ins-pill-badge mb-3">
+                                    <svg class="ph-duotone ph-tree-structure ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-tree-structure"/></svg>
+                                    <span>CRYPTOGRAPHIC PROOF OF WORK</span>
+                                </div>
+                                <h2 class="display-5 fw-bold text-white mb-3 ins-title-balance">
+                                    Cây Băm Mật Mã Merkle DAG &amp;<br class="d-none d-sm-inline"/> Sổ Cái Kiểm Toán Bất Biến
+                                </h2>
+                                <p class="lead text-secondary mb-4 ins-proof-desc">
+                                    Mọi giao dịch mua sắm ERP, chỉ số rung động máy CNC và hóa đơn điện tử đều được neo băm mật mã SHA-256. Không thể chỉnh sửa hồi tố, không thể làm giả số liệu kiểm toán.
+                                </p>
+                                <div class="vstack gap-3 mb-4">
+                                    <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <svg class="ph-duotone ph-seal-check ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-seal-check"/></svg>
+                                            <h4 class="h6 fw-bold text-white mb-0">Neo Băm Merkle Root 60 Giây</h4>
+                                        </div>
+                                        <p class="text-secondary small mb-0">
+                                            Mỗi 60s, toàn bộ giao dịch phân xưởng và kế toán được gom thành block băm duy nhất, công bố lên ledger nội bộ bất biến.
+                                        </p>
+                                    </div>
+                                    <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <svg class="ph-duotone ph-fingerprint ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-fingerprint"/></svg>
+                                            <h4 class="h6 fw-bold text-white mb-0">Xác Minh Zero-Knowledge Audit</h4>
+                                        </div>
+                                        <p class="text-secondary small mb-0">
+                                            Kiểm toán viên độc lập thẩm định được tính toàn vẹn của chứng từ tài chính mà không cần truy cập bí mật kinh doanh hay dữ liệu thô.
+                                        </p>
+                                    </div>
+                                    <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <svg class="ph-duotone ph-warning-circle ph-sm text-danger"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-warning-circle"/></svg>
+                                            <h4 class="h6 fw-bold text-white mb-0">Tự Động Báo Động Khi Bị Can Thiệp</h4>
+                                        </div>
+                                        <p class="text-secondary small mb-0">
+                                            Bất kỳ thay đổi nào dù chỉ 1 ký tự trong đơn giá PO hoặc giờ máy chạy sẽ làm sụp đổ toàn bộ chuỗi băm upstream ngay tức thì.
+                                        </p>
+                                    </div>
+                                </div>
+                                <a href="/resources/operational-ai" class="btn btn-primary rounded-pill px-4 py-2">
+                                    <span>Tải Bạch Thư Mật Mã Học</span>
+                                    <svg class="ph-duotone ph-arrow-right ph-sm ms-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                </a>
+                            </div>
+
+                            <!-- Right: Live Merkle DAG Simulation Console -->
+                            <div class="col-lg-7">
+                                <div class="ins-glass-card p-4 border border-secondary border-opacity-25 rounded-4 shadow-lg">
+                                    <div class="d-flex justify-content-between align-items-center pb-3 mb-3 border-bottom border-secondary border-opacity-25">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="ins-live-ping"/>
+                                            <span class="font-monospace small text-cyan fw-bold">LIVE MERKLE DAG LEDGER CONSOLE</span>
+                                        </div>
+                                        <span class="badge bg-success-subtle text-mint border border-success-subtle font-monospace small">SHA-256 VERIFIED</span>
+                                    </div>
+
+                                    <!-- Merkle Root Node -->
+                                    <div class="text-center mb-4">
+                                        <div class="p-3 border border-warning border-opacity-50 rounded-3 bg-dark-subtle d-inline-block w-100">
+                                            <div class="text-warning small font-monospace fw-bold mb-1">
+                                                <svg class="ph-duotone ph-key ph-sm me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-key"/></svg>
+                                                <span>MERKLE ROOT HASH #BLOCK-2026-0928</span>
+                                            </div>
+                                            <div class="text-white font-monospace small fw-bold">0x7A8E29BC04D791F610AC8392B740EF582D01E9B2</div>
+                                            <div class="text-secondary small font-monospace">Xác thực: 0.0034s // Trạng thái: Hợp lệ 100%</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Intermediate Branches -->
+                                    <div class="row g-2 text-center mb-4">
+                                        <div class="col-4">
+                                            <div class="p-2 border border-info border-opacity-25 rounded-3 bg-dark-subtle">
+                                                <div class="text-cyan font-monospace small fw-bold">BRANCH A: ERP</div>
+                                                <div class="text-secondary font-monospace small text-truncate">0x4D12AA89...</div>
+                                                <span class="badge bg-info-subtle text-cyan small font-monospace">TT 200 / TT 78</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="p-2 border border-info border-opacity-25 rounded-3 bg-dark-subtle">
+                                                <div class="text-cyan font-monospace small fw-bold">BRANCH B: MES</div>
+                                                <div class="text-secondary font-monospace small text-truncate">0x8F33CC41...</div>
+                                                <span class="badge bg-info-subtle text-cyan small font-monospace">BOM &amp; SCADA</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="p-2 border border-info border-opacity-25 rounded-3 bg-dark-subtle">
+                                                <div class="text-cyan font-monospace small fw-bold">BRANCH C: LOG</div>
+                                                <div class="text-secondary font-monospace small text-truncate">0x1B90EF12...</div>
+                                                <span class="badge bg-info-subtle text-cyan small font-monospace">FLEET LOG</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Leaf Transactions -->
+                                    <div class="vstack gap-2">
+                                        <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <div class="text-white font-monospace small fw-bold">BILL/2026/09/0001 (E-Invoice TT78 537.5M ₫)</div>
+                                                <div class="text-secondary small font-monospace">Leaf Hash: 0x91F032B74A89C1... Khớp Hóa đơn CQT</div>
+                                            </div>
+                                            <span class="badge bg-success text-white small font-monospace">CONFIRMED</span>
+                                        </div>
+                                        <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <div class="text-white font-monospace small fw-bold">WH/MO/00010 (V-LIFT 2500E Laser Cutting 12kW)</div>
+                                                <div class="text-secondary small font-monospace">Leaf Hash: 0x77C8302198DF12... Khớp Hợp Đồng Cung Ứng Thép</div>
+                                            </div>
+                                            <span class="badge bg-success text-white small font-monospace">CONFIRMED</span>
+                                        </div>
+                                        <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <div class="text-white font-monospace small fw-bold">PORT_BL_8912 (Container Drayage 18.675B ₫)</div>
+                                                <div class="text-secondary small font-monospace">Leaf Hash: 0x32DA90812FE430... Khớp GPS Xe 51C-982.45</div>
+                                            </div>
+                                            <span class="badge bg-success text-white small font-monospace">CONFIRMED</span>
+                                        </div>
+                                        <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <div class="text-white font-monospace small fw-bold">GRID_500KV_FFT (ISO 10816 Vibration FFT Log)</div>
+                                                <div class="text-secondary small font-monospace">Leaf Hash: 0x55E92341AC7801... Khớp Trạm Biến Áp 110kV</div>
+                                            </div>
+                                            <span class="badge bg-success text-white small font-monospace">CONFIRMED</span>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 mt-3 border-top border-secondary border-opacity-25 text-center text-secondary small font-monospace">
+                                        <span>Bằng chứng mật mã được kiểm chứng độc lập trong &lt; 9ms. Không thể làm giả dữ liệu.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Live SLA & Telemetry Monitor -->
+                <section class="s_numbers o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_uptime_monitor" data-name="Live SLA &amp; Telemetry Monitor" data-bs-theme="dark">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <div class="ins-pill-badge mb-2">
+                                <svg class="ph-duotone ph-pulse ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-pulse"/></svg>
+                                <span>LIVE SLA &amp; TELEMETRY PULSE</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                                Giám Sát Vận Hành Thời Gian Thực &amp;<br class="d-none d-sm-inline"/> Cam Kết Sẵn Sàng 99.995%
+                            </h2>
+                            <p class="lead text-secondary mx-auto col-lg-8">
+                                Bảng trạng thái trực tiếp từ các điểm hiện diện PoP quốc gia, minh bạch cam kết dịch vụ cho hệ thống sản xuất công nghiệp không ngừng nghỉ.
+                            </p>
+                        </div>
+
+                        <!-- 4 Core SLA Metrics -->
+                        <div class="row g-4 ins-card-row-balanced mb-5">
+                            <div class="col-lg-3 col-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card text-center d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="display-4 fw-bold text-mint mb-2 font-monospace">99.995%</div>
+                                        <h3 class="h5 fw-bold text-white mb-2 ins-title-balance">Tier 1: Sẵn Sàng Hạ Tầng SLA</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            Cam kết thời gian ngừng hoạt động ngoài kế hoạch dưới 26 phút mỗi năm trên GovCloud và Sovereign Multi-Cloud.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto">
+                                        <span class="badge bg-success-subtle text-mint border border-success-subtle font-monospace small">TIER 1 SLA // HA 99.995%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card text-center d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="display-4 fw-bold text-cyan mb-2 font-monospace">99.8%</div>
+                                        <h3 class="h5 fw-bold text-white mb-2 ins-title-balance">Tier 2: Xử Lý Thẳng STP</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            Tỷ lệ bóc tách và đối soát tự động hóa khép kín GRC/IDP (với baseline 97.4% trên hồ sơ phi cấu trúc phức tạp).
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto">
+                                        <span class="badge bg-info-subtle text-cyan border border-info-subtle font-monospace small">TIER 2 SLA // STP 99.8%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card text-center d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="display-4 fw-bold text-white mb-2 font-monospace">&lt; 15ms</div>
+                                        <h3 class="h5 fw-bold text-white mb-2 ins-title-balance">Tier 3: Độ Trễ Truy Vấn P99</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            Truy vấn đồ thị tri thức Knowledge Graph P99 &lt; 15ms và phản hồi cổng API Gateway &lt; 9ms cho dòng dữ liệu SCADA.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto">
+                                        <span class="badge bg-white-10 text-white border border-white-10 font-monospace small">TIER 3 SLA // P99 &lt; 15MS</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card text-center d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="display-4 fw-bold text-warning mb-2 font-monospace">100%</div>
+                                        <h3 class="h5 fw-bold text-white mb-2 ins-title-balance">Cư Trú Chủ Quyền Dữ Liệu</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            100% dữ liệu cư trú tại Việt Nam theo Nghị định 13/2023/NĐ-CP và Nghị quyết 175/NQ-CP Trung tâm Dữ liệu Quốc gia.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto">
+                                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle font-monospace small">SOVEREIGN RESIDENCY</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4 Regional PoPs Status Monitor -->
+                        <div class="ins-glass-card p-4 border border-secondary border-opacity-25 rounded-4 shadow-lg">
+                            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="ins-live-ping"/>
+                                    <h4 class="h6 fw-bold text-white mb-0 font-monospace">HẠ TẦNG TRUNG TÂM DỮ LIỆU QUỐC GIA &amp; 4 ĐIỂM HIỆN DIỆN SOVEREIGN POP</h4>
+                                </div>
+                                <span class="text-mint font-monospace small">NGHỊ QUYẾT 175/NQ-CP · ACTIVE-ACTIVE</span>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="text-white fw-bold small">TTDL Quốc Gia (Hòa Lạc Hi-Tech)</div>
+                                            <div class="text-secondary font-monospace small">NQ 175/NQ-CP // Tier III+ Ready</div>
+                                        </div>
+                                        <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">PRIMARY CORE</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="text-white fw-bold small">Hà Nội IDC (Viettel Pháp Vân)</div>
+                                            <div class="text-secondary font-monospace small">Ping: 3.8ms // Tier III Uptime</div>
+                                        </div>
+                                        <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">OPERATIONAL</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="text-white fw-bold small">Miền Bắc GovCloud (VNPT Thăng Long)</div>
+                                            <div class="text-secondary font-monospace small">Ping: 3.5ms // Tier III Certified</div>
+                                        </div>
+                                        <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">OPERATIONAL</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="text-white fw-bold small">TP.HCM Hub (FPT Tân Thuận)</div>
+                                            <div class="text-secondary font-monospace small">Ping: 4.1ms // Tier III Facility</div>
+                                        </div>
+                                        <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">OPERATIONAL</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5: Trust Closing Call to Action -->
+                <section class="s_call_to_action o_colored_level o_cc o_cc5 pt80 pb80 text-center position-relative overflow-hidden" data-snippet="s_call_to_action" data-name="Trust CTA" data-bs-theme="dark">
+                    <div class="container position-relative z-1">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="ins-pill-badge mb-3">
+                                <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                <span>SECURITY REVIEW &amp; AUDIT CONSULTATION</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-3 ins-title-balance">
+                                Sẵn Sàng Thiết Lập Pháo Đài An Ninh &amp;<br class="d-none d-sm-inline"/> Độc Lập Dữ Liệu Cho Nhà Máy Của Quý Vị?
+                            </h2>
+                            <p class="lead text-secondary mb-4 ins-proof-desc">
+                                Đội ngũ chuyên gia kiến trúc an ninh thông tin của Insilos sẵn sàng khảo sát thực địa hiện trường, phân tích luồng dữ liệu SCADA và tư vấn giải pháp cách ly an toàn.
+                            </p>
+                            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                                <a href="/request-demo" class="btn btn-primary rounded-pill px-5 py-3 fw-bold">
+                                    <span>Yêu Cầu Rà Soát Bảo Mật Chuyên Sâu</span>
+                                    <svg class="ph-duotone ph-arrow-right ph-sm ms-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                </a>
+                                <a href="/compliance" class="btn btn-outline-light rounded-pill px-4 py-3">
+                                    <span>Khám Phá Khung Tuân Thủ GRC</span>
+                                    <svg class="ph-duotone ph-scales ph-sm ms-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scales"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty" id="oe_structure_trust_bottom"/>
+            </main>
+        </t>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- DEDICATED REGULATORY GRC ARCHITECTURE PAGE: /compliance           -->
+    <!-- ================================================================= -->
+    <template id="insilos_compliance_page" name="Regulatory GRC Architecture">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Insilos — Regulatory GRC &amp; Industrial Compliance Architecture</t>
+            <t t-set="meta_description">Khung tuân thủ chuẩn mực cho doanh nghiệp trọng yếu: SOC 2 Type II, ISO 27001:2022, IEC 62443, VAS 200, Thông tư 78 và Nghị định 13/2023/NĐ-CP.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
+                <div class="oe_structure oe_empty" id="oe_structure_compliance_top"/>
+
+                <!-- Section 1: Regulatory GRC Center Cover -->
+                <section class="s_cover o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_cover" data-name="Compliance Hero" data-bs-theme="dark">
+                    <div class="container position-relative py-lg-4">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-8 mx-auto text-center">
+                                <div class="ins-pill-badge mb-3">
+                                    <svg class="ph-duotone ph-scales ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scales"/></svg>
+                                    <span>ENTERPRISE GRC COMPLIANCE CENTER</span>
+                                </div>
+                                <h1 class="display-3 fw-bold text-white mb-3 ins-title-balance">
+                                    Khung Tuân Thủ Chuẩn Mực Cho<br class="d-none d-md-inline"/> <span class="o_text_highlight o_text_highlight_underline text-cyan position-relative">Doanh Nghiệp Trọng Yếu</span>
+                                </h1>
+                                <p class="lead text-secondary mb-4 mx-auto col-lg-10 ins-proof-desc">
+                                    Tự động hóa đối soát và khóa cứng lưu vết kiểm toán theo chuẩn mực kế toán Việt Nam và an ninh mạng quốc tế. Sẵn sàng 100% cho mọi kỳ thanh tra tài chính, thuế và an toàn thông tin.
+                                </p>
+                                <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                                    <span class="badge bg-white-10 text-cyan border border-white-10 small font-monospace px-3 py-2">
+                                        <svg class="ph-duotone ph-seal-check ph-sm me-1 text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-seal-check"/></svg>
+                                        <span>SOC 2 TYPE II</span>
+                                    </span>
+                                    <span class="badge bg-white-10 text-mint border border-white-10 small font-monospace px-3 py-2">
+                                        <svg class="ph-duotone ph-certificate ph-sm me-1 text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-certificate"/></svg>
+                                        <span>ISO 27001:2022</span>
+                                    </span>
+                                    <span class="badge bg-white-10 text-warning border border-white-10 small font-monospace px-3 py-2">
+                                        <svg class="ph-duotone ph-cpu ph-sm me-1 text-warning"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
+                                        <span>IEC 62443-4-2</span>
+                                    </span>
+                                    <span class="badge bg-white-10 text-emerald border border-white-10 small font-monospace px-3 py-2">
+                                        <svg class="ph-duotone ph-file-text ph-sm me-1 text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                        <span>VAS 200 &amp; TT 78</span>
+                                    </span>
+                                    <span class="badge bg-white-10 text-white border border-white-10 small font-monospace px-3 py-2">
+                                        <svg class="ph-duotone ph-shield ph-sm me-1 text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield"/></svg>
+                                        <span>NGHỊ ĐỊNH 13/2023/NĐ-CP</span>
+                                    </span>
+                                    <span class="badge bg-white-10 text-white border border-white-10 small font-monospace px-3 py-2">
+                                        <svg class="ph-duotone ph-globe ph-sm me-1 text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-globe"/></svg>
+                                        <span>WCO SAFE</span>
+                                    </span>
+                                </div>
+                                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                                    <a href="#compliance-matrix" class="btn btn-primary rounded-pill px-5 py-3 fw-bold">
+                                        <span>Tra Cứu Ma Trận Tuân Thủ GRC</span>
+                                        <svg class="ph-duotone ph-arrow-right ph-sm ms-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                    </a>
+                                    <a href="#audit-vault" class="btn btn-outline-light rounded-pill px-4 py-3">
+                                        <span>Tải Hồ Sơ Kiểm Toán</span>
+                                        <svg class="ph-duotone ph-download-simple ph-sm ms-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-download-simple"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Compliance Certification Matrix (7 Frameworks) -->
+                <section id="compliance-matrix" class="s_comparisons o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_compliance_matrix" data-name="Compliance Certification Matrix" data-bs-theme="dark">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <div class="ins-pill-badge mb-2">
+                                <svg class="ph-duotone ph-scales ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scales"/></svg>
+                                <span>COMPLIANCE CERTIFICATION MATRIX</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                                Ma Trận 7 Khung Tiêu Chuẩn &amp;<br class="d-none d-sm-inline"/> Tuân Thủ Pháp Lý Trọng Yếu
+                            </h2>
+                            <p class="lead text-secondary mx-auto col-lg-8">
+                                Đối chiếu toàn diện cơ chế kỹ thuật và bằng chứng kiểm toán thực chứng, loại bỏ 100% rủi ro xuất toán và vi phạm an ninh thông tin.
+                            </p>
+                        </div>
+
+                        <div class="table-responsive ins-glass-card rounded-4 border border-secondary border-opacity-25 p-4 text-white shadow-lg">
+                            <table class="table table-hover align-middle mb-0 text-white">
+                                <thead class="border-bottom border-secondary border-opacity-50">
+                                    <tr>
+                                        <th scope="col" class="py-3 text-cyan text-uppercase font-monospace small">Chuẩn Mực &amp; Khung Pháp Lý</th>
+                                        <th scope="col" class="py-3 text-secondary text-uppercase font-monospace small">Phạm Vi Kiểm Soát</th>
+                                        <th scope="col" class="py-3 text-white text-uppercase font-monospace small">Cơ Chế Kỹ Thuật Insilos</th>
+                                        <th scope="col" class="py-3 text-secondary text-uppercase font-monospace small">Bằng Chứng Kiểm Toán</th>
+                                        <th scope="col" class="py-3 text-mint text-uppercase font-monospace small text-center">Trạng Thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="border-top-0">
+                                    <tr>
+                                        <td class="fw-bold text-white">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg class="ph-duotone ph-seal-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-seal-check"/></svg>
+                                                <span>SOC 2 Type II</span>
+                                            </div>
+                                            <span class="badge bg-info-subtle text-cyan small font-monospace mt-1">AICPA Trust Services</span>
+                                        </td>
+                                        <td class="text-secondary small">
+                                            An ninh, Tính sẵn sàng và Bảo mật thông tin trên toàn bộ cụm hạ tầng tính toán.
+                                        </td>
+                                        <td class="text-white small">
+                                            Mã hóa AES-256-GCM tại nghỉ, TLS 1.3 đang truyền, phân quyền RBAC/ABAC đa cấp.
+                                        </td>
+                                        <td class="text-secondary small font-monospace">
+                                            Báo cáo kiểm toán độc lập Big 4 thẩm định 12 tháng liên tục.
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">CHỨNG NHẬN</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg class="ph-duotone ph-certificate ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-certificate"/></svg>
+                                                <span>ISO 27001:2022</span>
+                                            </div>
+                                            <span class="badge bg-success-subtle text-mint small font-monospace mt-1">ISMS Global Standard</span>
+                                        </td>
+                                        <td class="text-secondary small">
+                                            Hệ thống quản lý an toàn thông tin (ISMS) cho các trung tâm dữ liệu và văn phòng điều hành.
+                                        </td>
+                                        <td class="text-white small">
+                                            Chính sách an ninh mạng kernel eBPF, quy trình quản lý lỗ hổng bảo mật DevSecOps CI/CD.
+                                        </td>
+                                        <td class="text-secondary small font-monospace">
+                                            Chứng thư ISO/IEC 27001:2022 cấp bởi BSI / TUV Rheinland.
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">HIỆU LỰC</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg class="ph-duotone ph-cpu ph-sm text-warning"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
+                                                <span>IEC 62443-4-2</span>
+                                            </div>
+                                            <span class="badge bg-warning-subtle text-warning small font-monospace mt-1">Industrial Cyber Security</span>
+                                        </td>
+                                        <td class="text-secondary small">
+                                            An toàn an ninh mạng cho hệ thống điều khiển và tự động hóa công nghiệp (IACS / SCADA).
+                                        </td>
+                                        <td class="text-white small">
+                                            Hardware Data Diode quang học một chiều, xác thực mTLS 1.3 với chip TPM 2.0 cấp độ SL-4.
+                                        </td>
+                                        <td class="text-secondary small font-monospace">
+                                            Biên bản nghiệm thu an toàn SCADA tại các nhà máy năng lượng &amp; cảng biển trọng điểm.
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">SL-4 PASSED</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg class="ph-duotone ph-file-text ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                                <span>VAS 200 / TT 200</span>
+                                            </div>
+                                            <span class="badge bg-success-subtle text-emerald small font-monospace mt-1">DN Lớn (Bộ Tài Chính)</span>
+                                        </td>
+                                        <td class="text-secondary small">
+                                            Chuẩn mực kế toán doanh nghiệp lớn, phân bổ chi phí qua tài khoản trung gian TK 621, 622, 627 và báo cáo tài chính B01-DN, B02-DN.
+                                        </td>
+                                        <td class="text-white small">
+                                            Tự động kết chuyển chi phí TK 621/622/627 sang TK 154 và TK 632, đối soát tự động 3 chiều không phát sinh sai lệch kỳ kế toán.
+                                        </td>
+                                        <td class="text-secondary small font-monospace">
+                                            Bảng cân đối số phát sinh và nhật ký sổ cái khớp 1:1 với ERP SAP/Oracle.
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">CHUẨN HOÁ 100%</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg class="ph-duotone ph-calculator ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-calculator"/></svg>
+                                                <span>VAS 133 / TT 133</span>
+                                            </div>
+                                            <span class="badge bg-info-subtle text-cyan small font-monospace mt-1">DN SME (Bộ Tài Chính)</span>
+                                        </td>
+                                        <td class="text-secondary small">
+                                            Chế độ kế toán doanh nghiệp vừa và nhỏ, hạch toán giá thành trực tiếp và báo cáo tài chính mẫu B01-DNN, B02-DNN.
+                                        </td>
+                                        <td class="text-white small">
+                                            Tự động tập hợp chi phí SXKD dở dang trực tiếp vào TK 154 qua các tiểu khoản TK 1541, 1542, 1543; xuất Báo cáo KQKD B02-DNN không cần tái cấu trúc COA.
+                                        </td>
+                                        <td class="text-secondary small font-monospace">
+                                            Bảng phân bổ chi phí TK 1541/1542/1543 và phiếu tính giá thành B02-DNN.
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">TỰ ĐỘNG THÍCH ỨNG</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg class="ph-duotone ph-check-square ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-square"/></svg>
+                                                <span>Thông Tư 78/2021/TT-BTC</span>
+                                            </div>
+                                            <span class="badge bg-info-subtle text-cyan small font-monospace mt-1">Hóa Đơn Điện Tử CQT</span>
+                                        </td>
+                                        <td class="text-secondary small">
+                                            Quy định về hóa đơn, chứng từ điện tử và truyền nhận dữ liệu với Tổng cục Thuế.
+                                        </td>
+                                        <td class="text-white small">
+                                            Tự động phát hành hóa đơn điện tử TT 78 khớp 1:1 lệnh giao hàng, lưu vết mã CQT.
+                                        </td>
+                                        <td class="text-secondary small font-monospace">
+                                            Mã tra cứu hóa đơn CQT hợp lệ, không sai lệch thời điểm.
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">KẾT NỐI SỐNG</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg class="ph-duotone ph-shield ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield"/></svg>
+                                                <span>Nghị Định 13/2023/NĐ-CP</span>
+                                            </div>
+                                            <span class="badge bg-success-subtle text-mint small font-monospace mt-1">Bảo Vệ Dữ Liệu Cá Nhân PDPD</span>
+                                        </td>
+                                        <td class="text-secondary small">
+                                            Bảo vệ dữ liệu cá nhân cán bộ công nhân viên, đối tác và khách hàng trên lãnh thổ Việt Nam; Thỏa thuận DPA.
+                                        </td>
+                                        <td class="text-white small">
+                                            Mã hóa PII, lưu trữ 100% nội địa tại TTDL Quốc Gia (NQ 175) &amp; Tier III IDC, phân quyền tối thiểu, quy trình DPO chuyên trách.
+                                        </td>
+                                        <td class="text-secondary small font-monospace">
+                                            Hồ sơ đánh giá tác động DPIA hoàn tất nộp Cục An ninh mạng A05.
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">TUÂN THỦ A05</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-white">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg class="ph-duotone ph-globe ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-globe"/></svg>
+                                                <span>WCO SAFE Framework</span>
+                                            </div>
+                                            <span class="badge bg-info-subtle text-cyan small font-monospace mt-1">Tổ Chức Hải Quan Thế Giới</span>
+                                        </td>
+                                        <td class="text-secondary small">
+                                            Chuẩn mực an ninh chuỗi cung ứng và tạo thuận lợi thương mại toàn cầu cho doanh nghiệp ưu tiên AEO.
+                                        </td>
+                                        <td class="text-white small">
+                                            Bóc tách tờ khai hải quan HQ-01 đạt 99.8% STP, kiểm soát seal chì container và hành trình GPS.
+                                        </td>
+                                        <td class="text-secondary small font-monospace">
+                                            Hồ sơ thông quan luồng xanh tại Chi cục Hải quan Cảng Biển Quốc Tế.
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">AEO READY</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Audit Evidence Dossier (Downloadable Packages with SHA-256) -->
+                <section id="audit-vault" class="s_media_list o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_audit_vault" data-name="Audit Evidence Dossier" data-bs-theme="dark">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <div class="ins-pill-badge mb-2">
+                                <svg class="ph-duotone ph-file-pdf ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-pdf"/></svg>
+                                <span>EXECUTIVE AUDIT EVIDENCE VAULT</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                                Hồ Sơ Bằng Chứng Kiểm Toán &amp;<br class="d-none d-sm-inline"/> Chứng Thư Toàn Vẹn SHA-256
+                            </h2>
+                            <p class="lead text-secondary mx-auto col-lg-8">
+                                Tải trọn bộ tài liệu thẩm định kỹ thuật, báo cáo tuân thủ và chứng chỉ an toàn kèm mã băm SHA-256 phục vụ công tác thanh tra tài chính và kiểm toán nhà nước.
+                            </p>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced">
+                            <!-- Dossier 1 -->
+                            <div class="col-lg-6 col-12">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace fw-semibold">CHỨNG THỰC BẢO MẬT</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-shield-check ph-md text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2 ins-title-balance">Gói Hồ Sơ Bảo Mật K8s &amp; Air-Gap Sovereign</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            Hồ sơ Insilos Sovereign Core v2.4 Security Attestation Dossier: Báo cáo kiến trúc mạng cách ly, chính sách Cilium eBPF, kiểm thử xâm nhập (Pen-test) và chứng nhận SOC 2 Type II / ISO 27001.
+                                        </p>
+                                        <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="text-cyan font-monospace small fw-bold">SHA-256 CHECKSUM</span>
+                                                <span class="text-mint font-monospace small">Digital Signature OK</span>
+                                            </div>
+                                            <div class="text-white font-monospace small text-break">8f4b23a1c79e602d31b0e59a42f618d7890123456789abcdef0123456789abcd</div>
+                                            <div class="text-secondary font-monospace small mt-1">Artifact: Insilos Sovereign Core v2.4 Security Attestation Dossier</div>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-secondary font-monospace small">Định dạng: PDF // 18.4 MB</span>
+                                        <a href="/request-demo" class="btn btn-outline-light rounded-pill px-4 py-2 small font-monospace d-inline-flex align-items-center gap-2">
+                                            <span>Tải Hồ Sơ</span>
+                                            <svg class="ph-duotone ph-download-simple ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-download-simple"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dossier 2 -->
+                            <div class="col-lg-6 col-12">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-success-subtle text-emerald border border-success-subtle small font-monospace fw-semibold">CHUẨN MỰC TÀI CHÍNH</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-file-text ph-md text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2 ins-title-balance">Hồ Sơ Hạch Toán &amp; Đối Soát Song Hành VAS 200 / VAS 133</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            Tài liệu kỹ thuật đối soát 3 chiều, tự động thích ứng song hành: VAS 200 (kết chuyển TK 621/622/627 sang TK 154, B02-DN) và VAS 133 (tập hợp trực tiếp TK 1541/1542/1543 sang TK 154, B02-DNN).
+                                        </p>
+                                        <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="text-cyan font-monospace small fw-bold">SHA-256 CHECKSUM</span>
+                                                <span class="text-mint font-monospace small">Digital Signature OK</span>
+                                            </div>
+                                            <div class="text-white font-monospace small text-break">a8f5f167f44f4964e6c998dee827110c01759f005a0a38f3f885dfd707297e68</div>
+                                            <div class="text-secondary font-monospace small mt-1">Artifact: Insilos Financial Engine Dual-Standard Dossier</div>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-secondary font-monospace small">Định dạng: PDF // 12.1 MB</span>
+                                        <a href="/request-demo" class="btn btn-outline-light rounded-pill px-4 py-2 small font-monospace d-inline-flex align-items-center gap-2">
+                                            <span>Tải Hồ Sơ</span>
+                                            <svg class="ph-duotone ph-download-simple ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-download-simple"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dossier 3 -->
+                            <div class="col-lg-6 col-12">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-warning-subtle text-warning border border-warning-subtle small font-monospace fw-semibold">AN NINH CÔNG NGHIỆP</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-cpu ph-md text-warning"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2 ins-title-balance">Chứng Chỉ An Ninh Mạng SCADA IEC 62443</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            Hồ sơ kiểm định vật lý phần cứng Data Diode, biên bản thử nghiệm mTLS 1.3 và cấu hình bảo vệ mạng truyền thông công nghiệp IEC 61850 không lây nhiễm mã độc.
+                                        </p>
+                                        <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="text-cyan font-monospace small fw-bold">SHA-256 CHECKSUM</span>
+                                                <span class="text-mint font-monospace small">Digital Signature OK</span>
+                                            </div>
+                                            <div class="text-white font-monospace small text-break">7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069</div>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-secondary font-monospace small">Định dạng: PDF // 24.8 MB</span>
+                                        <a href="/request-demo" class="btn btn-outline-light rounded-pill px-4 py-2 small font-monospace d-inline-flex align-items-center gap-2">
+                                            <span>Tải Hồ Sơ</span>
+                                            <svg class="ph-duotone ph-download-simple ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-download-simple"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dossier 4 -->
+                            <div class="col-lg-6 col-12">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-glass-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-info-subtle text-mint border border-info-subtle small font-monospace fw-semibold">BẢO VỆ DỮ LIỆU</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-shield ph-md text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2 ins-title-balance">Báo Cáo Đánh Giá Tác Động Nghị Định 13/2023</h3>
+                                        <p class="text-secondary small mb-3 ins-card-desc">
+                                            Hồ sơ đánh giá tác động xử lý dữ liệu cá nhân (DPIA), cam kết cư trú dữ liệu trong nước và quy trình bổ nhiệm Cán bộ Bảo vệ Dữ liệu (DPO) theo chuẩn A05.
+                                        </p>
+                                        <div class="p-3 border border-secondary border-opacity-25 rounded-3 bg-dark-subtle mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="text-cyan font-monospace small fw-bold">SHA-256 CHECKSUM</span>
+                                                <span class="text-mint font-monospace small">Digital Signature OK</span>
+                                            </div>
+                                            <div class="text-white font-monospace small text-break">3c59dc048e8850243be8079a5c74d079fa19d40f8b42baab444a50d7e3b1f612</div>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-secondary font-monospace small">Định dạng: PDF // 9.6 MB</span>
+                                        <a href="/request-demo" class="btn btn-outline-light rounded-pill px-4 py-2 small font-monospace d-inline-flex align-items-center gap-2">
+                                            <span>Tải Hồ Sơ</span>
+                                            <svg class="ph-duotone ph-download-simple ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-download-simple"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: GRC Defense FAQ -->
+                <section class="s_faq_collapse o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_faq_collapse" data-name="GRC Defense FAQ" data-bs-theme="dark">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <div class="ins-pill-badge mb-2">
+                                <svg class="ph-duotone ph-question ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-question"/></svg>
+                                <span>GRC AUDIT DEFENSE FAQ</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                                Giải Đáp Thanh Tra &amp;<br class="d-none d-sm-inline"/> Phòng Vệ Pháp Lý Doanh Nghiệp
+                            </h2>
+                            <p class="lead text-secondary mx-auto col-lg-8">
+                                Làm rõ cơ chế kỹ thuật và căn cứ pháp lý giúp doanh nghiệp tự tin trước các đoàn kiểm toán độc lập và cơ quan thanh tra chuyên ngành.
+                            </p>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced">
+                            <!-- FAQ 1 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-faq-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace fw-semibold">CHỦ QUYỀN DỮ LIỆU</span>
+                                            <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-white mb-2 ins-title-balance">Insilos Bảo Đảm Chủ Quyền Dữ Liệu Thế Nào?</h4>
+                                        <p class="text-secondary small mb-3 ins-faq-answer">
+                                            Toàn bộ hệ thống cài đặt 100% on-premises hoặc trên Private Cloud GovCloud chuẩn Tier III tại Việt Nam. Không có kết nối truyền dữ liệu ra máy chủ ngoại quốc, tuân thủ Luật An ninh mạng 2018.
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-mint font-monospace small fw-semibold">Nội Địa Hóa 100%</span>
+                                        <a href="/trust" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                            <span>Xem Kiến Trúc</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ 2 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-faq-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace fw-semibold">THÔNG TƯ 78 &amp; THUẾ</span>
+                                            <svg class="ph-duotone ph-file-text ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-white mb-2 ins-title-balance">Đáp Ứng Thanh Tra Thuế Theo TT 78 Ra Sao?</h4>
+                                        <p class="text-secondary small mb-3 ins-faq-answer">
+                                            Insilos tích hợp trực tiếp API hóa đơn điện tử được Tổng cục Thuế cấp phép chuẩn Thông tư 78. Hóa đơn chỉ phát hành khi lệnh giao hàng và biên bản nghiệm thu khớp 1:1, tự động gắn mã CQT.
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-mint font-monospace small fw-semibold">Khóa Cứng Sai Lệch</span>
+                                        <a href="/solutions/trade-compliance" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                            <span>Chi Tiết Thuế</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ 3 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-faq-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace fw-semibold">TÍNH PHÁP LÝ MERKLE DAG</span>
+                                            <svg class="ph-duotone ph-tree-structure ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-tree-structure"/></svg>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-white mb-2 ins-title-balance">Hồ Sơ Merkle DAG Có Giá Trị Pháp Lý Không?</h4>
+                                        <p class="text-secondary small mb-3 ins-faq-answer">
+                                            Có. Chuỗi băm Merkle DAG tuân thủ chuẩn chứng từ điện tử theo Luật Giao dịch Điện tử 2023. Các kiểm toán viên Big 4 có thể dùng công cụ băm độc lập để kiểm tra tính toàn vẹn mà không cần mở mã nguồn.
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-mint font-monospace small fw-semibold">Bất Biến Mật Mã</span>
+                                        <a href="/trust" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                            <span>Xem Cây Băm</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ 4 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-faq-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace fw-semibold">CẬP NHẬT MÔ HÌNH AI</span>
+                                            <svg class="ph-duotone ph-hard-drives ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-hard-drives"/></svg>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-white mb-2 ins-title-balance">Air-Gapped Có Cần Nối Internet Cập Nhật AI?</h4>
+                                        <p class="text-secondary small mb-3 ins-faq-answer">
+                                            Tuyệt đối không. Mọi bản vá và trọng số mô hình AI được đóng gói thành container image nén có chữ ký số Cosign, vận chuyển qua cơ chế rà soát bảo mật vật lý hoặc cập nhật từ trạm nội bộ.
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-mint font-monospace small fw-semibold">100% Offline Safe</span>
+                                        <a href="/platform" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                            <span>Xem Quy Trình</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ 5 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-faq-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace fw-semibold">NGHỊ ĐỊNH 13 PDPD</span>
+                                            <svg class="ph-duotone ph-shield ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield"/></svg>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-white mb-2 ins-title-balance">Bảo Vệ Dữ Liệu Cá Nhân NĐ 13 Triển Khai Thế Nào?</h4>
+                                        <p class="text-secondary small mb-3 ins-faq-answer">
+                                            Hệ thống tự động phân loại, mã hóa trường PII, thiết lập nhật ký truy vết truy cập bất biến và cung cấp sẵn mẫu hồ sơ đánh giá tác động DPIA chuẩn để doanh nghiệp nộp Cục An ninh mạng Bộ Công An.
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-mint font-monospace small fw-semibold">Tuân Thủ Nghị Định 13</span>
+                                        <a href="/request-demo" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                            <span>Tải Mẫu DPIA</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ 6 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 ins-faq-card d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace fw-semibold">ĐỐI SOÁT VAS 200 &amp; 133</span>
+                                            <svg class="ph-duotone ph-scales ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scales"/></svg>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-white mb-2 ins-title-balance">Ngăn Thất Thoát Vật Tư &amp; Thích Ứng VAS 133 Ra Sao?</h4>
+                                        <p class="text-secondary small mb-3 ins-faq-answer">
+                                            Thuật toán đối soát 3 chiều liên kết PO mua hàng, phiếu cân kho thực tế và lệnh sản xuất MO. Hệ thống tự động thích ứng cả mô hình VAS 200 (TK 621/622/627 sang TK 154) lẫn VAS 133 SME (tập hợp trực tiếp TK 1541, 1542, 1543 sang B02-DNN).
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-mint font-monospace small fw-semibold">Kiểm Soát Dung Sai</span>
+                                        <a href="/solutions/vertical-idp" class="text-cyan font-monospace small text-decoration-none d-inline-flex align-items-center gap-1">
+                                            <span>Xem Bóc Tách</span>
+                                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5: Compliance Closing Call to Action -->
+                <section class="s_call_to_action o_colored_level o_cc o_cc5 pt80 pb80 text-center position-relative overflow-hidden" data-snippet="s_call_to_action" data-name="Compliance CTA" data-bs-theme="dark">
+                    <div class="container position-relative z-1">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="ins-pill-badge mb-3">
+                                <svg class="ph-duotone ph-certificate ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-certificate"/></svg>
+                                <span>REGULATORY DEFENSE ASSURANCE</span>
+                            </div>
+                            <h2 class="display-4 fw-bold text-white mb-3 ins-title-balance">
+                                Sẵn Sàng Cho Mọi Kỳ Kiểm Toán &amp;<br class="d-none d-sm-inline"/> Thanh Tra Nhà Nước Cùng Insilos GRC?
+                            </h2>
+                            <p class="lead text-secondary mb-4 ins-proof-desc">
+                                Liên hệ ngay với bộ phận tư vấn tuân thủ GRC của Insilos để nhận trọn bộ hồ sơ kiểm toán mẫu và thiết kế lộ trình chuyển đổi không rủi ro cho doanh nghiệp.
+                            </p>
+                            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                                <a href="/request-demo" class="btn btn-primary rounded-pill px-5 py-3 fw-bold">
+                                    <span>Tải Trọn Bộ Hồ Sơ Kiểm Toán GRC</span>
+                                    <svg class="ph-duotone ph-arrow-right ph-sm ms-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                </a>
+                                <a href="/trust" class="btn btn-outline-light rounded-pill px-4 py-3">
+                                    <span>Khám Phá Trung Tâm Bảo Mật</span>
+                                    <svg class="ph-duotone ph-shield-check ph-sm ms-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty" id="oe_structure_compliance_bottom"/>
+            </main>
+        </t>
+    </template>
+</odoo>

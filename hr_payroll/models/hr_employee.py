@@ -111,7 +111,7 @@ class HrEmployee(models.Model):
 
         self.env.cr.execute('''
             SELECT emp.id,
-                   acc.acc_number,
+                   acc.account_number AS acc_number,
                    acc.allow_out_payment
              FROM  hr_employee emp
          LEFT JOIN employee_bank_account_rel rel

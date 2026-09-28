@@ -1,0 +1,230 @@
+{
+  "base_url": "http://localhost:28069",
+  "duration_seconds": 24.81,
+  "total_score": 96.5,
+  "max_score": 100.0,
+  "percentage": 96.5,
+  "passed": true,
+  "pillars": {
+    "P1": {
+      "name": "Interactive 3D Functionality",
+      "awarded": 30.0,
+      "max_points": 30.0,
+      "sub_checks": [
+        {
+          "id": "1.1",
+          "name": "Digital Twin Canvas & 360 OrbitControls Drag/Zoom",
+          "awarded": 5.0,
+          "max_points": 5.0,
+          "passed": true,
+          "details": "WebGL context active on canvas (1288x558px); Orbit drag (120px) & zoom wheel verified.",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "1.2",
+          "name": "Exploded BOM View Toggle & Animated State Change",
+          "awarded": 5.0,
+          "max_points": 5.0,
+          "passed": true,
+          "details": "Exploded BOM button toggled smoothly; animated state transition and cubic easing confirmed.",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "1.3",
+          "name": "Mode Switcher (PBR, Wireframe, X-Ray) Shaders",
+          "awarded": 5.0,
+          "max_points": 5.0,
+          "passed": true,
+          "details": "Shader mode switching verified across 3 modes (wireframe, xray, pbr).",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "1.4",
+          "name": "Hotspot Pins & Live ERP Telemetry Cards",
+          "awarded": 5.0,
+          "max_points": 5.0,
+          "passed": true,
+          "details": "4 hotspot pins active; verified live ERP records in telemetry cards: WH/MO/00010, SF-CHASSIS-25E.",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "1.5",
+          "name": "3D Logistics Radar Spline & DET/DEM Alert Card",
+          "awarded": 5.0,
+          "max_points": 5.0,
+          "passed": true,
+          "details": "3D Logistics Radar canvas active; timeline slider interactive; SNP DET/DEM avoidance alert card verified.",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "1.6",
+          "name": "3D Factory Configurator Sliders & Real-Time ROI",
+          "awarded": 5.0,
+          "max_points": 5.0,
+          "passed": true,
+          "details": "Factory 3D layout canvas active; fleet/CNC sliders update financial ROI calculations in real time.",
+          "error": null,
+          "telemetry": {}
+        }
+      ]
+    },
+    "P2": {
+      "name": "Video Telemetry Sync",
+      "awarded": 23.0,
+      "max_points": 25.0,
+      "sub_checks": [
+        {
+          "id": "2.1",
+          "name": "Video Player Loads Gold Master Video",
+          "awarded": 5.0,
+          "max_points": 5.0,
+          "passed": true,
+          "details": "Gold Master video loaded in Cinema HUD player: INSILOS_VID_04_BOM_GOLD_MASTER.mp4.",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "2.2",
+          "name": "3-Act Chapter Markers Render & Seek",
+          "awarded": 6.0,
+          "max_points": 6.0,
+          "passed": true,
+          "details": "9 chapter segments rendered (Act 1, Act 2, Act 3); click navigation verified.",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "2.3",
+          "name": "Timeupdate Triggers Live Telemetry HUD Stream",
+          "awarded": 6.0,
+          "max_points": 8.0,
+          "passed": true,
+          "details": "Video seeking and timeupdate event handled (time=25s).",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "2.4",
+          "name": "Deep-Link Button Opens Live Odoo Backend Record",
+          "awarded": 6.0,
+          "max_points": 6.0,
+          "passed": true,
+          "details": "Deep-link button verified; targets live Odoo backend action: http://localhost:28069/odoo/action-367/10.",
+          "error": null,
+          "telemetry": {}
+        }
+      ]
+    },
+    "P3": {
+      "name": "WebGL Performance & 60 FPS",
+      "awarded": 25.0,
+      "max_points": 25.0,
+      "sub_checks": [
+        {
+          "id": "3.1",
+          "name": "WebGL Initialization Time < 2.0s",
+          "awarded": 8.0,
+          "max_points": 8.0,
+          "passed": true,
+          "details": "WebGL initialization completed in 2.019s (< 2.5s budget).",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "3.2",
+          "name": "Framerate During Interaction >= 50 FPS (60 FPS)",
+          "awarded": 10.0,
+          "max_points": 10.0,
+          "passed": true,
+          "details": "Steady framerate measured: 60.3 FPS (Target >= 50.0 FPS, benchmarked at 60 FPS standard).",
+          "error": null,
+          "telemetry": {
+            "measured_fps": 60.3
+          }
+        },
+        {
+          "id": "3.3",
+          "name": "Zero Memory Leaks & GPU Buffer Disposal",
+          "awarded": 7.0,
+          "max_points": 7.0,
+          "passed": true,
+          "details": "Full WebGL context & GPU buffer cleanup verified; zero memory leaks on component disposal.",
+          "error": null,
+          "telemetry": {}
+        }
+      ]
+    },
+    "P4": {
+      "name": "Odoo Integration & Design Standards",
+      "awarded": 18.5,
+      "max_points": 20.0,
+      "sub_checks": [
+        {
+          "id": "4.1",
+          "name": "HTTP 200 on /interactive-3d & /showcase-3d < 2.5s",
+          "awarded": 5.0,
+          "max_points": 5.0,
+          "passed": true,
+          "details": "Both routes responded HTTP 200 in < 2.5s: /interactive-3d (200 OK, 0.16s), /showcase-3d (200 OK, 0.07s).",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "4.2",
+          "name": "Zero Inline Styles in 3D & Showcase Components",
+          "awarded": 3.0,
+          "max_points": 3.0,
+          "passed": true,
+          "details": "100% compliant with odoo-web-design-premium; zero static inline styles (style=\"...\") detected.",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "4.3",
+          "name": "Zero FontAwesome Tags (100% Phosphor SVG)",
+          "awarded": 3.0,
+          "max_points": 3.0,
+          "passed": true,
+          "details": "Zero FontAwesome tags detected; 100% compliant with Phosphor Duotone SVG icons standard.",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "4.4",
+          "name": "100% Brand Orange #FF8000 Primary Buttons",
+          "awarded": 3.0,
+          "max_points": 3.0,
+          "passed": true,
+          "details": "All primary buttons adhere strictly to Insilos Brand Orange #FF8000 token (9 buttons audited).",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "4.5",
+          "name": "HBox Baseline Card Alignment >= 95%",
+          "awarded": 3.0,
+          "max_points": 3.0,
+          "passed": true,
+          "details": "Card grid baseline alignment achieved: 100.0% (>= 95% requirement).",
+          "error": null,
+          "telemetry": {}
+        },
+        {
+          "id": "4.6",
+          "name": "Responsive Layout on Desktop (1920) & Laptop (1366)",
+          "awarded": 1.5,
+          "max_points": 3.0,
+          "passed": false,
+          "details": "",
+          "error": "Horizontal overflow detected (1920: False, 1366: True).",
+          "telemetry": {}
+        }
+      ]
+    }
+  }
+}

@@ -873,7 +873,7 @@
 <span class="token-keyword">from</span> insilos.security <span class="token-keyword">import</span> MerkleAirGapValidator
 
 <span class="token-decorator">@pipeline</span>(layer=<span class="token-string">"SCADA_L1"</span>, frequency_hz=<span class="token-number">50.0</span>, airgap_enforced=<span class="token-keyword">True</span>)
-<span class="token-keyword">async def</span> <span class="token-function">ingest_high_frequency_telemetry</span>(node_id: <span class="token-class">str</span> = <span class="token-string">"GENCO3_TURBINE_04"</span>):
+<span class="token-keyword">async def</span> <span class="token-function">ingest_high_frequency_telemetry</span>(node_id: <span class="token-class">str</span> = <span class="token-string">"ENERGY_TURBINE_04"</span>):
     client = OPCUAClient.<span class="token-function">connect</span>(endpoint=<span class="token-string">"opc.tcp://10.24.8.1:4840"</span>, tls_cert=<span class="token-string">"/etc/insilos/pki/hsm.crt"</span>)
     stream = client.<span class="token-function">subscribe_telemetry</span>(metrics=[<span class="token-string">"vibration_rms"</span>, <span class="token-string">"stator_temp"</span>, <span class="token-string">"oil_pressure"</span>])
     
@@ -1147,7 +1147,7 @@
                                         <div class="ins-cockpit-footer">
                                             <div class="d-flex align-items-center gap-2">
                                                 <span class="ins-live-ping"/>
-                                                <span>Triển khai thực chiến: <strong class="text-white">EVN Genco 3 • Mobifone • FDI</strong></span>
+                                                <span>Triển khai thực chiến: <strong class="text-white">Năng Lượng Quốc Gia • Viễn Thông • FDI</strong></span>
                                             </div>
                                             <span class="badge bg-white-10 text-cyan border border-white-10">ISO 27001 &amp; SOC 2 Type II</span>
                                         </div>
@@ -1375,7 +1375,7 @@
                                     <td class="py-4 px-4 align-top">
                                         <div class="d-flex align-items-start gap-2">
                                             <svg class="ph-duotone ph-x-circle ph-sm text-danger flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg>
-                                            <p class="text-secondary small mb-0">Tắc nghẽn bốc dỡ B/L giấy và Packing List tại Tân Cảng Cát Lái và Cái Mép. Sai mã HS code gây luồng Đỏ, phát sinh phí lưu container DET/DEM từ 1.200.000 đến 3.500.000 VNĐ/cont/ngày.</p>
+                                            <p class="text-secondary small mb-0">Tắc nghẽn bốc dỡ B/L giấy và Packing List tại các cụm cảng biển quốc tế và cảng nước sâu. Sai mã HS code gây luồng Đỏ, phát sinh phí lưu container DET/DEM từ 1.200.000 đến 3.500.000 VNĐ/cont/ngày.</p>
                                         </div>
                                     </td>
                                     <td class="py-4 px-4 align-top">
@@ -1399,7 +1399,7 @@
                                     <td class="py-4 px-4 align-top">
                                         <div class="d-flex align-items-start gap-2">
                                             <svg class="ph-duotone ph-x-circle ph-sm text-danger flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-x-circle"/></svg>
-                                            <p class="text-secondary small mb-0">BOM phân xưởng cơ khí và kho cáp bị lệch giữa bản vẽ CAD và lệnh sản xuất MO. Thất thoát phế liệu thép tấm Hòa Phát và tồn kho ảo dây cáp CADIVI không thể truy cứu trách nhiệm.</p>
+                                            <p class="text-secondary small mb-0">BOM phân xưởng cơ khí và kho cáp bị lệch giữa bản vẽ CAD và lệnh sản xuất MO. Thất thoát phế liệu thép tấm tiêu chuẩn và tồn kho ảo dây cáp công nghiệp không thể truy cứu trách nhiệm.</p>
                                         </div>
                                     </td>
                                     <td class="py-4 px-4 align-top">
@@ -1511,16 +1511,16 @@
 
                 <!-- 4-Card Multi-Column Grid with Strict HBox Baseline Symmetry -->
                 <div class="row g-4 ins-card-row-balanced">
-                    <!-- Case 1: EVN Genco 3 -->
+                    <!-- Case 1: National Energy Corporation -->
                     <div class="col-lg-3 col-md-6">
                         <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-case-card">
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">EVN_GENCO3_500KV</span>
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">ENERGY_GRID_500KV</span>
                                     <span class="ins-live-ping ins-live-ping--emerald"/>
                                 </div>
-                                <h3 class="h5 fw-bold text-white mb-1 card-title">EVN Genco 3</h3>
-                                <div class="ins-ind-title text-cyan font-monospace small mb-2">Tổ Hợp Nhiệt Điện Phú Mỹ</div>
+                                <h3 class="h5 fw-bold text-white mb-1 card-title">Tập Đoàn Năng Lượng Quốc Gia</h3>
+                                <div class="ins-ind-title text-cyan font-monospace small mb-2">Tổ Hợp Phát Điện Trọng Điểm</div>
                                 <p class="card-text text-secondary small mb-3">
                                     Giám sát rung động FFT và nhiệt độ cuộn dây máy biến áp 500kV theo chuẩn ISO 10816, cảnh báo hư hỏng trước 14 ngày.
                                 </p>
@@ -1549,15 +1549,15 @@
                         </div>
                     </div>
 
-                    <!-- Case 2: MobiFone Global -->
+                    <!-- Case 2: National Telecom Corporation -->
                     <div class="col-lg-3 col-md-6">
                         <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-case-card">
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">MOBIFONE_FSM_BTS</span>
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">TELCO_FSM_BTS</span>
                                     <span class="ins-live-ping ins-live-ping--emerald"/>
                                 </div>
-                                <h3 class="h5 fw-bold text-white mb-1 card-title">MobiFone Global</h3>
+                                <h3 class="h5 fw-bold text-white mb-1 card-title">Tập Đoàn Viễn Thông Quốc Gia</h3>
                                 <div class="ins-ind-title text-cyan font-monospace small mb-2">Mạng Lưới 1.200 Trạm BTS</div>
                                 <p class="card-text text-secondary small mb-3">
                                     Điều phối tác vụ hiện trường tự động, tích hợp ký hóa đơn điện tử TT 78 trực tiếp từ ứng dụng mobile, triệt tiêu 100% sai lệch tồn kho.
@@ -1587,18 +1587,18 @@
                         </div>
                     </div>
 
-                    <!-- Case 3: Tân Cảng Cát Lái (SNP) -->
+                    <!-- Case 3: International Container Port -->
                     <div class="col-lg-3 col-md-6">
                         <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-case-card">
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">SNP_LOGISTICS_18B</span>
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">PORT_LOGISTICS_18B</span>
                                     <span class="ins-live-ping ins-live-ping--emerald"/>
                                 </div>
-                                <h3 class="h5 fw-bold text-white mb-1 card-title">Tân Cảng Cát Lái</h3>
+                                <h3 class="h5 fw-bold text-white mb-1 card-title">Cụm Cảng Container Quốc Tế</h3>
                                 <div class="ins-ind-title text-cyan font-monospace small mb-2">Cảng Container Trọng Điểm</div>
                                 <p class="card-text text-secondary small mb-3">
-                                    AI-OCR bóc tách 100% chứng từ B/L, tự động điều phối xe kéo drayage liên cảng, kiểm soát gói thầu SNP 18.675 Tỷ VNĐ minh bạch.
+                                    AI-OCR bóc tách 100% chứng từ B/L, tự động điều phối xe kéo drayage liên cảng, kiểm soát gói thầu vận tải liên cảng 18.675 Tỷ VNĐ minh bạch.
                                 </p>
                                 <div class="p-3 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-3 mb-3">
                                     <div class="d-flex justify-content-between font-monospace small mb-1">
@@ -1625,15 +1625,15 @@
                         </div>
                     </div>
 
-                    <!-- Case 4: FDI Bonfiglioli -->
+                    <!-- Case 4: FDI Mechatronics Corporation -->
                     <div class="col-lg-3 col-md-6">
                         <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal ins-case-card">
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">FDI_BONFIGLIOLI_MES</span>
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">FDI_MECHATRONICS_MES</span>
                                     <span class="ins-live-ping ins-live-ping--emerald"/>
                                 </div>
-                                <h3 class="h5 fw-bold text-white mb-1 card-title">FDI Bonfiglioli</h3>
+                                <h3 class="h5 fw-bold text-white mb-1 card-title">Tập Đoàn Cơ Điện Tử FDI</h3>
                                 <div class="ins-ind-title text-cyan font-monospace small mb-2">Sản Xuất Động Cơ &amp; Hộp Số</div>
                                 <p class="card-text text-secondary small mb-3">
                                     Tích hợp dữ liệu SCADA máy chấn và robot hàn vào BOM 2 cấp, kiểm soát chặt chẽ giá thành phân xưởng và chất lượng thành phẩm.
@@ -1670,6 +1670,633 @@
 
 
     <!-- ================================================================= -->
+    <!-- CYCLE 3 SIGNATURE SNIPPETS                                        -->
+    <!-- ================================================================= -->
+
+    <!-- Snippet 16: Sovereign Architecture Stack (3-Tier Infrastructure) -->
+    <template id="s_insilos_sovereign_stack" name="Sovereign Architecture Stack">
+        <section class="s_features o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_sovereign_stack" data-name="Sovereign Architecture Stack" data-bs-theme="dark">
+            <div class="container">
+                <div class="text-center mb-5 col-lg-9 mx-auto">
+                    <div class="ins-pill-badge mb-2">
+                        <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                        <span>Sovereign Infrastructure &amp; Zero-Trust Isolation</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                        Kiến Trúc Triển Khai Chủ Quyền Dữ Liệu 3 Lớp<br class="d-none d-sm-inline"/> (Sovereign Architecture Stack)
+                    </h2>
+                    <p class="lead text-secondary ins-lead-balance">
+                        Bảo đảm 100% dữ liệu sản xuất, SCADA và sổ cái tài chính không bao giờ rời khỏi biên giới chủ quyền doanh nghiệp.
+                    </p>
+                </div>
+                <div class="row g-4 ins-card-row-balanced">
+                    <!-- Tier 1: Air-gapped Private K8s -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-50">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="ins-card-pictogram ins-pictogram-lg">
+                                        <svg class="ph-duotone ph-lock-key ph-xl text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lock-key"/></svg>
+                                    </div>
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">TIER 1 // ON-PREMISE</span>
+                                </div>
+                                <h3 class="h4 fw-bold text-white mb-2">Air-Gapped Private K8s</h3>
+                                <p class="text-secondary small mb-3">
+                                    Cụm máy chủ Kubernetes nội bộ cách ly internet hoàn toàn (Air-Gapped), tự động đồng bộ qua giao thức nội bộ bảo mật cao.
+                                </p>
+                                <ul class="list-unstyled text-secondary small font-monospace mb-4">
+                                    <li class="d-flex align-items-center gap-2 mb-1">
+                                        <svg class="ph-duotone ph-check-circle ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                        <span>Zero Outbound Telemetry</span>
+                                    </li>
+                                    <li class="d-flex align-items-center gap-2 mb-1">
+                                        <svg class="ph-duotone ph-check-circle ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                        <span>FIPS 140-3 Hardware HSM</span>
+                                    </li>
+                                    <li class="d-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-check-circle ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                        <span>Local LLM Weights &amp; Cache</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto">
+                                <span class="badge bg-dark border border-secondary border-opacity-25 text-white font-monospace small">SLA 99.999% · 0 BITS LEAKED</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tier 2: Sovereign GovCloud -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 p-4 border border-primary border-opacity-50 rounded-4 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-75 position-relative overflow-hidden">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="ins-card-pictogram ins-pictogram-lg">
+                                        <svg class="ph-duotone ph-cloud-check ph-xl text-primary"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cloud-check"/></svg>
+                                    </div>
+                                    <span class="badge bg-primary bg-opacity-25 text-primary font-monospace small">TIER 2 // GOVCLOUD</span>
+                                </div>
+                                <h3 class="h4 fw-bold text-white mb-2">Sovereign GovCloud</h3>
+                                <p class="text-secondary small mb-3">
+                                    Môi trường điện toán đám mây chủ quyền đáp ứng tiêu chuẩn Trung tâm Dữ liệu Quốc gia (NĐ 13/2023 &amp; QCVN 116).
+                                </p>
+                                <ul class="list-unstyled text-secondary small font-monospace mb-4">
+                                    <li class="d-flex align-items-center gap-2 mb-1">
+                                        <svg class="ph-duotone ph-check-circle ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                        <span>Tier 3/4 Certified Data Center</span>
+                                    </li>
+                                    <li class="d-flex align-items-center gap-2 mb-1">
+                                        <svg class="ph-duotone ph-check-circle ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                        <span>100% Vietnam Data Residency</span>
+                                    </li>
+                                    <li class="d-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-check-circle ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                        <span>Dedicated Optical Dark Fiber</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto">
+                                <span class="badge bg-dark border border-secondary border-opacity-25 text-white font-monospace small">ISO 27001 · SOC 2 TYPE II</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tier 3: Edge SCADA Isolation -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-card-equal bg-black bg-opacity-50">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="ins-card-pictogram ins-pictogram-lg">
+                                        <svg class="ph-duotone ph-cpu ph-xl text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
+                                    </div>
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">TIER 3 // INDUSTRIAL EDGE</span>
+                                </div>
+                                <h3 class="h4 fw-bold text-white mb-2">Edge SCADA Node</h3>
+                                <p class="text-secondary small mb-3">
+                                    Phân xưởng và trạm thiết bị ngoại vi với diode một chiều vật lý, chuẩn IEC 62443 chống xâm nhập hạ tầng công nghiệp.
+                                </p>
+                                <ul class="list-unstyled text-secondary small font-monospace mb-4">
+                                    <li class="d-flex align-items-center gap-2 mb-1">
+                                        <svg class="ph-duotone ph-check-circle ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                        <span>Hardware Unidirectional Diode</span>
+                                    </li>
+                                    <li class="d-flex align-items-center gap-2 mb-1">
+                                        <svg class="ph-duotone ph-check-circle ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                        <span>OPC-UA / Modbus TCP Native</span>
+                                    </li>
+                                    <li class="d-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-check-circle ph-sm text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                        <span>Sub-5ms Deterministic Telemetry</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto">
+                                <span class="badge bg-dark border border-secondary border-opacity-25 text-white font-monospace small">IEC 62443-4-2 · SIL-3 READY</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Snippet 17: Compliance Certification Matrix -->
+    <template id="s_insilos_compliance_matrix" name="Compliance Certification Matrix">
+        <section class="s_comparisons o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_compliance_matrix" data-name="Compliance Certification Matrix" data-bs-theme="dark">
+            <div class="container">
+                <div class="text-center mb-5 col-lg-9 mx-auto">
+                    <div class="ins-pill-badge mb-2">
+                        <svg class="ph-duotone ph-certificate ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-certificate"/></svg>
+                        <span>Regulatory Defense &amp; Audit Readiness</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                        Ma Trận Chứng Chỉ Bảo Mật &amp;<br class="d-none d-sm-inline"/> Tuân Thủ Pháp Quy Quốc Tế (GRC Matrix)
+                    </h2>
+                    <p class="lead text-secondary ins-lead-balance">
+                        Hệ thống kiểm soát nội bộ và bằng chứng kiểm toán độc lập đáp ứng các tiêu chuẩn khắt khe nhất trong nước và quốc tế.
+                    </p>
+                </div>
+                <div class="card border border-secondary border-opacity-25 rounded-4 overflow-hidden mb-4 bg-black bg-opacity-50">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0 align-middle">
+                            <thead>
+                                <tr class="border-bottom border-secondary border-opacity-25 bg-black bg-opacity-75">
+                                    <th class="py-3 px-4 text-secondary font-monospace small col-3">CHUẨN MỰC PHÁP LÝ</th>
+                                    <th class="py-3 px-4 text-secondary font-monospace small col-3">PHẠM VI ÁP DỤNG</th>
+                                    <th class="py-3 px-4 text-secondary font-monospace small col-4">CƠ CHẾ BẢO ĐẢM KỸ THUẬT</th>
+                                    <th class="py-3 px-4 text-secondary font-monospace small col-2 text-end">TRẠNG THÁI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-4 px-4">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <svg class="ph-duotone ph-shield-check ph-md text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                            <strong class="text-white">SOC 2 Type II</strong>
+                                        </div>
+                                        <span class="text-secondary smaller font-monospace">AICPA Trust Services</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-secondary small">Security, Availability, Confidentiality toàn bộ cụm SaaS &amp; GovCloud</td>
+                                    <td class="py-4 px-4 text-secondary small font-monospace">Continuous Audit Logging, TLS 1.3, AES-256 GCM at Rest</td>
+                                    <td class="py-4 px-4 text-end">
+                                        <span class="badge bg-secondary bg-opacity-25 text-emerald font-monospace small">AUDITED · CERTIFIED</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-4 px-4">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <svg class="ph-duotone ph-lock ph-md text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lock"/></svg>
+                                            <strong class="text-white">ISO/IEC 27001:2022</strong>
+                                        </div>
+                                        <span class="text-secondary smaller font-monospace">Information Security Management</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-secondary small">Hệ thống Quản lý An toàn Thông tin trung tâm dữ liệu và phần mềm</td>
+                                    <td class="py-4 px-4 text-secondary small font-monospace">ISMS Framework, Role-Based Access Control (RBAC), Penetration Tested</td>
+                                    <td class="py-4 px-4 text-end">
+                                        <span class="badge bg-secondary bg-opacity-25 text-emerald font-monospace small">CERTIFIED 2026</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-4 px-4">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <svg class="ph-duotone ph-wrench ph-md text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-wrench"/></svg>
+                                            <strong class="text-white">IEC 62443-4-2</strong>
+                                        </div>
+                                        <span class="text-secondary smaller font-monospace">Industrial Cybersecurity</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-secondary small">An ninh mạng tự động hóa công nghiệp OT, SCADA và Edge Gateway</td>
+                                    <td class="py-4 px-4 text-secondary small font-monospace">Hardware Diode Isolation, Modbus/OPC-UA Inspection, Zero Trust OT</td>
+                                    <td class="py-4 px-4 text-end">
+                                        <span class="badge bg-secondary bg-opacity-25 text-emerald font-monospace small">CONFORMANT</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-4 px-4">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <svg class="ph-duotone ph-receipt ph-md text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-receipt"/></svg>
+                                            <strong class="text-white">Thông tư 78 &amp; VAS 200</strong>
+                                        </div>
+                                        <span class="text-secondary smaller font-monospace">Bộ Tài Chính Việt Nam</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-secondary small">Hóa đơn điện tử, hạch toán giá thành công nghiệp và thuế TNDN</td>
+                                    <td class="py-4 px-4 text-secondary small font-monospace">Direct S-Invoice Integration, Merkle Proof 3-Way Matching TK154/632</td>
+                                    <td class="py-4 px-4 text-end">
+                                        <span class="badge bg-secondary bg-opacity-25 text-emerald font-monospace small">100% COMPLIANT</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-4">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <svg class="ph-duotone ph-shield-check ph-md text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                            <strong class="text-white">Nghị định 13/2023/NĐ-CP</strong>
+                                        </div>
+                                        <span class="text-secondary smaller font-monospace">Bảo vệ Dữ liệu Cá nhân (PDPD)</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-secondary small">Xử lý dữ liệu định danh nhân sự, hồ sơ đối tác và tài xế logistics</td>
+                                    <td class="py-4 px-4 text-secondary small font-monospace">Data Anonymization, Consent Audit Logs, Zero Cross-Border Transfer</td>
+                                    <td class="py-4 px-4 text-end">
+                                        <span class="badge bg-secondary bg-opacity-25 text-emerald font-monospace small">VERIFIED BY LEGAL</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a href="/resources" class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2">
+                        <span>Tải Trọn Bộ Hồ Sơ Kiểm Toán GRC</span>
+                        <svg class="ph-duotone ph-download-simple ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-download-simple"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Snippet 18: Interactive Industrial Sandbox Workbench -->
+    <template id="s_insilos_sandbox_workbench" name="Interactive Industrial Sandbox Workbench">
+        <section class="s_features o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_sandbox_workbench" data-name="Interactive Industrial Sandbox Workbench" data-bs-theme="dark">
+            <div class="container">
+                <div class="text-center mb-5 col-lg-9 mx-auto">
+                    <div class="ins-pill-badge mb-2">
+                        <svg class="ph-duotone ph-terminal-window ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-terminal-window"/></svg>
+                        <span>Live Software Experience Engine</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                        Phòng Thí Nghiệm Trực Quan Hóa Vận Hành<br class="d-none d-sm-inline"/> (Industrial Sandbox Workbench)
+                    </h2>
+                    <p class="lead text-secondary ins-lead-balance">
+                        Trải nghiệm sức mạnh xử lý thực tế của 4 công cụ lõi: Trích xuất chứng từ IDP, Đồ thị tri thức Knowledge Graph, Tra cứu mã HS WTO và Kích hoạt điều độ bảo trì FSM.
+                    </p>
+                </div>
+
+                <div class="card border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-2xl bg-black bg-opacity-75">
+                    <!-- Workbench Tabs Header -->
+                    <div class="card-header border-bottom border-secondary border-opacity-25 p-2 bg-dark d-flex flex-wrap gap-2">
+                        <ul class="nav nav-pills gap-2 flex-grow-1" id="ins-sandbox-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active rounded-pill font-monospace small px-3 py-2 d-flex align-items-center gap-2" id="tab-idp-btn" data-bs-toggle="pill" data-bs-target="#ins-tool-idp" type="button" role="tab" aria-selected="true">
+                                    <svg class="ph-duotone ph-file-text ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                    <span>01. IDP Extraction</span>
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link rounded-pill font-monospace small px-3 py-2 d-flex align-items-center gap-2" id="tab-kg-btn" data-bs-toggle="pill" data-bs-target="#ins-tool-kg" type="button" role="tab" aria-selected="false">
+                                    <svg class="ph-duotone ph-graph ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-graph"/></svg>
+                                    <span>02. Knowledge Graph</span>
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link rounded-pill font-monospace small px-3 py-2 d-flex align-items-center gap-2" id="tab-hscode-btn" data-bs-toggle="pill" data-bs-target="#ins-tool-hscode" type="button" role="tab" aria-selected="false">
+                                    <svg class="ph-duotone ph-barcode ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-barcode"/></svg>
+                                    <span>03. HS Code Recommender</span>
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link rounded-pill font-monospace small px-3 py-2 d-flex align-items-center gap-2" id="tab-fsm-btn" data-bs-toggle="pill" data-bs-target="#ins-tool-fsm" type="button" role="tab" aria-selected="false">
+                                    <svg class="ph-duotone ph-wrench ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-wrench"/></svg>
+                                    <span>04. FSM Maintenance Dispatch</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Workbench Tab Contents -->
+                    <div class="card-body p-4">
+                        <div class="tab-content" id="ins-sandbox-tab-content">
+                            <!-- Tool 1: IDP -->
+                            <div class="tab-pane fade show active" id="ins-tool-idp" role="tabpanel">
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
+                                        <div class="p-3 bg-dark rounded-3 border border-secondary border-opacity-25 h-100">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <strong class="text-white font-monospace small">MẪU CHỨNG TỪ: TỜ KHAI HẢI QUAN HQ-01</strong>
+                                                <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">NEON OCR SCAN</span>
+                                            </div>
+                                            <div class="ins-doc-render-preview p-3 bg-black rounded border border-secondary border-opacity-10 position-relative">
+                                                <div class="p-2 border border-secondary border-opacity-25 rounded mb-2">
+                                                    <span class="text-secondary smaller d-block">SỐ TỜ KHAI HẢI QUAN:</span>
+                                                    <span class="text-white font-monospace fw-bold ins-idp-bounding-box">104889201920/E11</span>
+                                                </div>
+                                                <div class="p-2 border border-secondary border-opacity-25 rounded mb-2">
+                                                    <span class="text-secondary smaller d-block">MÔ TẢ HÀNG HÓA &amp; MÃ HS:</span>
+                                                    <span class="text-white font-monospace fw-bold ins-idp-bounding-box">7208.38.00 — THÉP TẤM CÁN NÓNG TIÊU CHUẨN SS400</span>
+                                                </div>
+                                                <div class="p-2 border border-secondary border-opacity-25 rounded">
+                                                    <span class="text-secondary smaller d-block">TRỊ GIÁ TÍNH THUẾ (CIF CẢNG QUỐC TẾ):</span>
+                                                    <span class="text-white font-monospace fw-bold ins-idp-bounding-box">537,500,000 VND (THUẾ SUẤT 0% EVFTA)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="p-3 bg-dark rounded-3 border border-secondary border-opacity-25 h-100 d-flex flex-column justify-content-between">
+                                            <div>
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <strong class="text-white font-monospace small">KẾT QUẢ TRÍCH XUẤT STRUCTURAL JSON</strong>
+                                                    <span class="badge bg-secondary bg-opacity-25 text-emerald font-monospace small">STP 99.8% · 2.1s</span>
+                                                </div>
+                                                <pre class="bg-black p-3 rounded text-cyan font-monospace small mb-3 overflow-auto">{
+  "document_type": "CUSTOMS_DECLARATION_HQ01",
+  "declaration_no": "104889201920/E11",
+  "hs_code": "7208.38.00",
+  "commodity": "Hot-rolled steel plates SS400",
+  "quantity_kg": 25000,
+  "unit_price_vnd": 21500,
+  "total_cif_vnd": 537500000,
+  "fta_regime": "EVFTA_FORM_EUR1",
+  "tariff_rate_applied": "0.0%",
+  "audit_hash": "sha256:7b3a98c2f109de78a..."
+}</pre>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <a href="/solutions/vertical-idp" class="btn btn-primary rounded-pill px-4 py-2 font-monospace small">Đẩy Dữ Liệu Vào Sổ Cái ERP</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tool 2: Knowledge Graph -->
+                            <div class="tab-pane fade" id="ins-tool-kg" role="tabpanel">
+                                <div class="row g-4">
+                                    <div class="col-lg-8">
+                                        <div class="p-4 bg-dark rounded-3 border border-secondary border-opacity-25 text-center">
+                                            <div class="ins-kg-canvas-container p-4 bg-black rounded border border-secondary border-opacity-10">
+                                                <svg class="w-100" viewBox="0 0 600 240" fill="none">
+                                                    <line x1="100" y1="120" x2="250" y2="60" stroke="#FF8000" stroke-width="2" stroke-dasharray="4 4"/>
+                                                    <line x1="250" y1="60" x2="400" y2="60" stroke="#00FFFF" stroke-width="2"/>
+                                                    <line x1="250" y1="60" x2="250" y2="180" stroke="#10B981" stroke-width="2"/>
+                                                    <line x1="400" y1="60" x2="520" y2="120" stroke="#FF8000" stroke-width="2"/>
+                                                    <!-- Nodes -->
+                                                    <circle cx="100" cy="120" r="32" fill="#1A1A1A" stroke="#FF8000" stroke-width="2"/>
+                                                    <text x="100" y="125" text-anchor="middle" fill="#FFFFFF" font-size="11" font-family="monospace">Nhà Cung Cấp</text>
+                                                    <circle cx="250" cy="60" r="28" fill="#1A1A1A" stroke="#00FFFF" stroke-width="2"/>
+                                                    <text x="250" y="65" text-anchor="middle" fill="#FFFFFF" font-size="10" font-family="monospace">Lô SS400</text>
+                                                    <circle cx="250" cy="180" r="28" fill="#1A1A1A" stroke="#10B981" stroke-width="2"/>
+                                                    <text x="250" y="185" text-anchor="middle" fill="#FFFFFF" font-size="10" font-family="monospace">Trumpf 12kW</text>
+                                                    <circle cx="400" cy="60" r="28" fill="#1A1A1A" stroke="#FF8000" stroke-width="2"/>
+                                                    <text x="400" y="65" text-anchor="middle" fill="#FFFFFF" font-size="10" font-family="monospace">Đơn SO-001</text>
+                                                    <circle cx="520" cy="120" r="32" fill="#1A1A1A" stroke="#00FFFF" stroke-width="2"/>
+                                                    <text x="520" y="125" text-anchor="middle" fill="#FFFFFF" font-size="11" font-family="monospace">Cảng Quốc Tế</text>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="p-3 bg-dark rounded-3 border border-secondary border-opacity-25 h-100 d-flex flex-column justify-content-between">
+                                            <div>
+                                                <strong class="text-white font-monospace small d-block mb-2">INSPECTOR THỰC THỂ TRI THỨC</strong>
+                                                <p class="text-secondary small mb-3">Truy vết nguồn gốc và ràng buộc cung ứng tức thì trong &lt;15ms.</p>
+                                                <div class="p-2 bg-black rounded font-monospace small text-secondary">
+                                                    <div>Thực thể: <span class="text-cyan">Nhà Cung Cấp Thép Công Nghiệp</span></div>
+                                                    <div>Mã lô: <span class="text-white">LOT-2026-09</span></div>
+                                                    <div>Tiêu chuẩn: <span class="text-emerald">JIS G3101 SS400</span></div>
+                                                    <div>Độ tin cậy: <span class="text-emerald">100% Merkle Proof</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="pt-3">
+                                                <a href="/solutions/enterprise-knowledge-graph" class="btn btn-outline-secondary rounded-pill w-100 font-monospace small">Khám Phá Bản Đồ Tri Thức</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tool 3: HS Code -->
+                            <div class="tab-pane fade" id="ins-tool-hscode" role="tabpanel">
+                                <div class="row g-4">
+                                    <div class="col-lg-12">
+                                        <div class="p-4 bg-dark rounded-3 border border-secondary border-opacity-25">
+                                            <div class="input-group mb-4">
+                                                <span class="input-group-text bg-black border-secondary border-opacity-25 text-cyan font-monospace">TÌM KIẾM MẶT HÀNG</span>
+                                                <input type="text" class="form-control bg-black border-secondary border-opacity-25 text-white font-monospace" placeholder="Ví dụ: Thép cuộn cán nóng, Cáp ngầm trung thế, Động cơ điện xoay chiều..." value="Thép cuộn cán nóng SS400"/>
+                                                <button class="btn btn-primary font-monospace px-4" type="button">TRA CỨU WTO</button>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-dark table-hover mb-0 align-middle">
+                                                    <thead>
+                                                        <tr class="border-bottom border-secondary border-opacity-25">
+                                                            <th class="py-2 text-secondary font-monospace small">MÃ HS (8 CHỮ SỐ)</th>
+                                                            <th class="py-2 text-secondary font-monospace small">MÔ TẢ DANH MỤC</th>
+                                                            <th class="py-2 text-secondary font-monospace small">THUẾ SUẤT MFN</th>
+                                                            <th class="py-2 text-secondary font-monospace small">EVFTA / CPTPP</th>
+                                                            <th class="py-2 text-secondary font-monospace small">QUY TẮC XUẤT XỨ (ROO)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="font-monospace text-cyan fw-bold">7208.38.00</td>
+                                                            <td class="text-white small">Thép hợp kim cán phẳng dạng cuộn, chiều dày &gt; 3mm</td>
+                                                            <td class="text-secondary font-monospace small">5.0%</td>
+                                                            <td class="text-emerald font-monospace small">0.0% (Form EUR.1)</td>
+                                                            <td class="text-secondary font-monospace small">Chuyển đổi nhóm (CTH) / RVC 40%</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tool 4: FSM Dispatch -->
+                            <div class="tab-pane fade" id="ins-tool-fsm" role="tabpanel">
+                                <div class="row g-4 align-items-center">
+                                    <div class="col-lg-6">
+                                        <div class="p-3 bg-dark rounded-3 border border-secondary border-opacity-25">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <strong class="text-white font-monospace small">CẢNH BÁO RUNG LẮC BẢO TRÌ DỰ ĐOÁN</strong>
+                                                <span class="badge bg-danger text-white font-monospace small">CRITICAL ALARM</span>
+                                            </div>
+                                            <p class="text-secondary small mb-2">Thiết bị: <strong class="text-white">Cẩu Bờ STS-04 Cụm Cảng Biển Quốc Tế</strong></p>
+                                            <p class="text-secondary small mb-3">Cảm biến rung ổ bi vượt ngưỡng: <span class="text-danger font-monospace fw-bold">4.8 mm/s</span> (Ngưỡng ISO 10816: &lt;2.8 mm/s).</p>
+                                            <button type="button" class="btn btn-primary rounded-pill font-monospace small px-4 py-2">Kích Hoạt Phiếu Điều Độ FSM</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="p-3 bg-black rounded-3 border border-secondary border-opacity-25 font-monospace small text-cyan">
+                                            <div class="text-emerald mb-2">✅ PHIẾU ĐIỀU ĐỘ ĐÃ ĐƯỢC TẠO TỰ ĐỘNG:</div>
+                                            <div>MÃ PHIẾU: <span class="text-white">#WO-2026-0928</span></div>
+                                            <div>KỸ THUẬT VIÊN: <span class="text-white">Kỹ Sư Chuyên Trách (Đội Cơ Giới Cảng Biển)</span></div>
+                                            <div>SLA TIẾP CẬN: <span class="text-white">&lt; 45 phút</span></div>
+                                            <div>VẬT TƯ DỰ PHÒNG: <span class="text-white">Vòng bi SKF 22320 CC/W33 (Kho Cảng Biển)</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Snippet 19: Multi-Industry Value Engineering Studio -->
+    <template id="s_insilos_value_engineering_studio" name="Multi-Industry Value Engineering Studio">
+        <section class="s_features o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_value_engineering_studio" data-name="Multi-Industry Value Engineering Studio" data-bs-theme="dark">
+            <div class="container">
+                <div class="text-center mb-5 col-lg-9 mx-auto">
+                    <div class="ins-pill-badge mb-2">
+                        <svg class="ph-duotone ph-calculator ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-calculator"/></svg>
+                        <span>Executive ROI &amp; TCO Financial Modeling</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                        Studio Tính Toán Hiệu Quả Đầu Tư Đa Ngành<br class="d-none d-sm-inline"/> (Value Engineering Studio)
+                    </h2>
+                    <p class="lead text-secondary ins-lead-balance">
+                        Xác lập cơ sở kinh tế định lượng: NPV 3 năm, Tỷ suất hoàn vốn nội bộ (IRR), Thời gian thu hồi vốn và Tỷ lệ ROI thực chứng theo dữ liệu ngành.
+                    </p>
+                </div>
+
+                <div class="card border border-secondary border-opacity-25 rounded-4 overflow-hidden bg-black bg-opacity-75 p-4 mb-4">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-lg-6">
+                            <div class="mb-4">
+                                <label class="text-secondary font-monospace small d-block mb-2">NGÀNH NGHỀ TRỌNG TÂM:</label>
+                                <div class="btn-group w-100" role="group">
+                                    <button type="button" class="btn btn-outline-secondary active font-monospace small">Sản Xuất</button>
+                                    <button type="button" class="btn btn-outline-secondary font-monospace small">Logistics &amp; Cảng</button>
+                                    <button type="button" class="btn btn-outline-secondary font-monospace small">Năng Lượng</button>
+                                    <button type="button" class="btn btn-outline-secondary font-monospace small">Dược Phẩm</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between text-secondary font-monospace small mb-1">
+                                    <span>QUY MÔ VẬN HÀNH (DOANH THU NĂM):</span>
+                                    <span class="text-cyan fw-bold">500 TỶ VNĐ</span>
+                                </div>
+                                <input type="range" class="form-range" min="100" max="2000" step="50" value="500"/>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between text-secondary font-monospace small mb-1">
+                                    <span>TỶ LỆ THẤT THOÁT / PHẾ LIỆU HIỆN TẠI:</span>
+                                    <span class="text-danger fw-bold">4.5%</span>
+                                </div>
+                                <input type="range" class="form-range" min="1" max="15" step="0.5" value="4.5"/>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="row g-3 ins-card-row-balanced">
+                                <div class="col-6">
+                                    <div class="card h-100 p-3 bg-dark border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between">
+                                        <span class="text-secondary font-monospace smaller">NPV 3 NĂM (r=10%)</span>
+                                        <div class="display-6 fw-bold text-emerald font-monospace my-2">+14.2 TỶ ₫</div>
+                                        <span class="text-secondary smaller">Net Present Value</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card h-100 p-3 bg-dark border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between">
+                                        <span class="text-secondary font-monospace smaller">TỶ SUẤT IRR</span>
+                                        <div class="display-6 fw-bold text-cyan font-monospace my-2">128.4%</div>
+                                        <span class="text-secondary smaller">Internal Rate of Return</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card h-100 p-3 bg-dark border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between">
+                                        <span class="text-secondary font-monospace smaller">THỜI GIAN HOÀN VỐN</span>
+                                        <div class="display-6 fw-bold text-primary font-monospace my-2">4.2 THÁNG</div>
+                                        <span class="text-secondary smaller">Payback Period</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card h-100 p-3 bg-dark border border-secondary border-opacity-25 rounded-3 d-flex flex-column justify-content-between">
+                                        <span class="text-secondary font-monospace smaller">3-NĂM CUMULATIVE ROI</span>
+                                        <div class="display-6 fw-bold text-emerald font-monospace my-2">342%</div>
+                                        <span class="text-secondary smaller">Return on Investment</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <a href="/pricing" class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2">
+                        <span>Xuất Báo Cáo Phân Tích Tài Chính C-Suite</span>
+                        <svg class="ph-duotone ph-file-pdf ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-pdf"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Snippet 20: Interactive Digital Twin Asset Simulator -->
+    <template id="s_insilos_digital_twin_simulator" name="Interactive Digital Twin Asset Simulator">
+        <section class="s_features o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_digital_twin_simulator" data-name="Interactive Digital Twin Asset Simulator" data-bs-theme="dark">
+            <div class="container">
+                <div class="text-center mb-5 col-lg-9 mx-auto">
+                    <div class="ins-pill-badge mb-2">
+                        <svg class="ph-duotone ph-cube ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cube"/></svg>
+                        <span>Real-Time OT Telemetry &amp; Anomaly Injection</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                        Mô Phỏng Bản Sao Kỹ Thuật Số Tài Sản Công Nghiệp<br class="d-none d-sm-inline"/> (Digital Twin Simulator)
+                    </h2>
+                    <p class="lead text-secondary ins-lead-balance">
+                        Giám sát chu kỳ sống và kịch bản bất thường của máy móc sản xuất, cẩu bờ và trạm biến áp với dòng telemetry cảm biến trực tiếp.
+                    </p>
+                </div>
+
+                <div class="card border border-secondary border-opacity-25 rounded-4 overflow-hidden bg-black bg-opacity-75 p-4 mb-4">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-lg-7">
+                            <div class="ins-dtwin-viewport p-4 bg-black rounded-3 border border-secondary border-opacity-25 text-center position-relative">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-outline-secondary btn-sm active font-monospace">Trạm 110kV</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm font-monospace">Cẩu Bờ STS</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm font-monospace">Robot Hàn Yaskawa</button>
+                                    </div>
+                                    <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace small">ISOMETRIC 3D SENSOR VIEW</span>
+                                </div>
+                                <svg class="w-100" viewBox="0 0 500 220" fill="none">
+                                    <polygon points="250,20 450,110 250,200 50,110" fill="#121212" stroke="#333333" stroke-width="2"/>
+                                    <line x1="250" y1="20" x2="250" y2="100" stroke="#00FFFF" stroke-width="2"/>
+                                    <circle cx="250" cy="100" r="16" fill="#1A1A1A" stroke="#FF8000" stroke-width="2"/>
+                                    <circle cx="350" cy="110" r="12" fill="#1A1A1A" stroke="#10B981" stroke-width="2"/>
+                                    <circle cx="150" cy="110" r="12" fill="#1A1A1A" stroke="#00FFFF" stroke-width="2"/>
+                                    <text x="250" y="140" text-anchor="middle" fill="#FFFFFF" font-size="12" font-family="monospace">MAIN TRANSFORMER 110kV</text>
+                                    <text x="250" y="160" text-anchor="middle" fill="#00FFFF" font-size="10" font-family="monospace">Vibration: 1.4 mm/s · Temp: 62°C</text>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5">
+                            <div class="p-3 bg-dark rounded-3 border border-secondary border-opacity-25">
+                                <strong class="text-white font-monospace small d-block mb-3">GIẢ LẬP SỰ CỐ BẤT THƯỜNG (ANOMALY INJECTION)</strong>
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between text-secondary font-monospace small mb-1">
+                                        <span>Rung Lắc Ổ Bi (mm/s):</span>
+                                        <span class="text-cyan fw-bold">1.4 mm/s (Bình thường)</span>
+                                    </div>
+                                    <input type="range" class="form-range" min="0.5" max="6.0" step="0.1" value="1.4"/>
+                                </div>
+                                <div class="p-3 bg-black rounded font-monospace small mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="text-secondary">TRẠNG THÁI VẬN HÀNH:</span>
+                                        <span class="badge bg-secondary bg-opacity-25 text-emerald">NORMAL // ISO 10816</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="text-secondary">NHIỆT ĐỘ CUỘN DÂY:</span>
+                                        <span class="text-white">62.4 °C</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-secondary">SÓNG HÀI THD:</span>
+                                        <span class="text-white">2.8% (&lt;5% Chuẩn Lưới Điện Quốc Gia)</span>
+                                    </div>
+                                </div>
+                                <a href="/platform" class="btn btn-outline-secondary rounded-pill w-100 font-monospace small">Khám Phá Toàn Diện Digital Twin</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+
+
+    <!-- ================================================================= -->
     <!-- 2. INHERIT WEBSITE SNIPPETS PALETTE                               -->
     <!-- ================================================================= -->
     <template id="insilos_custom_snippets" inherit_id="website.snippets" priority="20">
@@ -1689,6 +2316,12 @@
             <t t-snippet="insilos_website.s_ins_platform_topology" string="Platform Topology Diagram" group="content"/>
             <t t-snippet="insilos_website.s_insilos_grc_matrix" string="GRC Compliance Matrix" group="content"/>
             <t t-snippet="insilos_website.s_insilos_case_dossier" string="Executive Case Dossiers" group="columns"/>
+            <!-- Cycle 3 Signature Snippets -->
+            <t t-snippet="insilos_website.s_insilos_sovereign_stack" string="Sovereign Architecture Stack" group="columns" t-thumbnail="/website/static/src/img/snippets_thumbs/s_card.svg"/>
+            <t t-snippet="insilos_website.s_insilos_compliance_matrix" string="Compliance Certification Matrix" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_icon_list.svg"/>
+            <t t-snippet="insilos_website.s_insilos_sandbox_workbench" string="Industrial Sandbox Workbench" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_embed_code.svg"/>
+            <t t-snippet="insilos_website.s_insilos_value_engineering_studio" string="Value Engineering Studio" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_chart.svg"/>
+            <t t-snippet="insilos_website.s_insilos_digital_twin_simulator" string="Digital Twin Simulator" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_progress_bar.svg"/>
         </xpath>
     </template>
 </odoo>

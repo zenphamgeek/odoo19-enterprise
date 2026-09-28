@@ -3,13 +3,13 @@
     <template id="webclient_login" inherit_id="web.login_layout">
         <xpath expr="//t[@t-call='web.frontend_layout']/*[1]" position="before">
             <t t-set="body_classname" t-value="'o_home_menu_background'"/>
-            <t t-set="login_card_classes" t-value="'rounded-0 shadow-sm bg-white'"/>
+            <t t-set="login_card_classes" t-value="'rounded-3 shadow-lg'"/>
         </xpath>
     </template>
 
     <template id="webclient_bootstrap" inherit_id="web.webclient_bootstrap">
         <xpath expr="//meta[@name='theme-color']" position="replace">
-            <meta name="theme-color" t-att-content="'#242733' if color_scheme == 'dark' else '#004455'"/>
+            <meta name="theme-color" t-att-content="'#070B14' if color_scheme == 'dark' else '#FF8000'"/>
         </xpath>
     </template>
 </odoo>

@@ -50,7 +50,7 @@
             <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; margin-bottom: 28px;">
                 <div style="margin-bottom: 12px;">
                     <strong style="color: #00D2FF; font-size: 14px;">1. Video Master 4K Cinematic (105s):</strong>
-                    <div style="color: #94A3B8; font-size: 13px;">Khảo sát thực địa Phân xưởng Laser CNC 12kW, Robot hàn Yaskawa, Lắp ráp Pin LFP và Đội xe container Cát Lái.</div>
+                    <div style="color: #94A3B8; font-size: 13px;">Khảo sát thực địa Phân xưởng Laser CNC 12kW, Robot hàn Yaskawa, Lắp ráp Pin LFP và Đội xe container Cảng Biển Quốc Tế.</div>
                 </div>
                 <div style="margin-bottom: 12px;">
                     <strong style="color: #10B981; font-size: 14px;">2. Bản Vẽ Thiết Kế Kỹ Thuật &amp; BOM Đa Tầng:</strong>
@@ -84,9 +84,9 @@
             ]]></field>
         </record>
 
-        <!-- Template Tầng 2: Gửi Case Study MRP & Đội xe Cát Lái -->
+        <!-- Template Tầng 2: Gửi Case Study MRP & Đội Xe Cảng Biển Quốc Tế -->
         <record id="mailing_insilos_tier2_mrp_fleet" model="mailing.mailing">
-            <field name="subject">[Case Study Insilos] Tối Ưu Lệnh Sản Xuất &amp; Điều Phối Đội Xe Cát Lái</field>
+            <field name="subject">[Case Study Insilos] Tối Ưu Lệnh Sản Xuất &amp; Điều Phối Đội Xe Cảng Biển Quốc Tế</field>
             <field name="mailing_type">mail</field>
             <field name="reply_to_mode">update</field>
             <field name="mailing_model_id" ref="crm.model_crm_lead"/>
@@ -103,7 +103,7 @@
                 Cách Doanh Nghiệp Cắt Giảm 18.4% Chi Phí Nhiên Liệu &amp; Đạt OEE 92.5% Cùng Insilos
             </h1>
             <p style="color: #94A3B8; font-size: 14px; margin: 0;">
-                Dữ liệu đo lường thực tế từ tuyến KCN VSIP - Cảng Tân Cảng Cát Lái.
+                Dữ liệu đo lường thực tế từ tuyến KCN VSIP - Cụm Cảng Biển Quốc Tế.
             </p>
         </div>
 
@@ -189,7 +189,7 @@ for lead in records:
 
         <!-- Hoạt động Tầng 2: Gửi Case Study MRP & Fleet sau 2 Ngày -->
         <record id="activity_insilos_tier2_casestudy" model="marketing.activity">
-            <field name="name">Tầng 2: Gửi Case Study MRP &amp; Đội Xe Cát Lái (Sau 2 ngày)</field>
+            <field name="name">Tầng 2: Gửi Case Study MRP &amp; Đội Xe Cảng Biển Quốc Tế (Sau 2 ngày)</field>
             <field name="campaign_id" ref="campaign_insilos_industrial_nurturing"/>
             <field name="parent_id" ref="activity_insilos_tier1_instant"/>
             <field name="activity_type">email</field>

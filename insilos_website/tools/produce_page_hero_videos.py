@@ -200,7 +200,7 @@ CONFIGS = [
         "sub_label": ("CLOSED-LOOP AUTOMATION", "ERP WRITE-BACK // HUMAN IN THE LOOP"),
         "status_tag": "PRODUCTION",
         "status_text": "99.8% PRECISION // <15ms GRAPH",
-        "telemetry_text": "● CROSS-SYSTEM PIPELINE: ACTIVE // EVN · MOBIFONE · SWAROVSKI",
+        "telemetry_text": "● CROSS-SYSTEM PIPELINE: ACTIVE // ENERGY · TELECOM · FDI ENTERPRISE",
         "protocol_text": "MULTI-TENANT GOVERNED ARCHITECTURE // 2026.3 RELEASE"
     },
     {
@@ -329,14 +329,14 @@ CONFIGS = [
         "out_name": "hero_energy_opt",
         "duration": 8.0,
         "title": "OFFSHORE WIND & RENEWABLE SMART GRID",
-        "category": "EVN & CLEAN ENERGY AI",
+        "category": "NATIONAL & CLEAN ENERGY AI",
         "target_box": (640, 220, 1360, 720),
         "target_label": ("OFFSHORE TURBINE CLUSTER // 400 MW", "IEC 61850 SUBSTATION TELEMETRY · 98.2% YIELD FORECAST"),
         "sub_box": (1400, 520, 1820, 780),
         "sub_label": ("UNPLANNED DOWNTIME: -62%", "SPOT MARKET BIDDING DISPATCH"),
         "status_tag": "GRID STABLE",
         "status_text": "50.02 Hz NOMINAL // 98.2% FORECAST",
-        "telemetry_text": "● EVN GRID TELEMETRY: 2.4 kHz // P99: 11.2ms // DISPATCH READY",
+        "telemetry_text": "● NATIONAL GRID TELEMETRY: 2.4 kHz // P99: 11.2ms // DISPATCH READY",
         "protocol_text": "IEC 61850 / IEC 60870-5-104 / ISO 55000 CERTIFIED"
     },
     {
@@ -348,7 +348,7 @@ CONFIGS = [
         "title": "TELECOM BTS & SUBSTATION FIELD MOBILITY",
         "category": "WORKFORCE DISPATCH",
         "target_box": (620, 220, 1340, 720),
-        "target_label": ("WORKFORCE DISPATCH FABRIC // MOBIFONE", "GPS ROUTE OPTIMIZATION · FIRST-TIME FIX: 94.8%"),
+        "target_label": ("WORKFORCE DISPATCH FABRIC // NATIONAL TELCO", "GPS ROUTE OPTIMIZATION · FIRST-TIME FIX: 94.8%"),
         "sub_box": (1380, 520, 1820, 780),
         "sub_label": ("MTTR: -65% // SMR: 99.4%", "DIGITAL SOP 2026.3 IN FIELD"),
         "status_tag": "MOBILITY LIVE",

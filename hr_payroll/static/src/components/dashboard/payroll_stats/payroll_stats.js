@@ -59,8 +59,15 @@ export class PayrollDashboardStats extends Component {
     renderChart() {
         if (this.chart) {
             this.chart.destroy();
+            this.chart = null;
+        }
+        if (!this.canvasRef || !this.canvasRef.el || typeof Chart === "undefined") {
+            return;
         }
         const ctx = this.canvasRef.el.getContext('2d');
+        if (!ctx) {
+            return;
+        }
         this.chart = new Chart(ctx, this.getChartConfig());
     }
 

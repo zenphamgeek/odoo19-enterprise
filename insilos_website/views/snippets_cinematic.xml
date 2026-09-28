@@ -8,8 +8,8 @@
         <section class="s_cover o_colored_level o_cc o_cc5 position-relative overflow-hidden min-vh-100 d-flex align-items-center py-5" data-snippet="s_cover" data-name="Insilos 3D Hero Cinematic" data-bs-theme="dark">
             <!-- Ambient 3D Video Viewport -->
             <div class="position-absolute top-0 start-0 w-100 h-100 z-0 opacity-40 o_not_editable pointer-events-none overflow-hidden">
-                <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" class="w-100 h-100 object-fit-cover" poster="/insilos_website/static/src/img/logistics.webp">
-                    <source src="/insilos_website/static/src/video/hero_act1_opt.mp4" type="video/mp4"/>
+                <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" class="w-100 h-100 object-fit-cover" poster="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.webp">
+                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.mp4" type="video/mp4"/>
                 </video>
                 <!-- Cinematic Cybernetic Gradients -->
                 <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-60"/>
@@ -40,7 +40,7 @@
 
                         <!-- Executive Subheadline -->
                         <p class="lead text-secondary mb-5 col-lg-11 mx-auto fs-5">
-                            Hợp nhất từ <strong class="text-white">Bản vẽ R&amp;D</strong>, <strong class="text-white">Phân xưởng Gia công CNC/Robot</strong>, <strong class="text-white">Đoàn xe Vận tải Cảng Cát Lái</strong> đến <strong class="text-white">Sổ cái Tài chính Thông tư 200</strong> trên một nền tảng số Insilos sống duy nhất.
+                            Hợp nhất từ <strong class="text-white">Bản vẽ R&amp;D</strong>, <strong class="text-white">Phân xưởng Gia công CNC/Robot</strong>, <strong class="text-white">Đoàn xe Vận tải Cảng Biển Quốc Tế</strong> đến <strong class="text-white">Sổ cái Tài chính Thông tư 200</strong> trên một nền tảng số Insilos sống duy nhất.
                         </p>
 
                         <!-- Action Button Matrix -->
@@ -109,8 +109,8 @@
                     <div class="modal-body p-0 bg-black">
                         <!-- Native HTML5 Industrial Video Player -->
                         <div class="ratio ratio-16x9 bg-black position-relative">
-                            <video id="insilos-master-player" controls="controls" autoplay="autoplay" playsinline="playsinline" class="w-100 h-100 object-fit-contain" poster="/insilos_website/static/src/img/logistics.webp">
-                                <source src="/insilos_website/static/src/video/hero_platform_opt.mp4" type="video/mp4"/>
+                            <video id="insilos-master-player" controls="controls" autoplay="autoplay" playsinline="playsinline" class="w-100 h-100 object-fit-contain" poster="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.webp">
+                                <source src="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.mp4" type="video/mp4"/>
                             </video>
                         </div>
                         <!-- Video Footage Channel Switcher -->
@@ -119,14 +119,14 @@
                                 <span class="text-cyan fw-bold font-monospace"><svg class="ph-duotone ph-film-strip me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-film-strip"/></svg>CHỌN KÊNH FOOTAGE THỰC ĐỊA:</span>
                             </div>
                             <div class="btn-group btn-group-sm" role="group">
-                                <button type="button" class="btn btn-outline-light active" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/hero_platform_opt.mp4'; document.getElementById('insilos-master-player').play();">
-                                    1. Toàn Cảnh Nền Tảng (Master)
+                                <button type="button" class="btn btn-outline-light active" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.mp4'; document.getElementById('insilos-master-player').play();">
+                                    1. Toàn Cảnh Nền Tảng (Master 105s)
                                 </button>
                                 <button type="button" class="btn btn-outline-light" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/hero_act1_robotics.mp4'; document.getElementById('insilos-master-player').play();">
                                     2. Robot Hàn &amp; Xưởng CNC
                                 </button>
                                 <button type="button" class="btn btn-outline-light" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/hero_act2_port.mp4'; document.getElementById('insilos-master-player').play();">
-                                    3. Cảng Cát Lái &amp; Rơ-moóc
+                                    3. Đội Xe Vận Tải &amp; Rơ-moóc Cảng Biển
                                 </button>
                                 <button type="button" class="btn btn-outline-light" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/hero_logistics_opt.mp4'; document.getElementById('insilos-master-player').play();">
                                     4. Đội Xe Tải Nặng
@@ -189,6 +189,12 @@
                                 <option value="full" selected="selected">Toàn Diện Trọn Gói (End-to-End Enterprise)</option>
                             </select>
                         </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="modal-consent" name="consent" required="required"/>
+                            <label class="form-check-label text-secondary small" for="modal-consent">
+                                Tôi đồng ý để Insilos xử lý dữ liệu theo <a href="/privacy" target="_blank" class="text-cyan text-decoration-underline">Chính sách Quyền riêng tư</a> (Nghị định 13/2023/NĐ-CP). *
+                            </label>
+                        </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary rounded-pill py-3 fw-bold">
                                 Nhận Trọn Bộ Hồ Sơ &amp; Kích Hoạt Demo
@@ -233,7 +239,7 @@
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link rounded-pill px-4 py-2 border border-secondary border-opacity-25" id="tab-fleet" data-bs-toggle="pill" data-bs-target="#content-fleet" type="button" role="tab" aria-selected="false">
-                            <svg class="ph-duotone ph-truck me-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg>Đội Xe &amp; Cảng Cát Lái
+                            <svg class="ph-duotone ph-truck me-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg>Đội Xe &amp; Cảng Biển Quốc Tế
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -280,8 +286,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="position-relative rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-lg">
-                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/img/fsm.webp">
-                                            <source src="/insilos_website/static/src/video/hero_act1_robotics.mp4" type="video/mp4"/>
+                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.webp">
+                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.mp4" type="video/mp4"/>
                                         </video>
                                         <div class="position-absolute bottom-0 start-0 w-100 p-2 px-3 bg-black bg-opacity-75 font-monospace small text-cyan d-flex justify-content-between pointer-events-none">
                                             <span>WORKCENTER: ROBOT_WELD_01</span>
@@ -328,8 +334,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="position-relative rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-lg">
-                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/img/fsm-960.webp">
-                                            <source src="/insilos_website/static/src/video/hero_graph_opt.mp4" type="video/mp4"/>
+                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.webp">
+                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.mp4" type="video/mp4"/>
                                         </video>
                                         <div class="position-absolute bottom-0 start-0 w-100 p-2 px-3 bg-black bg-opacity-75 font-monospace small text-emerald d-flex justify-content-between pointer-events-none">
                                             <span>TRACE: PDI LOAD TEST</span>
@@ -351,10 +357,10 @@
                                         <span class="badge bg-secondary bg-opacity-25 text-cyan font-monospace">SMART FLEET LOGISTICS</span>
                                     </div>
                                     <h3 class="h2 fw-bold text-white mb-3">
-                                        Điều Phối Đoàn Xe Container Về Cảng Tân Cảng Cát Lái
+                                        Điều Phối Đoàn Xe Container Về Cụm Cảng Biển Quốc Tế
                                     </h3>
                                     <p class="text-secondary mb-4">
-                                        Giám sát đội xe đầu kéo container Hyundai Xcient GT 440PS biển số 51C-982.45 và dàn rơ-moóc CIMC 40ft trên tuyến KCN VSIP - Cát Lái. Quản lý chính xác km ODO, lịch đăng kiểm và định mức dầu DO 0.05S.
+                                        Giám sát đội xe đầu kéo container Hyundai Xcient GT 440PS biển số 51C-982.45 và dàn rơ-moóc CIMC 40ft trên tuyến vận tải KCN - Cảng Biển Quốc Tế. Quản lý chính xác km ODO, lịch đăng kiểm và định mức dầu DO 0.05S.
                                     </p>
                                     <div class="row g-3 mb-4 font-monospace small">
                                         <div class="col-6">
@@ -376,12 +382,12 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="position-relative rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-lg">
-                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/img/logistics.webp">
-                                            <source src="/insilos_website/static/src/video/hero_act2_port.mp4" type="video/mp4"/>
+                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.webp">
+                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.mp4" type="video/mp4"/>
                                         </video>
                                         <div class="position-absolute bottom-0 start-0 w-100 p-2 px-3 bg-black bg-opacity-75 font-monospace small text-cyan d-flex justify-content-between pointer-events-none">
                                             <span>FLEET TELEMETRY: 51C-982.45</span>
-                                            <span>DESTINATION: CAT LAI PORT</span>
+                                            <span>DESTINATION: INTERNATIONAL SEAPORT</span>
                                         </div>
                                     </div>
                                 </div>
@@ -424,8 +430,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="position-relative rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-lg">
-                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/img/fsm.webp">
-                                            <source src="/insilos_website/static/src/video/hero_idp_opt.mp4" type="video/mp4"/>
+                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.webp">
+                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.mp4" type="video/mp4"/>
                                         </video>
                                         <div class="position-absolute bottom-0 start-0 w-100 p-2 px-3 bg-black bg-opacity-75 font-monospace small text-emerald d-flex justify-content-between pointer-events-none">
                                             <span>GL LEDGER: VAS 200/2014</span>
@@ -456,14 +462,17 @@
                         Hệ Sinh Thái 12 Nghiệp Vụ Công Nghiệp Sống
                     </h2>
                     <p class="lead text-secondary">
-                        Khám phá trọn bộ 12 phim nghiệp vụ thực tế được trích xuất trực tiếp từ hệ điều hành Insilos Enterprise tại các KCN VSIP, Đình Vũ và Tân Cảng Cát Lái. 100% dữ liệu nghiệp vụ thật, không dàn dựng.
+                        Khám phá trọn bộ 12 phim nghiệp vụ thực tế được trích xuất trực tiếp từ hệ điều hành Insilos Enterprise tại các KCN trọng điểm và Cụm Cảng Biển Quốc Tế. 100% dữ liệu nghiệp vụ thật, không dàn dựng.
                     </p>
                 </div>
 
                 <!-- Domain Category Filter Tabs -->
                 <div class="d-flex flex-wrap justify-content-center gap-2 mb-5 ins-gold-filter-bar">
                     <button type="button" class="btn ins-gold-filter-btn active rounded-pill px-4 py-2 font-monospace small" data-filter="all">
-                        <svg class="ph-duotone ph-squares-four me-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-squares-four"/></svg>Tất Cả (12)
+                        <svg class="ph-duotone ph-squares-four me-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-squares-four"/></svg>Tất Cả (16)
+                    </button>
+                    <button type="button" class="btn btn-outline-light ins-filter-btn ins-gold-filter-btn rounded-pill px-4 py-2 font-monospace small" data-filter="cutdowns">
+                        <svg class="ph-duotone ph-scissors me-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scissors"/></svg>Cutdowns
                     </button>
                     <button type="button" class="btn ins-gold-filter-btn rounded-pill px-4 py-2 font-monospace small" data-filter="mfg">
                         <svg class="ph-duotone ph-gear-six me-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-gear-six"/></svg>Sản Xuất &amp; Chế Tạo (4)
@@ -472,7 +481,7 @@
                         <svg class="ph-duotone ph-archive me-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-archive"/></svg>Kho Bãi &amp; Vật Tư (2)
                     </button>
                     <button type="button" class="btn ins-gold-filter-btn rounded-pill px-4 py-2 font-monospace small" data-filter="log">
-                        <svg class="ph-duotone ph-truck me-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg>Đội Xe &amp; Tiếp Vận (3)
+                        <svg class="ph-duotone ph-truck me-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg>Đội Xe &amp; Tiếp Vận (4)
                     </button>
                     <button type="button" class="btn ins-gold-filter-btn rounded-pill px-4 py-2 font-monospace small" data-filter="fin">
                         <svg class="ph-duotone ph-scales me-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scales"/></svg>Tài Chính &amp; Kế Toán (3)
@@ -534,12 +543,12 @@
                              data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER.mp4"
                              data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER_poster.webp"
                              data-episode="EP 02 · 51s"
-                             data-title="Thu Mua Thép Hòa Phát 25 Tấn &amp; Khóa Sổ Sách"
+                             data-title="Thu Mua Thép Công Nghiệp 25 Tấn &amp; Khóa Sổ Sách"
                              data-industry="THU MUA &amp; KẾ TOÁN"
                              data-metric="25 TẤN THÉP"
                              data-lufs="-14.6 LUFS"
                              data-desc="Quy trình phê duyệt PO 537.5 triệu VNĐ, kiểm soát 3-way matching và khóa tài khóa tự động.">
-                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Thu Mua Thép Hòa Phát 25 Tấn &amp; Khóa Sổ Sách">
+                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Thu Mua Thép Công Nghiệp 25 Tấn &amp; Khóa Sổ Sách">
                                 <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER_poster.webp">
                                     <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER.mp4" type="video/mp4"/>
                                 </video>
@@ -559,7 +568,7 @@
                                         <svg class="ph-duotone ph-shopping-cart"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shopping-cart"/></svg> THU MUA &amp; KẾ TOÁN
                                     </div>
                                     <h5 class="card-title text-white fw-bold mb-2">
-                                        Thu Mua Thép Hòa Phát 25 Tấn &amp; Khóa Sổ Sách
+                                        Thu Mua Thép Công Nghiệp 25 Tấn &amp; Khóa Sổ Sách
                                     </h5>
                                     <p class="card-text text-secondary small mb-3">
                                         Quy trình phê duyệt PO 537.5 triệu VNĐ, kiểm soát 3-way matching và khóa tài khóa tự động.
@@ -580,12 +589,12 @@
                              data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER.mp4"
                              data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER_poster.webp"
                              data-episode="EP 03 · 66s"
-                             data-title="Kiểm Kê Kho CADIVI &amp; Quản Trị Serial ARM Cortex"
+                             data-title="Kiểm Kê Kho Cáp Điện &amp; Quản Trị Serial ARM Cortex"
                              data-industry="KHO THÔNG MINH"
                              data-metric="100% SERIAL TRACE"
                              data-lufs="-14.6 LUFS"
-                             data-desc="Định danh bo mạch vi xử lý ARM-M4, cuộn cáp CADIVI 35mm2 và truy vết nguồn gốc linh kiện 100%.">
-                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Kiểm Kê Kho CADIVI &amp; Quản Trị Serial ARM Cortex">
+                             data-desc="Định danh bo mạch vi xử lý ARM-M4, cuộn cáp điện 35mm2 và truy vết nguồn gốc linh kiện 100%.">
+                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Kiểm Kê Kho Cáp Điện &amp; Quản Trị Serial ARM Cortex">
                                 <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER_poster.webp">
                                     <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER.mp4" type="video/mp4"/>
                                 </video>
@@ -605,10 +614,10 @@
                                         <svg class="ph-duotone ph-archive"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-archive"/></svg> KHO THÔNG MINH
                                     </div>
                                     <h5 class="card-title text-white fw-bold mb-2">
-                                        Kiểm Kê Kho CADIVI &amp; Quản Trị Serial ARM Cortex
+                                        Kiểm Kê Kho Cáp Điện &amp; Quản Trị Serial ARM Cortex
                                     </h5>
                                     <p class="card-text text-secondary small mb-3">
-                                        Định danh bo mạch vi xử lý ARM-M4, cuộn cáp CADIVI 35mm2 và truy vết nguồn gốc linh kiện 100%.
+                                        Định danh bo mạch vi xử lý ARM-M4, cuộn cáp điện 35mm2 và truy vết nguồn gốc linh kiện 100%.
                                     </p>
                                 </div>
                                 <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center font-monospace small mt-auto">
@@ -764,12 +773,12 @@
                              data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER.mp4"
                              data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER_poster.webp"
                              data-episode="EP 07 · 60s"
-                             data-title="Đội Xe Hyundai Xcient Tuyến VSIP - Cát Lái"
+                             data-title="Đội Xe Vận Tải Tuyến KCN - Cảng Biển Quốc Tế"
                              data-industry="VẬN TẢI ĐỘI XE FLEET"
                              data-metric="34L/100KM"
                              data-lufs="-14.8 LUFS"
                              data-desc="Giám sát đội xe container 51C-982.45, kiểm soát km ODO và định mức tiêu hao nhiên liệu chính xác.">
-                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Đội Xe Hyundai Xcient Tuyến VSIP - Cát Lái">
+                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Đội Xe Vận Tải Tuyến KCN - Cảng Biển Quốc Tế">
                                 <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER_poster.webp">
                                     <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER.mp4" type="video/mp4"/>
                                 </video>
@@ -789,7 +798,7 @@
                                         <svg class="ph-duotone ph-truck"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg> VẬN TẢI ĐỘI XE FLEET
                                     </div>
                                     <h5 class="card-title text-white fw-bold mb-2">
-                                        Đội Xe Hyundai Xcient Tuyến VSIP - Cát Lái
+                                        Đội Xe Vận Tải Tuyến KCN - Cảng Biển Quốc Tế
                                     </h5>
                                     <p class="card-text text-secondary small mb-3">
                                         Giám sát đội xe container 51C-982.45, kiểm soát km ODO và định mức tiêu hao nhiên liệu chính xác.
@@ -850,18 +859,18 @@
                     </div>
 
                     <!-- Item 9: Seaport Logistics -->
-                    <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="wh">
+                    <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="log">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
-                             data-category="wh"
+                             data-category="log"
                              data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER.mp4"
                              data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER_poster.webp"
                              data-episode="EP 09 · 55s"
-                             data-title="Tiếp Vận Cảng Tân Cảng Cát Lái &amp; Bốc Dỡ"
+                             data-title="Tiếp Vận Cảng Biển Quốc Tế &amp; Bốc Dỡ"
                              data-industry="HẢI CẢNG &amp; TIẾP VẬN"
                              data-metric="ĐÚNG HẠN 99.4%"
                              data-lufs="-14.2 LUFS"
                              data-desc="Điều độ cẩu bờ STS, hạ bãi container xuất nhập khẩu và xác thực biên bản giao nhận điện tử.">
-                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Tiếp Vận Cảng Tân Cảng Cát Lái &amp; Bốc Dỡ">
+                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Tiếp Vận Cảng Biển Quốc Tế &amp; Bốc Dỡ">
                                 <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER_poster.webp">
                                     <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER.mp4" type="video/mp4"/>
                                 </video>
@@ -881,7 +890,7 @@
                                         <svg class="ph-duotone ph-anchor"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-anchor"/></svg> HẢI CẢNG &amp; TIẾP VẬN
                                     </div>
                                     <h5 class="card-title text-white fw-bold mb-2">
-                                        Tiếp Vận Cảng Tân Cảng Cát Lái &amp; Bốc Dỡ
+                                        Tiếp Vận Cảng Biển Quốc Tế &amp; Bốc Dỡ
                                     </h5>
                                     <p class="card-text text-secondary small mb-3">
                                         Điều độ cẩu bờ STS, hạ bãi container xuất nhập khẩu và xác thực biên bản giao nhận điện tử.
@@ -1027,6 +1036,190 @@
                                 </div>
                                 <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center font-monospace small mt-auto">
                                     <span class="text-emerald fw-bold"><svg class="ph-duotone ph-check-circle me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>LEAD NURTURING</span>
+                                    <span class="text-secondary">-14.5 LUFS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cutdown 1: Manufacturing & Welding Robot -->
+                    <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="cutdowns">
+                        <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
+                             data-category="cutdowns"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.mp4"
+                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.webp"
+                             data-episode="CUT 01 · 25s"
+                             data-title="Phân Xưởng Cơ Khí &amp; Robot Hàn Yaskawa"
+                             data-industry="SẢN XUẤT &amp; ROBOTICS"
+                             data-metric="OEE 92.5%"
+                             data-lufs="-14.5 LUFS"
+                             data-desc="Loại bỏ 100% giấy tờ tại xưởng cơ khí. Điều hành công đoạn tức thời cùng Insilos MRP.">
+                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Phân Xưởng Cơ Khí &amp; Robot Hàn Yaskawa">
+                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.webp">
+                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.mp4" type="video/mp4"/>
+                                </video>
+                                <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                                    <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
+                                        <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
+                                    </span>
+                                </div>
+                                <span class="position-absolute top-0 start-0 m-3 badge bg-primary font-monospace">CUT 01 · 25s</span>
+                                <span class="position-absolute bottom-0 end-0 m-3 badge bg-black bg-opacity-75 text-cyan border border-cyan border-opacity-25 font-monospace small d-none d-sm-inline-flex align-items-center gap-1">
+                                    <svg class="ph-duotone ph-scissors me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scissors"/></svg>CUTDOWN
+                                </span>
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 mb-2 font-monospace small text-cyan">
+                                        <svg class="ph-duotone ph-gear-six"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-gear-six"/></svg> SẢN XUẤT &amp; ROBOTICS
+                                    </div>
+                                    <h5 class="card-title text-white fw-bold mb-2">
+                                        Phân Xưởng Cơ Khí &amp; Robot Hàn Yaskawa
+                                    </h5>
+                                    <p class="card-text text-secondary small mb-3">
+                                        Loại bỏ 100% giấy tờ tại xưởng cơ khí. Điều hành công đoạn tức thời cùng Insilos MRP.
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center font-monospace small mt-auto">
+                                    <span class="text-emerald fw-bold"><svg class="ph-duotone ph-check-circle me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>OEE 92.5%</span>
+                                    <span class="text-secondary">-14.5 LUFS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cutdown 2: Lot & Serial Traceability -->
+                    <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="cutdowns">
+                        <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
+                             data-category="cutdowns"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.mp4"
+                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.webp"
+                             data-episode="CUT 02 · 20s"
+                             data-title="Truy Xuất Nguồn Gốc Lô &amp; Serial Vi Mạch"
+                             data-industry="KHO BÃI &amp; TRACEABILITY"
+                             data-metric="100% SERIAL"
+                             data-lufs="-14.5 LUFS"
+                             data-desc="Gian lận kho hàng? Thất thoát vật tư? Insilos truy vết đến từng serial.">
+                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Truy Xuất Nguồn Gốc Lô &amp; Serial Vi Mạch">
+                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.webp">
+                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.mp4" type="video/mp4"/>
+                                </video>
+                                <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                                    <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
+                                        <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
+                                    </span>
+                                </div>
+                                <span class="position-absolute top-0 start-0 m-3 badge bg-primary font-monospace">CUT 02 · 20s</span>
+                                <span class="position-absolute bottom-0 end-0 m-3 badge bg-black bg-opacity-75 text-cyan border border-cyan border-opacity-25 font-monospace small d-none d-sm-inline-flex align-items-center gap-1">
+                                    <svg class="ph-duotone ph-scissors me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scissors"/></svg>CUTDOWN
+                                </span>
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 mb-2 font-monospace small text-cyan">
+                                        <svg class="ph-duotone ph-barcode"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-barcode"/></svg> KHO BÃI &amp; TRACEABILITY
+                                    </div>
+                                    <h5 class="card-title text-white fw-bold mb-2">
+                                        Truy Xuất Nguồn Gốc Lô &amp; Serial Vi Mạch
+                                    </h5>
+                                    <p class="card-text text-secondary small mb-3">
+                                        Gian lận kho hàng? Thất thoát vật tư? Insilos truy vết đến từng serial.
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center font-monospace small mt-auto">
+                                    <span class="text-emerald fw-bold"><svg class="ph-duotone ph-check-circle me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>100% SERIAL</span>
+                                    <span class="text-secondary">-14.5 LUFS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cutdown 3: Heavy Fleet & International Seaport -->
+                    <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="cutdowns">
+                        <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
+                             data-category="cutdowns"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.mp4"
+                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.webp"
+                             data-episode="CUT 03 · 30s"
+                             data-title="Đội Xe Container &amp; Cụm Cảng Biển Quốc Tế"
+                             data-industry="ĐỘI XE &amp; HẢI CẢNG"
+                             data-metric="34L/100KM · 0Đ DEM"
+                             data-lufs="-14.5 LUFS"
+                             data-desc="Hàng trễ cảng? Phí DET/DEM? Insilos Fleet điều xe chủ động từng phút.">
+                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Đội Xe Container &amp; Cụm Cảng Biển Quốc Tế">
+                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.webp">
+                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.mp4" type="video/mp4"/>
+                                </video>
+                                <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                                    <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
+                                        <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
+                                    </span>
+                                </div>
+                                <span class="position-absolute top-0 start-0 m-3 badge bg-primary font-monospace">CUT 03 · 30s</span>
+                                <span class="position-absolute bottom-0 end-0 m-3 badge bg-black bg-opacity-75 text-cyan border border-cyan border-opacity-25 font-monospace small d-none d-sm-inline-flex align-items-center gap-1">
+                                    <svg class="ph-duotone ph-scissors me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scissors"/></svg>CUTDOWN
+                                </span>
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 mb-2 font-monospace small text-cyan">
+                                        <svg class="ph-duotone ph-truck"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg> ĐỘI XE &amp; HẢI CẢNG
+                                    </div>
+                                    <h5 class="card-title text-white fw-bold mb-2">
+                                        Đội Xe Container &amp; Cụm Cảng Biển Quốc Tế
+                                    </h5>
+                                    <p class="card-text text-secondary small mb-3">
+                                        Hàng trễ cảng? Phí DET/DEM? Insilos Fleet điều xe chủ động từng phút.
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center font-monospace small mt-auto">
+                                    <span class="text-emerald fw-bold"><svg class="ph-duotone ph-check-circle me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>34L/100KM · 0Đ DEM</span>
+                                    <span class="text-secondary">-14.5 LUFS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cutdown 4: B2B CRM & Circular 200 Accounting -->
+                    <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="cutdowns">
+                        <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
+                             data-category="cutdowns"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.mp4"
+                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.webp"
+                             data-episode="CUT 04 · 20s"
+                             data-title="CRM B2B &amp; Kế Toán Chuẩn Mực TT200"
+                             data-industry="CRM &amp; TÀI CHÍNH TT200"
+                             data-metric="18.6 TỶ VNĐ"
+                             data-lufs="-14.5 LUFS"
+                             data-desc="Từ hợp đồng nghìn tỷ đến hóa đơn điện tử TT78 — Insilos xử lý tức thì.">
+                            <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video CRM B2B &amp; Kế Toán Chuẩn Mực TT200">
+                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.webp">
+                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.mp4" type="video/mp4"/>
+                                </video>
+                                <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                                    <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
+                                        <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
+                                    </span>
+                                </div>
+                                <span class="position-absolute top-0 start-0 m-3 badge bg-primary font-monospace">CUT 04 · 20s</span>
+                                <span class="position-absolute bottom-0 end-0 m-3 badge bg-black bg-opacity-75 text-cyan border border-cyan border-opacity-25 font-monospace small d-none d-sm-inline-flex align-items-center gap-1">
+                                    <svg class="ph-duotone ph-scissors me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scissors"/></svg>CUTDOWN
+                                </span>
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 mb-2 font-monospace small text-cyan">
+                                        <svg class="ph-duotone ph-scales"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scales"/></svg> CRM &amp; TÀI CHÍNH TT200
+                                    </div>
+                                    <h5 class="card-title text-white fw-bold mb-2">
+                                        CRM B2B &amp; Kế Toán Chuẩn Mực TT200
+                                    </h5>
+                                    <p class="card-text text-secondary small mb-3">
+                                        Từ hợp đồng nghìn tỷ đến hóa đơn điện tử TT78 — Insilos xử lý tức thì.
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center font-monospace small mt-auto">
+                                    <span class="text-emerald fw-bold"><svg class="ph-duotone ph-check-circle me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>18.6 TỶ VNĐ</span>
                                     <span class="text-secondary">-14.5 LUFS</span>
                                 </div>
                             </div>

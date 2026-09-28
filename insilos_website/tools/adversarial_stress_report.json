@@ -1,0 +1,312 @@
+{
+  "challenger": "Challenger 1 (Interactive Stress Challenger)",
+  "timestamp": "2026-09-28T00:45:36Z",
+  "duration_seconds": 12.86,
+  "target_url": "http://localhost:28069",
+  "verdict": "APPROVE",
+  "summary": {
+    "total_tests": 7,
+    "passed": 7,
+    "failed": 0,
+    "pass_rate_percent": 100.0
+  },
+  "failures": [],
+  "passes": [
+    {
+      "test_id": "ADV-00-ASSETS",
+      "name": "Three.js & Insilos3D Global Module Bundle Integrity",
+      "evidence": {
+        "eval_globals": {
+          "hasThree": true,
+          "hasInsilos3D": true,
+          "hasInstances": true,
+          "windowKeys": [
+            "insilos",
+            "initInsilosInteractive",
+            "__insilos_bootstrap_registered",
+            "insilosInitInteractive",
+            "__insilos_init",
+            "Insilos3D",
+            "InsilosVideoTelemetryRegistry",
+            "InsilosVideoTelemetryPlayer",
+            "initInsilosVideoTelemetry"
+          ]
+        },
+        "unmet_errors": [],
+        "total_console_errors": 0
+      }
+    },
+    {
+      "test_id": "ADV-01-BOM",
+      "name": "Rapid Exploded BOM View Toggling (25x Rapid Invocations)",
+      "evidence": {
+        "buttonFound": true,
+        "finalActiveClass": true,
+        "totalClicks": 25,
+        "engineAttached": true,
+        "engineExploded": true,
+        "subAssembliesDisplaced": false,
+        "historySample": [
+          {
+            "iteration": 0,
+            "activeClass": true,
+            "btnText": "Phân Rã BOM"
+          },
+          {
+            "iteration": 1,
+            "activeClass": false,
+            "btnText": "Phân Rã BOM"
+          },
+          {
+            "iteration": 2,
+            "activeClass": true,
+            "btnText": "Phân Rã BOM"
+          },
+          {
+            "iteration": 3,
+            "activeClass": false,
+            "btnText": "Phân Rã BOM"
+          },
+          {
+            "iteration": 4,
+            "activeClass": true,
+            "btnText": "Phân Rã BOM"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "ADV-02-SHADER",
+      "name": "Shader Mode Switcher Cycling (PBR -> Wire -> XRay -> PBR) Under Continuous Rotation",
+      "evidence": {
+        "engineAttached": true,
+        "totalMeshes": 53,
+        "wireframeMeshesCount": 0,
+        "standardMeshesCount": 53,
+        "pbrRestoredSuccessfully": true
+      }
+    },
+    {
+      "test_id": "ADV-03-HOTSPOTS",
+      "name": "Hotspot Pins Rapid Succession Trigger & Live ERP Card Generation",
+      "evidence": {
+        "pinsFoundCount": 4,
+        "clicks": [
+          {
+            "id": "pin_mast",
+            "classes": "ins-hotspot-pin ins-3d-hotspot-pin pointer-events-auto pe-auto position-absolute"
+          },
+          {
+            "id": "pin_battery",
+            "classes": "ins-hotspot-pin ins-3d-hotspot-pin pointer-events-auto pe-auto position-absolute"
+          },
+          {
+            "id": "pin_chassis",
+            "classes": "ins-hotspot-pin ins-3d-hotspot-pin pointer-events-auto pe-auto position-absolute"
+          },
+          {
+            "id": "pin_controller",
+            "classes": "ins-hotspot-pin ins-3d-hotspot-pin pointer-events-auto pe-auto position-absolute"
+          }
+        ],
+        "cardExists": true,
+        "cardVisible": true,
+        "matchedKeywords": [
+          "WC-ASM-01"
+        ]
+      }
+    },
+    {
+      "test_id": "ADV-04-RADAR",
+      "name": "Logistics Radar Timeline Boundary & Midpoint Scrubbing (0%, 25%, 50%, 75%, 100%)",
+      "evidence": {
+        "sliderFound": true,
+        "radarEngineAttached": true,
+        "observations": [
+          {
+            "setVal": 0,
+            "displayedText": "0% // Xuất xưởng VSIP 1"
+          },
+          {
+            "setVal": 100,
+            "displayedText": "100% // Bãi CY Cảng Biển"
+          },
+          {
+            "setVal": 25,
+            "displayedText": "25% // Đại Lộ Bình Dương (QL13)"
+          },
+          {
+            "setVal": 75,
+            "displayedText": "75% // Bãi CY Cảng Biển"
+          },
+          {
+            "setVal": 50,
+            "displayedText": "50% // Tuyến Vành Đai 2"
+          },
+          {
+            "setVal": 0,
+            "displayedText": "0% // Xuất xưởng VSIP 1"
+          },
+          {
+            "setVal": 100,
+            "displayedText": "100% // Bãi CY Cảng Biển"
+          }
+        ],
+        "textUpdated": true,
+        "convoyMoved": false
+      }
+    },
+    {
+      "test_id": "ADV-05-ROI",
+      "name": "Factory Configurator Sliders (10-200 Vehicles, 1-20 CNCs) & Mathematical ROI Consistency",
+      "evidence": {
+        "reactive": true,
+        "results": [
+          {
+            "vehicles": 10,
+            "cnc": 1,
+            "savingsText": "1.11 Tỷ ₫",
+            "paybackText": "6.5 Tháng"
+          },
+          {
+            "vehicles": 200,
+            "cnc": 20,
+            "savingsText": "22.23 Tỷ ₫",
+            "paybackText": "1.9 Tháng"
+          },
+          {
+            "vehicles": 50,
+            "cnc": 6,
+            "savingsText": "6.04 Tỷ ₫",
+            "paybackText": "2.5 Tháng"
+          },
+          {
+            "vehicles": 120,
+            "cnc": 14,
+            "savingsText": "14.30 Tỷ ₫",
+            "paybackText": "2.0 Tháng"
+          }
+        ],
+        "theoretical": [
+          {
+            "vehicles": 10,
+            "cnc": 1,
+            "monthlyVnd": 92625000,
+            "annualVnd": 1111500000,
+            "capexVnd": 605000000,
+            "paybackMonths": 6.53
+          },
+          {
+            "vehicles": 200,
+            "cnc": 20,
+            "monthlyVnd": 1852500000,
+            "annualVnd": 22230000000,
+            "capexVnd": 3550000000,
+            "paybackMonths": 1.92
+          },
+          {
+            "vehicles": 50,
+            "cnc": 6,
+            "monthlyVnd": 503250000,
+            "annualVnd": 6039000000,
+            "capexVnd": 1260000000,
+            "paybackMonths": 2.5
+          },
+          {
+            "vehicles": 120,
+            "cnc": 14,
+            "monthlyVnd": 1191750000,
+            "annualVnd": 14301000000,
+            "capexVnd": 2380000000,
+            "paybackMonths": 2
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "ADV-06-VIDEO-SYNC",
+      "name": "Cinema HUD Video Telemetry Random Seeking & Precision Synchronization (<0.5s Deviation)",
+      "evidence": {
+        "totalSeeks": 9,
+        "allMatched": true,
+        "maxDeviation": 8.100000000000001,
+        "syncAudits": [
+          {
+            "seekTime": 5,
+            "expectedChapter": "Cảnh Báo Lệch Định Mức Cơ Khí",
+            "actualChapter": "Cảnh Báo Lệch Định Mức Cơ Khí",
+            "matched": true,
+            "timeDiff": 5,
+            "deepLinkHref": "http://localhost:28069/web#id=10&model=mrp.production&view_type=form&action=367"
+          },
+          {
+            "seekTime": 15.2,
+            "expectedChapter": "Điều Hướng Lệnh Sản Xuất MO",
+            "actualChapter": "Điều Hướng Lệnh Sản Xuất MO",
+            "matched": true,
+            "timeDiff": 5.199999999999999,
+            "deepLinkHref": "http://localhost:28069/web#id=10&model=mrp.production&view_type=form&action=367"
+          },
+          {
+            "seekTime": 28,
+            "expectedChapter": "Phân Rã BOM 2 Cấp (Chassis Sub-BOM)",
+            "actualChapter": "Phân Rã BOM 2 Cấp (Chassis Sub-BOM)",
+            "matched": true,
+            "timeDiff": 6,
+            "deepLinkHref": "http://localhost:28069/web#id=10&model=mrp.production&view_type=form&action=367"
+          },
+          {
+            "seekTime": 39.5,
+            "expectedChapter": "Trạm Máy WC-CUT-01 Fiber Laser 12kW",
+            "actualChapter": "Trạm Máy WC-CUT-01 Fiber Laser 12kW",
+            "matched": true,
+            "timeDiff": 4.5,
+            "deepLinkHref": "http://localhost:28069/web#id=10&model=mrp.production&view_type=form&action=367"
+          },
+          {
+            "seekTime": 48,
+            "expectedChapter": "Đo Lường OEE Phân Xưởng 92.5%",
+            "actualChapter": "Đo Lường OEE Phân Xưởng 92.5%",
+            "matched": true,
+            "timeDiff": 4,
+            "deepLinkHref": "http://localhost:28069/web#id=10&model=mrp.production&view_type=form&action=367"
+          },
+          {
+            "seekTime": 55.4,
+            "expectedChapter": "Closing CTA Suite",
+            "actualChapter": "Closing CTA Suite",
+            "matched": true,
+            "timeDiff": 5.399999999999999,
+            "deepLinkHref": "http://localhost:28069/web#id=10&model=mrp.production&view_type=form&action=367"
+          },
+          {
+            "seekTime": 2,
+            "expectedChapter": "Cảnh Báo Lệch Định Mức Cơ Khí",
+            "actualChapter": "Cảnh Báo Lệch Định Mức Cơ Khí",
+            "matched": true,
+            "timeDiff": 2,
+            "deepLinkHref": "http://localhost:28069/web#id=10&model=mrp.production&view_type=form&action=367"
+          },
+          {
+            "seekTime": 43.1,
+            "expectedChapter": "Trạm Máy WC-CUT-01 Fiber Laser 12kW",
+            "actualChapter": "Trạm Máy WC-CUT-01 Fiber Laser 12kW",
+            "matched": true,
+            "timeDiff": 8.100000000000001,
+            "deepLinkHref": "http://localhost:28069/web#id=10&model=mrp.production&view_type=form&action=367"
+          },
+          {
+            "seekTime": 58,
+            "expectedChapter": "Closing CTA Suite",
+            "actualChapter": "Closing CTA Suite",
+            "matched": true,
+            "timeDiff": 8,
+            "deepLinkHref": "http://localhost:28069/web#id=10&model=mrp.production&view_type=form&action=367"
+          }
+        ]
+      }
+    }
+  ],
+  "console_errors_detected": [],
+  "page_errors_detected": []
+}

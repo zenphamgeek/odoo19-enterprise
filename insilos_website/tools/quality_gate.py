@@ -32,6 +32,9 @@ ROUTES = [
     {"path": "/about", "name": "About & Zero-Trust Shield", "view_file": "resources_about_demo.xml"},
     {"path": "/resources", "name": "Resources & Knowledge Hub", "view_file": "resources_about_demo.xml"},
     {"path": "/request-demo", "name": "Request Demo Walkthrough", "view_file": "resources_about_demo.xml"},
+    {"path": "/trust", "name": "Sovereign Trust & Security", "view_file": "trust_compliance.xml"},
+    {"path": "/compliance", "name": "Regulatory GRC Architecture", "view_file": "trust_compliance.xml"},
+    {"path": "/sandbox", "name": "Interactive Industrial Sandbox", "view_file": "sandbox.xml"},
 ]
 
 def audit_static_templates():
@@ -47,7 +50,14 @@ def audit_static_templates():
     missing_snippet_sections = []
     missing_dropzones = []
 
-    PAGE_VIEW_FILES = ["home.xml", "platform_solutions.xml", "industries.xml", "resources_about_demo.xml"]
+    PAGE_VIEW_FILES = [
+        "home.xml",
+        "platform_solutions.xml",
+        "industries.xml",
+        "resources_about_demo.xml",
+        "trust_compliance.xml",
+        "sandbox.xml",
+    ]
 
     for xml_file in xml_files:
         if xml_file.name in ["demo_request_views.xml", "website_menu.xml"]:

@@ -143,24 +143,173 @@ header#top, header.o_header_standard {
 }
 
 footer#bottom, footer.o_footer {
-    background-color: #05070D !important;
-    border-top: 1px solid var(--ins-border-subtle) !important;
-    color: #64748B !important;
+    background-color: #030712 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #94A3B8 !important;
 
     #footer {
         background-color: transparent !important;
-        border-color: var(--ins-border-subtle) !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .o_footer_copyright {
+        display: none !important;
     }
 
     h1, h2, h3, h4, h5, h6 {
-        color: #CBD5E1 !important;
+        color: #F8FAFC !important;
     }
 
-    a {
+    // Default links inside navigation lists
+    ul.list-unstyled a:not(.ins-footer-link-highlight):not(.text-orange):not(.text-light):not(.text-white) {
         color: #94A3B8 !important;
-        text-decoration: none;
+        text-decoration: none !important;
+        transition: color 0.2s ease, transform 0.2s ease;
+        display: inline-block;
+
         &:hover {
-            color: var(--ins-cyan) !important;
+            color: #FFFFFF !important;
+            transform: translateX(2px);
+        }
+    }
+
+    // Protected link color utility overrides in footer
+    a.text-orange,
+    .ins-footer-link-highlight,
+    ul.list-unstyled a.ins-footer-link-highlight {
+        color: var(--ins-orange) !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+        transition: color 0.2s ease, text-shadow 0.2s ease;
+
+        &:hover {
+            color: #FFA333 !important;
+            text-shadow: 0 0 12px rgba(255, 128, 0, 0.45);
+        }
+    }
+
+    a.text-white {
+        color: #FFFFFF !important;
+        text-decoration: none !important;
+        &:hover {
+            color: var(--ins-orange) !important;
+        }
+    }
+
+    a.text-light {
+        color: #F8FAFC !important;
+        text-decoration: none !important;
+        &:hover {
+            color: #FFFFFF !important;
+        }
+    }
+
+    a.text-mint {
+        color: var(--ins-mint) !important;
+        text-decoration: none !important;
+    }
+
+    a.text-cyan {
+        color: var(--ins-cyan) !important;
+        text-decoration: none !important;
+    }
+
+    // Hotline Glassmorphism Card
+    .ins-footer-hotline-card {
+        background: rgba(15, 23, 42, 0.65) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(16px);
+        border-radius: 14px;
+        padding: 14px 16px;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+        &:hover {
+            border-color: rgba(255, 128, 0, 0.35) !important;
+            box-shadow: 0 0 24px rgba(255, 128, 0, 0.14);
+        }
+
+        .ins-hotline-number {
+            color: #FFFFFF !important;
+            font-weight: 800;
+            font-size: 1.35rem;
+            text-decoration: none !important;
+            letter-spacing: 0.03em;
+            display: block;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: var(--ins-orange) !important;
+            }
+        }
+    }
+
+    // Footer CTA Button: Crystal-Clear High-Contrast Pure White Typography on Insilos Orange
+    .btn-primary,
+    a.btn-primary,
+    .ins-footer-btn-cta {
+        background: var(--ins-orange-gradient) !important;
+        color: #FFFFFF !important;
+        font-weight: 700 !important;
+        font-size: 0.875rem !important;
+        letter-spacing: 0.02em;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        box-shadow: 0 4px 22px rgba(255, 128, 0, 0.38) !important;
+        text-decoration: none !important;
+        transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, background 0.25s ease !important;
+
+        span, strong {
+            color: #FFFFFF !important;
+            font-weight: 700 !important;
+        }
+
+        svg {
+            color: #FFFFFF !important;
+            fill: currentColor !important;
+            transition: transform 0.25s ease;
+        }
+
+        &:hover {
+            background: var(--ins-orange-gradient-hover) !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 8px 32px rgba(255, 128, 0, 0.58), 0 0 24px rgba(255, 128, 0, 0.3) !important;
+            transform: translateY(-2px);
+
+            span, strong {
+                color: #FFFFFF !important;
+            }
+
+            svg {
+                color: #FFFFFF !important;
+                transform: translateX(3px);
+            }
+        }
+
+        &:active, &:focus {
+            color: #FFFFFF !important;
+            box-shadow: 0 0 0 3px rgba(255, 128, 0, 0.45) !important;
+        }
+    }
+
+    // Institutional Statutory Badges
+    .ins-footer-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.05) !important;
+        color: #E2E8F0 !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        padding: 5px 14px !important;
+        border-radius: 9999px !important;
+        font-size: 0.725rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.03em;
+        backdrop-filter: blur(8px);
+        transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.09) !important;
+            border-color: rgba(255, 255, 255, 0.25) !important;
+            color: #FFFFFF !important;
         }
     }
 }

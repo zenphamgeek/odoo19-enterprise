@@ -317,7 +317,7 @@ PAGES_DATA = {
                 "headline": 'Giám Sát Trạm Biến Áp <span class="text-cyan">10ms Tốc Độ Bắt Gói</span><br class="d-none d-md-inline"/> Truyền Dẫn Điện Lực <span class="ins-gradient-headline">500kV IEC 61850 Stream</span>',
                 "desc": "Kết nối trực tiếp hệ thống đo lường quang học CT/PT tại các trạm biến áp truyền tải 500kV và đường dây liên kết Bắc - Nam. Bắt gói tin vi sai với chu kỳ 10 mili-giây, cung cấp bức tranh vận hành siêu chính xác cho trung tâm điều độ.",
                 "cta_primary": ("Xem Sơ Đồ Lưới Điện", "#energy-architecture", "arrow-down"),
-                "cta_secondary": ("Tư Vấn Tích Hợp SCADA EVN", "/request-demo", "lightning", "cyan")
+                "cta_secondary": ("Tư Vấn Tích Hợp SCADA Năng Lượng", "/request-demo", "lightning", "cyan")
             },
             {
                 "headline": 'Bản Sao Số Hóa <span class="text-mint">98.6% Sức Khỏe Tuabin</span><br class="d-none d-md-inline"/> Dự Báo Hộp Số <span class="ins-gradient-headline">Offshore Turbine Twin</span>',
@@ -333,13 +333,13 @@ PAGES_DATA = {
             },
             {
                 "headline": 'Khóa Chống Rã Lưới <span class="text-cyan">0s Major Outage</span><br class="d-none d-md-inline"/> Cô Lập Sự Cố <span class="ins-gradient-headline">40ms Fault Isolation</span>',
-                "desc": "Thuật toán phát hiện sự cố phóng điện hoặc đứt pha tự động cô lập phân đoạn đường dây trong 40 mili-giây, ngăn chặn hiệu ứng sụp đổ dây chuyền dẫn đến rã lưới diện rộng. Giải pháp đã kiểm chứng tại các nhà máy điện EVN Genco 3.",
+                "desc": "Thuật toán phát hiện sự cố phóng điện hoặc đứt pha tự động cô lập phân đoạn đường dây trong 40 mili-giây, ngăn chặn hiệu ứng sụp đổ dây chuyền dẫn đến rã lưới diện rộng. Giải pháp đã kiểm chứng tại các nhà máy điện các nhà máy phát điện quốc gia.",
                 "cta_primary": ("Đăng Ký Tư Vấn Năng Lượng", "/request-demo", "arrow-right"),
-                "cta_secondary": ("Xem Case Study EVN Genco 3", "#energy-architecture", "shield-check", "cyan")
+                "cta_secondary": ("Xem Hồ Sơ Ngành Năng Lượng", "#energy-architecture", "shield-check", "cyan")
             },
         ],
         "lineage": [
-            ("Grid Standards:", "IEC 61850 Architecture", "500kV Transmission Ready", "EVN Proven", "Sub-40ms Protection")
+            ("Grid Standards:", "IEC 61850 Architecture", "500kV Transmission Ready", "Grid Proven", "Sub-40ms Protection")
         ]
     },
 
@@ -380,11 +380,11 @@ PAGES_DATA = {
                 "headline": 'Nghiệm Thu Di Động <span class="text-emerald">Instant Cloud Sync</span><br class="d-none d-md-inline"/> Hoạt Động Ngoại Tuyến <span class="ins-gradient-headline">Mobile Acceptance App</span>',
                 "desc": "Kỹ thuật viên chụp ảnh hiện trường, quét mã vạch thiết bị thay thế và ký nghiệm thu điện tử trực tiếp trên ứng dụng di động ngay cả khi mất sóng 4G/5G. Dữ liệu tự động đồng bộ về hệ thống trung tâm ngay khi có kết nối.",
                 "cta_primary": ("Trải Nghiệm Giải Pháp Viễn Thông", "/request-demo", "arrow-right"),
-                "cta_secondary": ("Xem Hệ Sinh Thái MobiFone", "#fsm-architecture", "check-circle", "emerald")
+                "cta_secondary": ("Xem Hệ Sinh Thái Viễn Thông", "#fsm-architecture", "check-circle", "emerald")
             },
         ],
         "lineage": [
-            ("Mobility Standards:", "Telecom Tower IoT", "GPS Multi-Stop Solver", "MobiFone Proven", "Offline Native Sync")
+            ("Mobility Standards:", "Telecom Tower IoT", "GPS Multi-Stop Solver", "Telco Proven", "Offline Native Sync")
         ]
     },
 

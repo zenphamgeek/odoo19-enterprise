@@ -39,7 +39,7 @@ if leaves_no_document:
             <field name="evaluation_code">
 leaves_no_allocation_ids = []
 employees = self.env['hr.employee'].search([('company_id', 'in', self.env.companies.ids)])
-consumed_leaves = employees._get_consumed_leaves(leave_types=self.env['hr.leave.type'].search([
+consumed_leaves = employees._get_consumed_leaves(work_entry_types=self.env['hr.work.entry.type'].search([
     ('requires_allocation', '=', True),
     ('allows_negative', '=', False),
 ]))[1]

@@ -51,7 +51,31 @@ class InsilosDemoRequest(models.Model):
         string="Quy mô nhân sự",
     )
     message = fields.Text(string="Bối cảnh / nhu cầu")
+    core_erp = fields.Selection(
+        [
+            ("sap_s4", "SAP S/4HANA"),
+            ("sap_ecc", "SAP ECC 6.0"),
+            ("oracle", "Oracle Fusion / EBS"),
+            ("odoo", "Odoo Enterprise / Community"),
+            ("inhouse", "Hệ thống nội bộ (In-house / Legacy)"),
+            ("other", "Khác"),
+        ],
+        string="Hệ thống Core ERP",
+    )
+    project_timeline = fields.Selection(
+        [
+            ("immediate", "Triển khai ngay (< 1 tháng)"),
+            ("1_3_mo", "1 – 3 tháng"),
+            ("3_6_mo", "3 – 6 tháng"),
+            ("explore", "Nghiên cứu khả thi / Khảo sát"),
+        ],
+        string="Tiến độ dự kiến",
+    )
     consent = fields.Boolean(string="Đồng ý được liên hệ", required=True)
+    consent_decree13 = fields.Boolean(
+        string="Đồng ý xử lý dữ liệu theo Nghị định 13/2023/NĐ-CP",
+        default=False,
+    )
     state = fields.Selection(
         [
             ("new", "Mới"),

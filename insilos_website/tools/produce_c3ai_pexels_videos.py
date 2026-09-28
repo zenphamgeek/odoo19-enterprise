@@ -260,13 +260,13 @@ def build_act4_hud():
     # Primary Target: Central Offshore Wind Turbine
     draw_corner_reticle(draw, 1020, 100, 1440, 670, COLOR_ORANGE, length=34, width=3)
     draw_center_crosshair(draw, 1230, 385, size=12, color=COLOR_ORANGE)
-    draw_hud_badge(draw, 980, 105, "TURBINE EVN-OFFSHORE #03 // 4.2 MW RATED", 
+    draw_hud_badge(draw, 980, 105, "TURBINE POWER-OFFSHORE #03 // 4.2 MW RATED", 
                    "ROTOR: 14.2 RPM | FFT VIBRATION: NORMAL | FTFR: 94.8%", color_accent=COLOR_ORANGE)
     
     # Secondary Target: Far Left Turbine on breakwater
     draw_corner_reticle(draw, 30, 200, 240, 520, COLOR_CYAN, length=20, width=2)
     draw_center_crosshair(draw, 135, 360, size=8, color=COLOR_CYAN)
-    draw_hud_badge(draw, 30, 530, "TURBINE EVN-OFFSHORE #01 // YAW: 218°", 
+    draw_hud_badge(draw, 30, 530, "TURBINE POWER-OFFSHORE #01 // YAW: 218°", 
                    "WIND: 11.4 m/s | PITCH: +2.1° | ONLINE", color_accent=COLOR_CYAN, border_color=COLOR_BORDER_CYAN)
     
     # Top Badges

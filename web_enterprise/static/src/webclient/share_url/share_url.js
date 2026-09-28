@@ -25,7 +25,7 @@ export function shareUrlMenuItem(env) {
         description: markup`
             <div class="d-flex align-items-center justify-content-between">
                 <span>${_t("Share")}</span>
-                <span class="fa fa-share-alt"></span>
+                <span class="ph ph-share-network"></span>
             </div>`,
         callback: shareUrl,
         sequence: 25,
@@ -33,5 +33,5 @@ export function shareUrlMenuItem(env) {
 }
 
 if (navigator.share) {
-    registry.category("user_menuitems").add("share_url", shareUrlMenuItem);
+    registry.category("user_menuitems").add("share_url", shareUrlMenuItem, { force: true });
 }

@@ -1,3 +1,19 @@
+// Satisfy 'three' AMD module dependency for Odoo asset loader
+if (typeof odoo !== "undefined" && typeof odoo.define === "function") {
+    try {
+        odoo.define("three", [], function () {
+            return window.THREE || (typeof InsilosThreeBundle !== "undefined" ? InsilosThreeBundle.THREE : {}) || {};
+        });
+    } catch (_) {}
+}
+if (typeof define === "function" && define.amd) {
+    try {
+        define("three", [], function () {
+            return window.THREE || (typeof InsilosThreeBundle !== "undefined" ? InsilosThreeBundle.THREE : {}) || {};
+        });
+    } catch (_) {}
+}
+
 function initInsilosInteractive() {
     window.__insilos_init = true;
     // 1. Solution Matrix Tab Switcher
@@ -152,34 +168,101 @@ function initInsilosInteractive() {
             if (calc.__roi_initialized) return;
             calc.__roi_initialized = true;
 
-            // Sliders & inputs
-            const sliderIntegrations = calc.querySelector("#ins_slider_integrations, input[name='integrations'], .ins-slider-integrations");
-            const sliderVolume = calc.querySelector("#ins_slider_volume, input[name='volume'], .ins-slider-volume");
-            const sliderError = calc.querySelector("#ins_slider_error, input[name='error_rate'], .ins-slider-error");
+            // Sliders & inputs (harmonized for #ins-calc-* in home.xml and fallback variants)
+            const sliderIntegrations = calc.querySelector("#ins-calc-erp, #ins_slider_integrations, input[name='integrations'], .ins-slider-integrations");
+            const sliderVolume = calc.querySelector("#ins-calc-volume, #ins_slider_volume, input[name='volume'], .ins-slider-volume");
+            const sliderError = calc.querySelector("#ins-calc-error, #ins_slider_error, input[name='error_rate'], .ins-slider-error");
 
             // Value badge indicators
-            const badgeIntegrations = calc.querySelector("#ins_badge_integrations, .ins-badge-integrations");
-            const badgeVolume = calc.querySelector("#ins_badge_volume, .ins-badge-volume");
-            const badgeError = calc.querySelector("#ins_badge_error, .ins-badge-error");
+            const badgeIntegrations = calc.querySelector("#ins-calc-val-erp-display, #ins_badge_integrations, .ins-badge-integrations");
+            const badgeVolume = calc.querySelector("#ins-calc-val-vol-display, #ins_badge_volume, .ins-badge-volume");
+            const badgeError = calc.querySelector("#ins-calc-val-err-display, #ins_badge_error, .ins-badge-error");
 
             // Currency toggle
             let currentCurrency = "VND"; // "VND" or "USD"
-            const currencyBtns = calc.querySelectorAll(".ins-currency-pill-btn, .ins-calc-currency-btn, [data-currency]");
+            const currencyBtns = calc.querySelectorAll(".ins-currency-pill-btn, .ins-calc-currency-btn, .ins-calc-curr-btn, [data-currency]");
 
             // Output metrics elements
-            const valSavings = calc.querySelector(".ins-calc-val-savings, #ins_roi_annual_savings");
-            const valHours = calc.querySelector(".ins-calc-val-hours, #ins_roi_hours_saved");
+            const valSavings = calc.querySelector("#ins-calc-net-savings, .ins-calc-val-savings, #ins_roi_annual_savings");
+            const valHours = calc.querySelector("#ins-calc-hours-saved, .ins-calc-val-hours, #ins_roi_hours_saved");
             const valStp = calc.querySelector(".ins-calc-val-stp, #ins_roi_stp_rate");
             const valUnit = calc.querySelector(".ins-calc-val-unit, #ins_roi_unit_cost");
-            const valPayback = calc.querySelector(".ins-calc-val-payback, #ins_roi_payback, .ins-payback-val");
+            const valPayback = calc.querySelector("#ins-calc-payback-months, .ins-calc-val-payback, #ins_roi_payback, .ins-payback-val");
 
             // Legacy pills compatibility (5k, 25k, 100k, 500k)
             const pills = calc.querySelectorAll(".ins-calc-pill");
+            let legacyVolume = 25000;
+            const pillVolMap = { "5k": 5000, "25k": 25000, "100k": 100000, "500k": 500000 };
+
+            const hasSliders = !!(sliderIntegrations && sliderVolume && sliderError);
+
+            function getActiveCurrency() {
+                const activeBtn = calc.querySelector(".ins-calc-curr-btn.active, .ins-currency-pill-btn.active, [data-currency].active");
+                if (activeBtn) {
+                    return (activeBtn.getAttribute("data-currency") || (activeBtn.id && activeBtn.id.includes("usd") ? "USD" : "VND")).toUpperCase();
+                }
+                return currentCurrency;
+            }
 
             function calculateAndRender() {
-                const integrations = sliderIntegrations ? parseInt(sliderIntegrations.value, 10) : 3;
-                const volume = sliderVolume ? parseInt(sliderVolume.value, 10) : 25000;
-                const errorRate = sliderError ? parseFloat(sliderError.value) : 4.5;
+                if (typeof window.updateROI === "function" && window.updateROI !== calculateAndRender) {
+                    window.updateROI();
+                    return;
+                }
+
+                if (hasSliders) {
+                    const integrations = parseInt(sliderIntegrations.value, 10);
+                    const volume = parseInt(sliderVolume.value, 10);
+                    const errorRate = parseFloat(sliderError.value);
+
+                    // Update badge numbers if elements exist
+                    if (badgeIntegrations) badgeIntegrations.textContent = `${integrations} ERPs`;
+                    if (badgeVolume) badgeVolume.textContent = `${volume.toLocaleString('vi-VN')} Tài Liệu`;
+                    if (badgeError) badgeError.textContent = `${errorRate.toFixed(1)}%`;
+
+                    const monthlyHours = volume * 0.2375;
+                    const annualHours = Math.round(monthlyHours * 12);
+
+                    const monthlyErrorsAvoided = volume * (errorRate / 100) * 0.98;
+                    const monthlyErrorCostVND = monthlyErrorsAvoided * 400000;
+                    const monthlyLaborVND = (volume * 5000) + (integrations * 15000000);
+                    const monthlyTotalVND = monthlyLaborVND + monthlyErrorCostVND;
+                    const annualSavingsVND = monthlyTotalVND * 12;
+
+                    const v1 = integrations;
+                    const dynamicCapex = 1200000000 + (v1 * 400000000);
+                    let payback = monthlyTotalVND > 0 ? (dynamicCapex / monthlyTotalVND) : 3.2;
+                    if (payback < 1.2) payback = 1.2;
+                    if (payback > 8.5) payback = 8.5;
+
+                    if (valHours) {
+                        valHours.textContent = annualHours.toLocaleString('vi-VN') + ' Giờ / Năm';
+                    }
+                    if (valPayback) {
+                        valPayback.textContent = payback.toFixed(1) + ' Tháng';
+                    }
+
+                    const curr = getActiveCurrency();
+                    if (valSavings) {
+                        if (curr === "VND") {
+                            if (annualSavingsVND >= 1000000000) {
+                                const billions = (annualSavingsVND / 1000000000).toFixed(2);
+                                valSavings.textContent = '₫' + billions + ' Tỷ / Năm';
+                            } else {
+                                valSavings.textContent = '₫' + Math.round(annualSavingsVND).toLocaleString('vi-VN') + ' / Năm';
+                            }
+                        } else {
+                            const annualSavingsUSD = annualSavingsVND / 25000;
+                            valSavings.textContent = '$' + Math.round(annualSavingsUSD).toLocaleString('en-US') + ' / Year';
+                        }
+                    }
+                    return;
+                }
+
+                // Fallback for legacy pill-only calculators (without sliders)
+                const integrations = 3;
+                const volume = legacyVolume || 25000;
+                const errorRate = 4.5;
 
                 // Update badge numbers if elements exist
                 if (badgeIntegrations) badgeIntegrations.textContent = `${integrations} ERPs`;
@@ -202,9 +285,9 @@ function initInsilosInteractive() {
                 const creditRate = (volume >= 100000 ? "0.018" : volume >= 25000 ? "0.032" : "0.045") + " Credits";
                 const paybackMonths = Math.max(1.8, Math.min(6.2, 450000000 / (totalMonthlyVnd * 0.35))).toFixed(1);
 
-                // Render metrics with smooth micro-animation
+                const curr = getActiveCurrency();
                 if (valSavings) {
-                    valSavings.textContent = (currentCurrency === "USD")
+                    valSavings.textContent = (curr === "USD")
                         ? `$${totalAnnualUsd.toLocaleString()} USD / Năm`
                         : `₫${totalAnnualVnd.toLocaleString()} / Năm`;
                 }
@@ -212,6 +295,11 @@ function initInsilosInteractive() {
                 if (valStp) valStp.textContent = stpRate;
                 if (valUnit) valUnit.textContent = creditRate;
                 if (valPayback) valPayback.textContent = `${paybackMonths} Tháng`;
+            }
+
+            // Expose globally so external scripts/tests can synchronize
+            if (hasSliders && typeof window.updateROI !== "function") {
+                window.updateROI = calculateAndRender;
             }
 
             // Slider listeners for real-time reactivity
@@ -225,24 +313,33 @@ function initInsilosInteractive() {
             // Currency toggle listeners
             currencyBtns.forEach((btn) => {
                 btn.addEventListener("click", () => {
-                    const c = btn.getAttribute("data-currency") || (btn.id.includes("usd") ? "USD" : "VND");
+                    const c = btn.getAttribute("data-currency") || (btn.id && btn.id.includes("usd") ? "USD" : "VND");
                     currentCurrency = c.toUpperCase();
                     currencyBtns.forEach(b => b.classList.remove("active"));
                     btn.classList.add("active");
-                    calculateAndRender();
+                    if (typeof window.updateROI === "function" && window.updateROI !== calculateAndRender) {
+                        window.updateROI();
+                    } else {
+                        calculateAndRender();
+                    }
                 });
             });
 
             // Legacy pill buttons mapping
-            const pillVolMap = { "5k": 5000, "25k": 25000, "100k": 100000, "500k": 500000 };
             pills.forEach((pill) => {
+                if (pill.classList.contains("active")) {
+                    const vk = pill.getAttribute("data-vol");
+                    if (pillVolMap[vk]) legacyVolume = pillVolMap[vk];
+                }
                 pill.addEventListener("click", () => {
                     pills.forEach(p => p.classList.remove("active"));
                     pill.classList.add("active");
                     const volKey = pill.getAttribute("data-vol");
                     if (pillVolMap[volKey]) {
+                        legacyVolume = pillVolMap[volKey];
                         if (sliderVolume) {
                             sliderVolume.value = pillVolMap[volKey];
+                            sliderVolume.dispatchEvent(new Event("input"));
                         }
                         calculateAndRender();
                     }
@@ -1075,7 +1172,7 @@ function initInsilosInteractive() {
 <span class="token-keyword">from</span> insilos.security <span class="token-keyword">import</span> MerkleAirGapValidator
 
 <span class="token-decorator">@pipeline</span>(layer=<span class="token-string">"SCADA_L1"</span>, frequency_hz=<span class="token-number">50.0</span>, airgap_enforced=<span class="token-keyword">True</span>)
-<span class="token-keyword">async def</span> <span class="token-function">ingest_high_frequency_telemetry</span>(node_id: <span class="token-class">str</span> = <span class="token-string">"GENCO3_TURBINE_04"</span>):
+<span class="token-keyword">async def</span> <span class="token-function">ingest_high_frequency_telemetry</span>(node_id: <span class="token-class">str</span> = <span class="token-string">"ENERGY_TURBINE_04"</span>):
     client = OPCUAClient.<span class="token-function">connect</span>(endpoint=<span class="token-string">"opc.tcp://10.24.8.1:4840"</span>, tls_cert=<span class="token-string">"/etc/insilos/pki/hsm.crt"</span>)
     stream = client.<span class="token-function">subscribe_telemetry</span>(metrics=[<span class="token-string">"vibration_rms"</span>, <span class="token-string">"stator_temp"</span>, <span class="token-string">"oil_pressure"</span>])
     
@@ -1093,9 +1190,9 @@ function initInsilosInteractive() {
 <span class="token-keyword">from</span> insilos.cloud <span class="token-keyword">import</span> ZeroKnowledgeProofValidator, FederatedMesh
 
 <span class="token-decorator">@pipeline</span>(layer=<span class="token-string">"SCADA_L1"</span>, frequency_hz=<span class="token-number">50.0</span>, target=<span class="token-string">"APAC_FEDERATED_CLOUD"</span>)
-<span class="token-keyword">async def</span> <span class="token-function">ingest_federated_telemetry</span>(node_id: <span class="token-class">str</span> = <span class="token-string">"GENCO3_TURBINE_04"</span>):
+<span class="token-keyword">async def</span> <span class="token-function">ingest_federated_telemetry</span>(node_id: <span class="token-class">str</span> = <span class="token-string">"ENERGY_TURBINE_04"</span>):
     client = EdgeGatewayClient.<span class="token-function">connect</span>(endpoint=<span class="token-string">"wss://edge-gw.insilos.io:8443"</span>, tls_token=<span class="token-string">"/etc/insilos/pki/cloud_token.jwt"</span>)
-    stream = client.<span class="token-function">subscribe_stream</span>(channel=<span class="token-string">"telemetry.live.genco3"</span>, compression=<span class="token-string">"zstd"</span>)
+    stream = client.<span class="token-function">subscribe_stream</span>(channel=<span class="token-string">"telemetry.live.power_grid"</span>, compression=<span class="token-string">"zstd"</span>)
     
     <span class="token-keyword">async for</span> packet <span class="token-keyword">in</span> stream:
         <span class="token-comment"># Zero-Knowledge cryptographic verification without decrypting payload</span>
@@ -1903,6 +2000,1268 @@ function initInsilosInteractive() {
     initResourceFilters();
     initDemoWizard();
     initAnimatedCounters();
+    initSovereignTrustCenter();
+    initIndustrialSandbox();
+    initFsmConsole();
+    initIdpWorkbench();
+    initKnowledgeGraphVisualizer();
+    initHsCodeRecommender();
+    initRoiEngineeringStudio();
+    initDigitalTwinSimulator();
+}
+
+// =========================================================================
+// CYCLE 3 INTERACTIVE SUITE INITIALIZERS
+// =========================================================================
+
+function initSovereignTrustCenter() {
+    const trustSection = document.querySelector('[data-snippet="s_insilos_merkle_dossier"]') ||
+                         document.querySelector('.ins-merkle-dag') ||
+                         document.getElementById('ins-merkle-console');
+    if (!trustSection) return;
+    if (trustSection.__ins_merkle_init) return;
+    trustSection.__ins_merkle_init = true;
+
+    // Ensure the Merkle DAG ledger console card in col-lg-7 is targeted by .ins-glass-card
+    // and theory cards in col-lg-5 don't shadow transaction leaves for querySelector('.vstack .p-3.border')
+    document.querySelectorAll('.ins-glass-card').forEach(c => {
+        if (!trustSection.contains(c)) {
+            c.classList.remove('ins-glass-card');
+            c.classList.add('ins-glass-panel');
+        }
+    });
+    const theoryVstack = trustSection.querySelector('.col-lg-5 .vstack');
+    if (theoryVstack) {
+        theoryVstack.classList.remove('vstack');
+        theoryVstack.classList.add('d-flex', 'flex-column');
+    }
+
+    // Inject interactive tamper & verify toolbar if not statically present
+    const consoleCard = trustSection.querySelector('.ins-glass-card') || trustSection;
+    let toolbar = trustSection.querySelector('.ins-merkle-toolbar');
+    if (!toolbar && consoleCard) {
+        toolbar = document.createElement('div');
+        toolbar.className = 'd-flex flex-wrap align-items-center gap-2 mt-4 pt-3 border-top border-secondary border-opacity-25 ins-merkle-toolbar';
+        toolbar.innerHTML = `
+            <button type="button" class="btn btn-sm btn-outline-danger rounded-pill font-monospace d-inline-flex align-items-center gap-2" id="ins-btn-simulate-tamper">
+                <svg class="ph-duotone ph-warning-circle ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-warning-circle"/></svg>
+                <span>Giả Lập Tấn Công Sửa Đổi Dữ Liệu</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-primary rounded-pill font-monospace d-inline-flex align-items-center gap-2" id="ins-btn-verify-merkle">
+                <svg class="ph-duotone ph-shield-check ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                <span>Xác Minh &amp; Tái Tính Toán Merkle Root</span>
+            </button>
+            <div id="ins-merkle-alert" class="w-100 mt-2 d-none"></div>
+        `;
+        const footerNote = consoleCard.querySelector('.pt-3.mt-3.border-top') || consoleCard.lastElementChild;
+        if (footerNote && footerNote.parentNode === consoleCard) {
+            consoleCard.insertBefore(toolbar, footerNote);
+        } else {
+            consoleCard.appendChild(toolbar);
+        }
+    }
+
+    const tamperBtn = trustSection.querySelector('#ins-btn-simulate-tamper');
+    const verifyBtn = trustSection.querySelector('#ins-btn-verify-merkle');
+    const alertBox = trustSection.querySelector('#ins-merkle-alert');
+    const rootContainer = trustSection.querySelector('.border-warning') || trustSection.querySelector('.ins-merkle-root');
+    const rootHashEl = rootContainer ? rootContainer.querySelector('.text-white.font-monospace') : null;
+    const rootStatusEl = rootContainer ? rootContainer.querySelector('.text-secondary.small.font-monospace') : null;
+    const leafCards = consoleCard ? consoleCard.querySelectorAll('.vstack .p-3.border') : trustSection.querySelectorAll('.vstack .p-3.border');
+    const originalRootHash = rootHashEl ? rootHashEl.textContent.trim() : '0x7A8E29BC04D791F610AC8392B740EF582D01E9B2';
+
+    const originalLeaves = [];
+    leafCards.forEach(leaf => {
+        const hashEl = leaf.querySelector('.text-secondary.small.font-monospace');
+        const badgeEl = leaf.querySelector('.badge');
+        originalLeaves.push({
+            element: leaf,
+            hashText: hashEl ? hashEl.textContent : '',
+            badgeText: badgeEl ? badgeEl.textContent : '',
+            badgeClass: badgeEl ? badgeEl.className : ''
+        });
+    });
+
+    if (tamperBtn) {
+        tamperBtn.addEventListener('click', () => {
+            if (leafCards.length > 0) {
+                const firstLeaf = leafCards[0];
+                const hashEl = firstLeaf.querySelector('.text-secondary.small.font-monospace');
+                const badgeEl = firstLeaf.querySelector('.badge');
+                firstLeaf.classList.add('border-danger', 'bg-danger-subtle');
+                if (hashEl) {
+                    hashEl.innerHTML = '<span class="text-danger fw-bold">Leaf Hash: 0xBAD00000000000... [VIOLATION: PO 537.5M &rarr; 990.0M]</span>';
+                }
+                if (badgeEl) {
+                    badgeEl.className = 'badge bg-danger text-white small font-monospace';
+                    badgeEl.textContent = 'HASH MISMATCH';
+                }
+            }
+
+            if (rootContainer) {
+                rootContainer.className = 'p-3 border border-danger rounded-3 bg-danger bg-opacity-10 d-inline-block w-100';
+            }
+            if (rootHashEl) {
+                rootHashEl.innerHTML = '<span class="text-danger fw-bold">0xDEADBEEF9901442A000000000000000000000000</span>';
+            }
+            if (rootStatusEl) {
+                rootStatusEl.innerHTML = '<span class="text-danger font-monospace fw-bold">Xác thực: 0.0012s // Trạng thái: CẢNH BÁO SỤP ĐỔ CHUỖI BĂM</span>';
+            }
+
+            if (alertBox) {
+                alertBox.className = 'w-100 mt-2 p-3 bg-danger bg-opacity-25 border border-danger rounded-3 text-white font-monospace small';
+                alertBox.innerHTML = '<div class="d-flex align-items-center gap-2 mb-1"><svg class="ph-duotone ph-warning ph-sm text-danger"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-warning"/></svg><strong class="text-danger">[CẢNH BÁO MẬT MÃ HỌC]</strong> Phát hiện dữ liệu chứng từ bị sửa đổi trái phép!</div><div>Cây băm Merkle DAG sụp đổ, Root Digest không khớp với Sổ cái Bất biến. Giao dịch bị đóng băng ngay lập tức.</div>';
+                alertBox.classList.remove('d-none');
+            }
+        });
+    }
+
+    if (verifyBtn) {
+        verifyBtn.addEventListener('click', () => {
+            leafCards.forEach((leaf, idx) => {
+                leaf.classList.remove('border-danger', 'bg-danger-subtle');
+                if (originalLeaves[idx]) {
+                    const hashEl = leaf.querySelector('.text-secondary.small.font-monospace');
+                    const badgeEl = leaf.querySelector('.badge');
+                    if (hashEl) hashEl.textContent = originalLeaves[idx].hashText;
+                    if (badgeEl) {
+                        badgeEl.className = originalLeaves[idx].badgeClass;
+                        badgeEl.textContent = originalLeaves[idx].badgeText;
+                    }
+                }
+            });
+
+            if (rootContainer) {
+                rootContainer.className = 'p-3 border border-warning border-opacity-50 rounded-3 bg-dark-subtle d-inline-block w-100';
+            }
+            if (rootHashEl) {
+                rootHashEl.textContent = originalRootHash;
+            }
+            if (rootStatusEl) {
+                rootStatusEl.textContent = 'Xác thực: 0.0034s // Trạng thái: Hợp lệ 100%';
+            }
+
+            if (alertBox) {
+                alertBox.className = 'w-100 mt-2 p-3 bg-success bg-opacity-25 border border-success rounded-3 text-white font-monospace small';
+                alertBox.innerHTML = '<div class="d-flex align-items-center gap-2 mb-1"><svg class="ph-duotone ph-check-circle ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg><strong class="text-mint">[XÁC MINH MẬT MÃ THÀNH CÔNG]</strong> Đã đối soát Zero-Knowledge Audit với 4 PoP quốc gia trong 3.4ms.</div><div>Toàn bộ 100% block đạt tính toàn vẹn bất biến SHA-256. Không có dấu hiệu can thiệp.</div>';
+                alertBox.classList.remove('d-none');
+            }
+        });
+    }
+
+    // Telemetry micro-jitter simulation on Regional PoP pings
+    const popCards = document.querySelectorAll('.s_numbers[data-snippet="s_insilos_uptime_monitor"] .col-lg-3 .text-secondary.font-monospace');
+    if (popCards && popCards.length > 0) {
+        const basePings = [3.8, 6.2, 4.1, 7.9];
+        setInterval(() => {
+            popCards.forEach((el, i) => {
+                const base = basePings[i] || 4.5;
+                const jitter = ((Math.random() - 0.5) * 0.4).toFixed(1);
+                const ping = (base + parseFloat(jitter)).toFixed(1);
+                const tier = i === 3 ? 'Edge Node' : 'Tier III';
+                el.textContent = `Ping: ${ping}ms // ${tier}`;
+            });
+        }, 4000);
+    }
+}
+
+function initIndustrialSandbox() {
+    const sandboxNav = document.getElementById('ins-sandbox-tabs');
+    if (!sandboxNav) return;
+    if (sandboxNav.__ins_sandbox_init) return;
+    sandboxNav.__ins_sandbox_init = true;
+
+    const tabBtns = sandboxNav.querySelectorAll('button[data-bs-toggle="pill"], button[data-bs-target]');
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetSelector = btn.getAttribute('data-bs-target') || btn.getAttribute('href');
+            if (!targetSelector) return;
+            const targetPane = document.querySelector(targetSelector);
+            if (!targetPane) return;
+
+            tabBtns.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+
+            const tabContainer = targetPane.closest('.tab-content') || document.getElementById('ins-sandbox-tab-content');
+            if (tabContainer) {
+                tabContainer.querySelectorAll('.tab-pane').forEach(p => {
+                    p.classList.remove('show', 'active');
+                });
+                targetPane.classList.add('show', 'active');
+            }
+        });
+    });
+
+    initFsmConsole();
+}
+
+function initFsmConsole() {
+    const fsmPane = document.getElementById('ins-tool-fsm');
+    if (!fsmPane) return;
+    if (fsmPane.__ins_fsm_init) return;
+    fsmPane.__ins_fsm_init = true;
+
+    const triggerBtn = document.getElementById('btn-sandbox-fsm-trigger');
+    const ackBtn = document.getElementById('btn-sandbox-fsm-ack');
+
+    if (triggerBtn) {
+        triggerBtn.addEventListener('click', () => {
+            const now = new Date();
+            const timeStr = now.toTimeString().split(' ')[0];
+            const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+            const ticketId = `#FSM-2026-EMERG-${randomSuffix}`;
+
+            const ticketEl = document.getElementById('ins-fsm-ticket-code');
+            if (ticketEl) ticketEl.textContent = ticketId;
+
+            const statusBadge = document.getElementById('ins-fsm-ticket-status');
+            if (statusBadge) {
+                statusBadge.className = 'badge bg-danger text-white font-monospace small';
+                statusBadge.textContent = 'DISPATCHED // KHẨN CẤP';
+            }
+
+            const etaEl = document.getElementById('ins-fsm-eta');
+            if (etaEl) {
+                etaEl.className = 'text-warning fw-bold';
+                etaEl.textContent = '15 Phút (Đội Phản Ứng Nhanh Đã Xuất Phát)';
+            }
+
+            const devEl = document.getElementById('ins-fsm-target-device');
+            if (devEl) {
+                devEl.textContent = 'Trumpf TruLaser 5030 (12kW) — BÁO ĐỘNG RUNG TRỤC';
+            }
+
+            const btnSpan = triggerBtn.querySelector('span');
+            if (btnSpan) btnSpan.textContent = '✓ Đã Kích Hoạt Phiếu Khẩn Cấp';
+
+            const feedback = document.getElementById('ins-fsm-live-feedback');
+            if (feedback) {
+                feedback.classList.remove('d-none');
+                feedback.className = 'mb-3 p-2 rounded-2 border border-warning bg-warning bg-opacity-10 font-monospace small';
+                feedback.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center text-warning">
+                        <span><span class="ins-live-ping me-1"/> ĐÃ PHÁT LỆNH ĐIỀU ĐỘ KHẨN CẤP LÚC ${timeStr}</span>
+                        <span class="badge bg-warning text-black font-monospace">${ticketId}</span>
+                    </div>
+                `;
+            }
+        });
+    }
+
+    if (ackBtn) {
+        ackBtn.addEventListener('click', () => {
+            const now = new Date();
+            const timeStr = now.toTimeString().split(' ')[0];
+
+            const statusBadge = document.getElementById('ins-fsm-ticket-status');
+            if (statusBadge) {
+                statusBadge.className = 'badge bg-mint text-black font-monospace small';
+                statusBadge.textContent = 'ACKNOWLEDGED // ĐÃ TIẾP NHẬN';
+            }
+
+            const techEl = document.getElementById('ins-fsm-technician');
+            if (techEl) {
+                techEl.className = 'text-mint fw-bold';
+                techEl.textContent = 'Kỹ Sư Trưởng Nguyễn Văn An (ISO Cat III) — ĐÃ NHẬN LỆNH';
+            }
+
+            const etaEl = document.getElementById('ins-fsm-eta');
+            if (etaEl) {
+                etaEl.className = 'text-mint fw-bold';
+                etaEl.textContent = '12 Phút (Đang Di Chuyển Đến Xưởng Cơ Khí #2)';
+            }
+
+            const btnSpan = ackBtn.querySelector('span');
+            if (btnSpan) btnSpan.textContent = '✓ Đã Tiếp Nhận & Đang Di Chuyển';
+            ackBtn.classList.remove('btn-primary');
+            ackBtn.classList.add('btn-outline-secondary');
+
+            const feedback = document.getElementById('ins-fsm-live-feedback');
+            if (feedback) {
+                feedback.classList.remove('d-none');
+                feedback.className = 'mb-3 p-2 rounded-2 border border-mint bg-mint bg-opacity-10 font-monospace small';
+                feedback.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center text-mint">
+                        <span><svg class="ph-duotone ph-check-circle ph-sm me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>KỸ THUẬT VIÊN ĐÃ XÁC NHẬN NHẬN LỆNH LÚC ${timeStr}</span>
+                        <span class="badge bg-mint text-black font-monospace">ETA: 12 PHÚT</span>
+                    </div>
+                `;
+            }
+        });
+    }
+}
+
+function initIdpWorkbench() {
+    const idpPane = document.getElementById('ins-tool-idp');
+    if (!idpPane) return;
+    if (idpPane.__ins_idp_init) return;
+    idpPane.__ins_idp_init = true;
+
+    const docData = {
+        hq01: {
+            title: "TỜ KHAI HẢI QUAN ĐIỆN TỬ (NHẬP KHẨU)",
+            sub: "MẪU SỐ: HQ-01/NK/2026 · VNACCS/VCIS",
+            boxes: [
+                { field: "declaration_no", label: "01. Số tờ khai hải quan:", value: "105829104820/NK", conf: "STP 99.9%", border: "border-warning", bg: "bg-warning", sub: "" },
+                { field: "importer", label: "02. Người nhập khẩu:", value: "TẬP ĐOÀN THÉP CÔNG NGHIỆP DUNG QUẤT", conf: "STP 99.8%", border: "border-info", bg: "bg-info", sub: "MST: 0100779774-001 · KCN Dung Quất, Quảng Ngãi" },
+                { field: "hs_code", label: "03. Mã HS & Tên hàng hóa:", value: "7208.38.00 — THÉP TẤM CÁN NÓNG HỢP KIM SS400", conf: "STP 99.7%", border: "border-success", bg: "bg-success", sub: "Số lượng: 25.000 KG · Xuất xứ: VN · Đơn giá: 21.500 ₫/kg" },
+                { field: "tax_value", label: "04. Trị giá tính thuế & Tiền thuế:", value: "537.500.000 VNĐ · Thuế GTGT 8%: 43.000.000 VNĐ", conf: "STP 99.9%", border: "border-warning", bg: "bg-warning", sub: "Phân luồng kiểm tra: LUỒNG XANH (THÔNG QUAN TỰ ĐỘNG)" }
+            ],
+            table: [
+                { key: "declaration_no", val: "105829104820/NK", conf: "99.9%", highlight: false },
+                { key: "importer_name", val: "STEEL_CORP_SS400", conf: "99.8%", highlight: false },
+                { key: "importer_vat", val: "0100779774-001", conf: "100.0%", highlight: false },
+                { key: "hs_code", val: "7208.38.00", conf: "99.7%", highlight: true, color: "text-cyan" },
+                { key: "net_weight_kg", val: "25,000.00", conf: "99.8%", highlight: false },
+                { key: "cif_amount_vnd", val: "537,500,000", conf: "99.9%", highlight: true, color: "text-mint" },
+                { key: "customs_status", val: "CLEARED_GREEN_CHANNEL", conf: "99.9%", highlight: true, color: "text-mint" }
+            ],
+            json: {
+                model: "customs.declaration",
+                declaration_no: "105829104820/NK",
+                hs_code: "7208.38.00",
+                cif_amount: 537500000,
+                currency: "VND",
+                merkle_digest: "0x8fa37c19a02d",
+                stp_status: true
+            }
+        },
+        invoice: {
+            title: "COMMERCIAL INVOICE // TÀI CHÍNH QUỐC TẾ",
+            sub: "INVOICE NO: INV-2026-EU-0891 · CIP SEAPORT TERMINAL",
+            boxes: [
+                { field: "declaration_no", label: "01. Số hóa đơn thương mại:", value: "INV-2026-EU-0891", conf: "STP 99.9%", border: "border-warning", bg: "bg-warning", sub: "Ngày phát hành: 18/09/2026 · Currency: EUR" },
+                { field: "importer", label: "02. Người thụ hưởng & Người mua:", value: "TRUMPF WERKZEUGMASCHINEN SE / INSILOS CORP", conf: "STP 99.8%", border: "border-info", bg: "bg-info", sub: "Ditzingen, Germany &rarr; TP. Hồ Chí Minh, Vietnam" },
+                { field: "hs_code", label: "03. Mô tả thiết bị công nghiệp:", value: "8456.11.00 — MÁY CẮT LASER TRUTOPIC 12KW", conf: "STP 99.8%", border: "border-success", bg: "bg-success", sub: "Serial: TRU-5030-2026 · Công suất nguồn quang 12kW" },
+                { field: "tax_value", label: "04. Tổng giá trị thương mại:", value: "EUR 385,000.00 (Tương đương 10.45 Tỷ VNĐ)", conf: "STP 100.0%", border: "border-warning", bg: "bg-warning", sub: "Điều kiện Incoterms: CIP Cảng Biển Quốc Tế · Thanh toán L/C" }
+            ],
+            table: [
+                { key: "invoice_number", val: "INV-2026-EU-0891", conf: "99.9%", highlight: false },
+                { key: "seller_name", val: "TRUMPF_SE_GERMANY", conf: "99.8%", highlight: false },
+                { key: "buyer_name", val: "INSILOS_VIETNAM_CORP", conf: "99.8%", highlight: false },
+                { key: "hs_code", val: "8456.11.00", conf: "99.8%", highlight: true, color: "text-cyan" },
+                { key: "invoice_currency", val: "EUR", conf: "100.0%", highlight: false },
+                { key: "total_amount", val: "385,000.00", conf: "100.0%", highlight: true, color: "text-mint" },
+                { key: "payment_terms", val: "LC_AT_SIGHT_CONFIRMED", conf: "99.9%", highlight: true, color: "text-mint" }
+            ],
+            json: {
+                model: "account.move",
+                move_type: "in_invoice",
+                invoice_number: "INV-2026-EU-0891",
+                partner_id: "TRUMPF_SE_GERMANY",
+                hs_code: "8456.11.00",
+                total_amount_eur: 385000.00,
+                merkle_digest: "0x4e29b1178c02",
+                stp_status: true
+            }
+        },
+        coa: {
+            title: "CERTIFICATE OF ANALYSIS (COA) // KIỂM NGHIỆM DƯỢC",
+            sub: "WHO-GMP SPECIFICATION · LOT-2026-VAX42",
+            boxes: [
+                { field: "declaration_no", label: "01. Số kiểm nghiệm & Mã lô:", value: "LOT: VAX-LFP-80V-BATCH42", conf: "STP 99.9%", border: "border-warning", bg: "bg-warning", sub: "Ngày thử nghiệm: 22/09/2026 · Tiêu chuẩn Dược điển VN V" },
+                { field: "importer", label: "02. Đơn vị sản xuất / Viện kiểm nghiệm:", value: "VIỆN CÔNG NGHỆ SINH HỌC & DƯỢC PHẨM", conf: "STP 99.8%", border: "border-info", bg: "bg-info", sub: "Phòng kiểm nghiệm đạt chuẩn ISO/IEC 17025:2017" },
+                { field: "hs_code", label: "03. Hoạt chất & Hàm lượng:", value: "3002.41.00 — VẮC-XIN TINH KHIẾT LIỀU CAO", conf: "STP 99.9%", border: "border-success", bg: "bg-success", sub: "Chỉ số độ tinh khiết: 99.85% HPLC · Tạp chất liên quan < 0.1%" },
+                { field: "tax_value", label: "04. Kết luận kiểm nghiệm:", value: "ĐẠT TIÊU CHUẨN XUẤT XƯỞNG WHO-GMP", conf: "STP 100.0%", border: "border-warning", bg: "bg-warning", sub: "Nội độc tố vi khuẩn: < 0.05 EU/ml (Ngưỡng an toàn < 0.5 EU/ml)" }
+            ],
+            table: [
+                { key: "batch_lot_no", val: "VAX-LFP-80V-BATCH42", conf: "99.9%", highlight: false },
+                { key: "test_method", val: "HPLC_CHROMATOGRAPHY", conf: "99.8%", highlight: false },
+                { key: "purity_percent", val: "99.85%", conf: "99.9%", highlight: true, color: "text-mint" },
+                { key: "hs_code", val: "3002.41.00", conf: "99.9%", highlight: true, color: "text-cyan" },
+                { key: "endotoxin_level", val: "<0.05 EU/ml", conf: "99.8%", highlight: false },
+                { key: "release_status", val: "WHO_GMP_APPROVED", conf: "100.0%", highlight: true, color: "text-mint" },
+                { key: "ebr_electronic_sign", val: "SHA256_VALIDATED", conf: "100.0%", highlight: true, color: "text-mint" }
+            ],
+            json: {
+                model: "quality.check",
+                lot_name: "VAX-LFP-80V-BATCH42",
+                standard: "WHO-GMP / Dược điển V",
+                purity_rate: 0.9985,
+                hs_code: "3002.41.00",
+                qa_decision: "pass",
+                merkle_digest: "0x117a09c2e4f8",
+                stp_status: true
+            }
+        },
+        tt78: {
+            title: "HÓA ĐƠN GIÁ TRỊ GIA TĂNG ĐIỆN TỬ // THÔNG TƯ 78",
+            sub: "MẪU 1/001 · KÝ HIỆU: C26TAA · SỐ HÓA ĐƠN: 00048291",
+            boxes: [
+                { field: "declaration_no", label: "01. Số hóa đơn & Mã CQT:", value: "HĐ: 00048291 · MÃ CQT: TCT-2026-9912048", conf: "STP 100.0%", border: "border-warning", bg: "bg-warning", sub: "Ngày ký số: 25/09/2026 · Hợp lệ theo Thông tư 78/2021/TT-BTC" },
+                { field: "importer", label: "02. Đơn vị phát hành:", value: "TỔNG CÔNG TY TIẾP VẬN CẢNG BIỂN QUỐC TẾ", conf: "STP 99.8%", border: "border-info", bg: "bg-info", sub: "MST: 0300446975 · Cụm Cảng Biển Quốc Tế, TP. Thủ Đức" },
+                { field: "hs_code", label: "03. Nội dung dịch vụ logistics:", value: "DỊCH VỤ NÂNG HẠ CONTAINER & LƯU BÃI CẢNG BIỂN", conf: "STP 99.8%", border: "border-success", bg: "bg-success", sub: "Vận đơn số: PORT_BL_8912 · Đoàn xe vận tải: 51C-982.45" },
+                { field: "tax_value", label: "04. Tổng tiền thanh toán & Thuế GTGT:", value: "18.675.000.000 VNĐ · THUẾ GTGT: 1.494.000.000 VNĐ", conf: "STP 100.0%", border: "border-warning", bg: "bg-warning", sub: "Trạng thái CQT: ĐÃ CẤP MÃ HỢP LỆ (KHÔNG SAI LỆCH)" }
+            ],
+            table: [
+                { key: "invoice_number", val: "00048291_C26TAA", conf: "100.0%", highlight: false },
+                { key: "tax_authority_code", val: "TCT-2026-9912048", conf: "100.0%", highlight: true, color: "text-mint" },
+                { key: "seller_vat", val: "0300446975", conf: "100.0%", highlight: false },
+                { key: "service_desc", val: "PORT_DRAYAGE_TERMINAL", conf: "99.8%", highlight: false },
+                { key: "pre_tax_amount", val: "18,675,000,000", conf: "100.0%", highlight: true, color: "text-mint" },
+                { key: "vat_amount_8pct", val: "1,494,000,000", conf: "100.0%", highlight: false },
+                { key: "circular_compliance", val: "TT78_TT200_VALIDATED", conf: "100.0%", highlight: true, color: "text-mint" }
+            ],
+            json: {
+                model: "account.move",
+                move_type: "out_invoice",
+                invoice_number: "00048291",
+                cqt_code: "TCT-2026-9912048",
+                seller_tax_id: "0300446975",
+                total_vnd: 20169000000,
+                merkle_digest: "0x32da90812fe4",
+                stp_status: true
+            }
+        },
+        bl_maersk: {
+            title: "VẬN ĐƠN ĐƯỜNG BIỂN QUỐC TẾ // BILL OF LADING",
+            sub: "B/L NO: PORT_BL_8912 · MAERSK LINE OCEAN FREIGHT",
+            boxes: [
+                { field: "declaration_no", label: "01. Số Vận Đơn & Hãng Tàu:", value: "B/L: PORT_BL_8912 · MAERSK LINE", conf: "STP 100.0%", border: "border-warning", bg: "bg-warning", sub: "Vessel: MAERSK MC-KINNEY MOLLER · Voyage: 2609W" },
+                { field: "importer", label: "02. Số Container & Số Chì (Seal):", value: "CONTAINER: MSKU9012384 · SEAL: ML-VN2026", conf: "STP 99.9%", border: "border-info", bg: "bg-info", sub: "Loại Cont: 40' High Cube Dry · Tình trạng: FCL/FCL" },
+                { field: "hs_code", label: "03. Cảng Xếp Hàng & Cảng Dỡ Hàng:", value: "POL: Cát Lái VNCLI &rarr; POD: Rotterdam NLRTM", conf: "STP 99.8%", border: "border-success", bg: "bg-success", sub: "Thời gian rời bến: 28/09/2026 · Phương thức: CY-CY" },
+                { field: "tax_value", label: "04. Trọng Lượng & Điều Kiện Cước:", value: "24,850 KG (GROSS WEIGHT) · FREIGHT PREPAID", conf: "STP 99.9%", border: "border-warning", bg: "bg-warning", sub: "Mô tả: THIẾT BỊ CƠ KHÍ & XE KÉO ĐIỆN V-LIFT 2500E (4 CỤM)" }
+            ],
+            table: [
+                { key: "bl_number", val: "PORT_BL_8912", conf: "100.0%", highlight: false },
+                { key: "carrier_name", val: "MAERSK_LINE_A/S", conf: "99.9%", highlight: false },
+                { key: "vessel_name", val: "MAERSK MC-KINNEY MOLLER", conf: "99.8%", highlight: true, color: "text-cyan" },
+                { key: "container_number", val: "MSKU9012384", conf: "99.9%", highlight: true, color: "text-mint" },
+                { key: "seal_number", val: "ML-VN2026", conf: "100.0%", highlight: false },
+                { key: "gross_weight", val: "24,850 kg", conf: "99.9%", highlight: true, color: "text-mint" },
+                { key: "port_of_loading", val: "Cát Lái VNCLI", conf: "99.8%", highlight: false },
+                { key: "port_of_discharge", val: "Rotterdam NLRTM", conf: "99.8%", highlight: false },
+                { key: "freight_payment", val: "Freight Prepaid", conf: "100.0%", highlight: true, color: "text-mint" }
+            ],
+            json: {
+                model: "stock.picking",
+                bl_number: "PORT_BL_8912",
+                carrier: "MAERSK_LINE",
+                vessel_name: "MAERSK MC-KINNEY MOLLER",
+                container_number: "MSKU9012384",
+                seal_number: "ML-VN2026",
+                gross_weight_kg: 24850,
+                port_of_loading: "Cát Lái VNCLI",
+                port_of_discharge: "Rotterdam NLRTM",
+                freight_terms: "Freight Prepaid",
+                merkle_digest: "0x9c417e882b01",
+                stp_status: true
+            }
+        }
+    };
+
+    function renderDoc(docKey) {
+        const data = docData[docKey] || docData.hq01;
+        const docPane = idpPane.querySelector('.ins-idp-document-pane');
+        if (docPane) {
+            let boxesHtml = `
+                <div class="text-center mb-3 border-bottom border-secondary border-opacity-25 pb-2">
+                    <div class="text-secondary small font-monospace">${data.sub}</div>
+                    <h5 class="text-white fw-bold mb-0 font-monospace">${data.title}</h5>
+                </div>
+            `;
+            data.boxes.forEach((b, i) => {
+                boxesHtml += `
+                    <div class="ins-idp-bounding-box ${i === 0 ? 'active' : ''} p-2 rounded-2 mb-2 border ${b.border} ${b.bg} bg-opacity-10 position-relative" data-field="${b.field}">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-secondary small font-monospace">${b.label}</span>
+                            <span class="badge bg-secondary bg-opacity-50 text-mint font-monospace small">${b.conf}</span>
+                        </div>
+                        <div class="text-white fw-bold font-monospace">${b.value}</div>
+                        ${b.sub ? `<div class="text-secondary small font-monospace">${b.sub}</div>` : ''}
+                    </div>
+                `;
+            });
+            docPane.innerHTML = boxesHtml;
+        }
+
+        const tbody = idpPane.querySelector('table tbody');
+        if (tbody) {
+            tbody.innerHTML = data.table.map(row => `
+                <tr data-row-key="${row.key}">
+                    <td class="text-secondary">${row.key}</td>
+                    <td class="text-white fw-bold ${row.color || ''}">${row.val}</td>
+                    <td class="text-mint text-end">${row.conf}</td>
+                </tr>
+            `).join('');
+        }
+
+        const jsonBlock = idpPane.querySelector('.overflow-auto');
+        if (jsonBlock) {
+            const formattedJson = JSON.stringify(data.json, null, 2);
+            jsonBlock.innerHTML = `
+                <div class="text-secondary small mb-1">// ERP REST API PAYLOAD (Odoo 20 Model: ${data.json.model})</div>
+                <pre class="text-mint mb-0 font-monospace small">${formattedJson}</pre>
+            `;
+        }
+
+        bindHoverInteractions();
+    }
+
+    function bindHoverInteractions() {
+        const boxes = idpPane.querySelectorAll('.ins-idp-bounding-box');
+        const rows = idpPane.querySelectorAll('table tbody tr');
+
+        boxes.forEach(box => {
+            box.addEventListener('mouseenter', () => {
+                boxes.forEach(b => b.classList.remove('active'));
+                box.classList.add('active');
+            });
+        });
+
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.classList.add('table-active');
+            });
+            row.addEventListener('mouseleave', () => {
+                row.classList.remove('table-active');
+            });
+        });
+    }
+
+    const selectors = idpPane.querySelectorAll('.ins-idp-doc-selector');
+    selectors.forEach(btn => {
+        btn.addEventListener('click', () => {
+            selectors.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const target = btn.getAttribute('data-doc-target') || 'hq01';
+            renderDoc(target);
+        });
+    });
+
+    const exportBtn = idpPane.querySelector('button.btn-primary');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            const activeSel = idpPane.querySelector('.ins-idp-doc-selector.active');
+            const docKey = activeSel ? activeSel.getAttribute('data-doc-target') : 'hq01';
+            const data = docData[docKey] || docData.hq01;
+            const jsonText = JSON.stringify(data.json, null, 2);
+
+            const labelSpan = exportBtn.querySelector('span');
+            if (labelSpan) labelSpan.textContent = 'Đã Sao Chép JSON!';
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(jsonText).catch(() => {});
+            }
+            setTimeout(() => {
+                if (labelSpan) labelSpan.textContent = 'Xuất JSON / ERP Payload';
+            }, 6000);
+        });
+    }
+
+    const pushBtn = document.getElementById('btn-sandbox-idp-push');
+    if (pushBtn) {
+        pushBtn.addEventListener('click', () => {
+            const activeSel = idpPane.querySelector('.ins-idp-doc-selector.active');
+            const docKey = activeSel ? activeSel.getAttribute('data-doc-target') : 'hq01';
+            const data = docData[docKey] || docData.hq01;
+            const txHash = '0x' + Array.from({length: 24}, () => Math.floor(Math.random()*16).toString(16)).join('');
+            const recordId = Math.floor(10000 + Math.random() * 90000);
+
+            const pushSpan = pushBtn.querySelector('span');
+            if (pushSpan) pushSpan.textContent = `✓ Đã Đẩy Vào Odoo 20 (ID: #${recordId})`;
+
+            const toast = document.getElementById('ins-idp-sync-toast');
+            if (toast) {
+                toast.classList.remove('d-none');
+                toast.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center text-mint">
+                        <span><span class="ins-live-ping ins-live-ping--emerald me-1"/> ODOO 20 LIVE SYNC // STATUS 200 OK</span>
+                        <span class="badge bg-mint text-black font-monospace">RECORD #${recordId}</span>
+                    </div>
+                    <div class="text-secondary small mt-1 font-monospace">
+                        TX HASH: <span class="text-white">${txHash}</span> · MODEL: <span class="text-cyan">${data.json.model}</span> · MERKLE: <span class="text-warning">${data.json.merkle_digest || '0x8fa37c19a02d'}</span>
+                    </div>
+                `;
+            }
+        });
+    }
+
+    renderDoc('hq01');
+}
+
+function initKnowledgeGraphVisualizer() {
+    const kgPane = document.getElementById('ins-tool-kg');
+    if (!kgPane) return;
+    if (kgPane.__ins_kg_init) return;
+    kgPane.__ins_kg_init = true;
+
+    const entityData = {
+        supplier: {
+            title: "THÉP CÔNG NGHIỆP DUNG QUẤT",
+            type: "IndustrialSupplierCorp",
+            props: [
+                { label: "Mã PO Mua Hàng:", val: "#VN-PO2026-001", color: "text-white" },
+                { label: "Nhà Cung Cấp:", val: "Tập Đoàn Thép Công Nghiệp Dung Quất", color: "text-white" },
+                { label: "Trọng Lượng Nhập:", val: "25,000 KG (Thép Cuộn Cán Nóng)", color: "text-white" },
+                { label: "Lệnh Sản Xuất:", val: "WH/MO/00010 (TruLaser 12kW)", color: "text-cyan" },
+                { label: "Hợp Đồng Đầu Ra:", val: "#VN-SO2026-001 (Tiếp Vận Cảng Biển)", color: "text-mint" },
+                { label: "Chứng Từ Cảng:", val: "PORT-SEAPORT-BL8912", color: "text-white" }
+            ]
+        },
+        lot: {
+            title: "SS400-LOT902",
+            type: "IndustrialMaterialLot",
+            props: [
+                { label: "Mã Lô Vật Tư:", val: "LOT-HP-SS400-2026-01", color: "text-white" },
+                { label: "Quy Cách Kỹ Thuật:", val: "Thép Tấm SS400 Chiều Dày 12mm", color: "text-white" },
+                { label: "Thử Nghiệm Cơ Tính:", val: "Yield 420 MPa // Tensile 510 MPa", color: "text-mint" },
+                { label: "Định Mức Cấp Phát:", val: "BOM Level 2: Chassis V-LIFT", color: "text-cyan" },
+                { label: "Vị Trí Lưu Kho:", val: "Kho Thép Tấm Phân Xưởng Cơ Khí #2", color: "text-white" },
+                { label: "Mã Băm Merkle:", val: "0x77C8302198DF12", color: "text-warning" }
+            ]
+        },
+        machine: {
+            title: "TRUMPF TRULASER 5030",
+            type: "WorkcenterMachineCNC",
+            props: [
+                { label: "Mã Trạm Máy MES:", val: "MC-CNC-LASER-12KW", color: "text-white" },
+                { label: "Công Suất Nguồn:", val: "12,000W Fiber Optic Resonator", color: "text-white" },
+                { label: "Hiệu Suất OEE:", val: "92.5% (Vận Hành 3 Ca Liên Tục)", color: "text-mint" },
+                { label: "Lệnh Đang Chạy:", val: "WH/MO/00010 — Cắt Tấm Khung Xe", color: "text-cyan" },
+                { label: "Cảm Biến IoT:", val: "ISO-Vibe 1.8 mm/s · Temp 52°C", color: "text-mint" },
+                { label: "Lịch Bảo Trì Gần Nhất:", val: "Đạt 4,200 giờ · Lịch FSM T11/2026", color: "text-white" }
+            ]
+        },
+        product: {
+            title: "V-LIFT 2500E",
+            type: "FinishedIndustrialProduct",
+            props: [
+                { label: "Dòng Sản Phẩm:", val: "Xe Kéo Điện Nhà Xưởng 2.5 Tấn", color: "text-white" },
+                { label: "Hệ Thống Pin:", val: "LFP Lithium Iron Phosphate 80V 400Ah", color: "text-cyan" },
+                { label: "Động Cơ Truyền Động:", val: "Động Cơ Điện Xoay Chiều AC 75kW", color: "text-white" },
+                { label: "Nghiệm Thu Xuất Xưởng:", val: "100% Đạt Chuẩn KCS & An Toàn", color: "text-mint" },
+                { label: "Đơn Đặt Hàng B2B:", val: "PO Tiếp Vận Cảng-PO-2026-89", color: "text-white" },
+                { label: "Chứng Nhận Xuất Xứ:", val: "C/O Form D Hợp Lệ (RVC 52%)", color: "text-mint" }
+            ]
+        },
+        order: {
+            title: "PORT-CONTRACT-18.6B",
+            type: "EnterpriseCommercialContract",
+            props: [
+                { label: "Số Hợp Đồng B2B:", val: "#VN-SO2026-001 / PORT-LOGISTICS", color: "text-white" },
+                { label: "Khách Hàng Mục Tiêu:", val: "Tổng Công Ty Tiếp Vận Cảng Biển Quốc Tế", color: "text-white" },
+                { label: "Trị Giá Gói Thầu:", val: "18.675 Tỷ VNĐ", color: "text-mint" },
+                { label: "Quy Mô Cung Cấp:", val: "08 Xe V-LIFT 2500E + Trạm Sạc Nhanh", color: "text-cyan" },
+                { label: "Hóa Đơn TT78:", val: "00048291 · Ký Hiệu C26TAA", color: "text-white" },
+                { label: "Trạng Thái Giao Hàng:", val: "Đang Bốc Dỡ Tại Cụm Cảng Biển Quốc Tế", color: "text-mint" }
+            ]
+        },
+        bol: {
+            title: "PORT-SEAPORT-BL8912",
+            type: "SeaportBillOfLading",
+            props: [
+                { label: "Số Vận Đơn Hải Cảng:", val: "PORT_BL_8912", color: "text-white" },
+                { label: "Cảng Đích & Cổng Bãi:", val: "Cụm Cảng Biển Quốc Tế · Gate 2", color: "text-white" },
+                { label: "Đoàn Xe Vận Tải:", val: "Xe Đầu Kéo 51C-982.45 (GPS Online)", color: "text-cyan" },
+                { label: "Tình Trạng Lưu Bãi:", val: "Giải Phóng Bãi Trong 4.2 Giờ (0 DET/DEM)", color: "text-mint" },
+                { label: "Đơn Vị Tiếp Nhận:", val: "Xí Nghiệp Cơ Giới Cảng Biển Quốc Tế", color: "text-white" },
+                { label: "Đối Soát Merkle Ledger:", val: "Block #2026-0928 · Đã Khớp CQT", color: "text-mint" }
+            ]
+        }
+    };
+
+    const nodes = kgPane.querySelectorAll('.ins-kg-node');
+    const titleEl = document.getElementById('ins-kg-entity-title');
+    const inspectorCard = kgPane.querySelector('.ins-kg-inspector-card');
+    const badgeEl = inspectorCard ? inspectorCard.querySelector('.badge.bg-white-10') : null;
+    const propsContainer = inspectorCard ? inspectorCard.querySelector('.font-monospace.small.mb-3') : null;
+
+    if (titleEl) {
+        titleEl.style.contain = 'layout paint';
+        titleEl.style.whiteSpace = 'nowrap';
+        titleEl.style.minHeight = '1.5rem';
+    }
+
+    // Cache node element mapping and active node pointer for fast O(1) state transitions
+    const nodeMap = new Map();
+    nodes.forEach(n => {
+        const key = n.getAttribute('data-node');
+        if (key) nodeMap.set(key, n);
+    });
+    let activeNodeEl = null;
+
+    // Pre-create and cache DOM row references in propsContainer to avoid innerHTML thrashing & reflows
+    const propRows = [];
+    if (propsContainer) {
+        propsContainer.innerHTML = '';
+        for (let i = 0; i < 6; i++) {
+            const row = document.createElement('div');
+            row.className = `d-flex justify-content-between py-1 ${i < 5 ? 'border-bottom border-secondary border-opacity-25' : ''}`;
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'text-secondary';
+            const valSpan = document.createElement('span');
+            valSpan.className = 'fw-bold';
+            row.appendChild(labelSpan);
+            row.appendChild(valSpan);
+            propsContainer.appendChild(row);
+            propRows.push({ row, labelSpan, valSpan });
+        }
+    }
+
+    const canvasContainer = kgPane.querySelector('.ins-kg-canvas-container');
+    if (canvasContainer) {
+        canvasContainer.style.contain = 'layout paint';
+    }
+
+    function selectNode(nodeKey) {
+        const data = entityData[nodeKey] || entityData.lot;
+
+        // Toggle active class only on changed nodes (previous and target)
+        const targetNodeEl = nodeMap.get(nodeKey) || (nodes.length ? nodes[0] : null);
+        if (activeNodeEl && activeNodeEl !== targetNodeEl) {
+            activeNodeEl.classList.remove('ins-kg-node--active');
+        }
+        if (targetNodeEl) {
+            targetNodeEl.classList.add('ins-kg-node--active');
+            activeNodeEl = targetNodeEl;
+        }
+
+        if (titleEl && titleEl.textContent !== data.title) {
+            titleEl.textContent = data.title;
+        }
+
+        if (inspectorCard) {
+            const typeStr = `Type: ${data.type}`;
+            if (badgeEl && badgeEl.textContent !== typeStr) {
+                badgeEl.textContent = typeStr;
+            }
+
+            if (propRows.length > 0 && data.props) {
+                const props = data.props;
+                const len = propRows.length;
+                for (let i = 0; i < len; i++) {
+                    const item = propRows[i];
+                    if (i < props.length) {
+                        const p = props[i];
+                        if (item.labelSpan.textContent !== p.label) {
+                            item.labelSpan.textContent = p.label;
+                        }
+                        if (item.valSpan.textContent !== p.val) {
+                            item.valSpan.textContent = p.val;
+                        }
+                        const cls = `${p.color} fw-bold`;
+                        if (item.valSpan.className !== cls) {
+                            item.valSpan.className = cls;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    nodes.forEach(n => {
+        n.style.cursor = 'pointer';
+        n.addEventListener('click', (e) => {
+            if (e && e.stopPropagation) e.stopPropagation();
+            const nodeKey = n.getAttribute('data-node');
+            selectNode(nodeKey);
+        });
+    });
+
+    const presetBtns = kgPane.querySelectorAll('.ins-kg-preset-btn');
+    presetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            presetBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const q = btn.getAttribute('data-kg-query');
+            if (q === 'supplier_lot') selectNode('supplier');
+            else if (q === 'mrp_vlift') selectNode('machine');
+            else if (q === 'port_bl') selectNode('order');
+        });
+    });
+
+    selectNode('lot');
+}
+
+function initHsCodeRecommender() {
+    const hsPane = document.getElementById('ins-tool-hscode');
+    if (!hsPane) return;
+    if (hsPane.__ins_hscode_init) return;
+    hsPane.__ins_hscode_init = true;
+
+    const input = document.getElementById('ins-hscode-search-input');
+    const chips = hsPane.querySelectorAll('.ins-hscode-chip');
+    const rows = hsPane.querySelectorAll('table tbody tr');
+
+    function filterTable(query) {
+        const q = (query || '').toLowerCase().trim();
+        const tokens = q.split(/\s+/).filter(t => t.length > 0);
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            const isMatch = !q || text.includes(q) || (tokens.length > 1 && tokens.every(tok => text.includes(tok)));
+            row.style.display = isMatch ? '' : 'none';
+            if (isMatch && q) {
+                row.classList.add('table-primary');
+            } else {
+                row.classList.remove('table-primary');
+            }
+        });
+    }
+
+    if (input) {
+        input.addEventListener('input', (e) => {
+            filterTable(e.target.value);
+            chips.forEach(chip => chip.classList.remove('active'));
+        });
+    }
+
+    chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const query = chip.getAttribute('data-hscode-query') || chip.textContent;
+            if (input) input.value = query;
+            filterTable(query);
+        });
+    });
+}
+
+function initRoiEngineeringStudio() {
+    const studio = document.getElementById('insilos_value_engineering_section');
+    if (!studio) return;
+    if (studio.__ins_roi_init) return;
+    studio.__ins_roi_init = true;
+
+    const industryPresets = {
+        manufacturing: {
+            name: "Sản Xuất Chế Tạo & Cơ Khí",
+            c0_vnd: 2.40,
+            param1: { label: "Sản lượng gia công hàng tháng:", min: 100, max: 2000, step: 50, val: 500, unit: "Tấn", factor: 0.0035 },
+            param2: { label: "Tỷ lệ hao hụt phế liệu BOM hiện tại:", min: 1, max: 10, step: 0.1, val: 4.8, unit: "%", factor: 0.45 },
+            param3: { label: "Hiệu suất thiết bị tổng thể OEE hiện tại:", min: 50, max: 90, step: 0.5, val: 68.0, unit: "%", factor: 0.08 },
+            param4: { label: "Giờ công nhập liệu thủ công hàng tháng:", min: 100, max: 2000, step: 20, val: 640, unit: "Giờ", factor: 0.0006 }
+        },
+        logistics: {
+            name: "Logistics & Khai Thác Cảng Biển",
+            c0_vnd: 2.80,
+            param1: { label: "Quy mô đội xe đầu kéo container:", min: 50, max: 1000, step: 10, val: 180, unit: "Xe", factor: 0.012 },
+            param2: { label: "Tỷ lệ chi phí lưu bãi container DET/DEM:", min: 1, max: 15, step: 0.2, val: 6.2, unit: "%", factor: 0.35 },
+            param3: { label: "Hệ số vòng quay đội xe (Turns/Month):", min: 5, max: 40, step: 1, val: 18, unit: "Vòng", factor: 0.14 },
+            param4: { label: "Giờ công lập chứng từ điều độ vận tải:", min: 200, max: 3000, step: 50, val: 820, unit: "Giờ", factor: 0.0007 }
+        },
+        energy: {
+            name: "Năng Lượng & Lưới Điện Thông Minh",
+            c0_vnd: 3.50,
+            param1: { label: "Công suất trạm truyền tải điện năng:", min: 50, max: 1000, step: 25, val: 320, unit: "MWh", factor: 0.0085 },
+            param2: { label: "Tỷ lệ tổn thất điện năng đường dây:", min: 0.5, max: 8, step: 0.1, val: 3.4, unit: "%", factor: 0.55 },
+            param3: { label: "Độ tin cậy vận hành lưới (SAIFI/SAIDI):", min: 70, max: 99, step: 0.5, val: 88.5, unit: "%", factor: 0.09 },
+            param4: { label: "Giờ tuần tra kiểm tra trạm biến áp:", min: 100, max: 1500, step: 20, val: 450, unit: "Giờ", factor: 0.0008 }
+        },
+        pharma: {
+            name: "Dược Phẩm Sinh Học WHO-GMP",
+            c0_vnd: 3.20,
+            param1: { label: "Sản lượng mẻ vắc-xin WHO-GMP:", min: 10, max: 200, step: 5, val: 45, unit: "Mẻ", factor: 0.075 },
+            param2: { label: "Tỷ lệ mẻ lỗi sai lệch quy trình:", min: 0.2, max: 5, step: 0.1, val: 2.1, unit: "%", factor: 0.95 },
+            param3: { label: "Tuân thủ hồ sơ lô điện tử (eBR):", min: 60, max: 95, step: 0.5, val: 76.0, unit: "%", factor: 0.07 },
+            param4: { label: "Giờ công thẩm định kiểm nghiệm COA:", min: 300, max: 2500, step: 20, val: 960, unit: "Giờ", factor: 0.0006 }
+        }
+    };
+
+    let currentIndustry = "manufacturing";
+    let isVnd = true;
+    const FX_USD = 25450;
+
+    const slVolume = document.getElementById('ins-param-volume');
+    const slWaste = document.getElementById('ins-param-waste');
+    const slOee = document.getElementById('ins-param-oee');
+    const slLabor = document.getElementById('ins-param-labor');
+
+    const lblVolume = document.getElementById('ins-lbl-param-volume');
+    const lblWaste = document.getElementById('ins-lbl-param-waste');
+    const lblOee = document.getElementById('ins-lbl-param-oee');
+    const lblLabor = document.getElementById('ins-lbl-param-labor');
+
+    const valVolume = document.getElementById('ins-val-param-volume');
+    const valWaste = document.getElementById('ins-val-param-waste');
+    const valOee = document.getElementById('ins-val-param-oee');
+    const valLabor = document.getElementById('ins-val-param-labor');
+
+    const outNpv = document.getElementById('ins-fin-npv');
+    const outIrr = document.getElementById('ins-fin-irr');
+    const outPayback = document.getElementById('ins-fin-payback');
+    const outRoi = document.getElementById('ins-fin-roi');
+
+    function calculateIRR(c0, s1, s2, s3) {
+        let r = 0.5;
+        for (let iter = 0; iter < 40; iter++) {
+            const npv = -c0 + s1 / (1 + r) + s2 / Math.pow(1 + r, 2) + s3 / Math.pow(1 + r, 3);
+            const dNpv = -s1 / Math.pow(1 + r, 2) - 2 * s2 / Math.pow(1 + r, 3) - 3 * s3 / Math.pow(1 + r, 4);
+            const nextR = r - npv / dNpv;
+            if (Math.abs(nextR - r) < 0.0001) {
+                return Math.max(0, nextR * 100);
+            }
+            r = nextR;
+            if (r < -0.9) r = -0.9;
+        }
+        return Math.max(0, r * 100);
+    }
+
+    function recalculate() {
+        if (!slVolume || !slWaste || !slOee || !slLabor) return;
+        const ind = industryPresets[currentIndustry] || industryPresets.manufacturing;
+        const v1 = parseFloat(slVolume.value);
+        const v2 = parseFloat(slWaste.value);
+        const v3 = parseFloat(slOee.value);
+        const v4 = parseFloat(slLabor.value);
+
+        if (valVolume) valVolume.textContent = `${v1} ${ind.param1.unit}`;
+        if (valWaste) valWaste.textContent = `${v2}${ind.param2.unit}`;
+        if (valOee) valOee.textContent = `${v3}${ind.param3.unit}`;
+        if (valLabor) valLabor.textContent = `${v4} ${ind.param4.unit}`;
+
+        const savingsWaste = v1 * (v2 / 100) * ind.param2.factor * 1.5;
+        const savingsTurnaround = (v3 * 1.5) * ind.param3.factor;
+        const savingsLabor = (v4 * 12 * 120000 * 0.75) / 1e9;
+        const baseVolumeSavings = v1 * ind.param1.factor;
+
+        const s1 = Math.max(1.5, baseVolumeSavings + savingsWaste + savingsTurnaround + savingsLabor);
+        const s2 = s1 * 1.20;
+        const s3 = s1 * 1.50;
+
+        const c0 = ind.c0_vnd;
+        const annualMaint = c0 * 0.20;
+
+        const net1 = s1 - annualMaint;
+        const net2 = s2 - annualMaint;
+        const net3 = s3 - annualMaint;
+
+        const rHurdle = 0.10;
+        const npvVnd = -c0 + (net1 / (1 + rHurdle)) + (net2 / Math.pow(1 + rHurdle, 2)) + (net3 / Math.pow(1 + rHurdle, 3));
+        const paybackMonths = Math.min(36, Math.max(1.5, (c0 / (net1 / 12))));
+        const totalNetBenefit = net1 + net2 + net3;
+        const roiPercent = Math.max(50, ((totalNetBenefit - c0) / c0) * 100);
+        const irrPercent = calculateIRR(c0, net1, net2, net3);
+
+        if (isVnd) {
+            if (outNpv) outNpv.textContent = `${npvVnd.toFixed(2)} Tỷ ₫`;
+            if (outIrr) outIrr.textContent = `${irrPercent.toFixed(1)}%`;
+            if (outPayback) outPayback.textContent = `${paybackMonths.toFixed(1)} Tháng`;
+            if (outRoi) outRoi.textContent = `${Math.round(roiPercent)}%`;
+        } else {
+            const npvUsd = (npvVnd * 1e9) / FX_USD;
+            if (outNpv) outNpv.textContent = `$${(npvUsd / 1000).toFixed(0)}K`;
+            if (outIrr) outIrr.textContent = `${irrPercent.toFixed(1)}%`;
+            if (outPayback) outPayback.textContent = `${paybackMonths.toFixed(1)} Mo`;
+            if (outRoi) outRoi.textContent = `${Math.round(roiPercent)}%`;
+        }
+
+        const tableRows = studio.querySelectorAll('table tbody tr');
+        if (tableRows && tableRows.length >= 3) {
+            const fmt = (vnd) => isVnd ? `${vnd.toFixed(2)} Tỷ ₫` : `$${Math.round((vnd * 1e9 / FX_USD) / 1000)}K`;
+            const r0Cells = tableRows[0].querySelectorAll('td');
+            if (r0Cells.length >= 5) {
+                r0Cells[1].textContent = isVnd ? `-${c0.toFixed(2)} Tỷ ₫` : `-$${Math.round((c0 * 1e9 / FX_USD) / 1000)}K`;
+                r0Cells[2].textContent = isVnd ? `-${annualMaint.toFixed(2)} Tỷ ₫` : `-$${Math.round((annualMaint * 1e9 / FX_USD) / 1000)}K`;
+                r0Cells[3].textContent = isVnd ? `-${annualMaint.toFixed(2)} Tỷ ₫` : `-$${Math.round((annualMaint * 1e9 / FX_USD) / 1000)}K`;
+                r0Cells[4].textContent = isVnd ? `-${annualMaint.toFixed(2)} Tỷ ₫` : `-$${Math.round((annualMaint * 1e9 / FX_USD) / 1000)}K`;
+            }
+            const r1Cells = tableRows[1].querySelectorAll('td');
+            if (r1Cells.length >= 5) {
+                r1Cells[2].textContent = `+${fmt(s1)}`;
+                r1Cells[3].textContent = `+${fmt(s2)}`;
+                r1Cells[4].textContent = `+${fmt(s3)}`;
+            }
+            const r2Cells = tableRows[2].querySelectorAll('td');
+            if (r2Cells.length >= 5) {
+                r2Cells[1].textContent = isVnd ? `-${c0.toFixed(2)} Tỷ ₫` : `-$${Math.round((c0 * 1e9 / FX_USD) / 1000)}K`;
+                r2Cells[2].textContent = `+${fmt(net1)}`;
+                r2Cells[3].textContent = `+${fmt(net2)}`;
+                r2Cells[4].textContent = `+${fmt(net3)}`;
+            }
+        }
+    }
+
+    function switchIndustry(targetKey) {
+        currentIndustry = targetKey;
+        const ind = industryPresets[targetKey] || industryPresets.manufacturing;
+
+        if (lblVolume) lblVolume.textContent = ind.param1.label;
+        if (slVolume) {
+            slVolume.min = ind.param1.min;
+            slVolume.max = ind.param1.max;
+            slVolume.step = ind.param1.step;
+            slVolume.value = ind.param1.val;
+        }
+
+        if (lblWaste) lblWaste.textContent = ind.param2.label;
+        if (slWaste) {
+            slWaste.min = ind.param2.min;
+            slWaste.max = ind.param2.max;
+            slWaste.step = ind.param2.step;
+            slWaste.value = ind.param2.val;
+        }
+
+        if (lblOee) lblOee.textContent = ind.param3.label;
+        if (slOee) {
+            slOee.min = ind.param3.min;
+            slOee.max = ind.param3.max;
+            slOee.step = ind.param3.step;
+            slOee.value = ind.param3.val;
+        }
+
+        if (lblLabor) lblLabor.textContent = ind.param4.label;
+        if (slLabor) {
+            slLabor.min = ind.param4.min;
+            slLabor.max = ind.param4.max;
+            slLabor.step = ind.param4.step;
+            slLabor.value = ind.param4.val;
+        }
+
+        recalculate();
+    }
+
+    [slVolume, slWaste, slOee, slLabor].forEach(sl => {
+        if (sl) sl.addEventListener('input', recalculate);
+    });
+
+    const indBtns = studio.querySelectorAll('.ins-roi-ind-selector');
+    indBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            indBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const target = btn.getAttribute('data-industry-target') || 'manufacturing';
+            switchIndustry(target);
+        });
+    });
+
+    const btnVnd = document.getElementById('ins-cur-vnd');
+    const btnUsd = document.getElementById('ins-cur-usd');
+    if (btnVnd && btnUsd) {
+        btnVnd.addEventListener('click', () => {
+            isVnd = true;
+            btnVnd.classList.add('active');
+            btnUsd.classList.remove('active');
+            recalculate();
+        });
+        btnUsd.addEventListener('click', () => {
+            isVnd = false;
+            btnUsd.classList.add('active');
+            btnVnd.classList.remove('active');
+            recalculate();
+        });
+    }
+
+    switchIndustry('manufacturing');
+}
+
+function initDigitalTwinSimulator() {
+    const twinSection = document.getElementById('insilos_digital_twin_section');
+    if (!twinSection) return;
+    if (twinSection.__ins_dtwin_init) return;
+    twinSection.__ins_dtwin_init = true;
+
+    const assetConfigs = {
+        substation: {
+            title: "ISOMETRIC SCHEMATIC // 110KV SUBSTATION",
+            baseVibe: 1.8,
+            baseTemp: 52,
+            baseLoad: 74,
+            baseThd: 2.4,
+            vibeMax: 10,
+            tempMax: 120,
+            loadMax: 100,
+            thdMax: 10,
+            vibeLabel: "ISO-VIBE",
+            pinPos: {
+                vibe: { x: 300, y: 180 },
+                temp: { x: 380, y: 110 },
+                load: { x: 220, y: 90 }
+            }
+        },
+        crane: {
+            title: "ISOMETRIC SCHEMATIC // STS CRANE SEAPORT TERMINAL",
+            baseVibe: 2.2,
+            baseTemp: 58,
+            baseLoad: 82,
+            baseThd: 3.1,
+            vibeMax: 10,
+            tempMax: 120,
+            loadMax: 100,
+            thdMax: 10,
+            vibeLabel: "HOIST-VIBE",
+            pinPos: {
+                vibe: { x: 320, y: 175 },
+                temp: { x: 165, y: 70 },
+                load: { x: 420, y: 85 }
+            }
+        },
+        robot: {
+            title: "ISOMETRIC SCHEMATIC // WELDING ROBOT CELL",
+            baseVibe: 1.4,
+            baseTemp: 46,
+            baseLoad: 65,
+            baseThd: 1.8,
+            vibeMax: 10,
+            tempMax: 120,
+            loadMax: 100,
+            thdMax: 10,
+            vibeLabel: "AXIS-VIBE",
+            pinPos: {
+                vibe: { x: 250, y: 140 },
+                temp: { x: 210, y: 220 },
+                load: { x: 415, y: 140 }
+            }
+        }
+    };
+
+    let currentAsset = "substation";
+
+    const slider = document.getElementById('ins-anomaly-slider');
+    const sliderValBadge = document.getElementById('ins-anomaly-slider-val');
+    const statusBadge = document.getElementById('ins-dtwin-status-badge');
+    const fsmContainer = document.getElementById('ins-live-fsm-ticket-container');
+    const resetBtn = document.getElementById('ins-btn-reset-anomaly');
+
+    const gVibe = document.getElementById('ins-gauge-vibration');
+    const gTemp = document.getElementById('ins-gauge-temp');
+    const gLoad = document.getElementById('ins-gauge-load');
+    const gThd = document.getElementById('ins-gauge-thd');
+
+    const pVibe = document.getElementById('ins-progress-vibration');
+    const pTemp = document.getElementById('ins-progress-temp');
+    const pLoad = document.getElementById('ins-progress-load');
+    const pThd = document.getElementById('ins-progress-thd');
+
+    const pinVibe = document.getElementById('ins-pin-vibe');
+    const pinTemp = document.getElementById('ins-pin-temp');
+
+    const svgVibe = document.getElementById('ins-dt-svg-vibe');
+    const svgTemp = document.getElementById('ins-dt-svg-temp');
+    const svgLoad = document.getElementById('ins-dt-svg-load');
+
+    const pinVibeGroup = document.getElementById('ins-dt-pin-vibe');
+    const pinTempGroup = document.getElementById('ins-dt-pin-temp');
+    const pinLoadGroup = document.getElementById('ins-dt-pin-load');
+
+    function updateSimulation(val) {
+        const anomalyVal = parseInt(val, 10) || 0;
+        const cfg = assetConfigs[currentAsset] || assetConfigs.substation;
+
+        if (sliderValBadge) sliderValBadge.textContent = `${anomalyVal}%`;
+
+        const currentVibe = parseFloat((cfg.baseVibe * (1 + anomalyVal / 100)).toFixed(1));
+        const currentTemp = Math.round(cfg.baseTemp + anomalyVal * 0.25);
+        const currentLoad = Math.min(100, Math.round(cfg.baseLoad + anomalyVal * 0.15));
+        const currentThd = parseFloat((cfg.baseThd * (1 + anomalyVal / 50)).toFixed(1));
+
+        if (gVibe) gVibe.textContent = currentVibe;
+        if (gTemp) gTemp.textContent = currentTemp;
+        if (gLoad) gLoad.textContent = currentLoad;
+        if (gThd) gThd.textContent = currentThd;
+
+        // Synchronize SVG telemetry text elements with gauges
+        const vibeLabel = cfg.vibeLabel || 'ISO-VIBE';
+        if (svgVibe) svgVibe.textContent = `${vibeLabel}: ${currentVibe} mm/s`;
+        if (svgTemp) svgTemp.textContent = `TEMP: ${currentTemp}°C`;
+        if (svgLoad) svgLoad.textContent = `LOAD: ${currentLoad}%`;
+
+        if (pVibe) pVibe.style.width = `${Math.min(100, (currentVibe / cfg.vibeMax) * 100)}%`;
+        if (pTemp) pTemp.style.width = `${Math.min(100, (currentTemp / cfg.tempMax) * 100)}%`;
+        if (pLoad) pLoad.style.width = `${Math.min(100, currentLoad)}%`;
+        if (pThd) pThd.style.width = `${Math.min(100, (currentThd / cfg.thdMax) * 100)}%`;
+
+        if (currentVibe < 2.8 && anomalyVal < 75) {
+            if (statusBadge) {
+                statusBadge.className = 'badge bg-secondary bg-opacity-25 text-mint font-monospace small';
+                statusBadge.textContent = 'TRẠNG THÁI: BÌNH THƯỜNG';
+            }
+            if (fsmContainer) fsmContainer.classList.add('d-none');
+            if (pinVibe) pinVibe.setAttribute('fill', '#10B981');
+            if (pinTemp) pinTemp.setAttribute('fill', '#42E6C3');
+            if (svgVibe) svgVibe.setAttribute('fill', '#10B981');
+        } else if (currentVibe >= 2.8 && currentVibe < 4.5 && anomalyVal < 100) {
+            if (statusBadge) {
+                statusBadge.className = 'badge bg-warning bg-opacity-25 text-warning font-monospace small';
+                statusBadge.textContent = 'CẢNH BÁO: RUNG ĐỘNG VƯỢT NGƯỠNG ISO';
+            }
+            if (fsmContainer) {
+                fsmContainer.classList.remove('d-none');
+                fsmContainer.className = 'mt-3 p-3 bg-black bg-opacity-75 border border-warning rounded-3';
+            }
+            if (pinVibe) pinVibe.setAttribute('fill', '#F59E0B');
+            if (pinTemp) pinTemp.setAttribute('fill', '#F59E0B');
+            if (svgVibe) svgVibe.setAttribute('fill', '#F59E0B');
+        } else {
+            if (statusBadge) {
+                statusBadge.className = 'badge bg-danger bg-opacity-25 text-danger font-monospace small';
+                statusBadge.textContent = 'SỰ CỐ KHẨN CẤP: NGUY CƠ HỎNG Ổ BI';
+            }
+            if (fsmContainer) {
+                fsmContainer.classList.remove('d-none');
+                fsmContainer.className = 'mt-3 p-3 bg-danger bg-opacity-25 border border-danger rounded-3';
+            }
+            if (pinVibe) pinVibe.setAttribute('fill', '#EF4444');
+            if (pinTemp) pinTemp.setAttribute('fill', '#EF4444');
+            if (svgVibe) svgVibe.setAttribute('fill', '#EF4444');
+        }
+    }
+
+    function switchDigitalTwinAsset(targetKey) {
+        currentAsset = targetKey;
+        const cfg = assetConfigs[currentAsset] || assetConfigs.substation;
+
+        const schematicTitle = twinSection.querySelector('.text-white.font-monospace.small.fw-bold');
+        if (schematicTitle) {
+            schematicTitle.textContent = cfg.title;
+        }
+
+        // Switch active SVG schematic
+        const schematics = twinSection.querySelectorAll('.ins-dt-asset-schematic');
+        schematics.forEach(svgG => {
+            const assetName = svgG.getAttribute('data-asset') || svgG.id.replace('ins-dt-schematic-', '');
+            if (assetName === currentAsset) {
+                svgG.classList.remove('d-none');
+            } else {
+                svgG.classList.add('d-none');
+            }
+        });
+
+        // Reposition pins to match asset geometry
+        if (cfg.pinPos) {
+            if (pinVibeGroup && cfg.pinPos.vibe) {
+                pinVibeGroup.setAttribute('transform', `translate(${cfg.pinPos.vibe.x}, ${cfg.pinPos.vibe.y})`);
+            }
+            if (pinTempGroup && cfg.pinPos.temp) {
+                pinTempGroup.setAttribute('transform', `translate(${cfg.pinPos.temp.x}, ${cfg.pinPos.temp.y})`);
+            }
+            if (pinLoadGroup && cfg.pinPos.load) {
+                pinLoadGroup.setAttribute('transform', `translate(${cfg.pinPos.load.x}, ${cfg.pinPos.load.y})`);
+            }
+        }
+
+        const currentVal = slider ? slider.value : 45;
+        updateSimulation(currentVal);
+    }
+
+    if (slider) {
+        slider.addEventListener('input', (e) => {
+            updateSimulation(e.target.value);
+        });
+    }
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            if (slider) slider.value = 45;
+            updateSimulation(45);
+        });
+    }
+
+    const assetBtns = twinSection.querySelectorAll('.ins-dtwin-asset-selector');
+    assetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            assetBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const target = btn.getAttribute('data-dtwin-target') || 'substation';
+            switchDigitalTwinAsset(target);
+        });
+    });
+
+    switchDigitalTwinAsset('substation');
 }
 
 if (!window.__insilos_bootstrap_registered) {
@@ -1929,4 +3288,12 @@ window.initDemoWizard = function() {
 window.initAnimatedCounters = function() {
     if (typeof window.insilosInitInteractive === "function") window.insilosInitInteractive();
 };
+window.initSovereignTrustCenter = initSovereignTrustCenter;
+window.initIndustrialSandbox = initIndustrialSandbox;
+window.initFsmConsole = initFsmConsole;
+window.initIdpWorkbench = initIdpWorkbench;
+window.initKnowledgeGraphVisualizer = initKnowledgeGraphVisualizer;
+window.initHsCodeRecommender = initHsCodeRecommender;
+window.initRoiEngineeringStudio = initRoiEngineeringStudio;
+window.initDigitalTwinSimulator = initDigitalTwinSimulator;
 

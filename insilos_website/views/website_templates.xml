@@ -69,15 +69,51 @@
         </div>
     </template>
 
-    <!-- Preconnect, High-Performance Vietnamese Typography Stack & Brand Metadata -->
+    <!-- Preconnect, High-Performance Vietnamese Typography Stack, Brand SEO & Metadata -->
     <template id="insilos_vietnamese_fonts" inherit_id="website.layout" priority="1">
-        <xpath expr="//head" position="inside">
+        <xpath expr="//head/*[1]" position="before">
             <t t-set="curr_path" t-value="request.httprequest.path if request and request.httprequest else '/'"/>
+            <t t-set="disable_opengraph" t-value="True"/>
+            <t t-set="insilos_meta_desc" t-value="
+                'Hệ điều hành Trí tuệ Nhân tạo Công nghiệp có Chủ quyền (Sovereign Industrial AI) hợp nhất Vertical IDP, Knowledge Graph, Trade Compliance và Field Service cho doanh nghiệp APAC.' if curr_path == '/' else
+                'Kiến trúc nền tảng Insilos Sovereign AI: Model-Driven Architecture, Ontology RDF/OWL, xác thực Merkle DAG và triển khai On-Premises Air-Gapped bảo mật tối đa.' if curr_path.startswith('/platform') else
+                'Giải pháp Vertical IDP: Tự động hóa bóc tách và đối soát 100% chứng từ vận tải, logistics, xuất nhập khẩu với OCR đa phương thức và độ chính xác 99.8%.' if curr_path == '/solutions/vertical-idp' else
+                'Enterprise Knowledge Graph: Hợp nhất thực thể, tài sản, lô hàng và quy trình thành mạng lưới tri thức sống, xóa bỏ hoàn toàn rào cản phân mảnh dữ liệu.' if curr_path == '/solutions/enterprise-knowledge-graph' else
+                'Trade Compliance &amp; Customs Intelligence: Tự động phân loại mã HS 8-10 số, thẩm định xuất xứ C/O FTA và lập hồ sơ chứng minh tuân thủ hải quan.' if curr_path == '/solutions/trade-compliance' else
+                'Field Service Intelligence: Điều phối kỹ thuật viên thông minh, dự báo sự cố tài sản qua IoT telemetry và tối ưu hóa tỷ lệ xử lý dứt điểm lần đầu.' if curr_path == '/solutions/field-service-intelligence' else
+                'Danh mục giải pháp AI công nghiệp chuyên sâu: Vertical IDP bóc tách chứng từ, Enterprise Knowledge Graph, Trade Compliance FTA và Field Service Intelligence.' if curr_path.startswith('/solutions') else
+                'Insilos Logistics &amp; Chuỗi Cung Ứng: Giảm 88% sự cố quá hạn Free Time, cắt giảm 18.4% chi phí phạt lưu bãi DET/DEM và tối ưu hóa điều phối cảng biển.' if curr_path == '/industries/logistics' else
+                'Insilos Dược Phẩm: Kiểm soát chất lượng sản xuất theo chuẩn WHO-GMP, FDA 21 CFR Part 11, truy xuất nguồn gốc lô và tối ưu hóa mẻ sản xuất.' if curr_path == '/industries/pharma' else
+                'Insilos Năng Lượng &amp; Lưới Điện: Giám sát trạm biến áp số IEC 61850, phân tích khí hòa tan DGA và dự báo công suất phát điện tái tạo chính xác 98.4%.' if curr_path == '/industries/energy' else
+                'Insilos Field Service Management: Tự động điều phối kỹ thuật viên theo chứng chỉ, vị trí GPS và rút ngắn 40% thời gian xử lý sự cố hiện trường.' if curr_path == '/industries/fsm' else
+                'Giám sát chuỗi cung ứng lạnh dược phẩm &amp; thực phẩm theo chuẩn GDP/GSP. Telemetry nhiệt độ reefer container -20°C và giám sát IoT cold box liên tục.' if curr_path == '/industries/cold_chain' else
+                'Bộ giải pháp AI công nghiệp được may đo theo 11 cụm ngành: Cảng biển &amp; Logistics, Sản xuất cơ khí, Dược phẩm GMP, Lưới điện và Năng lượng thông minh.' if curr_path.startswith('/industries') or curr_path.startswith('/industry') else
+                'Bảng giá và gói bản quyền Insilos Sovereign AI: Triển khai linh hoạt từ Pilot 4 tuần, Dedicated Enterprise đến Group Sovereign ELA đa nhà máy.' if curr_path.startswith('/pricing') else
+                'Về Insilos Sovereign AI: Đội ngũ sáng lập, chuyên gia công nghiệp hàng đầu và sứ mệnh bảo vệ chủ quyền dữ liệu cho các doanh nghiệp trọng điểm Việt Nam.' if curr_path.startswith('/about') else
+                'Trung tâm tài liệu, chuyên khảo kỹ thuật, Whitepapers điểm đau vận hành và hồ sơ năng lực triển khai thực tế từ Insilos Sovereign AI.' if curr_path.startswith('/resources') else
+                'Đăng ký khảo sát thực địa và trải nghiệm live demo hệ điều hành Insilos Sovereign AI với dữ liệu vận hành thực tế của doanh nghiệp.' if curr_path.startswith('/request-demo') else
+                'Chính sách bảo vệ dữ liệu cá nhân Insilos tuân thủ Nghị định 13/2023/NĐ-CP: 8 điều khoản bắt buộc về thu thập, xử lý, bảo mật và quyền của chủ thể dữ liệu.' if curr_path.startswith('/privacy') else
+                'Cam kết tin cậy &amp; an ninh thông tin Insilos: Chứng nhận ISO 27001, SOC 2 Type II, Merkle DAG audit trail và kiến trúc Zero-Trust Sovereign Cloud.' if curr_path.startswith('/trust') else
+                'Khung tuân thủ chuẩn mực thể chế &amp; kiểm toán Insilos: VAS 200/133, Thông tư 78 hóa đơn điện tử, WCO SAFE và tiêu chuẩn an toàn dữ liệu công nghiệp.' if curr_path.startswith('/compliance') else
+                'Môi trường thử nghiệm tương tác Insilos Sandbox: Khảo nghiệm trực quan năng lực bóc tách chứng từ IDP, sơ đồ Digital Twin và mô phỏng hiệu suất OEE.' if curr_path.startswith('/sandbox') else
+                'Phim điện ảnh thương hiệu và bộ 12 video tình huống nghiệp vụ thực chiến Insilos trên hệ thống Odoo 20 backend đạt chuẩn âm học EBU R128.' if curr_path.startswith('/showcase-3d') else
+                (meta_description or 'Insilos Sovereign Industrial AI Operating System')
+            "/>
+        </xpath>
+        <xpath expr="//meta[@name='description']" position="replace">
+            <meta name="description" t-att-content="insilos_meta_desc"/>
+        </xpath>
+        <xpath expr="//link[@rel='canonical']" position="replace">
+            <link rel="canonical" t-attf-href="https://insilos.ai{{ curr_path }}"/>
+        </xpath>
+        <xpath expr="//head" position="inside">
             <meta name="theme-color" content="#FF8000"/>
             <meta name="msapplication-TileColor" content="#FF8000"/>
             <meta property="og:site_name" content="Insilos Sovereign AI"/>
             <meta property="og:type" content="website"/>
             <meta property="og:url" t-attf-content="https://insilos.ai{{ curr_path }}"/>
+            <meta property="og:title" t-att-content="additional_title or title or 'Insilos Sovereign AI'"/>
+            <meta property="og:description" t-att-content="insilos_meta_desc"/>
             <meta property="og:image" content="https://insilos.ai/insilos_website/static/src/img/c3ai/c3ai_hero_control_room.webp"/>
             <meta property="og:image:width" content="1200"/>
             <meta property="og:image:height" content="630"/>
@@ -86,8 +122,9 @@
             <meta name="twitter:card" content="summary_large_image"/>
             <meta name="twitter:site" content="@insilos_ai"/>
             <meta name="twitter:creator" content="@insilos_ai"/>
+            <meta name="twitter:title" t-att-content="additional_title or title or 'Insilos Sovereign AI'"/>
+            <meta name="twitter:description" t-att-content="insilos_meta_desc"/>
             <meta name="twitter:image" content="https://insilos.ai/insilos_website/static/src/img/c3ai/c3ai_hero_control_room.webp"/>
-            <link rel="canonical" t-attf-href="https://insilos.ai{{ curr_path }}"/>
             <link rel="preconnect" href="https://fonts.googleapis.com"/>
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap&amp;subset=latin,latin-ext,vietnamese" rel="stylesheet"/>
@@ -101,26 +138,28 @@
                     "@graph": [
                         {
                             "@type": "Organization",
-                            "@id": "https://insilos.ai/#organization",
+                            "@id": "https://insilos.com/#organization",
                             "name": "Insilos Sovereign AI",
-                            "legalName": "Công ty Cổ phần Insilos Sovereign AI",
-                            "url": "https://insilos.ai",
+                            "legalName": "UNG DUNG SANG TAO LLC",
+                            "url": "https://insilos.com",
                             "logo": {
                                 "@type": "ImageObject",
-                                "url": "https://insilos.ai/insilos_website/static/src/icons/phosphor-duotone.svg"
+                                "url": "https://insilos.com/insilos_website/static/src/icons/phosphor-duotone.svg"
                             },
                             "description": "Sovereign Industrial AI Operating System uniting Vertical IDP, Enterprise Knowledge Graph, Trade Compliance, and Field Service Management for APAC enterprises.",
                             "foundingDate": "2018",
+                            "taxID": "0313683499",
                             "address": {
                                 "@type": "PostalAddress",
-                                "addressLocality": "Hồ Chí Minh &amp; Hà Nội",
+                                "streetAddress": "45 street 3, Trung Son Resident, Binh Hung ward",
+                                "addressLocality": "Binh Chanh district, Ho Chi Minh city",
                                 "addressCountry": "VN"
                             },
                             "contactPoint": {
                                 "@type": "ContactPoint",
-                                "telephone": "+84-28-7100-8888",
-                                "contactType": "sales",
-                                "email": "contact@insilos.ai",
+                                "telephone": "+84 944 311 811",
+                                "contactType": "customer service",
+                                "email": "contact@insilos.com",
                                 "availableLanguage": ["Vietnamese", "English"]
                             },
                             "sameAs": [
@@ -146,7 +185,7 @@
                 </script>
             </t>
 
-            <!-- 2. Platform Route (/platform): SoftwareApplication Schema -->
+            <!-- 2. Platform Route (/platform): SoftwareApplication Schema + 2-Tier Breadcrumb -->
             <t t-if="curr_path.startswith('/platform')">
                 <script type="application/ld+json">
                 {
@@ -179,9 +218,29 @@
                     "description": "Sovereign Industrial AI Operating System uniting Vertical IDP, Enterprise Knowledge Graph, Trade Compliance, and Field Service Management for APAC enterprises."
                 }
                 </script>
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Nền Tảng Sovereign AI",
+                            "item": "https://insilos.ai/platform"
+                        }
+                    ]
+                }
+                </script>
             </t>
 
-            <!-- 3. Pricing Route (/pricing): FAQPage Schema -->
+            <!-- 3. Pricing Route (/pricing): FAQPage Schema + 2-Tier Breadcrumb -->
             <t t-if="curr_path.startswith('/pricing')">
                 <script type="application/ld+json">
                 {
@@ -201,7 +260,7 @@
                             "name": "Chi phí bản quyền và mô hình tính giá được xác định như thế nào?",
                             "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "Insilos áp dụng mô hình cấp phép module linh hoạt theo nhu cầu vận hành thực tế (Vertical IDP, Knowledge Graph, Trade Compliance, FSM) kết hợp khối lượng chứng từ xử lý hàng tháng, giúp doanh nghiệp tối ưu chi phí và hoàn vốn trong 3-6 tháng."
+                                "text": "Insilos áp dụng mô hình cấp phép module linh hoạt theo nhu cầu vận hành thực tế (Vertical IDP, Knowledge Graph, Trade Compliance, FSM, Group ELA) kết hợp khối lượng chứng từ xử lý hàng tháng, giúp doanh nghiệp tối ưu chi phí và hoàn vốn trong 3-6 tháng."
                             }
                         },
                         {
@@ -239,10 +298,43 @@
                     ]
                 }
                 </script>
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Bảng Giá &amp; Hợp Đồng ELA",
+                            "item": "https://insilos.ai/pricing"
+                        }
+                    ]
+                }
+                </script>
             </t>
 
-            <!-- 4. Solutions Routes (/solutions/*): BreadcrumbList Schema -->
+            <!-- 4. Solutions Routes (/solutions and /solutions/*): 3-Tier BreadcrumbList Schema -->
             <t t-if="curr_path.startswith('/solutions')">
+                <t t-set="sol_slug" t-value="curr_path.replace('/solutions/', '').replace('/solutions', '')"/>
+                <t t-set="sol_title" t-value="
+                    'Vertical Intelligent Document Processing (IDP)' if sol_slug == 'vertical-idp' else
+                    'Enterprise Knowledge Graph' if sol_slug == 'enterprise-knowledge-graph' else
+                    'Trade Compliance &amp; Customs Intelligence' if sol_slug == 'trade-compliance' else
+                    'Field Service &amp; Intelligent Asset Operations' if sol_slug == 'field-service-intelligence' else
+                    'Asset Reliability' if sol_slug == 'asset-reliability' else
+                    'Logistics Control Tower' if sol_slug == 'logistics-control-tower' else
+                    'Process Optimization' if sol_slug == 'process-optimization' else
+                    'Operations AI Assistant' if sol_slug == 'operations-assistant' else
+                    'Governed Manufacturing AI' if sol_slug == 'governed-manufacturing-ai' else
+                    ''
+                "/>
                 <script type="application/ld+json">
                 {
                     "@context": "https://schema.org",
@@ -259,14 +351,29 @@
                             "position": 2,
                             "name": "Giải Pháp",
                             "item": "https://insilos.ai/solutions"
-                        }
+                        }<t t-if="sol_slug and sol_title">,
+                        {
+                            "@type": "ListItem",
+                            "position": 3,
+                            "name": "<t t-out="sol_title"/>",
+                            "item": "https://insilos.ai<t t-out="curr_path"/>"
+                        }</t>
                     ]
                 }
                 </script>
             </t>
 
-            <!-- 5. Industries Routes (/industries/*): BreadcrumbList Schema -->
-            <t t-if="curr_path.startswith('/industries')">
+            <!-- 5. Industries Routes (/industries and /industries/*): 3-Tier BreadcrumbList Schema -->
+            <t t-if="curr_path.startswith('/industries') or curr_path.startswith('/industry')">
+                <t t-set="ind_slug" t-value="curr_path.replace('/industries/', '').replace('/industries', '').replace('/industry/', '').replace('/industry', '')"/>
+                <t t-set="ind_title" t-value="
+                    'Logistics &amp; Chuỗi Cung Ứng' if ind_slug == 'logistics' else
+                    'Sản Xuất Dược Phẩm (WHO-GMP)' if ind_slug == 'pharma' else
+                    'Năng Lượng &amp; Lưới Điện Thông Minh' if ind_slug == 'energy' else
+                    'Field Service &amp; Quản Trị Hiện Trường' if ind_slug == 'fsm' else
+                    'Chuỗi Cung Ứng Lạnh (Cold Chain)' if ind_slug == 'cold_chain' else
+                    (industry.get('name') if industry else '')
+                "/>
                 <script type="application/ld+json">
                 {
                     "@context": "https://schema.org",
@@ -283,13 +390,19 @@
                             "position": 2,
                             "name": "Ngành Trọng Điểm",
                             "item": "https://insilos.ai/industries"
-                        }
+                        }<t t-if="ind_slug and ind_title">,
+                        {
+                            "@type": "ListItem",
+                            "position": 3,
+                            "name": "<t t-out="ind_title"/>",
+                            "item": "https://insilos.ai<t t-out="curr_path"/>"
+                        }</t>
                     ]
                 }
                 </script>
             </t>
 
-            <!-- 6. About Route (/about): AboutPage Schema -->
+            <!-- 6. About Route (/about): AboutPage Schema + 2-Tier Breadcrumb -->
             <t t-if="curr_path.startswith('/about')">
                 <script type="application/ld+json">
                 {
@@ -305,10 +418,31 @@
                     }
                 }
                 </script>
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Về Insilos",
+                            "item": "https://insilos.ai/about"
+                        }
+                    ]
+                }
+                </script>
             </t>
 
-            <!-- 7. Resources Route (/resources): CollectionPage Schema -->
+            <!-- 7. Resources Route (/resources and /resources/*): CollectionPage Schema + 3-Tier Breadcrumb -->
             <t t-if="curr_path.startswith('/resources')">
+                <t t-set="art_slug" t-value="curr_path.replace('/resources/', '').replace('/resources', '')"/>
                 <script type="application/ld+json">
                 {
                     "@context": "https://schema.org",
@@ -318,9 +452,35 @@
                     "url": "https://insilos.ai/resources"
                 }
                 </script>
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Tài Liệu &amp; Chuyên Khảo",
+                            "item": "https://insilos.ai/resources"
+                        }<t t-if="art_slug and article">,
+                        {
+                            "@type": "ListItem",
+                            "position": 3,
+                            "name": "<t t-out="article.get('title', '')"/>",
+                            "item": "https://insilos.ai<t t-out="curr_path"/>"
+                        }</t>
+                    ]
+                }
+                </script>
             </t>
 
-            <!-- 8. Request Demo Route (/request-demo): ContactPage Schema -->
+            <!-- 8. Request Demo Route (/request-demo): ContactPage Schema + 2-Tier Breadcrumb -->
             <t t-if="curr_path.startswith('/request-demo')">
                 <script type="application/ld+json">
                 {
@@ -331,9 +491,124 @@
                     "url": "https://insilos.ai/request-demo"
                 }
                 </script>
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Đăng Ký Live Demo",
+                            "item": "https://insilos.ai/request-demo"
+                        }
+                    ]
+                }
+                </script>
+            </t>
+
+            <!-- 9. Privacy Policy Route (/privacy): Decree 13/2023/ND-CP Breadcrumb -->
+            <t t-if="curr_path.startswith('/privacy')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Chính Sách Bảo Vệ Dữ Liệu Cá Nhân (Nghị Định 13/2023/NĐ-CP)",
+                            "item": "https://insilos.ai/privacy"
+                        }
+                    ]
+                }
+                </script>
+            </t>
+
+            <!-- 10. Trust Route (/trust): Breadcrumb -->
+            <t t-if="curr_path.startswith('/trust')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Trung Tâm Tin Cậy &amp; An Ninh",
+                            "item": "https://insilos.ai/trust"
+                        }
+                    ]
+                }
+                </script>
+            </t>
+
+            <!-- 11. Compliance Route (/compliance): Breadcrumb -->
+            <t t-if="curr_path.startswith('/compliance')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Khung Chuẩn Mực Tuân Thủ Thể Chế",
+                            "item": "https://insilos.ai/compliance"
+                        }
+                    ]
+                }
+                </script>
+            </t>
+
+            <!-- 12. Sandbox Route (/sandbox): Breadcrumb -->
+            <t t-if="curr_path.startswith('/sandbox')">
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Trang Chủ",
+                            "item": "https://insilos.ai/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Industrial AI Sandbox 48h",
+                            "item": "https://insilos.ai/sandbox"
+                        }
+                    ]
+                }
+                </script>
             </t>
         </xpath>
-
     </template>
 
     <!-- Glassmorphism Header Class Attribute -->
@@ -1013,6 +1288,132 @@
                     </a>
                 </div>
             </li>
+        </xpath>
+    </template>
+
+    <!-- Insilos Institutional Transparency & Enterprise Footer (Decree 52/2013/ND-CP & Decree 13/2023/ND-CP) -->
+    <template id="insilos_footer_custom" inherit_id="website.footer_custom" priority="50">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <div id="footer" class="oe_structure oe_structure_solo text-break" t-ignore="true" t-if="not no_footer">
+                <section class="s_text_block ins-footer-section bg-dark text-white pt-5 pb-4" data-snippet="s_text_block" data-name="Institutional Footer">
+                    <div class="container">
+                        <!-- Top Row: Brand, Corporate Legal, Navigation Columns -->
+                        <div class="row g-4 pb-4 border-bottom border-secondary border-opacity-25">
+                            <!-- Col 1: Corporate Legal Entity & Licensing (Decree 52/2013/ND-CP) -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="d-flex align-items-center gap-2 mb-3">
+                                    <span class="text-orange fw-bold fs-4 tracking-tight">INSILOS</span>
+                                    <span class="ins-footer-badge">Sovereign AI OS</span>
+                                </div>
+                                <h6 class="text-white fw-bold mb-2 small text-uppercase tracking-wider">UNG DUNG SANG TAO LLC</h6>
+                                <p class="text-secondary small mb-2 lh-sm">
+                                    <strong class="text-light">Mã số doanh nghiệp (ID):</strong> 0313683499 do Sở KH&amp;ĐT TP. Hồ Chí Minh cấp.
+                                </p>
+                                <p class="text-secondary small mb-3 lh-sm">
+                                    Nền tảng Trí tuệ Nhân tạo Công nghiệp có Chủ quyền tiên phong tại Việt Nam, tối ưu hóa vận hành ERP/MES/SCADA đạt chuẩn an ninh quốc phòng và tuân thủ thể chế.
+                                </p>
+                                <div class="d-flex flex-column gap-2 small text-secondary">
+                                    <div class="d-flex align-items-start gap-2">
+                                        <svg class="ph-duotone ph-map-pin ph-sm text-orange flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-map-pin"/></svg>
+                                        <span class="lh-sm"><strong class="text-light">Địa chỉ trụ sở:</strong> 45 street 3, Trung Son Resident, Binh Hung ward, Binh Chanh district, Ho Chi Minh city, Vietnam</span>
+                                    </div>
+                                    <div class="d-flex align-items-start gap-2">
+                                        <svg class="ph-duotone ph-buildings ph-sm text-cyan flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-buildings"/></svg>
+                                        <span class="lh-sm"><strong class="text-light">R&amp;D Hub:</strong> KDC Trung Sơn, Xã Bình Hưng, Huyện Bình Chánh, TP. Hồ Chí Minh</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Col 2: Solutions & Industries -->
+                            <div class="col-lg-3 col-md-6">
+                                <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider">Giải Pháp Trọng Điểm</h6>
+                                <ul class="list-unstyled d-flex flex-column gap-2 small mb-4">
+                                    <li><a href="/solutions/vertical-idp" class="text-secondary text-decoration-none hover-white">Vertical IDP &amp; Customs AI</a></li>
+                                    <li><a href="/solutions/enterprise-knowledge-graph" class="text-secondary text-decoration-none hover-white">Enterprise Knowledge Graph</a></li>
+                                    <li><a href="/solutions/trade-compliance" class="text-secondary text-decoration-none hover-white">Trade Compliance &amp; FTA</a></li>
+                                    <li><a href="/solutions/field-service-intelligence" class="text-secondary text-decoration-none hover-white">Field Service Intelligence</a></li>
+                                    <li><a href="/solutions/asset-reliability" class="text-secondary text-decoration-none hover-white">Asset Reliability &amp; Digital Twin</a></li>
+                                    <li><a href="/solutions/logistics-control-tower" class="text-secondary text-decoration-none hover-white">Logistics Control Tower</a></li>
+                                    <li><a href="/solutions" class="ins-footer-link-highlight">Tất Cả 9 Giải Pháp →</a></li>
+                                </ul>
+                                <h6 class="text-white fw-bold mb-2 small text-uppercase tracking-wider">Ngành Công Nghiệp</h6>
+                                <ul class="list-unstyled d-flex flex-column gap-1 small mb-0">
+                                    <li><a href="/industries/logistics" class="text-secondary text-decoration-none hover-white">Logistics &amp; Cảng Biển</a></li>
+                                    <li><a href="/industries/pharma" class="text-secondary text-decoration-none hover-white">Dược Phẩm (WHO-GMP/FDA)</a></li>
+                                    <li><a href="/industries/energy" class="text-secondary text-decoration-none hover-white">Năng Lượng &amp; Utilities</a></li>
+                                    <li><a href="/industries/fsm" class="text-secondary text-decoration-none hover-white">Field Service &amp; Thiết Bị</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Col 3: Legal, GRC & Compliance (Decree 13/2023/ND-CP) -->
+                            <div class="col-lg-2 col-md-6">
+                                <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider">Thể Chế &amp; An Ninh</h6>
+                                <ul class="list-unstyled d-flex flex-column gap-2 small mb-4">
+                                    <li>
+                                        <a href="/privacy" class="text-light text-decoration-none fw-semibold d-inline-flex align-items-center gap-1 text-nowrap">
+                                            <svg class="ph-duotone ph-shield-check ph-xs text-orange"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                            <span>Bảo Vệ Dữ Liệu (NĐ 13)</span>
+                                        </a>
+                                    </li>
+                                    <li><a href="/trust" class="text-secondary text-decoration-none hover-white">Trung Tâm Tin Cậy (Trust)</a></li>
+                                    <li><a href="/compliance" class="text-secondary text-decoration-none hover-white">Khung Tuân Thủ GRC</a></li>
+                                    <li><a href="/sandbox" class="text-secondary text-decoration-none hover-white">Industrial Sandbox 48h</a></li>
+                                    <li><a href="/media-credits" class="text-secondary text-decoration-none hover-white">Bản Quyền &amp; Tư Liệu</a></li>
+                                </ul>
+
+                                <h6 class="text-white fw-bold mb-2 small text-uppercase tracking-wider">Doanh Nghiệp</h6>
+                                <ul class="list-unstyled d-flex flex-column gap-1 small mb-0">
+                                    <li><a href="/about" class="text-secondary text-decoration-none hover-white">Về Insilos</a></li>
+                                    <li><a href="/pricing" class="text-secondary text-decoration-none hover-white">Bảng Giá &amp; ELA</a></li>
+                                    <li><a href="/resources" class="text-secondary text-decoration-none hover-white">Tài Liệu Chuyên Khảo</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Col 4: Contact & Hotline -->
+                            <div class="col-lg-3 col-md-6">
+                                <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider">Kết Nối Khẩn Cấp</h6>
+                                <div class="ins-footer-hotline-card mb-3">
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <svg class="ph-duotone ph-phone ph-sm text-orange"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-phone"/></svg>
+                                        <span class="text-secondary small">Hotline 24/7 (Miễn cước):</span>
+                                    </div>
+                                    <a href="tel:1900882026" class="ins-hotline-number">1900 88 2026</a>
+                                    <div class="text-secondary x-small mt-1">Hỗ trợ kỹ thuật P1 &lt; 15 phút</div>
+                                </div>
+                                <div class="d-flex flex-column gap-2 small text-secondary mb-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-envelope ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-envelope"/></svg>
+                                        <a href="mailto:contact@insilos.com" class="text-light text-decoration-none">contact@insilos.com</a>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                        <a href="mailto:legal@insilos.com" class="text-light text-decoration-none">legal@insilos.com</a>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-phone-call ph-sm text-orange"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-phone-call"/></svg>
+                                        <a href="tel:+84944311811" class="text-light text-decoration-none">+84 944 311 811</a>
+                                    </div>
+                                </div>
+                                <a href="/request-demo" class="btn btn-primary ins-footer-btn-cta rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2">
+                                    <span>Đăng Ký Khảo Sát Demo</span>
+                                    <svg class="ph-duotone ph-arrow-right ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row: Copyright & Statutory Badges -->
+                        <div class="row align-items-center pt-3 small text-secondary">
+                            <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
+                                <span>© 2026 UNG DUNG SANG TAO LLC · INSILOS SOVEREIGN AI. Bản quyền đã được bảo hộ. Tuân thủ tuyệt đối Nghị định 13/2023/NĐ-CP &amp; Nghị định 52/2013/NĐ-CP.</span>
+                            </div>
+                            <div class="col-md-5 text-center text-md-end">
+                                <span class="ins-footer-badge me-2">Bộ TT&amp;TT · Tier 3 Data Center</span>
+                                <span class="ins-footer-badge">ISO 27001 / IEC 62443</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </xpath>
     </template>
 

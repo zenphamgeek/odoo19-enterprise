@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ================================================================= -->
+    <!-- DEDICATED INTERACTIVE 3D SUITE PAGE: /interactive-3d              -->
+    <!-- ================================================================= -->
+    <template id="insilos_interactive_3d_page" name="Insilos Sovereign Interactive 3D Digital Twin Suite">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Insilos — Sovereign Interactive 3D Digital Twin &amp; Telemetry Suite</t>
+            <t t-set="meta_description">Trải nghiệm mô hình 3D Digital Twin thiết bị công nghiệp V-LIFT 2500E, bản đồ logistics 3D Cụm Cảng Biển Quốc Tế, và Trình phát Video Cinema HUD đồng bộ dữ liệu live ERP trên nền tảng Insilos Enterprise.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
+                <div class="oe_structure oe_empty" id="oe_structure_interactive_3d_top"/>
+
+                <!-- 1. Hero 3D Suite Intro Cover -->
+                <section class="s_cover o_colored_level o_cc o_cc5 py-5 position-relative overflow-hidden min-vh-75 d-flex align-items-center"
+                         data-snippet="s_cover"
+                         data-name="Interactive 3D Hero Intro"
+                         data-bs-theme="dark">
+                    <div class="container position-relative z-1 py-5">
+                        <div class="row align-items-center g-5 text-center">
+                            <div class="col-lg-10 mx-auto">
+                                <!-- Status Badge -->
+                                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-15 border border-primary border-opacity-30 text-cyan small mb-4 font-monospace">
+                                    <span class="ins-live-ping--emerald"/>
+                                    <span>SOVEREIGN 3D DIGITAL TWIN &amp; CINEMA HUD SUITE // ODOO 20 LIVE</span>
+                                </div>
+
+                                <!-- Main Heading with Native SVG Highlight -->
+                                <h1 class="display-3 fw-bold text-white mb-4 lh-sm">
+                                    Không Gian Trải Nghiệm<br/>
+                                    <span class="o_text_highlight o_text_highlight_underline text-primary position-relative d-inline-block">
+                                        3D Digital Twin &amp; Telemetry
+                                        <svg class="o_text_highlight_svg position-absolute start-0 bottom-0 w-100 overflow-visible ins-highlight-underline-svg" viewBox="0 0 100 20" preserveAspectRatio="none">
+                                            <path d="M 0,15 Q 50,0 100,12" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                    Công Nghiệp
+                                </h1>
+
+                                <!-- Executive Subtitle -->
+                                <p class="lead text-secondary mb-5 fs-5 col-lg-10 mx-auto">
+                                    Mô phỏng chân thực quy trình gia công cơ khí chính xác, điều vận đội xe container cảng biển quốc tế và đối soát số liệu kế toán thời gian thực — 100% tự chủ, bảo mật và kết nối trực tiếp với cơ sở dữ liệu Odoo ERP.
+                                </p>
+
+                                <!-- Action Buttons -->
+                                <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3">
+                                    <a href="#insilosDigitalTwinViewport" class="btn btn-primary btn-lg rounded-pill px-4 py-3 fw-bold shadow-lg d-inline-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-cube fs-5"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cube"/></svg>
+                                        <span>Khám Phá Digital Twin</span>
+                                    </a>
+                                    <a href="#insilosCinemaVideo" class="btn btn-outline-secondary rounded-pill px-4 py-3 fw-semibold text-white d-inline-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-play-circle fs-5"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play-circle"/></svg>
+                                        <span>Xem Cinema HUD Video</span>
+                                    </a>
+                                    <a href="/request-demo" class="btn btn-outline-light rounded-pill px-4 py-3 fw-semibold text-cyan d-inline-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-file-text fs-5"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                        <span>Đăng Ký Tư Vấn</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. R1: 3D Digital Twin Equipment Widget -->
+                <t t-call="insilos_website.s_insilos_3d_digital_twin"/>
+
+                <!-- 3. R2: 3D Logistics Radar & Route Map -->
+                <t t-call="insilos_website.s_insilos_3d_logistics_radar"/>
+
+                <!-- 4. R3: Interactive Cinema HUD Video Telemetry Player -->
+                <t t-call="insilos_website.s_insilos_video_telemetry_player"/>
+
+                <!-- 5. R4: Interactive 3D Factory & ROI Configurator -->
+                <t t-call="insilos_website.s_insilos_3d_factory_roi"/>
+
+                <!-- 6. Sovereign Trust & Compliance Strip -->
+                <section class="s_features o_colored_level o_cc o_cc5 py-5 border-top border-secondary border-opacity-25"
+                         data-snippet="s_features"
+                         data-name="3D Suite Compliance Bar"
+                         data-bs-theme="dark">
+                    <div class="container py-4">
+                        <div class="row g-4 text-center justify-content-center">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="p-3">
+                                    <svg class="ph-duotone ph-shield-check ph-xl text-cyan mb-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                    <h5 class="text-white fw-bold mb-1">Chủ Quyền Dữ Liệu</h5>
+                                    <p class="text-secondary small mb-0">100% On-Premises &amp; Air-Gapped Sovereign</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="p-3">
+                                    <svg class="ph-duotone ph-file-lock ph-xl text-emerald mb-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-lock"/></svg>
+                                    <h5 class="text-white fw-bold mb-1">Thông Tư 200 &amp; 78</h5>
+                                    <p class="text-secondary small mb-0">Khóa cứng đối soát 3 chiều hóa đơn điện tử</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="p-3">
+                                    <svg class="ph-duotone ph-lightning ph-xl text-cyan mb-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lightning"/></svg>
+                                    <h5 class="text-white fw-bold mb-1">Độ Trễ Telemetry &lt; 15ms</h5>
+                                    <p class="text-secondary small mb-0">Đồng bộ SCADA máy cắt và GPS đội xe</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="p-3">
+                                    <svg class="ph-duotone ph-certificate ph-xl text-emerald mb-2"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-certificate"/></svg>
+                                    <h5 class="text-white fw-bold mb-1">Bảo Chứng Thực Địa</h5>
+                                    <p class="text-secondary small mb-0">Triển khai tại Cụm Cảng Biển Quốc Tế, KCN VSIP, Đình Vũ</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. Closing Executive CTA -->
+                <section class="s_call_to_action o_colored_level o_cc o_cc5 py-5 text-center position-relative overflow-hidden"
+                         data-snippet="s_call_to_action"
+                         data-name="3D Suite Closing CTA"
+                         data-bs-theme="dark">
+                    <div class="container position-relative z-1 py-4">
+                        <div class="col-lg-8 mx-auto">
+                            <h2 class="display-5 fw-bold text-white mb-3">
+                                Sẵn Sàng Thiết Kế Mô Hình 3D Cho Doanh Nghiệp?
+                            </h2>
+                            <p class="lead text-secondary mb-4">
+                                Đội ngũ chuyên gia kiến trúc giải pháp công nghiệp của Insilos sẵn sàng khảo sát thực địa, số hóa bản vẽ và tích hợp hệ thống đo lường thời gian thực cho nhà máy của Quý vị.
+                            </p>
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="/request-demo" class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold">
+                                    Đăng Ký Tư Vấn Trực Tiếp
+                                </a>
+                                <a href="/showcase-3d" class="btn btn-outline-light btn-lg rounded-pill px-4 py-3">
+                                    Xem Video Showcase 4K
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty" id="oe_structure_interactive_3d_bottom"/>
+            </main>
+        </t>
+    </template>
+</odoo>

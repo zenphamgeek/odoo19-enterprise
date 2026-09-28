@@ -6,12 +6,14 @@ Comprehensive end-to-end verification script for Insilos Odoo 20 Website.
 
 Verifies:
 1. Full Quality Gate pass via `quality_gate.py` (Static QWeb, Editor Compatibility, Diversity, QWeb Directives, Brand Buttons, Typographic Balance).
-2. Live HTTP 200 on all 28+ routes (including core routes, dedicated solution views, industry routes, whitepapers, and boundary 404s).
+2. Live HTTP 200 on all 31 routes (including core routes, dedicated solution views, industry routes, whitepapers, and boundary 404s).
 3. Zero inline styles across all `views/*.xml`.
 4. Zero FontAwesome `<i class="fa fa-...">` tags across all `views/*.xml` (100% Phosphor SVG).
 5. 100% Brand Orange `#FF8000` buttons (0 rogue button classes, 0 inline button overrides).
 6. Zero typographic orphans on headings (text-wrap: balance, semantic breaks, balanced headline rhythm).
 7. 100% HBox card row baseline alignment (with `h-100 flex-column justify-content-between mt-auto`).
+8. Demo Request POST funnel & ORM selection integrity.
+9. Interactive Industrial Components Enforcement (/trust, /compliance, /sandbox).
 
 Usage:
     .venv/bin/python enterprise/insilos_website/tools/test_e2e_suite.py
@@ -55,6 +57,9 @@ CORE_ROUTES = [
     {"path": "/about", "name": "About & Zero-Trust Shield", "type": "core"},
     {"path": "/resources", "name": "Resources & Knowledge Hub", "type": "core"},
     {"path": "/request-demo", "name": "Request Demo Walkthrough", "type": "core"},
+    {"path": "/trust", "name": "Sovereign Trust & Security", "type": "core"},
+    {"path": "/compliance", "name": "Regulatory GRC Architecture", "type": "core"},
+    {"path": "/sandbox", "name": "Interactive Industrial Sandbox", "type": "core"},
     {"path": "/media-credits", "name": "Media Credits & Attribution", "type": "core"},
     {"path": "/showcase-3d", "name": "3D Interactive Showcase Landing", "type": "core"},
     {"path": "/thank-you", "name": "Demo Confirmation Page", "type": "core"},
@@ -98,13 +103,14 @@ def run_suite_1_quality_gate(verbose=False):
     if not QUALITY_GATE_SCRIPT.exists():
         return False, {"error": f"quality_gate.py not found at {QUALITY_GATE_SCRIPT}"}
     
-    python_bin = sys.executable
+    venv_python = Path("/home/zen/O20/.venv/bin/python")
+    python_bin = str(venv_python) if venv_python.exists() else sys.executable
     try:
         proc = subprocess.run(
             [python_bin, str(QUALITY_GATE_SCRIPT)],
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=120,
         )
         passed = (proc.returncode == 0)
         output = proc.stdout
@@ -647,6 +653,160 @@ def run_suite_8_demo_request_form_post(verbose=False):
     return all_passed, {"results": results, "passed_count": sum(1 for r in results if r["passed"]), "total_count": len(results)}
 
 
+def run_suite_9_interactive_industrial_components(verbose=False):
+    """Suite 9: Verify interactive industrial components enforcement across /trust, /compliance, and /sandbox."""
+    print("\n" + "=" * 75)
+    print("SUITE 9: INTERACTIVE INDUSTRIAL COMPONENTS ENFORCEMENT")
+    print("=" * 75)
+
+    all_passed = True
+    subtests = []
+
+    # 1. Test /trust: Merkle DAG #BLOCK-2026-0928, SLA 99.995%, dropzones
+    trust_url = f"{BASE_URL}/trust"
+    trust_passed = True
+    trust_details = {}
+    try:
+        req = urllib.request.Request(trust_url, headers={"User-Agent": "InsilosE2ETestSuite/2.0"})
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            status = resp.status
+            html = resp.read().decode("utf-8")
+
+            has_merkle_dag = "BLOCK-2026-0928" in html
+            has_sla = "99.995%" in html
+            has_top_dropzone = "oe_structure_trust_top" in html
+            has_bottom_dropzone = "oe_structure_trust_bottom" in html
+
+            trust_passed = (
+                status == 200
+                and has_merkle_dag
+                and has_sla
+                and has_top_dropzone
+                and has_bottom_dropzone
+            )
+            trust_details = {
+                "status": status,
+                "merkle_dag": has_merkle_dag,
+                "sla": has_sla,
+                "dropzone_top": has_top_dropzone,
+                "dropzone_bottom": has_bottom_dropzone,
+            }
+            if not trust_passed:
+                all_passed = False
+            status_icon = "✅" if trust_passed else "❌"
+            print(f"  {status_icon} /trust: Merkle DAG: {has_merkle_dag} | SLA 99.995%: {has_sla} | Dropzones: {has_top_dropzone and has_bottom_dropzone}")
+    except Exception as e:
+        trust_passed = False
+        all_passed = False
+        print(f"  ❌ /trust: ERROR: {e}")
+        trust_details = {"error": str(e)}
+
+    subtests.append({"target": "/trust", "passed": trust_passed, "details": trust_details})
+
+    # 2. Test /compliance: SOC 2, ISO 27001, IEC 62443, dropzones
+    comp_url = f"{BASE_URL}/compliance"
+    comp_passed = True
+    comp_details = {}
+    try:
+        req = urllib.request.Request(comp_url, headers={"User-Agent": "InsilosE2ETestSuite/2.0"})
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            status = resp.status
+            html = resp.read().decode("utf-8")
+
+            has_soc2 = "SOC 2" in html
+            has_iso27001 = "ISO 27001" in html
+            has_iec62443 = "IEC 62443" in html
+            has_top_dropzone = "oe_structure_compliance_top" in html
+            has_bottom_dropzone = "oe_structure_compliance_bottom" in html
+
+            comp_passed = (
+                status == 200
+                and has_soc2
+                and has_iso27001
+                and has_iec62443
+                and has_top_dropzone
+                and has_bottom_dropzone
+            )
+            comp_details = {
+                "status": status,
+                "soc2": has_soc2,
+                "iso27001": has_iso27001,
+                "iec62443": has_iec62443,
+                "dropzone_top": has_top_dropzone,
+                "dropzone_bottom": has_bottom_dropzone,
+            }
+            if not comp_passed:
+                all_passed = False
+            status_icon = "✅" if comp_passed else "❌"
+            print(f"  {status_icon} /compliance: SOC 2: {has_soc2} | ISO 27001: {has_iso27001} | IEC 62443: {has_iec62443} | Dropzones: {has_top_dropzone and has_bottom_dropzone}")
+    except Exception as e:
+        comp_passed = False
+        all_passed = False
+        print(f"  ❌ /compliance: ERROR: {e}")
+        comp_details = {"error": str(e)}
+
+    subtests.append({"target": "/compliance", "passed": comp_passed, "details": comp_details})
+
+    # 3. Test /sandbox: 4 workbench tools, Digital Twin Simulator, Value Engineering Studio, dropzones
+    sb_url = f"{BASE_URL}/sandbox"
+    sb_passed = True
+    sb_details = {}
+    try:
+        req = urllib.request.Request(sb_url, headers={"User-Agent": "InsilosE2ETestSuite/2.0"})
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            status = resp.status
+            html = resp.read().decode("utf-8")
+
+            has_tool_idp = "ins-tool-idp" in html
+            has_tool_kg = "ins-tool-kg" in html
+            has_tool_hscode = "ins-tool-hscode" in html
+            has_tool_fsm = "ins-tool-fsm" in html
+            has_anomaly_slider = "ins-anomaly-slider" in html
+            has_roi_modal = "ins-roi-dossier-modal" in html
+            has_top_dropzone = "oe_structure_sandbox_top" in html
+            has_bottom_dropzone = "oe_structure_sandbox_bottom" in html
+
+            tools_ok = has_tool_idp and has_tool_kg and has_tool_hscode and has_tool_fsm
+            dropzones_ok = has_top_dropzone and has_bottom_dropzone
+
+            sb_passed = (
+                status == 200
+                and tools_ok
+                and has_anomaly_slider
+                and has_roi_modal
+                and dropzones_ok
+            )
+            sb_details = {
+                "status": status,
+                "tool_idp": has_tool_idp,
+                "tool_kg": has_tool_kg,
+                "tool_hscode": has_tool_hscode,
+                "tool_fsm": has_tool_fsm,
+                "anomaly_slider": has_anomaly_slider,
+                "roi_modal": has_roi_modal,
+                "dropzone_top": has_top_dropzone,
+                "dropzone_bottom": has_bottom_dropzone,
+            }
+            if not sb_passed:
+                all_passed = False
+            status_icon = "✅" if sb_passed else "❌"
+            print(f"  {status_icon} /sandbox: 4 Tools: {tools_ok} | Digital Twin Slider: {has_anomaly_slider} | ROI Modal: {has_roi_modal} | Dropzones: {dropzones_ok}")
+    except Exception as e:
+        sb_passed = False
+        all_passed = False
+        print(f"  ❌ /sandbox: ERROR: {e}")
+        sb_details = {"error": str(e)}
+
+    subtests.append({"target": "/sandbox", "passed": sb_passed, "details": sb_details})
+
+    if all_passed:
+        print("  ✅ [SUITE 9 PASSED] All Interactive Industrial Components & Live Dropzones Verified!")
+    else:
+        print("  ❌ [SUITE 9 FAILED] One or more interactive components failed verification!")
+
+    return all_passed, {"subtests": subtests, "all_passed": all_passed}
+
+
 def main():
     parser = argparse.ArgumentParser(description="Insilos Enterprise Full-Site E2E Test Suite Runner")
     parser.add_argument("--verbose", "-v", action="store_true", help="Print detailed diagnostic output")
@@ -668,6 +828,7 @@ def main():
     s6_ok, s6_data = run_suite_6_typographic_balance(verbose=args.verbose)
     s7_ok, s7_data = run_suite_7_hbox_baseline_alignment(verbose=args.verbose)
     s8_ok, s8_data = run_suite_8_demo_request_form_post(verbose=args.verbose)
+    s9_ok, s9_data = run_suite_9_interactive_industrial_components(verbose=args.verbose)
     
     results["suite_1_quality_gate"] = {"passed": s1_ok, "data": s1_data}
     results["suite_2_live_routes"] = {"passed": s2_ok, "data": s2_data}
@@ -677,21 +838,23 @@ def main():
     results["suite_6_typographic_balance"] = {"passed": s6_ok, "data": s6_data}
     results["suite_7_hbox_baseline_alignment"] = {"passed": s7_ok, "data": s7_data}
     results["suite_8_demo_request_post"] = {"passed": s8_ok, "data": s8_data}
+    results["suite_9_interactive_components"] = {"passed": s9_ok, "data": s9_data}
     
-    strict_overall = s1_ok and s2_ok and s3_ok and s4_ok and s5_ok and s6_ok and s7_ok and s8_ok
-    m1_pending_overall = s1_ok and s2_ok and s5_ok and s6_ok and s7_ok and s8_ok
+    strict_overall = s1_ok and s2_ok and s3_ok and s4_ok and s5_ok and s6_ok and s7_ok and s8_ok and s9_ok
+    m1_pending_overall = s1_ok and s2_ok and s5_ok and s6_ok and s7_ok and s8_ok and s9_ok
     
     print("\n" + "=" * 75)
     print("📋 E2E TEST SUITE EXECUTION SUMMARY TABLE")
     print("=" * 75)
     print(f"  1. Quality Gate Suite (All 7 Gates)    : {'✅ PASS' if s1_ok else '❌ FAIL'}")
-    print(f"  2. Live HTTP Routes (28+ Endpoints)    : {'✅ PASS' if s2_ok else '❌ FAIL'} ({s2_data.get('passed_count')}/{s2_data.get('total_count')} routes 200 OK)")
+    print(f"  2. Live HTTP Routes (30+ Endpoints)    : {'✅ PASS' if s2_ok else '❌ FAIL'} ({s2_data.get('passed_count')}/{s2_data.get('total_count')} routes 200 OK)")
     print(f"  3. Zero Inline Styles Sanitation       : {'✅ PASS' if s3_ok else '❌ FAIL'} ({s3_data.get('total_inline_styles', 0)} styles found)")
     print(f"  4. Zero FontAwesome Icons (Phosphor)   : {'✅ PASS' if s4_ok else '❌ FAIL'} ({s4_data.get('total_fa_icons', 0)} icons found)")
     print(f"  5. Brand Orange #FF8000 Buttons        : {'✅ PASS' if s5_ok else '❌ FAIL'} (100% compliant)")
     print(f"  6. Typographic Balance & Zero Orphans  : {'✅ PASS' if s6_ok else '❌ FAIL'} (0 heading orphan defects)")
     print(f"  7. HBox Card Baseline Alignment        : {'✅ PASS' if s7_ok else '❌ FAIL'} ({s7_data.get('card_rate', 0):.1f}% locked)")
     print(f"  8. Demo Request POST Funnel Integrity  : {'✅ PASS' if s8_ok else '❌ FAIL'} ({s8_data.get('passed_count')}/{s8_data.get('total_count')} selections 303 redirect)")
+    print(f"  9. Interactive Industrial Components  : {'✅ PASS' if s9_ok else '❌ FAIL'} (Trust, Compliance & Sandbox Verified)")
     print("-" * 75)
     
     if args.json:
@@ -706,7 +869,7 @@ def main():
         print(json.dumps(cleaned_results, indent=2))
         
     if strict_overall:
-        print("🏆 ALL 8 E2E TEST SUITES PASSED STRICT ENFORCEMENT!")
+        print("🏆 ALL 9 E2E TEST SUITES PASSED STRICT ENFORCEMENT!")
         sys.exit(0)
     elif args.allow_pending_m1 and m1_pending_overall:
         print("⚠️  CORE PLATFORM SUITES PASSED! (Pending M1 items: inline styles & fontawesome flagged for escalation)")

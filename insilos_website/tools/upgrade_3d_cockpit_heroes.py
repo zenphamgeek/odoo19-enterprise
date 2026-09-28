@@ -146,7 +146,7 @@ CONFIGS = {
             {"num": "L3", "icon": "robot", "title": "Autonomous Operational Agents", "badge_text": "97.4% STP", "badge_color": "cyan", "desc": "HS Classifier, FTA Matrix, 3D Packing &amp; Predictive FSM", "metric": "Sub-45s SLA Execution", "meter_class": "ins-meter-w97"},
             {"num": "L4", "icon": "check-circle", "title": "Closed-Loop Execution &amp; Write-Back", "badge_text": "AUDIT VERIFIED", "badge_color": "mint", "desc": "ERP Write-Back, Cryptographic Dossier &amp; Human Gatekeeper", "metric": "Zero Drift Protection", "meter_class": "ins-meter-w99"}
         ],
-        "footer_proof": "Triển khai thực chiến: <strong class=\"text-white\">EVN Genco 3 • Mobifone • FDI</strong>",
+        "footer_proof": "Triển khai thực chiến: <strong class=\"text-white\">Năng Lượng Quốc Gia • Viễn Thông • FDI</strong>",
         "footer_cert": "ISO 27001 &amp; SOC 2 Type II"
     },
     "solutions": {
@@ -261,10 +261,10 @@ CONFIGS = {
             {"num": "L1", "icon": "lightning", "title": "Substation IEC 61850 Stream", "badge_text": "10ms Capture", "badge_color": "cyan", "desc": "Giám sát trạm biến áp 500kV &amp; đường dây truyền tải điện", "metric": "Optical CT/PT Stream", "meter_class": "ins-meter-w99"},
             {"num": "L2", "icon": "wind", "title": "Offshore Turbine Digital Twin", "badge_text": "98.6% Health", "badge_color": "mint", "desc": "Mô phỏng khí động học và độ mòn hộp số tua-bin gió", "metric": "Predictive Bearing RUL", "meter_class": "ins-meter-w96"},
             {"num": "L3", "icon": "sliders-horizontal", "title": "Frequency &amp; Reactive Balancer", "badge_text": "50.02 Hz Target", "badge_color": "emerald", "desc": "Cân bằng phụ tải lưới điện tự động theo thời gian thực", "metric": "Active Inertia Control", "meter_class": "ins-meter-w98"},
-            {"num": "L4", "icon": "shield-check", "title": "Blackout Prevention Interlock", "badge_text": "0s Major Outage", "badge_color": "cyan", "desc": "Tự động cô lập sự cố trong 40 mili-giây bảo vệ hệ thống", "metric": "EVN Genco 3 Proven", "meter_class": "ins-meter-w100"}
+            {"num": "L4", "icon": "shield-check", "title": "Blackout Prevention Interlock", "badge_text": "0s Major Outage", "badge_color": "cyan", "desc": "Tự động cô lập sự cố trong 40 mili-giây bảo vệ hệ thống", "metric": "Grid Proven", "meter_class": "ins-meter-w100"}
         ],
         "footer_proof": "Tiêu chuẩn quốc tế: <strong class=\"text-white\">IEC 61850 Grid Architecture</strong>",
-        "footer_cert": "EVN Proven"
+        "footer_cert": "Grid Proven"
     },
     "fsm_ind": {
         "prefix": "fsm_ind",
@@ -276,7 +276,7 @@ CONFIGS = {
             {"num": "L3", "icon": "wrench", "title": "Automated Tooling &amp; Spare Parts", "badge_text": "100% Parts Ready", "badge_color": "warning", "desc": "Đảm bảo kỹ sư mang đúng linh kiện ngay lần đầu tiên", "metric": "Inventory Auto-Reserve", "meter_class": "ins-meter-w98"},
             {"num": "L4", "icon": "check-circle", "title": "Mobile Acceptance Sign-Off", "badge_text": "Instant Sync", "badge_color": "emerald", "desc": "Nghiệm thu điện tử và cập nhật trực tiếp vào hệ thống", "metric": "Offline Mobile App", "meter_class": "ins-meter-w99"}
         ],
-        "footer_proof": "Hệ sinh thái viễn thông: <strong class=\"text-white\">Mobifone &amp; Viettel Ecosystem</strong>",
+        "footer_proof": "Hệ sinh thái viễn thông: <strong class=\"text-white\">National Telco &amp; Enterprise Ecosystem</strong>",
         "footer_cert": "Field Mobility"
     },
     "pricing": {

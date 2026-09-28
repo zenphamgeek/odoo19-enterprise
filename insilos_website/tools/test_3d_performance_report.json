@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "baseUrl": "http://localhost:28069",
+    "timestamp": "2026-09-28T00:41:47.794Z",
+    "browser": "Chromium Headless",
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "durationSeconds": 207.596
+  },
+  "findings": [],
+  "benchmarks": {
+    "initLatency": {
+      "passed": false,
+      "targetSec": 2,
+      "iterations": [
+        {
+          "run": 1,
+          "navToInitSec": 8.112,
+          "engineInitMs": 1135.9000000059605,
+          "dtInitMs": 15.099999994039536,
+          "radarInitMs": 36.5,
+          "cfgInitMs": 18.5,
+          "gpuUploadMs": 1065.800000011921
+        },
+        {
+          "run": 2,
+          "navToInitSec": 8.336,
+          "engineInitMs": 1095.0999999940395,
+          "dtInitMs": 33.30000001192093,
+          "radarInitMs": 25.799999982118607,
+          "cfgInitMs": 19.400000005960464,
+          "gpuUploadMs": 1016.5999999940395
+        },
+        {
+          "run": 3,
+          "navToInitSec": 7.735,
+          "engineInitMs": 1803.800000011921,
+          "dtInitMs": 57,
+          "radarInitMs": 33.20000001788139,
+          "cfgInitMs": 27.19999998807907,
+          "gpuUploadMs": 1686.4000000059605
+        },
+        {
+          "run": 4,
+          "navToInitSec": 10.65,
+          "engineInitMs": 2645.800000011921,
+          "dtInitMs": 72.5,
+          "radarInitMs": 36.900000005960464,
+          "cfgInitMs": 41.79999998211861,
+          "gpuUploadMs": 2494.600000023842
+        },
+        {
+          "run": 5,
+          "navToInitSec": 13.554,
+          "engineInitMs": 1771,
+          "dtInitMs": 70.59999999403954,
+          "radarInitMs": 117.19999998807907,
+          "cfgInitMs": 122.59999999403954,
+          "gpuUploadMs": 1460.6000000238419
+        }
+      ],
+      "meanNavToReadySec": 9.6774,
+      "meanEngineInitMs": 1690.3200000047684,
+      "minNavSec": 7.735,
+      "maxNavSec": 13.554
+    },
+    "sustainedFramerate": {
+      "digitalTwinFps": {
+        "avg": 25.465347994042077,
+        "p1": 0.21932710444471404,
+        "min": 0.21932710444471404,
+        "count": 12,
+        "stdDev": 14.227367960251515
+      },
+      "logisticsRadarFps": {
+        "avg": 16.4599681731426,
+        "p1": 0.9106638739690629,
+        "min": 0.9106638739690629,
+        "count": 38,
+        "stdDev": 11.491039422620661
+      },
+      "factoryConfiguratorFps": {
+        "avg": 0,
+        "p1": 0,
+        "min": 0,
+        "count": 0,
+        "stdDev": 0
+      },
+      "passed": false
+    },
+    "contextLoss": {
+      "passed": true,
+      "details": {
+        "supported": true,
+        "isLostImmediately": true,
+        "lostEventFired": true,
+        "restoredEventFired": true,
+        "appCalledPreventDefault": true,
+        "isStillLost": false,
+        "renderSucceeded": true
+      },
+      "uncaughtErrors": []
+    },
+    "intersectionObserver": {
+      "passed": false,
+      "details": {
+        "framesInView": 5,
+        "framesOutOfView": 5,
+        "framesBackInView": 1,
+        "pausedOutOfView": false,
+        "resumedBackInView": false
+      }
+    },
+    "disposal": {
+      "passed": true,
+      "details": {
+        "before": {
+          "totalGeometries": 47,
+          "dtGeometries": 29,
+          "radarGeometries": 13,
+          "cfgGeometries": 5,
+          "totalTextures": 1
+        },
+        "after": {
+          "totalGeometries": 0,
+          "dtGeometries": 0,
+          "radarGeometries": 0,
+          "cfgGeometries": 0,
+          "totalTextures": 0
+        }
+      }
+    },
+    "memoryDelta": {
+      "passed": true,
+      "initialHeapMb": 0,
+      "finalHeapMb": 0,
+      "heapDeltaMb": 0,
+      "transitionLogs": [
+        {
+          "cycle": 1,
+          "heapMb": 0
+        },
+        {
+          "cycle": 2,
+          "heapMb": 0
+        },
+        {
+          "cycle": 3,
+          "heapMb": 0
+        },
+        {
+          "cycle": 4,
+          "heapMb": 0
+        },
+        {
+          "cycle": 5,
+          "heapMb": 0
+        }
+      ]
+    }
+  },
+  "verdict": "REQUEST_CHANGES"
+}

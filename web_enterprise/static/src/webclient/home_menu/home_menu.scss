@@ -1,3 +1,7 @@
+// ============================================================================
+// Insilos Enterprise: Home Menu (App Drawer) Stylesheet
+// ============================================================================
+
 .o_home_menu_background {
     // 'Home menu background' design is shared with enterprise login
     // screens and it's located in './home_menu_background.scss'
@@ -52,15 +56,12 @@
             aspect-ratio: 1;
             padding: $o-home-menu-app-icon-padding;
             background-color: var(--AppSwitcherIcon-background, #{$o-home-menu-app-icon-background-color});
+            border-radius: 16px;
             object-fit: cover;
-            transform-origin: center bottom;
-            transition: box-shadow ease-in 0.1s, transform ease-in 0.1s;
-            box-shadow: var(--AppSwitcherIcon-inset-shadow, inset 0 0 0 1px rgba(0,0,0, .2)), 
-                0 1px 1px rgba(#000, .02),
-                0 2px 2px rgba(#000, .02),
-                0 4px 4px rgba(#000, .02),
-                0 8px 8px rgba(#000, .02),
-                0 16px 16px rgba(#000, .02);
+            transform-origin: center center;
+            transition: box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--AppSwitcherIcon-inset-shadow, inset 0 0 0 1px rgba(255, 255, 255, 0.1)), 
+                0 4px 12px rgba(0, 0, 0, 0.25);
 
             .fa {
                 font-size: $o-home-menu-app-icon-max-width * 0.5;
@@ -68,29 +69,39 @@
         }
         
         &:hover .o_app_icon {
-            box-shadow: var(--AppSwitcherIcon-inset-shadow, inset 0 0 0 1px rgba(0,0,0, .2)), 
-                0 2px 2px rgba(#000, .03),
-                0 4px 4px rgba(#000, .03),
-                0 8px 8px rgba(#000, .03),
-                0 12px 12px rgba(#000, .03),
-                0 24px 24px rgba(#000, .03);
-            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45),
+                0 0 22px rgba(255, 128, 0, 0.45),
+                inset 0 0 0 1.5px rgba(255, 128, 0, 0.6);
+            transform: translateY(-5px) scale(1.06);
         }
 
         &:active .o_app_icon {
-            transform: translateY(-2px) scale(.98);
+            transform: translateY(-1px) scale(0.98);
             transition: none;
         }
 
         .o_caption {
             color: var(--homeMenuCaption-color, #{$o-home-menu-caption-color});
             text-shadow: $o-home-menu-caption-shadow;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.015em;
+            transition: color 0.15s ease;
+        }
+
+        &:hover .o_caption {
+            color: #FFA033;
         }
 
         &.o_focused {
-            background: $component-active-bg;
-            outline: 1px solid $o-action;
-            border-radius: $border-radius;
+            background: rgba(255, 128, 0, 0.15) !important;
+            outline: 2px solid #FF8000 !important;
+            outline-offset: 3px;
+            border-radius: 12px;
+
+            .o_app_icon {
+                box-shadow: 0 0 20px rgba(255, 128, 0, 0.5), inset 0 0 0 1.5px #FF8000;
+            }
         }
     }
 
@@ -98,12 +109,23 @@
         transition: transform 0.5s;
         transform: rotate(6deg);
         .o_app_icon {
-            box-shadow: 0 8px 15px -10px black;
-            transform: translateY(-1px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 128, 0, 0.4);
+            transform: translateY(-3px);
         }
     }
 
-    // iOS iPhone list layout due to Apple AppStore review
+    .o_no_result {
+        color: #94A3B8;
+        font-size: 1.1rem;
+        text-align: center;
+        margin-top: 3rem;
+        padding: 2rem;
+        background: rgba(15, 23, 42, 0.5);
+        border-radius: 12px;
+        border: 1px dashed rgba(148, 163, 184, 0.25);
+    }
+
+    // iOS iPhone list layout due to Apple AppStore review & mobile responsiveness
     @include media-breakpoint-down(md) {
         &.o_ios_app {
             .o_apps {
@@ -120,8 +142,17 @@
             .o_app {
                 flex-direction: row !important;
                 justify-content: initial !important;
-                background-color: rgba(255, 255, 255, 0.1);
+                background-color: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 12px;
+                margin-bottom: map-get($spacers, 2);
                 padding: map-get($spacers, 3) map-get($spacers, 4) !important;
+                transition: background-color 0.15s ease, border-color 0.15s ease;
+
+                &:hover {
+                    background-color: rgba(255, 128, 0, 0.12);
+                    border-color: rgba(255, 128, 0, 0.3);
+                }
             }
 
             .o_app_icon {

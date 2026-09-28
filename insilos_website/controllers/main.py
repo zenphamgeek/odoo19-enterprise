@@ -218,11 +218,11 @@ EXTENDED_INDUSTRIES = [
         "id": "cold_chain",
         "cluster": "logistics_trade",
         "name": "Chuỗi Cung Ứng Lạnh Cold Chain Logistics",
-        "eyebrow": "TEMPERATURE-CONTROLLED LOGISTICS",
-        "summary": "Giám sát nhiệt độ thời gian thực, dự báo điểm lệch nhiệt và bảo toàn chất lượng vắc-xin, thực phẩm tươi sống.",
+        "eyebrow": "TEMPERATURE-CONTROLLED LOGISTICS & PHARMA GxP",
+        "summary": "Giám sát chuỗi cung ứng lạnh dược phẩm & thực phẩm theo chuẩn GDP/GSP. Telemetry nhiệt độ reefer container -20°C và giám sát IoT cold box liên tục.",
         "image_card": "/insilos_website/static/src/img/industries/cold_chain/1.webp",
-        "tags": ["IoT Temperature", "GxP Cold Chain", "SLA Monitoring", "ETA Prediction"],
-        "url": "/industries/logistics",
+        "tags": ["GDP/GSP Pharma", "Reefer Telemetry -20°C", "IoT Cold Box", "WHO-GMP Temp SLA"],
+        "url": "/industries/cold_chain",
     },
     {
         "id": "warehouse",
@@ -856,6 +856,24 @@ COMPANY_SIZE_SELECTIONS = [
     ("1000_plus", "1.000+"),
 ]
 
+CORE_ERP_SELECTIONS = [
+    ("", "Chọn hệ thống Core ERP"),
+    ("sap_s4", "SAP S/4HANA"),
+    ("sap_ecc", "SAP ECC 6.0"),
+    ("oracle", "Oracle Fusion / EBS"),
+    ("odoo", "Odoo Enterprise / Community"),
+    ("inhouse", "Hệ thống nội bộ (In-house / Legacy)"),
+    ("other", "Khác"),
+]
+
+PROJECT_TIMELINE_SELECTIONS = [
+    ("", "Chọn tiến độ dự kiến"),
+    ("immediate", "Triển khai ngay (< 1 tháng)"),
+    ("1_3_mo", "1 – 3 tháng"),
+    ("3_6_mo", "3 – 6 tháng"),
+    ("explore", "Nghiên cứu khả thi / Khảo sát"),
+]
+
 EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
 SLUG_RE = re.compile(r"^[a-zA-Z0-9_-]+$")
 STATIC_PAGE_PATHS = {
@@ -868,7 +886,13 @@ STATIC_PAGE_PATHS = {
     "/about",
     "/media-credits",
     "/request-demo",
+    "/privacy",
     "/thank-you",
+    "/trust",
+    "/compliance",
+    "/sandbox",
+    "/showcase-3d",
+    "/interactive-3d",
 }
 DEDICATED_SOLUTION_SLUGS = {
     "trade-compliance",
@@ -896,7 +920,13 @@ STATIC_URLS = [
     "/pricing",
     "/about",
     "/request-demo",
+    "/privacy",
     "/media-credits",
+    "/trust",
+    "/compliance",
+    "/sandbox",
+    "/showcase-3d",
+    "/interactive-3d",
 ]
 
 
@@ -953,6 +983,11 @@ class InsilosWebsite(http.Controller):
             )
             if page:
                 values["main_object"] = page
+        if request and hasattr(request, "website") and request.website and request.website.custom_code_head:
+            if "insilos.com" in request.website.custom_code_head:
+                cleaned_head = re.sub(r'<link\s+rel=["\']canonical["\']\s+href=["\']https://insilos\.com/?["\']\s*/?>', '', request.website.custom_code_head)
+                if cleaned_head != request.website.custom_code_head:
+                    request.website.custom_code_head = cleaned_head
         values.update(extra)
         return values
 
@@ -1032,6 +1067,39 @@ class InsilosWebsite(http.Controller):
         industry_data = INDUSTRY_101_REGISTRY.get(industry) or INDUSTRIES.get(industry)
         if not industry_data:
             return request.not_found()
+        if industry == "cold_chain":
+            industry_data = dict(industry_data)
+            industry_data.update({
+                "summary": (
+                    "Hệ thống giám sát chuỗi cung ứng lạnh dược phẩm & thực phẩm theo chuẩn "
+                    "GDP/GSP/WHO. Thu thập telemetry nhiệt độ thời gian thực từ container lạnh "
+                    "Reefer (-20°C đến +8°C), IoT Cold Box và cảnh báo tức thì nguy cơ đứt gãy dải nhiệt."
+                ),
+                "philosophy": (
+                    "Bảo toàn 100% chất lượng dược phẩm, sinh phẩm y tế và nông sản xuất khẩu thông "
+                    "qua mạng lưới cảm biến IoT không dây và nhật trình kiểm soát nhiệt độ tự động."
+                ),
+                "tags": [
+                    "GDP/GSP Pharma",
+                    "Reefer -20°C Telemetry",
+                    "IoT Cold Box",
+                    "VAS 200/133",
+                ],
+                "pain_points": [
+                    {
+                        "manual": "Ghi chép nhiệt độ container thủ công hoặc chỉ đọc data logger sau khi hàng về kho, không thể cứu vãn khi nhiệt độ âm sâu (-20°C) bị gián đoạn.",
+                        "insilos": "Telemetry thời gian thực từ trạm Reefer và IoT Cold Box truyền liên tục 60s/lần, tự động kích hoạt cảnh báo vượt ngưỡng trước khi hỏng lô hàng."
+                    },
+                    {
+                        "manual": "Hồ sơ đối soát nhiệt độ theo chuẩn GDP/GSP và FDA 21 CFR Part 11 phân mảnh, mất 3-5 ngày tổng hợp biên bản khi thanh tra.",
+                        "insilos": "Xuất báo cáo Audit Trail nhiệt độ tức thì có chữ ký số Merkle DAG bất biến, chứng minh chuỗi bảo quản lạnh liên tục 100% hành trình."
+                    },
+                    {
+                        "manual": "Chi phí bồi thường hư hỏng hàng nhạy nhiệt và phụ phí cắm điện container lạnh tại bãi cảng (Plug-in fees) tăng cao do điều phối chậm.",
+                        "insilos": "AI dự báo điểm lệch nhiệt và tối ưu lộ trình xe lạnh, giảm 85% rủi ro hủy lô hàng sinh phẩm và cắt giảm chi phí cắm điện bãi cảng."
+                    }
+                ],
+            })
         related_solutions = [
             (key, solution)
             for key, solution in SOLUTIONS.items()
@@ -1187,6 +1255,22 @@ class InsilosWebsite(http.Controller):
     def media_credits(self, **kwargs):
         return request.render("insilos_website.insilos_media_credits", self._base_values())
 
+    @http.route("/trust", type="http", auth="public", website=True, sitemap=True)
+    def trust(self, **kwargs):
+        return request.render("insilos_website.insilos_trust_page", self._base_values(**kwargs))
+
+    @http.route("/compliance", type="http", auth="public", website=True, sitemap=True)
+    def compliance(self, **kwargs):
+        return request.render("insilos_website.insilos_compliance_page", self._base_values(**kwargs))
+
+    @http.route("/sandbox", type="http", auth="public", website=True, sitemap=True)
+    def sandbox(self, **kwargs):
+        return request.render("insilos_website.insilos_sandbox_page", self._base_values(**kwargs))
+
+    @http.route("/privacy", type="http", auth="public", website=True, sitemap=True)
+    def privacy(self, **kwargs):
+        return request.render("insilos_website.insilos_privacy_page", self._base_values(**kwargs))
+
     @http.route(
         "/request-demo",
         type="http",
@@ -1206,8 +1290,11 @@ class InsilosWebsite(http.Controller):
             "industry": (post.get("industry") or "").strip(),
             "use_case": (post.get("use_case") or "").strip(),
             "company_size": (post.get("company_size") or "").strip(),
+            "core_erp": (post.get("core_erp") or "").strip(),
+            "project_timeline": (post.get("project_timeline") or "").strip(),
             "message": (post.get("message") or "").strip()[:5000],
-            "consent": post.get("consent") == "on",
+            "consent": post.get("consent") == "on" or post.get("consent_decree13") == "on",
+            "consent_decree13": post.get("consent_decree13") == "on" or post.get("consent") == "on",
             "website_url": (post.get("website_url") or "").strip(),
         }
         errors = {}
@@ -1232,8 +1319,12 @@ class InsilosWebsite(http.Controller):
                 errors["use_case"] = "Vui lòng chọn use case."
             if form_data["company_size"] and form_data["company_size"] not in dict(COMPANY_SIZE_SELECTIONS):
                 errors["company_size"] = "Quy mô không hợp lệ."
-            if not form_data["consent"]:
-                errors["consent"] = "Cần xác nhận đồng ý để Insilos có thể liên hệ."
+            if form_data["core_erp"] and form_data["core_erp"] not in dict(CORE_ERP_SELECTIONS):
+                errors["core_erp"] = "Hệ thống Core ERP không hợp lệ."
+            if form_data["project_timeline"] and form_data["project_timeline"] not in dict(PROJECT_TIMELINE_SELECTIONS):
+                errors["project_timeline"] = "Tiến độ dự kiến không hợp lệ."
+            if not form_data["consent_decree13"]:
+                errors["consent"] = "Cần xác nhận đồng ý xử lý dữ liệu theo Nghị định 13/2023/NĐ-CP để Insilos có thể liên hệ."
 
             if not errors:
                 current_website = request.env["website"].get_current_website(fallback=True)
@@ -1248,8 +1339,11 @@ class InsilosWebsite(http.Controller):
                         "industry": form_data["industry"],
                         "use_case": form_data["use_case"],
                         "company_size": form_data["company_size"] or False,
+                        "core_erp": form_data["core_erp"] or False,
+                        "project_timeline": form_data["project_timeline"] or False,
                         "message": form_data["message"],
                         "consent": True,
+                        "consent_decree13": True,
                         "website_id": website_id,
                         "source_url": (request.httprequest.referrer or "/request-demo")[:1024],
                         "language_code": request.env.lang or "",
@@ -1268,6 +1362,8 @@ class InsilosWebsite(http.Controller):
                 industry_selections=INDUSTRY_SELECTIONS,
                 use_case_selections=USE_CASE_SELECTIONS,
                 company_size_selections=COMPANY_SIZE_SELECTIONS,
+                core_erp_selections=CORE_ERP_SELECTIONS,
+                project_timeline_selections=PROJECT_TIMELINE_SELECTIONS,
             ),
         )
 
@@ -1332,6 +1428,11 @@ class InsilosWebsite(http.Controller):
             except Exception:
                 pass
         return response
+
+    @http.route(["/interactive-3d"], type="http", auth="public", website=True, sitemap=True)
+    def interactive_3d(self, **kwargs):
+        values = self._base_values()
+        return request.render("insilos_website.insilos_interactive_3d_page", values)
 
     @http.route("/insilos/lead-submit", type="http", auth="public", methods=["POST"], website=True, csrf=True)
     def lead_submit(self, **post):
