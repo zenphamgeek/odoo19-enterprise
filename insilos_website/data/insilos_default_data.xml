@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        Insilos Default Branding Data
+        Applied on every fresh install / upgrade of insilos_website.
+        Ensures company info, website metadata, and contact details
+        are pre-filled with Insilos brand identity.
+    -->
+
+    <!-- =========================================================
+         1. Company — res.company (id=1)
+         ========================================================= -->
+    <record id="base.main_company" model="res.company">
+        <field name="name">Insilos</field>
+        <field name="phone">+84 944 311 811</field>
+        <field name="email">contact@insilos.com</field>
+        <field name="website">https://insilos.com</field>
+        <field name="street">Quận 1</field>
+        <field name="city">Ho Chi Minh City</field>
+        <field name="country_id" ref="base.vn"/>
+    </record>
+
+    <!-- =========================================================
+         2. Company Partner — res.partner (mirrors company)
+         ========================================================= -->
+    <record id="base.main_partner" model="res.partner">
+        <field name="name">Insilos</field>
+        <field name="phone">+84 944 311 811</field>
+        <field name="email">contact@insilos.com</field>
+        <field name="website">https://insilos.com</field>
+        <field name="street">Quận 1</field>
+        <field name="city">Ho Chi Minh City</field>
+        <field name="country_id" ref="base.vn"/>
+        <field name="comment">Nền tảng AI Vận Hành Thông Minh cho Công Nghiệp</field>
+    </record>
+
+    <!-- =========================================================
+         3. Website record — name, domain, meta, SEO
+         ========================================================= -->
+    <record id="website.default_website" model="website">
+        <field name="name">Insilos</field>
+        <field name="domain">https://insilos.com</field>
+        <field name="custom_code_head"><![CDATA[<!-- Insilos SEO & OG Meta -->
+<meta name="description" content="Insilos - Nền tảng AI Vận Hành Thông Minh cho Công Nghiệp. Triển khai Digital Twins, AI Agents và tự động hóa quy trình sản xuất trong 4 tuần."/>
+<meta name="keywords" content="Industrial AI, Digital Twins, Smart Manufacturing, Operational Intelligence, AI Agent, Insilos"/>
+<meta property="og:site_name" content="Insilos"/>
+<meta property="og:title" content="Insilos — Intelligent Operations Platform"/>
+<meta property="og:description" content="Triển khai Digital Twins, AI Agents và tự động hóa quy trình sản xuất trong 4 tuần."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:site" content="@insilosai"/>
+<link rel="canonical" href="https://insilos.com"/>]]></field>
+        <field name="robots_txt">User-agent: *
+Disallow: /web
+Disallow: /odoo
+Disallow: /web/dataset
+Allow: /web/image
+Allow: /web/content
+Sitemap: https://insilos.com/sitemap.xml</field>
+    </record>
+
+</odoo>

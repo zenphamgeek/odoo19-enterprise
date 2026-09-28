@@ -10,6 +10,7 @@
     "data": [
         "security/security.xml",
         "security/ir.model.access.csv",
+        "data/insilos_default_data.xml",
         "views/demo_request_views.xml",
         "views/website_templates.xml",
         "views/home.xml",
