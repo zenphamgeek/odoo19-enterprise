@@ -1288,7 +1288,7 @@ function initInsilosInteractive() {
         max_eta_minutes=<span class="token-number">60</span>
     )
     
-    <span class="token-comment"># Auto-generate ERP Work Order &amp; Reserved Spares in SAP/Odoo on-prem</span>
+    <span class="token-comment"># Auto-generate ERP Work Order &amp; Reserved Spares in SAP/Insilos Core on-prem</span>
     work_order = ERPConnector.<span class="token-function">create_maintenance_order</span>(
         asset_id=alert_event[<span class="token-string">"asset_id"</span>],
         technician_id=assigned_tech.id,
