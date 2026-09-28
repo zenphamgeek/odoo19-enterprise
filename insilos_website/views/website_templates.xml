@@ -7,10 +7,15 @@
         </svg>
     </template>
 
-    <!-- Optimize Core Web Vitals: Eliminate unused Material Symbols font preload -->
-    <!-- Insilos uses Phosphor SVG icons, not Material Symbols — suppress the font preload entirely -->
+    <!-- Optimize Core Web Vitals: Suppress broken font preloads -->
+    <!-- 1. Material Symbols: not used (Insilos uses Phosphor SVG icons) -->
+    <!-- 2. odoo_ui_icons: CF has stale 0-byte cache for bundled URL; font -->
+    <!--    loads correctly via @font-face override in insilos.scss using static path -->
     <template id="insilos_icons_fonts_preload" name="Insilos Icons Fonts Preload Optimizer" inherit_id="web.frontend_layout" priority="25">
         <xpath expr="//t[@t-call-assets='web.material_symbols_outlined']" position="replace">
+            <t t-if="False"/>
+        </xpath>
+        <xpath expr="//t[@t-call-assets='web.odoo_ui_icons']" position="replace">
             <t t-if="False"/>
         </xpath>
     </template>
@@ -188,7 +193,7 @@
                             "name": "Insilos có hỗ trợ triển khai hoàn toàn Offline (Air-Gapped) không?",
                             "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "Có. Insilos hỗ trợ triển khai 100% On-Premises và Air-Gapped độc lập, đáp ứng nghiêm ngặt các quy chuẩn an toàn lưới điện EVN, quân sự và ngân hàng Nhà nước, không gửi bất kỳ byte dữ liệu nào ra Internet."
+                                "text": "Có. Insilos hỗ trợ triển khai 100% On-Premises và Air-Gapped độc lập, đáp ứng nghiêm ngặt các quy chuẩn an toàn lưới điện quốc gia, an ninh thông tin và ngân hàng Nhà nước, không gửi bất kỳ byte dữ liệu nào ra Internet."
                             }
                         },
                         {
@@ -596,7 +601,7 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="ins-metric-cell p-2 rounded-3 text-center">
-                                                <div class="ins-metric-val fw-bold text-orange ins-sol-m3-val">Genco 3</div>
+                                                <div class="ins-metric-val fw-bold text-orange ins-sol-m3-val">IEC 61850</div>
                                                 <div class="ins-metric-lbl text-secondary x-small ins-sol-m3-lbl">Verified Proof</div>
                                             </div>
                                         </div>
@@ -626,13 +631,13 @@
                             <div class="d-flex flex-column gap-2">
                                 <!-- Ind 1: Logistics & Ports -->
                                 <a href="/industries/logistics" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3 is-active"
-                                   data-badge="WCO SAFE · Cát Lái Port"
+                                   data-badge="WCO SAFE · Seaport"
                                    data-title="Logistics &amp; Cảng Biển"
                                    data-icon="ph-anchor"
                                    data-m1-val="-88%" data-m1-lbl="Phí Lưu Bãi Container"
                                    data-m2-val="99.8%" data-m2-lbl="Độ Chính Xác STP"
                                    data-m3-val="VAS 200/133" data-m3-lbl="Chuẩn Đối Soát Thuế"
-                                   data-desc="Triệt tiêu 88% phí lưu bãi container (DEM/DET), tự động hóa bóc tách lệnh giao hàng và đối soát 3 chiều WCO SAFE tại Cát Lái."
+                                   data-desc="Triệt tiêu 88% phí lưu bãi container (DEM/DET), tự động hóa bóc tách lệnh giao hàng và đối soát 3 chiều chuẩn WCO SAFE cảng biển quốc tế."
                                    data-href="/industries/logistics">
                                     <div class="ins-menu-icon-box flex-shrink-0">
                                         <svg class="ph-duotone ph-anchor ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-anchor"/></svg>
@@ -642,7 +647,7 @@
                                             <span class="ins-menu-item-title fw-semibold text-white">Logistics &amp; Cảng Biển</span>
                                             <span class="badge ins-badge-subtle">WCO SAFE</span>
                                         </div>
-                                        <p class="ins-menu-item-desc text-secondary small mb-0">-88% phí lưu bãi container, đối soát WCO SAFE Cát Lái</p>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">-88% phí lưu bãi container, đối soát WCO SAFE cảng biển</p>
                                     </div>
                                 </a>
                                 <!-- Ind 2: Pharma & GxP -->
@@ -668,7 +673,7 @@
                                 </a>
                                 <!-- Ind 3: Energy & Utilities -->
                                 <a href="/industries/energy" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
-                                   data-badge="IEC 61850 · EVN Genco 3"
+                                   data-badge="IEC 61850 · Power Grid"
                                    data-title="Năng Lượng &amp; Lưới Điện Thông Minh"
                                    data-icon="ph-lightning"
                                    data-m1-val="99.8%" data-m1-lbl="Độ Tin Cậy Lưới Điện"
@@ -682,9 +687,9 @@
                                     <div class="flex-grow-1 min-w-0">
                                         <div class="d-flex align-items-center justify-content-between mb-1">
                                             <span class="ins-menu-item-title fw-semibold text-white">Năng Lượng &amp; Utilities</span>
-                                            <span class="badge ins-badge-subtle">EVN Genco 3</span>
+                                            <span class="badge ins-badge-subtle">Power Grid</span>
                                         </div>
-                                        <p class="ins-menu-item-desc text-secondary small mb-0">Giám sát rung động tuabin EVN Genco 3, chuẩn hóa IEC 61850</p>
+                                        <p class="ins-menu-item-desc text-secondary small mb-0">Giám sát rung động tuabin phát điện, chuẩn hóa IEC 61850</p>
                                     </div>
                                 </a>
                                 <!-- Ind 4: Field Service & Machinery -->
@@ -741,7 +746,7 @@
                                         <span class="small text-secondary ins-cluster-name">Tài Chính &amp; Ngân Hàng</span>
                                     </a>
                                     <a href="/industries#telecom" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
-                                       data-badge="MobiFone 50M CDR"
+                                       data-badge="Telco 50M CDR"
                                        data-title="Công Nghệ &amp; Viễn Thông"
                                        data-icon="ph-broadcast"
                                        data-m1-val="50M+" data-m1-lbl="CDR Xử Lý / 4h"
@@ -787,7 +792,7 @@
                                 </div>
                                 <div class="col-6 d-flex flex-column gap-1">
                                     <a href="/industries/logistics" class="ins-menu-link-item ins-cluster-interactive p-1 rounded-2 text-decoration-none"
-                                       data-badge="WCO SAFE · Cát Lái"
+                                       data-badge="WCO SAFE · Seaport"
                                        data-title="Logistics &amp; Cảng Biển Quốc Tế"
                                        data-icon="ph-anchor"
                                        data-m1-val="-88%" data-m1-lbl="Phí Lưu Bãi (DEM)"
@@ -858,10 +863,10 @@
                                         <div class="ins-card-pictogram ins-pictogram-lg ins-ind-preview-icon">
                                             <svg class="ph-duotone ph-anchor ph-xl"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-anchor"/></svg>
                                         </div>
-                                        <span class="badge ins-pill-badge small fw-semibold ins-ind-preview-badge">WCO SAFE · Cát Lái Port</span>
+                                        <span class="badge ins-pill-badge small fw-semibold ins-ind-preview-badge">WCO SAFE · Seaport</span>
                                     </div>
                                     <h4 class="text-white fw-bold mb-2 ins-ind-preview-title">Logistics &amp; Cảng Biển</h4>
-                                    <p class="text-secondary small mb-3 ins-ind-preview-desc">Triệt tiêu 88% phí lưu bãi container (DEM/DET), tự động hóa bóc tách lệnh giao hàng và đối soát 3 chiều WCO SAFE tại Cát Lái.</p>
+                                    <p class="text-secondary small mb-3 ins-ind-preview-desc">Triệt tiêu 88% phí lưu bãi container (DEM/DET), tự động hóa bóc tách lệnh giao hàng và đối soát 3 chiều chuẩn WCO SAFE cảng biển quốc tế.</p>
                                     <!-- Live SLA Metrics Grid -->
                                     <div class="row g-2 mb-3">
                                         <div class="col-4">
@@ -971,7 +976,7 @@
                                     <div class="text-uppercase text-mint x-small fw-semibold mt-2">Flagship Verticals</div>
                                     <a href="/industries/logistics" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
                                         <span>Logistics &amp; Cảng Biển</span>
-                                        <span class="badge ins-badge-subtle">Cát Lái</span>
+                                        <span class="badge ins-badge-subtle">Seaport</span>
                                     </a>
                                     <a href="/industries/pharma" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
                                         <span>Dược Phẩm &amp; GxP</span>
@@ -979,7 +984,7 @@
                                     </a>
                                     <a href="/industries/energy" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
                                         <span>Năng Lượng &amp; Utilities</span>
-                                        <span class="badge ins-badge-subtle">EVN Genco 3</span>
+                                        <span class="badge ins-badge-subtle">Power Grid</span>
                                     </a>
                                     <a href="/industries/fsm" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
                                         <span>Dịch Vụ Hiện Trường</span>
