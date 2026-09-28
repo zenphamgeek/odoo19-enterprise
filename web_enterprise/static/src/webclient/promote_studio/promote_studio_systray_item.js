@@ -4,7 +4,7 @@ import { user } from "@web/core/user";
 import { PromoteStudioDialog } from "@web_enterprise/webclient/promote_studio/promote_studio_dialog";
 import { _t } from "@web/core/l10n/translation";
 
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 
 export class PromoteStudioSystrayItem extends Component {
     static template = "web_enterprise.SystrayItem";

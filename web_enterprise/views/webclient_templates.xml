@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<data>
     <template id="webclient_login" inherit_id="web.login_layout">
         <xpath expr="//t[@t-call='web.frontend_layout']/*[1]" position="before">
             <t t-set="body_classname" t-value="'o_home_menu_background'"/>
@@ -12,4 +12,4 @@
             <meta name="theme-color" t-att-content="'#070B14' if color_scheme == 'dark' else '#FF8000'"/>
         </xpath>
     </template>
-</odoo>
+</data>

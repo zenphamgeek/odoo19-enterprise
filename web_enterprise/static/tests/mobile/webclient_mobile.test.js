@@ -1,6 +1,6 @@
-import { describe, expect, test } from "@odoo/hoot";
-import { click, queryFirst } from "@odoo/hoot-dom";
-import { animationFrame, mockMatchMedia } from "@odoo/hoot-mock";
+import { describe, expect, test } from "@insilos/hoot";
+import { click, queryFirst } from "@insilos/hoot-dom";
+import { animationFrame, mockMatchMedia } from "@insilos/hoot-mock";
 import {
     defineActions,
     defineModels,

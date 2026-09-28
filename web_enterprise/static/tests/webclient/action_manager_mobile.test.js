@@ -1,6 +1,6 @@
-import { describe, expect, test } from "@odoo/hoot";
-import { click } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+import { describe, expect, test } from "@insilos/hoot";
+import { click } from "@insilos/hoot-dom";
+import { animationFrame } from "@insilos/hoot-mock";
 import {
     defineActions,
     defineModels,
@@ -97,7 +97,7 @@ test("uses a mobile-friendly view by default (if possible)", async () => {
 test("lazy load mobile-friendly view", async () => {
     stepAllNetworkCalls();
 
-    redirect("/odoo/action-1/new");
+    redirect("/insilos/action-1/new");
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
 

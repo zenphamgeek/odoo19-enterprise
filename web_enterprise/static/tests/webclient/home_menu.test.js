@@ -1,6 +1,6 @@
-import { describe, expect, test } from "@odoo/hoot";
-import { click, drag, keyDown, pointerDown, press, queryFirst } from "@odoo/hoot-dom";
-import { advanceTime, animationFrame, mockDate, mockTouch } from "@odoo/hoot-mock";
+import { describe, expect, test } from "@insilos/hoot";
+import { click, drag, keyDown, pointerDown, press, queryFirst } from "@insilos/hoot-dom";
+import { advanceTime, animationFrame, mockDate, mockTouch } from "@insilos/hoot-mock";
 import {
     defineMenus,
     getService,
@@ -30,7 +30,7 @@ const getDefaultHomeMenuProps = () => {
     const apps = [
         {
             actionID: 121,
-            href: "/odoo/action-121",
+            href: "/insilos/action-121",
             appID: 1,
             id: 1,
             label: "Discuss",
@@ -40,7 +40,7 @@ const getDefaultHomeMenuProps = () => {
         },
         {
             actionID: 122,
-            href: "/odoo/action-122",
+            href: "/insilos/action-122",
             appID: 2,
             id: 2,
             label: "Calendar",
@@ -50,7 +50,7 @@ const getDefaultHomeMenuProps = () => {
         },
         {
             actionID: 123,
-            href: "/odoo/contacts",
+            href: "/insilos/contacts",
             appID: 3,
             id: 3,
             label: "Contacts",
@@ -124,7 +124,7 @@ test("Navigation (only apps, only one line)", async () => {
         apps: new Array(3).fill().map((x, i) => {
             return {
                 actionID: 120 + i,
-                href: "/odoo/act" + (120 + i),
+                href: "/insilos/act" + (120 + i),
                 appID: i + 1,
                 id: i + 1,
                 label: `0${i}`,
@@ -160,7 +160,7 @@ test("Navigation (only apps, two lines, one incomplete)", async () => {
         apps: new Array(8).fill().map((x, i) => {
             return {
                 actionID: 121,
-                href: "/odoo/action-121",
+                href: "/insilos/action-121",
                 appID: i + 1,
                 id: i + 1,
                 label: `0${i}`,
@@ -235,7 +235,7 @@ test("Reorder apps in home menu using drag and drop", async () => {
     for (let i = 0; i < 8; i++) {
         apps.push({
             actionID: 121,
-            href: "/odoo/action-121",
+            href: "/insilos/action-121",
             appID: i + 1,
             id: i + 1,
             label: `0${i}`,
@@ -358,7 +358,7 @@ test("home keynav not triggering when navigating a dropdown", async () => {
     for (let i = 0; i < 8; i++) {
         apps.push({
             actionID: 121,
-            href: "/odoo/action-121",
+            href: "/insilos/action-121",
             appID: i + 1,
             id: i + 1,
             label: `0${i}`,

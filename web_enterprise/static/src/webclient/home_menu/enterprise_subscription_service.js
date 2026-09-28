@@ -9,7 +9,7 @@ import { cookie } from "@web/core/browser/cookie";
 import { rpc } from "@web/core/network/rpc";
 
 const { DateTime } = luxon;
-import { Component, reactive, xml } from "@odoo/owl";
+import { Component, reactive, xml } from "@insilos/owl";
 
 function daysUntil(datetime) {
     const duration = datetime.diff(DateTime.utc(), "days");

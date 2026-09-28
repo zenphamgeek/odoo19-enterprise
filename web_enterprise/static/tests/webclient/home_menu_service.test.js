@@ -1,8 +1,8 @@
-import { expect, test } from "@odoo/hoot";
+import { expect, test } from "@insilos/hoot";
 import { defineMenus, mountWebClient, onRpc } from "@web/../tests/web_test_helpers";
 import { IndexedDB } from "@web/core/utils/indexed_db";
-import { Deferred } from "@odoo/hoot-mock";
-import { animationFrame } from "@odoo/hoot-dom";
+import { Deferred } from "@insilos/hoot-mock";
+import { animationFrame } from "@insilos/hoot-dom";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 
 test("use stored menus, and update on load_menus return", async () => {

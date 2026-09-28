@@ -1,6 +1,6 @@
-from odoo import api, Command
-from odoo.tests.common import HttpCase, tagged
-from odoo.addons.base.tests.common import new_test_user
+from insilos import api, Command
+from insilos.tests.common import HttpCase, tagged
+from insilos.addons.base.tests.common import new_test_user
 
 
 class LoadMenusTests(HttpCase):
@@ -93,18 +93,18 @@ class TestWebEnterprise(HttpCase):
         invoice_action = self.env.ref("account.action_move_out_invoice_type", raise_if_not_found=False)
         if not invoice_action:
             return
-        self.start_tour("/odoo/action-account.action_move_out_invoice_type", "web_enterprise.test_studio_list_upsell", login="admin")
+        self.start_tour("/insilos/action-account.action_move_out_invoice_type", "web_enterprise.test_studio_list_upsell", login="admin")
 
     def test_studio_no_list_upsell_if_blacklisted(self):
         knowledge_action = self.env.ref("knowledge.knowledge_article_action", raise_if_not_found=False)
         if not knowledge_action:
             return
-        self.start_tour("/odoo/action-knowledge.knowledge_article_action", "web_enterprise.test_studio_no_list_upsell_if_blacklisted", login="admin")
+        self.start_tour("/insilos/action-knowledge.knowledge_article_action", "web_enterprise.test_studio_no_list_upsell_if_blacklisted", login="admin")
 
     def test_color_scheme_default(self):
         bob = new_test_user(self.env, "bob", groups="base.group_user", email="bob@test.com")
         self.authenticate(bob.login, bob.login)
-        response = self.url_open("/odoo")
+        response = self.url_open("/insilos")
         self.assertEqual(response.cookies.get("color_scheme"), "light")
 
     def test_color_scheme_dark(self):
@@ -113,5 +113,5 @@ class TestWebEnterprise(HttpCase):
             'color_scheme': 'dark',
         })
         self.authenticate(bob.login, bob.login)
-        response = self.url_open("/odoo")
+        response = self.url_open("/insilos")
         self.assertEqual(response.cookies.get("color_scheme"), "dark")

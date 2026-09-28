@@ -16,6 +16,24 @@
             <ExpirationPanel t-if="subscription.warningType and !subscription.isWarningHidden and subscription.daysLeft &lt;= 30 and subscription.daysLeft > 0"/>
             <div t-if="displayedApps.length" role="listbox" class="o_apps row user-select-none mt-5 mx-0">
                 <div t-foreach="displayedApps" t-as="app" t-key="app.id" class="col-3 col-md-2 o_draggable mb-3 px-0">
+                    <t t-set="sapAcronym" t-value="
+                        (app.xmlid and app.xmlid.startsWith('contacts')) ? 'BP' :
+                        ((app.xmlid and (app.xmlid.startsWith('sale') or app.xmlid.startsWith('crm') or app.xmlid.startsWith('point_of_sale'))) ? 'SD' :
+                        ((app.xmlid and app.xmlid.startsWith('purchase')) ? 'MM' :
+                        ((app.xmlid and app.xmlid.startsWith('stock')) ? 'MM-IM' :
+                        ((app.xmlid and (app.xmlid.startsWith('account') or app.xmlid.startsWith('account_accountant'))) ? 'FI/CO' :
+                        ((app.xmlid and (app.xmlid.startsWith('mrp') or app.xmlid.startsWith('quality') or app.xmlid.startsWith('maintenance'))) ? 'PP' :
+                        ((app.xmlid and app.xmlid.startsWith('spreadsheet')) ? 'BI' : ''))))))
+                    "/>
+                    <t t-set="sapDomain" t-value="
+                        sapAcronym === 'BP' ? 'Master Data' :
+                        (sapAcronym === 'SD' ? 'Sales &amp; Distribution' :
+                        (sapAcronym === 'MM' ? 'Materials Management' :
+                        (sapAcronym === 'MM-IM' ? 'Logistics &amp; Inventory' :
+                        (sapAcronym === 'FI/CO' ? 'Financials &amp; Controlling' :
+                        (sapAcronym === 'PP' ? 'Production Planning' :
+                        (sapAcronym === 'BI' ? 'Executive Analytics' : ''))))))
+                    "/>
                     <a t-att-id="'result_app_' + app_index"
                         role="option"
                         t-att-aria-selected="state.focusedIndex === app_index ? 'true' : 'false'"
@@ -25,15 +43,19 @@
                         t-att-href="app.href"
                         t-on-click.prevent="() => this._onAppClick(app)"
                         >
-                        <img t-if="app.webIconData" class="o_app_icon rounded-3"
-                            t-attf-src="{{app.webIconData}}"
-                        />
-                        <div t-else="" class="o_app_icon position-relative d-flex justify-content-center align-items-center p-2 rounded-3 ratio ratio-1x1"
-                            t-attf-style="background-color: {{app.webIcon.backgroundColor}};"
-                        >
-                            <i t-attf-class="{{app.webIcon.iconClass}} position-relative w-auto h-auto" t-attf-style="color: {{app.webIcon.color}};"/>
+                        <span t-if="sapAcronym" class="o_sap_pill badge" t-attf-class="o_sap_pill_{{sapAcronym ? sapAcronym.toLowerCase().replace('/', '_') : ''}}" t-out="sapAcronym"/>
+                        <div class="o_app_icon_wrapper position-relative d-flex justify-content-center align-items-center">
+                            <img t-if="app.webIconData" class="o_app_icon rounded-3"
+                                t-attf-src="{{app.webIconData}}"
+                            />
+                            <div t-else="" class="o_app_icon position-relative d-flex justify-content-center align-items-center p-2 rounded-3 ratio ratio-1x1"
+                                t-attf-style="background-color: {{app.webIcon.backgroundColor}};"
+                            >
+                                <i t-attf-class="{{app.webIcon.iconClass}} position-relative w-auto h-auto" t-attf-style="color: {{app.webIcon.color}};"/>
+                            </div>
                         </div>
                         <div class="o_caption w-100 text-center text-truncate mt-2" t-out="app.label or app.name"/>
+                        <div t-if="sapDomain" class="o_sap_domain_tag text-truncate text-center w-100" t-out="sapDomain"/>
                     </a>
                 </div>
             </div>

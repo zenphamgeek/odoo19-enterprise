@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { mockDate } from "@odoo/hoot-mock";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
+import { mockDate } from "@insilos/hoot-mock";
 import {
     defineActions,
     defineMenus,

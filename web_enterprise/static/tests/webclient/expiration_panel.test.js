@@ -1,6 +1,6 @@
-import { expect, test } from "@odoo/hoot";
-import { click, queryFirst, edit } from "@odoo/hoot-dom";
-import { animationFrame, mockDate, runAllTimers } from "@odoo/hoot-mock";
+import { expect, test } from "@insilos/hoot";
+import { click, queryFirst, edit } from "@insilos/hoot-dom";
+import { animationFrame, mockDate, runAllTimers } from "@insilos/hoot-mock";
 import {
     getService,
     mockService,
@@ -74,7 +74,7 @@ test("Expiration Panel one app installed, buy subscription", async () => {
     await click(".oe_instance_buy");
     await animationFrame();
 
-    expect(browser.location.href).toBe("https://www.odoo.com/odoo-enterprise/upgrade?num_users=7");
+    expect(browser.location.href).toBe("https://insilos.com/pricing?num_users=7");
 });
 
 test("Expiration Panel one app installed, try several times to register subscription", async () => {
@@ -183,7 +183,7 @@ test("Expiration Panel one app installed, try several times to register subscrip
     await animationFrame();
 
     expect(queryFirst(".oe_instance_register")).toHaveText(
-        "Something went wrong while registering your database. You can try again or contact Odoo Support."
+        "Something went wrong while registering your database. You can try again or contact Support."
     );
     expect(".database_expiration_panel").toHaveClass("alert-danger", {
         message: "Color should be red",
@@ -303,7 +303,7 @@ test("Expiration Panel one app installed, subscription already linked", async ()
     });
 
     expect(".oe_instance_register.oe_database_already_linked").toHaveText(
-        `Your subscription is already linked to a database.\nSend an email to the subscription owner to confirm the change, enter a new code or buy a subscription.\n\nUnable to send the instructions by email, please contact the Odoo Support\nError reason: By design`
+        `Your subscription is already linked to a database.\nSend an email to the subscription owner to confirm the change, enter a new code or buy a subscription.\n\nUnable to send the instructions by email, please contact Support\nError reason: By design`
     );
 
     expect.verifySteps([
@@ -523,7 +523,7 @@ test("One app installed, upgrade database", async () => {
 
     expect.verifySteps(["get_param", "search_count"]);
     expect(browser.location.href).toBe(
-        "https://www.odoo.com/odoo-enterprise/upsell?num_users=13&contract=ABC"
+        "https://insilos.com/pricing?num_users=13&contract=ABC"
     );
 });
 
@@ -590,7 +590,7 @@ test("One app installed, navigation to renewal page", async () => {
     await click(".oe_instance_renew");
     await animationFrame();
 
-    expect(browser.location.href).toBe("https://www.odoo.com/odoo-enterprise/renew?contract=ABC");
+    expect(browser.location.href).toBe("https://insilos.com/pricing?contract=ABC");
 
     expect.verifySteps(["get_param"]);
 });

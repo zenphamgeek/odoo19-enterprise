@@ -1,7 +1,7 @@
 import { NavBar } from "@web/webclient/navbar/navbar";
 import { useService, useBus } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
-import { useEffect, signal, onMounted } from "@odoo/owl";
+import { useEffect, signal, onMounted } from "@insilos/owl";
 
 export class EnterpriseNavBar extends NavBar {
     static template = "web_enterprise.EnterpriseNavBar";

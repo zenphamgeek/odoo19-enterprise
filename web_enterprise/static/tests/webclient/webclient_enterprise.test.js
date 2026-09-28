@@ -1,7 +1,7 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, keyDown, queryAll, queryFirst } from "@odoo/hoot-dom";
-import { animationFrame, Deferred, mockMatchMedia } from "@odoo/hoot-mock";
-import { Component, onMounted, xml } from "@odoo/owl";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
+import { click, keyDown, queryAll, queryFirst } from "@insilos/hoot-dom";
+import { animationFrame, Deferred, mockMatchMedia } from "@insilos/hoot-mock";
+import { Component, onMounted, xml } from "@insilos/owl";
 import {
     clearRegistry,
     contains,
@@ -496,7 +496,7 @@ test("url state is well handled when going in and out of the HomeMenu", async ()
     patchWithCleanup(browser.location, {
         origin: "http://example.com",
     });
-    redirect("/odoo");
+    redirect("/insilos");
     await mountWebClient({ WebClient: WebClientEnterprise });
     expect(router.current).toEqual({
         action: "menu",
@@ -521,7 +521,7 @@ test("url state is well handled when going in and out of the HomeMenu", async ()
         ],
     });
     expect(browser.history.length).toBe(2);
-    expect(browser.location.href).toBe("http://example.com/odoo/action-1002");
+    expect(browser.location.href).toBe("http://example.com/insilos/action-1002");
 
     await goToHomeMenu();
     await animationFrame();
@@ -545,7 +545,7 @@ test("url state is well handled when going in and out of the HomeMenu", async ()
         }
     );
     expect(browser.history.length).toBe(3);
-    expect(browser.location.href).toBe("http://example.com/odoo", {
+    expect(browser.location.href).toBe("http://example.com/insilos", {
         message:
             "despite the actionStack being in the router state, the url shouldn't have any path",
     });
@@ -565,7 +565,7 @@ test("url state is well handled when going in and out of the HomeMenu", async ()
         { message: "clicking another app creates a new action stack (ie empties the breadcrumb)" }
     );
     expect(browser.history.length).toBe(4);
-    expect(browser.location.href).toBe("http://example.com/odoo/action-1001");
+    expect(browser.location.href).toBe("http://example.com/insilos/action-1001");
 
     browser.history.back();
     await animationFrame();
@@ -588,7 +588,7 @@ test("url state is well handled when going in and out of the HomeMenu", async ()
     expect(browser.history.length).toBe(4, {
         message: "the previous history entry still exists (available with forward button)",
     });
-    expect(browser.location.href).toBe("http://example.com/odoo");
+    expect(browser.location.href).toBe("http://example.com/insilos");
 
     await contains(".o_menu_toggle").click();
     await animationFrame();
@@ -602,7 +602,7 @@ test("url state is well handled when going in and out of the HomeMenu", async ()
         ],
     });
     expect(browser.history.length).toBe(4);
-    expect(browser.location.href).toBe("http://example.com/odoo/action-1002");
+    expect(browser.location.href).toBe("http://example.com/insilos/action-1002");
 });
 
 test.tags("desktop");
@@ -660,7 +660,7 @@ test("go back to home menu using browser back button", async () => {
 
 test("initial action crashes", async () => {
     expect.errors(1);
-    redirect("/odoo/action-__test__client__action__?menu_id=1");
+    redirect("/insilos/action-__test__client__action__?menu_id=1");
     const ClientAction = registry.category("actions").get("__test__client__action__");
     class Override extends ClientAction {
         setup() {
@@ -760,7 +760,7 @@ test("Navigate to an application from the HomeMenu should generate only one push
     await goToHomeMenu();
     await animationFrame();
     expect(".o_home_menu").toHaveCount(1);
-    expect.verifySteps(["/odoo", "/odoo/action-1002", "/odoo", "/odoo/action-1001", "/odoo"]);
+    expect.verifySteps(["/insilos", "/insilos/action-1002", "/insilos", "/insilos/action-1001", "/insilos"]);
 });
 
 test("display studio icon when studio module is not installed", async () => {
@@ -770,7 +770,7 @@ test("display studio icon when studio module is not installed", async () => {
     await contains(".o_menu_systray .o_nav_entry").click();
     expect(`.modal-content`).toHaveCount(1);
     expect(queryFirst(".modal-header").textContent).toBe(
-        "Odoo Studio - Add new fields to any view"
+        "Studio - Add new fields to any view"
     );
 });
 

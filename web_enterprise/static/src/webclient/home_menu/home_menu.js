@@ -13,7 +13,7 @@ import {
     onWillUpdateProps,
     proxy,
     signal,
-} from "@odoo/owl";
+} from "@insilos/owl";
 
 class FooterComponent extends Component {
     static template = "web_enterprise.HomeMenu.CommandPalette.Footer";
@@ -83,7 +83,7 @@ export class HomeMenu extends Component {
      * @param {string} props.apps[].parents
      * @param {(boolean|string|Object)} props.apps[].webIcon either:
      *      - boolean: false (no webIcon)
-     *      - string: path to Odoo icon file
+     *      - string: path to Insilos icon file
      *      - Object: customized icon (background, class and color)
      * @param {string} [props.apps[].webIconData]
      * @param {string} props.apps[].xmlid

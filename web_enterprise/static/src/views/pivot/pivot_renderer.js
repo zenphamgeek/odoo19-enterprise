@@ -1,7 +1,7 @@
 import { patch } from "@web/core/utils/patch";
 import { PivotRenderer } from "@web/views/pivot/pivot_renderer";
 
-import { useEffect } from "@odoo/owl";
+import { useEffect } from "@insilos/owl";
 
 patch(PivotRenderer.prototype, {
     setup() {

@@ -1,7 +1,7 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.web.controllers import home as web_home
-from odoo.http import request, route
+from insilos.addons.web.controllers import home as web_home
+from insilos.http import request, route
 
 
 class Home(web_home.Home):

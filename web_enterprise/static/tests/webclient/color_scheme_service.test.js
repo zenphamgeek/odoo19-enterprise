@@ -1,4 +1,4 @@
-import { expect, test } from "@odoo/hoot";
+import { expect, test } from "@insilos/hoot";
 import {
     defineModels,
     fields,
@@ -6,7 +6,7 @@ import {
     webModels,
     mountWithCleanup,
 } from "@web/../tests/web_test_helpers";
-import { mockMatchMedia } from "@odoo/hoot-mock";
+import { mockMatchMedia } from "@insilos/hoot-mock";
 import { _makeUser, user } from "@web/core/user";
 import { cookie } from "@web/core/browser/cookie";
 import { browser } from "@web/core/browser/browser";

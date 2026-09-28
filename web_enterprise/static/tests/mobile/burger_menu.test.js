@@ -1,9 +1,9 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, queryAll } from "@odoo/hoot-dom";
-import { animationFrame, runAllTimers } from "@odoo/hoot-mock";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
+import { click, queryAll } from "@insilos/hoot-dom";
+import { animationFrame, runAllTimers } from "@insilos/hoot-mock";
 import { defineActions, defineMenus, mountWithCleanup } from "@web/../tests/web_test_helpers";
 
-import { Component, onMounted, xml } from "@odoo/owl";
+import { Component, onMounted, xml } from "@insilos/owl";
 
 import { registry } from "@web/core/registry";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
