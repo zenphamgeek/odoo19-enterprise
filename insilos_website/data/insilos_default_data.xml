@@ -3,8 +3,10 @@
     <!--
         Insilos Default Branding Data
         Applied on every fresh install / upgrade of insilos_website.
-        Ensures company info, website metadata, and contact details
-        are pre-filled with Insilos brand identity.
+        Ensures company info and contact details are pre-filled
+        with Insilos brand identity.
+        NOTE: Website metadata (custom_code_head, robots_txt) is applied
+        separately via post_init_hook to avoid external-ID issues.
     -->
 
     <!-- =========================================================
@@ -32,31 +34,6 @@
         <field name="city">Ho Chi Minh City</field>
         <field name="country_id" ref="base.vn"/>
         <field name="comment">Nền tảng AI Vận Hành Thông Minh cho Công Nghiệp</field>
-    </record>
-
-    <!-- =========================================================
-         3. Website record — name, domain, meta, SEO
-         ========================================================= -->
-    <record id="website.default_website" model="website">
-        <field name="name">Insilos</field>
-        <field name="domain">https://insilos.com</field>
-        <field name="custom_code_head"><![CDATA[<!-- Insilos SEO & OG Meta -->
-<meta name="description" content="Insilos - Nền tảng AI Vận Hành Thông Minh cho Công Nghiệp. Triển khai Digital Twins, AI Agents và tự động hóa quy trình sản xuất trong 4 tuần."/>
-<meta name="keywords" content="Industrial AI, Digital Twins, Smart Manufacturing, Operational Intelligence, AI Agent, Insilos"/>
-<meta property="og:site_name" content="Insilos"/>
-<meta property="og:title" content="Insilos — Intelligent Operations Platform"/>
-<meta property="og:description" content="Triển khai Digital Twins, AI Agents và tự động hóa quy trình sản xuất trong 4 tuần."/>
-<meta property="og:type" content="website"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:site" content="@insilosai"/>
-<link rel="canonical" href="https://insilos.com"/>]]></field>
-        <field name="robots_txt">User-agent: *
-Disallow: /web
-Disallow: /odoo
-Disallow: /web/dataset
-Allow: /web/image
-Allow: /web/content
-Sitemap: https://insilos.com/sitemap.xml</field>
     </record>
 
 </odoo>
