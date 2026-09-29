@@ -1,4 +1,4 @@
-import { Component, useState, xml } from "@odoo/owl";
+import { Component, useState, xml } from "@insilos/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { ModelFieldSelector } from "@web/core/model_field_selector/model_field_selector";
 import { useDialogConfirmation } from "@web_studio/client_action/utils";

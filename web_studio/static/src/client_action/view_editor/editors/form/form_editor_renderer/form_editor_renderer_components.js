@@ -11,7 +11,7 @@ import {
 import { _t } from "@web/core/l10n/translation";
 import { useOwnedDialogs } from "@web/core/utils/hooks";
 
-import { Component, useState, useRef } from "@odoo/owl";
+import { Component, useState, useRef } from "@insilos/owl";
 import { AddButtonAction } from "../../../interactive_editor/action_button/action_button";
 
 /**

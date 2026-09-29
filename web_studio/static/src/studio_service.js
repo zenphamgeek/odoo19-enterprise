@@ -2,7 +2,7 @@ import { registry } from "@web/core/registry";
 import { resetViewCompilerCache } from "@web/views/view_compiler";
 import { _t } from "@web/core/l10n/translation";
 
-import { EventBus, onWillUnmount, useState } from "@odoo/owl";
+import { EventBus, onWillUnmount, useState } from "@insilos/owl";
 import { useService } from "@web/core/utils/hooks";
 import { router, routerBus } from "@web/core/browser/router";
 import { Cache } from "@web/core/utils/cache";
@@ -331,7 +331,7 @@ export const studioService = {
             }
             rpcBus.trigger("CLEAR-CACHES");
             IrModelInfo.invalidate();
-            // since odoo/odoo@2e891626b071a04d1a5dd3d3c40cc24a12dcb1fb
+            // since commit 2e891626b071a04d1a5dd3d3c40cc24a12dcb1fb
             // template cache key is composed with the name of the compiler
             // which, in studio are *usually* different.
             resetViewCompilerCache();
@@ -363,7 +363,7 @@ export const studioService = {
                     }
                 }
                 const currentRouterState = { ...router.current };
-                stateLoaded = await loadState({ actionStack });
+                stateLoaded = await loadState({ ...lastAction, actionStack });
                 // We tried our best to leave studio with the current action's light-side sibling
                 // but did not work. Revert the change in the url, and let the code fallback
                 if (!stateLoaded) {

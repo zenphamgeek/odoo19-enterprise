@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 import { SelectMenu } from "@web/core/select_menu/select_menu";
 import { getFontAwesomeIcons } from "@web_studio/utils";
 

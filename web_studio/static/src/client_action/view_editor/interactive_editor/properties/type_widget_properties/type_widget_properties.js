@@ -1,4 +1,4 @@
-import { Component, onWillStart, onWillUpdateProps, useState } from "@odoo/owl";
+import { Component, onWillStart, onWillUpdateProps, useState } from "@insilos/owl";
 import { rpc } from "@web/core/network/rpc";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
@@ -267,19 +267,24 @@ export class TypeWidgetProperties extends Component {
             // The display of this property must be computed from the value of the corresponding super option
             const dependentOption = COMPUTED_DISPLAY_OPTIONS[property.name];
             const superOption = this.getOptionObj(dependentOption.superOption);
-            const superValue = this.getPropertyFromOptions(superOption, props).value;
-            if (dependentOption.getReadonly) {
-                property.isReadonly = dependentOption.getReadonly(superValue);
-            }
-            if (dependentOption.getValue) {
-                property.value = dependentOption.getValue(superValue);
-                if (property.isReadonly) {
-                    // The property value cannot be edited, return the computed value directly
-                    return property;
+            if (superOption) {
+                const superProp = superOption.isAttribute
+                    ? this.getPropertyFromAttributes(superOption, props)
+                    : this.getPropertyFromOptions(superOption, props);
+                const superValue = superProp.value;
+                if (dependentOption.getReadonly) {
+                    property.isReadonly = dependentOption.getReadonly(superValue);
                 }
-            }
-            if (dependentOption.getInvisible) {
-                property.isInvisible = dependentOption.getInvisible(superValue);
+                if (dependentOption.getValue) {
+                    property.value = dependentOption.getValue(superValue);
+                    if (property.isReadonly) {
+                        // The property value cannot be edited, return the computed value directly
+                        return property;
+                    }
+                }
+                if (dependentOption.getInvisible) {
+                    property.isInvisible = dependentOption.getInvisible(superValue);
+                }
             }
         }
         value = props.node.attrs.options?.[property.name];

@@ -3,7 +3,7 @@ import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import "@web_enterprise/webclient/promote_studio/promote_studio_systray_item";
 
-import { Component, useRef } from "@odoo/owl";
+import { Component, useRef } from "@insilos/owl";
 
 class StudioSystray extends Component {
     static template = "web_studio.SystrayItem";

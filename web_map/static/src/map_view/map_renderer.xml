@@ -3,11 +3,11 @@
 
     <t t-name="web_map.MapRenderer">
         <t t-if="isSmall">
-            <div class="row g-0 o-sm-pin-list-container" t-att-class="{ 'h-100': expendedPinList }">
+            <div class="row g-0 o-sm-pin-list-container" t-ref="this.rootRef" t-att-class="{ 'h-100': expendedPinList }">
                 <t t-call="{{ subTemplates.PinListContainer }}"/>
             </div>
         </t>
-        <div class="o-map-renderer row g-0" t-att-class="{ 'd-none': expendedPinList }">
+        <div class="o-map-renderer row g-0" t-ref="this.rootRef" t-att-class="{ 'd-none': expendedPinList }">
             <t t-if="!isSmall">
                 <t t-call="{{ subTemplates.PinListContainer }}"/>
             </t>
@@ -86,12 +86,16 @@
     </t>
 
     <t t-name="web_map.MapRenderer.PinList">
-        <t t-tag="props.model.metaData.numbering ? 'ol' : 'ul'"
-           t-att-class="{'o-map-renderer--pin-located': !props.model.metaData.numbering}"
+        <ol t-if="props.model.metaData.numbering"
            class="o-map-renderer--pin-list-details ps-0 pb-0 o-map-renderer--handle"
-           t-ref="pinList">
+           t-ref="this.pinList">
             <t t-call="{{ subTemplates.PinListItems }}" records="records"/>
-        </t>
+        </ol>
+        <ul t-else=""
+           class="o-map-renderer--pin-list-details ps-0 pb-0 o-map-renderer--handle"
+           t-ref="this.pinList">
+            <t t-call="{{ subTemplates.PinListItems }}" records="records"/>
+        </ul>
     </t>
 
     <t t-name="web_map.MapRenderer.PinListItems">
@@ -100,7 +104,7 @@
             <t t-set="longitude" t-value="record.partner and record.partner.partner_longitude"/>
             <li t-att-data-id="record.id" t-if="latitude and longitude" t-on-click.prevent="() => this.centerAndOpenPin(record)" class="cursor-pointer d-flex align-items-center justify-content-between o-map-renderer--pin-located py-1">
                 <span class="text-truncate flex-grow-1"> <t t-if="props.model.metaData.numbering" t-out="record_index + 1 + '.'"/> <t t-out="record.display_name"/> </span>
-                <span class="o_row_handle oi oi-draggable" t-if="this.props.model.canResequence" t-on-click.stop=""/>
+                <span class="o_row_handle oi oi-draggable" data-icon="drag_indicator" t-if="this.props.model.canResequence" t-on-click.stop=""/>
             </li>
         </t>
     </t>

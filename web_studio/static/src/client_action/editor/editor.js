@@ -1,4 +1,4 @@
-import { Component, EventBus, onWillDestroy, useState, useSubEnv, xml } from "@odoo/owl";
+import { Component, EventBus, onWillDestroy, useState, useSubEnv, xml } from "@insilos/owl";
 
 import { registry } from "@web/core/registry";
 import { makeActionManager } from "@web/webclient/actions/action_service";
@@ -34,7 +34,11 @@ const dialogService = {
             const props = { env, Component, componentProps: _props };
             return dialog.add(DialogWithEnv, props, options);
         }
-        return { ...dialog, add: addDialog };
+        return {
+            ...dialog,
+            add: addDialog,
+            closeAll: (...args) => dialog?.closeAll?.(...args),
+        };
     },
 };
 

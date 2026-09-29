@@ -1,10 +1,10 @@
 from lxml import etree
-from odoo import Command
-from odoo.tests import tagged
-from odoo.tests.common import BaseCase, HttpCase
-from odoo.addons.web_studio.controllers.export import StudioExporter
-from odoo.addons.web_studio.wizard.studio_export_wizard import _find_circular_dependencies, FIELDS_TO_EXPORT
-from odoo.addons.http_routing.tests.common import MockRequest
+from insilos import Command
+from insilos.tests import tagged
+from insilos.tests.common import BaseCase, HttpCase
+from insilos.addons.web_studio.controllers.export import StudioExporter
+from insilos.addons.web_studio.wizard.studio_export_wizard import _find_circular_dependencies, FIELDS_TO_EXPORT
+from insilos.addons.http_routing.tests.common import MockRequest
 
 
 class TestExport(HttpCase):
@@ -179,7 +179,7 @@ class TestExport(HttpCase):
 @tagged("post_install", "-at_install")
 class TestExportTours(HttpCase):
     def test_can_export_new_module(self):
-        self.start_tour("/odoo?debug=tests", 'can_export_new_module', login="admin")
+        self.start_tour("/insilos?debug=tests", 'can_export_new_module', login="admin")
         # check the export result made by the tour
         wizard = self.env['studio.export.wizard'].search([], limit=1, order='id desc')
         data, files, circular_dependencies = wizard.get_export_info()

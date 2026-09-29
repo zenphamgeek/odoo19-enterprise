@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";

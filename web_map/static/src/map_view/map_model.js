@@ -109,6 +109,7 @@ export class MapModel extends Model {
         const resequenceProm = resequence({
             records: this.data.records,
             resModel: this.metaData.resModel,
+            movedIds: [movedId],
             movedId,
             targetId,
             fieldName,

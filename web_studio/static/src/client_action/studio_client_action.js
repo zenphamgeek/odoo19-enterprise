@@ -9,7 +9,7 @@ import { Editor } from "./editor/editor";
 import { StudioNavbar } from "./navbar/navbar";
 import { StudioHomeMenu } from "./studio_home_menu/studio_home_menu";
 
-import { Component, onWillStart, onMounted, onPatched, onWillUnmount } from "@odoo/owl";
+import { Component, onWillStart, onMounted, onPatched, onWillUnmount } from "@insilos/owl";
 
 export class StudioClientAction extends Component {
     static template = "web_studio.StudioClientAction";

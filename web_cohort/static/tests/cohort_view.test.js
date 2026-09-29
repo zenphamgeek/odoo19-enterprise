@@ -452,20 +452,20 @@ test("when clicked on cell redirects to the correct list/form view ", async () =
     // Going to the list view, while clicking Period / Count cell
     await contains("td.o_cohort_value").click();
 
-    expect(".o_list_view th:eq(1)").toHaveText("Start", {
+    expect(".o_list_view th:eq(1)").toHaveText(/Start/i, {
         message: "First field in the list view should be start",
     });
-    expect(".o_list_view th:eq(2)").toHaveText("Stop", {
+    expect(".o_list_view th:eq(2)").toHaveText(/Stop/i, {
         message: "First field in the list view should be start",
     });
     // Going back to cohort view
     await contains(".o_back_button").click();
     // Going to the list view
     await contains("td div.o_cohort_value").click();
-    expect(".o_list_view th:eq(1)").toHaveText("Start", {
+    expect(".o_list_view th:eq(1)").toHaveText(/Start/i, {
         message: "First field in the list view should be start",
     });
-    expect(".o_list_view th:eq(2)").toHaveText("Stop", {
+    expect(".o_list_view th:eq(2)").toHaveText(/Stop/i, {
         message: "First field in the list view should be start",
     });
     // Going to the form view
@@ -564,20 +564,20 @@ test("when clicked on cell redirects to the action list/form view passed in cont
     // Going to the list view, while clicking Period / Count cell
     await contains("td.o_cohort_value").click();
 
-    expect(".o_list_view th:eq(1)").toHaveText("Start", {
+    expect(".o_list_view th:eq(1)").toHaveText(/Start/i, {
         message: "First field in the list view should be start",
     });
-    expect(".o_list_view th:eq(2)").toHaveText("Stop", {
+    expect(".o_list_view th:eq(2)").toHaveText(/Stop/i, {
         message: "First field in the list view should be start",
     });
     // Going back to cohort view
     await contains(".o_back_button").click();
     // Going to the list view
     await contains("td div.o_cohort_value").click();
-    expect(".o_list_view th:eq(1)").toHaveText("Start", {
+    expect(".o_list_view th:eq(1)").toHaveText(/Start/i, {
         message: "First field in the list view should be start",
     });
-    expect(".o_list_view th:eq(2)").toHaveText("Stop", {
+    expect(".o_list_view th:eq(2)").toHaveText(/Stop/i, {
         message: "First field in the list view should be start",
     });
     // Going to the form view

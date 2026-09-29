@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
     'name': "Studio",
     'summary': "Create and customize your Insilos apps",
@@ -48,7 +48,7 @@ Note: Only the admin user is allowed to make those customizations.
         'security/studio_security.xml',
     ],
     'application': True,
-    'author': 'Odoo S.A.',
+    'author': 'Insilos Enterprise Platform',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

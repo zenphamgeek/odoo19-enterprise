@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "@odoo/owl";
+import { useRef, useEffect, useState, onMounted } from "@insilos/owl";
 import { formView } from "@web/views/form/form_view";
 import * as formEditorRendererComponents from "@web_studio/client_action/view_editor/editors/form/form_editor_renderer/form_editor_renderer_components";
 
@@ -33,11 +33,17 @@ export class FormEditorRenderer extends formView.Renderer {
     };
     setup() {
         super.setup();
-        const rootRef = useRef("compiled_view_root");
-        this.rootRef = rootRef;
+        const getRootEl = () => (typeof this.rootRef === "function" ? this.rootRef() : (this.rootRef?.el || this.rootRef));
         const viewEditorModel = this.env.viewEditorModel;
         this.viewEditorModel = useState(viewEditorModel);
         this.mailComponents.Chatter = ChatterContainer;
+
+        onMounted(() => {
+            const rootEl = getRootEl();
+            if (rootEl) {
+                rootEl.classList.add("o_web_studio_form_view_editor");
+            }
+        });
 
         // Deals with invisible modifier by reacting to config.studioShowVisible.
         useEffect(
@@ -62,7 +68,7 @@ export class FormEditorRenderer extends formView.Renderer {
                         });
                 }
             },
-            () => [rootRef.el, viewEditorModel.showInvisible]
+            () => [getRootEl(), viewEditorModel.showInvisible]
         );
 
         // do this in another way?
@@ -75,7 +81,7 @@ export class FormEditorRenderer extends formView.Renderer {
                     }
                 }
             },
-            () => [rootRef.el]
+            () => [getRootEl()]
         );
     }
 }

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models
-from odoo.fields import Domain
+from insilos import api, models
+from insilos.fields import Domain
 
 
 class IrActionsReport(models.Model):

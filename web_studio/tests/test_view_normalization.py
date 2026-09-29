@@ -1,15 +1,15 @@
 import random
 import textwrap
 try:
-    from odoo.http import _request_stack
+    from insilos.http import _request_stack
 except ImportError:
     class _MockStack:
         def push(self, *a): pass
         def pop(self, *a): pass
     _request_stack = _MockStack()
-from odoo.tests.common import TransactionCase, tagged
-from odoo.tools import DotDict
-from odoo.addons.web_studio.controllers.main import WebStudioController
+from insilos.tests.common import TransactionCase, tagged
+from insilos.tools import DotDict
+from insilos.addons.web_studio.controllers.main import WebStudioController
 
 
 @tagged('web_studio_normalization')
@@ -66,7 +66,7 @@ class TestViewNormalization(TransactionCase):
                                 <field name="zip" placeholder="ZIP" class="o_address_zip" readonly="type == 'contact' and parent_id"/>
                                 <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" readonly="type == 'contact' and parent_id"/>
                             </div>
-                            <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                            <field name="website" widget="url" placeholder="e.g. www.insilos.com"/>
                         </group>
                         <group>
                             <field name="function" placeholder="e.g. Sales Director" invisible="is_company"/>

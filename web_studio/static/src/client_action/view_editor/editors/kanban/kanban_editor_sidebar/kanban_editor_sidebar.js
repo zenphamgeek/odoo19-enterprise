@@ -1,4 +1,4 @@
-import { Component, onWillStart, useState } from "@odoo/owl";
+import { Component, onWillStart, useState } from "@insilos/owl";
 import { _t } from "@web/core/l10n/translation";
 import { ViewStructures } from "@web_studio/client_action/view_editor/editors/components/view_structures";
 import { InteractiveEditorSidebar } from "@web_studio/client_action/view_editor/interactive_editor/interactive_editor_sidebar";

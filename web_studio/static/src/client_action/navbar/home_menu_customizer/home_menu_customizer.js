@@ -6,7 +6,7 @@ import { browser } from "@web/core/browser/browser";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { FileInput } from "@web/core/file_input/file_input";
 
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 
 export class HomeMenuCustomizer extends Component {
     static template = "web_studio.HomeMenuCustomizer";
@@ -29,7 +29,7 @@ export class HomeMenuCustomizer extends Component {
         });
     }
     /**
-     * Export all customizations done by Studio in a zip file containing Odoo
+     * Export all customizations done by Studio in a zip file containing Insilos
      * modules.
      */
     exportCusto() {

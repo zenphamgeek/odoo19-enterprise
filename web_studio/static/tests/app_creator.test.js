@@ -1,7 +1,7 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { describe, expect, globals, test } from "@odoo/hoot";
-import { edit, press, setInputFiles, waitFor } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+import { describe, expect, globals, test } from "@insilos/hoot";
+import { edit, press, setInputFiles, waitFor } from "@insilos/hoot-dom";
+import { animationFrame } from "@insilos/hoot-mock";
 import {
     contains,
     mockService,

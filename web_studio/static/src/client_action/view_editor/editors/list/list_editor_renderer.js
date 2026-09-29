@@ -1,6 +1,6 @@
 import { listView } from "@web/views/list/list_view";
 import { useThrottleForAnimation } from "@web/core/utils/timing";
-import { reactive, useEffect, useState } from "@odoo/owl";
+import { reactive, useEffect, useState, onMounted } from "@insilos/owl";
 import { SelectionHeaderButtons } from "../../interactive_editor/action_button/action_button";
 
 const colSelectedClass = "o-web-studio-editor--element-clicked";
@@ -45,11 +45,20 @@ export class ListEditorRenderer extends listView.Renderer {
         super.setup();
         this.onTableHover = useThrottleForAnimation(this.onTableHover);
 
+        const getRootEl = () => (typeof this.rootRef === "function" ? this.rootRef() : (this.rootRef?.el || this.rootRef));
+        onMounted(() => {
+            const rootEl = getRootEl();
+            if (rootEl) {
+                rootEl.classList.add("o_web_studio_list_view_editor");
+            }
+        });
         useEffect(
             (rootEl) => {
-                rootEl.classList.add("o_web_studio_list_view_editor");
+                if (rootEl) {
+                    rootEl.classList.add("o_web_studio_list_view_editor");
+                }
             },
-            () => [this.rootRef.el]
+            () => [getRootEl()]
         );
     }
 

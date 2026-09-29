@@ -2,7 +2,7 @@
  * Insilos Enterprise 3D Interactive WebGL Suite
  * Sovereign 3D Digital Twin, 3D Logistics Radar & 3D Factory ROI Configurator
  *
- * Grounded in Live Odoo 20 ERP Database (odoo20_dev):
+ * Grounded in Live Insilos ERP Database (odoo20_dev):
  * - Product: EQ-VLIFT-2500E (BOM-VLIFT-2500E-V1)
  * - Sub-BOM: SF-CHASSIS-25E (BOM-CHASSIS-25E-V1, Lot LOT-HP-SS400-2026-01)
  * - Workcenters: WC-CUT-01 (Trumpf Laser), WC-WELD-01 (Yaskawa Robot), WC-ASM-01
@@ -16,7 +16,13 @@
     "use strict";
 
     var root = typeof window !== "undefined" ? window : (typeof self !== "undefined" ? self : globalThis);
-    var THREE = root.THREE;
+    function getThree() {
+        return (typeof window !== "undefined" && window.THREE) ||
+               (typeof globalThis !== "undefined" && globalThis.THREE) ||
+               (typeof root !== "undefined" && root.THREE) ||
+               (typeof window !== "undefined" && window.InsilosThreeBundle && window.InsilosThreeBundle.THREE ? window.InsilosThreeBundle.THREE : undefined);
+    }
+    var THREE = getThree();
 
     // -------------------------------------------------------------------------
     // Utilities & Safety Checks
@@ -154,6 +160,12 @@
             this.container = typeof container === "string" ? document.querySelector(container) : container;
             if (!this.container) {
                 console.warn("[Insilos3D] DigitalTwin: container not found");
+                return;
+            }
+
+            if (!THREE) THREE = getThree();
+            if (!THREE || !isWebGLAvailable()) {
+                console.warn("[Insilos3D] DigitalTwin: THREE or WebGL not available, aborting init");
                 return;
             }
 
@@ -869,7 +881,7 @@
                     </div>
                     <div class="mt-2 text-end">
                         <a href="${hs.actionUrl}" target="_blank" class="btn btn-sm btn-primary rounded-pill d-inline-flex align-items-center gap-1">
-                            <span>Mở Odoo Live</span>
+                            <span>Mở Insilos ERP Live</span>
                             <svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor">
                                 <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"></path>
                             </svg>
@@ -1075,6 +1087,12 @@
         constructor(container, options = {}) {
             this.container = typeof container === "string" ? document.querySelector(container) : container;
             if (!this.container) return;
+
+            if (!THREE) THREE = getThree();
+            if (!THREE || !isWebGLAvailable()) {
+                console.warn("[Insilos3D] LogisticsRadar: THREE or WebGL not available, aborting init");
+                return;
+            }
 
             this.options = Object.assign({
                 progress: 0.35, // 0.0 to 1.0 along the 32.4km spline
@@ -1577,6 +1595,12 @@
             this.container = typeof container === "string" ? document.querySelector(container) : container;
             if (!this.container) return;
 
+            if (!THREE) THREE = getThree();
+            if (!THREE || !isWebGLAvailable()) {
+                console.warn("[Insilos3D] FactoryConfigurator: THREE or WebGL not available, aborting init");
+                return;
+            }
+
             this.options = Object.assign({
                 numVehicles: 40, // 10 to 200
                 numCnc: 6,       // 1 to 20
@@ -1980,6 +2004,23 @@
 
     function autoInit() {
         if (!isBrowser() || !isWebGLAvailable()) return instances;
+
+        if (!THREE) THREE = getThree();
+        if (!THREE) {
+            var attempts = 0;
+            var pollInterval = setInterval(function () {
+                attempts++;
+                THREE = getThree();
+                if (THREE) {
+                    clearInterval(pollInterval);
+                    autoInit();
+                } else if (attempts >= 60) {
+                    clearInterval(pollInterval);
+                    console.warn("[Insilos3D] Three.js runtime not detected after 3s.");
+                }
+            }, 50);
+            return instances;
+        }
 
         // Auto-mount Digital Twin
         const dtEl = document.querySelector("#insilosDigitalTwinViewport, .ins-3d-digital-twin-canvas, [data-insilos-3d='digital-twin']");

@@ -1,6 +1,6 @@
-import { beforeEach, describe, destroy, expect, test } from "@odoo/hoot";
-import { queryAllTexts, queryOne } from "@odoo/hoot-dom";
-import { animationFrame, Deferred, mockTimeZone } from "@odoo/hoot-mock";
+import { beforeEach, describe, destroy, expect, test } from "@insilos/hoot";
+import { drag, queryAllTexts, queryOne, waitFor, waitForNone } from "@insilos/hoot-dom";
+import { animationFrame, Deferred, mockTimeZone } from "@insilos/hoot-mock";
 import {
     contains,
     defineModels,
@@ -1834,6 +1834,7 @@ describe("map_view_desktop", () => {
         expect(controller.model.data.records).toHaveLength(1, {
             message: "There should be 1 record",
         });
+        await waitForNone(".leaflet-overlay-pane path");
         expect(".leaflet-overlay-pane path").toHaveCount(0);
         expect("div.leaflet-marker-icon").toHaveCount(1, {
             message: "There should be 1 marker on the map",
@@ -1845,6 +1846,8 @@ describe("map_view_desktop", () => {
         expect(controller.model.data.records).toHaveLength(0, {
             message: "There should be no record",
         });
+        await waitForNone(".leaflet-overlay-pane path");
+        await waitForNone("div.leaflet-marker-icon");
         expect(".leaflet-overlay-pane path").toHaveCount(0);
         expect("div.leaflet-marker-icon").toHaveCount(0, {
             message: "There should be 0 marker on the map",

@@ -1,5 +1,6 @@
-import { useState, onMounted, onPatched } from "@odoo/owl";
+import { useState, onMounted, onPatched, useProps, t } from "@insilos/owl";
 import { formView } from "@web/views/form/form_view";
+import { formControllerProps } from "@web/views/form/form_controller";
 import { useModelConfigFetchInvisible } from "@web_studio/client_action/view_editor/editors/utils";
 
 /**
@@ -11,15 +12,36 @@ import { useModelConfigFetchInvisible } from "@web_studio/client_action/view_edi
  */
 function useExternalParentInModel(model, parentRecord) {
     model._createRoot = (config, data) => {
-        return new model.constructor.Record(model, config, data, { parentRecord });
+        const root = new model.constructor.Record(model, config, data, { parentRecord });
+        root._parentRecord = parentRecord;
+        return root;
     };
+    if (model.root) {
+        model.root._parentRecord = parentRecord;
+        if (!("parent" in model.root.evalContext)) {
+            Object.defineProperty(model.root.evalContext, "parent", {
+                get() {
+                    return parentRecord.evalContext;
+                },
+                configurable: true,
+                enumerable: true,
+            });
+            Object.defineProperty(model.root.evalContextWithVirtualIds, "parent", {
+                get() {
+                    return parentRecord.evalContextWithVirtualIds;
+                },
+                configurable: true,
+                enumerable: true,
+            });
+        }
+    }
 }
 
 export class FormEditorController extends formView.Controller {
-    static props = {
-        ...formView.Controller.props,
-        parentRecord: { type: [Object, { value: null }], optional: true },
-    };
+    props = useProps({
+        ...formControllerProps,
+        parentRecord: t.any().optional(),
+    });
 
     setup() {
         super.setup();

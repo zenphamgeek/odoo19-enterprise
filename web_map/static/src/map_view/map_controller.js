@@ -10,7 +10,7 @@ import { SearchBar } from "@web/search/search_bar/search_bar";
 import { useSearchBarToggler } from "@web/search/search_bar/search_bar_toggler";
 import { CogMenu } from "@web/search/cog_menu/cog_menu";
 
-import { Component, onWillUnmount, onWillStart } from "@odoo/owl";
+import { Component, onWillUnmount, onWillStart } from "@insilos/owl";
 
 export class MapController extends Component {
     static template = "web_map.MapView";

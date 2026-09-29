@@ -1,7 +1,7 @@
 import { sortBy } from "@web/core/utils/arrays";
 import { registry } from "@web/core/registry";
 import { SIDEBAR_SAFE_FIELDS } from "@web_studio/client_action/view_editor/editors/sidebar_safe_fields";
-import { useComponent, useEffect, useRef } from "@odoo/owl";
+import { useComponent, useEffect, useRef } from "@insilos/owl";
 
 export const hookPositionTolerance = 50;
 
@@ -183,7 +183,7 @@ export function fieldsToChoices(fields, availableTypes, filterCallback) {
         values = values.filter((f) => availableTypes.includes(f.type));
     }
     return values.map((field) => ({
-        label: odoo.debug ? `${field.string} (${field.name})` : field.string || field.name,
+        label: insilos.debug ? `${field.string} (${field.name})` : field.string || field.name,
         value: field.name,
     }));
 }

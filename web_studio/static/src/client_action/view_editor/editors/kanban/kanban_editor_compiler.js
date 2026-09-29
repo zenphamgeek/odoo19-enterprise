@@ -20,7 +20,10 @@ const interestingSelector = [
  * @returns {string}
  */
 function getElementXpath(el) {
-    const xpath = el.getAttribute("studioXpath");
+    if (!el || !el.getAttribute) {
+        return '""';
+    }
+    const xpath = el.getAttribute("studioXpath") || "";
     if (isComponentNode(el)) {
         return xpath;
     }
@@ -53,6 +56,9 @@ export class KanbanEditorCompiler extends KanbanCompiler {
      * @returns {Element} The wrapped node
      */
     addStudioHook(node, type, template, { structures, wrap = false } = {}) {
+        if (!node || !node.insertAdjacentElement) {
+            return;
+        }
         const xpath = getElementXpath(node);
         if (wrap) {
             const studioHookBefore = createElement("StudioHook", {
@@ -116,7 +122,7 @@ export class KanbanEditorCompiler extends KanbanCompiler {
         const asideNode = node.querySelector("aside");
         const ribbonNode = node.querySelector("widget[name='web_ribbon']");
         const compiledCard = super.compileNode(node, params);
-        const compiledMain = compiledCard.querySelector("main");
+        const compiledMain = compiledCard.querySelector("main, .o_record_main") || compiledCard;
         if (!ribbonNode) {
             this.addStudioHook(compiledMain, "ribbon", "kanbanRibbon");
         }

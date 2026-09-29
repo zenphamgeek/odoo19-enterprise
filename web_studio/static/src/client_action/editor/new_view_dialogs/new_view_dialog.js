@@ -3,7 +3,7 @@ import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
-import { onWillStart } from "@odoo/owl";
+import { onWillStart } from "@insilos/owl";
 
 export class NewViewDialog extends ConfirmationDialog {
     static template = "web_studio.NewViewDialog";

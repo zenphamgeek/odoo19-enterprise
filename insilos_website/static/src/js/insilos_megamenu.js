@@ -343,7 +343,7 @@
         initMegaMenu();
     }
 
-    // Re-init on Odoo navigation / OWL events
+    // Re-init on Insilos ERP navigation / OWL events
     window.addEventListener('load', initMegaMenu);
     document.addEventListener('visibilitychange', () => {
         if (!document.hidden) initMegaMenu();

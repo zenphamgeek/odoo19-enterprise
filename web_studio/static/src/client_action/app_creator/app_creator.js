@@ -1,4 +1,4 @@
-import { Component, reactive, useExternalListener, useState } from "@odoo/owl";
+import { Component, reactive, useExternalListener, useState } from "@insilos/owl";
 import { rpc } from "@web/core/network/rpc";
 import { user } from "@web/core/user";
 import { useAutofocus, useService } from "@web/core/utils/hooks";

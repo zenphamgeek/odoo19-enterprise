@@ -1,7 +1,7 @@
 import { Chatter } from "@mail/chatter/web_portal_project/chatter";
 import "@mail/chatter/web/chatter_patch";
 
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 
 export class ChatterContainer extends Chatter {
     static template = "web_studio.ChatterContainer";

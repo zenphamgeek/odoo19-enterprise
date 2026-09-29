@@ -1,4 +1,4 @@
-// Satisfy 'three' AMD module dependency for Odoo asset loader
+// Satisfy 'three' AMD module dependency for Insilos ERP asset loader
 if (typeof odoo !== "undefined" && typeof odoo.define === "function") {
     try {
         odoo.define("three", [], function () {
@@ -2494,7 +2494,7 @@ function initIdpWorkbench() {
         if (jsonBlock) {
             const formattedJson = JSON.stringify(data.json, null, 2);
             jsonBlock.innerHTML = `
-                <div class="text-secondary small mb-1">// ERP REST API PAYLOAD (Odoo 20 Model: ${data.json.model})</div>
+                <div class="text-secondary small mb-1">// ERP REST API PAYLOAD (Insilos ERP Model: ${data.json.model})</div>
                 <pre class="text-mint mb-0 font-monospace small">${formattedJson}</pre>
             `;
         }
@@ -2563,14 +2563,14 @@ function initIdpWorkbench() {
             const recordId = Math.floor(10000 + Math.random() * 90000);
 
             const pushSpan = pushBtn.querySelector('span');
-            if (pushSpan) pushSpan.textContent = `✓ Đã Đẩy Vào Odoo 20 (ID: #${recordId})`;
+            if (pushSpan) pushSpan.textContent = `✓ Đã Đẩy Vào Insilos ERP (ID: #${recordId})`;
 
             const toast = document.getElementById('ins-idp-sync-toast');
             if (toast) {
                 toast.classList.remove('d-none');
                 toast.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center text-mint">
-                        <span><span class="ins-live-ping ins-live-ping--emerald me-1"/> ODOO 20 LIVE SYNC // STATUS 200 OK</span>
+                        <span><span class="ins-live-ping ins-live-ping--emerald me-1"/> INSILOS ERP LIVE SYNC // STATUS 200 OK</span>
                         <span class="badge bg-mint text-black font-monospace">RECORD #${recordId}</span>
                     </div>
                     <div class="text-secondary small mt-1 font-monospace">

@@ -6,10 +6,10 @@
         <div class="row">
             <div t-foreach="options" t-as="option" t-key="option" class="col-6">
                 <div class="form-check my-3 o_web_studio_model_configurator_option">
-                    <input type="checkbox" class="form-check-input" t-att-id="option" t-att-name="option" t-model="option_value.value"/>
+                    <input type="checkbox" class="form-check-input" t-att-id="option" t-att-name="option" t-att-checked="this.options[option].value" t-on-change="(ev) => this.options[option].value = ev.target.checked"/>
                     <label t-att-for="option" class="form-check-label ps-2 border-start">
-                        <strong t-esc="option_value.label"/>
-                        <div class="form-text text-muted" t-esc="option_value.help"/>
+                        <strong t-esc="this.options[option].label"/>
+                        <div class="form-text text-muted" t-esc="this.options[option].help"/>
                     </label>
                 </div>
             </div>

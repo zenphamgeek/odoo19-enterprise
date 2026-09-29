@@ -32,7 +32,7 @@
 
 <t t-name="web_studio.FilterConfiguration">
     <label class="mb-4">Filter label
-        <input type="text" id="domain_label" class="o_input" t-model="state.filterLabel" />
+        <input type="text" id="domain_label" class="o_input" t-att-value="state.filterLabel" t-on-input="(ev) => state.filterLabel = ev.target.value" />
     </label>
     <DomainSelector t-props="domainSelectorProps" />
 </t>

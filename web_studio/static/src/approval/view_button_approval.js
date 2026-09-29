@@ -1,4 +1,4 @@
-import { useSubEnv } from "@odoo/owl";
+import { useSubEnv } from "@insilos/owl";
 import { rpcBus } from "@web/core/network/rpc";
 import { UPDATE_METHODS } from "@web/core/orm_plugin";
 import { registry } from "@web/core/registry";

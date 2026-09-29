@@ -1,6 +1,6 @@
-import { describe, expect, test } from "@odoo/hoot";
-import { edit, press } from "@odoo/hoot-dom";
-import { animationFrame, Deferred } from "@odoo/hoot-mock";
+import { describe, expect, test } from "@insilos/hoot";
+import { edit, press } from "@insilos/hoot-dom";
+import { animationFrame, Deferred } from "@insilos/hoot-mock";
 import { contains, mountWithCleanup, onRpc } from "@web/../tests/web_test_helpers";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 import { defineStudioEnvironment } from "./studio_tests_context";

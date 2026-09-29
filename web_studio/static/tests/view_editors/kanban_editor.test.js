@@ -1,7 +1,7 @@
-import { describe, expect, test } from "@odoo/hoot";
-import { queryAllTexts } from "@odoo/hoot-dom";
-import { animationFrame, Deferred } from "@odoo/hoot-mock";
-import { onMounted } from "@odoo/owl";
+import { describe, expect, test } from "@insilos/hoot";
+import { queryAllTexts } from "@insilos/hoot-dom";
+import { animationFrame, Deferred } from "@insilos/hoot-mock";
+import { onMounted } from "@insilos/owl";
 import {
     contains,
     defineModels,

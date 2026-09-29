@@ -6,7 +6,7 @@ import {
     onWillUnmount,
     reactive,
     useState,
-} from "@odoo/owl";
+} from "@insilos/owl";
 import { _t } from "@web/core/l10n/translation";
 import { omit } from "@web/core/utils/objects";
 import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
@@ -176,7 +176,7 @@ export class ReportEditorWysiwyg extends Component {
         editor.attachTo(editable);
         // disable the qweb's plugin class: its style is too complex and confusing
         // in the case of reports
-        editable.classList.remove("odoo-editor-qweb");
+        editable.classList.remove("insilos-editor-qweb");
         return editor;
     }
 
@@ -189,7 +189,7 @@ export class ReportEditorWysiwyg extends Component {
         const doc = iframeRef.el.contentDocument;
         doc.body.classList.remove("container");
 
-        if (odoo.debug) {
+        if (insilos.debug) {
             ["t-esc", "t-out", "t-field"].forEach((tAtt) => {
                 doc.querySelectorAll(`*[${tAtt}]`).forEach((e) => {
                     // Save the previous title to set it back before saving the report
@@ -229,7 +229,7 @@ export class ReportEditorWysiwyg extends Component {
         const editable = this.editor.getElContent();
 
         // Clean technical title
-        if (odoo.debug) {
+        if (insilos.debug) {
             editable.querySelectorAll("*[t-field],*[t-out],*[t-esc]").forEach((e) => {
                 if (e.hasAttribute("data-oe-title")) {
                     e.setAttribute("title", e.getAttribute("data-oe-title"));

@@ -5,7 +5,8 @@ import { omit } from "@web/core/utils/objects";
 
 import { ListEditorRenderer, columnsStyling } from "./list_editor_renderer";
 
-import { Component, xml } from "@odoo/owl";
+import { Component, xml, useProps, t } from "@insilos/owl";
+import { listControllerProps } from "@web/views/list/list_controller";
 import { ListEditorSidebar } from "./list_editor_sidebar/list_editor_sidebar";
 import { getStudioNoFetchFields, useModelConfigFetchInvisible } from "../utils";
 
@@ -77,10 +78,10 @@ function useParentedStaticList(model, parentRecord, resIds) {
 }
 
 class ListEditorController extends listView.Controller {
-    static props = {
-        ...listView.Controller.props,
-        parentRecord: { type: Object, optional: true },
-    };
+    props = useProps({
+        ...listControllerProps,
+        parentRecord: t.any().optional(),
+    });
     setup() {
         super.setup();
         useModelConfigFetchInvisible(this.model);
@@ -91,7 +92,10 @@ class ListEditorController extends listView.Controller {
 }
 
 class ControllerShadow extends Component {
-    static props = { ...ListEditorController.props };
+    props = useProps({
+        ...listControllerProps,
+        parentRecord: t.any().optional(),
+    });
     static template = xml`<t t-component="Component" t-props="componentProps" />`;
     get Component() {
         return ListEditorController;

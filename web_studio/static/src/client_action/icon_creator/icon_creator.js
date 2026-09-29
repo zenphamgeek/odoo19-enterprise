@@ -6,7 +6,7 @@ import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { FontAwesomeIconSelector } from "@web_studio/client_action/components/font_awesome_icon_selector/font_awesome_icon_selector";
 
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 import { resizeBlobImg } from "@web/core/utils/files";
 
 export const DEFAULT_ICON = {

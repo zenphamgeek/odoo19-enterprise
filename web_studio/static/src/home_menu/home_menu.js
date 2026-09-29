@@ -1,7 +1,7 @@
 import { HomeMenu } from "@web_enterprise/webclient/home_menu/home_menu";
 import { url } from "@web/core/utils/urls";
 import { patch } from "@web/core/utils/patch";
-import { onMounted, onWillUnmount } from "@odoo/owl";
+import { onMounted, onWillUnmount } from "@insilos/owl";
 import { user } from "@web/core/user";
 
 patch(HomeMenu.prototype, {

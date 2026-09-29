@@ -2,22 +2,22 @@ import json
 from psycopg2.extras import Json
 from lxml import etree
 
-from odoo import Command, api
-from odoo.addons.base.models.ir_actions_report import IrActionsReport
-from odoo.addons.web_studio.controllers.main import WebStudioController
-from odoo.addons.web_studio.controllers.report import WebStudioReportController, get_report_view_copy, _get_and_write_studio_view
-from odoo.addons.web.controllers.report import ReportController
+from insilos import Command, api
+from insilos.addons.base.models.ir_actions_report import IrActionsReport
+from insilos.addons.web_studio.controllers.main import WebStudioController
+from insilos.addons.web_studio.controllers.report import WebStudioReportController, get_report_view_copy, _get_and_write_studio_view
+from insilos.addons.web.controllers.report import ReportController
 try:
-    from odoo.http import _request_stack, route
+    from insilos.http import _request_stack, route
 except ImportError:
-    from odoo.http import route
+    from insilos.http import route
     class _MockStack:
         def push(self, *a): pass
         def pop(self, *a): pass
     _request_stack = _MockStack()
-from odoo.tests.common import HttpCase, TransactionCase
-from odoo.tests import tagged
-from odoo.tools import DotDict, mute_logger
+from insilos.tests.common import HttpCase, TransactionCase
+from insilos.tests import tagged
+from insilos.tools import DotDict, mute_logger
 
 parserXML = etree.XMLParser(remove_blank_text=False)
 parserHTML = etree.HTMLParser(remove_blank_text=False)
@@ -303,7 +303,7 @@ class TestReportEditorUIUnit(HttpCase):
 
     @property
     def tour_url(self):
-        return f"/odoo/action-{self.testAction.id}/studio?mode=editor&_tab=reports&_report_id={self.report.id}&menu_id={self.testMenu.id}"
+        return f"/insilos/action-{self.testAction.id}/studio?mode=editor&_tab=reports&_report_id={self.report.id}&menu_id={self.testMenu.id}"
 
     def _clear_routing(self):
         self.env.registry.clear_cache('routing')
@@ -319,7 +319,7 @@ class TestReportEditorUIUnit(HttpCase):
             <t t-name="web_studio.test_report">
                <t t-call="web.html_container">
                  <div>
-                   <p>edited with odoo editor</p>
+                   <p>edited with insilos editor</p>
                  </div>
                  <t t-foreach="docs" t-as="doc">
                    <t t-call="web_studio.test_report_document"/>
@@ -331,7 +331,7 @@ class TestReportEditorUIUnit(HttpCase):
         <data>
            <data>
             <xpath expr="/t[@t-name='web_studio.test_report']//t[@t-call='web.html_container']/div/p/br" position="replace"/>
-             <xpath expr="/t[@t-name='web_studio.test_report']//t[@t-call='web.html_container']/div/p" position="inside">edited with odoo editor</xpath>
+             <xpath expr="/t[@t-name='web_studio.test_report']//t[@t-call='web.html_container']/div/p" position="inside">edited with insilos editor</xpath>
            </data>
         </data>
         """)
@@ -344,14 +344,14 @@ class TestReportEditorUIUnit(HttpCase):
                <div>
                  <p t-field="doc.name"/>
                </div>
-               <p>edited with odoo editor 2</p>
+               <p>edited with insilos editor 2</p>
              </t>
         """)
         self.assertXMLEqual(studio_arch, """
         <data>
            <data>
              <xpath expr="/t[@t-name='web_studio.test_report_document']/p/br" position="replace"/>
-             <xpath expr="/t[@t-name='web_studio.test_report_document']/p" position="inside">edited with odoo editor 2</xpath>
+             <xpath expr="/t[@t-name='web_studio.test_report_document']/p" position="inside">edited with insilos editor 2</xpath>
            </data>
         </data>
         """)
@@ -440,7 +440,7 @@ class TestReportEditorUIUnit(HttpCase):
             <t t-name="web_studio.test_report">
                <t t-call="web.html_container">
                  <div>
-                   <p>edited with odoo editor</p>
+                   <p>edited with insilos editor</p>
                  </div>
                  <t t-foreach="docs" t-as="doc">
                    <t t-call="web_studio.test_report_document"/>
@@ -491,7 +491,7 @@ class TestReportEditorUIUnit(HttpCase):
         main_view_arch = self.main_view.arch
         document_view_arch = self.main_view_document.arch
 
-        with mute_logger("odoo.http"):
+        with mute_logger("insilos.http"):
             self.start_tour(self.tour_url, "web_studio.test_basic_report_edition_error", login="admin")
 
         self.assertTrue(error)
@@ -523,7 +523,7 @@ class TestReportEditorUIUnit(HttpCase):
         main_view_arch = self.main_view.arch
         document_view_arch = self.main_view_document.arch
 
-        with mute_logger("odoo.http"):
+        with mute_logger("insilos.http"):
             self.start_tour(self.tour_url, "web_studio.test_basic_report_edition_xml_error", login="admin")
 
         self.assertTrue(error)
@@ -575,7 +575,7 @@ class TestReportEditorUIUnit(HttpCase):
         arch, _ = get_combined_and_studio_arch(self.main_view_document)
         self.assertXMLEqual(arch, """
             <t t-name="web_studio.test_report_document">
-               <p>p edited with odooEditor</p>
+               <p>p edited with insilosEditor</p>
                <table class="valid_table">
                  <tbody>
                    <tr>
@@ -586,7 +586,7 @@ class TestReportEditorUIUnit(HttpCase):
                <table class="invalid_table">
                  <t t-foreach="doc.child_ids" t-as="child">
                    <tr>
-                     <td>edited with odooEditor</td>
+                     <td>edited with insilosEditor</td>
                    </tr>
                  </t>
                </table>
@@ -668,7 +668,7 @@ class TestReportEditorUIUnit(HttpCase):
             <t t-name="web_studio.test_report">
                <t t-call="web.html_container">
                  <div>
-                    <p><br/>edited with odooEditor</p>
+                    <p><br/>edited with insilosEditor</p>
                  </div>
                  <t t-foreach="docs" t-as="doc">
                    <t t-call="web_studio.test_report_document"/>
@@ -928,10 +928,10 @@ class TestReportEditorUIUnit(HttpCase):
             (Json({"en_US": arch}), bad_view.id)
         )
 
-        with mute_logger("odoo.http"):
+        with mute_logger("insilos.http"):
             self.start_tour(self.tour_url, "web_studio.test_error_at_loading", login="admin")
 
-        with mute_logger("odoo.http"):
+        with mute_logger("insilos.http"):
             self.start_tour(self.tour_url + "&debug=assets", "web_studio.test_error_at_loading_debug", login="admin")
 
     def test_xml_and_form_diff(self):
@@ -1402,7 +1402,7 @@ class TestReportEditorUIUnit(HttpCase):
         self.patch(ResPartner, "search", mock_search)
 
         self.authenticate("admin", "admin")
-        with mute_logger("odoo.sql_db"):
+        with mute_logger("insilos.sql_db"):
             response = self.url_open(
                 "/web_studio/get_report_qweb",
                 data=json.dumps({"params": {"report_id": self.report.id}}),

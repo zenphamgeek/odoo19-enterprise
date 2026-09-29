@@ -1,6 +1,6 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { before, expect, test } from "@odoo/hoot";
-import { animationFrame } from "@odoo/hoot-mock";
+import { before, expect, test } from "@insilos/hoot";
+import { animationFrame } from "@insilos/hoot-mock";
 import {
     contains,
     defineModels,
@@ -188,7 +188,7 @@ test("reload record when setting/deleting approval", async () => {
 test("don't reload model when setting approval in error", async () => {
     expect.errors(1);
     const error = makeServerError({
-        subType: "Odoo Client Error",
+        subType: "Insilos Client Error",
         message: "Crash",
         errorName: "crash",
     });

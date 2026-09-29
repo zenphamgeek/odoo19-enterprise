@@ -4,7 +4,7 @@ import { useService } from "@web/core/utils/hooks";
 import { NotEditableActionError } from "../../studio_service";
 import { IconCreatorDialog } from "./icon_creator_dialog/icon_creator_dialog";
 
-import { onMounted, onWillUnmount, useRef } from "@odoo/owl";
+import { onMounted, onWillUnmount, useRef } from "@insilos/owl";
 const NEW_APP_BUTTON = {
     isNewAppButton: true,
     label: _t("New App"),
@@ -31,7 +31,7 @@ export class StudioHomeMenu extends HomeMenu {
      * @param {string} props.apps[].parents
      * @param {(boolean|string|Object)} props.apps[].webIcon either:
      *      - boolean: false (no webIcon)
-     *      - string: path to Odoo icon file
+     *      - string: path to Insilos icon file
      *      - Object: customized icon (background, class and color)
      * @param {string} [props.apps[].webIconData]
      * @param {string} props.apps[].xmlid

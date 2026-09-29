@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<data>
     <template id="notify_approval">
         <t t-foreach="partner_ids" t-as="partner"><a t-att-href="'/insilos/res.partner/%s' % partner.id" t-att-data-oe-id="partner.id" data-oe-model="res.partner" class="o_mail_redirect" target="_blank">@<t t-esc="partner.name"/></a>, </t>
         <span t-if="approved" t-att-title="target_name">
@@ -9,4 +9,4 @@
             Rejected <i class="fa fa-thumbs-down text-danger"/>
         </span>
     </template>
-</odoo>
+</data>

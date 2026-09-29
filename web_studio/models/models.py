@@ -1,4 +1,4 @@
-from odoo import api, models
+from insilos import api, models
 
 
 class Base(models.AbstractModel):

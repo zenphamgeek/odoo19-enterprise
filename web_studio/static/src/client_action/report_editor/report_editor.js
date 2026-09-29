@@ -1,4 +1,4 @@
-import { Component, onWillStart, onWillUpdateProps } from "@odoo/owl";
+import { Component, onWillStart, onWillUpdateProps } from "@insilos/owl";
 import { registry } from "@web/core/registry";
 
 import { useReportEditorModel } from "@web_studio/client_action/report_editor/report_editor_model";

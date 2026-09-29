@@ -1,4 +1,4 @@
-import { Component, onWillStart, onWillUpdateProps, useState, toRaw } from "@odoo/owl";
+import { Component, onWillStart, onWillUpdateProps, useState, toRaw } from "@insilos/owl";
 import { _t } from "@web/core/l10n/translation";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { rpc } from "@web/core/network/rpc";

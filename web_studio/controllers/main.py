@@ -1,4 +1,4 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 import logging
 import json
 
@@ -7,11 +7,11 @@ from copy import deepcopy
 from lxml import etree
 from itertools import chain
 
-from odoo import http, _
-from odoo.http import request
-from odoo.exceptions import UserError, ValidationError
-from odoo.fields import Domain
-from odoo.tools import sql, clean_context
+from insilos import http, _
+from insilos.http import request
+from insilos.exceptions import UserError, ValidationError
+from insilos.fields import Domain
+from insilos.tools import sql, clean_context
 
 _logger = logging.getLogger(__name__)
 
@@ -468,7 +468,7 @@ class WebStudioController(http.Controller):
             return self._create_studio_view(view, arch)
 
     def _generate_studio_view_name(self, view):
-        return "Odoo Studio: %s customization" % (view.name)
+        return "Studio: %s customization" % (view.name)
 
     @http.route('/web_studio/get_studio_view_arch', type='jsonrpc', auth='user')
     def get_studio_view_arch(self, model, view_type, view_id=False, context=None):

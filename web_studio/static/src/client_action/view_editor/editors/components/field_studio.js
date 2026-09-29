@@ -3,7 +3,7 @@ import { FieldContentOverlay } from "./field_content_overlay";
 
 import { useStudioRef, studioIsVisible } from "@web_studio/client_action/view_editor/editors/utils";
 
-import { useState } from "@odoo/owl";
+import { useState } from "@insilos/owl";
 
 /*
  * Field:
@@ -65,11 +65,11 @@ export class FieldStudio extends Field {
 
     isX2ManyEditable(props) {
         const { name, record } = props;
-        const field = record.fields[name];
-        if (!["one2many", "many2many"].includes(field.type)) {
+        const field = record?.fields?.[name];
+        if (!field || !["one2many", "many2many"].includes(field.type)) {
             return false;
         }
-        return !!this.props.fieldInfo.field.useSubView;
+        return !!(this.field?.useSubView || this.props?.fieldInfo?.field?.useSubView);
     }
 
     onEditViewType(viewType) {

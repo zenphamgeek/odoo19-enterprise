@@ -21,12 +21,12 @@
     <attribute name="t-ref">rootRef</attribute>
     <attribute name="t-on-click">onGroupClicked</attribute>
   </xpath>
-  <xpath expr="//t[@t-foreach='getRows()']" position="before">
+  <xpath expr="//t[@t-foreach='getRows()' or @t-foreach='this.getRows()']" position="before">
     <t t-set="studioHooks" t-value="getStudioHooks()" />
     <StudioHook t-if="studioHooks.has('beforeFirst')" t-props="studioHooks.get('beforeFirst')" />
   </xpath>
 
-  <xpath expr="//t[@t-foreach='getRows()']" position="inside">
+  <xpath expr="//t[@t-foreach='getRows()' or @t-foreach='this.getRows()']" position="inside">
     <StudioHook t-if="studioHooks.has(`afterRow ${row_index}`)" t-props="studioHooks.get(`afterRow ${row_index}`)"/>
   </xpath>
 
@@ -34,7 +34,7 @@
       <InnerGroupItemComponent t-if="cell.studioIsVisible or viewEditorModel.showInvisible" cell="cell" slots="props.slots"/>
   </xpath>
 
-  <xpath expr="//t[@t-foreach='getRows()']" position="after">
+  <xpath expr="//t[@t-foreach='getRows()' or @t-foreach='this.getRows()']" position="after">
     <StudioHook t-if="studioHooks.has('inside')" t-props="studioHooks.get('inside')"/>
   </xpath>
 </t>

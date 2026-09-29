@@ -7,7 +7,7 @@
         </h3>
         <div class="o_web_studio_existing_fields_section" t-if="!state.folded">
             <h6 class="small user-select-none">The following fields are currently not in the view.</h6>
-            <input type="text" class="o_web_studio_sidebar_search_input mb-2" autocomplete="studioAutocompleteOff" placeholder="Search..." t-model="state.searchValue" />
+            <input type="text" class="o_web_studio_sidebar_search_input mb-2" autocomplete="studioAutocompleteOff" placeholder="Search..." t-att-value="state.searchValue" t-on-input="(ev) => state.searchValue = ev.target.value" />
             <div class="o_web_studio_field_type_container o_web_studio_existing_fields">
                 <t t-foreach="existingFields" t-as="component" t-key="component.name">
                     <SidebarDraggableItem string="component.string || component.name" description="component.name" className="'w-100 mw-100 o_web_studio_field_' + component.classType" structure="'field'" dropData="component.dropData" />

@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component, useState } from "@insilos/owl";
 import { registry } from "@web/core/registry";
 import { computeXpath } from "@web_studio/client_action/view_editor/editors/xml_utils";
 import { visitXML } from "@web/core/utils/xml";

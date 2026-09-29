@@ -1,6 +1,6 @@
 import { LimitGroupVisibility } from "@web_studio/client_action/view_editor/interactive_editor/properties/limit_group_visibility/limit_group_visibility";
 import { SidebarPropertiesToolbox } from "@web_studio/client_action/view_editor/interactive_editor/properties/sidebar_properties_toolbox/sidebar_properties_toolbox";
-import { Component, useState } from "@odoo/owl";
+import { Component, useState } from "@insilos/owl";
 
 export class ViewStructureProperties extends Component {
     static components = { LimitGroupVisibility, SidebarPropertiesToolbox };

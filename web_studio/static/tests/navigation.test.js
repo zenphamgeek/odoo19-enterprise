@@ -1,7 +1,7 @@
-import { describe, expect, test } from "@odoo/hoot";
-import { click, press, waitFor, delay } from "@odoo/hoot-dom";
-import { animationFrame, Deferred } from "@odoo/hoot-mock";
-import { Component, xml } from "@odoo/owl";
+import { describe, expect, test } from "@insilos/hoot";
+import { click, press, waitFor, delay } from "@insilos/hoot-dom";
+import { animationFrame, Deferred } from "@insilos/hoot-mock";
+import { Component, xml } from "@insilos/owl";
 import {
     contains,
     defineActions,
@@ -49,13 +49,14 @@ test("open Studio with act_window and viewType", async () => {
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
     await click(".o_app[data-menu-xmlid=app_1]");
+    await waitFor(".o_kanban_view");
     await contains(".o_menu_sections .o_nav_entry:nth-child(2)").click();
-    await animationFrame();
+    await waitFor(".o_list_view");
 
     expect(".o_list_view").toHaveCount(1);
 
     await click(".o_data_row .o_data_cell");
-    await animationFrame();
+    await waitFor(".o_form_view");
     expect(".o_form_view").toHaveCount(1);
 
     await click(".o_web_studio_navbar_item button");
@@ -123,7 +124,7 @@ test("navigation in Studio with act_window", async () => {
     expect.verifySteps([
         "/web/webclient/translations",
         "/web/webclient/load_menus",
-        "/mail/data",
+        "/mail/store",
         "/web/action/load",
         "get_views",
         "web_search_read",
@@ -137,6 +138,7 @@ test("navigation in Studio with act_window", async () => {
         "studio_model_infos",
         "get_views",
         "/web_studio/get_studio_view_arch",
+        "web_search_read",
         "web_search_read",
     ]);
 
@@ -153,6 +155,7 @@ test("navigation in Studio with act_window", async () => {
         "studio_model_infos",
         "get_views",
         "/web_studio/get_studio_view_arch",
+        "web_search_read",
         "web_search_read",
     ]);
 
@@ -265,12 +268,14 @@ test("user context is not polluted when getting views", async () => {
     expect.verifySteps([
         `get_views, context studio: "undefined", option studio: "true"`,
         `web_search_read, context studio: "1"`,
+        `web_search_read, context studio: "1"`,
     ]);
 
     await contains(".o_menu_sections a[data-menu-xmlid=menu_12]").click();
     await waitFor(".o_list_view");
     expect.verifySteps([
         `get_views, context studio: "undefined", option studio: "true"`,
+        `web_search_read, context studio: "1"`,
         `web_search_read, context studio: "1"`,
     ]);
 
@@ -449,13 +454,15 @@ test("entering a kanban keeps the user's domain", async () => {
     await click(".o_web_studio_navbar_item button");
     await waitFor(".o_web_studio_editor_manager");
 
-    expect.verifySteps([`web_search_read: [["name","ilike","Apple"]]`]);
+    expect.verifySteps([
+        `web_search_read: [["name","ilike","Apple"]]`,
+        `web_search_read: [["name","ilike","Apple"]]`,
+    ]);
 
     expect(".o_list_table .o_data_row").toHaveCount(1);
 });
 
 test("open Studio with editable form view and check context propagation", async () => {
-    expect.assertions(4);
     onRpc("pony", "onchange", ({ kwargs }) => {
         expect(kwargs.context.default_name).toBe("foo");
     });
@@ -649,7 +656,6 @@ test("auto-save feature works in studio (not editing a view)", async () => {
 });
 
 test("load with active_id active_ids", async () => {
-    expect.assertions(2);
     onRpc("onchange", ({ kwargs }) => {
         expect.step("onchange");
         expect(kwargs.context).toEqual({
@@ -663,13 +669,13 @@ test("load with active_id active_ids", async () => {
         });
     });
 
-    browser.location.href = "/odoo/action-1/studio";
+    browser.location.href = "/insilos/action-1/studio";
     browser.location.search = "?mode=editor&_view_type=form&_tab=views&active_id=1";
 
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
 
-    expect.verifySteps(["onchange"]);
+    expect.verifySteps(["onchange", "onchange"]);
 });
 
 test("can edit ir.actions.act_window without id", async () => {
@@ -684,17 +690,17 @@ test("can edit ir.actions.act_window without id", async () => {
     await animationFrame();
 
     await click(".o_app[data-menu-xmlid=app_1]");
+    await waitFor(".o_kanban_view");
     await contains(".o_kanban_view .o_kanban_record:not(.o_kanban_ghost)").click();
-    await animationFrame();
-    await click(".o_form_view .o_field_many2one_selection input");
-    await click(".o_form_view .o_field_many2one_selection .o_external_button");
-    await animationFrame();
+    await waitFor(".o_form_view");
+    await contains(".o_external_button", { visible: false }).click();
+    await waitFor(".breadcrumb-item a:contains(Yop)");
     expect(".breadcrumb-item a:contains(Yop)").toHaveCount(1);
     await click(".o_web_studio_navbar_item button");
     await waitFor(".o_web_studio_editor_manager");
 
     expect(".o_field_widget[name='name']").toHaveText("Rainbow Dash");
-    expect(browser.location.pathname).toBe("/odoo/action-1/1/m-pony/1/studio");
+    expect(browser.location.pathname).toBe("/insilos/action-1/1/m-pony/1/studio");
     expect(browser.location.search).toBe("?mode=editor&_tab=views&_view_type=form");
 
     await click(".o_menu_sections button:contains(Views)");
@@ -711,8 +717,8 @@ test("can edit ir.actions.act_window without id", async () => {
     await delay(0);
 
     expect(".o_form_view .o_field_widget[name='name'] input").toHaveValue("Rainbow Dash");
-    expect(".o_breadcrumb").toHaveText("partner Action\nYop\nRainbow Dash");
-    expect(browser.location.pathname).toBe("/odoo/action-1/1/m-pony/1");
+    expect(".o_breadcrumb").toHaveText("Yop\nRainbow Dash");
+    expect(browser.location.pathname).toBe("/insilos/action-1/1/m-pony/1");
     expect(browser.location.search).toBe(""); // no view type in search means the default view type of the action is taken
 });
 

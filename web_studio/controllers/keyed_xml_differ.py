@@ -415,7 +415,7 @@ class KeyedXmlDiffer:
     It doesn't support anything else than Elements, in particular, comments and their tail will be ignored
 
     The `diff` method returns an abstraction describing what happened for a node with a given id
-    The `diff_xpath` method computes the Odoo's xpath notation to be used as an inherited view
+    The `diff_xpath` method computes the Insilos' xpath notation to be used as an inherited view
 
     The expected complexity is O(n log n), because of the use of bisect.
     It could be higher when we compute the xpath for each touched nodes.
@@ -464,7 +464,7 @@ class KeyedXmlDiffer:
     def diff(self, old: XMLInput, new: XMLInput):
         return self.analyzer.diff(old, new)
 
-    # Methods that concern the building of the Odoo's xpath semantic tree
+    # Methods that concern the building of the Insilos' xpath semantic tree
     def diff_xpath(self, old: XMLInput, new: XMLInput, flat: bool = False) -> str:
         diff = self.diff(old, new)
         changes = diff["changes"]
@@ -884,7 +884,7 @@ class KeyedXmlDiffer:
         before or after a given pivot node.
         This function applies the changes on the old tree to determine
         what would be this old section of the tree once we remove or replace nodes.
-        In Odoo's inheritance mechanism, moved nodes leave their tail behind, but removed
+        In Insilos' inheritance mechanism, moved nodes leave their tail behind, but removed
         nodes take their tail with them.
         This process allows, in a section of an old tree (before or after a pivot node),
         to select a removed node (replace_target) to build a replace xpath instead of a before/after
@@ -912,7 +912,7 @@ class KeyedXmlDiffer:
 
     def _leaves_text_compatibility(self, old_leaves, new_leaves, position):
         """Compares texts in old_leaves to new leaves according to position.
-        The Odoo's inheritance mechanism doesn't really allow replacing texts
+        The Insilos' inheritance mechanism doesn't really allow replacing texts
         This algorithm is used to determine beforehand if we can apply an xpath containing texts
         and whether to include a specific text or not in the xpath
         """

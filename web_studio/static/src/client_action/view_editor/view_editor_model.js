@@ -9,7 +9,7 @@ import {
     parseStringToXml,
     serializeXmlToString,
 } from "@web_studio/client_action/view_editor/editors/xml_utils";
-import { EventBus, markRaw, useEnv, reactive, toRaw } from "@odoo/owl";
+import { EventBus, markRaw, useEnv, reactive, toRaw } from "@insilos/owl";
 import { user } from "@web/core/user";
 import { parseXML } from "@web/core/utils/xml";
 import { viewTypeToString } from "@web_studio/studio_service";
@@ -159,12 +159,12 @@ export class ViewEditorModel extends Reactive {
                 arch.querySelectorAll(`[studio_no_fetch="1"]`).forEach((n) => n.remove());
             }
 
-            const rootArchNode = this.xmlDoc.firstElementChild;
+            const rootArchNode = this.xmlDoc?.firstElementChild;
             const controllerClasses = Array.from(
                 new Set([
                     "o_view_controller",
                     `o_${this.viewType}_view`,
-                    ...(rootArchNode.getAttribute("class") || "").split(" "),
+                    ...(rootArchNode?.getAttribute?.("class") || "").split(" "),
                 ])
             ).filter((c) => c);
 
@@ -211,10 +211,8 @@ export class ViewEditorModel extends Reactive {
             const context = this._subviewInfo ? this._subviewInfo.context : editedAction.context;
             const searchModel = this.editorInfo.editor.SearchModel || SearchModel;
             let defaultGroupBy = [];
-            if (!this.isEditingSubview) {
-                defaultGroupBy = this.xmlDoc.firstElementChild.hasAttribute("default_group_by")
-                    ? this.xmlDoc.firstElementChild.getAttribute("default_group_by").split(",")
-                    : [];
+            if (!this.isEditingSubview && this.xmlDoc?.firstElementChild?.hasAttribute?.("default_group_by")) {
+                defaultGroupBy = this.xmlDoc.firstElementChild.getAttribute("default_group_by").split(",");
             }
             return {
                 context: { ...context, studio: 1 },
@@ -265,7 +263,7 @@ export class ViewEditorModel extends Reactive {
 
         this._getUnprocessedXmlDoc = memoizeOnce((arch) => parseStringToXml(arch));
 
-        this.breadcrumbs = editionFlow.breadcrumbs;
+        this.breadcrumbs = editionFlow?.breadcrumbs || [];
 
         this._editionFlow = editionFlow;
 

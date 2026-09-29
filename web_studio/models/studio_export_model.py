@@ -1,10 +1,10 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 from ast import literal_eval
 
-from odoo import _, api, fields, models
-from odoo.fields import Command, Domain
-from odoo.addons.web_studio.wizard.studio_export_wizard import FIELDS_TO_EXPORT
+from insilos import _, api, fields, models
+from insilos.fields import Command, Domain
+from insilos.addons.web_studio.wizard.studio_export_wizard import FIELDS_TO_EXPORT
 
 # List of preset models to export when the preset action is triggered.
 # This list may include specific defaults for each model.

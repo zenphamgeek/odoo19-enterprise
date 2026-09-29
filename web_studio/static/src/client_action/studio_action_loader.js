@@ -3,7 +3,7 @@ import { LazyComponent } from "@web/core/assets";
 import { cookie } from "@web/core/browser/cookie";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 
-import { Component, xml } from "@odoo/owl";
+import { Component, xml } from "@insilos/owl";
 
 class StudioActionLoader extends Component {
     static components = { LazyComponent };

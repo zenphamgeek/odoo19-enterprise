@@ -1,9 +1,9 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 import io
 import logging
 import zipfile
 
-from odoo.http import (
+from insilos.http import (
     Controller,
     content_disposition,
     request,
@@ -55,7 +55,7 @@ class StudioExporter(Controller):
             se = serialize_exception(e)
             error = {
                 'code': 0,
-                'message': "Odoo Server Error",
+                'message': "Insilos Server Error",
                 'data': se
             }
             res = request.make_json_response(error, status=500)

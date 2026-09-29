@@ -9,7 +9,7 @@ import {
     useState,
     useSubEnv,
     onWillDestroy,
-} from "@odoo/owl";
+} from "@insilos/owl";
 import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { omit, pick } from "@web/core/utils/objects";

@@ -861,7 +861,7 @@ CORE_ERP_SELECTIONS = [
     ("sap_s4", "SAP S/4HANA"),
     ("sap_ecc", "SAP ECC 6.0"),
     ("oracle", "Oracle Fusion / EBS"),
-    ("odoo", "Odoo Enterprise / Community"),
+    ("odoo", "Insilos ERP"),
     ("inhouse", "Hệ thống nội bộ (In-house / Legacy)"),
     ("other", "Khác"),
 ]
@@ -1255,15 +1255,15 @@ class InsilosWebsite(http.Controller):
     def media_credits(self, **kwargs):
         return request.render("insilos_website.insilos_media_credits", self._base_values())
 
-    @http.route("/trust", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/trust", "/vi/trust"], type="http", auth="public", website=True, sitemap=True)
     def trust(self, **kwargs):
         return request.render("insilos_website.insilos_trust_page", self._base_values(**kwargs))
 
-    @http.route("/compliance", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/compliance", "/vi/compliance"], type="http", auth="public", website=True, sitemap=True)
     def compliance(self, **kwargs):
         return request.render("insilos_website.insilos_compliance_page", self._base_values(**kwargs))
 
-    @http.route("/sandbox", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/sandbox", "/vi/sandbox"], type="http", auth="public", website=True, sitemap=True)
     def sandbox(self, **kwargs):
         return request.render("insilos_website.insilos_sandbox_page", self._base_values(**kwargs))
 
@@ -1399,7 +1399,7 @@ class InsilosWebsite(http.Controller):
     def thank_you(self, **kwargs):
         return request.render("insilos_website.insilos_thank_you_page", self._base_values())
 
-    @http.route(["/showcase-3d", "/solutions/industrial-showcase"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/showcase-3d", "/vi/showcase-3d", "/solutions/industrial-showcase"], type="http", auth="public", website=True, sitemap=True)
     def showcase_3d(self, **kwargs):
         submitted = bool(kwargs.get("submitted"))
         now = time.time()
@@ -1429,7 +1429,7 @@ class InsilosWebsite(http.Controller):
                 pass
         return response
 
-    @http.route(["/interactive-3d"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/interactive-3d", "/vi/interactive-3d"], type="http", auth="public", website=True, sitemap=True)
     def interactive_3d(self, **kwargs):
         values = self._base_values()
         return request.render("insilos_website.insilos_interactive_3d_page", values)

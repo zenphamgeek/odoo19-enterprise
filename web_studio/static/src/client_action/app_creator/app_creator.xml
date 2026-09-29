@@ -18,7 +18,8 @@
                             <input type="text" class="o_input"
                                 name="appName"
                                 placeholder="e.g. Real Estate"
-                                t-model="state.data.appName"
+                                t-att-value="state.data.appName"
+                                t-on-input="(ev) => state.data.appName = ev.target.value"
                                 t-ref="autofocus"
                             />
                         </div>

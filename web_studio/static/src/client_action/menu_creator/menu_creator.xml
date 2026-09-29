@@ -7,7 +7,8 @@
             <input type="text" class="o_input"
                 name="menuName"
                 placeholder="e.g. Properties"
-                t-model="state.data.menuName"
+                t-att-value="state.data.menuName"
+                t-on-input="(ev) => state.data.menuName = ev.target.value"
                 t-ref="autofocus"
             />
         </div>
@@ -18,7 +19,8 @@
                     class="form-check-input m-0"
                     name="model_choice"
                     t-att-id="inputId"
-                    t-model="state.data.modelChoice"
+                    t-att-checked="state.data.modelChoice === item"
+                    t-on-change="() => state.data.modelChoice = item"
                     t-att-value="item"
                 />
                 <label class="form-check-label" t-att-for="inputId" t-esc="item_value" />

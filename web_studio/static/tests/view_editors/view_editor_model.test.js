@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@insilos/hoot";
 import { ViewEditorModel } from "@web_studio/client_action/view_editor/view_editor_model";
 
 describe.current.tags("headless");

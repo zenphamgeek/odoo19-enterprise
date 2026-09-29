@@ -1,8 +1,8 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { describe, expect, test } from "@odoo/hoot";
-import { edit, press, queryAllTexts } from "@odoo/hoot-dom";
-import { advanceTime, animationFrame } from "@odoo/hoot-mock";
-import { onWillRender } from "@odoo/owl";
+import { describe, expect, test } from "@insilos/hoot";
+import { edit, press, queryAllTexts } from "@insilos/hoot-dom";
+import { advanceTime, animationFrame } from "@insilos/hoot-mock";
+import { onWillRender } from "@insilos/owl";
 import {
     contains,
     defineModels,

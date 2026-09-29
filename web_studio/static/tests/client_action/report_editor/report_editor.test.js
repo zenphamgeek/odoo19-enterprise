@@ -1,8 +1,8 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { describe, expect, test } from "@odoo/hoot";
-import { hover, waitFor } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
-import { Component, onWillRender, useState, xml } from "@odoo/owl";
+import { describe, expect, test } from "@insilos/hoot";
+import { hover, waitFor } from "@insilos/hoot-dom";
+import { animationFrame } from "@insilos/hoot-mock";
+import { Component, onWillRender, useState, xml } from "@insilos/owl";
 import {
     contains,
     makeMockEnv,

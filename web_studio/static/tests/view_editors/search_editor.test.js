@@ -1,6 +1,6 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { describe, expect, test } from "@odoo/hoot";
-import { animationFrame } from "@odoo/hoot-mock";
+import { describe, expect, test } from "@insilos/hoot";
+import { animationFrame } from "@insilos/hoot-mock";
 import { contains, defineModels, fields, models, onRpc } from "@web/../tests/web_test_helpers";
 import { pick } from "@web/core/utils/objects";
 import { editView, mountViewEditor } from "../view_editor_tests_utils";

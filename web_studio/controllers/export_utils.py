@@ -1,4 +1,4 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 import binascii
 import functools
 import pprint
@@ -8,9 +8,9 @@ from collections import Counter, OrderedDict
 
 from lxml import etree
 from lxml.builder import E
-from odoo import models
-from odoo.fields import Domain
-from odoo.tools import topological_sort
+from insilos import models
+from insilos.fields import Domain
+from insilos.tools import topological_sort
 
 # The fields whose value is some XML content
 XML_FIELDS = [('ir.ui.view', 'arch')]
@@ -127,7 +127,7 @@ class StudioExportSerializer:
         if not nodes:
             return None, {}, skipped_fields
 
-        root = E.odoo(*nodes, noupdate="1") if no_update else E.odoo(*nodes)
+        root = E.data(*nodes, noupdate="1") if no_update else E.data(*nodes)
         content = etree.tostring(root, pretty_print=True, encoding='UTF-8', xml_declaration=True)
         (group, suffix) = path_info
         filepath = self.utils.get_next_file_path(group, model, suffix)
@@ -262,7 +262,7 @@ class StudioExportSerializer:
                     eval="[[%s]]" % refs,
                 ),
             ]
-            root = E.odoo(*nodes)
+            root = E.data(*nodes)
             content = etree.tostring(root, pretty_print=True, encoding='UTF-8', xml_declaration=True)
             yield (filepath, content)
 
@@ -291,7 +291,7 @@ class StudioExportSerializer:
                 ) for fn in fns[1:]
             ]
             nodes = [fns[0], *comments]
-            root = E.odoo(*nodes)
+            root = E.data(*nodes)
             content = etree.tostring(root, pretty_print=True, encoding='UTF-8', xml_declaration=True)
             try:
                 # this demo file should be before 'demo/ir_ui_view.xml' if it exists.

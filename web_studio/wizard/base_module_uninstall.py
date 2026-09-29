@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields, api
+from insilos import models, fields, api
 
 
 class BaseModuleUninstall(models.TransientModel):

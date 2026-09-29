@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 from lxml import etree
 from lxml.builder import E
 import functools
@@ -7,12 +7,12 @@ import json
 import uuid
 import random
 
-from odoo import api, models, _
-from odoo.exceptions import UserError
+from insilos import api, models, _
+from insilos.exceptions import UserError
 from ..controllers.keyed_xml_differ import KeyedXmlDiffer
-from odoo.tools.template_inheritance import apply_inheritance_specs
+from insilos.tools.template_inheritance import apply_inheritance_specs
 
-from odoo.addons.web_studio.controllers.report import get_report_view_copy
+from insilos.addons.web_studio.controllers.report import get_report_view_copy
 
 
 CONTAINER_TYPES = (

@@ -2,7 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { localization } from "@web/core/l10n/localization";
 import { registry } from "@web/core/registry";
 
-import { Component, useState } from "@odoo/owl";
+import { Component, useState } from "@insilos/owl";
 import { useStudioServiceAsReactive } from "@web_studio/studio_service";
 const editorTabRegistry = registry.category("web_studio.editor_tabs");
 
@@ -13,7 +13,7 @@ class Breadcrumbs extends Component {
         switchTab: Function,
     };
     setup() {
-        this.editionFlow = useState(this.env.editionFlow);
+        this.editionFlow = this.env.editionFlow ? useState(this.env.editionFlow) : null;
         this.nextCrumbId = 1;
     }
     get breadcrumbs() {
@@ -26,7 +26,7 @@ class Breadcrumbs extends Component {
                 handler: () => this.props.switchTab({ tab: currentTab.id }),
             },
         ];
-        const breadcrumbs = this.editionFlow.breadcrumbs;
+        const breadcrumbs = this.editionFlow?.breadcrumbs || [];
         breadcrumbs.forEach((crumb) => {
             crumbs.push(crumb);
         });

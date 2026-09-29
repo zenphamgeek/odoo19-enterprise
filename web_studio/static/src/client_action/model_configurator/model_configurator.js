@@ -1,5 +1,5 @@
 import { Dialog } from "@web/core/dialog/dialog";
-import { Component, useState } from "@odoo/owl";
+import { Component, useState } from "@insilos/owl";
 import { user } from "@web/core/user";
 import { _t } from "@web/core/l10n/translation";
 

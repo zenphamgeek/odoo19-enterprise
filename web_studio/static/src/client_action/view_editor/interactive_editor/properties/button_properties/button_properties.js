@@ -1,4 +1,4 @@
-import { Component, onWillStart, onWillUpdateProps, useState } from "@odoo/owl";
+import { Component, onWillStart, onWillUpdateProps, useState } from "@insilos/owl";
 import { CheckBox } from "@web/core/checkbox/checkbox";
 import { DomainSelectorDialog } from "@web/core/domain_selector_dialog/domain_selector_dialog";
 import { _t } from "@web/core/l10n/translation";
@@ -108,7 +108,7 @@ export class ButtonProperties extends Component {
 
     get actionsForModel() {
         return Object.values(this.state.actionsList).map((a) => ({
-            label: odoo.debug ? `${a.name} (${a.xml_id})` : a.name,
+            label: insilos.debug ? `${a.name} (${a.xml_id})` : a.name,
             value: a.xml_id,
         }));
     }

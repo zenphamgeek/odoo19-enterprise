@@ -96,7 +96,7 @@
                 'Cam kết tin cậy &amp; an ninh thông tin Insilos: Chứng nhận ISO 27001, SOC 2 Type II, Merkle DAG audit trail và kiến trúc Zero-Trust Sovereign Cloud.' if curr_path.startswith('/trust') else
                 'Khung tuân thủ chuẩn mực thể chế &amp; kiểm toán Insilos: VAS 200/133, Thông tư 78 hóa đơn điện tử, WCO SAFE và tiêu chuẩn an toàn dữ liệu công nghiệp.' if curr_path.startswith('/compliance') else
                 'Môi trường thử nghiệm tương tác Insilos Sandbox: Khảo nghiệm trực quan năng lực bóc tách chứng từ IDP, sơ đồ Digital Twin và mô phỏng hiệu suất OEE.' if curr_path.startswith('/sandbox') else
-                'Phim điện ảnh thương hiệu và bộ 12 video tình huống nghiệp vụ thực chiến Insilos trên hệ thống Odoo 20 backend đạt chuẩn âm học EBU R128.' if curr_path.startswith('/showcase-3d') else
+                'Phim điện ảnh thương hiệu và bộ 12 video tình huống nghiệp vụ thực chiến Insilos trên hệ thống Insilos ERP backend đạt chuẩn âm học EBU R128.' if curr_path.startswith('/showcase-3d') else
                 (meta_description or 'Insilos Sovereign Industrial AI Operating System')
             "/>
         </xpath>
@@ -1420,8 +1420,13 @@
     <!-- Include Insilos Interactive Controllers in Website Layout -->
     <template id="insilos_frontend_interactive_script" inherit_id="website.layout" priority="99">
         <xpath expr="//body" position="inside">
+            <script type="text/javascript" src="/insilos_website/static/src/lib/three/three.min.js"/>
             <script type="text/javascript" src="/insilos_website/static/src/js/c3ai_interactive.js"/>
             <script type="text/javascript" src="/insilos_website/static/src/js/insilos_megamenu.js"/>
+            <script type="text/javascript" src="/insilos_website/static/src/js/insilos_3d_suite.js"/>
+            <script type="text/javascript" src="/insilos_website/static/src/js/insilos_video_telemetry.js"/>
+            <script type="text/javascript" src="/insilos_website/static/src/js/insilos_cctv_player.js"/>
+            <script type="text/javascript" src="/insilos_website/static/src/js/insilos_sop_vault.js"/>
         </xpath>
     </template>
 </odoo>

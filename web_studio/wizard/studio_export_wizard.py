@@ -1,11 +1,11 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 from collections import OrderedDict, defaultdict
 
-from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
-from odoo.tools import groupby, topological_sort
-from odoo.tools.misc import OrderedSet
+from insilos import _, api, fields, models
+from insilos.exceptions import ValidationError
+from insilos.tools import groupby, topological_sort
+from insilos.tools.misc import OrderedSet
 
 
 # List of models to export (the order ensures that dependencies are satisfied)

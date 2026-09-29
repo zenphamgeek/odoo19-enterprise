@@ -107,7 +107,7 @@ function openEditorPowerBox(element, offsets = null) {
 // to be sure we leave the tour when the save is done.
 function patchReportEditorModelForSilentSave() {
     const saveProms = [];
-    const { ReportEditorModel } = odoo.loader.modules.get(
+    const { ReportEditorModel } = insilos.loader.modules.get(
         "@web_studio/client_action/report_editor/report_editor_model"
     );
     const _unpatch = patch(ReportEditorModel.prototype, {
@@ -135,7 +135,7 @@ registry
     .add("web_studio.test_disable_fields_commands_when_unavailable", {
         steps: () => [
             {
-                trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p",
+                trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p",
                 async run(helpers) {
                     const el = this.anchor;
                     openEditorPowerBox(el);
@@ -169,12 +169,12 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition", 
             trigger: ".o_web_studio_menu .breadcrumb-item.active:contains(modified in test)",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
-            run: "editor edited with odoo editor",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(0)",
+            run: "editor edited with insilos editor",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
-            run: "editor edited with odoo editor 2",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(2)",
+            run: "editor edited with insilos editor 2",
         },
         {
             // Don't explicitly save, this is a feature
@@ -263,12 +263,12 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_di
             trigger: ".o_web_studio_menu .breadcrumb-item.active:contains(modified in test)",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
-            run: "editor edited with odoo editor",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(0)",
+            run: "editor edited with insilos editor",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
-            run: "editor edited with odoo editor 2",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(2)",
+            run: "editor edited with insilos editor 2",
         },
         {
             trigger: ".o-web-studio-discard-report.btn-secondary",
@@ -279,7 +279,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_di
             run: "click",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(0)",
             run() {
                 assertEqual(this.anchor.textContent, "");
             },
@@ -297,8 +297,8 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_ca
             trigger: ".o_web_studio_menu .breadcrumb-item.active:contains(modified in test)",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
-            run: "editor edited with odoo editor",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(0)",
+            run: "editor edited with insilos editor",
         },
         {
             trigger: ".o-web-studio-discard-report.btn-secondary",
@@ -310,7 +310,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_ca
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0):contains(edited with odoo editor)",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(0):contains(edited with insilos editor)",
         },
         {
             trigger: ".o-web-studio-save-report.btn-primary",
@@ -355,12 +355,12 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
 registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_error", {
     steps: () => [
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
-            run: "editor edited with odoo editor",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(0)",
+            run: "editor edited with insilos editor",
         },
         {
             // Brutally add a t-else: this will crash in python on save
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable']",
             run() {
                 const editor = editorsWeakMap.get(this.anchor.ownerDocument);
                 const telse = editor.document.createElement("t");
@@ -370,8 +370,8 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_er
             },
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
-            run: "editor edited with odoo editor 2",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(2)",
+            run: "editor edited with insilos editor 2",
         },
         {
             trigger: ".o-web-studio-save-report.btn-primary",
@@ -382,7 +382,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_er
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0):contains(edited with odoo editor)",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(0):contains(edited with insilos editor)",
         },
     ],
 });
@@ -435,7 +435,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_reset_archs", {
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(1):contains(from file)",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(1):contains(from file)",
         },
     ],
 });
@@ -482,7 +482,7 @@ registry.category("web_tour.tours").add("web_studio.test_table_rendering", {
     steps: () => [
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable .valid_table",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] .valid_table",
             run() {
                 assertEqual(
                     this.anchor.outerHTML.replace(/\n\s*/g, ""),
@@ -494,7 +494,7 @@ registry.category("web_tour.tours").add("web_studio.test_table_rendering", {
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable .invalid_table",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] .invalid_table",
             run() {
                 assertEqual(
                     this.anchor.outerHTML.replace(/\n\s*/g, ""),
@@ -508,12 +508,12 @@ registry.category("web_tour.tours").add("web_studio.test_table_rendering", {
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable .invalid_table q-td",
-            run: "editor edited with odooEditor",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] .invalid_table q-td",
+            run: "editor edited with insilosEditor",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(1)",
-            run: "editor p edited with odooEditor",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(1)",
+            run: "editor p edited with insilosEditor",
         },
         {
             trigger: ".o_web_studio_sidebar input[id='name']",
@@ -533,7 +533,7 @@ registry.category("web_tour.tours").add("web_studio.test_field_placeholder", {
     steps: () => [
         {
             // 1 sec delay to make sure we call the download route
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(2)",
             async run(helpers) {
                 const el = this.anchor;
                 openEditorPowerBox(el);
@@ -590,15 +590,15 @@ registry.category("web_tour.tours").add("web_studio.test_field_placeholder", {
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable span[t-field='doc.function'][title='doc.function']",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] span[t-field='doc.function'][title='doc.function']",
         },
         {
             trigger: ".o-web-studio-save-report.btn-primary",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(0)",
             run() {
-                insertText(this.anchor, "edited with odooEditor");
+                insertText(this.anchor, "edited with insilosEditor");
             },
         },
         {
@@ -629,7 +629,7 @@ registry.category("web_tour.tours").add("web_studio.test_add_field_blank_report"
             run: "click",
         },
         {
-            trigger: ":iframe .odoo-editor-editable .page div",
+            trigger: ":iframe [class*='editor-editable'] .page div",
             async run(helpers) {
                 const el = this.anchor;
                 openEditorPowerBox(el);
@@ -693,10 +693,10 @@ registry.category("web_tour.tours").add("web_studio.test_add_field_blank_report"
         {
             // check that field was added successfully
             trigger:
-                ":iframe .odoo-editor-editable .page div > span[data-oe-demo='some default value']:contains(some default value)",
+                ":iframe [class*='editor-editable'] .page div > span[data-oe-demo='some default value']:contains(some default value)",
         },
         {
-            trigger: ":iframe .odoo-editor-editable .page div",
+            trigger: ":iframe [class*='editor-editable'] .page div",
             run() {
                 insertText(this.anchor, "Custo");
             },
@@ -714,7 +714,7 @@ registry.category("web_tour.tours").add("web_studio.test_add_field_blank_report"
 registry.category("web_tour.tours").add("web_studio.test_toolbar_appearance", {
     steps: () => [
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable .to_edit",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] .to_edit",
             run() {
                 const anchor = this.anchor;
                 const doc = anchor.ownerDocument;
@@ -750,10 +750,10 @@ registry.category("web_tour.tours").add("web_studio.test_edition_without_lang", 
     steps: () => [
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(1):contains(original term)",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(1):contains(original term)",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(1)",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(1)",
             async run() {
                 insertText(this.anchor, " edited");
             },
@@ -827,7 +827,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_xml_other_record
 registry.category("web_tour.tours").add("web_studio.test_partial_eval", {
     steps: () => [
         {
-            trigger: ".o-web-studio-report-container :iframe .odoo-editor-editable .lol",
+            trigger: ".o-web-studio-report-container :iframe [class*='editor-editable'] .lol",
             run() {
                 const closestContextElement = this.anchor.closest("[oe-context]");
                 const oeContext = closestContextElement.getAttribute("oe-context");
@@ -842,7 +842,7 @@ registry.category("web_tour.tours").add("web_studio.test_partial_eval", {
             },
         },
         {
-            trigger: ".o-web-studio-report-container :iframe .odoo-editor-editable .couic",
+            trigger: ".o-web-studio-report-container :iframe [class*='editor-editable'] .couic",
         },
     ],
 });
@@ -850,10 +850,10 @@ registry.category("web_tour.tours").add("web_studio.test_partial_eval", {
 registry.category("web_tour.tours").add("web_studio.test_render_multicompany", {
     steps: () => [
         {
-            trigger: ".o-web-studio-report-container :iframe .odoo-editor-editable .test_layout",
+            trigger: ".o-web-studio-report-container :iframe [class*='editor-editable'] .test_layout",
         },
         {
-            trigger: ".o-web-studio-report-container :iframe .odoo-editor-editable img",
+            trigger: ".o-web-studio-report-container :iframe [class*='editor-editable'] img",
             run() {
                 const cids = cookie.get("cids").split("-");
                 assertEqual(this.anchor.getAttribute("src"), `/logo.png?company=${cids[0]}`);
@@ -865,7 +865,7 @@ registry.category("web_tour.tours").add("web_studio.test_render_multicompany", {
 registry.category("web_tour.tours").add("web_studio.test_add_non_searchable_field", {
     steps: () => [
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(2)",
             async run(helpers) {
                 const el = this.anchor;
                 openEditorPowerBox(el);
@@ -908,7 +908,7 @@ registry.category("web_tour.tours").add("web_studio.test_add_non_searchable_fiel
 registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_field", {
     steps: () => [
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(2)",
             async run(helpers) {
                 const el = this.anchor;
                 openEditorPowerBox(el);
@@ -948,7 +948,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_f
             run: "click",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(2)",
             async run(helpers) {
                 const el = this.anchor;
                 openEditorPowerBox(el, { start: nodeSize(el) }); // after the file field
@@ -999,7 +999,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_f
 registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_table", {
     steps: () => [
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(2)",
             async run(helpers) {
                 const el = this.anchor;
                 openEditorPowerBox(el);
@@ -1028,11 +1028,11 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable table tr td:contains(Activities)",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] table tr td:contains(Activities)",
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable table tr[t-foreach]",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] table tr[t-foreach]",
             run() {
                 const el = this.anchor;
                 const context = JSON.parse(el.getAttribute("oe-context"));
@@ -1041,7 +1041,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable table tr td:contains(Insert a field...)",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] table tr td:contains(Insert a field...)",
             run() {
                 openEditorPowerBox(this.anchor);
             },
@@ -1072,7 +1072,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable table td span[t-field='x2many_record.summary']",
+                ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] table td span[t-field='x2many_record.summary']",
         },
         {
             trigger: ".o-web-studio-save-report.btn-primary",
@@ -1177,7 +1177,7 @@ registry.category("web_tour.tours").add("web_studio.test_error_at_loading_debug"
         },
         {
             trigger:
-                ".o-web-studio-report-container strong:contains(odoo.addons.base.models.ir_qweb.QWebError)",
+                ".o-web-studio-report-container strong:contains(QWebError)",
         },
     ],
 });
@@ -1185,9 +1185,9 @@ registry.category("web_tour.tours").add("web_studio.test_error_at_loading_debug"
 registry.category("web_tour.tours").add("web_studio.test_xml_and_form_diff", {
     steps: () => [
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable'] p:eq(2)",
             run() {
-                insertText(this.anchor, "edited with odooEditor");
+                insertText(this.anchor, "edited with insilosEditor");
             },
         },
         {
@@ -1234,7 +1234,7 @@ registry.category("web_tour.tours").add("web_studio.test_xml_and_form_diff", {
 registry.category("web_tour.tours").add("web_studio.test_remove_branding_on_copy", {
     steps: () => [
         {
-            trigger: "body :iframe .odoo-editor-editable#wrapwrap",
+            trigger: "body :iframe [class*='editor-editable']#wrapwrap",
             async run() {
                 const doc = this.anchor.ownerDocument;
                 const editor = editorsWeakMap.get(doc);
@@ -1275,7 +1275,7 @@ registry.category("web_tour.tours").add("web_studio.test_different_view_document
 registry.category("web_tour.tours").add("web_studio.test_edit_main_arch", {
     steps: () => [
         {
-            trigger: ":iframe .odoo-editor-editable .outside-t-call",
+            trigger: ":iframe [class*='editor-editable'] .outside-t-call",
             async run() {
                 const doc = this.anchor.ownerDocument;
                 const editor = editorsWeakMap.get(doc);
@@ -1299,7 +1299,7 @@ registry.category("web_tour.tours").add("web_studio.test_edit_main_arch", {
 registry.category("web_tour.tours").add("web_studio.test_edit_in_t_call", {
     steps: () => [
         {
-            trigger: ":iframe .odoo-editor-editable .in-t-call",
+            trigger: ":iframe [class*='editor-editable'] .in-t-call",
             async run() {
                 const doc = this.anchor.ownerDocument;
                 const editor = editorsWeakMap.get(doc);
@@ -1323,7 +1323,7 @@ registry.category("web_tour.tours").add("web_studio.test_edit_in_t_call", {
 registry.category("web_tour.tours").add("web_studio.test_edit_main_and_in_t_call", {
     steps: () => [
         {
-            trigger: ":iframe .odoo-editor-editable#wrapwrap",
+            trigger: ":iframe [class*='editor-editable']#wrapwrap",
             async run() {
                 const doc = this.anchor.ownerDocument;
                 const editor = editorsWeakMap.get(doc);
@@ -1354,7 +1354,7 @@ registry.category("web_tour.tours").add("web_studio.test_edit_main_and_in_t_call
 registry.category("web_tour.tours").add("web_studio.test_image_crop", {
     steps: () => [
         {
-            trigger: "body :iframe .odoo-editor-editable .myimg",
+            trigger: "body :iframe [class*='editor-editable'] .myimg",
             run: "click",
         },
         {
@@ -1370,7 +1370,7 @@ registry.category("web_tour.tours").add("web_studio.test_image_crop", {
 registry.category("web_tour.tours").add("web_studio.test_translations_are_copied", {
     steps: () => [
         {
-            trigger: "body :iframe .odoo-editor-editable#wrapwrap div:contains(term2)",
+            trigger: "body :iframe [class*='editor-editable']#wrapwrap div:contains(term2)",
             run() {
                 const doc = this.anchor.ownerDocument;
                 const editor = editorsWeakMap.get(doc);
@@ -1410,7 +1410,7 @@ registry.category("web_tour.tours").add("web_studio.test_reports_view_concurrenc
 registry.category("web_tour.tours").add("web_studio.test_dont_translate_on_save", {
     steps: () => [
         {
-            trigger: "body :iframe .odoo-editor-editable#wrapwrap p.test-origin",
+            trigger: "body :iframe [class*='editor-editable']#wrapwrap p.test-origin",
             async run() {
                 const doc = this.anchor.ownerDocument;
                 const el = doc.createElement("span");
@@ -1429,7 +1429,7 @@ registry.category("web_tour.tours").add("web_studio.test_dont_translate_on_save"
             trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
         {
-            trigger: "body :iframe .odoo-editor-editable#wrapwrap span",
+            trigger: "body :iframe [class*='editor-editable']#wrapwrap span",
             run() {
                 const doc = this.anchor.ownerDocument;
                 const selection = doc.getSelection();
@@ -1456,7 +1456,7 @@ registry.category("web_tour.tours").add("web_studio.test_dont_translate_on_save"
 registry.category("web_tour.tours").add("web_studio.test_do_not_delete_unspecial_spans", {
     steps: () => [
         {
-            trigger: "body :iframe .odoo-editor-editable#wrapwrap span",
+            trigger: "body :iframe [class*='editor-editable']#wrapwrap span",
             run() {
                 insertText(this.anchor, "added");
             },
@@ -1474,7 +1474,7 @@ registry.category("web_tour.tours").add("web_studio.test_do_not_delete_unspecial
 registry.category("web_tour.tours").add("web_studio.test_edit_header_only_company", {
     steps: () => [
         {
-            trigger: "body :iframe .odoo-editor-editable#wrapwrap .header img",
+            trigger: "body :iframe [class*='editor-editable']#wrapwrap .header img",
             run() {
                 const el = this.anchor;
                 const span = el.ownerDocument.createElement("span");
@@ -1505,7 +1505,7 @@ registry.category("web_tour.tours").add("web_studio.test_edit_header_only_compan
         },
         {
             trigger:
-                "body :iframe .odoo-editor-editable#wrapwrap .header [t-field][data-oe-demo='studio company id']",
+                "body :iframe [class*='editor-editable']#wrapwrap .header [t-field][data-oe-demo='studio company id']",
         },
         {
             trigger: ".o-web-studio-save-report.btn-primary",
@@ -1528,7 +1528,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_without_view", {
             run: "click",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable",
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe [class*='editor-editable']",
         },
     ],
 });

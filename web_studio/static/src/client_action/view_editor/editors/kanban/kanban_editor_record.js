@@ -6,7 +6,7 @@ import { ViewButtonStudio } from "@web_studio/client_action/view_editor/editors/
 import { StudioHook } from "@web_studio/client_action/view_editor/editors/components/studio_hook_component";
 import { useService } from "@web/core/utils/hooks";
 
-import { Component, toRaw, useEnv, useState, xml, onError } from "@odoo/owl";
+import { Component, toRaw, useEnv, useState, xml, onError } from "@insilos/owl";
 import { KanbanEditorCompiler } from "./kanban_editor_compiler";
 
 class FieldStudioKanbanRecord extends FieldStudio {

@@ -1,7 +1,7 @@
 import { kanbanView } from "@web/views/kanban/kanban_view";
 import { KanbanHeader } from "@web/views/kanban/kanban_header";
 import { KanbanEditorRecord } from "@web_studio/client_action/view_editor/editors/kanban/kanban_editor_record";
-import { useRef, useEffect } from "@odoo/owl";
+import { useEffect, onMounted } from "@insilos/owl";
 import { SelectionHeaderButtons } from "../../interactive_editor/action_button/action_button";
 
 class KanbanEditorHeader extends KanbanHeader {
@@ -19,7 +19,13 @@ export class KanbanEditorRenderer extends kanbanView.Renderer {
 
     setup() {
         super.setup();
-        const rootRef = useRef("root");
+        const getRootEl = () => (typeof this.rootRef === "function" ? this.rootRef() : (this.rootRef?.el || this.rootRef));
+        onMounted(() => {
+            const el = getRootEl();
+            if (el) {
+                el.classList.add("o_web_studio_kanban_view_editor");
+            }
+        });
         useEffect(
             (el) => {
                 if (!el) {
@@ -27,7 +33,7 @@ export class KanbanEditorRenderer extends kanbanView.Renderer {
                 }
                 el.classList.add("o_web_studio_kanban_view_editor");
             },
-            () => [rootRef.el]
+            () => [getRootEl()]
         );
     }
 
@@ -43,9 +49,10 @@ export class KanbanEditorRenderer extends kanbanView.Renderer {
         const { list } = this.props;
         const groupsOrRec = super.getGroupsOrRecords(...arguments);
         if (list.isGrouped) {
-            return [groupsOrRec.filter((el) => el.group.list.records.length)[0]];
+            const firstGroup = groupsOrRec.find((el) => el?.group?.list?.records?.length);
+            return firstGroup ? [firstGroup] : [];
         } else {
-            return [groupsOrRec[0]];
+            return groupsOrRec[0] ? [groupsOrRec[0]] : [];
         }
     }
 

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@insilos/hoot";
 import {
     queryAll,
     queryAllAttributes,
@@ -8,9 +8,9 @@ import {
     queryFirst,
     waitForNone,
     waitFor,
-} from "@odoo/hoot-dom";
-import { animationFrame, runAllTimers } from "@odoo/hoot-mock";
-import { Component, onMounted, xml } from "@odoo/owl";
+} from "@insilos/hoot-dom";
+import { animationFrame, runAllTimers } from "@insilos/hoot-mock";
+import { Component, onMounted, xml } from "@insilos/owl";
 
 import { mailModels, STORE_FETCH_ROUTES } from "@mail/../tests/mail_test_helpers";
 import {
@@ -2798,7 +2798,7 @@ test("form: onchange is resilient to errors -- debug mode", async () => {
     onRpc("onchange", () => {
         expect.step("onchange");
         const error = new RPCError();
-        error.exceptionName = "odoo.exceptions.ValidationError";
+        error.exceptionName = "insilos.exceptions.ValidationError";
         error.code = 0;
         error.message = "ValidationError";
         error.data = {

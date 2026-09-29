@@ -1,7 +1,7 @@
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 
-import { reactive, useComponent, useEnv, toRaw, onMounted, onWillDestroy } from "@odoo/owl";
+import { reactive, useComponent, useEnv, toRaw, onMounted, onWillDestroy } from "@insilos/owl";
 import { useRecordObserver } from "@web/model/relational_model/utils";
 import { Deferred } from "@web/core/utils/concurrency";
 import { registry } from "@web/core/registry";

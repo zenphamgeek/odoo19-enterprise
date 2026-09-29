@@ -1,4 +1,4 @@
-import { Component, toRaw, useSubEnv } from "@odoo/owl";
+import { Component, toRaw, useSubEnv } from "@insilos/owl";
 
 import { closest, touching } from "@web/core/utils/ui";
 import { useDraggable } from "@web/core/utils/draggable";

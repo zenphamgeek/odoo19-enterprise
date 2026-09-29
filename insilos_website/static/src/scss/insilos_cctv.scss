@@ -1,0 +1,484 @@
+/**
+ * ============================================================================
+ * INSILOS ENTERPRISE — INTERACTIVE AI CCTV CAMERA WIDGET (MILESTONE M4)
+ * ============================================================================
+ * Stylesheet: insilos_cctv.scss
+ * Architecture: Sovereign Industrial Vision HUD & Real-Time Alert System
+ * Conformance: Bootstrap 5, Insilos ERP Color Combinations (o_cc5), #FF8000 Brand Orange
+ * ============================================================================
+ */
+
+// Keyframe Animations
+@keyframes ins-cctv-strobe {
+    0% {
+        border-color: #ef4444;
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.6), inset 0 0 8px rgba(239, 68, 68, 0.3);
+    }
+    100% {
+        border-color: #ff0000;
+        box-shadow: 0 0 35px rgba(255, 0, 0, 0.95), inset 0 0 20px rgba(255, 0, 0, 0.55);
+    }
+}
+
+@keyframes ins-cctv-rec-blink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.25; transform: scale(0.85); }
+}
+
+@keyframes ins-cctv-scanline-scroll {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(1000%); }
+}
+
+@keyframes ins-siren-pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { transform: scale(1.06); box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+@keyframes ins-radar-sweep-cctv {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+// Main Snippet Section
+.s_insilos_cctv_ai_camera {
+    position: relative;
+    background-color: #070b14;
+
+    // Viewport Container
+    .ins-cctv-viewport {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        min-height: 440px;
+        background-color: #030712;
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid rgba(255, 128, 0, 0.35);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 128, 0, 0.15);
+        user-select: none;
+
+        @media (max-width: 767.98px) {
+            min-height: 280px;
+            aspect-ratio: auto;
+            height: 320px;
+        }
+
+        // Active Industrial Video Element
+        video.ins-cctv-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: contrast(1.06) brightness(0.96) saturate(1.05);
+        }
+
+        // Scanline Grid & CRT Effect
+        .ins-cctv-scanlines {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.03),
+                rgba(0, 255, 0, 0.01),
+                rgba(0, 0, 255, 0.03)
+            );
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0.65;
+        }
+
+        // Tactical Corner Markers
+        .ins-cctv-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 6;
+
+            &.ins-corner-tl {
+                top: 14px;
+                left: 14px;
+                border-top: 2px solid #ff8000;
+                border-left: 2px solid #ff8000;
+            }
+            &.ins-corner-tr {
+                top: 14px;
+                right: 14px;
+                border-top: 2px solid #ff8000;
+                border-right: 2px solid #ff8000;
+            }
+            &.ins-corner-bl {
+                bottom: 14px;
+                left: 14px;
+                border-bottom: 2px solid #ff8000;
+                border-left: 2px solid #ff8000;
+            }
+            &.ins-corner-br {
+                bottom: 14px;
+                right: 14px;
+                border-bottom: 2px solid #ff8000;
+                border-right: 2px solid #ff8000;
+            }
+        }
+
+        // Central Targeting Reticle
+        .ins-cctv-reticle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 4;
+
+            &::before, &::after {
+                content: '';
+                position: absolute;
+                background-color: rgba(255, 255, 255, 0.35);
+            }
+            &::before {
+                top: 50%;
+                left: -8px;
+                right: -8px;
+                height: 1px;
+                transform: translateY(-50%);
+            }
+            &::after {
+                left: 50%;
+                top: -8px;
+                bottom: -8px;
+                width: 1px;
+                transform: translateX(-50%);
+            }
+        }
+
+        // Top Status HUD Bar
+        .ins-cctv-topbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 18px;
+            background: linear-gradient(180deg, rgba(3, 7, 18, 0.88) 0%, rgba(3, 7, 18, 0) 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 7;
+            font-family: var(--bs-font-monospace);
+            font-size: 0.8rem;
+            color: #94a3b8;
+            pointer-events: none;
+
+            .ins-rec-indicator {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                color: #ef4444;
+                font-weight: 700;
+
+                .ins-rec-dot {
+                    width: 10px;
+                    height: 10px;
+                    background-color: #ef4444;
+                    border-radius: 50%;
+                    box-shadow: 0 0 8px #ef4444;
+                    animation: ins-cctv-rec-blink 1.2s infinite ease-in-out;
+                }
+            }
+
+            .ins-cctv-cam-title {
+                color: #f8fafc;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+            }
+
+            .ins-cctv-ai-status {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 3px 10px;
+                border-radius: 20px;
+                background-color: rgba(16, 185, 129, 0.2);
+                border: 1px solid rgba(16, 185, 129, 0.4);
+                color: #34d399;
+                font-weight: 600;
+                transition: all 0.3s ease;
+
+                &.is-alarm {
+                    background-color: rgba(239, 68, 68, 0.28);
+                    border-color: rgba(239, 68, 68, 0.65);
+                    color: #f87171;
+                    animation: ins-cctv-strobe 0.5s infinite alternate;
+                }
+            }
+        }
+
+        // Bottom Telemetry Overlay Strip
+        .ins-cctv-bottombar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 18px;
+            background: linear-gradient(0deg, rgba(3, 7, 18, 0.92) 0%, rgba(3, 7, 18, 0) 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            z-index: 7;
+            font-family: var(--bs-font-monospace);
+            font-size: 0.75rem;
+            color: #64748b;
+            pointer-events: none;
+
+            .ins-telemetry-tag {
+                color: #94a3b8;
+                strong {
+                    color: #38bdf8;
+                }
+            }
+        }
+
+        // AI Vision Bounding Box Layer
+        .ins-cctv-overlay-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            pointer-events: none;
+
+            .ins-cctv-box {
+                position: absolute;
+                border-radius: 4px;
+                transition: opacity 0.25s ease, transform 0.2s ease, border-color 0.2s ease;
+                opacity: 1;
+
+                &.is-hidden {
+                    opacity: 0 !important;
+                    visibility: hidden;
+                }
+
+                .ins-cctv-box-tag {
+                    position: absolute;
+                    top: -24px;
+                    left: -2px;
+                    font-family: var(--bs-font-monospace);
+                    font-size: 0.68rem;
+                    font-weight: 700;
+                    padding: 2px 7px;
+                    border-radius: 3px;
+                    white-space: nowrap;
+                    text-transform: uppercase;
+                    letter-spacing: 0.04em;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+                }
+
+                // Helmet Overlay (Emerald #10b981)
+                &.ins-bbox-helmet {
+                    border: 2px solid #10b981;
+                    background-color: rgba(16, 185, 129, 0.12);
+
+                    .ins-cctv-box-tag {
+                        background-color: #10b981;
+                        color: #022c22;
+                    }
+                }
+
+                // Hi-Vis Vest Overlay (Cyan #06b6d4)
+                &.ins-bbox-vest {
+                    border: 2px solid #06b6d4;
+                    background-color: rgba(6, 182, 212, 0.12);
+
+                    .ins-cctv-box-tag {
+                        background-color: #06b6d4;
+                        color: #083344;
+                    }
+                }
+
+                // Person Box Outer (White subtle)
+                &.ins-bbox-person {
+                    border: 1px dashed rgba(255, 255, 255, 0.35);
+                    background-color: rgba(255, 255, 255, 0.03);
+
+                    .ins-cctv-box-tag {
+                        background-color: rgba(30, 41, 59, 0.85);
+                        color: #cbd5e1;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    }
+                }
+
+                // Danger Zone Perimeter (Amber/Orange #f59e0b)
+                &.ins-bbox-danger-zone {
+                    border: 2px dashed #f59e0b;
+                    background: repeating-linear-gradient(
+                        45deg,
+                        rgba(245, 158, 11, 0.08),
+                        rgba(245, 158, 11, 0.08) 12px,
+                        transparent 12px,
+                        transparent 24px
+                    );
+
+                    .ins-cctv-box-tag {
+                        background-color: #f59e0b;
+                        color: #451a03;
+                    }
+                }
+
+                // Critical Violation State (Red #ef4444)
+                &.is-violation {
+                    border: 3px solid #ef4444 !important;
+                    background-color: rgba(239, 68, 68, 0.26) !important;
+                    box-shadow: 0 0 25px rgba(239, 68, 68, 0.85), inset 0 0 15px rgba(239, 68, 68, 0.45) !important;
+                    animation: ins-cctv-strobe 0.45s infinite alternate ease-in-out !important;
+
+                    .ins-cctv-box-tag {
+                        background-color: #ef4444 !important;
+                        color: #ffffff !important;
+                        font-weight: 900 !important;
+                        box-shadow: 0 0 14px rgba(239, 68, 68, 0.9) !important;
+                    }
+                }
+            }
+        }
+    }
+
+    // Camera Selector Navigation Bar
+    .ins-cctv-nav {
+        .ins-cctv-angle-btn {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(15, 23, 42, 0.65);
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+
+            &:hover {
+                border-color: rgba(255, 128, 0, 0.5);
+                color: #ffffff;
+                background: rgba(255, 128, 0, 0.12);
+            }
+
+            &.is-active {
+                border-color: #ff8000;
+                background: linear-gradient(135deg, rgba(255, 128, 0, 0.25) 0%, rgba(255, 128, 0, 0.08) 100%);
+                color: #ffffff;
+                box-shadow: 0 0 15px rgba(255, 128, 0, 0.3);
+            }
+        }
+    }
+
+    // Toggle Switches Control Card
+    .ins-layer-toggle-card {
+        background-color: rgba(15, 23, 42, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+
+        .form-check-input {
+            cursor: pointer;
+            &:focus {
+                box-shadow: 0 0 0 0.25rem rgba(255, 128, 0, 0.25);
+                border-color: #ff8000;
+            }
+        }
+
+        .ins-check-helmet:checked {
+            background-color: #10b981;
+            border-color: #10b981;
+        }
+
+        .ins-check-vest:checked {
+            background-color: #06b6d4;
+            border-color: #06b6d4;
+        }
+
+        .ins-check-danger:checked {
+            background-color: #f59e0b;
+            border-color: #f59e0b;
+        }
+    }
+
+    // Live Siren Indicator
+    .ins-siren-indicator {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        background-color: rgba(239, 68, 68, 0.2);
+        border: 1px solid #ef4444;
+        border-radius: 20px;
+        color: #fca5a5;
+        font-family: var(--bs-font-monospace);
+        font-size: 0.78rem;
+        animation: ins-siren-pulse 1.2s infinite ease-in-out;
+
+        &.is-playing {
+            display: inline-flex;
+        }
+    }
+}
+
+// Emergency Alert Modal Styling
+#insilosCctvAlertModal {
+    .modal-content {
+        background-color: #0a0f1d;
+        border: 1px solid rgba(239, 68, 68, 0.5);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(239, 68, 68, 0.3);
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(15, 23, 42, 0.9) 100%);
+        border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .ins-modal-evidence-frame {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 2px solid #ef4444;
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+
+        img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+        }
+
+        .ins-evidence-stamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(239, 68, 68, 0.9);
+            color: #ffffff;
+            font-family: var(--bs-font-monospace);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+        }
+    }
+
+    .ins-modal-spec-table {
+        td {
+            padding: 6px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.82rem;
+            &:first-child {
+                color: #94a3b8;
+                width: 38%;
+            }
+            &:last-child {
+                color: #f8fafc;
+                font-family: var(--bs-font-monospace);
+            }
+        }
+    }
+}

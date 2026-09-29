@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 
 export class ThumbnailItem extends Component {

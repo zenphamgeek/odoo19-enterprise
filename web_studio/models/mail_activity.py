@@ -1,8 +1,8 @@
 import contextlib
 
-from odoo import models, fields
-from odoo.exceptions import UserError
-from odoo.fields import Domain
+from insilos import models, fields
+from insilos.exceptions import UserError
+from insilos.fields import Domain
 
 
 class MailActivity(models.Model):

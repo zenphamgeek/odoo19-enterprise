@@ -7,12 +7,13 @@ import { isMacOS } from "@web/core/browser/feature_detection";
 
 import {
     Component,
+    onPatched,
     onWillUnmount,
     onWillUpdateProps,
     useEffect,
     proxy,
     signal,
-} from "@odoo/owl";
+} from "@insilos/owl";
 
 import { useSortable } from "@web/core/utils/sortable_owl";
 import { useService } from "@web/core/utils/hooks";
@@ -79,37 +80,42 @@ export class MapRenderer extends Component {
         });
         this.nextId = 1;
 
-        useEffect(() => {
-            const containerEl = this.mapContainer();
-            if (!containerEl) {
-                return;
-            }
-            if (!this.leafletMap) {
-                this.leafletMap = L.map(containerEl, {
-                    maxBounds: [L.latLng(180, -180), L.latLng(-180, 180)],
-                });
-                this.leafletMap.attributionControl.setPrefix(
-                    '<a href="https://leafletjs.com" title="A JavaScript library for interactive maps">Leaflet</a>'
-                );
-                L.tileLayer(this.apiTilesRoute, {
-                    attribution: mapTileAttribution,
-                    tileSize: 512,
-                    zoomOffset: -1,
-                    minZoom: 2,
-                    maxZoom: 19,
-                    id: "mapbox/streets-v11",
-                    accessToken: this.props.model.metaData.mapBoxToken,
-                }).addTo(this.leafletMap);
-            }
-            this.updateMap();
-        });
+        useEffect(
+            () => {
+                const containerEl = this.mapContainer();
+                if (!containerEl) {
+                    return;
+                }
+                if (!this.leafletMap) {
+                    this.leafletMap = L.map(containerEl, {
+                        maxBounds: [L.latLng(180, -180), L.latLng(-180, 180)],
+                    });
+                    this.leafletMap.attributionControl.setPrefix(
+                        '<a href="https://leafletjs.com" title="A JavaScript library for interactive maps">Leaflet</a>'
+                    );
+                    L.tileLayer(this.apiTilesRoute, {
+                        attribution: mapTileAttribution,
+                        tileSize: 512,
+                        zoomOffset: -1,
+                        minZoom: 2,
+                        maxZoom: 19,
+                        id: "mapbox/streets-v11",
+                        accessToken: this.props.model.metaData.mapBoxToken,
+                    }).addTo(this.leafletMap);
+                }
+                this.updateMap();
+            },
+            () => [this.props.model.data, this.state.closedGroupIds]
+        );
 
+        this.rootRef = signal.ref();
+        Object.defineProperty(this.rootRef, "el", { get: () => this.rootRef() });
         this.pinList = signal.ref();
         Object.defineProperty(this.pinList, "el", { get: () => this.pinList() });
         this.pinListRef = this.pinList;
         useSortable({
             enable: () => this.props.model.canResequence,
-            ref: this.pinList,
+            ref: () => this.rootRef() || document.querySelector(".o-map-renderer"),
             elements: ".o-map-renderer--pin-located",
             handle: ".o_row_handle",
             onDrop: async (params) => {
@@ -120,6 +126,9 @@ export class MapRenderer extends Component {
         });
 
         onWillUpdateProps(this.onWillUpdateProps);
+        onPatched(() => {
+            this.updateMap();
+        });
         onWillUnmount(this.onWillUnmount);
     }
     /**

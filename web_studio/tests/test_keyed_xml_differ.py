@@ -1,14 +1,14 @@
 from lxml import etree
 
-from odoo.addons.web_studio.controllers.keyed_xml_differ import (
+from insilos.addons.web_studio.controllers.keyed_xml_differ import (
     KeyedXmlDiffer,
     dedent_tree,
     indent_tree,
     diff_dicts,
     longest_increasing_subsequence,
 )
-from odoo.tests.common import BaseCase
-from odoo.tools.template_inheritance import apply_inheritance_specs
+from insilos.tests.common import BaseCase
+from insilos.tools.template_inheritance import apply_inheritance_specs
 
 
 class TestXmlDiffer(BaseCase):

@@ -10,7 +10,7 @@
   <t t-name="web_studio.SimpleNewModelDialog">
     <Dialog size="'sm'" title.translate="Create a new Model" contentClass="'o_web_studio_new_model_modal'" >
       <label t-attf-class="{{ state.showValidation and !state.modelName ? 'o_web_studio_field_warning': '' }}" >Model name
-        <input type="text" name="model_name" class="o_input" placeholder.translate="My model" t-model="state.modelName" />
+        <input type="text" name="model_name" class="o_input" placeholder.translate="My model" t-att-value="state.modelName" t-on-input="(ev) => state.modelName = ev.target.value" />
       </label>
 
       <t t-set-slot="footer">

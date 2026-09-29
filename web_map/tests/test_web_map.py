@@ -1,5 +1,5 @@
-from odoo.addons.base.tests.common import TransactionCaseWithUserDemo
-from odoo.tests.common import tagged
+from insilos.addons.base.tests.common import TransactionCaseWithUserDemo
+from insilos.tests.common import tagged
 
 
 @tagged('res_partner')

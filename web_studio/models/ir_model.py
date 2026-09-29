@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 import unicodedata
 import uuid
 import re
 
 import xml.etree.ElementTree as ET
 
-from odoo import api, fields, models, _, Command
-from odoo.exceptions import ValidationError
+from insilos import api, fields, models, _, Command
+from insilos.exceptions import ValidationError
 
 OPTIONS_WL = [
     'use_mail',          # add mail_thread to record

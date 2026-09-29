@@ -1,6 +1,6 @@
 import { Dialog } from "@web/core/dialog/dialog";
 
-import { Component, useRef } from "@odoo/owl";
+import { Component, useRef } from "@insilos/owl";
 
 export class FieldSelectorDialog extends Component {
     static template = "web_studio.FieldSelectorDialog";

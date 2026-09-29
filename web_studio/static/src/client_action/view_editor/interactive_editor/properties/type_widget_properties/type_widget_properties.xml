@@ -38,11 +38,12 @@
 </t>
 
 <t t-name="web_studio.property.subOptions">
-    <t t-if="attribute.subOptions">
+    <t t-if="attribute.subOptions and !attribute.isSubOption">
         <t t-foreach="attribute.subOptions" t-as="subOption" t-key="subOption">
             <t t-set="subOptionObj" t-value="getOptionObj(subOption)" />
-            <t t-call="{{ 'web_studio.property.' + subOptionObj.type }}">
-                <t t-set="attribute" t-value="getPropertyFromOptions(subOptionObj, props)" />
+            <t t-if="subOptionObj">
+                <t t-set="subOptionAttr" t-value="getPropertyFromOptions(subOptionObj, props)" />
+                <t t-call="{{ 'web_studio.property.' + subOptionObj.type }}" attribute="subOptionAttr" />
             </t>
         </t>
     </t>
@@ -60,7 +61,7 @@
         >
             <t t-esc="attribute.label"/>
         </Property>
-        <t t-call="web_studio.property.subOptions" />
+        <t t-call="web_studio.property.subOptions" t-if="!attribute.isSubOption" />
     </t>
 </t>
 <t t-name="web_studio.property.selection">
@@ -77,7 +78,7 @@
         >
             <t t-esc="attribute.label"/>
         </Property>
-        <t t-call="web_studio.property.subOptions" />
+        <t t-call="web_studio.property.subOptions" t-if="!attribute.isSubOption" />
     </t>
 </t>
 <t t-name="web_studio.property.domain">
@@ -93,7 +94,7 @@
         >
             <t t-esc="attribute.label"/>
         </Property>
-        <t t-call="web_studio.property.subOptions" />
+        <t t-call="web_studio.property.subOptions" t-if="!attribute.isSubOption" />
     </t>
 </t>
 <t t-name="web_studio.property.digits">
@@ -112,16 +113,16 @@
 </t>
 
 <t t-name="web_studio.property.boolean">
-    <t t-call="web_studio.property.defaultInput" />
+    <t t-call="web_studio.property.defaultInput" attribute="attribute" />
 </t>
 <t t-name="web_studio.property.field">
-    <t t-call="web_studio.property.selection" />
+    <t t-call="web_studio.property.selection" attribute="attribute" />
 </t>
 <t t-name="web_studio.property.number">
-    <t t-call="web_studio.property.defaultInput" />
+    <t t-call="web_studio.property.defaultInput" attribute="attribute" />
 </t>
 <t t-name="web_studio.property.string">
-    <t t-call="web_studio.property.defaultInput" />
+    <t t-call="web_studio.property.defaultInput" attribute="attribute" />
 </t>
 
 </templates>

@@ -3,7 +3,7 @@ import { useService } from "@web/core/utils/hooks";
 import { registry } from "@web/core/registry";
 import { rpc } from "@web/core/network/rpc";
 import { KeepLast } from "@web/core/utils/concurrency";
-import { Component, markup, onWillStart, onWillUnmount, onWillUpdateProps, xml } from "@odoo/owl";
+import { Component, markup, onWillStart, onWillUnmount, onWillUpdateProps, xml } from "@insilos/owl";
 import { useStudioServiceAsReactive } from "@web_studio/studio_service";
 import { resetViewCompilerCache } from "@web/views/view_compiler";
 

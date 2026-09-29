@@ -1,10 +1,10 @@
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
-import { markup } from "@odoo/owl";
+import { markup } from "@insilos/owl";
 import utils from "@web_studio/utils";
 
 registry.category("web_tour.tours").add("web_studio_new_app_tour", {
-    url: "/odoo/action-studio?mode=home_menu",
+    url: "/insilos/action-studio?mode=home_menu",
     steps: () => [
         {
             trigger: ".o_web_studio_new_app",

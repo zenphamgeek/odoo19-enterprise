@@ -2,7 +2,7 @@ import { formatDate, deserializeDate } from "@web/core/l10n/dates";
 import { Dialog } from "@web/core/dialog/dialog";
 import { user } from "@web/core/user";
 
-import { useState, Component, onWillRender } from "@odoo/owl";
+import { useState, Component, onWillRender } from "@insilos/owl";
 import { useService } from "@web/core/utils/hooks";
 import { groupBy, sortBy } from "@web/core/utils/arrays";
 

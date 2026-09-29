@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 import json
 from contextlib import contextmanager
 from copy import deepcopy
@@ -9,12 +9,12 @@ from psycopg2 import OperationalError
 from itertools import groupby
 from collections import defaultdict
 
-from odoo import http, _, Command, models
-from odoo.http import request, serialize_exception
-from odoo.addons.web_studio.controllers import main
-from odoo.addons.web_studio.controllers.keyed_xml_differ import KeyedXmlDiffer, DIFF_ATTRIBUTE
-from odoo.tools.template_inheritance import apply_inheritance_specs
-from odoo.tools.safe_eval import safe_eval
+from insilos import http, _, Command, models
+from insilos.http import request, serialize_exception
+from insilos.addons.web_studio.controllers import main
+from insilos.addons.web_studio.controllers.keyed_xml_differ import KeyedXmlDiffer, DIFF_ATTRIBUTE
+from insilos.tools.template_inheritance import apply_inheritance_specs
+from insilos.tools.safe_eval import safe_eval
 
 # We are dealing with an HTML document that has QWeb syntax in it (<t />, t-att etc..)
 # in addition to some attributes that are specific to the reportEditor (oe-..., ws-...)

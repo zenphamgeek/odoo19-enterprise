@@ -9,7 +9,7 @@
             <t t-set="meta_description">Trải nghiệm trực tiếp nền tảng Sovereign Industrial AI trên trình duyệt: Bóc tách chứng từ Vertical IDP, Knowledge Graph mạng nơ-ron thực thể, biểu thuế WTO/HS Code, và giả lập Digital Twin thiết bị công nghiệp kích hoạt điều độ FSM tự động.</t>
 
             <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
-                <!-- Top Dropzone for Odoo Website Editor (?enable_editor=1) -->
+                <!-- Top Dropzone for Insilos ERP Website Editor (?enable_editor=1) -->
                 <div class="oe_structure oe_empty" id="oe_structure_sandbox_top"/>
 
                 <!-- ========================================================= -->
@@ -380,7 +380,7 @@
 
                                                     <!-- JSON Code Block Preview -->
                                                     <div class="bg-black bg-opacity-75 p-3 rounded-3 border border-secondary border-opacity-25 font-monospace small mb-3 overflow-auto">
-                                                        <div class="text-secondary small mb-1">// ERP REST API PAYLOAD (Odoo 20 Model: account.move / stock.picking)</div>
+                                                        <div class="text-secondary small mb-1">// ERP REST API PAYLOAD (Insilos ERP Model: account.move / stock.picking)</div>
                                                         <div class="text-mint">{</div>
                                                         <div class="ps-3 text-secondary">"model": <span class="text-white">"customs.declaration"</span>,</div>
                                                         <div class="ps-3 text-secondary">"declaration_no": <span class="text-white">"105829104820/NK"</span>,</div>
@@ -399,7 +399,7 @@
                                                             <span>Xuất JSON / ERP Payload</span>
                                                         </button>
                                                         <button type="button" class="btn btn-outline-secondary rounded-pill px-3 py-2 font-monospace small" id="btn-sandbox-idp-push">
-                                                            <span>Đẩy Vào Odoo 20 Live</span>
+                                                            <span>Đẩy Vào Insilos ERP Live</span>
                                                         </button>
                                                     </div>
                                                     <div class="d-none mt-2 p-2 rounded-2 border border-mint bg-mint bg-opacity-10 font-monospace small" id="ins-idp-sync-toast"/>
@@ -808,7 +808,12 @@
                 </section>
 
                 <!-- ========================================================= -->
-                <!-- SECTION 3: INTERACTIVE DIGITAL TWIN ASSET SIMULATOR       -->
+                <!-- SECTION 3: CCTV AI VISION SAFETY MONITORING & SIMULATOR   -->
+                <!-- ========================================================= -->
+                <t t-call="insilos_website.s_insilos_cctv_ai_camera"/>
+
+                <!-- ========================================================= -->
+                <!-- SECTION 4: INTERACTIVE DIGITAL TWIN ASSET SIMULATOR       -->
                 <!-- ========================================================= -->
                 <section class="s_insilos_digital_twin_simulator o_colored_level o_cc o_cc5 py-5 border-top border-secondary border-opacity-25 position-relative" data-snippet="s_insilos_digital_twin_simulator" data-name="Interactive Digital Twin Asset Simulator" data-bs-theme="dark" id="insilos_digital_twin_section">
                     <div class="container py-lg-4">
@@ -1471,7 +1476,7 @@
                     </div>
                 </section>
 
-                <!-- Bottom Dropzone for Odoo Website Editor (?enable_editor=1) -->
+                <!-- Bottom Dropzone for Insilos ERP Website Editor (?enable_editor=1) -->
                 <div class="oe_structure oe_empty" id="oe_structure_sandbox_bottom"/>
             </main>
         </t>

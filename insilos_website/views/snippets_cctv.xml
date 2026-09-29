@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================= -->
+    <!-- SIGNATURE AI CCTV CAMERA SAFETY MONITORING SNIPPET (MILESTONE M4)  -->
+    <!-- ================================================================= -->
+    <template id="s_insilos_cctv_ai_camera" name="Insilos AI CCTV Safety Camera">
+        <style>
+            @keyframes ins-cctv-strobe {
+                0% { border-color: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.6), inset 0 0 8px rgba(239, 68, 68, 0.3); }
+                100% { border-color: #ff0000; box-shadow: 0 0 35px rgba(255, 0, 0, 0.95), inset 0 0 20px rgba(255, 0, 0, 0.55); }
+            }
+            @keyframes ins-cctv-rec-blink {
+                0%, 100% { opacity: 1; transform: scale(1); }
+                50% { opacity: 0.25; transform: scale(0.85); }
+            }
+            @keyframes ins-siren-pulse {
+                0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+                70% { transform: scale(1.06); box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+                100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+            }
+            .s_insilos_cctv_ai_camera { position: relative; background-color: #070b14; }
+            .s_insilos_cctv_ai_camera .ins-cctv-viewport {
+                position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 440px;
+                background-color: #030712; border-radius: 1rem; overflow: hidden;
+                border: 1px solid rgba(255, 128, 0, 0.35);
+                box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 128, 0, 0.15);
+                user-select: none;
+            }
+            @media (max-width: 767.98px) {
+                .s_insilos_cctv_ai_camera .ins-cctv-viewport { min-height: 280px; aspect-ratio: auto; height: 320px; }
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-viewport video.ins-cctv-video {
+                width: 100%; height: 100%; object-fit: cover; display: block;
+                filter: contrast(1.06) brightness(0.96) saturate(1.05);
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-viewport .ins-cctv-scanlines {
+                position: absolute; inset: 0;
+                background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                            linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+                background-size: 100% 4px, 6px 100%; pointer-events: none; z-index: 4; opacity: 0.65;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-viewport .ins-cctv-corner {
+                position: absolute; width: 20px; height: 20px; pointer-events: none; z-index: 6;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-viewport .ins-corner-tl { top: 14px; left: 14px; border-top: 2px solid #ff8000; border-left: 2px solid #ff8000; }
+            .s_insilos_cctv_ai_camera .ins-cctv-viewport .ins-corner-tr { top: 14px; right: 14px; border-top: 2px solid #ff8000; border-right: 2px solid #ff8000; }
+            .s_insilos_cctv_ai_camera .ins-cctv-viewport .ins-corner-bl { bottom: 14px; left: 14px; border-bottom: 2px solid #ff8000; border-left: 2px solid #ff8000; }
+            .s_insilos_cctv_ai_camera .ins-cctv-viewport .ins-corner-br { bottom: 14px; right: 14px; border-bottom: 2px solid #ff8000; border-right: 2px solid #ff8000; }
+            .s_insilos_cctv_ai_camera .ins-cctv-viewport .ins-cctv-reticle {
+                position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                width: 50px; height: 50px; border: 1px dashed rgba(255, 255, 255, 0.2);
+                border-radius: 50%; pointer-events: none; z-index: 4;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-viewport .ins-cctv-topbar {
+                position: absolute; top: 0; left: 0; right: 0; padding: 10px 18px;
+                background: linear-gradient(180deg, rgba(3, 7, 18, 0.88) 0%, rgba(3, 7, 18, 0) 100%);
+                display: flex; justify-content: space-between; align-items: center; z-index: 7;
+                font-family: var(--bs-font-monospace); font-size: 0.8rem; color: #94a3b8; pointer-events: none;
+            }
+            .s_insilos_cctv_ai_camera .ins-rec-indicator {
+                display: inline-flex; align-items: center; gap: 6px; color: #ef4444; font-weight: 700;
+            }
+            .s_insilos_cctv_ai_camera .ins-rec-dot {
+                width: 10px; height: 10px; background-color: #ef4444; border-radius: 50%;
+                box-shadow: 0 0 8px #ef4444; animation: ins-cctv-rec-blink 1.2s infinite ease-in-out;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-cam-title { color: #f8fafc; font-weight: 700; letter-spacing: 0.05em; }
+            .s_insilos_cctv_ai_camera .ins-cctv-ai-status {
+                display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 20px;
+                background-color: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4);
+                color: #34d399; font-weight: 600; transition: all 0.3s ease;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-ai-status.is-alarm {
+                background-color: rgba(239, 68, 68, 0.28); border-color: rgba(239, 68, 68, 0.65);
+                color: #f87171; animation: ins-cctv-strobe 0.5s infinite alternate;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-bottombar {
+                position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 18px;
+                background: linear-gradient(0deg, rgba(3, 7, 18, 0.92) 0%, rgba(3, 7, 18, 0) 100%);
+                display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+                gap: 10px; z-index: 7; font-family: var(--bs-font-monospace); font-size: 0.75rem;
+                color: #64748b; pointer-events: none;
+            }
+            .s_insilos_cctv_ai_camera .ins-telemetry-tag { color: #94a3b8; }
+            .s_insilos_cctv_ai_camera .ins-telemetry-tag strong { color: #38bdf8; }
+            .s_insilos_cctv_ai_camera .ins-cctv-overlay-layer {
+                position: absolute; inset: 0; z-index: 5; pointer-events: none;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box {
+                position: absolute; border-radius: 4px;
+                transition: opacity 0.2s ease, border-color 0.2s ease;
+                will-change: left, top, width, height;
+                opacity: 1;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-rt-stream {
+                position: absolute; bottom: 44px; left: 0; right: 0; z-index: 6;
+                padding: 4px 18px; background: rgba(5, 10, 20, 0.85);
+                backdrop-filter: blur(6px); border-top: 1px solid rgba(56, 189, 248, 0.25);
+                border-bottom: 1px solid rgba(56, 189, 248, 0.12);
+                font-family: var(--bs-font-monospace); font-size: 0.72rem;
+                transition: background-color 0.25s ease, border-color 0.25s ease;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-rt-stream.is-alarm {
+                background: rgba(185, 28, 28, 0.88) !important;
+                border-top-color: #ef4444 !important;
+                border-bottom-color: #ef4444 !important;
+                animation: ins-cctv-strobe 0.45s infinite alternate ease-in-out;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.is-hidden { opacity: 0 !important; visibility: hidden; }
+            .s_insilos_cctv_ai_camera .ins-cctv-box-tag {
+                position: absolute; top: -24px; left: -2px; font-family: var(--bs-font-monospace);
+                font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px;
+                white-space: nowrap; text-transform: uppercase; letter-spacing: 0.04em;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.ins-bbox-helmet {
+                border: 2px solid #10b981; background-color: rgba(16, 185, 129, 0.12);
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.ins-bbox-helmet .ins-cctv-box-tag {
+                background-color: #10b981; color: #022c22;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.ins-bbox-vest {
+                border: 2px solid #06b6d4; background-color: rgba(6, 182, 212, 0.12);
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.ins-bbox-vest .ins-cctv-box-tag {
+                background-color: #06b6d4; color: #083344;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.ins-bbox-person {
+                border: 1px dashed rgba(255, 255, 255, 0.35); background-color: rgba(255, 255, 255, 0.03);
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.ins-bbox-person .ins-cctv-box-tag {
+                background-color: rgba(30, 41, 59, 0.85); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.ins-bbox-danger-zone {
+                border: 2px dashed #f59e0b;
+                background: repeating-linear-gradient(45deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.08) 12px, transparent 12px, transparent 24px);
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.ins-bbox-danger-zone .ins-cctv-box-tag {
+                background-color: #f59e0b; color: #451a03;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.is-violation {
+                border: 3px solid #ef4444 !important; background-color: rgba(239, 68, 68, 0.26) !important;
+                box-shadow: 0 0 25px rgba(239, 68, 68, 0.85), inset 0 0 15px rgba(239, 68, 68, 0.45) !important;
+                animation: ins-cctv-strobe 0.45s infinite alternate ease-in-out !important;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-box.is-violation .ins-cctv-box-tag {
+                background-color: #ef4444 !important; color: #ffffff !important; font-weight: 900 !important;
+                box-shadow: 0 0 14px rgba(239, 68, 68, 0.9) !important;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-nav .ins-cctv-angle-btn {
+                border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(15, 23, 42, 0.65);
+                color: #cbd5e1; font-size: 0.85rem; transition: all 0.25s ease;
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-nav .ins-cctv-angle-btn:hover {
+                border-color: rgba(255, 128, 0, 0.5); color: #ffffff; background: rgba(255, 128, 0, 0.12);
+            }
+            .s_insilos_cctv_ai_camera .ins-cctv-nav .ins-cctv-angle-btn.is-active {
+                border-color: #ff8000;
+                background: linear-gradient(135deg, rgba(255, 128, 0, 0.25) 0%, rgba(255, 128, 0, 0.08) 100%);
+                color: #ffffff; box-shadow: 0 0 15px rgba(255, 128, 0, 0.3);
+            }
+            .s_insilos_cctv_ai_camera .ins-layer-toggle-card {
+                background-color: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12);
+            }
+            .s_insilos_cctv_ai_camera .ins-siren-indicator {
+                display: none; align-items: center; gap: 8px; padding: 4px 12px;
+                background-color: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444;
+                border-radius: 20px; color: #fca5a5; font-family: var(--bs-font-monospace);
+                font-size: 0.75rem; animation: ins-siren-pulse 1.2s infinite ease-in-out;
+            }
+            .s_insilos_cctv_ai_camera .ins-siren-indicator.is-playing { display: inline-flex; }
+            #insilosCctvAlertModal .modal-content {
+                background-color: #0a0f1d; border: 1px solid rgba(239, 68, 68, 0.5);
+                box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(239, 68, 68, 0.3);
+            }
+            #insilosCctvAlertModal .modal-header {
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(15, 23, 42, 0.9) 100%);
+                border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+            }
+            #insilosCctvAlertModal .ins-modal-evidence-frame {
+                position: relative; border-radius: 8px; overflow: hidden;
+                border: 2px solid #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+            }
+            #insilosCctvAlertModal .ins-modal-evidence-frame img {
+                width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;
+            }
+            #insilosCctvAlertModal .ins-evidence-stamp {
+                position: absolute; top: 10px; right: 10px; background-color: rgba(239, 68, 68, 0.9);
+                color: #ffffff; font-family: var(--bs-font-monospace); font-size: 0.72rem; font-weight: 700;
+                padding: 3px 8px; border-radius: 4px; letter-spacing: 0.05em;
+            }
+            #insilosCctvAlertModal .ins-modal-spec-table td {
+                padding: 6px 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.82rem;
+            }
+            #insilosCctvAlertModal .ins-modal-spec-table td:first-child { color: #94a3b8; width: 38%; }
+            #insilosCctvAlertModal .ins-modal-spec-table td:last-child { color: #f8fafc; font-family: var(--bs-font-monospace); }
+        </style>
+        <section class="s_insilos_cctv_ai_camera o_colored_level o_cc o_cc5 py-5 position-relative overflow-hidden"
+                 data-snippet="s_insilos_cctv_ai_camera"
+                 data-name="Insilos AI CCTV Safety Camera"
+                 data-bs-theme="dark"
+                 id="insilos_cctv_camera_section">
+            <div class="container position-relative z-1 py-4">
+
+                <!-- Section Header -->
+                <div class="row mb-5 text-center">
+                    <div class="col-lg-9 mx-auto">
+                        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-15 border border-primary border-opacity-30 text-cyan small mb-3 font-monospace">
+                            <span class="ins-live-ping--emerald"/>
+                            <span>AI COMPUTER VISION // CCTV LIVE HSE PATROL</span>
+                        </div>
+                        <h2 class="display-5 fw-bold text-white mb-3 ins-title-balance">
+                            Giám Sát Hiện Trường An Toàn Lao Động<br class="d-none d-sm-inline"/> Bằng <span class="o_text_highlight o_text_highlight_underline text-primary position-relative d-inline-block">Camera Trí Tuệ Nhân Tạo (AI Vision)</span>
+                        </h2>
+                        <p class="lead text-secondary fs-5 col-lg-10 mx-auto text-wrap-pretty">
+                            Nhận diện trang bị BHLĐ (Mũ bảo hộ, Áo phản quang), ranh giới vùng nguy hiểm và tự động kích hoạt còi hú hiện trường, khóa liên động máy cơ khí và đẩy hồ sơ sự cố lên Insilos ERP và Vertical GRC thời gian thực.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Multi-Camera Switching Navigation Bar -->
+                <div class="d-flex flex-wrap justify-content-center gap-2 mb-4 ins-cctv-nav">
+                    <button type="button" class="btn ins-cctv-angle-btn is-active rounded-pill px-4 py-2 font-monospace fw-semibold d-inline-flex align-items-center gap-2" data-camera-angle="cnc_ss400">
+                        <svg class="ph-duotone ph-crosshair"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-crosshair"/></svg>
+                        <span>Angle 1: Hiện Trường &amp; Tháp Cẩu</span>
+                    </button>
+                    <button type="button" class="btn ins-cctv-angle-btn rounded-pill px-4 py-2 font-monospace fw-semibold d-inline-flex align-items-center gap-2" data-camera-angle="robot_welding">
+                        <svg class="ph-duotone ph-gear-six"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-gear-six"/></svg>
+                        <span>Angle 2: Hàn Tự Động SS400</span>
+                    </button>
+                    <button type="button" class="btn ins-cctv-angle-btn rounded-pill px-4 py-2 font-monospace fw-semibold d-inline-flex align-items-center gap-2" data-camera-angle="catlai_terminal">
+                        <svg class="ph-duotone ph-truck"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg>
+                        <span>Angle 3: Cổng Kiểm Soát PPE Gate</span>
+                    </button>
+                </div>
+
+                <!-- Main CCTV HUD Viewport -->
+                <div class="row g-4 mb-4">
+                    <div class="col-12">
+                        <div class="ins-cctv-viewport">
+                            <!-- Visual Scanlines & Grid Overlay -->
+                            <div class="ins-cctv-scanlines"/>
+
+                            <!-- Corner Reticles -->
+                            <div class="ins-cctv-corner ins-corner-tl"/>
+                            <div class="ins-cctv-corner ins-corner-tr"/>
+                            <div class="ins-cctv-corner ins-corner-bl"/>
+                            <div class="ins-cctv-corner ins-corner-br"/>
+
+                            <!-- Central Aiming Reticle -->
+                            <div class="ins-cctv-reticle"/>
+
+                            <!-- Live Top Status HUD Bar -->
+                            <div class="ins-cctv-topbar">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="ins-rec-indicator">
+                                        <span class="ins-rec-dot"/>
+                                        <span>REC</span>
+                                    </div>
+                                    <span class="ins-cctv-cam-title">CAM-01 // Giám Sát An Toàn Hiện Trường &amp; Tháp Cẩu</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="ins-cctv-ai-status">
+                                        <span class="ins-live-ping--emerald me-1"/>
+                                        <span>AI PATROL // NOMINAL</span>
+                                    </span>
+                                    <span class="ins-cctv-clock">00:00:00.0</span>
+                                </div>
+                            </div>
+
+                            <!-- Industrial HTML5 Video Player (Authentic Site Supervisor with Hard Hat & PPE) -->
+                            <video class="ins-cctv-video" loop="loop" muted="muted" playsinline="playsinline" autoplay="autoplay" preload="metadata" poster="/insilos_website/static/src/video/cctv_ppe/cctv_cam02_poster.webp">
+                                <source class="ins-cctv-video-source" src="/insilos_website/static/src/video/cctv_ppe/cctv_cam02_site_communication.mp4" type="video/mp4"/>
+                            </video>
+
+                            <!-- AI Vision Bounding Box Overlay Layer (60 FPS Dynamic Keyframe Tracking) -->
+                            <div class="ins-cctv-overlay-layer"/>
+
+                            <!-- Live RT Telemetry Stream HUD -->
+                            <div class="ins-cctv-rt-stream d-flex flex-wrap align-items-center justify-content-between gap-2">
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="text-cyan"><span class="text-secondary">TARGET: </span><strong class="ins-rt-target">GIÁM SÁT VIÊN #01</strong></span>
+                                    <span class="text-white"><span class="text-secondary">BBOX: </span><strong class="ins-rt-bbox">[X: 0.600, Y: 0.060, W: 0.210, H: 0.240]</strong></span>
+                                    <span class="text-emerald"><span class="text-secondary">CONF: </span><strong class="ins-rt-conf">99.7%</strong></span>
+                                </div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="text-warning"><span class="text-secondary">VECTOR: </span><strong class="ins-rt-vector">[dx: +0.000, dy: +0.000]</strong></span>
+                                    <span class="text-emerald"><span class="text-secondary">ĐỘ TRỄ: </span><strong class="ins-rt-latency">12.3ms</strong></span>
+                                    <span class="text-cyan"><span class="text-secondary">FPS: </span><strong class="ins-rt-fps">60.0</strong></span>
+                                    <span class="text-white"><span class="text-secondary">TC: </span><strong class="ins-rt-timecode">00:00.000</strong></span>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Telemetry HUD Bar -->
+                            <div class="ins-cctv-bottombar">
+                                <div class="ins-telemetry-tag">
+                                    <span>VỊ TRÍ: </span>
+                                    <strong class="ins-cctv-cam-location text-white">Khu Thi Công Công Trình Trọng Điểm // Tháp Cẩu &amp; Giàn Giáo Thép</strong>
+                                </div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="ins-telemetry-tag">ĐỘ PHÂN GIẢI: <strong>1080P @ 60FPS</strong></span>
+                                    <span class="ins-telemetry-tag">ĐỘ TRỄ AI: <strong>&lt;12ms P99</strong></span>
+                                    <span class="ins-telemetry-tag">GIAO THỨC: <strong>RTSP / WebRTC H.264</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CCTV Control Console & Telemetry Dashboard (HBox Symmetrical Budget) -->
+                <div class="row g-4 ins-card-row-balanced mb-4">
+                    <!-- Column 1: AI Vision Layers Toggle Switches -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 p-4 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <span class="badge rounded-pill bg-primary bg-opacity-20 text-cyan border border-primary border-opacity-30 px-3 py-1 font-monospace">LỚP LỌC THỊ GIÁC AI</span>
+                                    <span class="text-secondary small font-monospace">YOLOv8x-HSE</span>
+                                </div>
+                                <h4 class="card-title text-white fw-bold mb-2">Bật / Tắt Lớp Lọc AI Vision</h4>
+                                <p class="card-text text-secondary mb-3">Tùy biến hiển thị các lớp nơ-ron nhận diện mũ bảo hộ, áo phản quang và ranh giới vùng nguy hiểm với độ chính xác trên 99%.</p>
+
+                                <div class="ins-layer-toggle-card rounded-3 p-3 mb-3">
+                                    <!-- Toggle 1: Helmet -->
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input ins-check-helmet" type="checkbox" role="switch" id="toggleLayerHelmet" checked="checked"/>
+                                        <label class="form-check-label text-white small d-flex justify-content-between align-items-center w-100" for="toggleLayerHelmet">
+                                            <span>Mũ Bảo Hộ (Safety Helmet)</span>
+                                            <span class="badge bg-success bg-opacity-25 text-emerald font-monospace">#10b981 // 99.4%</span>
+                                        </label>
+                                    </div>
+                                    <!-- Toggle 2: Hi-Vis Vest -->
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input ins-check-vest" type="checkbox" role="switch" id="toggleLayerVest" checked="checked"/>
+                                        <label class="form-check-label text-white small d-flex justify-content-between align-items-center w-100" for="toggleLayerVest">
+                                            <span>Áo Phản Quang (Hi-Vis Vest)</span>
+                                            <span class="badge bg-info bg-opacity-25 text-cyan font-monospace">#06b6d4 // 98.7%</span>
+                                        </label>
+                                    </div>
+                                    <!-- Toggle 3: Danger Zone -->
+                                    <div class="form-check form-switch mb-0">
+                                        <input class="form-check-input ins-check-danger" type="checkbox" role="switch" id="toggleLayerDanger" checked="checked"/>
+                                        <label class="form-check-label text-white small d-flex justify-content-between align-items-center w-100" for="toggleLayerDanger">
+                                            <span>Ranh Giới Vùng Nguy Hiểm</span>
+                                            <span class="badge bg-warning bg-opacity-25 text-warning font-monospace">#f59e0b // Hazard</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-2">
+                                <span class="text-secondary small font-monospace d-flex align-items-center gap-2">
+                                    <span class="ins-live-ping--emerald"/>
+                                    <span>Lớp lọc tự động kích hoạt theo ca làm việc</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Live Incident Simulation & Siren Trigger -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 p-4 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <span class="badge rounded-pill bg-danger bg-opacity-20 text-danger border border-danger border-opacity-30 px-3 py-1 font-monospace">TƯƠNG TÁC HIỆN TRƯỜNG</span>
+                                    <span class="ins-siren-indicator">
+                                        <svg class="ph-duotone ph-speaker-high"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-speaker-high"/></svg>
+                                        <span>CÒI HÚ ĐANG PHÁT</span>
+                                    </span>
+                                </div>
+                                <h4 class="card-title text-white fw-bold mb-2">Mô Phỏng Vi Phạm &amp; Cảnh Báo</h4>
+                                <p class="card-text text-secondary mb-3">Kích hoạt còi hú âm học kép FM (880Hz - 1240Hz), viền cảnh báo đỏ rực và bật cửa sổ khẩn cấp chuẩn ISO 45001.</p>
+
+                                <div class="d-grid gap-2 mb-3">
+                                    <!-- Primary Violation Simulation Trigger Button -->
+                                    <button type="button" class="btn btn-primary rounded-pill py-3 fw-bold ins-btn-simulate-violation d-inline-flex align-items-center justify-content-center gap-2">
+                                        <svg class="ph-duotone ph-warning-octagon fs-5"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-warning-octagon"/></svg>
+                                        <span>Mô Phỏng Vi Phạm PPE Hiện Trường</span>
+                                    </button>
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-pill px-3 py-2 small fw-semibold text-white flex-grow-1 ins-btn-reset-patrol d-inline-flex align-items-center justify-content-center gap-1">
+                                        <svg class="ph-duotone ph-arrows-clockwise"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrows-clockwise"/></svg>
+                                        <span>Đặt Lại Trạng Thái</span>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-light rounded-pill px-3 py-2 small fw-semibold text-white ins-btn-toggle-mute d-inline-flex align-items-center justify-content-center gap-1">
+                                        <span>🔊 Bật/Tắt Còi</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="pt-2">
+                                <span class="text-secondary small font-monospace">Còi hú ứng dụng Web Audio API không phụ thuộc file âm thanh ngoài</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: Live ERP & GRC Integration Ledger -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 p-4 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <span class="badge rounded-pill bg-success bg-opacity-20 text-success border border-success border-opacity-30 px-3 py-1 font-monospace">LIÊN THÔNG HỆ THỐNG</span>
+                                    <span class="text-cyan small font-monospace">ERP ↔ GRC</span>
+                                </div>
+                                <h4 class="card-title text-white fw-bold mb-2">Dữ Liệu Đối Soát ERP &amp; GRC</h4>
+                                <p class="card-text text-secondary mb-3">Đồng bộ hai chiều giữa lệnh bảo trì, lệnh sản xuất trên Insilos ERP và hồ sơ cấp phép an toàn e-PTW trên Vertical GRC.</p>
+
+                                <div class="bg-dark bg-opacity-60 rounded-3 p-3 mb-3 border border-secondary border-opacity-10">
+                                    <div class="d-flex justify-content-between text-secondary small py-1 border-bottom border-secondary border-opacity-10">
+                                        <span>Lệnh công tác:</span>
+                                        <strong class="text-white font-monospace ins-cctv-telemetry-wo">Kiểm tra an toàn tháp cẩu Liebherr 280 EC-H (WO #42)</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between text-secondary small py-1 border-bottom border-secondary border-opacity-10">
+                                        <span>Hiệu suất OEE:</span>
+                                        <strong class="text-emerald font-monospace ins-cctv-telemetry-oee">94.8%</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between text-secondary small py-1">
+                                        <span>Cảm biến:</span>
+                                        <strong class="text-cyan font-monospace ins-cctv-telemetry-sensor">AI-PTZ-S1080P // SENSOR-HSE-01</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column gap-2 pt-2">
+                                <a href="/web#action=2110&amp;id=1" data-live-link="/web#action=2110&amp;id=1" target="_blank" class="btn btn-outline-secondary rounded-pill w-100 d-inline-flex align-items-center justify-content-center gap-2 text-white ins-cctv-erp-link">
+                                    <svg class="ph-duotone ph-wrench"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-wrench"/></svg>
+                                    <span>Mở Lệnh Công Tác Trên Insilos ERP</span>
+                                </a>
+                                <a href="https://vertical.insilos.com/admin/content/hse_incidents" target="_blank" class="btn btn-outline-light rounded-pill w-100 d-inline-flex align-items-center justify-content-center gap-2 text-cyan">
+                                    <svg class="ph-duotone ph-shield-check"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                    <span>Mở Hồ Sơ Cấp Phép Vertical GRC</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- EMERGENCY ALERT MODAL (ISO 45001 PPE VIOLATION DISPATCH)          -->
+        <!-- ================================================================= -->
+        <div class="modal fade" id="insilosCctvAlertModal" tabindex="-1" aria-labelledby="insilosCctvAlertModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content text-white rounded-4 overflow-hidden">
+                    <div class="modal-header py-3 px-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-danger font-monospace px-3 py-1">CRITICAL ALARM // LEVEL 3</span>
+                            <h5 class="modal-title fw-bold m-0" id="insilosCctvAlertModalLabel">
+                                Cảnh Báo Khẩn Cấp: Phát Hiện Vi Phạm BHLĐ (AI PPE Detection)
+                            </h5>
+                        </div>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"/>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="row g-4 align-items-center">
+                            <!-- Left: Evidence Frame -->
+                            <div class="col-md-5">
+                                <div class="ins-modal-evidence-frame">
+                                    <img id="modalAlertEvidenceImg" src="/insilos_website/static/src/img/cctv_ppe/ppe_ppe_non_compliance_no_helmet_13.jpg" alt="AI PPE Evidence Capture"/>
+                                    <span class="ins-evidence-stamp">AI EVIDENCE // ENCRYPTED</span>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <span class="text-secondary small font-monospace">Mã Vi Phạm: </span>
+                                    <strong class="text-danger font-monospace" id="modalAlertViolationCode">VIO-2026-0929-CNC01</strong>
+                                </div>
+                            </div>
+                            <!-- Right: Detailed Spec Table -->
+                            <div class="col-md-7">
+                                <div class="p-3 bg-black bg-opacity-50 rounded-3 border border-secondary border-opacity-25 mb-3">
+                                    <p class="mb-0 text-warning fw-semibold small" id="modalAlertDescription">
+                                        Phát hiện Kỹ thuật viên không đội Mũ bảo hộ bước vào Ranh giới Vùng Nguy hiểm Máy Cắt Laser CNC 12kW!
+                                    </p>
+                                </div>
+
+                                <table class="table table-sm table-borderless ins-modal-spec-table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td>Thời gian ghi nhận:</td>
+                                            <td id="modalAlertTimestamp">2026-09-29T07:54:00Z</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Góc quan sát:</td>
+                                            <td id="modalAlertCamera">CAM-01 — Xưởng Cắt Laser CNC SS400</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vị trí hiện trường:</td>
+                                            <td id="modalAlertLocation">Khu A3 // Trạm Cắt Laser Trumpf TruLaser 5030</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Khung pháp lý:</td>
+                                            <td class="text-warning small" id="modalAlertRegulations">ISO 45001:2018 Clause 8.1.2 // QCVN 05A:2020/BCT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Liên động máy móc:</td>
+                                            <td><span class="badge bg-danger font-monospace">INTERLOCK ENGAGED // E-STOP ARMED</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top border-secondary border-opacity-25 py-3 px-4 bg-dark d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="d-flex gap-2">
+                            <a id="modalBtnGrcLink" href="https://vertical.insilos.com/admin/content/hse_incidents" target="_blank" class="btn btn-outline-light rounded-pill px-3 py-2 small fw-semibold text-cyan d-inline-flex align-items-center gap-1">
+                                <svg class="ph-duotone ph-file-text"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                <span>Mở Hồ Sơ GRC</span>
+                            </a>
+                            <a id="modalBtnErpLink" href="/web#action=2110&amp;id=1" target="_blank" class="btn btn-outline-light rounded-pill px-3 py-2 small fw-semibold text-white d-inline-flex align-items-center gap-1">
+                                <svg class="ph-duotone ph-wrench"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-wrench"/></svg>
+                                <span>Mở Lệnh Insilos ERP</span>
+                            </a>
+                        </div>
+                        <button type="button" id="modalBtnDismissPatrol" class="btn btn-primary rounded-pill px-4 py-2 fw-bold" data-bs-dismiss="modal">
+                            Tắt Còi &amp; Đặt Lại Trạng Thái
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </template>
+
+</odoo>

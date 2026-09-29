@@ -1,7 +1,7 @@
 import { Dialog } from "@web/core/dialog/dialog";
 import { useSortable } from "@web/core/utils/sortable_owl";
 
-import { Component, useRef, useState } from "@odoo/owl";
+import { Component, useRef, useState } from "@insilos/owl";
 
 export class SelectionContentDialog extends Component {
     static components = {

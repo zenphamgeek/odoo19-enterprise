@@ -1,11 +1,11 @@
 from psycopg2 import IntegrityError
 
-from odoo import Command
-from odoo.addons.mail.tests.common import mail_new_test_user
-from odoo.exceptions import AccessError, UserError, ValidationError
-from odoo.tests.common import TransactionCase
-from odoo.tools import mute_logger
-from odoo.tests import tagged
+from insilos import Command
+from insilos.addons.mail.tests.common import mail_new_test_user
+from insilos.exceptions import AccessError, UserError, ValidationError
+from insilos.tests.common import TransactionCase
+from insilos.tools import mute_logger
+from insilos.tests import tagged
 
 
 @tagged('post_install', '-at_install', 'mail_activity')
@@ -94,7 +94,7 @@ class TestStudioApproval(TransactionCase):
             self.rule.method = 'atomize'
         # check that there cannot be 2 entries for the same rule+record
         self.rule.with_user(self.manager).set_approval(res_id=self.record.id, approved=False)
-        with mute_logger('odoo.sql_db'):
+        with mute_logger('insilos.sql_db'):
             with self.assertRaises(IntegrityError, msg="Shouldn't have 2 entries for the same rule+record"):
                 with self.cr.savepoint():
                     self.env['studio.approval.entry'].with_user(self.manager).create({

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 import logging
 import os
 
 from lxml import etree
 
-from odoo.tools import misc, view_validation
+from insilos.tools import misc, view_validation
 
 _logger = logging.getLogger(__name__)
 

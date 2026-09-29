@@ -10,7 +10,7 @@
  *  1. 3-Act Interactive Timeline & Precision Chapter Scrubber (Acts 1, 2, 3)
  *  2. Real-Time Synchronous ERP Telemetry HUD Stream (60 FPS via rAF)
  *  3. Dynamic ERP Tabular Cards & High-Density JSON Audit Stream
- *  4. 1-Click Direct Deep-Link Action to Live Odoo 20 Backend Records
+ *  4. 1-Click Direct Deep-Link Action to Live Insilos ERP Backend Records
  *  5. Complete 13-Video Gold Master Registry (VID-01 to VID-12 + Master 105s)
  *  6. Responsive Dual-Pane Glassmorphism HUD Layout (Desktop, Tablet, Mobile)
  * ============================================================================
@@ -20,10 +20,10 @@
     'use strict';
 
     /**
-     * Resolve Odoo live backend base URL dynamically.
+     * Resolve Insilos ERP live backend base URL dynamically.
      * Defaults to http://localhost:28069 or current window origin.
      */
-    function getOdooBaseUrl() {
+    function getErpBaseUrl() {
         if (typeof window !== 'undefined' && window.location) {
             if (window.location.port === '28069' || window.location.hostname === 'localhost') {
                 return window.location.origin;
@@ -248,7 +248,7 @@
                         title: 'Hành Động Khuyên Dùng Cho C-Level',
                         columns: ['Hành Động', 'Thời Lượng Khảo Sát', 'Đầu Ra Bàn Giao'],
                         rows: [
-                            ['Trực Quan Hóa Trên Odoo Live', 'Tức thời (1 Click)', 'Xem bản ghi thật trên backend'],
+                            ['Trực Quan Hóa Trên Insilos ERP Live', 'Tức thời (1 Click)', 'Xem bản ghi thật trên backend'],
                             ['Khảo Sát Thực Địa KCN', '48 Giờ làm việc', 'Báo cáo tính toán ROI & TCO 3 năm'],
                             ['Kích Hoạt Sandbox Thử Nghiệm', 'Miễn phí 14 ngày', 'Môi trường dữ liệu doanh nghiệp']
                         ]
@@ -713,7 +713,7 @@
                     ],
                     table: {
                         title: 'Thông Tin Lệnh Sản Xuất WH/MO/00010',
-                        columns: ['Thuộc Tính', 'Giá Trị Hệ Thống Odoo 20 Live'],
+                        columns: ['Thuộc Tính', 'Giá Trị Hệ Thống Insilos ERP Live'],
                         rows: [
                             ['Thành Phẩm Sản Xuất', 'SF-CHASSIS-25E: Cụm Khung gầm Chassis hàn gia công'],
                             ['Định Mức Sử Dụng', 'BOM ID 11: BOM-CHASSIS-25E-V1'],
@@ -858,7 +858,7 @@
                         ]
                     },
                     json: {
-                        cta: 'Trực quan hóa trên Odoo Live',
+                        cta: 'Trực quan hóa trên Insilos ERP Live',
                         deep_link: 'http://localhost:28069/web#id=10&model=mrp.production&view_type=form&action=367'
                     }
                 }
@@ -1336,7 +1336,7 @@
                         columns: ['Thông Số Kiểm Tra', 'Kết Quả Quét', 'Hành Động Hệ Thống'],
                         rows: [
                             ['Hạn đăng kiểm rơ-moóc', '2026-09-26 (Đã quá 24h)', 'KÍCH HOẠT KHÓA KHẨN CẤP'],
-                            ['Phần mềm điều độ drayage', 'Nhận tín hiệu Lock từ Odoo Fleet', 'Ẩn xe khỏi danh sách gán cuốc'],
+                            ['Phần mềm điều độ drayage', 'Nhận tín hiệu Lock từ Insilos ERP Fleet', 'Ẩn xe khỏi danh sách gán cuốc'],
                             ['Cổng bảo vệ xuất xưởng', 'Quét biển số camera OCR', 'Đèn đỏ, không mở thanh chắn barie']
                         ]
                     },
@@ -2181,7 +2181,7 @@
                 autoPlay: false,
                 muted: true,
                 showSelector: true,
-                baseUrl: getOdooBaseUrl()
+                baseUrl: getErpBaseUrl()
             }, options);
 
             this.currentVideoId = this.options.defaultVideoId;
@@ -2380,14 +2380,14 @@
                                         </div>
                                     </div>
 
-                                    <!-- 1-Click Deep-Link Action Button to Odoo Live Backend -->
+                                    <!-- 1-Click Deep-Link Action Button to Insilos ERP Live Backend -->
                                     <div class="mt-auto pt-2 border-top border-secondary border-opacity-25">
                                         <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill w-100 py-3 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-lg text-decoration-none ins-deeplink-btn" data-deeplink-btn="true">
                                             ${renderPhosphorIcon('ph-arrow-square-out', 'fs-5')}
-                                            <span class="ins-deeplink-text">Trực quan hóa trên Odoo Live</span>
+                                            <span class="ins-deeplink-text">Trực quan hóa trên Insilos ERP Live</span>
                                         </a>
                                         <div class="small text-secondary font-monospace text-center mt-2 d-flex align-items-center justify-content-center gap-2">
-                                            <span>Mở bản ghi trực tiếp trên Odoo 20 Live Backend (Port 28069)</span>
+                                            <span>Mở bản ghi trực tiếp trên Insilos ERP Live Backend (Port 28069)</span>
                                             <span class="badge bg-secondary bg-opacity-25 text-emerald font-monospace ins-deeplink-target-ref">#VN-MO-00010</span>
                                         </div>
                                     </div>
@@ -2720,12 +2720,12 @@
 
             // 9. Update 1-Click Deep-Link Action
             if (this.deeplinkBtn) {
-                const baseUrl = this.options.baseUrl || getOdooBaseUrl();
+                const baseUrl = this.options.baseUrl || getErpBaseUrl();
                 const model = ms.model || this.currentVideoData.defaultModel;
                 const recordId = ms.recordId || this.currentVideoData.defaultRecordId;
                 const actionId = ms.actionId || this.currentVideoData.defaultActionId;
 
-                // Build deep-link URL supported by Odoo 20
+                // Build deep-link URL supported by Insilos ERP
                 let deepLinkUrl = `${baseUrl}/web#id=${recordId}&model=${model}&view_type=form&action=${actionId}`;
                 this.deeplinkBtn.setAttribute('href', deepLinkUrl);
 
@@ -3076,7 +3076,7 @@
         initInsilosVideoTelemetry();
     }
 
-    // Support Odoo Website Editor snippet dropped events
+    // Support Insilos ERP Website Editor snippet dropped events
     window.addEventListener('website_snippets_loaded', () => initInsilosVideoTelemetry());
     document.addEventListener('snippet_cloned', () => initInsilosVideoTelemetry());
 

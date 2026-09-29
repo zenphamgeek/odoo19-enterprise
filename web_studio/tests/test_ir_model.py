@@ -2,17 +2,17 @@
 from lxml import etree
 from unittest.mock import patch
 
-import odoo
+import insilos
 
-from odoo.tests import tagged
-from odoo.tests.common import TransactionCase
-from odoo.addons.web_studio.wizard.studio_export_wizard import DEFAULT_MODELS_TO_EXPORT, FIELDS_TO_EXPORT, MODELS_WITH_NOUPDATE, RELATIONS_NOT_TO_EXPORT
-from odoo.addons.web_studio.models.studio_export_model import PRESET_MODELS_DEFAULTS, \
+from insilos.tests import tagged
+from insilos.tests.common import TransactionCase
+from insilos.addons.web_studio.wizard.studio_export_wizard import DEFAULT_MODELS_TO_EXPORT, FIELDS_TO_EXPORT, MODELS_WITH_NOUPDATE, RELATIONS_NOT_TO_EXPORT
+from insilos.addons.web_studio.models.studio_export_model import PRESET_MODELS_DEFAULTS, \
     DEFAULT_FIELDS_TO_EXCLUDE, ABSTRACT_MODEL_FIELDS_TO_EXCLUDE, RELATED_MODELS_TO_EXCLUDE
-from odoo.addons.web_studio.controllers.export_utils import XML_FIELDS
-from odoo.addons.web_studio.models.ir_model import OPTIONS_WL
-from odoo.exceptions import ValidationError
-from odoo import Command
+from insilos.addons.web_studio.controllers.export_utils import XML_FIELDS
+from insilos.addons.web_studio.models.ir_model import OPTIONS_WL
+from insilos.exceptions import ValidationError
+from insilos import Command
 
 class TestStudioIrModel(TransactionCase):
 
@@ -470,14 +470,14 @@ class TestStudioIrModel(TransactionCase):
     def test_performance_01_fields_batch(self):
         """Test number of call to _setup_models__ when creating a model with multiple"""
         count_setup_models = 0
-        orig_setup_models = odoo.modules.registry.Registry._setup_models__
+        orig_setup_models = insilos.modules.registry.Registry._setup_models__
 
         def _setup_models(registry, cr, *args, **kwargs):
             nonlocal count_setup_models
             count_setup_models += 1
             orig_setup_models(registry, cr, *args, **kwargs)
 
-        with patch('odoo.modules.registry.Registry._setup_models__', new=_setup_models):
+        with patch('insilos.modules.registry.Registry._setup_models__', new=_setup_models):
             # not: using a specific model (PerformanceIssues and not Rockets) is important since after the rollback of the test,
             # the model will be missing but x_rockets is still in the pool, breaking some optimizations
             self.env['ir.model'].with_context(studio=True).studio_model_create('PerformanceIssues', options=OPTIONS_WL)

@@ -1,5 +1,5 @@
-import { describe, expect, test } from "@odoo/hoot";
-import { animationFrame, Deferred } from "@odoo/hoot-mock";
+import { describe, expect, test } from "@insilos/hoot";
+import { animationFrame, Deferred } from "@insilos/hoot-mock";
 import { mountWithCleanup, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
 import { SUCCESS_SIGNAL } from "@web/webclient/clickbot/clickbot";
@@ -33,7 +33,7 @@ test("clickbot clickeverywhere test", async () => {
     });
 
     const webClient = await mountWithCleanup(WebClientEnterprise);
-    patchWithCleanup(odoo, {
+    patchWithCleanup(insilos, {
         info: {
             isEnterprise: 1,
         },

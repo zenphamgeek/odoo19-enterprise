@@ -1,6 +1,6 @@
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
-import { markup } from "@odoo/owl";
+import { markup } from "@insilos/owl";
 
 registry.category("web_tour.tours").add("web_studio_home_menu_background_tour", {
     url: "/insilos",

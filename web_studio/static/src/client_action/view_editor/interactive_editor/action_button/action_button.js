@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component, useState } from "@insilos/owl";
 
 export class AddButtonAction extends Component {
     static props = {};

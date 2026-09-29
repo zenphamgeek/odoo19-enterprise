@@ -195,7 +195,7 @@ export class ReportEditorPlugin extends Plugin {
                             fieldString || `field: "${qwebVar}.${fieldNameChain}"`
                         );
                         popoverAnchor.setAttribute("t-field", `${qwebVar}.${fieldNameChain}`);
-                        if (odoo.debug) {
+                        if (insilos.debug) {
                             popoverAnchor.setAttribute("title", `${qwebVar}.${fieldNameChain}`);
                         }
 
@@ -438,7 +438,7 @@ export class ReportEditorPlugin extends Plugin {
                     span.setAttribute("data-oe-demo", defaultValue);
                     span.setAttribute("t-field", `${qwebVar}.${fieldNameChain}`);
 
-                    if (odoo.debug) {
+                    if (insilos.debug) {
                         span.setAttribute("title", `${qwebVar}.${fieldNameChain}`);
                     }
 

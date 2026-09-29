@@ -1,4 +1,4 @@
-import { Component, onWillUpdateProps, useState, useSubEnv, useRef, markRaw } from "@odoo/owl";
+import { Component, onMounted, onWillUpdateProps, useState, useSubEnv, useRef, markRaw } from "@insilos/owl";
 
 import { useBus, useService } from "@web/core/utils/hooks";
 import { registry } from "@web/core/registry";
@@ -57,7 +57,7 @@ export class ViewEditor extends Component {
         this.rendererRef = useRef("viewRenderer");
 
         const initialState = {};
-        const breadcrumbs = this.env.editionFlow.breadcrumbs;
+        const breadcrumbs = this.env.editionFlow?.breadcrumbs || [];
         if (breadcrumbs.length) {
             initialState.showInvisible = breadcrumbs[0].initialState.showInvisible;
             initialState.activeNodeXpath = breadcrumbs.at(-1).initialState.activeNodeXpath;
@@ -67,13 +67,6 @@ export class ViewEditor extends Component {
 
         useSetupAction({
             getLocalState: () => {
-                // Use this as a hook that is triggered when the actionService knows
-                // this component will be unmounted, is still alive and the new action
-                // is being built.
-                // We store the state in the breadcrumbs, because there two ways
-                // to respawn the editor:
-                // - the editor's breadcrumbs
-                // - the standard actionService breadcrumbs
                 const breadcrumbs = this.viewEditorModel.breadcrumbs;
                 breadcrumbs[0].initialState = markRaw({
                     showInvisible: this.viewEditorModel.showInvisible,

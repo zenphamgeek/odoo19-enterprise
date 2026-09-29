@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component, useState } from "@insilos/owl";
 import { registry } from "@web/core/registry";
 import { pivotView } from "@web/views/pivot/pivot_view";
 

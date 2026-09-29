@@ -1,4 +1,4 @@
-import { Component, useRef, useState } from "@odoo/owl";
+import { Component, useRef, useState } from "@insilos/owl";
 import { getCssFromPaperFormat } from "@web_studio/client_action/report_editor/utils";
 import { useThrottleForAnimation } from "@web/core/utils/timing";
 import { ErrorDisplay } from "@web_studio/client_action/report_editor/error_display";

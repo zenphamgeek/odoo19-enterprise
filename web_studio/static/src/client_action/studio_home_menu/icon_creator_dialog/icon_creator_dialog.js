@@ -4,7 +4,7 @@ import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { IconCreator } from "@web_studio/client_action/icon_creator/icon_creator";
 
-import { Component, useState } from "@odoo/owl";
+import { Component, useState } from "@insilos/owl";
 
 export class IconCreatorDialog extends Component {
     static props = {

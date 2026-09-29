@@ -1,11 +1,11 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 from ast import literal_eval
 import logging
 
-from odoo import api, models, fields, _
-from odoo.exceptions import ValidationError, UserError
-from odoo.fields import Command, Domain
+from insilos import api, models, fields, _
+from insilos.exceptions import ValidationError, UserError
+from insilos.fields import Command, Domain
 from collections import defaultdict
 
 
@@ -545,9 +545,9 @@ class StudioApprovalRule(models.Model):
         :param bool approved: whether the rule is approved or rejected
         :return: True if the rule was approved, False if it was rejected
         :rtype: boolean
-        :raise: odoo.exceptions.AccessError when the user does not have write
+        :raise: insilos.exceptions.AccessError when the user does not have write
                 access to the underlying record
-        :raise: odoo.exceptions.UserError when any of the other checks failed
+        :raise: insilos.exceptions.UserError when any of the other checks failed
         """
         self.ensure_one()
         entry = self._set_approval(res_id, approved)
@@ -561,9 +561,9 @@ class StudioApprovalRule(models.Model):
                            (the model comes from the rule itself)
         :return: True
         :rtype: boolean
-        :raise: odoo.exceptions.AccessError when the user does not have write
+        :raise: insilos.exceptions.AccessError when the user does not have write
                 access to the underlying record
-        :raise: odoo.exceptions.UserError when any there is no existing entry
+        :raise: insilos.exceptions.UserError when any there is no existing entry
                 to cancel or when the user is trying to cancel an entry that
                 they didn't create themselves
         """
@@ -621,10 +621,10 @@ class StudioApprovalRule(models.Model):
                            (the model comes from the rule itself)
         :param bool approved: whether the rule is approved or rejected
         :return: a new approval entry
-        :rtype: :class:`~odoo.addons.web_studio.models.StudioApprovalEntry`
-        :raise: odoo.exceptions.AccessError when the user does not have write
+        :rtype: :class:`~insilos.addons.web_studio.models.StudioApprovalEntry`
+        :raise: insilos.exceptions.AccessError when the user does not have write
                 access to the underlying record
-        :raise: odoo.exceptions.UserError when any of the other checks failed
+        :raise: insilos.exceptions.UserError when any of the other checks failed
         """
         self.ensure_one()
         self = self._clean_context()
@@ -637,7 +637,7 @@ class StudioApprovalRule(models.Model):
             return None
         self.env.cr.execute('SELECT id FROM studio_approval_rule WHERE id IN %s FOR UPDATE NOWAIT', (all_rule_ids,))
         # NOTE: despite the 'NOWAIT' modifier, the query will actually be retried by
-        # Odoo itself (not PG); the NOWAIT ensures that no deadlock will happen
+        # Insilos itself (not PG); the NOWAIT ensures that no deadlock will happen
         # check if the user has write access to the record
         record = self.env[self.sudo().model_name].browse(res_id)
         record.check_access('write')

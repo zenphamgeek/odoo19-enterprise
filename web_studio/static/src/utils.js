@@ -1,4 +1,4 @@
-/** @odoo-module default=false **/
+/** @insilos-module default=false **/
 export const COLORS = [
     "#FFFFFF",
     "#262c34",

@@ -1,7 +1,7 @@
 from lxml import etree
 
-from odoo import http
-from odoo.http import request
+from insilos import http
+from insilos.http import request
 
 class WebStudioController(http.Controller):
 

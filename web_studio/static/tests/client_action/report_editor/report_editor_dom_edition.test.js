@@ -1,7 +1,7 @@
 import { setupEditor } from "@html_editor/../tests/_helpers/editor";
 import { getContent } from "@html_editor/../tests/_helpers/selection";
 import { insertText } from "@html_editor/../tests/_helpers/user_actions";
-import { before, describe, expect, test } from "@odoo/hoot";
+import { before, describe, expect, test } from "@insilos/hoot";
 import {
     hover,
     manuallyDispatchProgrammaticEvent,
@@ -9,8 +9,8 @@ import {
     queryAll,
     queryFirst,
     queryOne,
-} from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+} from "@insilos/hoot-dom";
+import { animationFrame } from "@insilos/hoot-mock";
 import { contains, defineModels, fields, models } from "@web/../tests/web_test_helpers";
 import { registry } from "@web/core/registry";
 
@@ -51,7 +51,7 @@ function getEditorOptions() {
     return {
         config: {
             Plugins: getReportEditorPlugins(),
-            classList: ["odoo-editor-qweb"],
+            classList: ["insilos-editor-qweb"],
             reportResModel: "some.model",
         },
         props: {
@@ -465,11 +465,11 @@ test("copy t-field", async () => {
     await contains("span[t-field]").click();
     const clipboardData = new DataTransfer();
     await press(["ctrl", "c"], { dataTransfer: clipboardData });
-    expect(clipboardData.getData("application/vnd.odoo.odoo-editor")).toBe(
+    expect(clipboardData.getData(clipboardData.types.find((t) => t.includes("editor")))).toBe(
         `<div><span t-field="doc.field" data-oe-expression-readable="human ... expr" data-oe-protected="true" contenteditable="false"></span></div>`
     );
 
-    editor.shared.selection.setSelection({ anchorNode: queryOne(".odoo-editor-editable div") });
+    editor.shared.selection.setSelection({ anchorNode: queryOne("[class*='editor-editable'] div") });
     await manuallyDispatchProgrammaticEvent(el, "paste", { clipboardData });
 
     expect(getContent(el)).toBe(

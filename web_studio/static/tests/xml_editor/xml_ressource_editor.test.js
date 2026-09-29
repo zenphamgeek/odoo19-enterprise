@@ -1,8 +1,8 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { describe, expect, test } from "@odoo/hoot";
-import { queryOne } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
-import { Component, reactive, useState, xml } from "@odoo/owl";
+import { describe, expect, test } from "@insilos/hoot";
+import { queryOne } from "@insilos/hoot-dom";
+import { animationFrame } from "@insilos/hoot-mock";
+import { Component, reactive, useState, xml } from "@insilos/owl";
 import { contains, mountWithCleanup, onRpc } from "@web/../tests/web_test_helpers";
 import { XmlResourceEditor } from "@web_studio/client_action/xml_resource_editor/xml_resource_editor";
 

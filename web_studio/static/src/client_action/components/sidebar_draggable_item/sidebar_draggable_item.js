@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 
 export class SidebarDraggableItem extends Component {
     static template = "web_studio.SidebarDraggableItem";

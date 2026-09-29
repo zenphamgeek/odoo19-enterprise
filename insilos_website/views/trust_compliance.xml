@@ -779,7 +779,240 @@
                     </div>
                 </section>
 
-                <!-- Section 3: Audit Evidence Dossier (Downloadable Packages with SHA-256) -->
+                <!-- ========================================================= -->
+                <!-- SECTION 3: CCTV AI VISION SAFETY & ISO 45001 AUDIT CAMERA -->
+                <!-- ========================================================= -->
+                <t t-call="insilos_website.s_insilos_cctv_ai_camera"/>
+
+                <!-- ========================================================= -->
+                <!-- SECTION 3B: E2E ERP-GRC SYNCHRONIZATION RUNTIME            -->
+                <!-- ========================================================= -->
+                <section id="e2e-erp-grc-runtime" class="s_features o_colored_level o_cc o_cc5 pt80 pb80 position-relative ins-radial-glow border-top border-secondary border-opacity-25" data-snippet="s_insilos_e2e_runtime" data-name="E2E ERP-GRC Synchronization Runtime" data-bs-theme="dark">
+                    <div class="container position-relative z-1">
+                        <!-- Section Header -->
+                        <div class="row text-center mb-5">
+                            <div class="col-lg-9 mx-auto">
+                                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-15 border border-primary border-opacity-30 text-cyan small mb-3 font-monospace">
+                                    <span class="ins-live-ping--emerald"/>
+                                    <span>CROSS-SYSTEM E2E RUNTIME // ERP &lt;-&gt; GRC INTERLOCK</span>
+                                </div>
+                                <h2 class="display-5 fw-bold text-white mb-3 ins-title-balance">
+                                    Luồng Đối Soát Nghiệp Vụ Liên Thông Giữa Insilos ERP &amp; Vertical GRC
+                                </h2>
+                                <p class="lead text-secondary fs-5 col-lg-10 mx-auto text-wrap-pretty">
+                                    Khép kín vòng đời vận hành công nghiệp: Từ kế hoạch bảo trì thiết bị, cấp phép an toàn hiện trường, camera AI nhận diện vi phạm đến hạch toán tổn thất kế toán và phong tỏa giải ngân nhà thầu.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 3 Interactive Workflow Navigation Tabs -->
+                        <div class="d-flex flex-wrap justify-content-center gap-2 mb-5 ins-e2e-nav">
+                            <button type="button" class="btn btn-outline-info rounded-pill px-4 py-2 ins-e2e-tab-btn active" data-flow="1">
+                                <span class="font-monospace text-cyan me-1">01.</span>
+                                <span>Khóa An Toàn Lệnh Công Tác &amp; Cấp Phép e-PTW</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-info rounded-pill px-4 py-2 ins-e2e-tab-btn" data-flow="2">
+                                <span class="font-monospace text-cyan me-1">02.</span>
+                                <span>Hạch Toán Chi Phí Sự Cố Sang Sổ Cái Kế Toán</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-info rounded-pill px-4 py-2 ins-e2e-tab-btn" data-flow="3">
+                                <span class="font-monospace text-cyan me-1">03.</span>
+                                <span>Thẻ Điểm Nhà Thầu HSE &amp; Khóa Đơn Mua PO</span>
+                            </button>
+                        </div>
+
+                        <!-- Flow Panes -->
+                        <div class="ins-e2e-panes">
+                            <!-- Pane 1: Work Order Safety Lock <-> e-PTW -->
+                            <div class="ins-e2e-pane active" id="ins-e2e-pane-1">
+                                <div class="card bg-dark bg-opacity-75 border border-secondary border-opacity-30 rounded-4 p-4 p-lg-5 shadow-2xl mb-4">
+                                    <div class="row align-items-center g-4 mb-4">
+                                        <div class="col-lg-8">
+                                            <div class="d-flex align-items-center gap-2 mb-2">
+                                                <span class="badge bg-primary bg-opacity-25 text-cyan font-monospace px-3 py-1">WORK ORDER INTERLOCK PROTOCOL</span>
+                                                <span class="badge bg-success bg-opacity-20 text-mint font-monospace">ACTIVE SYNC (8.4ms)</span>
+                                            </div>
+                                            <h3 class="text-white fw-bold mb-2">Khóa Liên Động An Toàn Lệnh Công Tác ERP &amp; Giấy Phép e-PTW</h3>
+                                            <p class="text-secondary mb-0">
+                                                Khi Lệnh sản xuất hoặc Lệnh bảo trì trên Insilos ERP chạm ngưỡng nguy hại cao, hệ thống tự động khóa trạng thái Safety Lock. Phân xưởng không thể vận hành máy cho đến khi Vertical GRC cấp phép e-PTW và hoàn tất cô lập năng lượng LOTO.
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-4 text-lg-end">
+                                            <div class="d-flex flex-column flex-sm-row flex-lg-column gap-2">
+                                                <a href="/web#action=insilos_erp_maintenance" class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center justify-content-center gap-2">
+                                                    <svg class="ph-duotone ph-gear-six ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-gear-six"/></svg>
+                                                    <span>Mở Lệnh Công Tác Insilos ERP</span>
+                                                </a>
+                                                <a href="https://vertical.insilos.com" target="_blank" rel="noopener" class="btn btn-outline-info rounded-pill px-4 py-2 d-inline-flex align-items-center justify-content-center gap-2">
+                                                    <svg class="ph-duotone ph-shield-check ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                                    <span>Mở Thẩm Định Trên Vertical GRC</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Flow Diagram Grid -->
+                                    <div class="row g-3 text-center">
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-white-10 h-100">
+                                                <div class="text-cyan font-monospace small mb-1">BƯỚC 1: KHỞI TẠO</div>
+                                                <h6 class="text-white fw-bold mb-2">Insilos ERP Work Order</h6>
+                                                <p class="text-secondary small mb-0">Kỹ sư lập Lệnh bảo trì <code>WO-MAIN-2026-04192</code>. Cờ <code>is_high_risk = True</code> kích hoạt Khóa an toàn.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-cyan border-opacity-30 h-100">
+                                                <div class="text-cyan font-monospace small mb-1">BƯỚC 2: ĐỒNG BỘ PAYLOAD</div>
+                                                <h6 class="text-white fw-bold mb-2">Connector Engine</h6>
+                                                <p class="text-secondary small mb-0">Đẩy JSON Payload sang Vertical GRC qua REST API bảo mật. Kiểm tra đối soát SIMOPS không gian thời gian.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-white-10 h-100">
+                                                <div class="text-mint font-monospace small mb-1">BƯỚC 3: PHÊ DUYỆT</div>
+                                                <h6 class="text-white fw-bold mb-2">Vertical GRC e-PTW</h6>
+                                                <p class="text-secondary small mb-0">Giám sát viên ký số Giấy phép e-PTW. Kiểm định nồng độ khí Oxy/LEL đạt chuẩn ISO 45001.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-success border-opacity-30 h-100">
+                                                <div class="text-mint font-monospace small mb-1">BƯỚC 4: MỞ KHÓA VẬN HÀNH</div>
+                                                <h6 class="text-white fw-bold mb-2">Unlock Lệnh ERP</h6>
+                                                <p class="text-secondary small mb-0">Webhook <code>permit_approved</code> gửi ngược về Insilos ERP mở khóa điện máy CNC bắt đầu thi công.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pane 2: Incident Cost Accounting <-> General Ledger -->
+                            <div class="ins-e2e-pane d-none" id="ins-e2e-pane-2">
+                                <div class="card bg-dark bg-opacity-75 border border-secondary border-opacity-30 rounded-4 p-4 p-lg-5 shadow-2xl mb-4">
+                                    <div class="row align-items-center g-4 mb-4">
+                                        <div class="col-lg-8">
+                                            <div class="d-flex align-items-center gap-2 mb-2">
+                                                <span class="badge bg-warning bg-opacity-25 text-warning font-monospace px-3 py-1">ISO 45001 FINANCIAL POSTING</span>
+                                                <span class="badge bg-success bg-opacity-20 text-mint font-monospace">GENERAL LEDGER INTEGRATED</span>
+                                            </div>
+                                            <h3 class="text-white fw-bold mb-2">Hạch Toán Chi Phí Sự Cố &amp; Near-Miss Sang Sổ Cái Kế Toán ERP</h3>
+                                            <p class="text-secondary mb-0">
+                                                Khi sự cố an toàn hoặc tình huống suýt ngã được điều tra trên Vertical GRC, tổn thất kinh tế và chi phí khắc phục được định lượng tự động và kết chuyển thành bút toán Sổ cái trên Insilos ERP (TK 642 / TK 811), đảm bảo minh bạch tài chính kiểm toán.
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-4 text-lg-end">
+                                            <div class="d-flex flex-column flex-sm-row flex-lg-column gap-2">
+                                                <a href="/web#action=insilos_erp_accounting" class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center justify-content-center gap-2">
+                                                    <svg class="ph-duotone ph-file-text ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-text"/></svg>
+                                                    <span>Mở Sổ Cái Trên Insilos ERP</span>
+                                                </a>
+                                                <a href="https://vertical.insilos.com" target="_blank" rel="noopener" class="btn btn-outline-info rounded-pill px-4 py-2 d-inline-flex align-items-center justify-content-center gap-2">
+                                                    <svg class="ph-duotone ph-warning ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-warning"/></svg>
+                                                    <span>Mở Hồ Sơ Sự Cố Trên Vertical GRC</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Flow Diagram Grid -->
+                                    <div class="row g-3 text-center">
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-white-10 h-100">
+                                                <div class="text-warning font-monospace small mb-1">BƯỚC 1: ĐIỀU TRA RCA</div>
+                                                <h6 class="text-white fw-bold mb-2">Vertical GRC Hồ Sơ</h6>
+                                                <p class="text-secondary small mb-0">HSE lập biên bản theo SOP-03: Phân tích 5-Why, biểu đồ Ishikawa và xác định nguyên nhân gốc rễ.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-warning border-opacity-30 h-100">
+                                                <div class="text-warning font-monospace small mb-1">BƯỚC 2: ĐỊNH LƯỢNG TỔN THẤT</div>
+                                                <h6 class="text-white fw-bold mb-2">Bóc Tách Chi Phí</h6>
+                                                <p class="text-secondary small mb-0">Định lượng thiệt hại: Giờ dừng máy phát điện, vật tư thay thế, viện phí và dự phòng bảo hiểm bồi thường.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-white-10 h-100">
+                                                <div class="text-cyan font-monospace small mb-1">BƯỚC 3: ĐỒNG BỘ KẾ TOÁN</div>
+                                                <h6 class="text-white fw-bold mb-2">API Giao Dịch ERP</h6>
+                                                <p class="text-secondary small mb-0">API chuyển đổi dữ liệu thành bút toán <code>account.move</code> kèm mã định danh tham chiếu sự cố SHA-256.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-success border-opacity-30 h-100">
+                                                <div class="text-mint font-monospace small mb-1">BƯỚC 4: HẠCH TOÁN SỔ CÁI</div>
+                                                <h6 class="text-white fw-bold mb-2">Insilos ERP Kế Toán</h6>
+                                                <p class="text-secondary small mb-0">Cập nhật ngay vào Sổ cái tổng hợp, báo cáo tài chính quản trị và hồ sơ thanh tra thuế/kiểm toán.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pane 3: Contractor HSE Scorecard & Automated PO Freeze -->
+                            <div class="ins-e2e-pane d-none" id="ins-e2e-pane-3">
+                                <div class="card bg-dark bg-opacity-75 border border-secondary border-opacity-30 rounded-4 p-4 p-lg-5 shadow-2xl mb-4">
+                                    <div class="row align-items-center g-4 mb-4">
+                                        <div class="col-lg-8">
+                                            <div class="d-flex align-items-center gap-2 mb-2">
+                                                <span class="badge bg-danger bg-opacity-25 text-danger font-monospace px-3 py-1">AUTOMATED SANCTION PROTOCOL</span>
+                                                <span class="badge bg-danger bg-opacity-20 text-danger font-monospace">PURCHASE ORDER FREEZE</span>
+                                            </div>
+                                            <h3 class="text-white fw-bold mb-2">Đánh Giá Thẻ Điểm HSE Nhà Thầu &amp; Khóa Tự Động Đơn Mua Hàng ERP</h3>
+                                            <p class="text-secondary mb-0">
+                                                Camera AI và giám sát viên hiện trường ghi nhận vi phạm BHLĐ (Form-06). Khi điểm an toàn của nhà thầu tụt dưới ngưỡng 80% (hoặc chạm vi phạm cấp 3), Vertical GRC kích hoạt lệnh phong tỏa tức thì trên phân hệ Mua hàng Insilos ERP, đình chỉ giải ngân PO.
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-4 text-lg-end">
+                                            <div class="d-flex flex-column flex-sm-row flex-lg-column gap-2">
+                                                <a href="/web#action=insilos_erp_purchase" class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center justify-content-center gap-2">
+                                                    <svg class="ph-duotone ph-lock-key ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lock-key"/></svg>
+                                                    <span>Mở Quản Lý PO Insilos ERP</span>
+                                                </a>
+                                                <a href="https://vertical.insilos.com" target="_blank" rel="noopener" class="btn btn-outline-info rounded-pill px-4 py-2 d-inline-flex align-items-center justify-content-center gap-2">
+                                                    <svg class="ph-duotone ph-shield-check ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                                    <span>Mở Thẻ Điểm Nhà Thầu Vertical GRC</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Flow Diagram Grid -->
+                                    <div class="row g-3 text-center">
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-white-10 h-100">
+                                                <div class="text-danger font-monospace small mb-1">BƯỚC 1: PHÁT HIỆN VI PHẠM</div>
+                                                <h6 class="text-white fw-bold mb-2">Camera AI CCTV 60 FPS</h6>
+                                                <p class="text-secondary small mb-0">AI phát hiện công nhân nhà thầu không đội mũ bảo hộ. Xuất biên bản Form-06 kèm ảnh bằng chứng.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-danger border-opacity-30 h-100">
+                                                <div class="text-danger font-monospace small mb-1">BƯỚC 2: TRỪ ĐIỂM HSE</div>
+                                                <h6 class="text-white fw-bold mb-2">Vertical GRC Scorecard</h6>
+                                                <p class="text-secondary small mb-0">Trừ 15 điểm an toàn. Điểm tích lũy nhà thầu giảm xuống 72% (&lt; 80% ngưỡng cho phép).</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-white-10 h-100">
+                                                <div class="text-cyan font-monospace small mb-1">BƯỚC 3: PHONG TỎA HỢP ĐỒNG</div>
+                                                <h6 class="text-white fw-bold mb-2">Automated PO Lock</h6>
+                                                <p class="text-secondary small mb-0">Hệ thống kích hoạt webhook khóa trạng thái Đơn mua hàng PO của nhà thầu trên Insilos ERP.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded-4 bg-black bg-opacity-60 border border-danger border-opacity-50 h-100">
+                                                <div class="text-danger font-monospace small mb-1">BƯỚC 4: ĐÌNH CHỈ GIẢI NGÂN</div>
+                                                <h6 class="text-white fw-bold mb-2">Insilos ERP Purchase</h6>
+                                                <p class="text-secondary small mb-0">Kế toán bị chặn giải ngân tạm ứng. Cấm phát hành PO mới cho đến khi nhà thầu hoàn tất tái đào tạo.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Audit Evidence Dossier (Downloadable Packages with SHA-256) -->
                 <section id="audit-vault" class="s_media_list o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_insilos_audit_vault" data-name="Audit Evidence Dossier" data-bs-theme="dark">
                     <div class="container">
                         <div class="text-center mb-5">
@@ -1096,7 +1329,7 @@
                                 <span>REGULATORY DEFENSE ASSURANCE</span>
                             </div>
                             <h2 class="display-4 fw-bold text-white mb-3 ins-title-balance">
-                                Sẵn Sàng Cho Mọi Kỳ Kiểm Toán &amp;<br class="d-none d-sm-inline"/> Thanh Tra Nhà Nước Cùng Insilos GRC?
+                                Sẵn Sàng Cho Mọi Kỳ Kiểm Toán &amp;<br class="d-none d-sm-inline"/> Thanh Tra Nhà Nước Cùng Vertical GRC?
                             </h2>
                             <p class="lead text-secondary mb-4 ins-proof-desc">
                                 Liên hệ ngay với bộ phận tư vấn tuân thủ GRC của Insilos để nhận trọn bộ hồ sơ kiểm toán mẫu và thiết kế lộ trình chuyển đổi không rủi ro cho doanh nghiệp.

@@ -1,4 +1,4 @@
-import { useSubEnv } from "@odoo/owl";
+import { useSubEnv } from "@insilos/owl";
 import { patch } from "@web/core/utils/patch";
 import { FormController } from "@web/views/form/form_controller";
 

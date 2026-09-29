@@ -1,4 +1,4 @@
-import { Component, onWillRender, useState } from "@odoo/owl";
+import { Component, onWillRender, useState } from "@insilos/owl";
 import { router } from "@web/core/browser/router";
 import { useService } from "@web/core/utils/hooks";
 import { humanReadableError } from "@web_studio/client_action/report_editor/utils";

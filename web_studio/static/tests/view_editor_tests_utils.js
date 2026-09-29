@@ -1,6 +1,6 @@
-import { getFixture } from "@odoo/hoot";
-import { waitFor } from "@odoo/hoot-dom";
-import { Component, useSubEnv, xml } from "@odoo/owl";
+import { getFixture } from "@insilos/hoot";
+import { waitFor } from "@insilos/hoot-dom";
+import { Component, useSubEnv, xml } from "@insilos/owl";
 
 import {
     contains,

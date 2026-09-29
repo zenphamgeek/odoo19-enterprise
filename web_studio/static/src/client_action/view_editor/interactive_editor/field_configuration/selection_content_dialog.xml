@@ -21,10 +21,10 @@
                 <t t-set="editedSelection" t-value="getSelectionFromItem(editedItem)" />
                 <div class="flex-shrink-0 w-100">Editing item: <b t-esc="oldValue.get(editedSelection)[0]" /></div>
                 <label style="max-width: 40%;">Label
-                    <input t-model="editedSelection[1]" class="w-100" />
+                    <input t-att-value="editedSelection[1]" t-on-input="(ev) => editedSelection[1] = ev.target.value" class="w-100" />
                 </label>
                 <label style="max-width: 30%;">Value
-                    <input t-model="editedSelection[0]" class="w-100" />
+                    <input t-att-value="editedSelection[0]" t-on-input="(ev) => editedSelection[0] = ev.target.value" class="w-100" />
                 </label>
                 <div>
                     <button class="btn btn-primary btn btn-primary fa fa-check" t-on-click="() => this.editItem(editedItem)"/>

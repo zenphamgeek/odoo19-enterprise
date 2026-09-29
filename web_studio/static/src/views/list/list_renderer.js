@@ -15,11 +15,11 @@ export const patchListRendererStudio = () => ({
      * @override
      */
     onSelectedAddCustomField() {
-        this.studioService.open();
+        this.studioService?.open();
     },
 
     isStudioEditable() {
-        return !this.studioService.mode && super.isStudioEditable();
+        return !this.studioService?.mode && super.isStudioEditable();
     },
 });
 

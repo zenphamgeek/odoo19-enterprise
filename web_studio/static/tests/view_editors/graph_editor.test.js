@@ -1,8 +1,8 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { describe, expect, test } from "@odoo/hoot";
-import { Deferred } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
-import { onMounted } from "@odoo/owl";
+import { describe, expect, test } from "@insilos/hoot";
+import { Deferred } from "@insilos/hoot-dom";
+import { animationFrame } from "@insilos/hoot-mock";
+import { onMounted } from "@insilos/owl";
 import {
     contains,
     defineModels,

@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component, useState } from "@insilos/owl";
 import { useOwnedDialogs, useAutofocus } from "@web/core/utils/hooks";
 import { Dialog } from "@web/core/dialog/dialog";
 

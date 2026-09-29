@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 import { user } from "@web/core/user";
 import { FileInput } from "@web/core/file_input/file_input";
 import { SelectMenu } from "@web/core/select_menu/select_menu";

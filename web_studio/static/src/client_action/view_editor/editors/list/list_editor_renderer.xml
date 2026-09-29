@@ -3,11 +3,11 @@
 
   <t t-name="web_studio.ListEditorRenderer" t-inherit="web.ListRenderer" >
 
-    <xpath expr="//*[@t-ref='table']" position="before">
+    <xpath expr="//table" position="before">
       <SelectionHeaderButtons t-if="!this.env.viewEditorModel.isEditingSubview" headerButtons="props.archInfo.headerButtons" />
     </xpath>
 
-    <xpath expr="//*[@t-ref='table']" position="attributes">
+    <xpath expr="//table" position="attributes">
       <attribute name="t-on-click.capture">onTableClicked</attribute>
       <attribute name="t-on-mouseover">onTableHover</attribute>
       <attribute name="t-on-mouseout">onTableHover</attribute>

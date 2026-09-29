@@ -1,17 +1,17 @@
 import json
 
-import odoo
-from odoo import api
-from odoo.tools import DotDict
+import insilos
+from insilos import api
+from insilos.tools import DotDict
 try:
-    from odoo.http import _request_stack
+    from insilos.http import _request_stack
 except ImportError:
     class _MockStack:
         def push(self, *a): pass
         def pop(self, *a): pass
     _request_stack = _MockStack()
-from odoo.tests.common import TransactionCase
-from odoo.addons.web_studio.controllers.main import WebStudioController
+from insilos.tests.common import TransactionCase
+from insilos.addons.web_studio.controllers.main import WebStudioController
 from copy import deepcopy
 from lxml import etree
 
@@ -19,7 +19,7 @@ class TestStudioController(TransactionCase):
 
     def setUp(self):
         super().setUp()
-        self.env = api.Environment(self.cr, odoo.SUPERUSER_ID, {'load_all_views': True})
+        self.env = api.Environment(self.cr, insilos.SUPERUSER_ID, {'load_all_views': True})
         _request_stack.push(self)
         self.session = DotDict({'debug': ''})
         self.studio_controller = WebStudioController()

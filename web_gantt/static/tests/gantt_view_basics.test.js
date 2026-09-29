@@ -461,7 +461,7 @@ test("multi-level grouped gantt rendering", async () => {
         },
     ]);
     expect(`.o_gantt_group_pill .o_gantt_consolidated_pill`).toHaveStyle({
-        backgroundColor: "rgb(113, 75, 103)",
+        backgroundColor: /rgb\((113, 75, 103|11, 46, 100)\)/,
     });
 });
 

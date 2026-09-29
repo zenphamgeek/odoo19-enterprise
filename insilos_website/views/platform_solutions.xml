@@ -860,12 +860,12 @@
                                 <div class="ins-code-pane" data-pane="fsm">
                                     <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS — Layer 4: Field Service Multi-Constraint Optimization</span>
 <span class="token-keyword">from</span> insilos.fsm <span class="token-keyword">import</span> VehicleRoutingOptimizer, EngineerSkillMatcher
-<span class="token-keyword">from</span> insilos.erp <span class="token-keyword">import</span> OdooConnector, TwoWayWriteBack
+<span class="token-keyword">from</span> insilos.erp <span class="token-keyword">import</span> InsilosConnector, TwoWayWriteBack
 
 <span class="token-decorator">@fsm_task</span>(sla_target_hours=<span class="token-number">2.0</span>, first_time_fix_goal=<span class="token-number">0.95</span>)
 <span class="token-keyword">def</span> <span class="token-function">dispatch_critical_work_order</span>(ticket_id: <span class="token-class">str</span>, plant_geo: <span class="token-class">tuple</span>):
     # Retrieve spare parts BOM inventory from nearest mobile service fleet van
-    van_inventory = OdooConnector.<span class="token-function">query_mobile_stock</span>(required_parts=[<span class="token-string">"BRG-6205-2RS"</span>, <span class="token-string">"SEAL-VITON-40"</span>])
+    van_inventory = InsilosConnector.<span class="token-function">query_mobile_stock</span>(required_parts=[<span class="token-string">"BRG-6205-2RS"</span>, <span class="token-string">"SEAL-VITON-40"</span>])
     
     # Solve Multi-Depot Vehicle Routing Problem with Time Windows (MD-VRPTW)
     route = VehicleRoutingOptimizer.<span class="token-function">solve</span>(
@@ -874,9 +874,9 @@
         traffic_matrix=<span class="token-string">"REALTIME_HCMC_CONGESTION"</span>
     )
     
-    # 2-Way Atomic Write-back to Odoo 20 FSM Module &amp; Telegram Push
+    # 2-Way Atomic Write-back to Insilos ERP FSM Module &amp; Telegram Push
     result = TwoWayWriteBack.<span class="token-function">execute</span>(
-        odoo_model=<span class="token-string">"project.task"</span>,
+        erp_model=<span class="token-string">"project.task"</span>,
         values={
             <span class="token-string">"user_ids"</span>: [(<span class="token-number">4</span>, route.assigned_engineer_id)],
             <span class="token-string">"planned_date_begin"</span>: route.eta_timestamp,
@@ -1860,7 +1860,11 @@
                 <!-- ============================================================= -->
                 <!-- C3.AI DOSSIER MATRIX (INDUSTRIAL SPEC-SHEETS)                -->
                 <!-- ============================================================= -->
-                
+                <!-- ============================================================= -->
+                <!-- AI CCTV VISION SAFETY & OPERATIONAL SURVEILLANCE              -->
+                <!-- ============================================================= -->
+                <t t-call="insilos_website.s_insilos_cctv_ai_camera"/>
+
                 <!-- ============================================================= -->
                 <!-- ARCHITECTURE SPECS ACCORDION (s_accordion)                     -->
                 <!-- ============================================================= -->
@@ -5300,7 +5304,7 @@
                                         Chỉ Dẫn Bảo Trì <span class="text-cyan">Offline 3D SOP</span><br class="d-none d-md-inline"/> Nghiệm Thu Tức Thì <span class="ins-gradient-headline">Zero Downtime Sync</span>
                                     </h1>
                                     <p class="lead text-secondary mb-4 col-lg-11 p-0">
-                                        Ứng dụng di động cung cấp mô hình 3D tháo lắp từng bước hoạt động hoàn toàn ngoại tuyến tại hầm mỏ, giàn khoan. Nghiệm thu điện tử bằng hình ảnh và chữ ký số tự động đồng bộ về sổ cái bảo trì Odoo/SAP khi có mạng.
+                                        Ứng dụng di động cung cấp mô hình 3D tháo lắp từng bước hoạt động hoàn toàn ngoại tuyến tại hầm mỏ, giàn khoan. Nghiệm thu điện tử bằng hình ảnh và chữ ký số tự động đồng bộ về sổ cái bảo trì Insilos ERP / SAP khi có mạng.
                                     </p>
                                     <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 mb-4">
                                         <a href="/request-demo" class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2">
@@ -5451,7 +5455,7 @@
                                                     </div>
                                                     <div class="d-flex justify-content-between align-items-center text-secondary small">
                                                         <span>Hướng dẫn tháo lắp AR/3D không cần kết nối mạng</span>
-                                                        <span class="text-cyan fw-medium font-monospace small">Odoo / SAP FSM Sync</span>
+                                                        <span class="text-cyan fw-medium font-monospace small">Insilos ERP / SAP FSM Sync</span>
                                                     </div>
                                                     <div class="ins-cockpit-meter">
                                                         <div class="ins-cockpit-meter-bar ins-meter-w98"/>
@@ -5776,7 +5780,7 @@
   <span class="token-property">"post_service_vibration_rms"</span>: <span class="token-string">"0.92 mm/s (ZONE A - EXCELLENT)"</span>,
   <span class="token-property">"asset_health_score_delta"</span>: { <span class="token-property">"before"</span>: 87.2, <span class="token-property">"after"</span>: 96.8 },
   <span class="token-property">"erp_updates"</span>: {
-    <span class="token-property">"odoo_maintenance_request"</span>: <span class="token-string">"REQ-09412 (STATUS: DONE)"</span>,
+    <span class="token-property">"insilos_maintenance_request"</span>: <span class="token-string">"REQ-09412 (STATUS: DONE)"</span>,
     <span class="token-property">"sap_pm_order"</span>: <span class="token-string">"40092144 (CONFIRMED)"</span>,
     <span class="token-property">"wms_stock_move"</span>: <span class="token-string">"SM-2026-08194 (CONSUMED: 2x SKF-7314)"</span>
   },
@@ -5786,7 +5790,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center text-secondary small pt-2 border-top border-secondary border-opacity-25">
-                                        <span>ERP Connectors: Odoo Maintenance 20.0 · SAP S/4HANA PM</span>
+                                        <span>ERP Connectors: Insilos ERP Maintenance 20.0 · SAP S/4HANA PM</span>
                                         <span>Status: Two-Way Synchronized</span>
                                     </div>
                                 </div>

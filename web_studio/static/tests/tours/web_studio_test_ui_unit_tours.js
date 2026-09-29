@@ -6,7 +6,7 @@ import { DEBOUNCED_DELAY } from "@web/core/select_menu/select_menu";
 registry
     .category("web_tour.tours")
     .add("web_studio_test_form_view_not_altered_by_studio_xml_edition", {
-        url: "/odoo?debug=1",
+        url: "/insilos?debug=1",
         steps: () => [
             {
                 trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
@@ -41,7 +41,7 @@ registry
 
 /* global ace */
 registry.category("web_tour.tours").add("web_studio_test_edit_with_xml_editor", {
-    url: "/odoo?debug=1",
+    url: "/insilos?debug=1",
     steps: () => [
         {
             trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
@@ -70,7 +70,7 @@ registry.category("web_tour.tours").add("web_studio_test_edit_with_xml_editor", 
             run: "click",
         },
         {
-            trigger: ".o-dropdown--menu .o_select_menu_item:contains(Odoo Studio)",
+            trigger: ".o-dropdown--menu .o_select_menu_item:contains(Studio)",
             run: "click",
         },
         {
@@ -1407,7 +1407,7 @@ registry.category("web_tour.tours").add("web_studio_test_new_field_rename_descri
 });
 
 registry.category("web_tour.tours").add("web_studio_test_edit_digits_option", {
-    url: "/odoo",
+    url: "/insilos",
     steps: () => [
         {
             trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
@@ -1804,7 +1804,7 @@ registry.category("web_tour.tours").add("web_studio_test_kanban_menu_ribbon", {
             trigger: ".o_web_studio_component.o_web_studio_field_menu",
             async run({ waitFor }) {
                 await animationFrame();
-                const { drag } = odoo.loader.modules.get("@odoo/hoot-dom");
+                const { drag } = insilos.loader.modules.get("@insilos/hoot-dom");
                 const { drop, moveTo } = await drag(this.anchor);
                 await moveTo(".o_kanban_record:first");
                 await animationFrame(500); // wait for animations to finish in under 500ms

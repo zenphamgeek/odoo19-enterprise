@@ -1,6 +1,6 @@
-import { describe, expect, test } from "@odoo/hoot";
-import { edit } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+import { describe, expect, test } from "@insilos/hoot";
+import { edit } from "@insilos/hoot-dom";
+import { animationFrame } from "@insilos/hoot-mock";
 import {
     contains,
     MockServer,

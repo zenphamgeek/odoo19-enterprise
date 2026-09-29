@@ -1,6 +1,6 @@
 import { _t } from "@web/core/l10n/translation";
 import { rpc, rpcBus } from "@web/core/network/rpc";
-import { toRaw, useState, useEnv, reactive, onMounted, onWillUnmount, markRaw } from "@odoo/owl";
+import { toRaw, useState, useEnv, reactive, onMounted, onWillUnmount, markRaw } from "@insilos/owl";
 import { Reactive } from "@web_studio/client_action/utils";
 
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
@@ -91,12 +91,12 @@ export function useEditorBreadcrumbs(initialCrumb) {
     const env = useEnv();
     const editionFlow = env.editionFlow;
 
-    if (initialCrumb && !editionFlow.breadcrumbs.length) {
+    if (initialCrumb && editionFlow?.breadcrumbs && !editionFlow.breadcrumbs.length) {
         onMounted(() => editionFlow.pushBreadcrumb(initialCrumb));
     }
 
-    const crumbs = useState(editionFlow.breadcrumbs);
-    const push = (crumb) => editionFlow.pushBreadcrumb(crumb);
+    const crumbs = useState(editionFlow?.breadcrumbs || []);
+    const push = (crumb) => editionFlow?.pushBreadcrumb?.(crumb);
     return { crumbs, push };
 }
 

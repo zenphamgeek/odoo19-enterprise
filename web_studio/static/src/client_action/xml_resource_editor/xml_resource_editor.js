@@ -1,4 +1,4 @@
-import { Component, onWillStart, onWillUpdateProps, toRaw, useState } from "@odoo/owl";
+import { Component, onWillStart, onWillUpdateProps, toRaw, useState } from "@insilos/owl";
 import { _t } from "@web/core/l10n/translation";
 import { CodeEditor } from "@web/core/code_editor/code_editor";
 import { rpc } from "@web/core/network/rpc";

@@ -6,7 +6,7 @@ import {
     useEnv,
     useState,
     useSubEnv,
-} from "@odoo/owl";
+} from "@insilos/owl";
 import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
 import { viewTypeToString } from "@web_studio/studio_service";
 import {
@@ -32,7 +32,7 @@ export function useViewEditorModel(viewRef, { initialState }) {
 
     /* Coordination */
     // Communicates with editorMenu, provides standard server calls
-    const editionFlow = useState(env.editionFlow);
+    const editionFlow = env.editionFlow ? useState(env.editionFlow) : null;
     useEditorBreadcrumbs({ name: viewTypeToString(services.studio.editedViewType) });
 
     const viewEditorModel = new ViewEditorModel({
@@ -55,7 +55,9 @@ export function useViewEditorModel(viewRef, { initialState }) {
         return new Promise((resolve, reject) => {
             viewEditorModel
                 .load()
-                .then(resolve)
+                .then(() => {
+                    resolve();
+                })
                 .catch((error) => {
                     if (status(component) !== "destroyed") {
                         reject(error);

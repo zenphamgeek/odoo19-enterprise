@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 import { CheckBox } from "@web/core/checkbox/checkbox";
 import { useOwnedDialogs } from "@web/core/utils/hooks";
 import { ExpressionEditorDialog } from "@web/core/expression_editor_dialog/expression_editor_dialog";

@@ -1,4 +1,4 @@
-import { reactive, useComponent, useEnv, useSubEnv } from "@odoo/owl";
+import { reactive, useComponent, useEnv, useSubEnv } from "@insilos/owl";
 
 export function getFieldsInArch(xmlDoc) {
     const res = [];
@@ -109,7 +109,7 @@ export function useSubEnvAndServices(env) {
 /**
  * Sorts a list topologically, each element's dependencies should be defined
  * with the getDependencies callback.
- * This is a copy of what is done in python: odoo.tools.misc.py:def topological_sort
+ * This is a copy of what is done in python: insilos.tools.misc.py:def topological_sort
  * @params [Array] elems
  * @params [Function] getDependencies
  */
