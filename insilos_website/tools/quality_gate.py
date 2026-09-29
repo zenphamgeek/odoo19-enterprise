@@ -12,6 +12,7 @@ Audits all public pages and templates to guarantee:
 
 import sys
 import os
+import time
 import json
 import re
 import urllib.request
@@ -233,14 +234,23 @@ def audit_website_editor_compatibility():
                 
                 http_ok = False
                 http_status = None
-                try:
-                    req_url = f"{BASE_URL}{thumb_path}"
-                    with urllib.request.urlopen(req_url, timeout=3) as resp:
-                        http_status = resp.getcode()
-                        http_ok = (http_status == 200)
-                except Exception as e:
-                    http_status = getattr(e, "code", str(e))
-                    http_ok = False
+                req_url = f"{BASE_URL}{thumb_path}"
+                for attempt in range(3):
+                    try:
+                        req = urllib.request.Request(
+                            req_url,
+                            headers={"User-Agent": "InsilosQualityGate/2.0"}
+                        )
+                        with urllib.request.urlopen(req, timeout=15) as resp:
+                            http_status = resp.getcode()
+                            http_ok = (http_status == 200)
+                            if http_ok:
+                                break
+                    except Exception as e:
+                        http_status = getattr(e, "code", str(e))
+                        http_ok = False
+                        if attempt < 2:
+                            time.sleep(0.5)
                     
                 thumbnail_audits.append({
                     "snippet": snip_id,
