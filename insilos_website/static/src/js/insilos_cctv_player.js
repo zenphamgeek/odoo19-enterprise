@@ -67,11 +67,11 @@
             videoSrc: '/insilos_website/static/src/video/cctv_ppe/cctv_cam02_site_communication.mp4',
             posterSrc: '/insilos_website/static/src/video/cctv_ppe/cctv_cam02_poster.webp',
             duration: 7.88,
-            workOrderModel: 'maintenance.request',
-            workOrderId: 1,
-            workOrderActionId: 2110,
-            workOrderName: 'Kiểm tra an toàn tháp cẩu Liebherr 280 EC-H (WO #42)',
-            deepLinkErp: '/web#action=2110&id=1',
+            workOrderModel: 'fleet.vehicle',
+            workOrderId: 6,
+            workOrderActionId: 738,
+            workOrderName: 'Kiểm định xe cẩu chuyên dụng & thiết bị nâng (51C-982.45)',
+            deepLinkErp: '/web#action=738&id=6',
             grcIncidentId: 'INC-2026-0929-0042',
             deepLinkGrc: 'https://vertical.insilos.com/admin/content/hse_incidents',
             regulatoryRef: 'ISO 45001:2018 Clause 8.1.2 // QCVN 18:2021/BXD // Nghị định 12/2022/NĐ-CP',
@@ -356,6 +356,97 @@
             violationTargetBoxId: 'box_earmuffs_3',
             violationDescription: 'Phát hiện không tuân thủ: Nhân viên chưa đeo Chụp tai chống ồn trong phân xưởng có độ ồn vượt ngưỡng 85 dBA!',
             violationCode: 'VIO-2026-0929-PPE03'
+        },
+        'factory_engineer': {
+            id: 'factory_engineer',
+            code: 'CAM-04',
+            name: 'Giám Sát Kỹ Sư Phân Xưởng Cơ Khí',
+            location: 'Phân Xưởng Cơ Khí Nặng // Dây Chuyền Chế Tạo Khung Gầm SS400',
+            sensor: 'AI-OPTICAL-PPE // SENSOR-HSE-04',
+            resolution: '1920x1080 @ 60 FPS',
+            videoSrc: '/insilos_website/static/src/video/cctv_ppe/cctv_cam01_factory_engineer.mp4',
+            posterSrc: '/insilos_website/static/src/video/cctv_ppe/cctv_cam01_poster.webp',
+            duration: 23.24,
+            workOrderModel: 'mrp.production',
+            workOrderId: 10,
+            workOrderActionId: 367,
+            workOrderName: 'Kiểm tra tuân thủ trang bị BHLĐ chuyền chế tạo WH/MO/00010',
+            deepLinkErp: '/web#action=367&id=10',
+            grcIncidentId: 'INC-2026-0929-0045',
+            deepLinkGrc: 'https://vertical.insilos.com/admin/content/hse_incidents',
+            regulatoryRef: 'ISO 45001:2018 Clause 8.1.2 // TCVN 2291:1978 // Nghị định 12/2022/NĐ-CP',
+            stats: {
+                oee: '98.2%',
+                personnel: 1,
+                helmets: 1,
+                vests: 1,
+                zoneStatus: 'ALL PPE COMPLIANT // WORK AREA SAFE'
+            },
+            primaryBoxId: 'box_helmet_4',
+            boxes: [
+                {
+                    id: 'box_person_4',
+                    type: 'person',
+                    layer: 'person',
+                    baseTag: 'KỸ SƯ TRƯỞNG PHÂN XƯỞNG #04',
+                    violationTag: 'XÂM NHẬP VÙNG GIA CÔNG CƠ KHÍ',
+                    keyframes: [
+                        { t: 0.0,   x: 0.35, y: 0.08, w: 0.36, h: 0.90, conf: 0.995 },
+                        { t: 4.0,   x: 0.34, y: 0.08, w: 0.37, h: 0.90, conf: 0.994 },
+                        { t: 8.0,   x: 0.35, y: 0.09, w: 0.36, h: 0.89, conf: 0.996 },
+                        { t: 12.0,  x: 0.36, y: 0.08, w: 0.35, h: 0.90, conf: 0.995 },
+                        { t: 16.0,  x: 0.35, y: 0.07, w: 0.36, h: 0.91, conf: 0.994 },
+                        { t: 20.0,  x: 0.34, y: 0.08, w: 0.37, h: 0.90, conf: 0.995 },
+                        { t: 23.24, x: 0.35, y: 0.08, w: 0.36, h: 0.90, conf: 0.995 }
+                    ]
+                },
+                {
+                    id: 'box_helmet_4',
+                    type: 'helmet',
+                    layer: 'helmet',
+                    baseTag: 'MŨ BẢO HỘ CHỐNG VA ĐẬP ĐẠT CHUẨN',
+                    violationTag: 'CHƯA ĐỘI MŨ BẢO HỘ ĐẠT CHUẨN',
+                    keyframes: [
+                        { t: 0.0,   x: 0.44, y: 0.08, w: 0.18, h: 0.17, conf: 0.998 },
+                        { t: 4.0,   x: 0.43, y: 0.08, w: 0.18, h: 0.17, conf: 0.997 },
+                        { t: 8.0,   x: 0.44, y: 0.09, w: 0.18, h: 0.17, conf: 0.998 },
+                        { t: 12.0,  x: 0.45, y: 0.08, w: 0.17, h: 0.17, conf: 0.997 },
+                        { t: 16.0,  x: 0.44, y: 0.07, w: 0.18, h: 0.18, conf: 0.998 },
+                        { t: 20.0,  x: 0.43, y: 0.08, w: 0.18, h: 0.17, conf: 0.997 },
+                        { t: 23.24, x: 0.44, y: 0.08, w: 0.18, h: 0.17, conf: 0.998 }
+                    ]
+                },
+                {
+                    id: 'box_vest_4',
+                    type: 'vest',
+                    layer: 'vest',
+                    baseTag: 'ÁO PHẢN QUANG BẢO HỘ CAO CẤP',
+                    violationTag: 'THIẾU ÁO PHẢN QUANG CẢNH BÁO',
+                    keyframes: [
+                        { t: 0.0,   x: 0.38, y: 0.25, w: 0.30, h: 0.38, conf: 0.992 },
+                        { t: 4.0,   x: 0.37, y: 0.25, w: 0.31, h: 0.38, conf: 0.991 },
+                        { t: 8.0,   x: 0.38, y: 0.26, w: 0.30, h: 0.37, conf: 0.993 },
+                        { t: 12.0,  x: 0.39, y: 0.25, w: 0.29, h: 0.38, conf: 0.992 },
+                        { t: 16.0,  x: 0.38, y: 0.24, w: 0.30, h: 0.39, conf: 0.991 },
+                        { t: 20.0,  x: 0.37, y: 0.25, w: 0.31, h: 0.38, conf: 0.992 },
+                        { t: 23.24, x: 0.38, y: 0.25, w: 0.30, h: 0.38, conf: 0.992 }
+                    ]
+                },
+                {
+                    id: 'box_danger_4',
+                    type: 'danger-zone',
+                    layer: 'danger',
+                    baseTag: 'VÙNG DÂY CHUYỀN CHẾ TẠO KHUNG GẦM // AN TOÀN',
+                    violationTag: 'CẢNH BÁO: RỦI RO KẸP CUỐN CƠ KHÍ',
+                    keyframes: [
+                        { t: 0.0,   x: 0.15, y: 0.04, w: 0.70, h: 0.92, conf: 1.0 },
+                        { t: 23.24, x: 0.15, y: 0.04, w: 0.70, h: 0.92, conf: 1.0 }
+                    ]
+                }
+            ],
+            violationTargetBoxId: 'box_helmet_4',
+            violationDescription: 'Phát hiện không tuân thủ: Kỹ sư/công nhân chưa trang bị đầy đủ mũ bảo hộ hoặc áo phản quang trong khu vực vận hành cơ khí nặng!',
+            violationCode: 'VIO-2026-0929-PPE04'
         }
     };
 
@@ -1072,9 +1163,34 @@
     }
 
     /**
+     * Bind HSE Video modal events (auto-play when modal opens, pause when closes)
+     */
+    function setupHseVideoModalListeners() {
+        const hseModal = document.getElementById('insilosHseVideoModal');
+        if (!hseModal || hseModal._hseModalBound) return;
+        hseModal._hseModalBound = true;
+
+        const cinemaPlayer = document.getElementById('insilosHseCinemaPlayer');
+
+        hseModal.addEventListener('shown.bs.modal', () => {
+            if (cinemaPlayer) {
+                cinemaPlayer.currentTime = 0;
+                cinemaPlayer.play().catch(() => {});
+            }
+        });
+
+        hseModal.addEventListener('hidden.bs.modal', () => {
+            if (cinemaPlayer) {
+                cinemaPlayer.pause();
+            }
+        });
+    }
+
+    /**
      * Mount all CCTV widgets on page.
      */
     function initInsilosCctvWidgets() {
+        setupHseVideoModalListeners();
         const widgetNodes = document.querySelectorAll('.s_insilos_cctv_ai_camera');
         const instances = [];
         widgetNodes.forEach((node) => {

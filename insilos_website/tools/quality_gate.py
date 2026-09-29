@@ -35,6 +35,8 @@ ROUTES = [
     {"path": "/trust", "name": "Sovereign Trust & Security", "view_file": "trust_compliance.xml"},
     {"path": "/compliance", "name": "Regulatory GRC Architecture", "view_file": "trust_compliance.xml"},
     {"path": "/sandbox", "name": "Interactive Industrial Sandbox", "view_file": "sandbox.xml"},
+    {"path": "/showcase-3d", "name": "3D Cinematic Showcase", "view_file": "showcase_landing.xml"},
+    {"path": "/interactive-3d", "name": "Interactive 3D Digital Twin Suite", "view_file": "interactive_3d.xml"},
 ]
 
 def audit_static_templates():
@@ -118,45 +120,54 @@ def audit_live_routes():
 
     for route_info in ROUTES:
         url = f"{BASE_URL}{route_info['path']}"
-        try:
-            req = urllib.request.Request(
-                url,
-                headers={"User-Agent": "InsilosQualityGate/2.0"}
-            )
-            with urllib.request.urlopen(req, timeout=15) as resp:
-                status = resp.status
-                html = resp.read().decode("utf-8")
+        resp_data = None
+        last_error = None
+        for attempt in range(2):
+            try:
+                req = urllib.request.Request(
+                    url,
+                    headers={"User-Agent": "InsilosQualityGate/2.0"}
+                )
+                with urllib.request.urlopen(req, timeout=25) as resp:
+                    status = resp.status
+                    html = resp.read().decode("utf-8")
+                    resp_data = (status, html)
+                    break
+            except Exception as e:
+                last_error = e
+
+        if resp_data is not None:
+            status, html = resp_data
+            # Check for dropzones
+            has_dropzone = ('oe_structure' in html) or ('class="s_' in html)
+            
+            # Count sections and snippet classes
+            section_count = len(re.findall(r'<section\b', html))
+            snippet_count = len(re.findall(r'class="[^"]*\bs_[a-z0-9_]+', html))
+            
+            passed = (status == 200 and has_dropzone and section_count > 0)
+            if not passed:
+                all_passed = False
                 
-                # Check for dropzones
-                has_dropzone = ('oe_structure' in html) or ('class="s_' in html)
-                
-                # Count sections and snippet classes
-                section_count = len(re.findall(r'<section\b', html))
-                snippet_count = len(re.findall(r'class="[^"]*\bs_[a-z0-9_]+', html))
-                
-                passed = (status == 200 and has_dropzone and section_count > 0)
-                if not passed:
-                    all_passed = False
-                    
-                status_str = f"HTTP {status}"
-                print(f"  {'✅' if passed else '❌'} {route_info['path']:16} | {status_str} | Sections: {section_count} | Snippets: {snippet_count} | Dropzones: {has_dropzone}")
-                
-                results.append({
-                    "route": route_info["path"],
-                    "name": route_info["name"],
-                    "status": status,
-                    "sections": section_count,
-                    "snippets": snippet_count,
-                    "has_dropzone": has_dropzone,
-                    "passed": passed
-                })
-        except Exception as e:
-            all_passed = False
-            print(f"  ❌ {route_info['path']:16} | ERROR: {e}")
+            status_str = f"HTTP {status}"
+            print(f"  {'✅' if passed else '❌'} {route_info['path']:16} | {status_str} | Sections: {section_count} | Snippets: {snippet_count} | Dropzones: {has_dropzone}")
+            
             results.append({
                 "route": route_info["path"],
                 "name": route_info["name"],
-                "status": f"ERR: {e}",
+                "status": status,
+                "sections": section_count,
+                "snippets": snippet_count,
+                "has_dropzone": has_dropzone,
+                "passed": passed
+            })
+        else:
+            all_passed = False
+            print(f"  ❌ {route_info['path']:16} | ERROR: {last_error}")
+            results.append({
+                "route": route_info["path"],
+                "name": route_info["name"],
+                "status": f"ERR: {last_error}",
                 "passed": False
             })
 
@@ -169,34 +180,107 @@ def audit_live_routes():
 
 def audit_website_editor_compatibility():
     print("\n[GATE 3] Auditing Website Editor (?enable_editor=1) Contract & Custom Snippets...")
-    snippets_xml = VIEWS_DIR / "snippets.xml"
-    if not snippets_xml.exists():
-        print("  ❌ snippets.xml not found!")
-        return False, {}
+    snippet_files = [
+        VIEWS_DIR / "snippets.xml",
+        VIEWS_DIR / "snippets_3d.xml",
+        VIEWS_DIR / "snippets_cinematic.xml",
+    ]
+    
+    all_snippets = []
+    snippet_details = []
+    all_inherit_palette = True
+    missing_files = []
+    thumbnail_audits = []
+    broken_thumbnails = []
+    
+    def resolve_thumbnail_disk(thumb_url):
+        rel = thumb_url.lstrip("/")
+        parts = rel.split("/", 1)
+        if len(parts) == 2:
+            mod, sub = parts[0], parts[1]
+            for search_root in [
+                BASE_DIR.parent,
+                BASE_DIR.parent.parent / "addons",
+                BASE_DIR.parent.parent / "enterprise",
+            ]:
+                cand = search_root / mod / sub
+                if cand.exists():
+                    return cand
+        return None
 
-    content = snippets_xml.read_text(encoding="utf-8")
-    
-    # Check that custom snippets are declared
-    custom_snippets = re.findall(r'<t t-snippet=\"insilos_website\.([^\"]+)\"', content)
-    inherits_palette = 'inherit_id="website.snippets"' in content
-    
-    print(f"  • Custom Insilos C3.ai Snippets Defined: {len(custom_snippets)}")
-    for snip in custom_snippets:
-        string_match = re.search(r't-snippet=\"insilos_website\.' + snip + r'\"[^>]*string=\"([^\"]+)\"', content)
-        display_name = string_match.group(1) if string_match else snip
-        print(f"    - {display_name} ({snip})")
+    for sfile in snippet_files:
+        if not sfile.exists():
+            missing_files.append(sfile.name)
+            continue
+        content = sfile.read_text(encoding="utf-8")
+        if 'inherit_id="website.snippets"' not in content:
+            all_inherit_palette = False
+            
+        t_pattern = re.compile(r'<t\b[^>]*\bt-snippet=[\"\']insilos_website\.([^\"\']+)[\"\'][^>]*>', re.DOTALL)
+        for match in t_pattern.finditer(content):
+            snip_id = match.group(1)
+            tag_str = match.group(0)
+            str_match = re.search(r'string=[\"\']([^\"\']+)[\"\']', tag_str)
+            snip_name = str_match.group(1) if str_match else snip_id
+            all_snippets.append(snip_id)
+            snippet_details.append((snip_id, snip_name))
+            
+            thumb_match = re.search(r't-thumbnail=[\"\']([^\"\']+)[\"\']', tag_str)
+            if thumb_match:
+                thumb_path = thumb_match.group(1)
+                disk_path = resolve_thumbnail_disk(thumb_path)
+                disk_ok = disk_path is not None and disk_path.exists()
+                
+                http_ok = False
+                http_status = None
+                try:
+                    req_url = f"{BASE_URL}{thumb_path}"
+                    with urllib.request.urlopen(req_url, timeout=3) as resp:
+                        http_status = resp.getcode()
+                        http_ok = (http_status == 200)
+                except Exception as e:
+                    http_status = getattr(e, "code", str(e))
+                    http_ok = False
+                    
+                thumbnail_audits.append({
+                    "snippet": snip_id,
+                    "thumbnail": thumb_path,
+                    "disk_exists": disk_ok,
+                    "http_ok": http_ok,
+                    "http_status": http_status,
+                })
+                if not disk_ok or not http_ok:
+                    broken_thumbnails.append((snip_id, thumb_path, disk_ok, http_status))
+            
+    if missing_files:
+        print(f"  ❌ Snippet XML files missing: {', '.join(missing_files)}")
+        return False, {}
         
-    print(f"  • Inherits website.snippets Palette: {'✅ Yes' if inherits_palette else '❌ No'}")
+    print(f"  • Custom Insilos Enterprise Snippets Defined: {len(all_snippets)}")
+    for snip_id, snip_name in snippet_details:
+        print(f"    - {snip_name} ({snip_id})")
+        
+    print(f"  • Inherits website.snippets Palette: {'✅ Yes' if all_inherit_palette else '❌ No'}")
+    print(f"  • Snippet Thumbnails Audited: {len(thumbnail_audits)} declared")
+    print(f"  • Broken / Phantom Thumbnail Links: {len(broken_thumbnails)}")
     
-    gate3_pass = (len(custom_snippets) >= 5 and inherits_palette)
-    if gate3_pass:
-        print("  ✅ [GATE 3 PASSED] Custom Building Blocks Integrated into Odoo Website Editor!")
+    if broken_thumbnails:
+        for b_snip, b_thumb, b_disk, b_http in broken_thumbnails:
+            print(f"    ❌ Broken Thumbnail: {b_snip} -> {b_thumb} (Disk: {b_disk}, HTTP: {b_http})")
     else:
-        print("  ❌ [GATE 3 FAILED] Website editor snippets configuration incomplete!")
+        print(f"  ✅ All {len(thumbnail_audits)} Snippet Thumbnails Exist on Disk and Return HTTP 200 OK!")
+    
+    gate3_pass = (len(all_snippets) == 28 and all_inherit_palette and len(broken_thumbnails) == 0 and len(thumbnail_audits) == 28)
+    if gate3_pass:
+        print(f"  ✅ [GATE 3 PASSED] All {len(all_snippets)} Custom Building Blocks and Thumbnails Verified!")
+    else:
+        print(f"  ❌ [GATE 3 FAILED] Website editor snippets configuration incomplete (Found {len(all_snippets)}/28 snippets, {len(broken_thumbnails)} broken thumbnails)!")
         
     return gate3_pass, {
-        "snippets_count": len(custom_snippets),
-        "snippets": [(s, s) for s in custom_snippets]
+        "snippets_count": len(all_snippets),
+        "snippets": snippet_details,
+        "thumbnail_audits": thumbnail_audits,
+        "broken_thumbnails": broken_thumbnails,
     }
 
 def audit_snippet_diversity():

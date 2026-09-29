@@ -853,19 +853,72 @@
                             <div class="col-lg-7">
                                 <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 shadow-lg overflow-hidden p-4 flex-column justify-content-between">
                                     <div>
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
                                             <div class="d-flex align-items-center gap-2">
                                                 <span class="ins-live-ping ins-live-ping--emerald"/>
-                                                <span class="text-white font-monospace small fw-bold">ISOMETRIC SCHEMATIC // 110KV SUBSTATION</span>
+                                                <span class="text-white font-monospace small fw-bold" id="ins-dt-viewport-heading">3D BLENDER DIGITAL TWIN // GIAO THỨC IEC 61850 GOOSE</span>
                                             </div>
-                                            <span class="badge bg-secondary bg-opacity-25 text-mint font-monospace small" id="ins-dtwin-status-badge">TRẠNG THÁI: BÌNH THƯỜNG</span>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="btn-group btn-group-sm" role="group" aria-label="Digital Twin View Mode">
+                                                    <button type="button" class="btn btn-outline-info active font-monospace py-1 px-2" id="insBtnTwin3d">🌟 3D Blender Twin</button>
+                                                    <button type="button" class="btn btn-outline-secondary font-monospace py-1 px-2" id="insBtnTwinWire">📐 Wireframe</button>
+                                                </div>
+                                                <span class="badge bg-secondary bg-opacity-25 text-mint font-monospace small" id="ins-dtwin-status-badge">TRẠNG THÁI: BÌNH THƯỜNG</span>
+                                            </div>
                                         </div>
 
-                                        <!-- Isometric Schematic Container with Blinking Sensors -->
-                                        <div class="ins-dtwin-viewport bg-black bg-opacity-50 p-3 rounded-3 border border-secondary border-opacity-25 position-relative overflow-hidden mb-3">
-                                            <svg viewBox="0 0 600 320" class="w-100 h-100" id="ins-dtwin-svg-canvas">
-                                                <!-- 1. ASSET SCHEMATIC: 110KV SUBSTATION TRANSFORMER -->
-                                                <g id="ins-dt-schematic-substation" class="ins-dt-asset-schematic" data-asset="substation">
+                                        <!-- Isometric Schematic & 3D Blender Twin Container with Blinking Sensors -->
+                                        <div class="ins-dtwin-viewport bg-black bg-opacity-75 p-0 rounded-3 border border-secondary border-opacity-25 position-relative overflow-hidden mb-3" style="min-height: 330px;">
+                                            <!-- 3D Blender Digital Twin Mode View (Default Active with Insilos Brand Mark) -->
+                                            <div id="ins-dtwin-3d-view" class="position-relative w-100 h-100 overflow-hidden">
+                                                <img src="/insilos_website/static/src/img/digital_twin/insilos_iec61850_3d_twin.webp"
+                                                     alt="Insilos IEC 61850 3D Digital Twin"
+                                                     class="w-100 h-100 object-fit-cover d-block"
+                                                     style="filter: contrast(1.05) brightness(0.95); min-height: 320px;"/>
+                                                
+                                                <!-- Holographic HUD Telemetry Badges & Watermark -->
+                                                <div class="position-absolute top-0 start-0 m-3 d-flex flex-column gap-1 pointer-events-none">
+                                                    <span class="badge bg-danger bg-opacity-90 text-white font-monospace small px-2 py-1 shadow d-inline-flex align-items-center gap-1">
+                                                        <span class="ins-live-ping--emerald me-1"/>
+                                                        <span>INSILOS BRAND MARK #DT1-X</span>
+                                                    </span>
+                                                    <span class="badge bg-black bg-opacity-80 text-cyan border border-cyan border-opacity-30 font-monospace small">
+                                                        IEC 61850 GOOSE · 4 NODES ACTIVE
+                                                    </span>
+                                                </div>
+
+                                                <div class="position-absolute top-0 end-0 m-3 pointer-events-none text-end">
+                                                    <span class="badge bg-black bg-opacity-80 text-warning border border-warning border-opacity-30 font-monospace small d-block mb-1">
+                                                        60HZ SYNC // PHASE A, B, C
+                                                    </span>
+                                                    <span class="badge bg-black bg-opacity-80 text-emerald border border-emerald border-opacity-30 font-monospace small">
+                                                        LATENCY &lt; 12ms · PTP IEEE 1588
+                                                    </span>
+                                                </div>
+
+                                                <!-- Live Interactive Floating Sensor Pins synced with simulation -->
+                                                <div class="position-absolute" style="top: 48%; left: 24%;">
+                                                    <span class="badge bg-black bg-opacity-85 text-emerald border border-emerald border-opacity-50 font-monospace px-2 py-1 shadow" id="ins-dtwin-3d-vibe-pill">
+                                                        VIBE: 1.8 mm/s
+                                                    </span>
+                                                </div>
+                                                <div class="position-absolute" style="top: 60%; left: 52%;">
+                                                    <span class="badge bg-black bg-opacity-85 text-cyan border border-cyan border-opacity-50 font-monospace px-2 py-1 shadow" id="ins-dtwin-3d-temp-pill">
+                                                        TEMP: 52°C
+                                                    </span>
+                                                </div>
+                                                <div class="position-absolute" style="top: 40%; left: 78%;">
+                                                    <span class="badge bg-black bg-opacity-85 text-warning border border-warning border-opacity-50 font-monospace px-2 py-1 shadow" id="ins-dtwin-3d-load-pill">
+                                                        LOAD: 74%
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Blueprint Wireframe SVG Mode View (Toggleable) -->
+                                            <div id="ins-dtwin-blueprint-view" class="w-100 h-100 d-none p-3">
+                                                <svg viewBox="0 0 600 320" class="w-100 h-100" id="ins-dtwin-svg-canvas">
+                                                    <!-- 1. ASSET SCHEMATIC: 110KV SUBSTATION TRANSFORMER -->
+                                                    <g id="ins-dt-schematic-substation" class="ins-dt-asset-schematic" data-asset="substation">
                                                     <!-- Concrete Foundation Pad -->
                                                     <polygon points="80,210 300,295 520,210 300,140" fill="#070C18" stroke="#1F2D42" stroke-width="1.5"/>
                                                     <!-- Main Transformer Body Isometric Polygons -->
@@ -1024,11 +1077,22 @@
                                             </svg>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="mt-auto d-flex justify-content-between align-items-center small text-secondary font-monospace">
-                                        <span>GIAO THỨC IEC 61850 GOOSE · 60HZ TELEMETRY</span>
-                                        <span class="text-mint">KẾT NỐI VẬT LÝ AN TOÀN</span>
+                                <div class="mt-auto d-flex flex-wrap justify-content-between align-items-center gap-2 small text-secondary font-monospace pt-2 border-top border-secondary border-opacity-25">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-primary bg-opacity-20 text-cyan border border-primary border-opacity-30">IEC 61850 GOOSE</span>
+                                        <span class="text-white">60HZ DUAL-BUS TELEMETRY</span>
+                                        <span class="text-secondary">· PTP IEEE 1588</span>
                                     </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-warning bg-opacity-20 text-warning border border-warning border-opacity-30">INSILOS SOVEREIGN MARK</span>
+                                        <span class="text-mint d-inline-flex align-items-center gap-1">
+                                            <svg class="ph-duotone ph-shield-check ph-xs text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                            <span>DATA DIODE ISOLATED</span>
+                                        </span>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
 

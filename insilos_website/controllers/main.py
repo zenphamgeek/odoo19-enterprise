@@ -921,6 +921,7 @@ STATIC_URLS = [
     "/about",
     "/request-demo",
     "/privacy",
+    "/privacy-policy",
     "/media-credits",
     "/trust",
     "/compliance",
@@ -1267,7 +1268,7 @@ class InsilosWebsite(http.Controller):
     def sandbox(self, **kwargs):
         return request.render("insilos_website.insilos_sandbox_page", self._base_values(**kwargs))
 
-    @http.route("/privacy", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/privacy", "/privacy-policy", "/vi/privacy", "/vi/privacy-policy"], type="http", auth="public", website=True, sitemap=True)
     def privacy(self, **kwargs):
         return request.render("insilos_website.insilos_privacy_page", self._base_values(**kwargs))
 

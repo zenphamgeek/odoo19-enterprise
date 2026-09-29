@@ -655,10 +655,18 @@
     <!-- ================================================================= -->
     <template id="insilos_3d_snippets_palette" inherit_id="website.snippets" priority="30">
         <xpath expr="//snippets[@id='snippet_structure']" position="inside">
-            <t t-snippet="insilos_website.s_insilos_3d_digital_twin" string="3D Digital Twin Equipment" group="content"/>
-            <t t-snippet="insilos_website.s_insilos_3d_logistics_radar" string="3D Logistics Radar Map" group="content"/>
-            <t t-snippet="insilos_website.s_insilos_video_telemetry_player" string="Cinema HUD Video Player" group="content"/>
-            <t t-snippet="insilos_website.s_insilos_3d_factory_roi" string="3D Factory &amp; ROI Config" group="content"/>
+            <t t-snippet="insilos_website.s_insilos_3d_digital_twin" string="3D Digital Twin Equipment" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_card.svg">
+                <keywords>3d, digital twin, v-lift, forklift, bom, webgl, threejs</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_insilos_3d_logistics_radar" string="3D Logistics Radar Map" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_image.svg">
+                <keywords>3d, logistics, radar, map, fleet, gps, container</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_insilos_video_telemetry_player" string="Cinema HUD Video Player" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_video.svg">
+                <keywords>video, player, telemetry, hud, cinema, erp, gold master</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_insilos_3d_factory_roi" string="3D Factory &amp; ROI Config" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_chart.svg">
+                <keywords>3d, factory, roi, configurator, plant, equipment</keywords>
+            </t>
         </xpath>
     </template>
 

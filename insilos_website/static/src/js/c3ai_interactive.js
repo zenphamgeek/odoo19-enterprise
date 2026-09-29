@@ -3138,6 +3138,41 @@ function initDigitalTwinSimulator() {
     const pinTempGroup = document.getElementById('ins-dt-pin-temp');
     const pinLoadGroup = document.getElementById('ins-dt-pin-load');
 
+    const btnTwin3d = document.getElementById('insBtnTwin3d');
+    const btnTwinWire = document.getElementById('insBtnTwinWire');
+    const viewTwin3d = document.getElementById('ins-dtwin-3d-view');
+    const viewTwinWire = document.getElementById('ins-dtwin-blueprint-view');
+    const headingTwin = document.getElementById('ins-dt-viewport-heading');
+
+    const pillVibe3d = document.getElementById('ins-dtwin-3d-vibe-pill');
+    const pillTemp3d = document.getElementById('ins-dtwin-3d-temp-pill');
+    const pillLoad3d = document.getElementById('ins-dtwin-3d-load-pill');
+
+    if (btnTwin3d && btnTwinWire) {
+        btnTwin3d.addEventListener('click', () => {
+            btnTwin3d.classList.add('active', 'btn-outline-info');
+            btnTwin3d.classList.remove('btn-outline-secondary');
+            btnTwinWire.classList.remove('active', 'btn-outline-info');
+            btnTwinWire.classList.add('btn-outline-secondary');
+            if (viewTwin3d) viewTwin3d.classList.remove('d-none');
+            if (viewTwinWire) viewTwinWire.classList.add('d-none');
+            if (headingTwin) headingTwin.textContent = '3D BLENDER DIGITAL TWIN // GIAO THỨC IEC 61850 GOOSE';
+        });
+
+        btnTwinWire.addEventListener('click', () => {
+            btnTwinWire.classList.add('active', 'btn-outline-info');
+            btnTwinWire.classList.remove('btn-outline-secondary');
+            btnTwin3d.classList.remove('active', 'btn-outline-info');
+            btnTwin3d.classList.add('btn-outline-secondary');
+            if (viewTwinWire) viewTwinWire.classList.remove('d-none');
+            if (viewTwin3d) viewTwin3d.classList.add('d-none');
+            if (headingTwin) {
+                const cfg = assetConfigs[currentAsset] || assetConfigs.substation;
+                headingTwin.textContent = cfg.title;
+            }
+        });
+    }
+
     function updateSimulation(val) {
         const anomalyVal = parseInt(val, 10) || 0;
         const cfg = assetConfigs[currentAsset] || assetConfigs.substation;
@@ -3159,6 +3194,36 @@ function initDigitalTwinSimulator() {
         if (svgVibe) svgVibe.textContent = `${vibeLabel}: ${currentVibe} mm/s`;
         if (svgTemp) svgTemp.textContent = `TEMP: ${currentTemp}°C`;
         if (svgLoad) svgLoad.textContent = `LOAD: ${currentLoad}%`;
+
+        // Synchronize 3D Blender floating telemetry pills
+        if (pillVibe3d) {
+            pillVibe3d.textContent = `VIBE: ${currentVibe} mm/s`;
+            if (currentVibe >= 4.5 || anomalyVal >= 100) {
+                pillVibe3d.className = 'badge bg-danger text-white border border-danger font-monospace px-2 py-1 shadow animate-pulse';
+            } else if (currentVibe >= 2.8) {
+                pillVibe3d.className = 'badge bg-warning text-black border border-warning font-monospace px-2 py-1 shadow';
+            } else {
+                pillVibe3d.className = 'badge bg-black bg-opacity-85 text-emerald border border-emerald border-opacity-50 font-monospace px-2 py-1 shadow';
+            }
+        }
+        if (pillTemp3d) {
+            pillTemp3d.textContent = `TEMP: ${currentTemp}°C`;
+            if (currentTemp > 85) {
+                pillTemp3d.className = 'badge bg-danger text-white border border-danger font-monospace px-2 py-1 shadow';
+            } else if (currentTemp > 65) {
+                pillTemp3d.className = 'badge bg-warning text-black border border-warning font-monospace px-2 py-1 shadow';
+            } else {
+                pillTemp3d.className = 'badge bg-black bg-opacity-85 text-cyan border border-cyan border-opacity-50 font-monospace px-2 py-1 shadow';
+            }
+        }
+        if (pillLoad3d) {
+            pillLoad3d.textContent = `LOAD: ${currentLoad}%`;
+            if (currentLoad > 90) {
+                pillLoad3d.className = 'badge bg-danger text-white border border-danger font-monospace px-2 py-1 shadow';
+            } else {
+                pillLoad3d.className = 'badge bg-black bg-opacity-85 text-warning border border-warning border-opacity-50 font-monospace px-2 py-1 shadow';
+            }
+        }
 
         if (pVibe) pVibe.style.width = `${Math.min(100, (currentVibe / cfg.vibeMax) * 100)}%`;
         if (pTemp) pTemp.style.width = `${Math.min(100, (currentTemp / cfg.tempMax) * 100)}%`;
@@ -3204,6 +3269,28 @@ function initDigitalTwinSimulator() {
     function switchDigitalTwinAsset(targetKey) {
         currentAsset = targetKey;
         const cfg = assetConfigs[currentAsset] || assetConfigs.substation;
+
+        if (targetKey !== 'substation') {
+            if (btnTwinWire && btnTwin3d && viewTwinWire && viewTwin3d) {
+                btnTwinWire.classList.add('active', 'btn-outline-info');
+                btnTwinWire.classList.remove('btn-outline-secondary');
+                btnTwin3d.classList.remove('active', 'btn-outline-info');
+                btnTwin3d.classList.add('btn-outline-secondary');
+                viewTwinWire.classList.remove('d-none');
+                viewTwin3d.classList.add('d-none');
+            }
+            if (headingTwin) headingTwin.textContent = cfg.title;
+        } else {
+            if (btnTwin3d && btnTwinWire && viewTwin3d && viewTwinWire) {
+                btnTwin3d.classList.add('active', 'btn-outline-info');
+                btnTwin3d.classList.remove('btn-outline-secondary');
+                btnTwinWire.classList.remove('active', 'btn-outline-info');
+                btnTwinWire.classList.add('btn-outline-secondary');
+                viewTwin3d.classList.remove('d-none');
+                viewTwinWire.classList.add('d-none');
+            }
+            if (headingTwin) headingTwin.textContent = '3D BLENDER DIGITAL TWIN // GIAO THỨC IEC 61850 GOOSE';
+        }
 
         const schematicTitle = twinSection.querySelector('.text-white.font-monospace.small.fw-bold');
         if (schematicTitle) {

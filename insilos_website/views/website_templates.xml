@@ -647,6 +647,12 @@
                         </a>
                     </li>
                     <li role="presentation" class="nav-item ins-nav-item">
+                        <a role="menuitem" href="/showcase-3d" class="nav-link d-inline-flex align-items-center gap-1">
+                            <span class="badge bg-danger bg-opacity-75 text-white font-monospace" style="font-size: 0.65rem; padding: 2px 6px;">HSE VIDEO</span>
+                            <span>Video &amp; 3D</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="nav-item ins-nav-item">
                         <a role="menuitem" href="/pricing" class="nav-link">
                             <span>Pricing</span>
                         </a>
@@ -1276,6 +1282,10 @@
                 <!-- Direct Nav Links -->
                 <div class="d-flex flex-column gap-2 border-top border-secondary border-opacity-25 pt-3">
                     <a href="/platform" class="text-white text-decoration-none py-2 fw-medium">Platform</a>
+                    <a href="/showcase-3d" class="text-white text-decoration-none py-2 fw-medium d-flex align-items-center justify-content-between">
+                        <span>Video &amp; 3D Showcase</span>
+                        <span class="badge bg-danger font-monospace">HSE VIDEO</span>
+                    </a>
                     <a href="/resources" class="text-white text-decoration-none py-2 fw-medium">Resources</a>
                     <a href="/pricing" class="text-white text-decoration-none py-2 fw-medium">Pricing</a>
                     <a href="/about" class="text-white text-decoration-none py-2 fw-medium">Company</a>
@@ -1295,90 +1305,109 @@
     <template id="insilos_footer_custom" inherit_id="website.footer_custom" priority="50">
         <xpath expr="//div[@id='footer']" position="replace">
             <div id="footer" class="oe_structure oe_structure_solo text-break" t-ignore="true" t-if="not no_footer">
-                <section class="s_text_block ins-footer-section bg-dark text-white pt-5 pb-4" data-snippet="s_text_block" data-name="Institutional Footer">
+                <section class="s_text_block ins-footer-section text-white pt-5 pb-4 position-relative" data-snippet="s_text_block" data-name="Institutional Footer" style="background-color: #050811; border-top: 1px solid rgba(255, 255, 255, 0.08);">
                     <div class="container">
-                        <!-- Top Row: Brand, Corporate Legal, Navigation Columns -->
-                        <div class="row g-4 pb-4 border-bottom border-secondary border-opacity-25">
-                            <!-- Col 1: Corporate Legal Entity & Licensing (Decree 52/2013/ND-CP) -->
-                            <div class="col-lg-4 col-md-6">
+                        <!-- Top Row: Symmetrical 5-Column Fortune 500 Enterprise Grid -->
+                        <div class="row g-4 pb-5 border-bottom border-secondary border-opacity-25">
+                            <!-- Col 1 (3 cols): Corporate Legal Entity & Sovereign OS -->
+                            <div class="col-lg-3 col-md-6">
                                 <div class="d-flex align-items-center gap-2 mb-3">
                                     <span class="text-orange fw-bold fs-4 tracking-tight">INSILOS</span>
-                                    <span class="ins-footer-badge">Sovereign AI OS</span>
+                                    <span class="badge bg-secondary bg-opacity-25 text-mint border border-secondary border-opacity-30 font-monospace small">Sovereign AI OS</span>
                                 </div>
                                 <h6 class="text-white fw-bold mb-2 small text-uppercase tracking-wider">UNG DUNG SANG TAO LLC</h6>
                                 <p class="text-secondary small mb-2 lh-sm">
-                                    <strong class="text-light">Mã số doanh nghiệp (ID):</strong> 0313683499 do Sở KH&amp;ĐT TP. Hồ Chí Minh cấp.
+                                    <strong class="text-light">Mã số DN (Tax ID):</strong> 0313683499 do Sở KH&amp;ĐT TP.HCM cấp.
                                 </p>
                                 <p class="text-secondary small mb-3 lh-sm">
-                                    Nền tảng Trí tuệ Nhân tạo Công nghiệp có Chủ quyền tiên phong tại Việt Nam, tối ưu hóa vận hành ERP/MES/SCADA đạt chuẩn an ninh quốc phòng và tuân thủ thể chế.
+                                    Hệ điều hành AI Công nghiệp có Chủ quyền tiên phong tại Việt Nam, kết nối trực tiếp cảm biến SCADA/IoT hiện trường với sổ cái ERP VAS 200.
                                 </p>
                                 <div class="d-flex flex-column gap-2 small text-secondary">
                                     <div class="d-flex align-items-start gap-2">
                                         <svg class="ph-duotone ph-map-pin ph-sm text-orange flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-map-pin"/></svg>
-                                        <span class="lh-sm"><strong class="text-light">Địa chỉ trụ sở:</strong> 45 street 3, Trung Son Resident, Binh Hung ward, Binh Chanh district, Ho Chi Minh city, Vietnam</span>
+                                        <span class="lh-sm"><strong class="text-light">Trụ sở chính:</strong> 45 Đường số 3, KDC Trung Sơn, Bình Hưng, Bình Chánh, TP. Hồ Chí Minh</span>
                                     </div>
                                     <div class="d-flex align-items-start gap-2">
                                         <svg class="ph-duotone ph-buildings ph-sm text-cyan flex-shrink-0 mt-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-buildings"/></svg>
-                                        <span class="lh-sm"><strong class="text-light">R&amp;D Hub:</strong> KDC Trung Sơn, Xã Bình Hưng, Huyện Bình Chánh, TP. Hồ Chí Minh</span>
+                                        <span class="lh-sm"><strong class="text-light">R&amp;D Hub:</strong> Trung Tâm Nghiên Cứu Công Nghệ AI &amp; IoT Công Nghiệp, TP.HCM</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Col 2: Solutions & Industries -->
-                            <div class="col-lg-3 col-md-6">
-                                <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider">Giải Pháp Trọng Điểm</h6>
-                                <ul class="list-unstyled d-flex flex-column gap-2 small mb-4">
-                                    <li><a href="/solutions/vertical-idp" class="text-secondary text-decoration-none hover-white">Vertical IDP &amp; Customs AI</a></li>
-                                    <li><a href="/solutions/enterprise-knowledge-graph" class="text-secondary text-decoration-none hover-white">Enterprise Knowledge Graph</a></li>
-                                    <li><a href="/solutions/trade-compliance" class="text-secondary text-decoration-none hover-white">Trade Compliance &amp; FTA</a></li>
-                                    <li><a href="/solutions/field-service-intelligence" class="text-secondary text-decoration-none hover-white">Field Service Intelligence</a></li>
-                                    <li><a href="/solutions/asset-reliability" class="text-secondary text-decoration-none hover-white">Asset Reliability &amp; Digital Twin</a></li>
-                                    <li><a href="/solutions/logistics-control-tower" class="text-secondary text-decoration-none hover-white">Logistics Control Tower</a></li>
-                                    <li><a href="/solutions" class="ins-footer-link-highlight">Tất Cả 9 Giải Pháp →</a></li>
-                                </ul>
-                                <h6 class="text-white fw-bold mb-2 small text-uppercase tracking-wider">Ngành Công Nghiệp</h6>
-                                <ul class="list-unstyled d-flex flex-column gap-1 small mb-0">
-                                    <li><a href="/industries/logistics" class="text-secondary text-decoration-none hover-white">Logistics &amp; Cảng Biển</a></li>
-                                    <li><a href="/industries/pharma" class="text-secondary text-decoration-none hover-white">Dược Phẩm (WHO-GMP/FDA)</a></li>
-                                    <li><a href="/industries/energy" class="text-secondary text-decoration-none hover-white">Năng Lượng &amp; Utilities</a></li>
-                                    <li><a href="/industries/fsm" class="text-secondary text-decoration-none hover-white">Field Service &amp; Thiết Bị</a></li>
+                            <!-- Col 2 (2 cols): Platform & Sandbox Spotlight -->
+                            <div class="col-lg-2 col-md-6 col-6">
+                                <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider d-flex align-items-center gap-2">
+                                    <span class="p-1 rounded bg-info bg-opacity-10 text-cyan"><svg class="ph-duotone ph-cpu ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg></span>
+                                    <span>Nền Tảng</span>
+                                </h6>
+                                <ul class="list-unstyled d-flex flex-column gap-2 small mb-0">
+                                    <li>
+                                        <a href="/sandbox" class="text-decoration-none fw-semibold text-cyan d-inline-flex align-items-center gap-1">
+                                            <span class="ins-live-ping ins-live-ping--emerald"/>
+                                            <span>Industrial Sandbox 48h</span>
+                                        </a>
+                                    </li>
+                                    <li><a href="/platform" class="text-secondary text-decoration-none hover-white">Nền Tảng Hợp Nhất</a></li>
+                                    <li><a href="/interactive-3d" class="text-secondary text-decoration-none hover-white">3D Digital Twin CAD</a></li>
+                                    <li><a href="/showcase-3d" class="text-secondary text-decoration-none hover-white">Trung Tâm 3D &amp; Video</a></li>
+                                    <li><a href="/platform#pillars" class="text-secondary text-decoration-none hover-white">Kiến Trúc Air-Gapped</a></li>
+                                    <li><a href="/platform#roi" class="text-secondary text-decoration-none hover-white">Báo Cáo TCO &amp; ROI</a></li>
+                                    <li><a href="/request-demo" class="text-secondary text-decoration-none hover-white">Đăng Ký Pilot 48 Giờ</a></li>
                                 </ul>
                             </div>
 
-                            <!-- Col 3: Legal, GRC & Compliance (Decree 13/2023/ND-CP) -->
-                            <div class="col-lg-2 col-md-6">
-                                <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider">Thể Chế &amp; An Ninh</h6>
-                                <ul class="list-unstyled d-flex flex-column gap-2 small mb-4">
+                            <!-- Col 3 (2 cols): Core Solutions -->
+                            <div class="col-lg-2 col-md-6 col-6">
+                                <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider d-flex align-items-center gap-2">
+                                    <span class="p-1 rounded bg-success bg-opacity-10 text-mint"><svg class="ph-duotone ph-stack ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-stack"/></svg></span>
+                                    <span>Giải Pháp</span>
+                                </h6>
+                                <ul class="list-unstyled d-flex flex-column gap-2 small mb-0">
+                                    <li><a href="/solutions/vertical-idp" class="text-secondary text-decoration-none hover-white">Vertical IDP Hải Quan</a></li>
+                                    <li><a href="/solutions/enterprise-knowledge-graph" class="text-secondary text-decoration-none hover-white">Knowledge Graph Đa Tầng</a></li>
+                                    <li><a href="/solutions/trade-compliance" class="text-secondary text-decoration-none hover-white">Trade Compliance &amp; FTA</a></li>
+                                    <li><a href="/solutions/field-service-intelligence" class="text-secondary text-decoration-none hover-white">Field Service FSM</a></li>
+                                    <li><a href="/solutions/asset-reliability" class="text-secondary text-decoration-none hover-white">Độ Tin Cậy Thiết Bị APM</a></li>
+                                    <li><a href="/solutions/logistics-control-tower" class="text-secondary text-decoration-none hover-white">Logistics Control Tower</a></li>
+                                    <li><a href="/solutions" class="ins-footer-link-highlight">Tất Cả 9 Giải Pháp →</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Col 4 (2 cols): Institutional Governance & Resources -->
+                            <div class="col-lg-2 col-md-6 col-6">
+                                <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider d-flex align-items-center gap-2">
+                                    <span class="p-1 rounded bg-warning bg-opacity-10 text-warning"><svg class="ph-duotone ph-shield-check ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg></span>
+                                    <span>Thể Chế &amp; Hồ Sơ</span>
+                                </h6>
+                                <ul class="list-unstyled d-flex flex-column gap-2 small mb-0">
                                     <li>
                                         <a href="/privacy" class="text-light text-decoration-none fw-semibold d-inline-flex align-items-center gap-1 text-nowrap">
                                             <svg class="ph-duotone ph-shield-check ph-xs text-orange"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
                                             <span>Bảo Vệ Dữ Liệu (NĐ 13)</span>
                                         </a>
                                     </li>
-                                    <li><a href="/trust" class="text-secondary text-decoration-none hover-white">Trung Tâm Tin Cậy (Trust)</a></li>
+                                    <li><a href="/trust" class="text-secondary text-decoration-none hover-white">Sovereign Trust Center</a></li>
                                     <li><a href="/compliance" class="text-secondary text-decoration-none hover-white">Khung Tuân Thủ GRC</a></li>
-                                    <li><a href="/sandbox" class="text-secondary text-decoration-none hover-white">Industrial Sandbox 48h</a></li>
+                                    <li><a href="/resources#hse-sop-vault" class="text-secondary text-decoration-none hover-white">Kho 4 SOPs &amp; 6 Biểu Mẫu</a></li>
+                                    <li><a href="/resources#hse-video-training" class="text-secondary text-decoration-none hover-white">Video Đào Tạo HSE &amp; PPE</a></li>
                                     <li><a href="/media-credits" class="text-secondary text-decoration-none hover-white">Bản Quyền &amp; Tư Liệu</a></li>
-                                </ul>
-
-                                <h6 class="text-white fw-bold mb-2 small text-uppercase tracking-wider">Doanh Nghiệp</h6>
-                                <ul class="list-unstyled d-flex flex-column gap-1 small mb-0">
-                                    <li><a href="/about" class="text-secondary text-decoration-none hover-white">Về Insilos</a></li>
-                                    <li><a href="/pricing" class="text-secondary text-decoration-none hover-white">Bảng Giá &amp; ELA</a></li>
-                                    <li><a href="/resources" class="text-secondary text-decoration-none hover-white">Tài Liệu Chuyên Khảo</a></li>
+                                    <li><a href="/pricing" class="text-secondary text-decoration-none hover-white">Bảng Giá Doanh Nghiệp</a></li>
                                 </ul>
                             </div>
 
-                            <!-- Col 4: Contact & Hotline -->
+                            <!-- Col 5 (3 cols): 24/7 Hotline & Emergency SOC -->
                             <div class="col-lg-3 col-md-6">
-                                <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider">Kết Nối Khẩn Cấp</h6>
-                                <div class="ins-footer-hotline-card mb-3">
-                                    <div class="d-flex align-items-center gap-2 mb-1">
-                                        <svg class="ph-duotone ph-phone ph-sm text-orange"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-phone"/></svg>
-                                        <span class="text-secondary small">Hotline 24/7 (Miễn cước):</span>
+                                <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider d-flex align-items-center gap-2">
+                                    <span class="p-1 rounded bg-danger bg-opacity-10 text-danger"><svg class="ph-duotone ph-phone-call ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-phone-call"/></svg></span>
+                                    <span>Kết Nối Khẩn Cấp 24/7</span>
+                                </h6>
+                                <div class="ins-footer-hotline-card p-3 rounded-3 mb-3 border border-secondary border-opacity-25" style="background-color: rgba(15, 23, 42, 0.65);">
+                                    <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
+                                        <span class="text-secondary small font-monospace">HOTLINE TOÀN QUỐC:</span>
+                                        <span class="badge bg-success bg-opacity-20 text-mint font-monospace small px-2 py-0">24/7 ACTIVE</span>
                                     </div>
-                                    <a href="tel:1900882026" class="ins-hotline-number">1900 88 2026</a>
-                                    <div class="text-secondary x-small mt-1">Hỗ trợ kỹ thuật P1 &lt; 15 phút</div>
+                                    <a href="tel:1900882026" class="ins-hotline-number d-block fs-4 fw-bold text-orange text-decoration-none font-monospace mb-1">1900 88 2026</a>
+                                    <div class="text-secondary small lh-sm">Cam kết phản hồi sự cố kỹ thuật P1 &lt; 15 phút.</div>
                                 </div>
                                 <div class="d-flex flex-column gap-2 small text-secondary mb-3">
                                     <div class="d-flex align-items-center gap-2">
@@ -1389,26 +1418,52 @@
                                         <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
                                         <a href="mailto:legal@insilos.com" class="text-light text-decoration-none">legal@insilos.com</a>
                                     </div>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <svg class="ph-duotone ph-phone-call ph-sm text-orange"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-phone-call"/></svg>
-                                        <a href="tel:+84944311811" class="text-light text-decoration-none">+84 944 311 811</a>
-                                    </div>
                                 </div>
-                                <a href="/request-demo" class="btn btn-primary ins-footer-btn-cta rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2">
+                                <a href="/request-demo" class="btn btn-primary ins-footer-btn-cta rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 fw-bold shadow">
                                     <span>Đăng Ký Khảo Sát Demo</span>
                                     <svg class="ph-duotone ph-arrow-right ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                 </a>
                             </div>
                         </div>
 
+                        <!-- Enterprise Compliance Certification Ribbon -->
+                        <div class="py-3 border-bottom border-secondary border-opacity-25">
+                            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between gap-3 text-secondary font-monospace small">
+                                <span class="d-inline-flex align-items-center gap-1">
+                                    <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                    <strong class="text-white">ISO 27001:2022</strong> ISMS
+                                </span>
+                                <span class="d-inline-flex align-items-center gap-1">
+                                    <svg class="ph-duotone ph-hard-hat ph-sm text-warning"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-hard-hat"/></svg>
+                                    <strong class="text-white">ISO 45001:2018</strong> HSE
+                                </span>
+                                <span class="d-inline-flex align-items-center gap-1">
+                                    <svg class="ph-duotone ph-lightning ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lightning"/></svg>
+                                    <strong class="text-white">IEC 61850</strong> GOOSE 60HZ
+                                </span>
+                                <span class="d-inline-flex align-items-center gap-1">
+                                    <svg class="ph-duotone ph-boat ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-boat"/></svg>
+                                    <strong class="text-white">WCO SAFE</strong> FRAMEWORK
+                                </span>
+                                <span class="d-inline-flex align-items-center gap-1">
+                                    <svg class="ph-duotone ph-scales ph-sm text-orange"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scales"/></svg>
+                                    <strong class="text-white">VAS 200/2014</strong> AUDITED
+                                </span>
+                                <span class="d-inline-flex align-items-center gap-1">
+                                    <svg class="ph-duotone ph-lock-key ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lock-key"/></svg>
+                                    <strong class="text-white">100% AIR-GAPPED</strong> SOVEREIGN
+                                </span>
+                            </div>
+                        </div>
+
                         <!-- Bottom Row: Copyright & Statutory Badges -->
                         <div class="row align-items-center pt-3 small text-secondary">
                             <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
-                                <span>© 2026 UNG DUNG SANG TAO LLC · INSILOS SOVEREIGN AI. Bản quyền đã được bảo hộ. Tuân thủ tuyệt đối Nghị định 13/2023/NĐ-CP &amp; Nghị định 52/2013/NĐ-CP.</span>
+                                <span>© 2026 UNG DUNG SANG TAO LLC · INSILOS SOVEREIGN ENTERPRISE OS. Bản quyền đã được bảo hộ. Tuân thủ tuyệt đối Nghị định 13/2023/NĐ-CP &amp; Nghị định 52/2013/NĐ-CP.</span>
                             </div>
                             <div class="col-md-5 text-center text-md-end">
                                 <span class="ins-footer-badge me-2">Bộ TT&amp;TT · Tier 3 Data Center</span>
-                                <span class="ins-footer-badge">ISO 27001 / IEC 62443</span>
+                                <span class="ins-footer-badge">IEC 62443 CYBERSECURITY</span>
                             </div>
                         </div>
                     </div>

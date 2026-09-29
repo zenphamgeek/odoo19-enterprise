@@ -28,13 +28,24 @@
     --ins-orange-gradient: linear-gradient(135deg, #FFA033 0%, #FF8000 45%, #E66A00 100%);
     --ins-orange-gradient-hover: linear-gradient(135deg, #FFB347 0%, #FF8A00 45%, #F97316 100%);
 
-    // Supporting Accents & Semantic States
-    --ins-cyan: #FF8000; // Mapped directly to Brand Orange for full visual harmony
-    --ins-cyan-glow: rgba(255, 128, 0, 0.28);
+    // =========================================================================
+    // INSILOS ENTERPRISE COLOR TOKEN SYSTEM (MILESTONE 1 STANDARD)
+    // =========================================================================
+    --ins-mint: #42E6C3;             // Electric Mint (Bright -> Dark text #05101E)
+    --ins-cyan: #00F2FE;             // Tech Cyan (Bright -> Dark text #05101E)
+    --ins-cyan-glow: rgba(0, 242, 254, 0.28);
+    --ins-yellow: #FFC107;           // Safety Hazard Yellow (Bright -> Dark text #05101E)
+    --ins-emerald: #10B981;          // Industrial Emerald (Bright -> Dark text #05101E)
+    --ins-cobalt: #1E40AF;           // Deep Cobalt (Dark -> White text #FFFFFF)
+    --ins-amber: #F59E0B;            // Vivid Amber (Bright -> Dark text #05101E)
+    --ins-violet: #8B5CF6;           // Cyber Violet (Dark -> White text #FFFFFF)
+    --ins-slate: #64748B;            // Platinum Slate (Dark -> White text #FFFFFF)
+    --ins-rose: #F43F5E;             // Rose Gold (White text #FFFFFF)
     --ins-blue: #EA580C;
-    --ins-emerald: #10B981;
-    --ins-amber: #FF8000;
-    --ins-mint: #42E6C3;
+
+    // Contrast Text Foundations
+    --ins-text-dark: #05101E;
+    --ins-text-light: #FFFFFF;
 
     // Borders & Glassmorphism
     --ins-border-subtle: rgba(255, 255, 255, 0.08);
@@ -42,6 +53,288 @@
     --ins-glass-surface: rgba(14, 23, 38, 0.72);
     --c3-border: var(--ins-border-subtle);
 }
+
+/* ==========================================================================
+   ENTERPRISE BADGE, PILL & CHIP ARCHITECTURE (WCAG AA/AAA COMPLIANT)
+   ========================================================================== */
+
+// 1. Universal Absolute Centering & Geometric Normalization
+.badge,
+.badge-pill,
+.ins-tag,
+.ins-status-chip,
+.ins-pill-badge,
+.ins-status-badge,
+.ins-badge-subtle,
+.ins-cockpit-badge,
+.rounded-pill:not(.btn) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+// 2. Strict WCAG Contrast Rules (Overrides Odoo Core --badge-color Cascade)
+.badge,
+.badge-pill,
+.ins-tag,
+.ins-status-chip,
+.ins-pill-badge,
+.ins-status-badge {
+    // --- Bright Backgrounds: MUST use Dark Text #05101E (>= 4.5:1, up to 12.2:1) ---
+    &.bg-mint, &.badge-mint,
+    &.bg-cyan, &.badge-cyan,
+    &.bg-yellow, &.badge-yellow,
+    &.bg-warning, &.badge-warning,
+    &.bg-amber, &.badge-amber,
+    &.bg-light, &.badge-light,
+    &.bg-white, &.badge-white,
+    &.text-dark {
+        --badge-color: #05101E !important;
+        color: #05101E !important;
+
+        * {
+            color: #05101E !important;
+            fill: #05101E !important;
+        }
+    }
+
+    // Specific Bright Background Colors
+    &.bg-mint, &.badge-mint {
+        background-color: #42E6C3 !important;
+        --badge-bg: #42E6C3 !important;
+    }
+    &.bg-cyan, &.badge-cyan {
+        background-color: #00F2FE !important;
+        --badge-bg: #00F2FE !important;
+    }
+    &.bg-yellow, &.badge-yellow, &.bg-warning, &.badge-warning {
+        background-color: #FFC107 !important;
+        --badge-bg: #FFC107 !important;
+    }
+    &.bg-amber, &.badge-amber {
+        background-color: #F59E0B !important;
+        --badge-bg: #F59E0B !important;
+    }
+    &.bg-emerald, &.badge-emerald {
+        background-color: #10B981 !important;
+        --badge-bg: #10B981 !important;
+        --badge-color: #05101E !important;
+        color: #05101E !important;
+    }
+    &.bg-white, &.badge-white, &.bg-light, &.badge-light {
+        background-color: #FFFFFF !important;
+        --badge-bg: #FFFFFF !important;
+    }
+
+    // --- Dark Backgrounds: MUST use Crisp White Text #FFFFFF ---
+    &.bg-cobalt, &.badge-cobalt {
+        background-color: #1E40AF !important;
+        --badge-bg: #1E40AF !important;
+        --badge-color: #FFFFFF !important;
+        color: #FFFFFF !important;
+    }
+    &.bg-violet, &.badge-violet {
+        background-color: #8B5CF6 !important;
+        --badge-bg: #8B5CF6 !important;
+        --badge-color: #FFFFFF !important;
+        color: #FFFFFF !important;
+    }
+    &.bg-slate, &.badge-slate {
+        background-color: #64748B !important;
+        --badge-bg: #64748B !important;
+        --badge-color: #FFFFFF !important;
+        color: #FFFFFF !important;
+    }
+    &.bg-rose, &.badge-rose {
+        background-color: #F43F5E !important;
+        --badge-bg: #F43F5E !important;
+        --badge-color: #FFFFFF !important;
+        color: #FFFFFF !important;
+    }
+    &.bg-dark, &.badge-dark, &.bg-black, &.badge-black {
+        background-color: #070B14 !important;
+        --badge-bg: #070B14 !important;
+        --badge-color: #FFFFFF !important;
+        color: #FFFFFF !important;
+    }
+
+    // Sub-variants for subtle/translucent badge overlays
+    &.bg-white-10, &.bg-white-20, &.bg-black-60,
+    &[class*="bg-opacity-"],
+    &.bg-opacity-10, &.bg-opacity-20, &.bg-opacity-25, &.bg-opacity-50, &.bg-opacity-75 {
+        &.bg-secondary {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            --badge-bg: rgba(255, 255, 255, 0.08) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
+        &.bg-info {
+            background-color: rgba(0, 242, 254, 0.12) !important;
+            --badge-bg: rgba(0, 242, 254, 0.12) !important;
+            border: 1px solid rgba(0, 242, 254, 0.25) !important;
+        }
+        &.bg-success {
+            background-color: rgba(16, 185, 129, 0.12) !important;
+            --badge-bg: rgba(16, 185, 129, 0.12) !important;
+            border: 1px solid rgba(16, 185, 129, 0.25) !important;
+        }
+        &.bg-danger {
+            background-color: rgba(244, 63, 94, 0.12) !important;
+            --badge-bg: rgba(244, 63, 94, 0.12) !important;
+            border: 1px solid rgba(244, 63, 94, 0.25) !important;
+        }
+        &.bg-primary {
+            background-color: rgba(255, 128, 0, 0.12) !important;
+            --badge-bg: rgba(255, 128, 0, 0.12) !important;
+            border: 1px solid rgba(255, 128, 0, 0.25) !important;
+        }
+        &.bg-warning {
+            background-color: rgba(255, 193, 7, 0.12) !important;
+            --badge-bg: rgba(255, 193, 7, 0.12) !important;
+            border: 1px solid rgba(255, 193, 7, 0.25) !important;
+        }
+
+        &.text-light, &.text-white {
+            color: #FFFFFF !important;
+            --badge-color: #FFFFFF !important;
+        }
+        &.text-secondary {
+            color: #E2E8F0 !important;
+            --badge-color: #E2E8F0 !important;
+        }
+        &.text-cyan {
+            color: #00F2FE !important;
+            --badge-color: #00F2FE !important;
+        }
+        &.text-mint {
+            color: #42E6C3 !important;
+            --badge-color: #42E6C3 !important;
+        }
+        &.text-emerald, &.text-success {
+            color: #10B981 !important;
+            --badge-color: #10B981 !important;
+        }
+        &.text-warning {
+            color: #FFC107 !important;
+            --badge-color: #FFC107 !important;
+        }
+        &.text-danger {
+            color: #F43F5E !important;
+            --badge-color: #F43F5E !important;
+        }
+    }
+}
+
+// 3. Advanced Style Variants: Glassmorphism, Dual-Tone Accent & Neon Glow
+// Glassmorphism Frosted Badges
+.badge-glass,
+.ins-badge-glass,
+.badge.bg-glass {
+    background: rgba(14, 23, 38, 0.72) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #FFFFFF !important;
+    --badge-color: #FFFFFF !important;
+}
+
+// Dual-Tone Accent Badges & Status Chips
+.badge-dual-mint, .ins-pill-dual-mint {
+    background: rgba(66, 230, 195, 0.12) !important;
+    border: 1px solid rgba(66, 230, 195, 0.35) !important;
+    color: #42E6C3 !important;
+    --badge-color: #42E6C3 !important;
+}
+.badge-dual-cyan, .ins-pill-dual-cyan {
+    background: rgba(0, 242, 254, 0.12) !important;
+    border: 1px solid rgba(0, 242, 254, 0.35) !important;
+    color: #00F2FE !important;
+    --badge-color: #00F2FE !important;
+}
+.badge-dual-orange, .ins-pill-dual-orange {
+    background: rgba(255, 128, 0, 0.12) !important;
+    border: 1px solid rgba(255, 128, 0, 0.35) !important;
+    color: #FF8000 !important;
+    --badge-color: #FF8000 !important;
+}
+.badge-dual-emerald, .ins-pill-dual-emerald {
+    background: rgba(16, 185, 129, 0.12) !important;
+    border: 1px solid rgba(16, 185, 129, 0.35) !important;
+    color: #10B981 !important;
+    --badge-color: #10B981 !important;
+}
+.badge-dual-amber, .ins-pill-dual-amber {
+    background: rgba(245, 158, 11, 0.12) !important;
+    border: 1px solid rgba(245, 158, 11, 0.35) !important;
+    color: #F59E0B !important;
+    --badge-color: #F59E0B !important;
+}
+.badge-dual-violet, .ins-pill-dual-violet {
+    background: rgba(139, 92, 246, 0.12) !important;
+    border: 1px solid rgba(139, 92, 246, 0.35) !important;
+    color: #8B5CF6 !important;
+    --badge-color: #8B5CF6 !important;
+}
+.badge-dual-rose, .ins-pill-dual-rose {
+    background: rgba(244, 63, 94, 0.12) !important;
+    border: 1px solid rgba(244, 63, 94, 0.35) !important;
+    color: #F43F5E !important;
+    --badge-color: #F43F5E !important;
+}
+
+// Subtle Neon Glow Borders
+.badge-glow-mint {
+    box-shadow: 0 0 10px rgba(66, 230, 195, 0.45) !important;
+    border-color: rgba(66, 230, 195, 0.8) !important;
+}
+.badge-glow-cyan {
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.45) !important;
+    border-color: rgba(0, 242, 254, 0.8) !important;
+}
+.badge-glow-orange {
+    box-shadow: 0 0 10px rgba(255, 128, 0, 0.45) !important;
+    border-color: rgba(255, 128, 0, 0.8) !important;
+}
+.badge-glow-violet {
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.45) !important;
+    border-color: rgba(139, 92, 246, 0.8) !important;
+}
+
+// 4. Utility Text & Background Classes
+.text-dark { color: #05101E !important; }
+.text-mint { color: #42E6C3 !important; }
+.text-cyan { color: #00F2FE !important; }
+.text-yellow { color: #FFC107 !important; }
+.text-emerald { color: #10B981 !important; }
+.text-cobalt { color: #1E40AF !important; }
+.text-amber { color: #F59E0B !important; }
+.text-violet { color: #8B5CF6 !important; }
+.text-slate { color: #64748B !important; }
+.text-rose { color: #F43F5E !important; }
+
+.bg-mint { background-color: #42E6C3 !important; }
+.bg-cyan { background-color: #00F2FE !important; }
+.bg-yellow { background-color: #FFC107 !important; }
+.bg-emerald { background-color: #10B981 !important; }
+.bg-cobalt { background-color: #1E40AF !important; }
+.bg-amber { background-color: #F59E0B !important; }
+.bg-violet { background-color: #8B5CF6 !important; }
+.bg-slate { background-color: #64748B !important; }
+.bg-rose { background-color: #F43F5E !important; }
+
+.border-mint { border-color: #42E6C3 !important; }
+.border-cyan { border-color: #00F2FE !important; }
+.border-yellow { border-color: #FFC107 !important; }
+.border-emerald { border-color: #10B981 !important; }
+.border-cobalt { border-color: #1E40AF !important; }
+.border-amber { border-color: #F59E0B !important; }
+.border-violet { border-color: #8B5CF6 !important; }
+.border-slate { border-color: #64748B !important; }
+.border-rose { border-color: #F43F5E !important; }
 
 body, #wrapwrap, .o_cc5, html {
     font-family: var(--bs-body-font-family) !important;
@@ -569,13 +862,13 @@ footer#bottom, footer.o_footer {
     // Brand Orange Colors & Utilities
     .text-orange { color: var(--ins-orange) !important; }
     .text-primary { color: var(--ins-orange) !important; }
-    .text-cyan { color: var(--ins-orange) !important; } // Full backward compatibility with unified Brand Orange
+    .text-cyan { color: var(--ins-cyan) !important; }
     .bg-orange { background-color: var(--ins-orange) !important; }
     .border-orange { border-color: var(--ins-orange) !important; }
-    .text-mint { color: #42E6C3 !important; }
+    .text-mint { color: var(--ins-mint) !important; }
     .text-emerald { color: var(--ins-emerald) !important; }
-    .text-amber { color: var(--ins-orange) !important; }
-    .bg-mint { background-color: #42E6C3 !important; }
+    .text-amber { color: var(--ins-amber) !important; }
+    .bg-mint { background-color: var(--ins-mint) !important; }
     .display-2-fs { font-size: calc(1.425rem + 2.1vw) !important; }
     .display-4-fs { font-size: calc(1.375rem + 1.5vw) !important; }
 }

@@ -2301,28 +2301,70 @@
     <!-- ================================================================= -->
     <template id="insilos_custom_snippets" inherit_id="website.snippets" priority="20">
         <xpath expr="//snippets[@id='snippet_structure']" position="inside">
-            <t t-snippet="insilos_website.s_c3ai_hero_blueprint" string="C3.ai Blueprint Hero" group="intro"/>
-            <t t-snippet="insilos_website.s_c3ai_bento_grid" string="C3.ai Frosted Bento" group="columns"/>
-            <t t-snippet="insilos_website.s_c3ai_dossier_matrix" string="C3.ai Dossier Matrix" group="columns"/>
-            <t t-snippet="insilos_website.s_c3ai_asymmetric_bento" string="C3.ai Asymmetric Bento" group="content"/>
-            <t t-snippet="insilos_website.s_c3ai_comparison_ledger" string="C3.ai Comparison Ledger" group="content"/>
-            <t t-snippet="insilos_website.s_c3ai_micro_ledger" string="C3.ai Micro-Ledger" group="content"/>
-            <t t-snippet="insilos_website.s_c3ai_compliance_ticker" string="C3.ai Compliance Ticker" group="content"/>
-            <t t-snippet="insilos_website.s_c3ai_radar_topology" string="C3.ai Radar Topology" group="content"/>
-            <t t-snippet="insilos_website.s_c3ai_terminal_console" string="C3.ai Terminal Console" group="content"/>
-            <t t-snippet="insilos_website.s_c3ai_roi_calculator" string="C3.ai ROI Calculator" group="content"/>
-            <t t-snippet="insilos_website.s_c3ai_code_studio" string="C3.ai Architecture Code Studio" group="content"/>
-            <t t-snippet="insilos_website.s_c3ai_3d_cockpit" string="C3.ai 3D Cockpit Stack" group="content"/>
-            <t t-snippet="insilos_website.s_ins_platform_topology" string="Platform Topology Diagram" group="content"/>
-            <t t-snippet="insilos_website.s_insilos_grc_matrix" string="GRC Compliance Matrix" group="content"/>
-            <t t-snippet="insilos_website.s_insilos_case_dossier" string="Executive Case Dossiers" group="columns"/>
+            <t t-snippet="insilos_website.s_c3ai_hero_blueprint" string="C3.ai Blueprint Hero" group="intro" t-thumbnail="/website/static/src/img/snippets_thumbs/thumb_snippets_intro.svg">
+                <keywords>hero, blueprint, console, logistics, c3ai, telemetry</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_bento_grid" string="C3.ai Frosted Bento" group="columns" t-thumbnail="/website/static/src/img/snippets_thumbs/s_card.svg">
+                <keywords>bento, grid, frosted, glass, architecture, pillars</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_dossier_matrix" string="C3.ai Dossier Matrix" group="columns" t-thumbnail="/website/static/src/img/snippets_thumbs/s_card.svg">
+                <keywords>dossier, matrix, spec, stp, customs, idp</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_asymmetric_bento" string="C3.ai Asymmetric Bento" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_card.svg">
+                <keywords>bento, asymmetric, multi-scale, telemetry, ai</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_comparison_ledger" string="C3.ai Comparison Ledger" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_icon_list.svg">
+                <keywords>comparison, ledger, before, after, manual vs ai</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_micro_ledger" string="C3.ai Micro-Ledger" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_icon_list.svg">
+                <keywords>micro-ledger, billing, credits, pricing, transaction</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_compliance_ticker" string="C3.ai Compliance Ticker" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_animated_number.svg">
+                <keywords>compliance, ticker, evfta, iso, standards</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_radar_topology" string="C3.ai Radar Topology" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_image.svg">
+                <keywords>radar, topology, edge, scada, ais, latency</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_terminal_console" string="C3.ai Terminal Console" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_embed_code.svg">
+                <keywords>terminal, console, cli, json, merkle, lineage</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_roi_calculator" string="C3.ai ROI Calculator" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_chart.svg">
+                <keywords>roi, calculator, savings, volume, tco</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_code_studio" string="C3.ai Architecture Code Studio" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_embed_code.svg">
+                <keywords>code studio, api, sdk, rest, grpc, developer</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_c3ai_3d_cockpit" string="C3.ai 3D Cockpit Stack" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_image.svg">
+                <keywords>3d, cockpit, hero, digital twin, webgl</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_ins_platform_topology" string="Platform Topology Diagram" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_image.svg">
+                <keywords>topology, diagram, architecture, platform</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_insilos_grc_matrix" string="GRC Compliance Matrix" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_icon_list.svg">
+                <keywords>grc, compliance, regulatory, matrix, security</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_insilos_case_dossier" string="Executive Case Dossiers" group="columns" t-thumbnail="/website/static/src/img/snippets_thumbs/s_card.svg">
+                <keywords>case studies, dossiers, tan cang, hoa phat, customers</keywords>
+            </t>
             <!-- Cycle 3 Signature Snippets -->
-            <t t-snippet="insilos_website.s_insilos_sovereign_stack" string="Sovereign Architecture Stack" group="columns" t-thumbnail="/website/static/src/img/snippets_thumbs/s_card.svg"/>
-            <t t-snippet="insilos_website.s_insilos_compliance_matrix" string="Compliance Certification Matrix" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_icon_list.svg"/>
-            <t t-snippet="insilos_website.s_insilos_sandbox_workbench" string="Industrial Sandbox Workbench" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_embed_code.svg"/>
-            <t t-snippet="insilos_website.s_insilos_value_engineering_studio" string="Value Engineering Studio" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_chart.svg"/>
-            <t t-snippet="insilos_website.s_insilos_digital_twin_simulator" string="Digital Twin Simulator" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_progress_bar.svg"/>
-            <t t-snippet="insilos_website.s_insilos_cctv_ai_camera" string="AI CCTV Safety Camera" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_video.svg"/>
+            <t t-snippet="insilos_website.s_insilos_sovereign_stack" string="Sovereign Architecture Stack" group="columns" t-thumbnail="/website/static/src/img/snippets_thumbs/s_card.svg">
+                <keywords>sovereign, stack, air-gapped, security, cryptography, on-premise</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_insilos_compliance_matrix" string="Compliance Certification Matrix" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_icon_list.svg">
+                <keywords>compliance, matrix, certifications, iso, gdpr, regulatory</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_insilos_sandbox_workbench" string="Industrial Sandbox Workbench" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_embed_code.svg">
+                <keywords>sandbox, workbench, interactive, simulation, testing, playground</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_insilos_value_engineering_studio" string="Value Engineering Studio" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_chart.svg">
+                <keywords>value engineering, studio, roi, financial modeling, cost reduction</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_insilos_digital_twin_simulator" string="Digital Twin Simulator" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_progress_bar.svg">
+                <keywords>digital twin, simulator, scada, plc, telemetry, industrial</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_insilos_cctv_ai_camera" string="AI CCTV Safety Camera" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_video.svg">
+                <keywords>cctv, ai camera, computer vision, ppe, safety, hse, streaming</keywords>
+            </t>
         </xpath>
     </template>
 </odoo>
