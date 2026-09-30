@@ -26,6 +26,6 @@
         ],
     },
     'auto_install': True,
-    'author': 'Odoo S.A.',
+    'author': 'Insilos',
     'license': 'OEEL-1',
 }

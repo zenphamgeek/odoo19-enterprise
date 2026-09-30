@@ -399,7 +399,7 @@ class StudioExportUtils:
         return pprint.pformat({
             'name': self.module.display_name,
             'version': self.module.installed_version,
-            'category': 'Studio',
+            'category': 'Insilos Studio',
             'description': self.module.description,
             'author': self.module.author,
             'depends': depends,

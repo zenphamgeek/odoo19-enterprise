@@ -3,7 +3,7 @@ import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
-import { onWillStart } from "@insilos/owl";
+import { onWillStart, useState } from "@insilos/owl";
 
 export class NewViewDialog extends ConfirmationDialog {
     static template = "web_studio.NewViewDialog";
@@ -22,10 +22,10 @@ export class NewViewDialog extends ConfirmationDialog {
 
         this.title = _t("Generate %s View", this.viewType);
 
-        this.fieldsChoice = {
+        this.fieldsChoice = useState({
             date_start: null,
             date_stop: null,
-        };
+        });
 
         onWillStart(async () => {
             const fieldsGet = await this.orm.call(this.studio.editedAction.res_model, "fields_get");

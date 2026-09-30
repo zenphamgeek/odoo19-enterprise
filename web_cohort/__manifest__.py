@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Cohort View',
@@ -15,6 +15,6 @@
         ],
     },
     'auto_install': True,
-    'author': 'Odoo S.A.',
+    'author': 'Insilos',
     'license': 'OEEL-1',
 }

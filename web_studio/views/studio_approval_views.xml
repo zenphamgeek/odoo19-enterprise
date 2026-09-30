@@ -16,7 +16,7 @@
         <field name="name">studio.approval.entry.form</field>
         <field name="model">studio.approval.entry</field>
         <field name="arch" type="xml">
-            <form string="Studio Approval Entry">
+            <form string="Insilos Studio Approval Entry">
                 <sheet>
                     <div class="oe_title">
                         <h1><field name="name"/></h1>
@@ -61,12 +61,12 @@
     </record>
 
     <record id="studio_approval_entry_action" model="ir.actions.act_window">
-        <field name="name">Studio Approval Entries</field>
+        <field name="name">Insilos Studio Approval Entries</field>
         <field name="res_model">studio.approval.entry</field>
         <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem id="menu_studio_approval_entry" name="Studio Approval Entries" sequence="11" action="studio_approval_entry_action" parent="base.next_id_2" groups="base.group_system"/>
+    <menuitem id="menu_studio_approval_entry" name="Insilos Studio Approval Entries" sequence="11" action="studio_approval_entry_action" parent="base.next_id_2" groups="base.group_system"/>
     <!-- Approval Rules -->
     <record id="studio_approval_rule_tree_view" model="ir.ui.view">
         <field name="name">studio.approval.list</field>
@@ -135,7 +135,7 @@
         <field name="name">studio.approval.form</field>
         <field name="model">studio.approval.rule</field>
         <field name="arch" type="xml">
-            <form string="Studio Approval Rule">
+            <form string="Insilos Studio Approval Rule">
                 <header>
                     <field name="notification_order" widget="statusbar" options="{'clickable': '1'}"/>
                     <button name="open_delegate_action" type="object" string="Delegate" class="btn btn-primary" invisible="not can_validate"/>
@@ -230,12 +230,12 @@
     </record>
 
     <record id="studio_approval_rule_action" model="ir.actions.act_window">
-        <field name="name">Studio Approval Rules</field>
+        <field name="name">Insilos Studio Approval Rules</field>
         <field name="res_model">studio.approval.rule</field>
         <field name="view_mode">kanban,list,form</field>
         <field name="context">{'active_test': False, 'search_view_ref': 'web_studio.studio_approval_rule_search_view'}</field>
     </record>
 
-    <menuitem id="menu_studio_approval_rule" name="Studio Approval Rules" sequence="10" action="studio_approval_rule_action" parent="base.next_id_2" groups="base.group_system"/>
+    <menuitem id="menu_studio_approval_rule" name="Insilos Studio Approval Rules" sequence="10" action="studio_approval_rule_action" parent="base.next_id_2" groups="base.group_system"/>
 
 </data>

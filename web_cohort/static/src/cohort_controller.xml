@@ -5,7 +5,7 @@
     </t>
 
     <t t-name="web_cohort.CohortView">
-        <div t-att-class="props.className" t-ref="root">
+        <div t-att-class="props.className" t-ref="this.rootRef">
             <Layout className="model.useSampleModel ? 'o_view_sample_data' : ''" display="props.display">
                 <t t-set-slot="control-panel-buttons">
                     <t t-call="{{ props.buttonTemplate }}"/>

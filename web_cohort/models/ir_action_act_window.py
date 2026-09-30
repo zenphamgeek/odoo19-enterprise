@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, models
+from insilos import fields, models
 
 
 class IrActionsAct_WindowView(models.Model):

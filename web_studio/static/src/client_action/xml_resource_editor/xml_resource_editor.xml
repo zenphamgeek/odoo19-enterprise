@@ -33,7 +33,7 @@
     </t>
 
     <t t-name="web_studio.ViewSelector" t-inherit="web.SelectMenu" >
-        <xpath expr="//t[@t-foreach='state.displayedOptions']" position="attributes">
+        <xpath expr="//t[@t-foreach='this.state.displayedOptions']" position="attributes">
             <attribute name="t-foreach">this.getMainViews()</attribute>
         </xpath>
     </t>

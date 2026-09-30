@@ -16,7 +16,7 @@ import { useSearchBarToggler } from "@web/search/search_bar/search_bar_toggler";
 import { browser } from "@web/core/browser/browser";
 import { ActionHelper } from "@web/views/action_helper";
 
-import { Component, proxy, signal, onWillUnmount } from "@odoo/owl";
+import { Component, proxy, signal, onWillUnmount } from "@insilos/owl";
 
 const { DateTime } = luxon;
 

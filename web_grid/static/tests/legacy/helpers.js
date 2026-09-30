@@ -1,4 +1,4 @@
-/** @odoo-module alias=@web_grid/../tests/helpers default=false */
+/** @insilos-module alias=@web_grid/../tests/helpers default=false */
 
 import { nextTick, triggerEvents } from "@web/../tests/helpers/utils";
 

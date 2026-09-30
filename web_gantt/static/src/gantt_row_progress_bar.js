@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 import { hasTouch, isMobileOS } from "@web/core/browser/feature_detection";
 
 export class GanttRowProgressBar extends Component {

@@ -1,6 +1,6 @@
-import { beforeEach, expect, test, describe } from "@odoo/hoot";
-import { queryFirst } from "@odoo/hoot-dom";
-import { mockDate } from "@odoo/hoot-mock";
+import { beforeEach, expect, test, describe } from "@insilos/hoot";
+import { queryFirst } from "@insilos/hoot-dom";
+import { mockDate } from "@insilos/hoot-mock";
 import { mountGanttView } from "./web_gantt_test_helpers";
 import { ResUsers, TASKS_STAGE_SELECTION, Tasks, defineGanttModels } from "./gantt_mock_models";
 

@@ -1,4 +1,4 @@
-import { after } from "@odoo/hoot";
+import { after } from "@insilos/hoot";
 import {
     click,
     hover,
@@ -7,8 +7,8 @@ import {
     queryFirst,
     queryOne,
     queryText,
-} from "@odoo/hoot-dom";
-import { advanceTime, animationFrame, runAllTimers } from "@odoo/hoot-mock";
+} from "@insilos/hoot-dom";
+import { advanceTime, animationFrame, runAllTimers } from "@insilos/hoot-mock";
 import { getPickerCell, zoomOut } from "@web/../tests/core/datetime/datetime_test_helpers";
 import { contains, mountView } from "@web/../tests/web_test_helpers";
 

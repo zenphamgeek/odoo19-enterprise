@@ -8,7 +8,7 @@ import { CogMenu } from "@web/search/cog_menu/cog_menu";
 import { Widget } from "@web/views/widgets/widget";
 import { ActionHelper } from "@web/views/action_helper";
 
-import { Component, signal, toRaw } from "@odoo/owl";
+import { Component, signal, toRaw } from "@insilos/owl";
 
 export class CohortController extends Component {
     static template = "web_cohort.CohortView";

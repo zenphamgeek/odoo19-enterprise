@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
 import {
     click,
     hover,
@@ -11,8 +11,8 @@ import {
     queryRect,
     scroll,
     waitFor,
-} from "@odoo/hoot-dom";
-import { Deferred, advanceTime, animationFrame, mockDate, runAllTimers } from "@odoo/hoot-mock";
+} from "@insilos/hoot-dom";
+import { Deferred, advanceTime, animationFrame, mockDate, runAllTimers } from "@insilos/hoot-mock";
 import {
     contains,
     defineParams,

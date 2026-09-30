@@ -1,4 +1,4 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
 from datetime import date, datetime
@@ -6,10 +6,10 @@ from dateutil.relativedelta import relativedelta
 
 import babel.dates
 
-from odoo import api, fields, models
-from odoo.fields import Domain
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, date_utils
-from odoo.tools.misc import get_lang
+from insilos import api, fields, models
+from insilos.fields import Domain
+from insilos.tools import DEFAULT_SERVER_DATE_FORMAT, date_utils
+from insilos.tools.misc import get_lang
 
 DISPLAY_FORMATS = {
     'day': '%d %b %Y',

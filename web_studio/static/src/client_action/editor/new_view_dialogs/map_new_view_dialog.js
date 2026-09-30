@@ -2,6 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { NewViewDialog } from "@web_studio/client_action/editor/new_view_dialogs/new_view_dialog";
 import { useService } from "@web/core/utils/hooks";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { useState } from "@insilos/owl";
 
 export class MapNewViewDialog extends NewViewDialog {
     static template = "web_studio.MapNewViewDialog";
@@ -12,9 +13,9 @@ export class MapNewViewDialog extends NewViewDialog {
     setup() {
         super.setup();
         this.dialog = useService("dialog");
-        this.fieldsChoice = {
+        this.fieldsChoice = useState({
             res_partner: null,
-        };
+        });
     }
 
     get viewType() {

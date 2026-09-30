@@ -191,7 +191,7 @@ class ActionEditor extends Component {
                 } else {
                     this.addDialog(AlertDialog, {
                         body: _t(
-                            "Creating this type of view is not currently supported in Studio."
+                            "Creating this type of view is not currently supported in Insilos Studio."
                         ),
                     });
                     resolve(false);

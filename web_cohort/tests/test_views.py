@@ -1,9 +1,9 @@
 from dateutil.relativedelta import relativedelta
 
-from odoo import Command, fields
-from odoo.tests.common import HttpCase, tagged, freeze_time
+from insilos import Command, fields
+from insilos.tests.common import HttpCase, tagged, freeze_time
 
-from odoo.addons.base.tests.test_ir_ui_view import ViewCase
+from insilos.addons.base.tests.test_ir_ui_view import ViewCase
 
 
 class TestViews(ViewCase):

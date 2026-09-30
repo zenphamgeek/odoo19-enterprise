@@ -3,7 +3,7 @@ import { formatFloatFactor } from "@web/views/fields/formatters";
 import { useGridCell, useMagnifierGlass } from "@web_grid/hooks/grid_cell_hook";
 import { standardGridCellProps } from "./grid_cell";
 
-import { Component, useLayoutEffect, proxy, signal } from "@odoo/owl";
+import { Component, useLayoutEffect, proxy, signal } from "@insilos/owl";
 
 function formatter(value, options = {}) {
     return formatFloatFactor(value, options);

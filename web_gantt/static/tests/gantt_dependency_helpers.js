@@ -1,10 +1,10 @@
-import { hover, queryFirst } from "@odoo/hoot-dom";
-import { runAllTimers } from "@odoo/hoot-mock";
+import { hover, queryFirst } from "@insilos/hoot-dom";
+import { runAllTimers } from "@insilos/hoot-mock";
 import { contains } from "@web/../tests/web_test_helpers";
 import { SELECTORS } from "./web_gantt_test_helpers";
 
 /**
- * @typedef {import("@odoo/hoot-dom").Target} Target
+ * @typedef {import("@insilos/hoot-dom").Target} Target
  *
  * @typedef {import("@web_gantt/gantt_renderer").ConnectorId} ConnectorId
  * @typedef {import("@web_gantt/gantt_renderer").GanttRenderer} GanttRenderer

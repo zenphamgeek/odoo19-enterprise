@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 
 export class GanttPopoverInDialog extends Component {

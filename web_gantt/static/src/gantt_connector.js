@@ -1,4 +1,4 @@
-import { Component, onWillRender, signal } from "@odoo/owl";
+import { Component, onWillRender, signal } from "@insilos/owl";
 import { useLayoutEffect } from "@web/owl2/utils";
 
 /**

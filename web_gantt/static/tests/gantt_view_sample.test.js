@@ -1,7 +1,7 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { queryFirst, queryAll } from "@odoo/hoot-dom";
-import { mockDate, animationFrame } from "@odoo/hoot-mock";
-import { markup } from "@odoo/owl";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
+import { queryFirst, queryAll } from "@insilos/hoot-dom";
+import { mockDate, animationFrame } from "@insilos/hoot-mock";
+import { markup } from "@insilos/owl";
 import {
     getService,
     mountWithCleanup,

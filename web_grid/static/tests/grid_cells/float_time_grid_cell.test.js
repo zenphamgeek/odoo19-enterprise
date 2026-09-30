@@ -1,6 +1,6 @@
-import { expect, test } from "@odoo/hoot";
-import { hover, queryFirst } from "@odoo/hoot-dom";
-import { animationFrame, mockDate, runAllTimers } from "@odoo/hoot-mock";
+import { expect, test } from "@insilos/hoot";
+import { hover, queryFirst } from "@insilos/hoot-dom";
+import { animationFrame, mockDate, runAllTimers } from "@insilos/hoot-mock";
 import {
     contains,
     defineModels,
@@ -76,5 +76,5 @@ test("FloatTimeGridCell in grid view", async () => {
     expect(".o_grid_cell_readonly").toHaveText("9:30", {
         message: "The edition should be taken into account.",
     });
-    expect(".o_grid_component[name='foo_id'] .o_form_uri").toHaveAttribute("href", "/odoo/m-foo/1");
+    expect(".o_grid_component[name='foo_id'] .o_form_uri").toHaveAttribute("href", "/insilos/m-foo/1");
 });

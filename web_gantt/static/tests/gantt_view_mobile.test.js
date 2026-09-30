@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { queryAll, queryAllTexts, queryFirst } from "@odoo/hoot-dom";
-import { animationFrame, mockDate } from "@odoo/hoot-mock";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
+import { queryAll, queryAllTexts, queryFirst } from "@insilos/hoot-dom";
+import { animationFrame, mockDate } from "@insilos/hoot-mock";
 import { contains, getService, mountWithCleanup, onRpc } from "@web/../tests/web_test_helpers";
 import { Domain } from "@web/core/domain";
 import { deserializeDateTime } from "@web/core/l10n/dates";

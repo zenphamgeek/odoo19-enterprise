@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 import { registry } from "@web/core/registry";
 
 import { GridCell } from "../grid_cell";

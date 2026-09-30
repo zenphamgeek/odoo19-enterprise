@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Web Gantt',
     'category': 'Hidden',
     'description': """
-Odoo Web Gantt chart view.
+Insilos Web Gantt chart view.
 =============================
 
     """,
@@ -33,6 +33,6 @@ Odoo Web Gantt chart view.
         ],
     },
     'auto_install': True,
-    'author': 'Odoo S.A.',
+    'author': 'Insilos',
     'license': 'OEEL-1',
 }

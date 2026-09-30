@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
-    'name': "Studio",
-    'summary': "Create and customize your Insilos apps",
+    'name': "Insilos Studio",
+    'summary': "Insilos Studio - Customize Insilos Platform",
     'website': 'https://insilos.com',
     'description': """
 Studio - Customize Insilos
@@ -16,7 +16,7 @@ simple and graphical way. It has two main features:
 
 Note: Only the admin user is allowed to make those customizations.
 """,
-    'category': 'Customizations/Studio',
+    'category': 'Customizations/Insilos Studio',
     'sequence': 75,
     'version': '1.0',
     'depends': [

@@ -42,7 +42,7 @@ export class StudioNavbar extends EnterpriseNavBar {
             } catch (e) {
                 if (e instanceof NotEditableActionError) {
                     const options = { type: "danger" };
-                    this.notification.add(_t("This action is not editable by Studio"), options);
+                    this.notification.add(_t("This action is not editable by Insilos Studio"), options);
                     return;
                 }
                 throw e;

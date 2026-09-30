@@ -2,7 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { formatPercentage } from "@web/views/fields/formatters";
 import { registry } from "@web/core/registry";
 
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { ViewScaleSelector } from "@web/views/view_components/view_scale_selector";

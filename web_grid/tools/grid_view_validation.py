@@ -4,7 +4,7 @@ import os
 
 from lxml import etree
 
-from odoo.tools import misc, view_validation
+from insilos.tools import misc, view_validation
 
 _logger = logging.getLogger(__name__)
 

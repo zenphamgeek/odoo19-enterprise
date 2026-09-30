@@ -1,6 +1,6 @@
 import { getActiveHotkey } from "@web/core/hotkeys/hotkey_utils";
 
-import { useLayoutEffect, useRef } from "@odoo/owl";
+import { useLayoutEffect, useRef } from "@insilos/owl";
 
 export function useInputHook(params) {
     const inputRef = params.ref || useRef(params.refName || "input");

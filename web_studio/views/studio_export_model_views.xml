@@ -5,7 +5,7 @@
         <field name="name">models.to.export.list</field>
         <field name="model">studio.export.model</field>
         <field name="arch" type="xml">
-            <list string="Studio Export">
+            <list string="Insilos Studio Export">
                     <header>
                         <button type="object" name="action_preset" string="Preset" display="always"/>
                         <button
@@ -30,7 +30,7 @@
         <field name="name">models.to.export.form</field>
         <field name="model">studio.export.model</field>
         <field name="arch" type="xml">
-            <form string="Studio Export">
+            <form string="Insilos Studio Export">
                 <sheet>
                     <group>
                         <group>
@@ -69,22 +69,22 @@
     </record>
 
     <record id="action_models_to_export" model="ir.actions.act_window">
-        <field name="name">Studio Export</field>
+        <field name="name">Insilos Studio Export</field>
         <field name="res_model">studio.export.model</field>
         <field name="target">main</field>
         <field name="view_mode">list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Additional Studio Exports
+                Additional Insilos Studio Exports
             </p>
             <p>
-                Configure additional models to export with Studio, such as records that hold configuration information or demo data.
+                Configure additional models to export with Insilos Studio, such as records that hold configuration information or demo data.
             </p>
         </field>
     </record>
 
     <menuitem
-        name="Studio Export"
+        name="Insilos Studio Export"
         action="action_models_to_export"
         id="menu_models_to_export"
         parent="base.next_id_9"/>

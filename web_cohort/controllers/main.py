@@ -1,13 +1,13 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 import io
 import json
 
 from werkzeug.datastructures import FileStorage
 
-from odoo import http, _
-from odoo.http import content_disposition, request
-from odoo.tools import osutil
+from insilos import http, _
+from insilos.http import content_disposition, request
+from insilos.tools import osutil
 
 
 class WebCohort(http.Controller):

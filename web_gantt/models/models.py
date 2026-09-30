@@ -5,9 +5,9 @@ from datetime import datetime, timezone, timedelta
 from lxml.builder import E
 from pytz import utc
 
-from odoo import api, fields, models
-from odoo.exceptions import UserError
-from odoo.tools import _, unique, OrderedSet
+from insilos import api, fields, models
+from insilos.exceptions import UserError
+from insilos.tools import _, unique, OrderedSet
 
 
 class Base(models.AbstractModel):

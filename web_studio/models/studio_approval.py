@@ -46,7 +46,7 @@ class StudioApprovalRuleApprover(models.Model):
 
 class StudioApprovalRule(models.Model):
     _name = 'studio.approval.rule'
-    _description = "Studio Approval Rule"
+    _description = "Insilos Studio Approval Rule"
     _inherit = ["studio.mixin", 'mail.thread']
 
     @api.model
@@ -1183,9 +1183,9 @@ class StudioApprovalRule(models.Model):
 
 class StudioApprovalEntry(models.Model):
     _name = 'studio.approval.entry'
-    _description = 'Studio Approval Entry'
+    _description = 'Insilos Studio Approval Entry'
     # entries don't have the studio mixin since they depend on the data of the
-    # db - they cannot be included into the Studio Customizations module
+    # db - they cannot be included into the Insilos Studio Customizations module
 
     @api.model
     def _default_user_id(self):
@@ -1274,7 +1274,7 @@ class StudioApprovalEntry(models.Model):
 
 class StudioApprovalRequest(models.Model):
     _name = 'studio.approval.request'
-    _description = 'Studio Approval Request'
+    _description = 'Insilos Studio Approval Request'
 
     mail_activity_id = fields.Many2one('mail.activity', string='Linked Activity', ondelete='cascade',
                                         required=True, index=True, inverse="_inverse_mail_activity_id")

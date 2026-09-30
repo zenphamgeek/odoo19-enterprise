@@ -6,7 +6,7 @@ import { formatFloat } from "@web/core/utils/numbers";
 import { parseInteger, parseFloat } from "@web/views/fields/parsers";
 import { useInputHook } from "@web_grid/hooks/input_hook";
 
-import { Component, useLayoutEffect, proxy, signal } from "@odoo/owl";
+import { Component, useLayoutEffect, proxy, signal } from "@insilos/owl";
 import { useGridCell, useMagnifierGlass } from "@web_grid/hooks/grid_cell_hook";
 
 export const standardGridCellProps = {

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, _
+from insilos import fields, models, _
 from lxml import etree
 
 GANTT_VALID_ATTRIBUTES = set([

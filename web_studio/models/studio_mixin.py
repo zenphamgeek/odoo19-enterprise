@@ -12,7 +12,7 @@ class StudioMixin(models.AbstractModel):
         afterwards.
     """
     _name = 'studio.mixin'
-    _description = 'Studio Mixin'
+    _description = 'Insilos Studio Mixin'
 
     @api.model_create_multi
     def create(self, vals_list):

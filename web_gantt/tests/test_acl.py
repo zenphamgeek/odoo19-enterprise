@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 from lxml import etree
 
-from odoo.addons.base.tests.common import TransactionCaseWithUserDemo
+from insilos.addons.base.tests.common import TransactionCaseWithUserDemo
 
 
 class TestACL(TransactionCaseWithUserDemo):

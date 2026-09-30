@@ -22,7 +22,7 @@ import {
     onPatched,
     reactive,
     useExternalListener,
-} from "@odoo/owl";
+} from "@insilos/owl";
 
 export class GridRenderer extends Component {
     static components = {

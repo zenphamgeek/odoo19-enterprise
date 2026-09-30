@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { mockDate } from "@odoo/hoot-mock";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
+import { mockDate } from "@insilos/hoot-mock";
 import { onRpc } from "@web/../tests/web_test_helpers";
 import { defineGanttModels } from "./gantt_mock_models";
 import {

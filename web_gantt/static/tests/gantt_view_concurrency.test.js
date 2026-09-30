@@ -1,7 +1,7 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { Deferred, animationFrame, mockDate } from "@odoo/hoot-mock";
-import { click } from "@odoo/hoot-dom";
-import { onPatched } from "@odoo/owl";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
+import { Deferred, animationFrame, mockDate } from "@insilos/hoot-mock";
+import { click } from "@insilos/hoot-dom";
+import { onPatched } from "@insilos/owl";
 import {
     onRpc,
     patchWithCleanup,

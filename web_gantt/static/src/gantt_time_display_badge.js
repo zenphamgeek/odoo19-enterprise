@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component } from "@insilos/owl";
 
 export class GanttTimeDisplayBadge extends Component {
     static props = {

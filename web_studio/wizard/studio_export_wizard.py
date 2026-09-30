@@ -337,7 +337,7 @@ class StudioExportWizardData(models.TransientModel):
     even for data that do not have an xmlid (an ir.model.data record).
     """
     _name = 'studio.export.wizard.data'
-    _description = "Studio Export Data"
+    _description = "Insilos Studio Export Data"
     _order = "model_name, res_id"
 
     model = fields.Char(required=True)
@@ -412,7 +412,7 @@ class StudioExportWizardData(models.TransientModel):
 
 class StudioExportWizard(models.TransientModel):
     _name = 'studio.export.wizard'
-    _description = "Studio Export Wizard"
+    _description = "Insilos Studio Export Wizard"
 
     def _default_studio_export_data(self):
         data = self.env["ir.model.data"].search([
@@ -447,7 +447,7 @@ class StudioExportWizard(models.TransientModel):
         "studio.export.model",
         compute="_compute_additional_models",
         string="Additional models to export",
-        help="Additional models you may choose to export in addition to the Studio customizations",
+        help="Additional models you may choose to export in addition to the Insilos Studio customizations",
     )
     additional_export_data = fields.Many2many(
         "studio.export.wizard.data",

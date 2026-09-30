@@ -9,7 +9,7 @@ import {
     signal,
     proxy,
     useExternalListener,
-} from "@odoo/owl";
+} from "@insilos/owl";
 import { useLayoutEffect } from "@web/owl2/utils";
 import { hasTouch, isMobileOS } from "@web/core/browser/feature_detection";
 import { Domain } from "@web/core/domain";

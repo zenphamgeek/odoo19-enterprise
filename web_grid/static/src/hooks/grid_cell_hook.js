@@ -1,4 +1,4 @@
-import { useComponent, useLayoutEffect } from "@odoo/owl";
+import { useComponent, useLayoutEffect } from "@insilos/owl";
 
 export function useMagnifierGlass() {
     const component = useComponent();

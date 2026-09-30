@@ -84,7 +84,7 @@ export class StudioHomeMenu extends HomeMenu {
             } catch (e) {
                 if (e instanceof NotEditableActionError) {
                     const options = { type: "danger" };
-                    this.notifications.add(_t("This action is not editable by Studio"), options);
+                    this.notifications.add(_t("This action is not editable by Insilos Studio"), options);
                     return;
                 }
                 throw e;

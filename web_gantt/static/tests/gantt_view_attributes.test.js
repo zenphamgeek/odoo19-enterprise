@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, leave, queryAll, queryAllTexts, queryFirst, queryOne } from "@odoo/hoot-dom";
-import { animationFrame, mockDate, runAllTimers } from "@odoo/hoot-mock";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
+import { click, leave, queryAll, queryAllTexts, queryFirst, queryOne } from "@insilos/hoot-dom";
+import { animationFrame, mockDate, runAllTimers } from "@insilos/hoot-mock";
 import { contains, defineParams, onRpc } from "@web/../tests/web_test_helpers";
 import { Tasks, defineGanttModels } from "./gantt_mock_models";
 import {

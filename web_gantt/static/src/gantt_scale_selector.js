@@ -1,4 +1,4 @@
-import { onWillUpdateProps, proxy, useProps, t, signal } from "@odoo/owl";
+import { onWillUpdateProps, proxy, useProps, t, signal } from "@insilos/owl";
 import { useDateTimePicker } from "@web/core/datetime/datetime_picker_hook";
 import { useDropdownState } from "@web/core/dropdown/dropdown_hooks";
 import { formatDate } from "@web/core/l10n/dates";

@@ -1,7 +1,7 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { queryAll, queryAllTexts, queryFirst } from "@odoo/hoot-dom";
-import { animationFrame, mockDate, mockTimeZone } from "@odoo/hoot-mock";
-import { useEffect, useLayoutEffect, useRef } from "@odoo/owl";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
+import { queryAll, queryAllTexts, queryFirst } from "@insilos/hoot-dom";
+import { animationFrame, mockDate, mockTimeZone } from "@insilos/hoot-mock";
+import { useEffect, useLayoutEffect, useRef } from "@insilos/owl";
 import {
     contains,
     defineParams,

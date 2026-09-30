@@ -78,7 +78,7 @@ export class EditionFlow extends Reactive {
             };
             this.dialog.add(ConfirmationDialog, {
                 body: _t(
-                    "Are you sure you want to restore the default view?\r\nAll customization done with studio on this view will be lost."
+                    "Are you sure you want to restore the default view?\r\nAll customization done with Insilos Studio on this view will be lost."
                 ),
                 confirm,
                 cancel: () => resolve(false),

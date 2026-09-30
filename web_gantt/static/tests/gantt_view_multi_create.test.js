@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, edit, keyDown, keyUp } from "@odoo/hoot-dom";
-import { animationFrame, disableAnimations, mockDate, mockTimeZone } from "@odoo/hoot-mock";
+import { beforeEach, describe, expect, test } from "@insilos/hoot";
+import { click, edit, keyDown, keyUp } from "@insilos/hoot-dom";
+import { animationFrame, disableAnimations, mockDate, mockTimeZone } from "@insilos/hoot-mock";
 
 import { contains, defineParams, onRpc } from "@web/../tests/web_test_helpers";
 import { Tasks, defineGanttModels } from "./gantt_mock_models";

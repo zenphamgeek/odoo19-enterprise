@@ -152,7 +152,7 @@ export const studioService = {
                     menu.setCurrentMenu(argMenu);
                 } catch (e) {
                     if (e instanceof NotEditableActionError) {
-                        notification.add(_t("This action is not editable by Studio"), {
+                        notification.add(_t("This action is not editable by Insilos Studio"), {
                             type: "danger",
                         });
                         return;

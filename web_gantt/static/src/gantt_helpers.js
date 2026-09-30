@@ -1,4 +1,4 @@
-import { onWillUnmount, status, useComponent, useEnv } from "@odoo/owl";
+import { onWillUnmount, status, useComponent, useEnv } from "@insilos/owl";
 import { useLayoutEffect } from "@web/owl2/utils";
 import { getEndOfLocalWeek, getStartOfLocalWeek } from "@web/core/l10n/dates";
 import { makePopover, usePopover } from "@web/core/popover/popover_hook";
@@ -881,7 +881,7 @@ export const useGanttSelectable = makeDraggableHook({
 /**
  * Same as usePopover, but replaces the popover by a dialog when display size is small.
  *
- * @param {typeof import("@odoo/owl").Component} component
+ * @param {typeof import("@insilos/owl").Component} component
  * @param {import("@web/core/popover/popover_service").PopoverServiceAddOptions} [options]
  * @returns {import("@web/core/popover/popover_hook").PopoverHookReturnType}
  */

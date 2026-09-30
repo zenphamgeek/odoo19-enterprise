@@ -1,5 +1,5 @@
 import { _t } from "@web/core/l10n/translation";
-import { Component, onWillUnmount, signal, useSubEnv } from "@odoo/owl";
+import { Component, onWillUnmount, signal, useSubEnv } from "@insilos/owl";
 import { useLayoutEffect } from "@web/owl2/utils";
 import {
     deleteConfirmationMessage,
