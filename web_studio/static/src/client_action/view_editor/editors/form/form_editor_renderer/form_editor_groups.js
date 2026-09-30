@@ -3,7 +3,6 @@ import { studioIsVisible } from "@web_studio/client_action/view_editor/editors/u
 import { StudioHook } from "@web_studio/client_action/view_editor/editors/components/studio_hook_component";
 
 import { Component, t, useEffect, useRef, useState } from "@insilos/owl";
-import { useService } from "@web/core/utils/hooks";
 
 const components = formView.Renderer.components;
 
@@ -72,7 +71,6 @@ class InnerGroupItemComponent extends Component {
         slots: { type: Object },
     };
     setup() {
-        this.uiService = useService("ui");
         const labelRef = useRef("labelRef");
         const fieldRef = useRef("fieldRef");
 
