@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { LazyComponent } from "@web/core/assets";
+import { LazyComponent } from "@web/core/lazy_component";
 import { cookie } from "@web/core/browser/cookie";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 

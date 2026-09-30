@@ -1,4 +1,4 @@
-import { Component, onWillStart, onWillUpdateProps, toRaw, useState } from "@insilos/owl";
+import { Component, useEffect, onWillStart, onWillUpdateProps, toRaw, useState } from "@insilos/owl";
 import { _t } from "@web/core/l10n/translation";
 import { CodeEditor } from "@web/core/code_editor/code_editor";
 import { rpc } from "@web/core/network/rpc";
@@ -135,6 +135,23 @@ export class XmlResourceEditor extends Component {
                 display: true,
             },
         });
+
+        useEffect(
+            () => {
+                if (this.cursorPosition) {
+                    const restore = () => {
+                        const aceEl = document.querySelector(".o_web_studio_code_editor.ace_editor");
+                        if (aceEl && window.ace) {
+                            const editor = window.ace.edit(aceEl);
+                            editor.selection.moveToPosition(this.cursorPosition);
+                        }
+                    };
+                    restore();
+                    window.requestAnimationFrame(restore);
+                }
+            },
+            () => [this.codeEditorKey]
+        );
     }
 
     get minWidth() {
@@ -182,6 +199,12 @@ export class XmlResourceEditor extends Component {
     }
 
     onCodeChange(code, cursorPosition) {
+        if (!cursorPosition && window.ace) {
+            const aceEl = document.querySelector(".o_web_studio_code_editor.ace_editor");
+            if (aceEl) {
+                cursorPosition = window.ace.edit(aceEl).getCursorPosition();
+            }
+        }
         this.cursorPosition = cursorPosition;
         this.tempCode = code;
         if ("onCodeChange" in this.props) {
@@ -192,6 +215,12 @@ export class XmlResourceEditor extends Component {
     onSaveClick() {
         if (!this.tempCode) {
             return;
+        }
+        if (!this.cursorPosition && window.ace) {
+            const aceEl = document.querySelector(".o_web_studio_code_editor.ace_editor");
+            if (aceEl) {
+                this.cursorPosition = window.ace.edit(aceEl).getCursorPosition();
+            }
         }
         const resource = this.getResourceFromId(this.state.currentResourceId);
         this.props.onSave({

@@ -2,7 +2,8 @@ import { formView } from "@web/views/form/form_view";
 import { studioIsVisible } from "@web_studio/client_action/view_editor/editors/utils";
 import { StudioHook } from "@web_studio/client_action/view_editor/editors/components/studio_hook_component";
 
-import { Component, useEffect, useRef, useState } from "@insilos/owl";
+import { Component, t, useEffect, useRef, useState } from "@insilos/owl";
+import { useService } from "@web/core/utils/hooks";
 
 const components = formView.Renderer.components;
 
@@ -15,7 +16,12 @@ const components = formView.Renderer.components;
 // An utility function that extends the common API parts of groups
 function extendGroup(GroupClass) {
     class Group extends GroupClass {
-        static props = [...GroupClass.props, "studioXpath?", "studioIsVisible?"];
+        static props = [...(GroupClass.props || []), "studioXpath?", "studioIsVisible?"];
+        static propShape = {
+            ...(GroupClass.propShape || {}),
+            studioXpath: t.any().optional(),
+            studioIsVisible: t.any().optional(),
+        };
         static components = { ...GroupClass.components, StudioHook };
         setup() {
             super.setup();
@@ -66,6 +72,7 @@ class InnerGroupItemComponent extends Component {
         slots: { type: Object },
     };
     setup() {
+        this.uiService = useService("ui");
         const labelRef = useRef("labelRef");
         const fieldRef = useRef("fieldRef");
 
