@@ -3,7 +3,7 @@
 
 <t t-name="web_studio.StudioHomeMenu" t-inherit="web_enterprise.HomeMenu" t-inherit-mode="primary" t-translation="off">
     <xpath expr="//div[hasclass('o_home_menu')]" position="attributes">
-        <attribute name="class" add="o_studio_home_menu" separator=" " />
+        <attribute name="class" add="o_studio_home_menu o_web_studio_home_menu" separator=" " />
         <attribute name="t-attf-style">
         {{ backgroundImageUrl ? "background-image: radial-gradient(circle, rgba(0,0,0, 0) 0%, rgba(0,0,0, 1) 100%), repeating-linear-gradient(45deg, rgba(255,255,255, .05), rgba(255,255,255, .05) 30px, rgba(0,0,0, .05) 30px, rgba(0,0,0, .05) 60px), url(" + backgroundImageUrl + ");" : '' }}
       </attribute>
