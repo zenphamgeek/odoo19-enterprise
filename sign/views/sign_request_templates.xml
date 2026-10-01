@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="sign._doc_sign" name="Document Sign">
-        <div t-if="current_request_item and current_request_item.state == 'sent' and sign_request.state in ['sent', 'shared']" class="o_sign_next_document_banner bg-odoo">
+        <div t-if="current_request_item and current_request_item.state == 'sent' and sign_request.state in ['sent', 'shared']" class="o_sign_next_document_banner bg-primary">
             <button type="button" class="btn btn-primary o_next_document_button">
                 Next Document
             </button>
         </div>
-        <div t-if="current_request_item and current_request_item.state == 'sent' and sign_request.state in ['sent', 'shared']" class="o_sign_validate_banner bg-odoo">
+        <div t-if="current_request_item and current_request_item.state == 'sent' and sign_request.state in ['sent', 'shared']" class="o_sign_validate_banner bg-primary">
             <button type="button" class="btn btn-primary o_validate_button">
                 Validate <span class="o_sign_validate_text"> &amp; Send Completed Document</span>
             </button>

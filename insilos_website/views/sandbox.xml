@@ -288,8 +288,8 @@
                                                                 <span class="text-secondary small font-monospace">02. Người nhập khẩu:</span>
                                                                 <span class="badge bg-secondary bg-opacity-50 text-mint font-monospace small">STP 99.8%</span>
                                                             </div>
-                                                            <div class="text-white fw-bold font-monospace">TẬP ĐOÀN THÉP CÔNG NGHIỆP DUNG QUẤT</div>
-                                                            <div class="text-secondary small font-monospace">MST: 0100779774-001 · KCN Dung Quất, Quảng Ngãi</div>
+                                                            <div class="text-white fw-bold font-monospace">TẬP ĐOÀN CÔNG NGHIỆP NẶNG V-STEEL</div>
+                                                            <div class="text-secondary small font-monospace">MST: 0300998877-001 · KCN Luyện Kim Trọng Điểm</div>
                                                         </div>
 
                                                         <!-- Bounding Box 3: HS Code & Description -->
@@ -315,7 +315,7 @@
 
                                                     <div class="mt-auto small text-secondary font-monospace d-flex justify-content-between align-items-center">
                                                         <span>KÝ SỐ: SHA-256 DIGITAL ENVELOPE</span>
-                                                        <span class="text-mint">ĐÃ ĐỐI SOÁT VỚI KHO DUNG QUẤT</span>
+                                                        <span class="text-mint">ĐÃ ĐỐI SOÁT VỚI KHO TỔ HỢP LUYỆN KIM</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -346,12 +346,12 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="text-secondary">importer_name</td>
-                                                                    <td class="text-white">HOAPHAT_SS400_CORP</td>
+                                                                    <td class="text-white">VSTEEL_SS400_CORP</td>
                                                                     <td class="text-mint text-end">99.8%</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="text-secondary">importer_vat</td>
-                                                                    <td class="text-white">0100779774-001</td>
+                                                                    <td class="text-white">0300998877-001</td>
                                                                     <td class="text-mint text-end">100.0%</td>
                                                                 </tr>
                                                                 <tr>
@@ -545,7 +545,7 @@
                                                             </div>
                                                             <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-25">
                                                                 <span class="text-secondary">Nhà Cung Cấp:</span>
-                                                                <span class="text-white">Thép Công Nghiệp Dung Quất</span>
+                                                                <span class="text-white">Tập Đoàn Công Nghiệp Nặng V-Steel</span>
                                                             </div>
                                                             <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-25">
                                                                 <span class="text-secondary">Trọng Lượng Nhập:</span>
@@ -860,7 +860,7 @@
                                             </div>
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="btn-group btn-group-sm" role="group" aria-label="Digital Twin View Mode">
-                                                    <button type="button" class="btn btn-outline-info active font-monospace py-1 px-2" id="insBtnTwin3d">🌟 3D Blender Twin</button>
+                                                    <button type="button" class="btn btn-outline-secondary active font-monospace py-1 px-2" id="insBtnTwin3d">🌟 3D Blender Twin</button>
                                                     <button type="button" class="btn btn-outline-secondary font-monospace py-1 px-2" id="insBtnTwinWire">📐 Wireframe</button>
                                                 </div>
                                                 <span class="badge bg-secondary bg-opacity-25 text-mint font-monospace small" id="ins-dtwin-status-badge">TRẠNG THÁI: BÌNH THƯỜNG</span>
@@ -868,13 +868,12 @@
                                         </div>
 
                                         <!-- Isometric Schematic & 3D Blender Twin Container with Blinking Sensors -->
-                                        <div class="ins-dtwin-viewport bg-black bg-opacity-75 p-0 rounded-3 border border-secondary border-opacity-25 position-relative overflow-hidden mb-3" style="min-height: 330px;">
+                                        <div class="ins-dtwin-viewport ins-dtwin-viewport-330 bg-black bg-opacity-75 p-0 rounded-3 border border-secondary border-opacity-25 position-relative overflow-hidden mb-3">
                                             <!-- 3D Blender Digital Twin Mode View (Default Active with Insilos Brand Mark) -->
                                             <div id="ins-dtwin-3d-view" class="position-relative w-100 h-100 overflow-hidden">
                                                 <img src="/insilos_website/static/src/img/digital_twin/insilos_iec61850_3d_twin.webp"
                                                      alt="Insilos IEC 61850 3D Digital Twin"
-                                                     class="w-100 h-100 object-fit-cover d-block"
-                                                     style="filter: contrast(1.05) brightness(0.95); min-height: 320px;"/>
+                                                     class="w-100 h-100 object-fit-cover d-block ins-dtwin-img-sm"/>
                                                 
                                                 <!-- Holographic HUD Telemetry Badges & Watermark -->
                                                 <div class="position-absolute top-0 start-0 m-3 d-flex flex-column gap-1 pointer-events-none">
@@ -897,17 +896,17 @@
                                                 </div>
 
                                                 <!-- Live Interactive Floating Sensor Pins synced with simulation -->
-                                                <div class="position-absolute" style="top: 48%; left: 24%;">
+                                                <div class="position-absolute ins-sensor-pin-1">
                                                     <span class="badge bg-black bg-opacity-85 text-emerald border border-emerald border-opacity-50 font-monospace px-2 py-1 shadow" id="ins-dtwin-3d-vibe-pill">
                                                         VIBE: 1.8 mm/s
                                                     </span>
                                                 </div>
-                                                <div class="position-absolute" style="top: 60%; left: 52%;">
+                                                <div class="position-absolute ins-sensor-pin-2">
                                                     <span class="badge bg-black bg-opacity-85 text-cyan border border-cyan border-opacity-50 font-monospace px-2 py-1 shadow" id="ins-dtwin-3d-temp-pill">
                                                         TEMP: 52°C
                                                     </span>
                                                 </div>
-                                                <div class="position-absolute" style="top: 40%; left: 78%;">
+                                                <div class="position-absolute ins-sensor-pin-3">
                                                     <span class="badge bg-black bg-opacity-85 text-warning border border-warning border-opacity-50 font-monospace px-2 py-1 shadow" id="ins-dtwin-3d-load-pill">
                                                         LOAD: 74%
                                                     </span>

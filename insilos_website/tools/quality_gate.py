@@ -94,18 +94,28 @@ def audit_static_templates():
             if not has_oe_structure:
                 missing_dropzones.append(xml_file.name)
 
-    gate1_pass = (len(missing_snippet_sections) == 0 and len(missing_dropzones) == 0 and len(broken_svgs) == 0)
+    # Validate XML well-formedness across all view files
+    xml_syntax_errors = []
+    for xf in xml_files:
+        try:
+            from lxml import etree
+            etree.parse(str(xf))
+        except Exception as e:
+            xml_syntax_errors.append({"file": xf.name, "error": str(e)})
+
+    gate1_pass = (len(missing_snippet_sections) == 0 and len(missing_dropzones) == 0 and len(broken_svgs) == 0 and len(xml_syntax_errors) == 0)
     
     print(f"  • Total Content Sections Analyzed: {total_sections}")
     print(f"  • Sections with valid data-snippet & data-name: {valid_snippet_sections}/{total_sections}")
     print(f"  • Sections missing snippet metadata: {len(missing_snippet_sections)}")
     print(f"  • Page View Templates with dropzones: {len(PAGE_VIEW_FILES) - len(missing_dropzones)}/{len(PAGE_VIEW_FILES)}")
     print(f"  • Broken/Hardcoded Python SVGs found: {len(broken_svgs)}")
+    print(f"  • XML Well-Formedness & Parseability: {'✅ 100% Valid XML' if len(xml_syntax_errors) == 0 else f'❌ {len(xml_syntax_errors)} parse errors'}")
     
     if gate1_pass:
         print("  ✅ [GATE 1 PASSED] 100% Static Snippet Contract Conformance!")
     else:
-        print("  ❌ [GATE 1 FAILED] Non-conforming sections detected!")
+        print("  ❌ [GATE 1 FAILED] Non-conforming sections or XML parse errors detected!")
 
     return gate1_pass, {
         "total_sections": total_sections,
@@ -374,7 +384,22 @@ def audit_brand_button_theme_conformance():
     )
     
     # 2. QWeb Zero Rogue Button Classes
-    ROGUE_BUTTON_CLASSES = ["btn-outline-cyan", "btn-cyan", "btn-dark-glow", "btn-custom"]
+    ROGUE_BUTTON_CLASSES = [
+        "btn-outline-info",
+        "btn-outline-warning",
+        "btn-outline-danger",
+        "btn-danger",
+        "btn-warning",
+        "btn-info",
+        "btn-success",
+        "btn-outline-success",
+        "btn-dark",
+        "btn-outline-dark",
+        "btn-outline-cyan",
+        "btn-cyan",
+        "btn-dark-glow",
+        "btn-custom",
+    ]
     xml_files = list(VIEWS_DIR.glob("*.xml"))
     rogue_button_detections = []
     inline_styled_buttons = []
@@ -400,12 +425,14 @@ def audit_brand_button_theme_conformance():
             total_buttons += 1
             
             # Check for inline style overriding background, color, or border
-            if re.search(r'style=["\'][^"\']*(?:background|color|border)[^"\']*["\']', attrs, re.IGNORECASE):
+            is_inline = bool(re.search(r'style=["\'][^"\']*(?:background|color|border)[^"\']*["\']', attrs, re.IGNORECASE))
+            is_rogue = any(rc in attrs for rc in ROGUE_BUTTON_CLASSES)
+            if is_inline:
                 inline_styled_buttons.append({
                     "file": xml_file.name,
                     "element": match.group(0)[:80]
                 })
-            else:
+            elif not is_rogue:
                 standard_buttons += 1
                 
     tokens_ok = has_orange_primary and has_orange_gradient and has_btn_primary_orange

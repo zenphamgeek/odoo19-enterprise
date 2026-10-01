@@ -104,17 +104,17 @@
             <meta name="description" t-att-content="insilos_meta_desc"/>
         </xpath>
         <xpath expr="//link[@rel='canonical']" position="replace">
-            <link rel="canonical" t-attf-href="https://insilos.ai{{ curr_path }}"/>
+            <link rel="canonical" t-attf-href="https://insilos.com{{ curr_path }}"/>
         </xpath>
         <xpath expr="//head" position="inside">
             <meta name="theme-color" content="#FF8000"/>
             <meta name="msapplication-TileColor" content="#FF8000"/>
             <meta property="og:site_name" content="Insilos Sovereign AI"/>
             <meta property="og:type" content="website"/>
-            <meta property="og:url" t-attf-content="https://insilos.ai{{ curr_path }}"/>
+            <meta property="og:url" t-attf-content="https://insilos.com{{ curr_path }}"/>
             <meta property="og:title" t-att-content="additional_title or title or 'Insilos Sovereign AI'"/>
             <meta property="og:description" t-att-content="insilos_meta_desc"/>
-            <meta property="og:image" content="https://insilos.ai/insilos_website/static/src/img/c3ai/c3ai_hero_control_room.webp"/>
+            <meta property="og:image" content="https://insilos.com/insilos_website/static/src/img/c3ai/c3ai_hero_control_room.webp"/>
             <meta property="og:image:width" content="1200"/>
             <meta property="og:image:height" content="630"/>
             <meta property="og:locale" content="vi_VN"/>
@@ -124,7 +124,7 @@
             <meta name="twitter:creator" content="@insilos_ai"/>
             <meta name="twitter:title" t-att-content="additional_title or title or 'Insilos Sovereign AI'"/>
             <meta name="twitter:description" t-att-content="insilos_meta_desc"/>
-            <meta name="twitter:image" content="https://insilos.ai/insilos_website/static/src/img/c3ai/c3ai_hero_control_room.webp"/>
+            <meta name="twitter:image" content="https://insilos.com/insilos_website/static/src/img/c3ai/c3ai_hero_control_room.webp"/>
             <link rel="preconnect" href="https://fonts.googleapis.com"/>
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap&amp;subset=latin,latin-ext,vietnamese" rel="stylesheet"/>
@@ -169,14 +169,14 @@
                         },
                         {
                             "@type": "WebSite",
-                            "@id": "https://insilos.ai/#website",
-                            "url": "https://insilos.ai",
+                            "@id": "https://insilos.com/#website",
+                            "url": "https://insilos.com",
                             "name": "Insilos Sovereign AI",
                             "description": "Hệ điều hành Trí tuệ Nhân tạo Công nghiệp có Chủ quyền cho Doanh nghiệp APAC",
-                            "publisher": {"@id": "https://insilos.ai/#organization"},
+                            "publisher": {"@id": "https://insilos.com/#organization"},
                             "potentialAction": {
                                 "@type": "SearchAction",
-                                "target": "https://insilos.ai/resources?q={search_term_string}",
+                                "target": "https://insilos.com/resources?q={search_term_string}",
                                 "query-input": "required name=search_term_string"
                             }
                         }
@@ -213,7 +213,7 @@
                     "publisher": {
                         "@type": "Organization",
                         "name": "Insilos Sovereign AI",
-                        "url": "https://insilos.ai"
+                        "url": "https://insilos.com"
                     },
                     "description": "Sovereign Industrial AI Operating System uniting Vertical IDP, Enterprise Knowledge Graph, Trade Compliance, and Field Service Management for APAC enterprises."
                 }
@@ -227,13 +227,13 @@
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Nền Tảng Sovereign AI",
-                            "item": "https://insilos.ai/platform"
+                            "item": "https://insilos.com/platform"
                         }
                     ]
                 }
@@ -307,13 +307,13 @@
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Bảng Giá &amp; Hợp Đồng ELA",
-                            "item": "https://insilos.ai/pricing"
+                            "item": "https://insilos.com/pricing"
                         }
                     ]
                 }
@@ -338,25 +338,48 @@
                 <script type="application/ld+json">
                 {
                     "@context": "https://schema.org",
+                    "@type": "SoftwareApplication",
+                    "name": "<t t-out="(sol_title or 'Insilos Enterprise Solutions')"/>",
+                    "applicationCategory": "BusinessApplication",
+                    "applicationSubCategory": "Industrial AI Operating System",
+                    "operatingSystem": "Linux, Cloud, On-Premises, Air-Gapped",
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "VND",
+                        "availability": "https://schema.org/InStock"
+                    },
+                    "url": "https://insilos.com<t t-out='curr_path'/>",
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "Insilos Sovereign AI",
+                        "url": "https://insilos.com"
+                    },
+                    "description": "Sovereign Industrial AI Enterprise Solutions providing Vertical IDP, Knowledge Graph, Trade Compliance, and Industrial Operations."
+                }
+                </script>
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
                     "@type": "BreadcrumbList",
                     "itemListElement": [
                         {
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Giải Pháp",
-                            "item": "https://insilos.ai/solutions"
+                            "item": "https://insilos.com/solutions"
                         }<t t-if="sol_slug and sol_title">,
                         {
                             "@type": "ListItem",
                             "position": 3,
                             "name": "<t t-out="sol_title"/>",
-                            "item": "https://insilos.ai<t t-out="curr_path"/>"
+                            "item": "https://insilos.com<t t-out="curr_path"/>"
                         }</t>
                     ]
                 }
@@ -383,19 +406,19 @@
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Ngành Trọng Điểm",
-                            "item": "https://insilos.ai/industries"
+                            "item": "https://insilos.com/industries"
                         }<t t-if="ind_slug and ind_title">,
                         {
                             "@type": "ListItem",
                             "position": 3,
                             "name": "<t t-out="ind_title"/>",
-                            "item": "https://insilos.ai<t t-out="curr_path"/>"
+                            "item": "https://insilos.com<t t-out="curr_path"/>"
                         }</t>
                     ]
                 }
@@ -410,11 +433,11 @@
                     "@type": "AboutPage",
                     "name": "Về Insilos Sovereign AI",
                     "description": "Lịch sử hình thành, đội ngũ lãnh đạo và sứ mệnh kiến tạo hệ điều hành AI công nghiệp có chủ quyền.",
-                    "url": "https://insilos.ai/about",
+                    "url": "https://insilos.com/about",
                     "mainEntity": {
                         "@type": "Organization",
                         "name": "Insilos Sovereign AI",
-                        "url": "https://insilos.ai"
+                        "url": "https://insilos.com"
                     }
                 }
                 </script>
@@ -427,13 +450,13 @@
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Về Insilos",
-                            "item": "https://insilos.ai/about"
+                            "item": "https://insilos.com/about"
                         }
                     ]
                 }
@@ -449,7 +472,7 @@
                     "@type": "CollectionPage",
                     "name": "Trung Tâm Tài Liệu &amp; Chuyên Khảo Insilos",
                     "description": "Kho tài liệu chuyên khảo Whitepapers, Case Studies, bài giảng kỹ thuật và tài liệu đặc tả API.",
-                    "url": "https://insilos.ai/resources"
+                    "url": "https://insilos.com/resources"
                 }
                 </script>
                 <script type="application/ld+json">
@@ -461,23 +484,48 @@
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Tài Liệu &amp; Chuyên Khảo",
-                            "item": "https://insilos.ai/resources"
+                            "item": "https://insilos.com/resources"
                         }<t t-if="art_slug and article">,
                         {
                             "@type": "ListItem",
                             "position": 3,
                             "name": "<t t-out="article.get('title', '')"/>",
-                            "item": "https://insilos.ai<t t-out="curr_path"/>"
+                            "item": "https://insilos.com<t t-out="curr_path"/>"
                         }</t>
                     ]
                 }
                 </script>
+                <t t-if="art_slug and article">
+                    <script type="application/ld+json">
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "TechArticle",
+                        "headline": "<t t-out="article.get('title', '')"/>",
+                        "description": "<t t-out="article.get('summary', '')"/>",
+                        "articleSection": "<t t-out="article.get('eyebrow', 'Technical Whitepaper')"/>",
+                        "url": "https://insilos.com<t t-out="curr_path"/>",
+                        "mainEntityOfPage": "https://insilos.com<t t-out="curr_path"/>",
+                        "inLanguage": "vi-VN",
+                        "publisher": {
+                            "@type": "Organization",
+                            "name": "Insilos Sovereign AI",
+                            "url": "https://insilos.com"
+                        },
+                        "author": {
+                            "@type": "Person",
+                            "name": "Zen Pham",
+                            "jobTitle": "Founder &amp; Chief Enterprise Architect",
+                            "url": "https://insilos.com/about"
+                        }
+                    }
+                    </script>
+                </t>
             </t>
 
             <!-- 8. Request Demo Route (/request-demo): ContactPage Schema + 2-Tier Breadcrumb -->
@@ -488,7 +536,7 @@
                     "@type": "ContactPage",
                     "name": "Đăng Ký Khảo Sát &amp; Trải Nghiệm Demo Insilos",
                     "description": "Đặt lịch tư vấn kiến trúc 1-1 với Kỹ sư trưởng và khởi tạo môi trường thử nghiệm Sandbox 48h.",
-                    "url": "https://insilos.ai/request-demo"
+                    "url": "https://insilos.com/request-demo"
                 }
                 </script>
                 <script type="application/ld+json">
@@ -500,13 +548,13 @@
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Đăng Ký Live Demo",
-                            "item": "https://insilos.ai/request-demo"
+                            "item": "https://insilos.com/request-demo"
                         }
                     ]
                 }
@@ -524,13 +572,13 @@
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Chính Sách Bảo Vệ Dữ Liệu Cá Nhân (Nghị Định 13/2023/NĐ-CP)",
-                            "item": "https://insilos.ai/privacy"
+                            "item": "https://insilos.com/privacy"
                         }
                     ]
                 }
@@ -548,13 +596,13 @@
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Trung Tâm Tin Cậy &amp; An Ninh",
-                            "item": "https://insilos.ai/trust"
+                            "item": "https://insilos.com/trust"
                         }
                     ]
                 }
@@ -572,13 +620,13 @@
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Khung Chuẩn Mực Tuân Thủ Thể Chế",
-                            "item": "https://insilos.ai/compliance"
+                            "item": "https://insilos.com/compliance"
                         }
                     ]
                 }
@@ -596,13 +644,13 @@
                             "@type": "ListItem",
                             "position": 1,
                             "name": "Trang Chủ",
-                            "item": "https://insilos.ai/"
+                            "item": "https://insilos.com/"
                         },
                         {
                             "@type": "ListItem",
                             "position": 2,
                             "name": "Industrial AI Sandbox 48h",
-                            "item": "https://insilos.ai/sandbox"
+                            "item": "https://insilos.com/sandbox"
                         }
                     ]
                 }
@@ -648,7 +696,7 @@
                     </li>
                     <li role="presentation" class="nav-item ins-nav-item">
                         <a role="menuitem" href="/showcase-3d" class="nav-link d-inline-flex align-items-center gap-1">
-                            <span class="badge bg-danger bg-opacity-75 text-white font-monospace" style="font-size: 0.65rem; padding: 2px 6px;">HSE VIDEO</span>
+                            <span class="badge bg-danger bg-opacity-75 text-white font-monospace ins-badge-micro-tag">HSE VIDEO</span>
                             <span>Video &amp; 3D</span>
                         </a>
                     </li>
@@ -1305,7 +1353,7 @@
     <template id="insilos_footer_custom" inherit_id="website.footer_custom" priority="50">
         <xpath expr="//div[@id='footer']" position="replace">
             <div id="footer" class="oe_structure oe_structure_solo text-break" t-ignore="true" t-if="not no_footer">
-                <section class="s_text_block ins-footer-section text-white pt-5 pb-4 position-relative" data-snippet="s_text_block" data-name="Institutional Footer" style="background-color: #050811; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                <section class="s_text_block ins-footer-section text-white pt-5 pb-4 position-relative" data-snippet="s_text_block" data-name="Institutional Footer">
                     <div class="container">
                         <!-- Top Row: Symmetrical 5-Column Fortune 500 Enterprise Grid -->
                         <div class="row g-4 pb-5 border-bottom border-secondary border-opacity-25">
@@ -1401,7 +1449,7 @@
                                     <span class="p-1 rounded bg-danger bg-opacity-10 text-danger"><svg class="ph-duotone ph-phone-call ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-phone-call"/></svg></span>
                                     <span>Kết Nối Khẩn Cấp 24/7</span>
                                 </h6>
-                                <div class="ins-footer-hotline-card p-3 rounded-3 mb-3 border border-secondary border-opacity-25" style="background-color: rgba(15, 23, 42, 0.65);">
+                                <div class="ins-footer-hotline-card p-3 rounded-3 mb-3 border border-secondary border-opacity-25">
                                     <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
                                         <span class="text-secondary small font-monospace">HOTLINE TOÀN QUỐC:</span>
                                         <span class="badge bg-success bg-opacity-20 text-mint font-monospace small px-2 py-0">24/7 ACTIVE</span>

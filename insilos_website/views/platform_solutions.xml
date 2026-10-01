@@ -1084,6 +1084,337 @@
                 <!-- ============================================================= -->
                 
                 <!-- ============================================================= -->
+                <!-- INDUSTRIAL PROTOCOL COMPATIBILITY MATRIX (s_features)          -->
+                <!-- ============================================================= -->
+                <section class="s_features o_colored_level o_cc o_cc5 pt80 pb80 position-relative border-top border-secondary border-opacity-25" data-snippet="s_features" data-name="Industrial Protocol Compatibility Matrix" data-bs-theme="dark">
+                    <div class="container s_allow_columns">
+                        <div class="row text-center mb-5">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="ins-pill-badge mb-2">
+                                    <svg class="ph-duotone ph-plugs-connected ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-plugs-connected"/></svg>
+                                    <span>INDUSTRIAL PROTOCOL COMPATIBILITY MATRIX</span>
+                                </div>
+                                <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                                    Ma Trận Tương Thích Giao Thức Công Nghiệp &amp;<br class="d-none d-md-inline"/> Kết Nối Trực Tiếp SCADA / PLC Hiện Trường
+                                </h2>
+                                <p class="lead text-secondary mx-auto col-lg-10">
+                                    Thu nạp và ánh xạ trực tiếp dòng tín hiệu 50.02 Hz (12.4k điểm/s) từ mọi dòng PLC và hệ thống tự động hóa mà không cần phần cứng chuyển đổi trung gian.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced">
+                            <!-- Protocol 1: OPC-UA -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-glass-card">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace">IEC 62541</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-cpu ph-md text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h5 fw-bold text-white mb-1">OPC-UA Binary &amp; PubSub</h3>
+                                        <div class="text-cyan font-monospace small mb-2">opc.tcp:// · TLS 1.3 HSM</div>
+                                        <p class="text-secondary small mb-3">
+                                            Chuẩn công nghiệp mở IEC 62541, hỗ trợ Binary TCP và PubSub UDP. Ánh xạ trực tiếp cấu trúc NodeId vào Knowledge Graph với tần số lấy mẫu micro-giây.
+                                        </p>
+                                        <table class="table table-sm table-borderless font-monospace small mb-0">
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Tần Số Lấy Mẫu</td>
+                                                <td class="text-end text-mint pe-0 py-1">50.02 Hz (12.4k pts/s)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Mã Hóa Kênh</td>
+                                                <td class="text-end text-white pe-0 py-1">TLS 1.3 / mTLS X.509</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Hệ Thống Đích</td>
+                                                <td class="text-end text-cyan pe-0 py-1">SCADA, DCS, Historian</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-mint font-monospace small">Native Driver Ready</span>
+                                        <span class="ins-live-ping"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Protocol 2: Siemens S7 Profinet -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-glass-card">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle small font-monospace">SIEMENS S7</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-broadcast ph-md text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-broadcast"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h5 fw-bold text-white mb-1">Siemens S7 Profinet</h3>
+                                        <div class="text-cyan font-monospace small mb-2">ISO-on-TCP · Port 102</div>
+                                        <p class="text-secondary small mb-3">
+                                            Đọc ghi trực tiếp khối dữ liệu DB (Data Blocks) trên S7-1500, S7-1200, S7-400 và S7-300 qua Profinet IO. Chu kỳ quét định kỳ &lt; 10ms phục vụ trạm cắt CNC và robot hàn.
+                                        </p>
+                                        <table class="table table-sm table-borderless font-monospace small mb-0">
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Dòng Hỗ Trợ</td>
+                                                <td class="text-end text-white pe-0 py-1">S7-300/400/1200/1500</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Chu Kỳ Quét</td>
+                                                <td class="text-end text-mint pe-0 py-1">&lt; 10ms Cyclic Polling</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Ứng Dụng</td>
+                                                <td class="text-end text-cyan pe-0 py-1">Cắt Laser, Robot Hàn</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-mint font-monospace small">Profinet Certified</span>
+                                        <span class="ins-live-ping"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Protocol 3: Modbus TCP / RTU -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-glass-card">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-warning-subtle text-warning border border-warning-subtle small font-monospace">MODBUS TCP/RTU</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-lightning ph-md text-warning"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lightning"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h5 fw-bold text-white mb-1">Modbus TCP &amp; Serial RTU</h3>
+                                        <div class="text-warning font-monospace small mb-2">Port 502 · RS-485 Bus</div>
+                                        <p class="text-secondary small mb-3">
+                                            Hỗ trợ đầy đủ Function Codes 01-04 (Coils/Registers) và 15-16. Thu thập dữ liệu từ đồng hồ đo xăng dầu PVOIL, biến tần năng lượng mặt trời/gió, cụm chiller và HVAC.
+                                        </p>
+                                        <table class="table table-sm table-borderless font-monospace small mb-0">
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Function Codes</td>
+                                                <td class="text-end text-white pe-0 py-1">FC01-04, FC15-16</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Đường Truyền</td>
+                                                <td class="text-end text-warning pe-0 py-1">TCP / Serial RS-485</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Ứng Dụng</td>
+                                                <td class="text-end text-cyan pe-0 py-1">Nhiên Liệu, Chiller, BMS</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-warning font-monospace small">Full Register Map</span>
+                                        <span class="ins-live-ping"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Protocol 4: Omron & MQTT Sparkplug B -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-glass-card">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-success-subtle text-mint border border-success-subtle small font-monospace">OMRON &amp; SPARKPLUG</span>
+                                            <div class="ins-card-pictogram">
+                                                <svg class="ph-duotone ph-git-fork ph-md text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-git-fork"/></svg>
+                                            </div>
+                                        </div>
+                                        <h3 class="h5 fw-bold text-white mb-1">Omron FINS &amp; Sparkplug B</h3>
+                                        <div class="text-mint font-monospace small mb-2">EtherNet/IP · Edge Buffer</div>
+                                        <p class="text-secondary small mb-3">
+                                            Tương thích Omron Sysmac (NJ/NX) qua FINS/EtherNet/IP và Mitsubishi qua MC Protocol. Kết hợp chuẩn MQTT Sparkplug B với cơ chế Store-and-Forward đệm dữ liệu tại biên khi mất mạng.
+                                        </p>
+                                        <table class="table table-sm table-borderless font-monospace small mb-0">
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Giao Thức</td>
+                                                <td class="text-end text-white pe-0 py-1">FINS / EtherNet/IP / CIP</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Edge Buffer</td>
+                                                <td class="text-end text-mint pe-0 py-1">Store-and-Forward 72h</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary ps-0 py-1">Ứng Dụng</td>
+                                                <td class="text-end text-cyan pe-0 py-1">Dây Chuyền Đóng Gói, SMT</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center mt-auto">
+                                        <span class="text-mint font-monospace small">Edge Buffer Active</span>
+                                        <span class="ins-live-ping"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- PREDICTIVE MAINTENANCE FSM & AI NESTING OPTIMIZATION           -->
+                <!-- ============================================================= -->
+                <section class="s_process_steps o_colored_level o_cc o_cc5 pt80 pb80 position-relative border-top border-secondary border-opacity-25" data-snippet="s_process_steps" data-name="Predictive Maintenance FSM &amp; AI Nesting Optimization" data-bs-theme="dark">
+                    <div class="container s_allow_columns">
+                        <div class="row text-center mb-5">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="ins-pill-badge mb-2">
+                                    <svg class="ph-duotone ph-git-branch ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-git-branch"/></svg>
+                                    <span>CLOSED-LOOP PREDICTIVE FSM &amp; NESTING OPTIMIZATION</span>
+                                </div>
+                                <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                                    Mô Hình Trạng Thái Hữu Hạn FSM &amp;<br class="d-none d-md-inline"/> Tối Ưu Hóa Phế Liệu Cắt Laser AI
+                                </h2>
+                                <p class="lead text-secondary mx-auto col-lg-10">
+                                    Vòng lặp khép kín tự động từ cảnh báo rung động FFT đến khóa an toàn lệnh bảo trì ERP và giải thuật lồng phôi đa giác cắt giảm phế liệu phôi thép SS400 từ 6.8% xuống còn &lt; 2.1%.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 6-State FSM Grid -->
+                        <div class="row g-3 ins-card-row-balanced mb-5">
+                            <!-- State 1 -->
+                            <div class="col-lg-2 col-md-4 col-6">
+                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-glass-card text-center">
+                                    <div>
+                                        <span class="badge bg-white-10 text-mint font-monospace small px-2 py-1 mb-2">STATE 01</span>
+                                        <h3 class="h6 fw-bold text-white mb-1">NORMAL_STEADY</h3>
+                                        <p class="text-secondary text-xs mb-0">Độ rung ISO 10816 &lt; 2.3 mm/s. Cảm biến gia tốc 50.02 Hz ổn định trên spindle máy cắt CNC.</p>
+                                    </div>
+                                    <div class="pt-2 border-top border-secondary border-opacity-25 mt-2">
+                                        <span class="text-mint font-monospace text-xs">Vibration Baseline</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- State 2 -->
+                            <div class="col-lg-2 col-md-4 col-6">
+                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-glass-card text-center">
+                                    <div>
+                                        <span class="badge bg-info-subtle text-cyan font-monospace small px-2 py-1 mb-2">STATE 02</span>
+                                        <h3 class="h6 fw-bold text-white mb-1">ANOMALY_FFT</h3>
+                                        <p class="text-secondary text-xs mb-0">Biến đổi Fourier (FFT) phát hiện đỉnh sóng hài bất thường tại tần số lỗi ổ bi BPFO/BPFI lệch &gt; 2.8σ.</p>
+                                    </div>
+                                    <div class="pt-2 border-top border-secondary border-opacity-25 mt-2">
+                                        <span class="text-cyan font-monospace text-xs">Spectral Drift &gt; 2.8σ</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- State 3 -->
+                            <div class="col-lg-2 col-md-4 col-6">
+                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-glass-card text-center">
+                                    <div>
+                                        <span class="badge bg-warning-subtle text-warning font-monospace small px-2 py-1 mb-2">STATE 03</span>
+                                        <h3 class="h6 fw-bold text-white mb-1">ALARM_PREDICTIVE</h3>
+                                        <p class="text-secondary text-xs mb-0">Ước tính thời gian hữu dụng còn lại RUL &lt; 14 ngày, tự động tính toán chỉ số rủi ro trạm máy cơ khí.</p>
+                                    </div>
+                                    <div class="pt-2 border-top border-secondary border-opacity-25 mt-2">
+                                        <span class="text-warning font-monospace text-xs">RUL &lt; 14 Ngày</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- State 4 -->
+                            <div class="col-lg-2 col-md-4 col-6">
+                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-glass-card text-center">
+                                    <div>
+                                        <span class="badge bg-danger-subtle text-danger font-monospace small px-2 py-1 mb-2">STATE 04</span>
+                                        <h3 class="h6 fw-bold text-white mb-1">SAFETY_LOCK</h3>
+                                        <p class="text-secondary text-xs mb-0">Tự động khóa Work Order trên ERP sang trạng thái "Chờ cấp phép an toàn", liên thông GRC cấp e-PTW.</p>
+                                    </div>
+                                    <div class="pt-2 border-top border-secondary border-opacity-25 mt-2">
+                                        <span class="text-danger font-monospace text-xs">ERP Safety Lock</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- State 5 -->
+                            <div class="col-lg-2 col-md-4 col-6">
+                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-glass-card text-center">
+                                    <div>
+                                        <span class="badge bg-info-subtle text-cyan font-monospace small px-2 py-1 mb-2">STATE 05</span>
+                                        <h3 class="h6 fw-bold text-white mb-1">DISPATCH_LOTO</h3>
+                                        <p class="text-secondary text-xs mb-0">Kích hoạt cô lập nguồn năng lượng LOTO, điều phối kỹ thuật viên kèm 3D procedure và phụ tùng sẵn sàng trong &lt; 45s.</p>
+                                    </div>
+                                    <div class="pt-2 border-top border-secondary border-opacity-25 mt-2">
+                                        <span class="text-cyan font-monospace text-xs">LOTO SLA &lt; 45s</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- State 6 -->
+                            <div class="col-lg-2 col-md-4 col-6">
+                                <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-4 d-flex flex-column justify-content-between ins-glass-card text-center">
+                                    <div>
+                                        <span class="badge bg-success-subtle text-mint font-monospace small px-2 py-1 mb-2">STATE 06</span>
+                                        <h3 class="h6 fw-bold text-white mb-1">POST_VERIFIED</h3>
+                                        <p class="text-secondary text-xs mb-0">Chạy thử nghiệm thu, đo kiểm phổ FFT xác nhận rung động chuẩn, mở khóa Work Order và lưu vết Merkle DAG.</p>
+                                    </div>
+                                    <div class="pt-2 border-top border-secondary border-opacity-25 mt-2">
+                                        <span class="text-mint font-monospace text-xs">Closed-Loop Done</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Nesting Scrap Optimization Bento Callout -->
+                        <div class="ins-glass-card rounded-4 border border-secondary border-opacity-25 p-4 text-white shadow-lg">
+                            <div class="row align-items-center g-4">
+                                <div class="col-lg-8">
+                                    <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                                        <span class="badge bg-primary-subtle text-cyan font-monospace small px-2 py-1 border border-cyan-subtle">MANUFACTURING AI OPTIMIZER</span>
+                                        <span class="badge bg-white-10 text-mint font-monospace small px-2 py-1">2D IRREGULAR POLYGON NESTING</span>
+                                    </div>
+                                    <h3 class="h4 fw-bold text-white mb-2 ins-title-balance">
+                                        Thuật Toán Lồng Phôi Đa Giác AI Cắt Giảm Phế Liệu Thép Tấm SS400
+                                    </h3>
+                                    <p class="text-secondary small mb-3">
+                                        Giải thuật di truyền kết hợp 2D Irregular Polygon Bin Packing trực tiếp điều khiển máy cắt Laser Trumpf 12kW và Fiber CNC. Tự động tính toán đường cắt chung (Common-Line Cutting), góc bo micro-joints và phân bổ nhiệt cục bộ chống cong vênh tấm thép SS400 khổ 1500x6000mm.
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <span class="text-white small">Phế liệu phôi tấm: Giảm từ <strong class="text-warning">6.8%</strong> xuống còn <strong class="text-mint">&lt; 2.1%</strong></span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <span class="text-white small">Tận dụng diện tích hữu ích: <strong class="text-cyan">97.9% diện tích phôi</strong></span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-mint"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <span class="text-white small">Hạch toán phế liệu thu hồi tự động vào <strong class="text-white">TK 152 / TK 621 VAS 200</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 text-lg-end">
+                                    <div class="p-3 bg-dark rounded-3 border border-secondary border-opacity-25 text-start font-monospace small mb-3">
+                                        <div class="text-secondary text-xs mb-1">// NESTING_METRICS_LIVE</div>
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="text-secondary">Raw Sheet</span>
+                                            <span class="text-white">SS400 1500x6000x12mm</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="text-secondary">Scrap Rate</span>
+                                            <span class="text-mint fw-bold">2.08% (-69.4% Scrap)</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-secondary">Est. Monthly Savings</span>
+                                            <span class="text-warning fw-bold">186,500,000 ₫/tháng</span>
+                                        </div>
+                                    </div>
+                                    <a href="/request-demo" class="btn btn-primary rounded-pill px-4 py-2 w-100 w-lg-auto">Mô Phỏng Cắt Laser CNC</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
                 <!-- SOVEREIGN GRC ALERT CALLOUT (s_alert)                          -->
                 <!-- ============================================================= -->
                 <section class="s_alert o_colored_level o_cc o_cc5 pt48 pb48" data-snippet="s_alert" data-name="Sovereign GRC Alert">
@@ -1105,30 +1436,35 @@
                 </section>
 
                 <!-- ============================================================= -->
-                <!-- 7-14 DAY GO-LIVE ENTERPRISE TIMELINE (s_timeline)              -->
+                <!-- 4-WEEK ENTERPRISE PROOF OF VALUE (PoV) METHODOLOGY (s_timeline) -->
                 <!-- ============================================================= -->
-                <section class="s_timeline o_colored_level o_cc o_cc5 pt80 pb80" data-snippet="s_timeline" data-name="Deployment Timeline">
-                    <div class="container">
+                <section class="s_timeline o_colored_level o_cc o_cc5 pt80 pb80" data-snippet="s_timeline" data-name="4-Week Enterprise PoV Methodology">
+                    <div class="container s_allow_columns">
                         <div class="text-center mb-5">
                             <div class="ins-pill-badge mb-2">
-                                <svg class="ph-duotone ph-clock ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-clock"/></svg>
-                                <span>Rapid Deployment SLA</span>
+                                <svg class="ph-duotone ph-calendar-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-calendar-check"/></svg>
+                                <span>ENTERPRISE PROCUREMENT &amp; PROOF OF VALUE</span>
                             </div>
-                            <h2 class="display-4 fw-bold text-white mb-2">Lộ Trình Triển Khai <span class="o_text_highlight o_text_highlight_underline text-cyan">7 - 14 Ngày</span> Go-Live</h2>
+                            <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                                Quy Trình 4 Tuần Thẩm Định Giá Trị Doanh Nghiệp // <span class="o_text_highlight o_text_highlight_underline text-cyan">4-Week Enterprise PoV</span>
+                            </h2>
                             <p class="lead text-secondary mx-auto col-lg-8">
-                                Mô hình đóng gói sẵn theo ngành giúp doanh nghiệp nghiệm thu kết quả thực tế ngay trong tuần đầu tiên.
+                                Khung thẩm định không ma sát (Frictionless Proof of Value) dành cho Hội đồng Mua sắm C-Suite (CFO, CIO, Giám đốc Sản xuất) với bảo toàn 100% dữ liệu và cam kết ROI định lượng.
                             </p>
                         </div>
-                        <div class="row g-4 ins-card-row-balanced">
+                        <div class="row g-4 ins-card-row-balanced mb-5">
+                            <!-- Week 1 -->
                             <div class="col-lg-3 col-md-6">
-                                <div class="card p-4 h-100 border border-secondary border-opacity-25 rounded-4 ins-card-equal">
+                                <div class="card p-4 h-100 border border-secondary border-opacity-25 rounded-4 ins-card-equal ins-glass-card d-flex flex-column justify-content-between">
                                     <div class="flex-grow-1">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div class="display-6 fw-bold text-cyan font-monospace mb-0">01</div>
-                                            <span class="badge bg-primary-subtle text-cyan rounded-pill px-2 py-1 small fw-semibold">GIAI ĐOẠN 1</span>
+                                            <div class="display-6 fw-bold text-cyan font-monospace mb-0">W1</div>
+                                            <span class="badge bg-primary-subtle text-cyan rounded-pill px-2 py-1 small fw-semibold">TUẦN 1: INGESTION</span>
                                         </div>
-                                        <h4 class="h5 fw-bold text-white mb-2">Ngày 1 - 3: Ingestion</h4>
-                                        <p class="text-secondary small mb-0">Kết nối API hoặc folder chứng từ (B/L, Invoice, C/O), cấu hình phân quyền RBAC và kiểm tra mẫu dữ liệu ban đầu.</p>
+                                        <h3 class="h5 fw-bold text-white mb-2 ins-title-balance">Ingestion &amp; Schema Mapping</h3>
+                                        <p class="text-secondary small mb-0">
+                                            Kết nối pipeline thu nạp chứng từ đa phương thức (B/L, C/O, Packing List) và cảm biến SCADA/IoT. Ánh xạ vào 101+ ontology chuẩn ngành và cấu hình phân quyền RBAC theo Nghị định 13/2023/NĐ-CP.
+                                        </p>
                                     </div>
                                     <div class="pt-3 mt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
                                         <span class="text-xs text-muted font-monospace">SLA: 72H</span>
@@ -1136,31 +1472,39 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Week 2 -->
                             <div class="col-lg-3 col-md-6">
-                                <div class="card p-4 h-100 border border-secondary border-opacity-25 rounded-4 ins-card-equal">
+                                <div class="card p-4 h-100 border border-secondary border-opacity-25 rounded-4 ins-card-equal ins-glass-card d-flex flex-column justify-content-between">
                                     <div class="flex-grow-1">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div class="display-6 fw-bold text-cyan font-monospace mb-0">02</div>
-                                            <span class="badge bg-primary-subtle text-cyan rounded-pill px-2 py-1 small fw-semibold">GIAI ĐOẠN 2</span>
+                                            <div class="display-6 fw-bold text-cyan font-monospace mb-0">W2</div>
+                                            <span class="badge bg-primary-subtle text-cyan rounded-pill px-2 py-1 small fw-semibold">TUẦN 2: CONNECTOR</span>
                                         </div>
-                                        <h4 class="h5 fw-bold text-white mb-2">Ngày 4 - 7: Ontology</h4>
-                                        <p class="text-secondary small mb-0">Ánh xạ sơ đồ tài khoản VAS 200/133, thiết lập cấu trúc thực thể Knowledge Graph và ma trận rủi ro GRC.</p>
+                                        <h3 class="h5 fw-bold text-white mb-2 ins-title-balance">Clean Core BAPI/OData Connector</h3>
+                                        <p class="text-secondary small mb-0">
+                                            Đấu nối cổng API Gateway qua BAPI/OData bảo toàn 100% lõi SAP S/4HANA, ECC và Oracle EBS hiện hữu. Thiết lập kênh ghi ngược hai chiều khép kín kèm cơ chế phê duyệt Human-in-the-Loop.
+                                        </p>
                                     </div>
                                     <div class="pt-3 mt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
                                         <span class="text-xs text-muted font-monospace">SLA: 96H</span>
-                                        <span class="text-mint small fw-medium">Khớp VAS 200</span>
+                                        <span class="text-mint small fw-medium">Clean Core Active</span>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Week 3 -->
                             <div class="col-lg-3 col-md-6">
-                                <div class="card p-4 h-100 border border-secondary border-opacity-25 rounded-4 ins-card-equal">
+                                <div class="card p-4 h-100 border border-secondary border-opacity-25 rounded-4 ins-card-equal ins-glass-card d-flex flex-column justify-content-between">
                                     <div class="flex-grow-1">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div class="display-6 fw-bold text-cyan font-monospace mb-0">03</div>
-                                            <span class="badge bg-primary-subtle text-cyan rounded-pill px-2 py-1 small fw-semibold">GIAI ĐOẠN 3</span>
+                                            <div class="display-6 fw-bold text-cyan font-monospace mb-0">W3</div>
+                                            <span class="badge bg-primary-subtle text-cyan rounded-pill px-2 py-1 small fw-semibold">TUẦN 3: MATCHING</span>
                                         </div>
-                                        <h4 class="h5 fw-bold text-white mb-2">Ngày 8 - 11: Multi-Agent</h4>
-                                        <p class="text-secondary small mb-0">Kích hoạt luồng đối soát tự động 3 chiều, huấn luyện tinh chỉnh mô hình OCR tiếng Việt và kiểm thử áp lực.</p>
+                                        <h3 class="h5 fw-bold text-white mb-2 ins-title-balance">3-Way Match &amp; Stress Testing</h3>
+                                        <p class="text-secondary small mb-0">
+                                            Chạy mô hình đối soát 3 chiều PO - Inv - B/L trên 10,000+ hồ sơ dữ liệu lịch sử thực tế đạt độ chính xác 99.8%. Thử nghiệm áp lực quy trình cảnh báo rung động FFT và khóa an toàn lệnh bảo trì.
+                                        </p>
                                     </div>
                                     <div class="pt-3 mt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
                                         <span class="text-xs text-muted font-monospace">SLA: 96H</span>
@@ -1168,21 +1512,79 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Week 4 -->
                             <div class="col-lg-3 col-md-6">
-                                <div class="card p-4 h-100 border border-secondary border-opacity-25 rounded-4 ins-card-equal">
+                                <div class="card p-4 h-100 border border-secondary border-opacity-25 rounded-4 ins-card-equal ins-glass-card d-flex flex-column justify-content-between">
                                     <div class="flex-grow-1">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div class="display-6 fw-bold text-mint font-monospace mb-0">04</div>
-                                            <span class="badge bg-success-subtle text-success rounded-pill px-2 py-1 small fw-semibold">GIAI ĐOẠN 4</span>
+                                            <div class="display-6 fw-bold text-mint font-monospace mb-0">W4</div>
+                                            <span class="badge bg-success-subtle text-success rounded-pill px-2 py-1 small fw-semibold">TUẦN 4: GO-LIVE</span>
                                         </div>
-                                        <h4 class="h5 fw-bold text-white mb-2">Ngày 12 - 14: Go-Live</h4>
-                                        <p class="text-secondary small mb-0">Chuyển sang môi trường vận hành thực tế, bàn giao bảng điều khiển KPI và kích hoạt Audit Trail bất biến.</p>
+                                        <h3 class="h5 fw-bold text-white mb-2 ins-title-balance">Executive ROI Signoff &amp; Go-Live</h3>
+                                        <p class="text-secondary small mb-0">
+                                            Xuất trình Báo cáo Thẩm định Giá trị Tài chính cho CFO/CIO, kiểm chứng thời gian hoàn vốn &lt; 4.2 tháng, ký kết nghiệm thu kỹ thuật, kích hoạt Audit Trail Merkle DAG và chuyển sang Production.
+                                        </p>
                                     </div>
                                     <div class="pt-3 mt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
                                         <span class="text-xs text-muted font-monospace">GO-LIVE</span>
-                                        <span class="text-cyan small fw-medium">Nghiệm Thu Thực Chiến</span>
+                                        <span class="text-cyan small fw-medium">SLA 99.995% HA</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Air-Gapped Kubernetes Hardware Sizing Matrix Callout Card -->
+                        <div class="ins-glass-card rounded-4 border border-secondary border-opacity-25 p-4 text-white shadow-lg">
+                            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25 flex-wrap gap-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="ins-live-ping"/>
+                                    <h4 class="h5 fw-bold text-white mb-0 font-monospace">AIR-GAPPED KUBERNETES HARDWARE SIZING MATRIX // ON-PREMISES BOM</h4>
+                                </div>
+                                <span class="badge bg-primary-subtle text-cyan border border-cyan-subtle font-monospace small">HIGH AVAILABILITY SLA: 99.995% · P99 &lt; 15MS</span>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0 text-white font-monospace small">
+                                    <thead class="border-bottom border-secondary border-opacity-50">
+                                        <tr>
+                                            <th scope="col" class="py-2 text-cyan">Phân Tầng Cụm Node</th>
+                                            <th scope="col" class="py-2 text-secondary">Số Lượng Node</th>
+                                            <th scope="col" class="py-2 text-white">Cấu Hình Tối Thiểu (CPU / RAM)</th>
+                                            <th scope="col" class="py-2 text-secondary">Lưu Trữ NVMe &amp; IOPS</th>
+                                            <th scope="col" class="py-2 text-mint">Vai Trò &amp; Phần Cứng Bảo Mật</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="border-top-0">
+                                        <tr>
+                                            <td class="fw-bold text-white">Control Plane (Master)</td>
+                                            <td class="text-cyan">3x Nodes (HA Quorum)</td>
+                                            <td class="text-white">16 vCPU, 64 GB ECC DDR5</td>
+                                            <td class="text-secondary">2x 500 GB NVMe RAID-1 OS</td>
+                                            <td class="text-mint">etcd Raft Consensus, Cilium eBPF, API Server</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold text-white">Worker Compute Nodes</td>
+                                            <td class="text-cyan">5x Worker Nodes</td>
+                                            <td class="text-white">32 vCPU, 128 GB ECC DDR5</td>
+                                            <td class="text-secondary">2x 1.92 TB NVMe U.2 RAID-10 (&#8805; 15,000 IOPS)</td>
+                                            <td class="text-mint">Rook-Ceph Cluster, Vector Database, Multi-Agent Engine</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold text-white">Dedicated AI GPU Nodes</td>
+                                            <td class="text-cyan">2x GPU Nodes</td>
+                                            <td class="text-white">64 vCPU, 256 GB ECC DDR5</td>
+                                            <td class="text-secondary">2x 3.84 TB Enterprise NVMe U.3</td>
+                                            <td class="text-mint">NVIDIA L40S / A100 Tensor Core 80GB, Multimodal OCR</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold text-white">Hardware Security &amp; Network</td>
+                                            <td class="text-cyan">Dual Appliance / Switch</td>
+                                            <td class="text-white">FIPS 140-2 Level 3 Validated</td>
+                                            <td class="text-secondary">Tamper-Evident Enclosure</td>
+                                            <td class="text-mint">Thales Luna HSM PCIe, Dual 25GbE SFP28 MLAG, Data Diode</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

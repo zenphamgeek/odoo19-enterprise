@@ -366,7 +366,22 @@ def run_suite_5_brand_orange_buttons(verbose=False):
     )
     
     # 2. Button Audit Across XML Views
-    ROGUE_BUTTON_CLASSES = ["btn-outline-cyan", "btn-cyan", "btn-dark-glow", "btn-custom"]
+    ROGUE_BUTTON_CLASSES = [
+        "btn-outline-info",
+        "btn-outline-warning",
+        "btn-outline-danger",
+        "btn-danger",
+        "btn-warning",
+        "btn-info",
+        "btn-success",
+        "btn-outline-success",
+        "btn-dark",
+        "btn-outline-dark",
+        "btn-outline-cyan",
+        "btn-cyan",
+        "btn-dark-glow",
+        "btn-custom",
+    ]
     xml_files = sorted([f for f in VIEWS_DIR.glob("*.xml") if not f.name.endswith(".bak")])
     
     rogue_buttons = []
@@ -386,9 +401,11 @@ def run_suite_5_brand_orange_buttons(verbose=False):
         for match in button_regex.finditer(content):
             attrs = match.group(1)
             total_buttons += 1
-            if re.search(r'style=["\'][^"\']*(?:background|color|border)[^"\']*["\']', attrs, re.IGNORECASE):
+            is_inline = bool(re.search(r'style=["\'][^"\']*(?:background|color|border)[^"\']*["\']', attrs, re.IGNORECASE))
+            is_rogue = any(rc in attrs for rc in ROGUE_BUTTON_CLASSES)
+            if is_inline:
                 inline_styled_buttons.append({"file": xf.name, "tag": match.group(0)[:80]})
-            else:
+            elif not is_rogue:
                 standard_buttons += 1
                 
     tokens_ok = has_primary_orange and has_orange_gradient and has_btn_primary_orange

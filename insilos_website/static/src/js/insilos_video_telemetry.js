@@ -1670,7 +1670,7 @@
                             ['Chứng Thư Số Nhà Cung Cấp', 'Viettel-CA Cloud HSM Server'],
                             ['Thuật Toán Băm Chữ Ký', 'SHA-256 with RSA Encryption 2048-bit'],
                             ['Mã Nhận Hóa Đơn Thuế', '002348910248921 (Tổng Cục Thuế tiếp nhận hợp lệ)'],
-                            ['Email Gửi Tự Động Khách Hàng', 'ketoan@saigonnewport.com.vn (Đã gửi link tra cứu)']
+                            ['Email Gửi Tự Động Khách Hàng', 'ketoan@maritime-port.vn (Đã gửi link tra cứu)']
                         ]
                     },
                     json: {

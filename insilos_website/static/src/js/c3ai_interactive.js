@@ -2307,14 +2307,14 @@ function initIdpWorkbench() {
             sub: "MẪU SỐ: HQ-01/NK/2026 · VNACCS/VCIS",
             boxes: [
                 { field: "declaration_no", label: "01. Số tờ khai hải quan:", value: "105829104820/NK", conf: "STP 99.9%", border: "border-warning", bg: "bg-warning", sub: "" },
-                { field: "importer", label: "02. Người nhập khẩu:", value: "TẬP ĐOÀN THÉP CÔNG NGHIỆP DUNG QUẤT", conf: "STP 99.8%", border: "border-info", bg: "bg-info", sub: "MST: 0100779774-001 · KCN Dung Quất, Quảng Ngãi" },
+                { field: "importer", label: "02. Người nhập khẩu:", value: "TẬP ĐOÀN THÉP CÔNG NGHIỆP DUNG QUẤT", conf: "STP 99.8%", border: "border-info", bg: "bg-info", sub: "MST: 0300998877-001 · KCN Luyện Kim Trọng Điểm, Miền Trung" },
                 { field: "hs_code", label: "03. Mã HS & Tên hàng hóa:", value: "7208.38.00 — THÉP TẤM CÁN NÓNG HỢP KIM SS400", conf: "STP 99.7%", border: "border-success", bg: "bg-success", sub: "Số lượng: 25.000 KG · Xuất xứ: VN · Đơn giá: 21.500 ₫/kg" },
                 { field: "tax_value", label: "04. Trị giá tính thuế & Tiền thuế:", value: "537.500.000 VNĐ · Thuế GTGT 8%: 43.000.000 VNĐ", conf: "STP 99.9%", border: "border-warning", bg: "bg-warning", sub: "Phân luồng kiểm tra: LUỒNG XANH (THÔNG QUAN TỰ ĐỘNG)" }
             ],
             table: [
                 { key: "declaration_no", val: "105829104820/NK", conf: "99.9%", highlight: false },
-                { key: "importer_name", val: "STEEL_CORP_SS400", conf: "99.8%", highlight: false },
-                { key: "importer_vat", val: "0100779774-001", conf: "100.0%", highlight: false },
+                { key: "importer_name", val: "VSTEEL_SS400_CORP", conf: "99.8%", highlight: false },
+                { key: "importer_vat", val: "0300998877-001", conf: "100.0%", highlight: false },
                 { key: "hs_code", val: "7208.38.00", conf: "99.7%", highlight: true, color: "text-cyan" },
                 { key: "net_weight_kg", val: "25,000.00", conf: "99.8%", highlight: false },
                 { key: "cif_amount_vnd", val: "537,500,000", conf: "99.9%", highlight: true, color: "text-mint" },
@@ -2393,14 +2393,14 @@ function initIdpWorkbench() {
             sub: "MẪU 1/001 · KÝ HIỆU: C26TAA · SỐ HÓA ĐƠN: 00048291",
             boxes: [
                 { field: "declaration_no", label: "01. Số hóa đơn & Mã CQT:", value: "HĐ: 00048291 · MÃ CQT: TCT-2026-9912048", conf: "STP 100.0%", border: "border-warning", bg: "bg-warning", sub: "Ngày ký số: 25/09/2026 · Hợp lệ theo Thông tư 78/2021/TT-BTC" },
-                { field: "importer", label: "02. Đơn vị phát hành:", value: "TỔNG CÔNG TY TIẾP VẬN CẢNG BIỂN QUỐC TẾ", conf: "STP 99.8%", border: "border-info", bg: "bg-info", sub: "MST: 0300446975 · Cụm Cảng Biển Quốc Tế, TP. Thủ Đức" },
+                { field: "importer", label: "02. Đơn vị phát hành:", value: "TỔNG CÔNG TY TIẾP VẬN CẢNG BIỂN QUỐC TẾ", conf: "STP 99.8%", border: "border-info", bg: "bg-info", sub: "MST: 0300887766 · Cụm Cảng Biển Quốc Tế, TP. Thủ Đức" },
                 { field: "hs_code", label: "03. Nội dung dịch vụ logistics:", value: "DỊCH VỤ NÂNG HẠ CONTAINER & LƯU BÃI CẢNG BIỂN", conf: "STP 99.8%", border: "border-success", bg: "bg-success", sub: "Vận đơn số: PORT_BL_8912 · Đoàn xe vận tải: 51C-982.45" },
                 { field: "tax_value", label: "04. Tổng tiền thanh toán & Thuế GTGT:", value: "18.675.000.000 VNĐ · THUẾ GTGT: 1.494.000.000 VNĐ", conf: "STP 100.0%", border: "border-warning", bg: "bg-warning", sub: "Trạng thái CQT: ĐÃ CẤP MÃ HỢP LỆ (KHÔNG SAI LỆCH)" }
             ],
             table: [
                 { key: "invoice_number", val: "00048291_C26TAA", conf: "100.0%", highlight: false },
                 { key: "tax_authority_code", val: "TCT-2026-9912048", conf: "100.0%", highlight: true, color: "text-mint" },
-                { key: "seller_vat", val: "0300446975", conf: "100.0%", highlight: false },
+                { key: "seller_vat", val: "0300887766", conf: "100.0%", highlight: false },
                 { key: "service_desc", val: "PORT_DRAYAGE_TERMINAL", conf: "99.8%", highlight: false },
                 { key: "pre_tax_amount", val: "18,675,000,000", conf: "100.0%", highlight: true, color: "text-mint" },
                 { key: "vat_amount_8pct", val: "1,494,000,000", conf: "100.0%", highlight: false },
@@ -2411,7 +2411,7 @@ function initIdpWorkbench() {
                 move_type: "out_invoice",
                 invoice_number: "00048291",
                 cqt_code: "TCT-2026-9912048",
-                seller_tax_id: "0300446975",
+                seller_tax_id: "0300887766",
                 total_vnd: 20169000000,
                 merkle_digest: "0x32da90812fe4",
                 stp_status: true
