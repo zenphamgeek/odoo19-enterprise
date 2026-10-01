@@ -31,7 +31,10 @@ header.o_navbar {
        ------------------------------------------------------------------------ */
     .o_menu_toggle {
       width: 44px !important;
+      min-width: 44px !important;
+      max-width: 44px !important;
       height: 44px !important;
+      flex-shrink: 0 !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -39,12 +42,13 @@ header.o_navbar {
       color: var(--insilos-text-primary, #0f172a) !important;
       text-decoration: none !important;
       transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
-      margin-right: 6px !important;
+      margin-right: 8px !important;
 
       i.ph-squares-four,
       i.o_menu_toggle_icon {
         font-size: 20px !important;
         line-height: 1 !important;
+        margin-right: 0 !important;
       }
 
       &:hover {
@@ -61,6 +65,25 @@ header.o_navbar {
     /* ------------------------------------------------------------------------
        2. Brand Wordmark & Active App Indicator (SAP Fiori ShellBar Header)
        ------------------------------------------------------------------------ */
+    .o_insilos_brand_logo {
+      height: 24px !important;
+      width: auto !important;
+      display: inline-block !important;
+      vertical-align: middle !important;
+      object-fit: contain !important;
+      margin-right: 8px !important;
+      flex-shrink: 0 !important;
+      transition: opacity var(--insilos-transition-fast);
+    }
+
+    .o_menu_brand_separator {
+      font-size: 16px !important;
+      line-height: 1 !important;
+      color: var(--insilos-border-strong, #94a3b8) !important;
+      margin-right: 8px !important;
+      flex-shrink: 0 !important;
+    }
+
     .o_menu_brand {
       font-family: var(--insilos-font-sans);
       font-size: 13.5px !important;
@@ -68,13 +91,14 @@ header.o_navbar {
       letter-spacing: -0.01em;
       color: var(--insilos-text-primary, #0f172a) !important;
       padding: 0 12px 0 4px !important;
-      margin: 0 !important;
+      margin: 0 8px 0 0 !important;
       height: 48px !important;
       display: inline-flex !important;
       align-items: center !important;
       white-space: nowrap !important;
       text-decoration: none !important;
       border-right: 1px solid var(--insilos-border-subtle, #e2e8f0);
+      flex-shrink: 0 !important;
 
       .o_menu_brand_icon {
         height: 22px !important;
@@ -177,15 +201,23 @@ header.o_navbar {
         transition: all var(--insilos-transition-fast);
 
         /* Live status indicator dot */
-        &::before {
-          content: '';
+        .o_live_status_dot {
           width: 7px;
           height: 7px;
           border-radius: 50%;
-          background-color: var(--insilos-positive, #107e3e);
-          box-shadow: 0 0 6px var(--insilos-positive, #107e3e);
           display: inline-block;
           flex-shrink: 0;
+          transition: background-color var(--insilos-transition-fast), box-shadow var(--insilos-transition-fast);
+
+          &.o_status_live {
+            background-color: var(--insilos-positive, #107e3e) !important;
+            box-shadow: 0 0 6px var(--insilos-positive, #107e3e) !important;
+          }
+
+          &.o_status_offline {
+            background-color: var(--insilos-critical, #bb0000) !important;
+            box-shadow: 0 0 6px var(--insilos-critical, #bb0000) !important;
+          }
         }
 
         &:hover {
@@ -232,6 +264,11 @@ header.o_navbar {
           color: var(--insilos-text-primary, #0f172a) !important;
         }
 
+        &:focus-visible {
+          outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+          outline-offset: 1px !important;
+        }
+
         &[aria-expanded="true"],
         &.show {
           background-color: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08)) !important;
@@ -274,6 +311,11 @@ header.o_navbar {
         &:hover {
           background-color: var(--insilos-bg-hover, #f1f5f9) !important;
           border-color: var(--insilos-border-subtle, #e2e8f0) !important;
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+          outline-offset: 1px !important;
         }
 
         &[aria-expanded="true"],
@@ -324,6 +366,10 @@ body.o_dark_mode,
     border-bottom: 1px solid var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
 
     .o_main_navbar {
+      .o_insilos_brand_logo {
+        filter: brightness(0) invert(1) !important;
+      }
+
       .o_menu_brand {
         border-right-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
       }
@@ -345,10 +391,30 @@ body.o_dark_mode,
         .o_switch_company_menu {
           background-color: var(--insilos-bg-card, #141e33) !important;
           border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+
+          .o_live_status_dot.o_status_live {
+            background-color: #24a148 !important;
+            box-shadow: 0 0 6px #24a148 !important;
+          }
         }
 
-        .o_user_menu .o_user_avatar {
-          border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18)) !important;
+        .o_nav_entry:not(.o_mobile_menu_toggle):not(.o_user_menu),
+        .dropdown-toggle:not(.o_switch_company_menu):not(.o_mobile_menu_toggle):not(.o_user_menu) {
+          &:focus-visible {
+            outline: 2px solid #00f2fe !important;
+            outline-offset: 1px !important;
+          }
+        }
+
+        .o_user_menu {
+          &:focus-visible {
+            outline: 2px solid #00f2fe !important;
+            outline-offset: 1px !important;
+          }
+
+          .o_user_avatar {
+            border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18)) !important;
+          }
         }
       }
     }

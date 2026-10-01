@@ -60,6 +60,11 @@ export class EnterpriseNavBar extends NavBar {
             menuBrandIcon.classList.toggle("o_hidden", !isInApp);
         }
 
+        const menuBrandSeparator = navEl?.querySelector(".o_menu_brand_separator");
+        if (menuBrandSeparator) {
+            menuBrandSeparator.classList.toggle("o_hidden", !isInApp);
+        }
+
         const appSubMenus =
             (typeof this.appSubMenus === "function" ? this.appSubMenus() : this.appSubMenus?.el) ||
             navEl?.querySelector(".o_menu_sections");

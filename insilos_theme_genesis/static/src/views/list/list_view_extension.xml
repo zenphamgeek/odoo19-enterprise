@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="after">
+            <FloatingBatchActionBar t-if="this.hasSelectedRecords"
+                selectedCount="this.model.root.selection.length"
+                isDomainSelected="this.isDomainSelected"
+                totalCount="this.model.root.count"
+                onApprove="() => this.onFloatingBatchApprove()"
+                onExport="() => this.onFloatingBatchExport()"
+                onArchive="() => this.onFloatingBatchArchive()"
+                onDelete="() => this.onFloatingBatchDelete()"
+                onDiscard="() => this.onFloatingBatchDiscard()"
+                canArchive="this.archiveEnabled ? true : false"
+                canDelete="this.activeActions?.delete ? true : false"
+                canExport="this.isExportEnable ? true : false"
+            />
+        </xpath>
+    </t>
+
+    <t t-inherit="purchase.ListView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="after">
+            <FloatingBatchActionBar t-if="this.hasSelectedRecords"
+                selectedCount="this.model.root.selection.length"
+                isDomainSelected="this.isDomainSelected ? true : false"
+                totalCount="this.model.root.count"
+                onApprove="() => this.onFloatingBatchApprove()"
+                onExport="() => this.onFloatingBatchExport()"
+                onArchive="() => this.onFloatingBatchArchive()"
+                onDelete="() => this.onFloatingBatchDelete()"
+                onDiscard="() => this.onFloatingBatchDiscard()"
+                canArchive="this.archiveEnabled ? true : false"
+                canDelete="this.activeActions?.delete ? true : false"
+                canExport="this.isExportEnable ? true : false"
+            />
+        </xpath>
+    </t>
+
+</templates>

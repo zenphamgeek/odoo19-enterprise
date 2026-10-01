@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="insilos_theme_genesis.FloatingBatchActionBar">
+        <div class="o_floating_batch_action_bar is_floating_batch_action_bar" role="toolbar" aria-label="Batch Actions">
+            <!-- 1. Selection Count Badge -->
+            <div class="is-floating-bar-badge d-flex align-items-center">
+                <span class="o_selected_count badge rounded-pill bg-primary me-2">
+                    <t t-out="props.selectedCount"/>
+                </span>
+                <span class="is-floating-bar-text text-white">selected</span>
+                <t t-if="props.isDomainSelected">
+                    <span class="badge bg-secondary ms-1 text-xs">(All in domain)</span>
+                </t>
+            </div>
+
+            <div class="is-floating-bar-divider"/>
+
+            <!-- 2. Primary Action / Approve Button -->
+            <button t-if="props.onApprove"
+                    type="button"
+                    class="btn btn-sm btn-primary is-floating-action-btn is-floating-btn-approve d-inline-flex align-items-center"
+                    t-on-click="props.onApprove"
+                    title="Approve / Process Selected Records">
+                <i class="ph ph-check-circle me-1"/>
+                <span>Approve</span>
+            </button>
+
+            <!-- 3. Export Button -->
+            <button t-if="props.canExport and props.onExport"
+                    type="button"
+                    class="btn btn-sm btn-outline-light is-floating-action-btn is-floating-btn-export d-inline-flex align-items-center"
+                    t-on-click="props.onExport"
+                    title="Export Selected Records">
+                <i class="ph ph-download-simple me-1"/>
+                <span>Export</span>
+            </button>
+
+            <!-- 4. Archive Button -->
+            <button t-if="props.canArchive and props.onArchive"
+                    type="button"
+                    class="btn btn-sm btn-outline-light is-floating-action-btn is-floating-btn-archive d-inline-flex align-items-center"
+                    t-on-click="props.onArchive"
+                    title="Archive Selected Records">
+                <i class="ph ph-archive me-1"/>
+                <span>Archive</span>
+            </button>
+
+            <!-- 5. Delete Button -->
+            <button t-if="props.canDelete and props.onDelete"
+                    type="button"
+                    class="btn btn-sm btn-danger is-floating-action-btn is-floating-btn-delete d-inline-flex align-items-center"
+                    t-on-click="props.onDelete"
+                    title="Delete Selected Records">
+                <i class="ph ph-trash me-1"/>
+                <span>Delete</span>
+            </button>
+
+            <div class="is-floating-bar-divider"/>
+
+            <!-- 6. Deselect All Button -->
+            <button t-if="props.onDiscard"
+                    type="button"
+                    class="btn btn-sm btn-outline-light is-floating-btn-close d-inline-flex align-items-center justify-content-center"
+                    t-on-click="props.onDiscard"
+                    title="Deselect All Records"
+                    aria-label="Deselect All">
+                <i class="ph ph-x" aria-hidden="true"/>
+            </button>
+        </div>
+    </t>
+</templates>

@@ -62,50 +62,80 @@
       }
     }
 
-    /* Sequential Chevron Workflow Stages (Right) */
+    /* Sequential Chevron Workflow Stages (SAP Fiori Process Flow Chevrons) */
     .o_statusbar_status {
-      display: inline-flex !important;
+      display: flex !important;
+      flex-flow: row-reverse wrap-reverse !important;
       align-items: center !important;
-      gap: 0 !important;
-      border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
-      border-radius: var(--insilos-radius-sm, 4px) !important;
-      overflow: hidden !important;
-      background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+      border: none !important;
+      background: transparent !important;
+      gap: 2px !important;
+      overflow: visible !important;
+      margin-left: auto !important;
 
-      .btn {
-        height: 30px !important;
-        line-height: 30px !important;
-        padding: 0 14px !important;
+      .btn.o_arrow_button:not(.d-none) {
+        height: 32px !important;
+        line-height: 32px !important;
+        padding: 0 16px 0 22px !important;
         font-size: 12px !important;
-        font-weight: 550 !important;
+        font-weight: 600 !important;
         border: none !important;
         border-radius: 0 !important;
-        border-right: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-        background: transparent !important;
+        margin-left: -10px !important;
+        clip-path: polygon(0% 0%, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0% 100%, 10px 50%) !important;
+        background-color: var(--insilos-bg-subtle, #f8fafc) !important;
         color: var(--insilos-text-secondary, #475569) !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         transition: all var(--insilos-transition-fast);
+        position: relative !important;
+        cursor: pointer;
 
-        &:last-child {
-          border-right: none !important;
+        /* Earliest stage (far left visually = .o_last in reversed DOM) */
+        &.o_last {
+          clip-path: polygon(0% 0%, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0% 100%) !important;
+          margin-left: 0 !important;
+          padding-left: 14px !important;
+          border-top-left-radius: var(--insilos-radius-xs, 2px) !important;
+          border-bottom-left-radius: var(--insilos-radius-xs, 2px) !important;
         }
 
-        /* Active Workflow Stage */
+        /* Final stage (far right visually = .o_first in reversed DOM) */
+        &.o_first {
+          clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 10px 50%) !important;
+          padding-right: 14px !important;
+          border-top-right-radius: var(--insilos-radius-xs, 2px) !important;
+          border-bottom-right-radius: var(--insilos-radius-xs, 2px) !important;
+        }
+
+        /* Single stage fallback */
+        &.o_first.o_last {
+          clip-path: none !important;
+          border-radius: var(--insilos-radius-xs, 2px) !important;
+        }
+
+        /* Active Milestone in High-Contrast Brand Accent */
         &.btn-primary,
         &.o_arrow_button_current {
           background-color: var(--insilos-primary, #0b2e64) !important;
-          color: var(--insilos-text-on-primary, #ffffff) !important;
-          font-weight: 650 !important;
+          color: #ffffff !important;
+          font-weight: 700 !important;
+          z-index: 2 !important;
+          box-shadow: 0 1px 3px rgba(11, 46, 100, 0.25) !important;
         }
 
         /* Inactive Upcoming Stages */
-        &.btn-secondary:not(.disabled) {
+        &:not(.o_arrow_button_current):not(.btn-primary) {
           &:hover {
             background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-            color: var(--insilos-text-primary, #0f172a) !important;
+            color: var(--insilos-primary, #0b2e64) !important;
           }
+        }
+
+        &:disabled {
+          opacity: 1 !important;
+          cursor: default;
         }
       }
     }
@@ -226,10 +256,13 @@
         .o_field_widget {
           margin-bottom: 10px !important;
 
-          /* Text & Select Inputs */
+          /* Text, Select, & Combobox Inputs */
           input.o_input,
           select.o_input,
-          textarea.o_input {
+          textarea.o_input,
+          .o_input_dropdown input,
+          .o_datepicker_button,
+          .o_dropdown_button {
             height: var(--insilos-input-height, 32px) !important;
             border-radius: var(--insilos-radius-xs, 2px) !important;
             border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
@@ -325,11 +358,17 @@
 /* ----------------------------------------------------------------------------
    Chatter / Enterprise Activity Feed (Right Rail)
    ---------------------------------------------------------------------------- */
-.o_Chatter {
+.o_Chatter,
+.o-mail-Chatter,
+.o-mail-ChatterContainer,
+.o-mail-Chatter-container,
+.o-mail-Form-chatter {
   background-color: var(--insilos-bg-canvas, #f4f6f8) !important;
   border-left: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
 
-  .o_ChatterTopbar {
+  .o_ChatterTopbar,
+  .o-mail-Chatter-top,
+  .o-mail-Chatter-topbar {
     border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
     background-color: var(--insilos-bg-surface, #ffffff) !important;
     padding: 8px 16px !important;
@@ -369,17 +408,25 @@ body.o_dark_mode,
       }
 
       .o_statusbar_status {
-        background-color: var(--insilos-bg-subtle, #0b0f19) !important;
-        border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+        background-color: transparent !important;
+        border: none !important;
 
-        .btn {
+        .btn.o_arrow_button:not(.d-none) {
+          background-color: var(--insilos-bg-subtle, #0b0f19) !important;
           color: var(--insilos-text-secondary, #cbd5e1) !important;
-          border-right-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+
+          &:hover:not(.o_arrow_button_current):not(.btn-primary) {
+            background-color: #1e293b !important;
+            color: var(--insilos-primary, #00f2fe) !important;
+          }
 
           &.btn-primary,
           &.o_arrow_button_current {
             background-color: var(--insilos-primary, #00f2fe) !important;
-            color: var(--insilos-text-on-primary, #05101e) !important;
+            color: #05101e !important;
+            font-weight: 700 !important;
+            z-index: 2 !important;
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.25) !important;
           }
         }
       }
@@ -409,10 +456,12 @@ body.o_dark_mode,
           }
         }
 
+        .o_form_label,
+        .o_group .o_form_label {
+          color: var(--insilos-text-secondary, #cbd5e1) !important;
+        }
+
         .o_group {
-          .o_form_label {
-            color: var(--insilos-text-secondary, #cbd5e1) !important;
-          }
 
           .o_field_widget {
             input.o_input,
@@ -455,12 +504,18 @@ body.o_dark_mode,
     }
   }
 
-  .o_Chatter {
-    background-color: var(--insilos-bg-canvas, #070b14) !important;
+  .o_Chatter,
+  .o-mail-Chatter,
+  .o-mail-ChatterContainer,
+  .o-mail-Chatter-container,
+  .o-mail-Form-chatter {
+    background-color: #0f172a !important;
     border-left-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
 
-    .o_ChatterTopbar {
-      background-color: var(--insilos-bg-surface, #0f172a) !important;
+    .o_ChatterTopbar,
+    .o-mail-Chatter-top,
+    .o-mail-Chatter-topbar {
+      background-color: #0f172a !important;
       border-bottom-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
     }
   }

@@ -6,36 +6,32 @@
         <attribute name="t-ref">this.nav</attribute>
     </xpath>
     <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="replace">
-        <a t-if="!isScopedApp" href="/insilos" class="o_menu_toggle border-0" t-att-class="{'hasImage': currentApp?.webIconData}" accesskey="h" t-ref="this.menuApps" t-on-click.prevent="() => { (this.ui?.isSmall || env.isSmall) ? this._openAppMenuSidebar() : this.hm.toggle() }">
+        <a t-if="!isScopedApp" href="/insilos" class="o_menu_toggle o_navbar_apps_menu border-0 d-inline-flex align-items-center justify-content-center" t-att-class="{'hasImage': currentApp?.webIconData}" accesskey="h" t-ref="this.menuApps" t-on-click.prevent="() => { (this.ui?.isSmall || env.isSmall) ? this._openAppMenuSidebar() : this.hm.toggle() }">
             <t t-if="(this.ui?.isSmall || env.isSmall) and !hm.hasHomeMenu">
                 <t t-call="web.NavBar.AppsMenu.Sidebar"/>
             </t>
             <t t-else="">
-                <i class="o_menu_toggle_icon ph ph-squares-four fs-4 me-2"/>
-                <t t-if="!(this.ui?.isSmall || env.isSmall) and currentApp">
-                    <img
-                        t-if="currentApp.webIconData"
-                        t-att-src="currentApp.webIconData"
-                        class="o_menu_brand_icon d-inline position-absolute start-0 h-100 ps-1 ms-2"
-                        t-att-alt="currentApp.name"
-                        t-ref="appIcon"/>
-                    <span t-out="currentApp.name" class="o_menu_brand d-flex ms-3 pe-0"/>
-                </t>
+                <i class="o_menu_toggle_icon ph-duotone ph-squares-four fs-4 me-2"/>
             </t>
         </a>
-        <a t-else="" t-att-href="pwa.startUrl" class="o_menu_toggle" t-ref="this.menuApps">
+        <a t-else="" t-att-href="pwa.startUrl" class="o_menu_toggle o_navbar_apps_menu border-0 d-inline-flex align-items-center justify-content-center" t-ref="this.menuApps">
+            <i class="o_menu_toggle_icon ph-duotone ph-squares-four fs-4 me-2"/>
+        </a>
+        <!-- Insilos Master Brand Logo -->
+        <img src="/web/static/img/insilos_logo.svg"
+             alt="Insilos"
+             class="o_insilos_brand_logo d-none d-sm-inline-block align-middle me-2"
+             style="height: 24px; width: auto;"/>
+        <t t-if="!(this.ui?.isSmall || env.isSmall) and currentApp">
+            <span class="o_menu_brand_separator text-muted opacity-50 me-2 d-none d-md-inline">|</span>
             <img
-                t-if="currentApp &amp;&amp; currentApp.webIconData"
+                t-if="currentApp.webIconData"
                 t-att-src="currentApp.webIconData"
-                class="o_menu_brand_icon d-none d-lg-inline position-absolute start-0 h-100 ps-1 ms-2"
+                class="o_menu_brand_icon d-inline h-100 ps-1 ms-2"
                 t-att-alt="currentApp.name"
                 t-ref="appIcon"/>
-
-            <span
-                t-if="currentApp"
-                t-out="currentApp.name"
-                class="o_menu_brand d-none d-md-flex ps-4 pe-0"/>
-        </a>
+            <span t-out="currentApp.name" class="o_menu_brand d-flex pe-0"/>
+        </t>
     </xpath>
 
     <xpath expr="//DropdownItem[contains(@t-out, 'currentApp.name') or contains(@t-esc, 'currentApp.name')]" position="replace"/>
