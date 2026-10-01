@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<data>
     <!-- ================================================================= -->
     <!-- 1. SIGNATURE C3.AI SNIPPET TEMPLATES (NATIVE QWEB & BOOTSTRAP 5)  -->
     <!-- ================================================================= -->
@@ -2297,6 +2297,427 @@
 
 
     <!-- ================================================================= -->
+    <!-- R3. INDUSTRIAL SNIPPET TEMPLATES                                  -->
+    <!-- ================================================================= -->
+
+    <!-- Snippet: Industrial Metrics KPI Cards -->
+    <template id="s_industrial_metrics_kpi" name="Industrial Metrics KPI Cards">
+        <section class="s_numbers o_colored_level o_cc o_cc5 pt80 pb80 position-relative ins-kpi-section overflow-hidden" data-snippet="s_numbers" data-name="Industrial Metrics KPI Cards" data-bs-theme="dark">
+            <div class="container position-relative">
+                <!-- Section Header -->
+                <div class="text-center mb-5 col-lg-8 mx-auto">
+                    <div class="ins-pill-badge mb-2">
+                        <svg class="ph-duotone ph-chart-line-up ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-chart-line-up"/></svg>
+                        <span>SHOP-FLOOR TELEMETRY // ISA-95</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                        Chỉ Số Đo Lường Vận Hành Công Nghiệp
+                    </h2>
+                    <p class="lead text-secondary ins-lead-balance">
+                        Dữ liệu đo lường trực tiếp từ cảm biến SCADA, dây chuyền Laser CNC và cụm robot tự động với độ trễ P99 dưới 12ms.
+                    </p>
+                </div>
+
+                <!-- KPI Cards Grid -->
+                <div class="row g-4 ins-card-row-balanced">
+                    <!-- Card 1: OEE -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 bg-black bg-opacity-50 d-flex flex-column justify-content-between ins-kpi-card ins-kpi-card--emerald">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-emerald text-dark font-monospace fw-bold px-2 py-1 rounded-pill small">NOMINAL</span>
+                                    <span class="text-secondary small font-monospace">OEE // CNC_01</span>
+                                </div>
+                                <div class="ins-kpi-val text-white font-monospace display-5 fw-bold mb-1">94.8%</div>
+                                <h3 class="h6 fw-bold text-cyan mb-2">Hiệu Suất Tổng Thể Thiết Bị</h3>
+                                <p class="text-secondary small mb-3">
+                                    Sẵn sàng 96.2% · Tốc độ 99.1% · Chất lượng 99.5% trên máy cắt Laser Fiber CNC.
+                                </p>
+                            </div>
+                            <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto">
+                                <div class="d-flex justify-content-between text-secondary smaller font-monospace mb-1">
+                                    <span>SHIFT PROGRESS</span>
+                                    <span class="text-emerald">+3.4% VS BASELINE</span>
+                                </div>
+                                <div class="progress bg-dark bg-opacity-75" style="height: 6px;">
+                                    <div class="progress-bar bg-emerald" role="progressbar" style="width: 94.8%;" aria-valuenow="94.8" aria-valuemin="0" aria-valuemax="100"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Production Throughput & STP -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 bg-black bg-opacity-50 d-flex flex-column justify-content-between ins-kpi-card ins-kpi-card--cyan">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-cyan text-dark font-monospace fw-bold px-2 py-1 rounded-pill small">ACTIVE FLOW</span>
+                                    <span class="text-secondary small font-monospace">STP // MES_L2</span>
+                                </div>
+                                <div class="ins-kpi-val text-white font-monospace display-5 fw-bold mb-1">12,850T</div>
+                                <h3 class="h6 fw-bold text-cyan mb-2">Sản Lượng Thép &amp; STP</h3>
+                                <p class="text-secondary small mb-3">
+                                    99.82% chứng từ gia công và lệnh sản xuất MO được đối soát tự động không can thiệp.
+                                </p>
+                            </div>
+                            <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto">
+                                <div class="d-flex justify-content-between text-secondary smaller font-monospace mb-1">
+                                    <span>AUTOMATION LEVEL</span>
+                                    <span class="text-cyan">99.8% STRAIGHT-THROUGH</span>
+                                </div>
+                                <div class="progress bg-dark bg-opacity-75" style="height: 6px;">
+                                    <div class="progress-bar bg-cyan" role="progressbar" style="width: 99.8%;" aria-valuenow="99.8" aria-valuemin="0" aria-valuemax="100"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Downtime & MTBF -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 bg-black bg-opacity-50 d-flex flex-column justify-content-between ins-kpi-card ins-kpi-card--cobalt">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-cobalt text-white font-monospace fw-bold px-2 py-1 rounded-pill small">PREDICTIVE</span>
+                                    <span class="text-secondary small font-monospace">RELIABILITY</span>
+                                </div>
+                                <div class="ins-kpi-val text-white font-monospace display-5 fw-bold mb-1">0.12%</div>
+                                <h3 class="h6 fw-bold text-cyan mb-2">Thời Gian Dừng Máy (Downtime)</h3>
+                                <p class="text-secondary small mb-3">
+                                    MTBF đạt 1,420 giờ hoạt động liên tục. Cảnh báo sớm rung chấn ổ bi trước 72 giờ.
+                                </p>
+                            </div>
+                            <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto">
+                                <div class="d-flex justify-content-between text-secondary smaller font-monospace mb-1">
+                                    <span>MTBF BENCHMARK</span>
+                                    <span class="text-white">1,420H / TARGET 1,200H</span>
+                                </div>
+                                <div class="progress bg-dark bg-opacity-75" style="height: 6px;">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 98.8%;" aria-valuenow="98.8" aria-valuemin="0" aria-valuemax="100"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Energy Intensity -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 p-4 border border-secondary border-opacity-25 rounded-4 bg-black bg-opacity-50 d-flex flex-column justify-content-between ins-kpi-card ins-kpi-card--yellow">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-yellow text-dark font-monospace fw-bold px-2 py-1 rounded-pill small">ISO 50001</span>
+                                    <span class="text-secondary small font-monospace">ENERGY // ECO</span>
+                                </div>
+                                <div class="ins-kpi-val text-white font-monospace display-5 fw-bold mb-1">-28.4%</div>
+                                <h3 class="h6 fw-bold text-cyan mb-2">Suất Tiêu Hao Điện Năng</h3>
+                                <p class="text-secondary small mb-3">
+                                    Giảm kWh/tấn sản phẩm qua thuật toán điều độ phụ tải đỉnh và cân bằng pha biến áp.
+                                </p>
+                            </div>
+                            <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto">
+                                <div class="d-flex justify-content-between text-secondary smaller font-monospace mb-1">
+                                    <span>DECARBONIZATION</span>
+                                    <span class="text-yellow">SAVED 420 MWH/NĂM</span>
+                                </div>
+                                <div class="progress bg-dark bg-opacity-75" style="height: 6px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 71.6%;" aria-valuenow="71.6" aria-valuemin="0" aria-valuemax="100"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Snippet: Production Line Digital Topology Diagram -->
+    <template id="s_production_line_topology" name="Production Line Digital Topology">
+        <section class="s_cover o_colored_level o_cc o_cc5 pt80 pb80 position-relative ins-prod-topology-section overflow-hidden" data-snippet="s_cover" data-name="Production Line Digital Topology" data-bs-theme="dark">
+            <div class="container position-relative">
+                <!-- Section Header -->
+                <div class="text-center mb-5 col-lg-9 mx-auto">
+                    <div class="ins-pill-badge mb-2">
+                        <span class="ins-live-ping ins-live-ping--emerald"/>
+                        <span>CYBER-PHYSICAL SYSTEM TOPOLOGY // INDUSTRY 4.0</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                        Sơ Đồ Topology Số Hóa Dây Chuyền Sản Xuất
+                    </h2>
+                    <p class="lead text-secondary ins-lead-balance">
+                        Mô hình hóa kiến trúc liên thông thời gian thực từ cảm biến trạm máy, camera AI thị giác đến hạch toán kế toán ERP tự chủ.
+                    </p>
+                </div>
+
+                <!-- Topology Interactive Container -->
+                <div class="card border border-secondary border-opacity-25 rounded-4 p-4 p-lg-5 bg-black bg-opacity-60 ins-prod-topology-card shadow-lg">
+                    <!-- Topbar Telemetry -->
+                    <div class="d-flex flex-wrap justify-content-between align-items-center pb-4 mb-4 border-bottom border-secondary border-opacity-25 gap-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="ins-console-dots"><span/><span/><span/></div>
+                            <span class="font-monospace small text-white fw-bold">PRODUCTION PIPELINE // DIGITAL THREAD ARCHITECTURE</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2 font-monospace small">
+                            <span class="badge bg-secondary bg-opacity-25 text-cyan border border-cyan-subtle">LATENCY P99 &lt; 12MS</span>
+                            <span class="badge bg-secondary bg-opacity-25 text-emerald border border-emerald-subtle">ZERO DATA LOSS</span>
+                        </div>
+                    </div>
+
+                    <!-- 5-Stage Interconnected Process Flow -->
+                    <div class="row g-3 g-lg-4 position-relative align-items-stretch">
+                        <!-- Stage 1: Physical Edge Ingestion -->
+                        <div class="col-lg col-md-6">
+                            <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 bg-dark bg-opacity-50 ins-topo-node">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-cobalt text-white font-monospace smaller px-2 py-0">STAGE 01</span>
+                                    <svg class="ph-duotone ph-plugs-connected ph-md text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-plugs-connected"/></svg>
+                                </div>
+                                <h4 class="h6 fw-bold text-white mb-1">Trạm Máy &amp; IoT</h4>
+                                <p class="text-secondary smaller mb-2">Laser CNC 12kW, Robot hàn Yaskawa, Cảm biến OPC-UA.</p>
+                                <div class="mt-auto pt-2 border-top border-secondary border-opacity-10 text-cyan font-monospace smaller">
+                                    10,000 pts/sec
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stage 2: AI Computer Vision Safety -->
+                        <div class="col-lg col-md-6">
+                            <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 bg-dark bg-opacity-50 ins-topo-node">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-yellow text-dark font-monospace fw-bold smaller px-2 py-0">STAGE 02</span>
+                                    <svg class="ph-duotone ph-camera ph-md text-yellow"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-camera"/></svg>
+                                </div>
+                                <h4 class="h6 fw-bold text-white mb-1">AI Thị Giác HSE</h4>
+                                <p class="text-secondary smaller mb-2">Quét PPE Mũ/Áo 60FPS, rào cản quang vùng nguy hiểm.</p>
+                                <div class="mt-auto pt-2 border-top border-secondary border-opacity-10 text-yellow font-monospace smaller">
+                                    &lt; 28ms Inference
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stage 3: Digital Twin & FSM -->
+                        <div class="col-lg col-md-6">
+                            <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 bg-dark bg-opacity-50 ins-topo-node">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-cyan text-dark font-monospace fw-bold smaller px-2 py-0">STAGE 03</span>
+                                    <svg class="ph-duotone ph-cpu ph-md text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
+                                </div>
+                                <h4 class="h6 fw-bold text-white mb-1">Digital Twin &amp; FSM</h4>
+                                <p class="text-secondary smaller mb-2">Mô hình hóa ISA-95, tính OEE động, dự báo rung lắc.</p>
+                                <div class="mt-auto pt-2 border-top border-secondary border-opacity-10 text-cyan font-monospace smaller">
+                                    1.4M Triples Graph
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stage 4: Quality Gate & Ledger -->
+                        <div class="col-lg col-md-6">
+                            <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 bg-dark bg-opacity-50 ins-topo-node">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-emerald text-dark font-monospace fw-bold smaller px-2 py-0">STAGE 04</span>
+                                    <svg class="ph-duotone ph-shield-check ph-md text-emerald"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
+                                </div>
+                                <h4 class="h6 fw-bold text-white mb-1">Kiểm Định &amp; Merkle</h4>
+                                <p class="text-secondary smaller mb-2">Đo quét laser 3D, lưu vết mã băm phôi thép bất biến.</p>
+                                <div class="mt-auto pt-2 border-top border-secondary border-opacity-10 text-emerald font-monospace smaller">
+                                    99.98% First-Pass
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stage 5: ERP Closed-Loop Execution -->
+                        <div class="col-lg col-md-6">
+                            <div class="card h-100 p-3 border border-secondary border-opacity-25 rounded-3 bg-dark bg-opacity-50 ins-topo-node">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-primary text-white font-monospace smaller px-2 py-0">STAGE 05</span>
+                                    <svg class="ph-duotone ph-arrows-clockwise ph-md text-primary"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrows-clockwise"/></svg>
+                                </div>
+                                <h4 class="h6 fw-bold text-white mb-1">Đóng Vòng Lặp ERP</h4>
+                                <p class="text-secondary smaller mb-2">Khấu trừ Sub-BOM, mở lệnh bảo trì PM, hạch toán TT78.</p>
+                                <div class="mt-auto pt-2 border-top border-secondary border-opacity-10 text-primary font-monospace smaller">
+                                    STP 99.8% Move
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Verification Banner -->
+                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <span class="text-secondary font-monospace smaller">
+                            TIÊU CHUẨN CÔNG NGHIỆP: IEC 62443 CYBERSECURITY · ISO 9001:2015 · ISO 45001:2018 · ISA-95
+                        </span>
+                        <a href="/solutions" class="btn btn-outline-secondary rounded-pill btn-sm px-3 font-monospace smaller">
+                            Xem Kiến Trúc Chi Tiết →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Snippet: High-Density Comparison Table -->
+    <template id="s_high_density_comparison" name="High-Density Comparison Table">
+        <section class="s_comparisons o_colored_level o_cc o_cc5 pt80 pb80 position-relative ins-dense-comparison-section overflow-hidden" data-snippet="s_comparisons" data-name="High-Density Comparison Table" data-bs-theme="dark">
+            <div class="container position-relative">
+                <!-- Section Header -->
+                <div class="text-center mb-5 col-lg-9 mx-auto">
+                    <div class="ins-pill-badge mb-2">
+                        <svg class="ph-duotone ph-scales ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-scales"/></svg>
+                        <span>ENTERPRISE ARCHITECTURE COMPARISON</span>
+                    </div>
+                    <h2 class="display-4 fw-bold text-white mb-2 ins-title-balance">
+                        Bảng Đối Chiếu Năng Lực Vận Hành &amp; Công Nghệ
+                    </h2>
+                    <p class="lead text-secondary ins-lead-balance">
+                        So sánh mật độ cao giữa mô hình thủ công phân mảnh, phần mềm đóng gói truyền thống và nền tảng trí tuệ tự chủ Insilos.
+                    </p>
+                </div>
+
+                <!-- Structured Data Table Container -->
+                <div class="card border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg bg-black bg-opacity-50">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0 align-middle ins-dense-table font-monospace">
+                            <thead>
+                                <tr class="border-bottom border-secondary border-opacity-25 bg-black bg-opacity-75">
+                                    <th class="py-3 px-4 text-secondary small text-uppercase" style="width: 25%;">TIÊU CHÍ KỸ THUẬT</th>
+                                    <th class="py-3 px-3 text-secondary small text-uppercase" style="width: 22%;">TRUYỀN THỐNG / PHÂN MẢNH</th>
+                                    <th class="py-3 px-3 text-secondary small text-uppercase" style="width: 23%;">ERP ĐÓNG GÓI TIÊU CHUẨN</th>
+                                    <th class="py-3 px-4 text-cyan small text-uppercase bg-primary bg-opacity-10 border-start border-end border-cyan border-opacity-25 position-relative" style="width: 30%;">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span>INSILOS SOVEREIGN OS</span>
+                                            <span class="badge bg-cyan text-dark fw-bold smaller px-2 py-0 rounded-pill">CHUẨN ĐỀ XUẤT</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row 1: Data Architecture -->
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-3 px-4 text-white fw-bold small">
+                                        <div class="text-truncate">Kiến Trúc Dữ Liệu</div>
+                                        <span class="text-secondary smaller font-sans d-block">Data Integration &amp; Ingestion</span>
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span class="text-danger">✗</span> Excel &amp; nhập tay hàng tuần
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span>⚠</span> SQL Batch sync 24h trễ 4-8h
+                                    </td>
+                                    <td class="py-3 px-4 text-white small bg-primary bg-opacity-10 border-start border-end border-cyan border-opacity-25">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <span class="text-emerald fw-bold">OPC-UA Real-time &lt; 15ms Triples</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 2: HSE & Vision Safety -->
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-3 px-4 text-white fw-bold small">
+                                        <div class="text-truncate">An Toàn Lao Động HSE</div>
+                                        <span class="text-secondary smaller font-sans d-block">Computer Vision &amp; e-PTW</span>
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span class="text-danger">✗</span> Tuần tra sổ sách, hậu kiểm
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span>⚠</span> CCTV ghi hình không phân tích
+                                    </td>
+                                    <td class="py-3 px-4 text-white small bg-primary bg-opacity-10 border-start border-end border-cyan border-opacity-25">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <span class="text-white">AI Vision 60FPS, Khóa Work Order</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 3: OEE & Predictive Maintenance -->
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-3 px-4 text-white fw-bold small">
+                                        <div class="text-truncate">Hiệu Suất OEE &amp; Bảo Trì</div>
+                                        <span class="text-secondary smaller font-sans d-block">Predictive Maintenance FSM</span>
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span class="text-danger">✗</span> Chờ hỏng máy mới sửa
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span>⚠</span> Bảo trì theo giờ chạy định kỳ
+                                    </td>
+                                    <td class="py-3 px-4 text-white small bg-primary bg-opacity-10 border-start border-end border-cyan border-opacity-25">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <span class="text-white">FSM Rung động, OEE &gt;= 94.8%</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 4: BOM & Scrap Lineage -->
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-3 px-4 text-white fw-bold small">
+                                        <div class="text-truncate">Định Mức BOM &amp; Phế Liệu</div>
+                                        <span class="text-secondary smaller font-sans d-block">Sub-BOM Traceability</span>
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span class="text-danger">✗</span> Lệch thực tế 8-12%, hao hụt
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span>⚠</span> Trừ kho lý thuyết cuối tháng
+                                    </td>
+                                    <td class="py-3 px-4 text-white small bg-primary bg-opacity-10 border-start border-end border-cyan border-opacity-25">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <span class="text-white">Khóa CNC Laser, Merkle DAG 100%</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 5: Tax Compliance & E-Invoice -->
+                                <tr class="border-bottom border-secondary border-opacity-10">
+                                    <td class="py-3 px-4 text-white fw-bold small">
+                                        <div class="text-truncate">Hóa Đơn &amp; Giá Thành TK 154</div>
+                                        <span class="text-secondary smaller font-sans d-block">TT 78/2021 &amp; VAS 200</span>
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span class="text-danger">✗</span> Trễ 15-30 ngày, rủi ro phạt
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span>⚠</span> Nhập file sao kê bán tự động
+                                    </td>
+                                    <td class="py-3 px-4 text-white small bg-primary bg-opacity-10 border-start border-end border-cyan border-opacity-25">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <span class="text-white">Đối soát 3 chiều 99.8% trong ngày</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 6: Deployment & Air-Gap -->
+                                <tr>
+                                    <td class="py-3 px-4 text-white fw-bold small">
+                                        <div class="text-truncate">Chủ Quyền &amp; Bảo Mật</div>
+                                        <span class="text-secondary smaller font-sans d-block">Deployment Sovereignty</span>
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span class="text-danger">✗</span> Máy trạm rời rạc, không backup
+                                    </td>
+                                    <td class="py-3 px-3 text-secondary small">
+                                        <span>⚠</span> Public Cloud máy chủ nước ngoài
+                                    </td>
+                                    <td class="py-3 px-4 text-white small bg-primary bg-opacity-10 border-start border-end border-cyan border-opacity-25">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <svg class="ph-duotone ph-check-circle ph-sm text-emerald flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                            <span class="text-cyan fw-bold">Air-Gapped On-Premise K8s</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+
+
+    <!-- ================================================================= -->
     <!-- 2. INHERIT WEBSITE SNIPPETS PALETTE                               -->
     <!-- ================================================================= -->
     <template id="insilos_custom_snippets" inherit_id="website.snippets" priority="20">
@@ -2365,7 +2786,17 @@
             <t t-snippet="insilos_website.s_insilos_cctv_ai_camera" string="AI CCTV Safety Camera" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_video.svg">
                 <keywords>cctv, ai camera, computer vision, ppe, safety, hse, streaming</keywords>
             </t>
+            <!-- R3 Industrial Snippets Palette Exposure -->
+            <t t-snippet="insilos_website.s_industrial_metrics_kpi" string="Industrial Metrics KPI" group="columns" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_industrial_metrics_kpi.svg">
+                <keywords>kpi, metrics, oee, throughput, downtime, mtbf, industrial, scada</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_production_line_topology" string="Production Line Topology" group="content" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_production_line_topology.svg">
+                <keywords>topology, production line, cyber-physical, pipeline, iot, mes</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_high_density_comparison" string="High-Density Comparison" group="content" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_high_density_comparison.svg">
+                <keywords>comparison, matrix, density, carbon, tiers, specifications</keywords>
+            </t>
         </xpath>
     </template>
-</odoo>
+</data>
 

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Insilos Intelligent Operations Website — Insilos Enterprise Preview</title>
+    <style>
+        :root {
+            --insilos-carbon-spacing-01: 2px;
+            --insilos-carbon-spacing-02: 4px;
+            --insilos-carbon-spacing-03: 8px;
+            --insilos-carbon-spacing-04: 12px;
+            --insilos-carbon-spacing-05: 16px;
+            --insilos-radius-micro: 2px;
+            --insilos-radius-architectural: 4px;
+            --insilos-cyan-primary: #00F2FE;
+            --insilos-cobalt-primary: #0B2E64;
+            --insilos-canvas-dark: #0f172a;
+            --insilos-surface-dark: #1e293b;
+            --insilos-border-dark: #334155;
+            --insilos-text-primary: #f8fafc;
+            --insilos-text-secondary: #94a3b8;
+            --insilos-font-mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+            --insilos-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--insilos-canvas-dark);
+            color: var(--insilos-text-primary);
+            font-family: var(--insilos-font-sans);
+            line-height: 1.5;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--insilos-border-dark);
+            margin-bottom: 24px;
+        }
+        .preview-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--insilos-cyan-primary);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: var(--insilos-radius-micro);
+            font-family: var(--insilos-font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .preview-card {
+            background: var(--insilos-surface-dark);
+            border: 1px solid var(--insilos-border-dark);
+            border-radius: var(--insilos-radius-architectural);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        .preview-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+        .preview-summary {
+            color: var(--insilos-text-secondary);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--insilos-border-dark);
+            border-left: 3px solid var(--insilos-cyan-primary);
+            border-radius: var(--insilos-radius-architectural);
+            padding: 16px;
+        }
+        .metric-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--insilos-text-secondary);
+            margin-bottom: 4px;
+        }
+        .metric-val {
+            font-family: var(--insilos-font-mono);
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .status-chip {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10B981;
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-header">
+        <div>
+            <span class="preview-badge"><span class="status-chip"></span>Insilos Enterprise 20.0 LTS</span>
+            <h1 class="preview-title" style="margin-top: 8px;">Insilos Intelligent Operations Website</h1>
+            <p class="preview-summary">Production-ready QWeb and Owl website for Insilos (v20.0.3.0.0)</p>
+        </div>
+        <div style="text-align: right; font-family: var(--insilos-font-mono); font-size: 12px; color: var(--insilos-text-secondary);">
+            <div>Module: insilos_website</div>
+            <div>Architecture: IBM Carbon 11 + SAP Fiori</div>
+        </div>
+    </div>
+
+    <div class="preview-card">
+        <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--insilos-cyan-primary);">Industrial KPI Dashboard Preview</h2>
+        <div class="preview-grid">
+            <div class="metric-card">
+                <div class="metric-label">OEE Performance Index</div>
+                <div class="metric-val">96.8 %</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">High-Density Table Rows</div>
+                <div class="metric-val">34 px</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">WCAG AAA Contrast Ratio</div>
+                <div class="metric-val">13.76 : 1</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
