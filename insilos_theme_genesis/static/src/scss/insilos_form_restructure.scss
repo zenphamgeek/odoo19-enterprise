@@ -13,7 +13,11 @@
     background-color: var(--insilos-bg-surface, #ffffff) !important;
     border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
     padding: 8px 24px !important;
-    min-height: 46px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+    box-sizing: border-box !important;
+    margin: 0 -24px 20px -24px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -67,6 +71,9 @@
       display: flex !important;
       flex-flow: row-reverse wrap-reverse !important;
       align-items: center !important;
+      height: 32px !important;
+      padding: 0 !important;
+      margin: 0 !important;
       border: none !important;
       background: transparent !important;
       gap: 2px !important;
@@ -76,6 +83,9 @@
       .btn.o_arrow_button:not(.d-none) {
         height: 32px !important;
         line-height: 32px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         padding: 0 16px 0 22px !important;
         font-size: 12px !important;
         font-weight: 600 !important;
@@ -147,6 +157,10 @@
   .o_form_sheet_bg {
     background-color: var(--insilos-bg-canvas, #f4f6f8) !important;
     padding: 20px 24px 48px !important;
+
+    &:has(> .o_form_statusbar) {
+      padding-top: 0 !important;
+    }
 
     .o_form_sheet {
       background-color: var(--insilos-bg-card, #ffffff) !important;
@@ -366,19 +380,53 @@
   background-color: var(--insilos-bg-canvas, #f4f6f8) !important;
   border-left: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
 
+  .o-mail-Chatter-top {
+    padding: 0 !important;
+    border-bottom: none !important;
+    background: transparent !important;
+  }
+
   .o_ChatterTopbar,
-  .o-mail-Chatter-top,
   .o-mail-Chatter-topbar {
-    border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-    background-color: var(--insilos-bg-surface, #ffffff) !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
     padding: 8px 16px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    background-color: var(--insilos-bg-surface, #ffffff) !important;
+    border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
 
     .btn {
-      border-radius: var(--insilos-radius-sm, 4px) !important;
-      font-size: 12px !important;
+      height: 32px !important;
+      line-height: 1 !important;
+      font-size: 12.5px !important;
       font-weight: 600 !important;
-      height: 30px !important;
+      border-radius: var(--insilos-radius-sm, 4px) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
       padding: 0 12px !important;
+      gap: 6px !important;
+    }
+
+    button.btn-link,
+    .o-mail-Chatter-search {
+      height: 32px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .o-mail-Followers {
+      height: 32px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+
+      .btn {
+        height: 32px !important;
+      }
     }
   }
 }
@@ -512,11 +560,22 @@ body.o_dark_mode,
     background-color: #0f172a !important;
     border-left-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
 
+    .o-mail-Chatter-top {
+      background: transparent !important;
+      border-bottom: none !important;
+    }
+
     .o_ChatterTopbar,
-    .o-mail-Chatter-top,
     .o-mail-Chatter-topbar {
       background-color: #0f172a !important;
       border-bottom-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+
+      .btn.btn-secondary,
+      .btn:not(.btn-primary):not(.btn-link) {
+        background-color: var(--insilos-bg-card, #141e33) !important;
+        border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+        color: var(--insilos-text-primary, #f8fafc) !important;
+      }
     }
   }
 }
