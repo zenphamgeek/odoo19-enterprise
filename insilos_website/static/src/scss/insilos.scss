@@ -38,9 +38,9 @@
     --ins-emerald: #10B981;          // Industrial Emerald (Bright -> Dark text #05101E)
     --ins-cobalt: #1E40AF;           // Deep Cobalt (Dark -> White text #FFFFFF)
     --ins-amber: #F59E0B;            // Vivid Amber (Bright -> Dark text #05101E)
-    --ins-violet: #8B5CF6;           // Cyber Violet (Dark -> White text #FFFFFF)
+    --ins-violet: #6D28D9;           // Cyber Violet (WCAG AAA Dark -> White text #FFFFFF)
     --ins-slate: #64748B;            // Platinum Slate (Dark -> White text #FFFFFF)
-    --ins-rose: #F43F5E;             // Rose Gold (White text #FFFFFF)
+    --ins-rose: #9F1239;             // Rose Gold (WCAG AAA Dark -> White text #FFFFFF)
     --ins-blue: #EA580C;
 
     // Contrast Text Foundations
@@ -78,7 +78,7 @@
     text-decoration: none;
 }
 
-// 2. Strict WCAG Contrast Rules (Overrides Odoo Core --badge-color Cascade)
+// 2. Strict WCAG Contrast Rules (Overrides Core --badge-color Cascade)
 .badge,
 .badge-pill,
 .ins-tag,
@@ -139,8 +139,8 @@
         color: #FFFFFF !important;
     }
     &.bg-violet, &.badge-violet {
-        background-color: #8B5CF6 !important;
-        --badge-bg: #8B5CF6 !important;
+        background-color: #6D28D9 !important;
+        --badge-bg: #6D28D9 !important;
         --badge-color: #FFFFFF !important;
         color: #FFFFFF !important;
     }
@@ -151,8 +151,8 @@
         color: #FFFFFF !important;
     }
     &.bg-rose, &.badge-rose {
-        background-color: #F43F5E !important;
-        --badge-bg: #F43F5E !important;
+        background-color: #9F1239 !important;
+        --badge-bg: #9F1239 !important;
         --badge-color: #FFFFFF !important;
         color: #FFFFFF !important;
     }
@@ -322,9 +322,9 @@
 .bg-emerald { background-color: #10B981 !important; }
 .bg-cobalt { background-color: #1E40AF !important; }
 .bg-amber { background-color: #F59E0B !important; }
-.bg-violet { background-color: #8B5CF6 !important; }
+.bg-violet { background-color: #6D28D9 !important; }
 .bg-slate { background-color: #64748B !important; }
-.bg-rose { background-color: #F43F5E !important; }
+.bg-rose { background-color: #9F1239 !important; }
 
 .border-mint { border-color: #42E6C3 !important; }
 .border-cyan { border-color: #00F2FE !important; }
@@ -607,7 +607,7 @@ footer#bottom, footer.o_footer {
     }
 }
 
-// 3. Odoo Color Combination 5 (o_cc5) — Deep Slate Mission-Critical Theme
+// 3. Insilos Color Combination 5 (o_cc5) — Deep Slate Mission-Critical Theme
 .o_cc5 {
     background-color: var(--ins-slate-950) !important;
     color: #94A3B8;
@@ -638,7 +638,7 @@ footer#bottom, footer.o_footer {
         color: #94A3B8 !important;
     }
 
-    // Native Bootstrap 5 Cards in Odoo Dark Theme
+    // Native Bootstrap 5 Cards in Insilos Dark Theme
     .card {
         background: var(--ins-glass-surface);
         backdrop-filter: blur(16px);
@@ -1379,7 +1379,7 @@ html.ins-js [data-ins-reveal].is-visible {
 }
 
 // =============================================================================
-// SUBJECT-AWARE VISUAL FRAMING & FOCAL POINT CONTROL (ODOO PREMIUM STANDARD)
+// SUBJECT-AWARE VISUAL FRAMING & FOCAL POINT CONTROL (INSILOS PREMIUM STANDARD)
 // =============================================================================
 // Eliminates awkward cropping of human heads, safety helmets, machinery clamps,
 // tall wind turbines, or subterranean mining equipment across all aspect ratios.

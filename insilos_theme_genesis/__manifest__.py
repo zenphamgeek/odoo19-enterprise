@@ -25,6 +25,7 @@
             'insilos_theme_genesis/static/src/scss/insilos_list_restructure.scss',
             'insilos_theme_genesis/static/src/scss/insilos_kanban_restructure.scss',
             'insilos_theme_genesis/static/src/scss/insilos_form_restructure.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_dialog_restructure.scss',
             'insilos_theme_genesis/static/src/scss/insilos_command_palette_restructure.scss',
             'insilos_theme_genesis/static/src/scss/insilos_home_launcher_restructure.scss',
             'insilos_theme_genesis/static/src/user_menu/user_menu_patch.js',

@@ -65,6 +65,28 @@
               padding-left: 14px !important;
               padding-right: 0 !important;
             }
+
+            &.o_list_number_th {
+              text-align: right !important;
+
+              > div {
+                justify-content: flex-end !important;
+                text-align: right !important;
+
+                .o_list_number_th {
+                  text-align: right !important;
+                }
+
+                .o_list_header_label_spacer {
+                  order: -1;
+                }
+
+                .o_list_sortable_icon {
+                  margin-left: 4px !important;
+                  margin-right: 0 !important;
+                }
+              }
+            }
           }
         }
       }
@@ -149,6 +171,9 @@
               font-size: 12.5px !important;
               font-weight: 550 !important;
               letter-spacing: -0.01em;
+              text-align: right !important;
+              direction: ltr !important;
+              white-space: nowrap !important;
             }
 
             /* Date & Timestamp Cells */
@@ -268,10 +293,80 @@
             border-top: 2px solid var(--insilos-border-medium, #cbd5e1) !important;
             font-family: var(--insilos-font-mono) !important;
             font-variant-numeric: tabular-nums !important;
+
+            &.o_list_number {
+              text-align: right !important;
+              direction: ltr !important;
+              white-space: nowrap !important;
+            }
+          }
+        }
+      }
+
+      /* Normal density modifier (40px row height) */
+      &.o_density_normal,
+      .o_density_normal {
+        thead tr {
+          height: 40px !important;
+          th {
+            height: 40px !important;
+          }
+        }
+
+        tbody tr.o_data_row {
+          height: 40px !important;
+          min-height: 40px !important;
+          max-height: 40px !important;
+          line-height: 40px !important;
+
+          td {
+            height: 40px !important;
+            min-height: 40px !important;
+            max-height: 40px !important;
+            padding: 0 14px !important;
+            font-size: 13px !important;
           }
         }
       }
     }
+
+    &.o_density_normal {
+      .o_list_table {
+        thead tr {
+          height: 40px !important;
+          th {
+            height: 40px !important;
+          }
+        }
+        tbody tr.o_data_row {
+          height: 40px !important;
+          min-height: 40px !important;
+          max-height: 40px !important;
+          line-height: 40px !important;
+          td {
+            height: 40px !important;
+            min-height: 40px !important;
+            max-height: 40px !important;
+            padding: 0 14px !important;
+            font-size: 13px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Standalone .o_density_normal row modifier */
+.o_density_normal tr.o_data_row {
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  line-height: 40px !important;
+
+  td {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
   }
 }
 
@@ -450,6 +545,12 @@ body.o_dark_mode,
       }
     }
 
+    &.is-floating-btn-print {
+      i.ph {
+        font-size: 14px;
+      }
+    }
+
     &.btn-danger {
       background-color: var(--insilos-critical, #bb0000);
       border-color: var(--insilos-critical, #bb0000);
@@ -518,6 +619,17 @@ body.o_dark_mode,
         &:hover {
           background-color: #38bdf8;
           border-color: #38bdf8;
+        }
+      }
+
+      &.is-floating-btn-print {
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #f1f5f9;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.15);
+          border-color: rgba(0, 242, 254, 0.4);
+          color: #00f2fe;
         }
       }
     }

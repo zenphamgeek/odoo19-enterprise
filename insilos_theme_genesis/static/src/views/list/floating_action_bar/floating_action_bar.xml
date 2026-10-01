@@ -25,6 +25,16 @@
                 <span>Approve</span>
             </button>
 
+            <!-- 3. Batch Print Button -->
+            <button t-if="canPrint"
+                    type="button"
+                    class="btn btn-sm btn-outline-light is-floating-action-btn is-floating-btn-print d-inline-flex align-items-center"
+                    t-on-click="onPrint"
+                    title="Print Selected Records">
+                <i class="ph ph-printer me-1"/>
+                <span>Print</span>
+            </button>
+
             <!-- 3. Export Button -->
             <button t-if="props.canExport and props.onExport"
                     type="button"

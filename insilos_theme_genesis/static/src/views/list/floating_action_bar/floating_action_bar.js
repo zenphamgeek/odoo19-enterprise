@@ -7,12 +7,14 @@ export class FloatingBatchActionBar extends Component {
         isDomainSelected: { type: Boolean, optional: true },
         totalCount: { type: Number, optional: true },
         onApprove: { type: Function, optional: true },
+        onPrint: { type: Function, optional: true },
         onExport: { type: Function, optional: true },
         onArchive: { type: Function, optional: true },
         onDelete: { type: Function, optional: true },
         onDiscard: { type: Function, optional: true },
         onSelectDomain: { type: Function, optional: true },
         headerButtons: { type: Array, optional: true },
+        canPrint: { type: Boolean, optional: true },
         canArchive: { type: Boolean, optional: true },
         canDelete: { type: Boolean, optional: true },
         canExport: { type: Boolean, optional: true },
@@ -21,8 +23,20 @@ export class FloatingBatchActionBar extends Component {
         selectedCount: 0,
         isDomainSelected: false,
         totalCount: 0,
+        canPrint: true,
         canArchive: true,
         canDelete: true,
         canExport: true,
     };
+
+    get canPrint() {
+        return this.props.canPrint !== false;
+    }
+
+    onPrint(ev) {
+        if (typeof this.props.onPrint === "function") {
+            return this.props.onPrint(ev);
+        }
+        window.print();
+    }
 }

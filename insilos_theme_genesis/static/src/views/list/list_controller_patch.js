@@ -1,6 +1,7 @@
 import { patch } from "@web/core/utils/patch";
 import { ListController } from "@web/views/list/list_controller";
 import { registry } from "@web/core/registry";
+import { session } from "@web/session";
 import { FloatingBatchActionBar } from "./floating_action_bar/floating_action_bar";
 
 // Register on base ListController
@@ -32,6 +33,7 @@ patch(ListController.prototype, {
             this.constructor.components = {};
         }
         this.constructor.components.FloatingBatchActionBar = FloatingBatchActionBar;
+        this.onFloatingBatchPrint = this.onFloatingBatchPrint.bind(this);
     },
 
     onFloatingBatchApprove() {
@@ -59,6 +61,49 @@ patch(ListController.prototype, {
                 { type: "info" }
             );
         }
+    },
+
+    async onFloatingBatchPrint() {
+        const records = this.model.root.selection;
+        if (!records.length) {
+            return;
+        }
+        if (this.props.info?.actionMenus?.print?.length) {
+            const primaryPrintAction = this.props.info.actionMenus.print[0];
+            let activeIds = records.map((r) => r.resId);
+            if (this.isDomainSelected && this.orm) {
+                activeIds = await this.orm.search(this.model.root.resModel, this.model.root.domain, {
+                    limit: session?.active_ids_limit || 80,
+                    context: this.props.context,
+                });
+            }
+            const activeIdsContext = {
+                active_id: activeIds[0],
+                active_ids: activeIds,
+                active_model: this.model.root.resModel,
+            };
+            if (this.model.root.domain) {
+                activeIdsContext.active_domain = this.model.root.domain;
+            }
+            if (this.actionService) {
+                return this.actionService.doAction(primaryPrintAction.id, {
+                    additionalContext: activeIdsContext,
+                });
+            } else if (this.env.services?.action) {
+                return this.env.services.action.doAction(primaryPrintAction.id, {
+                    additionalContext: activeIdsContext,
+                });
+            }
+        }
+        // Fallback: check if print menu button in control panel exists or trigger window.print
+        const printBtn = this.rootRef()?.querySelector(
+            `.o_control_panel .o_cp_action_menus button.o_print_menu_toggle, .o_control_panel [data-hotkey='u'], .o_control_panel button[name='print']`
+        );
+        if (printBtn) {
+            printBtn.click();
+            return;
+        }
+        window.print();
     },
 
     onFloatingBatchExport() {
