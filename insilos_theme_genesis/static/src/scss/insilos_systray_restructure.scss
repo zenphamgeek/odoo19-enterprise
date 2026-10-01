@@ -27,13 +27,14 @@ header.o_navbar {
     border: none !important;
 
     /* ------------------------------------------------------------------------
-       1. Waffle / App Switcher Button (IBM Carbon Grid Launcher)
+       1. App Launcher Button (Insilos Icon Mark Launcher)
        ------------------------------------------------------------------------ */
+    .o_navbar_apps_menu,
     .o_menu_toggle {
-      width: 44px !important;
-      min-width: 44px !important;
-      max-width: 44px !important;
-      height: 44px !important;
+      width: 36px !important;
+      min-width: 36px !important;
+      max-width: 36px !important;
+      height: 36px !important;
       flex-shrink: 0 !important;
       display: inline-flex !important;
       align-items: center !important;
@@ -41,19 +42,44 @@ header.o_navbar {
       border-radius: var(--insilos-radius-sm, 4px) !important;
       color: var(--insilos-text-primary, #0f172a) !important;
       text-decoration: none !important;
-      transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
-      margin-right: 8px !important;
+      transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast), transform 0.1s ease;
+      margin: 6px 10px 6px 8px !important;
+      padding: 0 !important;
+      cursor: pointer !important;
 
-      i.ph-squares-four,
+      .o_insilos_launcher_icon {
+        width: 26px !important;
+        height: 19px !important;
+        object-fit: contain !important;
+        display: block !important;
+      }
+
       i.o_menu_toggle_icon {
-        font-size: 20px !important;
+        font-size: 18px !important;
         line-height: 1 !important;
         margin-right: 0 !important;
+      }
+
+      &.o_hidden {
+        display: none !important;
+      }
+
+      &.o_menu_toggle_back {
+        .o_insilos_launcher_icon {
+          display: none !important;
+        }
+        .o_menu_toggle_back_icon {
+          display: inline-block !important;
+        }
       }
 
       &:hover {
         background-color: var(--insilos-bg-hover, #f1f5f9) !important;
         color: var(--insilos-primary, #0b2e64) !important;
+      }
+
+      &:active {
+        transform: scale(0.95) !important;
       }
 
       &:focus-visible {
@@ -68,12 +94,16 @@ header.o_navbar {
     .o_insilos_brand_logo {
       height: 24px !important;
       width: auto !important;
-      display: inline-block !important;
       vertical-align: middle !important;
       object-fit: contain !important;
-      margin-right: 8px !important;
+      margin-left: 6px !important;
+      margin-right: 12px !important;
       flex-shrink: 0 !important;
       transition: opacity var(--insilos-transition-fast);
+
+      &.o_hidden {
+        display: none !important;
+      }
     }
 
     .o_menu_brand_separator {
@@ -84,28 +114,47 @@ header.o_navbar {
       flex-shrink: 0 !important;
     }
 
+    .o_menu_brand_wrapper {
+      display: inline-flex !important;
+      align-items: center !important;
+      height: 100% !important;
+      padding-right: 14px !important;
+      margin-right: 8px !important;
+      border-right: 1px solid var(--insilos-border-subtle, #e2e8f0);
+      flex-shrink: 0 !important;
+    }
+
+    .o_menu_brand_icon {
+      height: 18px !important;
+      width: 18px !important;
+      max-height: 18px !important;
+      max-width: 18px !important;
+      font-size: 18px !important;
+      object-fit: contain !important;
+      margin-right: 8px !important;
+      margin-left: 2px !important;
+      vertical-align: middle !important;
+      flex-shrink: 0 !important;
+      padding: 0 !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+
     .o_menu_brand {
       font-family: var(--insilos-font-sans);
       font-size: 13.5px !important;
       font-weight: 650 !important;
       letter-spacing: -0.01em;
       color: var(--insilos-text-primary, #0f172a) !important;
-      padding: 0 12px 0 4px !important;
-      margin: 0 8px 0 0 !important;
-      height: 48px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      height: auto !important;
       display: inline-flex !important;
       align-items: center !important;
       white-space: nowrap !important;
       text-decoration: none !important;
-      border-right: 1px solid var(--insilos-border-subtle, #e2e8f0);
+      border-right: none !important;
       flex-shrink: 0 !important;
-
-      .o_menu_brand_icon {
-        height: 22px !important;
-        width: 22px !important;
-        object-fit: contain;
-        margin-right: 8px !important;
-      }
     }
 
     /* ------------------------------------------------------------------------
@@ -370,8 +419,19 @@ body.o_dark_mode,
         filter: brightness(0) invert(1) !important;
       }
 
-      .o_menu_brand {
+      .o_navbar_apps_menu,
+      .o_menu_toggle {
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.08) !important;
+        }
+      }
+
+      .o_menu_brand_wrapper {
         border-right-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+      }
+
+      .o_menu_brand {
+        color: #f1f5f9 !important;
       }
 
       .o_menu_sections {

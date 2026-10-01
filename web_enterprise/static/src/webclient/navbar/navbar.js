@@ -50,6 +50,16 @@ export class EnterpriseNavBar extends NavBar {
         }
 
         const navEl = this.nav() || this.root();
+        const brandLogo = navEl?.querySelector(".o_insilos_brand_logo");
+        if (brandLogo) {
+            brandLogo.classList.toggle("o_hidden", isInApp);
+        }
+
+        const menuBrandWrapper = navEl?.querySelector(".o_menu_brand_wrapper");
+        if (menuBrandWrapper) {
+            menuBrandWrapper.classList.toggle("o_hidden", !isInApp);
+        }
+
         const menuBrand = navEl?.querySelector(".o_menu_brand");
         if (menuBrand) {
             menuBrand.classList.toggle("o_hidden", !isInApp);
