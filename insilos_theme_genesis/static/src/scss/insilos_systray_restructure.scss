@@ -1,215 +1,356 @@
 /* ==========================================================================
-   Insilos Top Menu Systray Restructure (The Capsule Island Concept)
+   Insilos ShellBar & Enterprise Navigation Header
+   SAP Fiori Horizon ShellBar Architecture + IBM Carbon Shell Standards
+   Seamless full-bleed 48px header, integrated tenant switcher, active line indicator
    ========================================================================== */
 
-.o_navbar .o_main_navbar {
-  /* --------------------------------------------------------------------------
-     1. The Systray Capsule Island
-     -------------------------------------------------------------------------- */
-  .o_menu_systray {
-    margin: auto 16px auto auto;
-    padding: 3px 8px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border-radius: var(--insilos-radius-full);
-    background: var(--insilos-bg-surface);
-    border: 1px solid var(--insilos-border-subtle);
-    box-shadow: var(--insilos-shadow-sm);
-    transition: var(--insilos-transition-fast);
+.o_navbar,
+header.o_navbar {
+  height: var(--insilos-shellbar-height, 48px) !important;
+  min-height: var(--insilos-shellbar-height, 48px) !important;
+  max-height: var(--insilos-shellbar-height, 48px) !important;
+  background-color: var(--insilos-bg-header, #ffffff) !important;
+  border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  z-index: 1000 !important;
+  padding: 0 !important;
+  transition: background-color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
 
-    &:hover {
-      border-color: var(--insilos-border-medium);
-      box-shadow: var(--insilos-shadow-card);
-    }
-
-    /* ------------------------------------------------------------------------
-       2. Tenant / Company Switcher Chip
-       ------------------------------------------------------------------------ */
-    .o_switch_company_menu {
-      height: 28px;
-      line-height: 26px;
-      padding: 0 12px !important;
-      border-radius: var(--insilos-radius-full) !important;
-      background: var(--insilos-bg-hover) !important;
-      border: 1px solid var(--insilos-border-subtle) !important;
-      color: var(--insilos-text-primary) !important;
-      font-size: 12px !important;
-      font-weight: 600 !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 6px !important;
-      transition: var(--insilos-transition-fast);
-
-      /* Live status green dot */
-      &::before {
-        content: '';
-        width: 6.5px;
-        height: 6.5px;
-        border-radius: 50%;
-        background-color: var(--insilos-success);
-        box-shadow: 0 0 6px var(--insilos-success);
-        display: inline-block;
-        flex-shrink: 0;
-      }
-
-      &:hover {
-        background: var(--insilos-bg-active) !important;
-        border-color: var(--insilos-border-medium) !important;
-        color: var(--insilos-primary) !important;
-      }
-
-      .oe_topbar_name {
-        max-width: 140px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
+  .o_main_navbar {
+    height: 100% !important;
+    min-height: var(--insilos-shellbar-height, 48px) !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 12px !important;
+    gap: 0 !important;
+    background: transparent !important;
+    border: none !important;
 
     /* ------------------------------------------------------------------------
-       3. Mobile Menu Toggle - HIDE ON DESKTOP (Prevents Duplicate Avatar!)
+       1. Waffle / App Switcher Button (IBM Carbon Grid Launcher)
        ------------------------------------------------------------------------ */
-    .o_mobile_menu_toggle {
-      display: none !important; /* Never display on desktop */
-
-      @media (max-width: 767.98px) {
-        display: flex !important;
-      }
-    }
-
-    /* ------------------------------------------------------------------------
-       4. Icon Buttons (Messaging, Activities, Copilot)
-       ------------------------------------------------------------------------ */
-    .o_nav_entry:not(.o_mobile_menu_toggle):not(.o_user_menu),
-    .dropdown-toggle:not(.o_switch_company_menu):not(.o_mobile_menu_toggle):not(.o_user_menu) {
-      width: 30px;
-      height: 30px;
-      padding: 0 !important;
-      border-radius: 50% !important;
+    .o_menu_toggle {
+      width: 44px !important;
+      height: 44px !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
-      background: transparent !important;
-      border: none !important;
-      color: var(--insilos-text-secondary) !important;
-      transition: var(--insilos-transition-fast);
-      position: relative;
+      border-radius: var(--insilos-radius-sm, 4px) !important;
+      color: var(--insilos-text-primary, #0f172a) !important;
+      text-decoration: none !important;
+      transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
+      margin-right: 6px !important;
 
-      i, .oi, svg {
-        font-size: 15px;
-        transition: var(--insilos-transition-fast);
+      i.ph-squares-four,
+      i.o_menu_toggle_icon {
+        font-size: 20px !important;
+        line-height: 1 !important;
       }
 
       &:hover {
-        background: var(--insilos-bg-hover) !important;
-        color: var(--insilos-text-primary) !important;
+        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+        color: var(--insilos-primary, #0b2e64) !important;
       }
 
-      /* Active / Open state */
-      &[aria-expanded="true"],
-      &.show {
-        background: var(--insilos-primary-subtle) !important;
-        color: var(--insilos-primary) !important;
-      }
-
-      /* Notification Glow Badges */
-      .badge {
-        position: absolute;
-        top: 2px;
-        right: 0px;
-        transform: translate(30%, -20%) !important;
-        font-size: 9.5px !important;
-        font-weight: 750 !important;
-        line-height: 1;
-        padding: 2.5px 5.5px !important;
-        border-radius: var(--insilos-radius-full) !important;
-        background-color: var(--insilos-danger) !important;
-        color: #ffffff !important;
-        border: 1.5px solid var(--insilos-bg-surface);
-        box-shadow: 0 1px 4px rgba(239, 68, 68, 0.4);
+      &:focus-visible {
+        outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+        outline-offset: -2px !important;
       }
     }
 
     /* ------------------------------------------------------------------------
-       5. User Avatar Button (The ONLY avatar on desktop)
+       2. Brand Wordmark & Active App Indicator (SAP Fiori ShellBar Header)
        ------------------------------------------------------------------------ */
-    .o_user_menu {
-      width: auto !important;
-      height: 30px !important;
-      padding: 1px 4px !important;
-      border-radius: var(--insilos-radius-full) !important;
+    .o_menu_brand {
+      font-family: var(--insilos-font-sans);
+      font-size: 13.5px !important;
+      font-weight: 650 !important;
+      letter-spacing: -0.01em;
+      color: var(--insilos-text-primary, #0f172a) !important;
+      padding: 0 12px 0 4px !important;
+      margin: 0 !important;
+      height: 48px !important;
       display: inline-flex !important;
       align-items: center !important;
-      gap: 6px;
-      background: transparent !important;
-      border: none !important;
-      cursor: pointer;
-      position: relative;
+      white-space: nowrap !important;
+      text-decoration: none !important;
+      border-right: 1px solid var(--insilos-border-subtle, #e2e8f0);
 
-      .o-mail-DiscussAvatar,
-      .o_user_avatar {
-        width: 26px !important;
-        height: 26px !important;
-        border-radius: 50% !important;
-        border: 1.5px solid var(--insilos-primary-border);
-        object-fit: cover;
-        transition: var(--insilos-transition-fast);
+      .o_menu_brand_icon {
+        height: 22px !important;
+        width: 22px !important;
+        object-fit: contain;
+        margin-right: 8px !important;
+      }
+    }
+
+    /* ------------------------------------------------------------------------
+       3. Navigation Sections & Dropdowns (SAP Fiori Horizon Menu Links)
+       ------------------------------------------------------------------------ */
+    .o_menu_sections {
+      display: flex !important;
+      align-items: center !important;
+      height: 100% !important;
+      margin: 0 0 0 4px !important;
+      gap: 2px !important;
+
+      .dropdown,
+      .o_nav_entry {
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
       }
 
-      &:hover {
-        .o-mail-DiscussAvatar,
-        .o_user_avatar {
-          transform: scale(1.06);
-          border-color: var(--insilos-primary);
+      .dropdown-toggle,
+      a.dropdown-item,
+      .o_nav_entry > a {
+        height: 48px !important;
+        line-height: 48px !important;
+        padding: 0 12px !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        color: var(--insilos-text-secondary, #475569) !important;
+        border: none !important;
+        background: transparent !important;
+        text-decoration: none !important;
+        position: relative !important;
+        transition: color var(--insilos-transition-fast), background-color var(--insilos-transition-fast);
+
+        &:hover {
+          color: var(--insilos-text-primary, #0f172a) !important;
+          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+        }
+
+        /* Active Horizon Highlight Indicator */
+        &.active,
+        &[aria-expanded="true"] {
+          color: var(--insilos-text-primary, #0f172a) !important;
+          font-weight: 600 !important;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 8px;
+            right: 8px;
+            height: 3px;
+            background-color: var(--insilos-primary, #0b2e64);
+            border-radius: 2px 2px 0 0;
+          }
         }
       }
     }
-  }
 
-  /* --------------------------------------------------------------------------
-     6. App Navigation Sections & Home Toggle
-     -------------------------------------------------------------------------- */
-  .o_menu_toggle {
-    margin: auto 8px auto 16px !important;
-    border-radius: var(--insilos-radius-md) !important;
-    transition: var(--insilos-transition-fast);
+    /* ------------------------------------------------------------------------
+       4. Integrated Enterprise Systray (IBM Carbon Shell Toolbar Standard)
+       ------------------------------------------------------------------------ */
+    .o_menu_systray {
+      margin-left: auto !important;
+      margin-right: 0 !important;
+      height: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      padding: 0 4px !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
 
-    &:hover {
-      background: var(--insilos-bg-hover) !important;
-      transform: scale(1.05);
-    }
-  }
+      /* ----------------------------------------------------------------------
+         Tenant / Plant Switcher Chip (Clean Architectural Micro-Pill)
+         ---------------------------------------------------------------------- */
+      .o_switch_company_menu {
+        height: 30px !important;
+        line-height: 28px !important;
+        padding: 0 10px !important;
+        border-radius: var(--insilos-radius-sm, 4px) !important;
+        background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+        border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        cursor: pointer;
+        transition: all var(--insilos-transition-fast);
 
-  .o_menu_sections {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding-left: 4px;
+        /* Live status indicator dot */
+        &::before {
+          content: '';
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background-color: var(--insilos-positive, #107e3e);
+          box-shadow: 0 0 6px var(--insilos-positive, #107e3e);
+          display: inline-block;
+          flex-shrink: 0;
+        }
 
-    .o_nav_entry,
-    .dropdown-toggle {
-      border-radius: var(--insilos-radius-full) !important;
-      padding: 5px 12px !important;
-      font-size: 13px !important;
-      font-weight: 550 !important;
-      color: var(--insilos-text-secondary) !important;
-      transition: var(--insilos-transition-fast);
-      text-decoration: none !important;
+        &:hover {
+          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+          border-color: var(--insilos-border-medium, #cbd5e1) !important;
+          color: var(--insilos-primary, #0b2e64) !important;
+        }
 
-      &:hover {
-        background: var(--insilos-bg-hover) !important;
-        color: var(--insilos-text-primary) !important;
+        .oe_topbar_name {
+          max-width: 130px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
 
-      &[aria-expanded="true"],
-      &.active {
-        background: var(--insilos-primary-subtle) !important;
-        color: var(--insilos-primary) !important;
-        font-weight: 650 !important;
+      /* ----------------------------------------------------------------------
+         Systray Tool Icons (Activities, Chat, AI Assistant, Notifications)
+         ---------------------------------------------------------------------- */
+      .o_nav_entry:not(.o_mobile_menu_toggle):not(.o_user_menu),
+      .dropdown-toggle:not(.o_switch_company_menu):not(.o_mobile_menu_toggle):not(.o_user_menu) {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        padding: 0 !important;
+        border-radius: var(--insilos-radius-sm, 4px) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        color: var(--insilos-text-secondary, #475569) !important;
+        transition: all var(--insilos-transition-fast);
+        position: relative !important;
+
+        i, .oi, svg {
+          font-size: 16px !important;
+          line-height: 1 !important;
+        }
+
+        &:hover {
+          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+          border-color: var(--insilos-border-subtle, #e2e8f0) !important;
+          color: var(--insilos-text-primary, #0f172a) !important;
+        }
+
+        &[aria-expanded="true"],
+        &.show {
+          background-color: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08)) !important;
+          border-color: var(--insilos-primary-border, rgba(11, 46, 100, 0.25)) !important;
+          color: var(--insilos-primary, #0b2e64) !important;
+        }
+
+        /* High-Visibility Notification Count Chip */
+        .badge {
+          position: absolute !important;
+          top: -3px !important;
+          right: -3px !important;
+          font-size: 9px !important;
+          font-weight: 700 !important;
+          line-height: 1 !important;
+          padding: 2px 5px !important;
+          border-radius: var(--insilos-radius-xs, 2px) !important;
+          background-color: var(--insilos-critical, #bb0000) !important;
+          color: #ffffff !important;
+          border: 1px solid var(--insilos-bg-header, #ffffff);
+          box-shadow: 0 1px 3px rgba(187, 0, 0, 0.35);
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         User Menu & Profile Avatar (IBM Carbon Compact Header Item)
+         ---------------------------------------------------------------------- */
+      .o_user_menu {
+        height: 32px !important;
+        padding: 0 4px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        border-radius: var(--insilos-radius-sm, 4px) !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
+        cursor: pointer;
+        transition: all var(--insilos-transition-fast);
+
+        &:hover {
+          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+          border-color: var(--insilos-border-subtle, #e2e8f0) !important;
+        }
+
+        &[aria-expanded="true"],
+        &.show {
+          background-color: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08)) !important;
+        }
+
+        .o_user_avatar {
+          width: 26px !important;
+          height: 26px !important;
+          border-radius: var(--insilos-radius-xs, 2px) !important;
+          object-fit: cover;
+          border: 1px solid var(--insilos-border-medium, #cbd5e1);
+        }
+
+        .oe_topbar_name {
+          font-size: 12.5px !important;
+          font-weight: 600 !important;
+          color: var(--insilos-text-primary, #0f172a) !important;
+          margin-left: 6px !important;
+          max-width: 120px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      /* Hide Mobile Menu Toggle on Desktop */
+      .o_mobile_menu_toggle {
+        display: none !important;
+
+        @media (max-width: 767.98px) {
+          display: flex !important;
+        }
       }
     }
   }
 }
 
+/* Dark Mode ShellBar Adjustments */
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
+  .o_navbar,
+  header.o_navbar {
+    background-color: var(--insilos-bg-header, #0f172a) !important;
+    border-bottom: 1px solid var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+
+    .o_main_navbar {
+      .o_menu_brand {
+        border-right-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+      }
+
+      .o_menu_sections {
+        .dropdown-toggle,
+        a.dropdown-item,
+        .o_nav_entry > a {
+          &.active,
+          &[aria-expanded="true"] {
+            &::after {
+              background-color: var(--insilos-primary, #00f2fe) !important;
+            }
+          }
+        }
+      }
+
+      .o_menu_systray {
+        .o_switch_company_menu {
+          background-color: var(--insilos-bg-card, #141e33) !important;
+          border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+        }
+
+        .o_user_menu .o_user_avatar {
+          border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18)) !important;
+        }
+      }
+    }
+  }
+}

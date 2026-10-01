@@ -1,4 +1,4 @@
-import { useState } from "@odoo/owl";
+import { useState } from "@insilos/owl";
 import { patch } from "@web/core/utils/patch";
 import { UserMenu } from "@web/webclient/user_menu/user_menu";
 

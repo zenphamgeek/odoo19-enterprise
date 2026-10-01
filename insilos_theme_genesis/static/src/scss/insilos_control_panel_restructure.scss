@@ -1,196 +1,362 @@
 /* ==========================================================================
    Insilos Control Panel & Action Bar Restructure
-   Segmented View Switchers, Pill Actions, Facets & Pager
+   SAP Fiori Horizon Smart FilterBar + IBM Carbon Data Toolbar
+   44px compact height, precision 4px geometry, high-density facets and breadcrumbs
    ========================================================================== */
 
 .o_control_panel {
+  min-height: var(--insilos-control-panel-height, 44px) !important;
   background-color: var(--insilos-bg-header, #ffffff) !important;
-  border-bottom: 1px solid var(--insilos-border-subtle) !important;
-  padding: 10px 24px !important;
-  transition: var(--insilos-transition-fast);
+  border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+  padding: 6px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  transition: background-color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
 
-  /* Breadcrumbs */
+  /* --------------------------------------------------------------------------
+     1. Breadcrumb Navigation (Fiori Hierarchy Trail)
+     -------------------------------------------------------------------------- */
   .o_breadcrumb {
-    .o_breadcrumb_item {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--insilos-text-secondary);
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    font-size: 13.5px !important;
 
-      &.active, &:last-child {
-        font-weight: 650;
-        color: var(--insilos-text-primary);
+    .o_breadcrumb_item {
+      font-weight: 500 !important;
+      color: var(--insilos-text-secondary, #475569) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+
+      &.active,
+      &:last-child {
+        font-weight: 700 !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
       }
 
       a {
-        color: var(--insilos-text-secondary);
-        text-decoration: none;
-        transition: var(--insilos-transition-fast);
+        color: var(--insilos-text-secondary, #475569) !important;
+        text-decoration: none !important;
+        transition: color var(--insilos-transition-fast);
 
         &:hover {
-          color: var(--insilos-primary);
+          color: var(--insilos-primary, #0b2e64) !important;
+        }
+      }
+
+      & + .o_breadcrumb_item::before {
+        content: '/' !important;
+        padding: 0 8px !important;
+        color: var(--insilos-text-muted, #94a3b8) !important;
+        font-weight: 400 !important;
+      }
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     2. Action Buttons (IBM Carbon Precision 4px Radii — No Candy Pills)
+     -------------------------------------------------------------------------- */
+  .o_cp_buttons {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+
+    .btn {
+      height: 32px !important;
+      line-height: 1 !important;
+      padding: 0 14px !important;
+      font-size: 12.5px !important;
+      border-radius: var(--insilos-radius-sm, 4px) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      transition: all var(--insilos-transition-fast);
+      box-shadow: none !important;
+
+      &.btn-primary {
+        background-color: var(--insilos-primary, #0b2e64) !important;
+        border: 1px solid var(--insilos-primary, #0b2e64) !important;
+        color: var(--insilos-text-on-primary, #ffffff) !important;
+        font-weight: 600 !important;
+
+        &:hover {
+          background-color: var(--insilos-primary-hover, #082147) !important;
+          border-color: var(--insilos-primary-hover, #082147) !important;
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+          outline-offset: 1px !important;
+        }
+      }
+
+      &.btn-secondary {
+        background-color: var(--insilos-bg-surface, #ffffff) !important;
+        border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
+        font-weight: 500 !important;
+
+        &:hover {
+          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+          border-color: var(--insilos-border-strong, #94a3b8) !important;
+          color: var(--insilos-text-primary, #0f172a) !important;
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+          outline-offset: 1px !important;
         }
       }
     }
   }
 
-  /* Control Panel Action Buttons (Create, Save, Discard, Generate) */
-  .o_cp_buttons {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  /* --------------------------------------------------------------------------
+     3. Search View (Fiori Horizon Smart FilterBar & Facets)
+     -------------------------------------------------------------------------- */
+  .o_searchview {
+    height: 32px !important;
+    min-height: 32px !important;
+    border-radius: var(--insilos-radius-sm, 4px) !important;
+    background-color: var(--insilos-bg-surface, #ffffff) !important;
+    border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
+    padding: 2px 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: all var(--insilos-transition-fast);
 
-    .btn-primary {
-      background: var(--insilos-primary) !important;
-      border: 1px solid var(--insilos-primary) !important;
-      color: #ffffff !important;
-      font-weight: 600 !important;
-      font-size: 13px !important;
-      padding: 6px 18px !important;
-      border-radius: var(--insilos-radius-full) !important;
-      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25) !important;
-      transition: var(--insilos-transition-fast);
+    &:focus-within {
+      border-color: var(--insilos-border-focus, #0f62fe) !important;
+      box-shadow: 0 0 0 2px var(--insilos-primary-subtle, rgba(15, 98, 254, 0.2)) !important;
+    }
 
-      &:hover {
-        background: var(--insilos-primary-hover) !important;
-        border-color: var(--insilos-primary-hover) !important;
-        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35) !important;
-        transform: translateY(-1px);
+    .o_searchview_input_container {
+      display: flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      flex-wrap: nowrap !important;
+    }
+
+    .o_searchview_facet {
+      border-radius: var(--insilos-radius-xs, 2px) !important;
+      background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+      border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+      padding: 1px 4px !important;
+      margin: 0 2px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      height: 24px !important;
+
+      .o_searchview_facet_label {
+        background-color: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08)) !important;
+        color: var(--insilos-primary, #0b2e64) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        padding: 1px 6px !important;
+        border-radius: var(--insilos-radius-xs, 2px) 0 0 var(--insilos-radius-xs, 2px) !important;
       }
 
-      &:active {
-        transform: translateY(0);
+      .o_facet_values {
+        font-size: 11.5px !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
+        padding: 0 6px !important;
+        font-weight: 500 !important;
+      }
+
+      .o_facet_remove {
+        cursor: pointer;
+        color: var(--insilos-text-muted, #94a3b8) !important;
+        padding: 0 2px !important;
+
+        &:hover {
+          color: var(--insilos-critical, #bb0000) !important;
+        }
       }
     }
 
-    .btn-secondary {
-      background: var(--insilos-bg-surface, #ffffff) !important;
-      border: 1px solid var(--insilos-border-medium) !important;
-      color: var(--insilos-text-primary) !important;
-      font-weight: 550 !important;
-      font-size: 13px !important;
-      padding: 6px 16px !important;
-      border-radius: var(--insilos-radius-full) !important;
-      transition: var(--insilos-transition-fast);
-
-      &:hover {
-        background: var(--insilos-bg-hover) !important;
-        border-color: var(--insilos-border-strong) !important;
-        color: var(--insilos-text-primary) !important;
-      }
-    }
-  }
-
-  /* Search Facets (Pills inside Search View) */
-  .o_searchview_facet {
-    background-color: var(--insilos-primary-subtle) !important;
-    border: 1px solid var(--insilos-primary-border) !important;
-    border-radius: var(--insilos-radius-full) !important;
-    padding: 2px 10px !important;
-    margin: 2px 4px 2px 0 !important;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-
-    .o_searchview_facet_label {
+    .o_searchview_input {
+      font-size: 12.5px !important;
+      color: var(--insilos-text-primary, #0f172a) !important;
       background: transparent !important;
-      color: var(--insilos-primary) !important;
-      font-size: 11.5px !important;
-      font-weight: 600 !important;
-      padding: 0 4px 0 0 !important;
       border: none !important;
-    }
 
-    .o_facet_values {
-      font-size: 12px !important;
-      font-weight: 500 !important;
-      color: var(--insilos-text-primary) !important;
-    }
-
-    .o_facet_remove {
-      color: var(--insilos-primary) !important;
-      opacity: 0.7;
-      transition: opacity var(--insilos-transition-fast);
-
-      &:hover {
-        opacity: 1;
+      &::placeholder {
+        color: var(--insilos-text-muted, #94a3b8) !important;
+        font-size: 12px !important;
       }
     }
   }
 
-  /* Segmented View Switchers (Kanban, List, Calendar, Pivot, Graph, Activity) */
+  /* --------------------------------------------------------------------------
+     4. View Switcher (IBM Carbon Content Switcher Segmented Control)
+     -------------------------------------------------------------------------- */
   .o_cp_switch_buttons {
-    background: var(--insilos-bg-hover, #f1f5f9) !important;
-    border: 1px solid var(--insilos-border-subtle) !important;
-    border-radius: var(--insilos-radius-full) !important;
-    padding: 3px !important;
     display: inline-flex !important;
     align-items: center !important;
-    gap: 2px !important;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    height: 32px !important;
+    border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
+    border-radius: var(--insilos-radius-sm, 4px) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    background-color: var(--insilos-bg-surface, #ffffff) !important;
 
-    .o_switch_view,
-    button.btn {
-      background: transparent !important;
+    .btn {
+      width: 32px !important;
+      height: 30px !important;
+      padding: 0 !important;
       border: none !important;
-      border-radius: var(--insilos-radius-full) !important;
-      color: var(--insilos-text-muted) !important;
-      padding: 5px 10px !important;
-      font-size: 13px !important;
-      line-height: 1 !important;
-      transition: var(--insilos-transition-fast);
-      box-shadow: none !important;
+      border-right: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      color: var(--insilos-text-secondary, #475569) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all var(--insilos-transition-fast);
+
+      &:last-child {
+        border-right: none !important;
+      }
+
+      i, .oi {
+        font-size: 14px !important;
+      }
 
       &:hover {
-        color: var(--insilos-text-primary) !important;
-        background: rgba(255, 255, 255, 0.6) !important;
+        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
       }
 
       &.active {
-        background: var(--insilos-bg-surface, #ffffff) !important;
-        color: var(--insilos-primary) !important;
-        font-weight: 600 !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+        background-color: var(--insilos-primary, #0b2e64) !important;
+        color: var(--insilos-text-on-primary, #ffffff) !important;
       }
     }
   }
 
-  /* Pager Navigation */
+  /* --------------------------------------------------------------------------
+     5. Pager Navigation (Tabular Numbers & Micro-Arrows)
+     -------------------------------------------------------------------------- */
   .o_pager {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
 
     .o_pager_value {
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--insilos-text-secondary);
+      font-family: var(--insilos-font-mono);
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      color: var(--insilos-text-primary, #0f172a) !important;
+      font-variant-numeric: tabular-nums !important;
+    }
+
+    .o_pager_limit {
+      font-family: var(--insilos-font-mono);
+      font-size: 12px !important;
+      color: var(--insilos-text-secondary, #475569) !important;
+      font-variant-numeric: tabular-nums !important;
     }
 
     .btn-group {
-      background: var(--insilos-bg-hover, #f1f5f9);
-      border: 1px solid var(--insilos-border-subtle);
-      border-radius: var(--insilos-radius-full);
-      padding: 2px;
-
-      button.btn {
-        background: transparent !important;
-        border: none !important;
-        border-radius: var(--insilos-radius-full) !important;
-        color: var(--insilos-text-secondary) !important;
-        padding: 4px 8px !important;
-        font-size: 11px !important;
-        transition: var(--insilos-transition-fast);
+      .btn {
+        width: 28px !important;
+        height: 28px !important;
+        padding: 0 !important;
+        border-radius: var(--insilos-radius-xs, 2px) !important;
+        border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+        background-color: var(--insilos-bg-surface, #ffffff) !important;
+        color: var(--insilos-text-secondary, #475569) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
 
         &:hover:not(:disabled) {
-          background: var(--insilos-bg-surface, #ffffff) !important;
-          color: var(--insilos-text-primary) !important;
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+          color: var(--insilos-text-primary, #0f172a) !important;
         }
 
         &:disabled {
-          opacity: 0.35;
+          opacity: 0.4 !important;
         }
       }
+    }
+  }
+}
+
+/* Dark Mode Control Panel Adjustments */
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
+  .o_control_panel {
+    background-color: var(--insilos-bg-header, #0f172a) !important;
+    border-bottom: 1px solid var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+
+    .o_breadcrumb .o_breadcrumb_item {
+      color: var(--insilos-text-secondary, #cbd5e1) !important;
+
+      &.active, &:last-child {
+        color: var(--insilos-text-primary, #f8fafc) !important;
+      }
+    }
+
+    .o_cp_buttons .btn {
+      &.btn-primary {
+        background-color: var(--insilos-primary, #00f2fe) !important;
+        border-color: var(--insilos-primary, #00f2fe) !important;
+        color: var(--insilos-text-on-primary, #05101e) !important;
+
+        &:hover {
+          background-color: var(--insilos-primary-hover, #38bdf8) !important;
+          border-color: var(--insilos-primary-hover, #38bdf8) !important;
+        }
+      }
+
+      &.btn-secondary {
+        background-color: var(--insilos-bg-card, #141e33) !important;
+        border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+        color: var(--insilos-text-primary, #f8fafc) !important;
+
+        &:hover {
+          background-color: var(--insilos-bg-hover, #1e293b) !important;
+        }
+      }
+    }
+
+    .o_searchview {
+      background-color: var(--insilos-bg-card, #141e33) !important;
+      border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+
+      .o_searchview_facet {
+        background-color: var(--insilos-bg-surface, #0f172a) !important;
+        border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+
+        .o_searchview_facet_label {
+          background-color: var(--insilos-primary-subtle, rgba(0, 242, 254, 0.15)) !important;
+          color: var(--insilos-primary, #00f2fe) !important;
+        }
+      }
+    }
+
+    .o_cp_switch_buttons {
+      background-color: var(--insilos-bg-card, #141e33) !important;
+      border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+
+      .btn {
+        border-right-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+
+        &.active {
+          background-color: var(--insilos-primary, #00f2fe) !important;
+          color: var(--insilos-text-on-primary, #05101e) !important;
+        }
+      }
+    }
+
+    .o_pager .btn-group .btn {
+      background-color: var(--insilos-bg-card, #141e33) !important;
+      border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+      color: var(--insilos-text-primary, #f8fafc) !important;
     }
   }
 }

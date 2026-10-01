@@ -1,54 +1,64 @@
 /* ==========================================================================
-   Insilos Apps Marketplace Restructure (Scoped to .o_modules_kanban & SearchPanel)
+   IBM Carbon Module Catalog + SAP Fiori App Finder
+   Structured search panel with 2px indicator, 4px architectural cards,
+   48px square app icons, 2px micro-radii buttons, and zero pill geometry.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1. SearchPanel Restyling (Categories & Pillars)
    -------------------------------------------------------------------------- */
 .o_search_panel {
-  background-color: var(--insilos-bg-surface);
-  border-right: 1px solid var(--insilos-border-subtle);
-  padding: 18px 14px;
+  background-color: var(--insilos-bg-surface, #ffffff);
+  border-right: 1px solid var(--insilos-border-subtle, #e2e8f0);
+  border-radius: 0 !important;
+  padding: 16px 8px;
 
   .o_search_panel_section {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 
     header {
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--insilos-text-tertiary);
+      color: var(--insilos-text-tertiary, #64748b);
       padding: 8px 12px 6px;
     }
 
     .list-group-item {
       border: 1px solid transparent;
-      border-radius: var(--insilos-radius-md);
-      padding: 8px 14px;
+      border-left: 3px solid transparent;
+      border-radius: var(--insilos-radius-architectural, 4px);
+      padding: 8px 12px;
       margin: 2px 0;
       font-size: 13px;
       font-weight: 500;
-      color: var(--insilos-text-secondary);
-      transition: var(--insilos-transition-fast);
+      color: var(--insilos-text-secondary, #475569);
+      transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
       background: transparent;
       display: flex;
       align-items: center;
       justify-content: space-between;
 
       &:hover {
-        background-color: var(--insilos-bg-hover);
-        color: var(--insilos-text-primary);
+        background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12));
+        color: var(--insilos-text-primary, #0f172a);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--insilos-carbon-focus, #0f62fe);
+        outline-offset: -2px;
       }
 
       &.active {
-        background-color: var(--insilos-primary-subtle);
-        color: var(--insilos-primary);
+        background-color: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08));
+        color: var(--insilos-primary, #0b2e64);
         font-weight: 600;
-        border-color: var(--insilos-primary-border);
+        border-color: transparent;
+        border-left: 3px solid var(--insilos-primary, #0b2e64);
 
         .badge {
-          background-color: var(--insilos-primary);
+          background-color: var(--insilos-primary, #0b2e64);
           color: #ffffff;
         }
       }
@@ -56,33 +66,35 @@
       .badge {
         font-size: 11px;
         font-weight: 600;
-        padding: 3px 8px;
-        border-radius: var(--insilos-radius-full);
-        background-color: var(--insilos-bg-hover);
-        color: var(--insilos-text-muted);
-        transition: var(--insilos-transition-fast);
+        font-variant-numeric: tabular-nums;
+        padding: 2px 6px;
+        border-radius: var(--insilos-radius-micro, 2px);
+        background-color: var(--insilos-bg-hover, #f1f5f9);
+        color: var(--insilos-text-tertiary, #64748b);
+        transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
       }
     }
   }
 }
 
 /* --------------------------------------------------------------------------
-   2. Apps Kanban Grid & Cards
+   2. Apps Kanban Grid & Cards (Carbon Architectural Geometry)
    -------------------------------------------------------------------------- */
 .o_kanban_view.o_modules_kanban {
-  background-color: var(--insilos-bg-canvas);
+  background-color: var(--insilos-bg-canvas, #f4f6f8);
 
   .o_kanban_renderer {
-    padding: 28px 36px 80px;
-    gap: 20px;
+    padding: 24px 32px 64px;
+    gap: 16px;
 
     .o_kanban_record {
-      background: var(--insilos-bg-card);
-      border: 1px solid var(--insilos-border-subtle);
-      border-radius: var(--insilos-radius-lg);
-      padding: 22px;
-      box-shadow: var(--insilos-shadow-card);
-      transition: var(--insilos-transition-normal);
+      background: var(--insilos-bg-card, #ffffff);
+      border: 1px solid var(--insilos-border-subtle, #e2e8f0);
+      border-left: 3px solid transparent;
+      border-radius: var(--insilos-radius-architectural, 4px);
+      padding: 16px;
+      box-shadow: var(--insilos-shadow-card, 0 1px 3px rgba(0, 0, 0, 0.06));
+      transition: border-color var(--insilos-transition-fast), box-shadow var(--insilos-transition-fast), background-color var(--insilos-transition-fast);
       display: flex;
       flex-direction: row;
       align-items: flex-start;
@@ -92,28 +104,36 @@
       overflow: hidden;
 
       &:hover {
-        transform: translateY(-3px);
-        border-color: var(--insilos-border-medium);
-        box-shadow: var(--insilos-shadow-hover);
+        border-color: var(--insilos-border-medium, #cbd5e1);
+        border-left: 3px solid var(--insilos-accent, #0f62fe);
+        box-shadow: var(--insilos-shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.08));
+        /* NO translateY hover */
       }
 
-      /* Aside: App Icon */
+      &:focus-visible {
+        outline: 2px solid var(--insilos-carbon-focus, #0f62fe);
+        outline-offset: -2px;
+      }
+
+      /* Aside: App Icon (48px Square, 4px Radius) */
       > aside {
         flex-shrink: 0;
 
         img {
-          width: 52px;
-          height: 52px;
-          border-radius: var(--insilos-radius-md);
-          border: 1px solid var(--insilos-border-subtle);
-          box-shadow: var(--insilos-shadow-sm);
+          width: 48px;
+          height: 48px;
+          min-width: 48px;
+          min-height: 48px;
+          border-radius: var(--insilos-radius-architectural, 4px);
+          border: 1px solid var(--insilos-border-subtle, #e2e8f0);
+          box-shadow: var(--insilos-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
           object-fit: cover;
-          background-color: var(--insilos-bg-hover);
+          background-color: var(--insilos-bg-hover, #f1f5f9);
         }
 
         .oe_module_flag {
-          top: -6px;
-          left: -6px;
+          top: -4px;
+          left: -4px;
         }
       }
 
@@ -127,9 +147,9 @@
         justify-content: space-between;
 
         h2 {
-          font-size: 15px;
+          font-size: 13.5px;
           font-weight: 650;
-          color: var(--insilos-text-primary);
+          color: var(--insilos-text-primary, #0f172a);
           margin: 0 0 4px 0;
           letter-spacing: -0.01em;
           white-space: nowrap;
@@ -138,15 +158,24 @@
         }
 
         small.text-muted {
-          font-size: 12.5px;
-          color: var(--insilos-text-secondary) !important;
-          line-height: 1.45;
-          margin-bottom: 14px;
+          font-size: 12px;
+          color: var(--insilos-text-secondary, #475569) !important;
+          line-height: 1.4;
+          margin-bottom: 12px;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
-          min-height: 36px;
+          min-height: 34px;
+
+          code {
+            font-size: 11px;
+            font-family: var(--insilos-font-mono, monospace);
+            padding: 1px 4px;
+            border-radius: var(--insilos-radius-micro, 2px);
+            background-color: var(--insilos-bg-hover, #f1f5f9);
+            color: var(--insilos-text-tertiary, #64748b);
+          }
         }
 
         /* Footer: Actions & Status */
@@ -155,24 +184,26 @@
           align-items: center;
           justify-content: space-between;
           padding-top: 12px;
-          border-top: 1px solid var(--insilos-border-subtle);
+          border-top: 1px solid var(--insilos-border-subtle, #e2e8f0);
           margin-top: auto;
+          gap: 8px;
 
-          /* "Installed" Pill Badge */
+          /* "Installed" Status Badge */
           button.d-flex.align-items-center.text-muted,
           button.text-muted:disabled,
           .badge-installed {
-            background-color: var(--insilos-success-bg) !important;
-            color: var(--insilos-success) !important;
-            border: 1px solid var(--insilos-success-border) !important;
+            background-color: var(--insilos-positive-bg, #e7f6ed) !important;
+            color: var(--insilos-positive, #107e3e) !important;
+            border: 1px solid var(--insilos-positive-border, rgba(16, 126, 62, 0.3)) !important;
             font-size: 11px !important;
             font-weight: 600 !important;
-            padding: 4px 10px !important;
-            border-radius: var(--insilos-radius-full) !important;
+            padding: 4px 8px !important;
+            border-radius: var(--insilos-radius-micro, 2px) !important;
             cursor: default !important;
             display: inline-flex !important;
             align-items: center !important;
             gap: 4px !important;
+            line-height: 14px !important;
 
             &::before {
               content: '✓';
@@ -181,42 +212,198 @@
             }
           }
 
-          /* "Activate" / "Install" Button */
+          /* "Activate" / "Install" Button (IBM Carbon Primary Button) */
           button.btn-primary {
-            background: var(--insilos-primary) !important;
-            border: 1px solid var(--insilos-primary) !important;
+            background: var(--insilos-primary, #0b2e64) !important;
+            border: 1px solid var(--insilos-primary, #0b2e64) !important;
             color: #ffffff !important;
             font-weight: 600 !important;
             font-size: 12px !important;
-            padding: 5px 16px !important;
-            border-radius: var(--insilos-radius-full) !important;
-            box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25) !important;
-            transition: var(--insilos-transition-fast);
+            padding: 4px 12px !important;
+            border-radius: var(--insilos-radius-micro, 2px) !important;
+            box-shadow: none !important;
+            transition: background-color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
 
             &:hover {
-              background: var(--insilos-primary-hover) !important;
-              border-color: var(--insilos-primary-hover) !important;
-              box-shadow: 0 3px 8px rgba(37, 99, 235, 0.35) !important;
-              transform: translateY(-1px);
+              background: var(--insilos-primary-hover, #082147) !important;
+              border-color: var(--insilos-primary-hover, #082147) !important;
+              transform: none !important;
+            }
+
+            &:focus-visible {
+              outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+              outline-offset: 2px !important;
             }
           }
 
-          /* "Learn More" / "Module Info" Buttons */
+          /* "Learn More" / "Module Info" / Secondary Action Buttons */
           a.btn-secondary,
           button.btn-secondary {
             background: transparent !important;
-            border: 1px solid var(--insilos-border-medium) !important;
-            color: var(--insilos-text-secondary) !important;
+            border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
+            color: var(--insilos-text-secondary, #475569) !important;
             font-weight: 500 !important;
             font-size: 11.5px !important;
-            padding: 5px 14px !important;
-            border-radius: var(--insilos-radius-full) !important;
-            transition: var(--insilos-transition-fast);
+            padding: 4px 10px !important;
+            border-radius: var(--insilos-radius-micro, 2px) !important;
+            transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
 
             &:hover {
-              background: var(--insilos-bg-hover) !important;
-              color: var(--insilos-text-primary) !important;
-              border-color: var(--insilos-border-strong) !important;
+              background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12)) !important;
+              color: var(--insilos-text-primary, #0f172a) !important;
+              border-color: var(--insilos-border-strong, #94a3b8) !important;
+              transform: none !important;
+            }
+
+            &:focus-visible {
+              outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+              outline-offset: 2px !important;
+            }
+          }
+
+          /* Upgrade / Info Button */
+          a.btn-info,
+          button.btn-info {
+            background-color: var(--insilos-information-bg, #e8f2fe) !important;
+            color: var(--insilos-information, #0070f2) !important;
+            border: 1px solid var(--insilos-information-border, rgba(0, 112, 242, 0.3)) !important;
+            font-size: 11.5px !important;
+            font-weight: 600 !important;
+            padding: 4px 10px !important;
+            border-radius: var(--insilos-radius-micro, 2px) !important;
+
+            &:hover {
+              background-color: var(--insilos-information, #0070f2) !important;
+              color: #ffffff !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   Dark Mode Overrides (IBM Carbon Gray 100 & SAP Fiori Horizon Dark)
+   ========================================================================== */
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
+  .o_search_panel {
+    background-color: var(--insilos-bg-surface, #0f172a) !important;
+    border-right-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+
+    .o_search_panel_section {
+      header {
+        color: var(--insilos-text-tertiary, #94a3b8);
+      }
+
+      .list-group-item {
+        color: var(--insilos-text-secondary, #cbd5e1);
+
+        &:hover {
+          background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12));
+          color: var(--insilos-text-primary, #f8fafc);
+        }
+
+        &.active {
+          background-color: var(--insilos-primary-subtle, rgba(0, 242, 254, 0.12));
+          color: var(--insilos-cyan-primary, #00f2fe);
+          border-left-color: var(--insilos-cyan-primary, #00f2fe);
+
+          .badge {
+            background-color: var(--insilos-cyan-primary, #00f2fe);
+            color: var(--insilos-text-on-primary, #05101e);
+          }
+        }
+
+        .badge {
+          background-color: var(--insilos-bg-hover, #1e293b);
+          color: var(--insilos-text-tertiary, #94a3b8);
+        }
+      }
+    }
+  }
+
+  .o_kanban_view.o_modules_kanban {
+    background-color: var(--insilos-bg-canvas, #070b14) !important;
+
+    .o_kanban_renderer {
+      .o_kanban_record {
+        background-color: var(--insilos-bg-card, #141e33) !important;
+        border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+
+        &:hover {
+          border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18)) !important;
+          border-left-color: var(--insilos-cyan-primary, #00f2fe) !important;
+        }
+
+        > aside {
+          img {
+            border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1));
+            background-color: var(--insilos-bg-hover, #1e293b);
+          }
+        }
+
+        > main {
+          h2 {
+            color: var(--insilos-text-primary, #f8fafc);
+          }
+
+          small.text-muted {
+            color: var(--insilos-text-secondary, #cbd5e1) !important;
+
+            code {
+              background-color: var(--insilos-bg-hover, #1e293b);
+              color: var(--insilos-text-tertiary, #94a3b8);
+            }
+          }
+
+          footer {
+            border-top-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1));
+
+            button.d-flex.align-items-center.text-muted,
+            button.text-muted:disabled,
+            .badge-installed {
+              background-color: var(--insilos-positive-bg, rgba(16, 185, 129, 0.18)) !important;
+              color: var(--insilos-positive, #34d399) !important;
+              border-color: var(--insilos-positive-border, rgba(52, 211, 153, 0.4)) !important;
+            }
+
+            button.btn-primary {
+              background: var(--insilos-cyan-primary, #00f2fe) !important;
+              border-color: var(--insilos-cyan-primary, #00f2fe) !important;
+              color: var(--insilos-text-on-primary, #05101e) !important;
+
+              &:hover {
+                background: var(--insilos-primary-hover, #38bdf8) !important;
+                border-color: var(--insilos-primary-hover, #38bdf8) !important;
+              }
+            }
+
+            a.btn-secondary,
+            button.btn-secondary {
+              border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18)) !important;
+              color: var(--insilos-text-secondary, #cbd5e1) !important;
+
+              &:hover {
+                background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12)) !important;
+                color: var(--insilos-text-primary, #f8fafc) !important;
+                border-color: var(--insilos-border-strong, rgba(255, 255, 255, 0.32)) !important;
+              }
+            }
+
+            a.btn-info,
+            button.btn-info {
+              background-color: var(--insilos-information-bg, rgba(59, 130, 246, 0.18)) !important;
+              color: var(--insilos-information, #60a5fa) !important;
+              border-color: var(--insilos-information-border, rgba(96, 165, 250, 0.4)) !important;
+
+              &:hover {
+                background-color: var(--insilos-information, #60a5fa) !important;
+                color: #ffffff !important;
+              }
             }
           }
         }

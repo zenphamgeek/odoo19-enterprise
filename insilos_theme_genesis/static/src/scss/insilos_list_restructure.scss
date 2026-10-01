@@ -1,121 +1,257 @@
 /* ==========================================================================
-   Insilos List View & Table Restructure
-   Clean typography, rounded checkboxes, subtle row highlights
+   Insilos Structured Data Tables — IBM Carbon 11 & SAP Fiori SmartTable
+   34px high-density rows, 11px uppercase tracked headers, tabular figures, left hover accent
    ========================================================================== */
 
 .o_list_view {
-  background-color: var(--insilos-bg-canvas, #f8fafc);
+  background-color: var(--insilos-bg-canvas, #f4f6f8) !important;
 
   .o_list_renderer {
-    border-radius: var(--insilos-radius-lg);
-    background: var(--insilos-bg-surface, #ffffff);
-    margin: 12px 18px;
-    border: 1px solid var(--insilos-border-subtle);
-    box-shadow: var(--insilos-shadow-card);
-    overflow: hidden;
+    margin: 12px 16px !important;
+    border-radius: var(--insilos-radius-sm, 4px) !important;
+    background-color: var(--insilos-bg-surface, #ffffff) !important;
+    border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+    box-shadow: var(--insilos-shadow-sm, 0 1px 2px rgba(0,0,0,0.05)) !important;
+    overflow-x: auto !important;
 
     .o_list_table {
-      margin-bottom: 0;
-      border-collapse: separate;
-      border-spacing: 0;
+      margin-bottom: 0 !important;
+      border-collapse: separate !important;
+      border-spacing: 0 !important;
+      width: 100% !important;
 
-      /* Header Styling */
+      /* ----------------------------------------------------------------------
+         1. Table Header (IBM Carbon Structured Column Header)
+         ---------------------------------------------------------------------- */
       thead {
-        background-color: var(--insilos-bg-surface, #ffffff);
-        position: sticky;
-        top: 0;
-        z-index: 2;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 2 !important;
 
         tr {
-          border-bottom: 1px solid var(--insilos-border-subtle) !important;
+          height: var(--insilos-table-header-height, 36px) !important;
 
           th {
-            background-color: var(--insilos-bg-surface, #ffffff);
-            color: var(--insilos-text-muted, #64748b);
-            font-size: 11.5px;
-            font-weight: 650;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 12px 16px;
+            background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+            color: var(--insilos-text-secondary, #475569) !important;
+            font-size: 11px !important;
+            font-weight: 650 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            padding: 0 12px !important;
+            height: var(--insilos-table-header-height, 36px) !important;
+            vertical-align: middle !important;
             border: none !important;
-            border-bottom: 1px solid var(--insilos-border-subtle) !important;
-            vertical-align: middle;
+            border-bottom: 2px solid var(--insilos-border-medium, #cbd5e1) !important;
+            white-space: nowrap !important;
+            transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
 
-            &.o_column_sortable:hover {
-              background-color: var(--insilos-bg-hover);
-              color: var(--insilos-text-primary);
+            &.o_column_sortable {
+              cursor: pointer;
+
+              &:hover {
+                background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+                color: var(--insilos-primary, #0b2e64) !important;
+              }
+
+              i.oi {
+                font-size: 11px !important;
+                margin-left: 4px !important;
+              }
+            }
+
+            &.o_list_record_selector {
+              width: 38px !important;
+              padding-left: 14px !important;
+              padding-right: 0 !important;
             }
           }
         }
       }
 
-      /* Body Row Styling */
+      /* ----------------------------------------------------------------------
+         2. Table Rows (IBM Carbon 34px High-Density Row Standard)
+         ---------------------------------------------------------------------- */
       tbody {
         tr.o_data_row {
-          transition: background-color var(--insilos-transition-fast);
-          border-bottom: 1px solid var(--insilos-border-subtle);
-
-          &:last-child {
-            border-bottom: none;
-          }
+          height: var(--insilos-table-row-height, 34px) !important;
+          min-height: var(--insilos-table-row-height, 34px) !important;
+          transition: background-color var(--insilos-transition-fast), box-shadow var(--insilos-transition-fast);
+          position: relative !important;
 
           td {
-            padding: 11px 16px;
-            font-size: 13px;
-            color: var(--insilos-text-primary);
-            vertical-align: middle;
+            padding: 0 12px !important;
+            height: var(--insilos-table-row-height, 34px) !important;
+            font-size: 12.5px !important;
+            color: var(--insilos-text-primary, #0f172a) !important;
+            vertical-align: middle !important;
             border: none !important;
-            border-bottom: 1px solid var(--insilos-border-subtle) !important;
+            border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+            line-height: 1.3 !important;
+            white-space: nowrap !important;
 
+            /* Checkbox selector */
             &.o_list_record_selector {
-              width: 44px;
-              padding-left: 18px;
+              width: 38px !important;
+              padding-left: 14px !important;
+              padding-right: 0 !important;
+
+              .form-check-input,
+              .o-checkbox input {
+                border-radius: var(--insilos-radius-xs, 2px) !important;
+                border: 1.5px solid var(--insilos-border-strong, #94a3b8) !important;
+                width: 15px !important;
+                height: 15px !important;
+                cursor: pointer;
+
+                &:checked {
+                  background-color: var(--insilos-primary, #0b2e64) !important;
+                  border-color: var(--insilos-primary, #0b2e64) !important;
+                }
+              }
+            }
+
+            /* Numeric & Monetary Cells (IBM Tabular Figures) */
+            &.o_monetary_cell,
+            &.o_list_number,
+            .o_field_monetary,
+            .o_field_float,
+            .o_field_integer {
+              font-family: var(--insilos-font-mono) !important;
+              font-variant-numeric: tabular-nums !important;
+              font-size: 12.5px !important;
+              font-weight: 550 !important;
+              letter-spacing: -0.01em;
+            }
+
+            /* Date & Timestamp Cells */
+            .o_field_date,
+            .o_field_datetime {
+              font-family: var(--insilos-font-mono) !important;
+              font-variant-numeric: tabular-nums !important;
+              font-size: 12px !important;
+              color: var(--insilos-text-secondary, #475569) !important;
+            }
+
+            /* Semantic Status Badges */
+            .badge,
+            .o_tag {
+              border-radius: var(--insilos-radius-xs, 2px) !important;
+              font-size: 11px !important;
+              font-weight: 600 !important;
+              padding: 2px 7px !important;
+              letter-spacing: 0.02em;
+            }
+          }
+
+          /* Interactive Row Hover Accent (IBM Carbon Blue Highlight Stripe) */
+          &:hover {
+            background-color: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.04)) !important;
+            box-shadow: inset 3px 0 0 var(--insilos-primary, #0b2e64) !important;
+
+            td {
+              color: var(--insilos-text-primary, #0f172a) !important;
+            }
+          }
+
+          /* Selected Row State */
+          &.o_data_row_selected {
+            background-color: var(--insilos-bg-selected, rgba(15, 98, 254, 0.08)) !important;
+            box-shadow: inset 3px 0 0 var(--insilos-accent, #0f62fe) !important;
+          }
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         3. Table Footer (Totals & Aggregations)
+         ---------------------------------------------------------------------- */
+      tfoot {
+        position: sticky !important;
+        bottom: 0 !important;
+
+        tr {
+          height: 36px !important;
+          background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+
+          td {
+            padding: 0 12px !important;
+            font-size: 12.5px !important;
+            font-weight: 700 !important;
+            color: var(--insilos-text-primary, #0f172a) !important;
+            border-top: 2px solid var(--insilos-border-medium, #cbd5e1) !important;
+            font-family: var(--insilos-font-mono) !important;
+            font-variant-numeric: tabular-nums !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Dark Mode List View Adjustments */
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
+  .o_list_view {
+    background-color: var(--insilos-bg-canvas, #070b14) !important;
+
+    .o_list_renderer {
+      background-color: var(--insilos-bg-surface, #0f172a) !important;
+      border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+
+      .o_list_table {
+        thead tr th {
+          background-color: var(--insilos-bg-subtle, #0b0f19) !important;
+          color: var(--insilos-text-secondary, #cbd5e1) !important;
+          border-bottom-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.15)) !important;
+
+          &.o_column_sortable:hover {
+            background-color: var(--insilos-bg-hover, #1e293b) !important;
+            color: var(--insilos-primary, #00f2fe) !important;
+          }
+        }
+
+        tbody tr.o_data_row {
+          td {
+            color: var(--insilos-text-primary, #f8fafc) !important;
+            border-bottom-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.08)) !important;
+
+            &.o_list_record_selector .form-check-input {
+              border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.3)) !important;
+
+              &:checked {
+                background-color: var(--insilos-primary, #00f2fe) !important;
+                border-color: var(--insilos-primary, #00f2fe) !important;
+              }
+            }
+
+            .o_field_date,
+            .o_field_datetime {
+              color: var(--insilos-text-secondary, #94a3b8) !important;
             }
           }
 
           &:hover {
-            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+            background-color: var(--insilos-primary-subtle, rgba(0, 242, 254, 0.1)) !important;
+            box-shadow: inset 3px 0 0 var(--insilos-primary, #00f2fe) !important;
           }
 
           &.o_data_row_selected {
-            background-color: var(--insilos-primary-subtle, rgba(37, 99, 235, 0.08)) !important;
+            background-color: var(--insilos-bg-selected, rgba(0, 242, 254, 0.15)) !important;
+            box-shadow: inset 3px 0 0 var(--insilos-primary, #00f2fe) !important;
+          }
+        }
+
+        tfoot tr {
+          background-color: var(--insilos-bg-subtle, #0b0f19) !important;
+
+          td {
+            border-top-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.15)) !important;
+            color: var(--insilos-text-primary, #f8fafc) !important;
           }
         }
       }
-    }
-  }
-
-  /* Rounded Checkboxes */
-  .form-check-input {
-    width: 17px;
-    height: 17px;
-    border-radius: 5px !important;
-    border: 1.5px solid var(--insilos-border-strong, #94a3b8);
-    transition: var(--insilos-transition-fast);
-    cursor: pointer;
-
-    &:checked {
-      background-color: var(--insilos-primary);
-      border-color: var(--insilos-primary);
-    }
-
-    &:focus {
-      border-color: var(--insilos-border-focus);
-      box-shadow: 0 0 0 2px var(--insilos-primary-subtle);
-    }
-  }
-
-  /* List Table Optional Column Switcher */
-  .o_optional_columns_dropdown_toggle {
-    color: var(--insilos-text-muted);
-    font-size: 13px;
-    padding: 6px;
-    border-radius: var(--insilos-radius-sm);
-    transition: var(--insilos-transition-fast);
-
-    &:hover {
-      color: var(--insilos-text-primary);
-      background-color: var(--insilos-bg-hover);
     }
   }
 }

@@ -1,30 +1,32 @@
 /* ==========================================================================
-   Insilos User Preference Dropdown Restructure (The Profile Card Concept)
+   IBM Carbon User Actions Panel + SAP Fiori Shell User Menu
+   Precision 4px architectural geometry, high-density 32px menu items,
+   monochrome neutral palette with Tech Cyan and Deep Cobalt accents.
    ========================================================================== */
 
 /* User Menu Dropdown Container */
 .o-dropdown--menu:has(.is-user-identity-card),
 .dropdown-menu:has(.is-user-identity-card),
 .o_popover:has(.is-user-identity-card) {
-  min-width: 290px;
+  min-width: 280px;
   max-width: 320px;
-  background-color: var(--insilos-bg-card) !important;
-  border: 1px solid var(--insilos-border-subtle) !important;
-  border-radius: var(--insilos-radius-xl) !important;
-  padding: 10px 10px 8px !important;
-  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.16), 0 6px 12px -2px rgba(0, 0, 0, 0.08) !important;
+  background-color: var(--insilos-bg-card, #ffffff) !important;
+  border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+  border-radius: var(--insilos-radius-architectural, 4px) !important;
+  padding: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.04) !important;
   overflow: hidden;
-  animation: userMenuSlideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: userMenuFadeIn 150ms ease-in-out forwards;
 
   /* --------------------------------------------------------------------------
-     1. User Identity Header Card
+     1. User Identity Header Card (Structured 8px Spacing)
      -------------------------------------------------------------------------- */
   .is-user-identity-card {
-    background-color: var(--insilos-bg-hover);
-    border-radius: var(--insilos-radius-lg);
-    padding: 14px 16px;
+    background-color: var(--insilos-bg-hover, #f1f5f9);
+    border-radius: var(--insilos-radius-architectural, 4px);
+    padding: 8px 12px;
     margin-bottom: 8px;
-    border: 1px solid var(--insilos-border-subtle);
+    border: 1px solid var(--insilos-border-subtle, #e2e8f0);
 
     .is-identity-top {
       display: flex;
@@ -32,11 +34,11 @@
       gap: 12px;
 
       .is-identity-avatar {
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
-        border: 2px solid var(--insilos-bg-surface);
-        box-shadow: var(--insilos-shadow-sm);
+        border: 1px solid var(--insilos-border-subtle, #e2e8f0);
+        box-shadow: var(--insilos-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
         object-fit: cover;
         flex-shrink: 0;
       }
@@ -46,14 +48,15 @@
         min-width: 0;
 
         .is-identity-name {
-          font-size: 14px;
-          font-weight: 700;
-          color: var(--insilos-text-primary);
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--insilos-text-primary, #0f172a);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           letter-spacing: -0.01em;
-          margin-bottom: 3px;
+          margin-bottom: 4px;
+          line-height: 16px;
         }
 
         .is-identity-badges {
@@ -63,23 +66,26 @@
           flex-wrap: wrap;
 
           .is-badge-role {
-            font-size: 9.5px;
+            font-size: 9px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            padding: 2px 7px;
-            border-radius: var(--insilos-radius-sm);
-            background: var(--insilos-primary-subtle);
-            color: var(--insilos-primary);
-            border: 1px solid var(--insilos-primary-border);
+            letter-spacing: 0.06em;
+            padding: 2px 6px;
+            border-radius: var(--insilos-radius-micro, 2px);
+            background: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08));
+            color: var(--insilos-primary, #0b2e64);
+            border: 1px solid var(--insilos-primary-border, rgba(11, 46, 100, 0.25));
+            line-height: 12px;
           }
 
           .is-badge-db {
-            font-size: 10px;
-            font-family: monospace;
-            color: var(--insilos-text-tertiary);
+            font-size: 11px;
+            font-family: var(--insilos-font-mono, monospace);
+            font-variant-numeric: tabular-nums;
+            color: var(--insilos-text-tertiary, #64748b);
             display: inline-flex;
             align-items: center;
+            line-height: 12px;
           }
         }
       }
@@ -87,98 +93,220 @@
   }
 
   /* --------------------------------------------------------------------------
-     2. Quick Theme Mode Switcher
+     2. Quick Theme Mode Switcher (IBM Carbon Content Switcher Pattern)
      -------------------------------------------------------------------------- */
   .is-theme-switcher-box {
-    margin: 4px 0 6px;
-    padding: 0 2px;
+    margin: 4px 0 8px;
+    padding: 0;
 
     .is-theme-segmented {
       display: flex;
       gap: 2px;
-      background-color: var(--insilos-bg-hover);
-      border: 1px solid var(--insilos-border-subtle);
-      border-radius: var(--insilos-radius-full);
-      padding: 3px;
+      background-color: var(--insilos-bg-hover, #f1f5f9);
+      border: 1px solid var(--insilos-border-subtle, #e2e8f0);
+      border-radius: var(--insilos-radius-architectural, 4px);
+      padding: 2px;
 
       .is-theme-btn {
         flex: 1;
+        height: 28px;
         border: none;
         background: transparent;
-        border-radius: var(--insilos-radius-full);
-        padding: 5px 6px;
+        border-radius: var(--insilos-radius-micro, 2px);
+        padding: 4px 8px;
         font-size: 11px;
         font-weight: 600;
-        color: var(--insilos-text-secondary);
+        color: var(--insilos-text-secondary, #475569);
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 4px;
-        transition: var(--insilos-transition-fast);
+        transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
         user-select: none;
 
         .is-theme-icon {
           font-size: 12px;
+          line-height: 1;
         }
 
         &:hover {
-          color: var(--insilos-text-primary);
+          color: var(--insilos-text-primary, #0f172a);
+          background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12));
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--insilos-carbon-focus, #0f62fe);
+          outline-offset: -2px;
         }
 
         &.active {
-          background-color: var(--insilos-bg-surface);
-          color: var(--insilos-primary);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+          background-color: var(--insilos-bg-surface, #ffffff);
+          color: var(--insilos-primary, #0b2e64);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+          font-weight: 700;
         }
       }
     }
   }
 
   /* --------------------------------------------------------------------------
-     3. Dropdown Menu Items
+     3. Dropdown Menu Items (IBM Carbon Compact 32px)
      -------------------------------------------------------------------------- */
   .dropdown-divider {
-    border-top: 1px solid var(--insilos-border-subtle) !important;
-    margin: 6px 0 !important;
+    border-top: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+    margin: 4px 0 !important;
   }
 
   .dropdown-item {
-    border-radius: var(--insilos-radius-sm);
-    padding: 8px 12px;
+    height: 32px;
+    min-height: 32px;
+    border-radius: var(--insilos-radius-micro, 2px);
+    padding: 0 8px;
     font-size: 13px;
     font-weight: 500;
-    color: var(--insilos-text-primary) !important;
+    color: var(--insilos-text-primary, #0f172a) !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: var(--insilos-transition-fast);
+    transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
 
     &:hover {
-      background-color: var(--insilos-bg-hover) !important;
-      color: var(--insilos-text-primary) !important;
+      background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12)) !important;
+      color: var(--insilos-text-primary, #0f172a) !important;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+      outline-offset: -2px !important;
     }
 
     /* Log out Item */
     &[data-menu="log_out"] {
-      color: var(--insilos-danger) !important;
+      color: var(--insilos-critical, #bb0000) !important;
       font-weight: 600;
 
       &:hover {
-        background-color: var(--insilos-danger-bg) !important;
-        color: var(--insilos-danger) !important;
+        background-color: var(--insilos-critical-bg, #fbeeed) !important;
+        color: var(--insilos-critical, #bb0000) !important;
+        border-radius: var(--insilos-radius-micro, 2px) !important;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--insilos-critical, #bb0000) !important;
+        outline-offset: -2px !important;
       }
     }
   }
 }
 
-@keyframes userMenuSlideDown {
+/* Fade-in Animation (150ms Ease) */
+@keyframes userMenuFadeIn {
   from {
     opacity: 0;
-    transform: translateY(-8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   Dark Mode Overrides (IBM Carbon Gray 100 & SAP Fiori Horizon Dark)
+   ========================================================================== */
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
+  .o-dropdown--menu:has(.is-user-identity-card),
+  .dropdown-menu:has(.is-user-identity-card),
+  .o_popover:has(.is-user-identity-card) {
+    background-color: var(--insilos-bg-card, #141e33) !important;
+    border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.25) !important;
+
+    .is-user-identity-card {
+      background-color: var(--insilos-bg-hover, #1e293b);
+      border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1));
+
+      .is-identity-top {
+        .is-identity-avatar {
+          border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18));
+        }
+
+        .is-identity-info {
+          .is-identity-name {
+            color: var(--insilos-text-primary, #f8fafc);
+          }
+
+          .is-identity-badges {
+            .is-badge-role {
+              background: var(--insilos-primary-subtle, rgba(0, 242, 254, 0.12));
+              color: var(--insilos-cyan-primary, #00f2fe);
+              border-color: var(--insilos-primary-border, rgba(0, 242, 254, 0.35));
+            }
+
+            .is-badge-db {
+              color: var(--insilos-text-tertiary, #94a3b8);
+            }
+          }
+        }
+      }
+    }
+
+    .is-theme-switcher-box {
+      .is-theme-segmented {
+        background-color: var(--insilos-bg-subtle, #0b0f19);
+        border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1));
+
+        .is-theme-btn {
+          color: var(--insilos-text-secondary, #cbd5e1);
+
+          &:hover {
+            color: var(--insilos-text-primary, #f8fafc);
+            background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12));
+          }
+
+          &:focus-visible {
+            outline-color: var(--insilos-cyan-primary, #00f2fe);
+          }
+
+          &.active {
+            background-color: var(--insilos-bg-card, #141e33);
+            color: var(--insilos-cyan-primary, #00f2fe);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
+    }
+
+    .dropdown-divider {
+      border-top-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+    }
+
+    .dropdown-item {
+      color: var(--insilos-text-primary, #f8fafc) !important;
+
+      &:hover {
+        background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12)) !important;
+        color: var(--insilos-text-primary, #f8fafc) !important;
+      }
+
+      &:focus-visible {
+        outline-color: var(--insilos-cyan-primary, #00f2fe) !important;
+      }
+
+      &[data-menu="log_out"] {
+        color: var(--insilos-critical, #f87171) !important;
+
+        &:hover {
+          background-color: var(--insilos-critical-bg, rgba(239, 68, 68, 0.18)) !important;
+          color: var(--insilos-critical, #f87171) !important;
+        }
+
+        &:focus-visible {
+          outline-color: var(--insilos-critical, #f87171) !important;
+        }
+      }
+    }
   }
 }

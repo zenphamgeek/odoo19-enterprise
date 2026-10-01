@@ -1,11 +1,13 @@
 /* ==========================================================================
-   Insilos Settings Hub Restructure (Scoped to .o_base_settings_view)
+   IBM Carbon Settings Console + SAP Fiori Administration Panel
+   (Scoped to .o_base_settings_view)
    2-Column Responsive Card Grid + Clean Single Scrollbar + Flawless Switches & Radios
    ========================================================================== */
 
 .o_base_settings_view {
   background-color: var(--insilos-bg-canvas);
   color: var(--insilos-text-primary);
+  font-variant-numeric: tabular-nums;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -36,7 +38,7 @@
         font-weight: 600;
         font-size: 13px;
         padding: 6px 18px;
-        border-radius: var(--insilos-radius-full);
+        border-radius: var(--insilos-radius-micro, 2px);
         box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
         transition: var(--insilos-transition-fast);
         white-space: nowrap;
@@ -46,6 +48,11 @@
           border-color: var(--insilos-primary-hover) !important;
           box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
           transform: translateY(-1px);
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--insilos-carbon-focus, #0f62fe);
+          outline-offset: 1px;
         }
       }
 
@@ -58,7 +65,7 @@
         font-weight: 500;
         font-size: 13px;
         padding: 6px 16px;
-        border-radius: var(--insilos-radius-full);
+        border-radius: var(--insilos-radius-micro, 2px);
         transition: var(--insilos-transition-fast);
         white-space: nowrap;
 
@@ -67,22 +74,27 @@
           color: var(--insilos-text-primary) !important;
           border-color: var(--insilos-border-strong) !important;
         }
+
+        &:focus-visible {
+          outline: 2px solid var(--insilos-carbon-focus, #0f62fe);
+          outline-offset: 1px;
+        }
       }
     }
 
-    /* Search Box (Single Pill Capsule, Zero Duplicate Borders) */
+    /* Search Box (IBM Carbon Search Field Pattern) */
     .o_searchview {
       background: var(--insilos-bg-hover) !important;
       border: 1px solid var(--insilos-border-subtle) !important;
-      border-radius: var(--insilos-radius-full) !important;
+      border-radius: var(--insilos-radius-micro, 2px) !important;
       padding: 6px 16px !important;
       box-shadow: none !important;
       transition: var(--insilos-transition-fast);
 
       &:focus-within {
         background: var(--insilos-bg-surface) !important;
-        border-color: var(--insilos-primary) !important;
-        box-shadow: 0 0 0 3px var(--insilos-primary-subtle) !important;
+        border-color: var(--insilos-carbon-focus, #0f62fe) !important;
+        box-shadow: 0 0 0 2px var(--insilos-primary-subtle) !important;
       }
 
       .o_searchview_input_container {
@@ -150,7 +162,7 @@
           height: 38px;
           line-height: 38px;
           padding: 0 14px;
-          border-radius: var(--insilos-radius-md);
+          border-radius: var(--insilos-radius-micro, 2px);
           font-size: 13.5px;
           font-weight: 500;
           color: var(--insilos-text-secondary);
@@ -190,7 +202,7 @@
               top: 7px;
               bottom: 7px;
               width: 3.5px;
-              border-radius: 0 3px 3px 0;
+              border-radius: 0 2px 2px 0;
               background-color: var(--insilos-primary);
             }
 
@@ -283,7 +295,7 @@
               /* Modern Card Appearance */
               background: var(--insilos-bg-card);
               border: 1px solid var(--insilos-border-subtle);
-              border-radius: var(--insilos-radius-lg);
+              border-radius: var(--insilos-radius-architectural, 4px);
               padding: 18px 20px;
               box-shadow: var(--insilos-shadow-card);
               transition: var(--insilos-transition-normal);
@@ -333,15 +345,15 @@
                   box-shadow: none !important;
                   margin: 0 !important;
 
-                  /* White Knob */
+                  /* White Knob - 4px padding */
                   &::before {
                     content: '' !important;
                     position: absolute !important;
-                    width: 16px !important;
-                    height: 16px !important;
+                    width: 14px !important;
+                    height: 14px !important;
                     border-radius: 50% !important;
-                    top: 3px !important;
-                    left: 3px !important;
+                    top: 4px !important;
+                    left: 4px !important;
                     background-color: #ffffff !important;
                     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
                     transition: var(--insilos-transition-fast) !important;
@@ -362,7 +374,7 @@
                   }
 
                   &:focus {
-                    box-shadow: 0 0 0 3px var(--insilos-primary-subtle) !important;
+                    box-shadow: 0 0 0 2px var(--insilos-carbon-focus, #0f62fe) !important;
                   }
                 }
               }
@@ -400,13 +412,13 @@
                   padding-top: 8px;
                   border-top: 1px dashed var(--insilos-border-subtle);
 
-                  /* Nested sub-checkboxes (Normal square checkboxes) */
+                  /* Nested sub-checkboxes (Micro 2px radius) */
                   .form-check-input[type="checkbox"],
                   input[type="checkbox"] {
                     width: 16px !important;
                     height: 16px !important;
                     min-width: 16px !important;
-                    border-radius: 4px !important;
+                    border-radius: var(--insilos-radius-micro, 2px) !important;
                     background-color: var(--insilos-bg-surface) !important;
                     border: 1px solid var(--insilos-border-medium) !important;
                     margin-right: 8px;
@@ -420,6 +432,11 @@
 
                     &:checked {
                       accent-color: var(--insilos-primary);
+                    }
+
+                    &:focus-visible {
+                      outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+                      outline-offset: 1px;
                     }
                   }
 
@@ -482,7 +499,7 @@
                   }
 
                   &:focus {
-                    box-shadow: 0 0 0 3px var(--insilos-primary-subtle) !important;
+                    box-shadow: 0 0 0 2px var(--insilos-carbon-focus, #0f62fe) !important;
                   }
                 }
 
@@ -508,7 +525,7 @@
                   .o_input_dropdown > .o_input {
                     background: var(--insilos-bg-surface);
                     border: 1px solid var(--insilos-border-medium);
-                    border-radius: var(--insilos-radius-sm);
+                    border-radius: var(--insilos-radius-micro, 2px);
                     padding: 6px 12px;
                     font-size: 13px;
                     color: var(--insilos-text-primary);
@@ -516,18 +533,35 @@
 
                     &:focus {
                       outline: none;
-                      border-color: var(--insilos-primary);
-                      box-shadow: 0 0 0 3px var(--insilos-primary-subtle);
+                      border-color: var(--insilos-carbon-focus, #0f62fe);
+                      box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.25);
                     }
                   }
                 }
 
                 /* Action buttons & links */
                 button.btn-primary {
-                  border-radius: var(--insilos-radius-full);
+                  border-radius: var(--insilos-radius-micro, 2px);
                   font-size: 12px;
                   font-weight: 600;
                   padding: 5px 14px;
+
+                  &:focus-visible {
+                    outline: 2px solid var(--insilos-carbon-focus, #0f62fe);
+                    outline-offset: 1px;
+                  }
+                }
+
+                button.btn-secondary {
+                  border-radius: var(--insilos-radius-micro, 2px);
+                  font-size: 12px;
+                  font-weight: 500;
+                  padding: 5px 14px;
+
+                  &:focus-visible {
+                    outline: 2px solid var(--insilos-carbon-focus, #0f62fe);
+                    outline-offset: 1px;
+                  }
                 }
 
                 button.btn-link,
@@ -542,6 +576,11 @@
 
                   &:hover {
                     text-decoration: underline;
+                  }
+
+                  &:focus-visible {
+                    outline: 2px solid var(--insilos-carbon-focus, #0f62fe);
+                    outline-offset: 1px;
                   }
                 }
               }
@@ -597,6 +636,325 @@
                 flex: 1 1 100% !important;
                 margin: 0 !important;
                 min-height: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   3. Dark Mode Overrides (IBM Carbon Gray 100 & SAP Fiori Horizon Dark)
+   ========================================================================== */
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
+  .o_base_settings_view {
+    background-color: #161616 !important;
+    color: #f4f4f4 !important;
+
+    /* Control Panel Dark Mode */
+    .o_control_panel {
+      background-color: #1e1e1e !important;
+      border-bottom: 1px solid #393939 !important;
+      box-shadow: none !important;
+
+      .o_control_panel_main_buttons,
+      .o_cp_buttons {
+        button.btn-primary,
+        button.o_form_button_save {
+          background: var(--insilos-cyan-primary, #00F2FE) !important;
+          border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+          color: #161616 !important;
+          box-shadow: 0 2px 4px rgba(0, 242, 254, 0.25) !important;
+
+          &:hover {
+            background: #38bdf8 !important;
+            border-color: #38bdf8 !important;
+            box-shadow: 0 4px 10px rgba(0, 242, 254, 0.35) !important;
+          }
+
+          &:focus-visible,
+          &:focus {
+            outline: 2px solid var(--insilos-cyan-primary, #00F2FE) !important;
+            outline-offset: 1px;
+          }
+        }
+
+        button.btn-secondary,
+        button.o_form_button_cancel {
+          background: transparent !important;
+          border-color: #525252 !important;
+          color: #f4f4f4 !important;
+
+          &:hover {
+            background: rgba(141, 141, 141, 0.12) !important;
+            border-color: #8d8d8d !important;
+            color: #ffffff !important;
+          }
+
+          &:focus-visible,
+          &:focus {
+            outline: 2px solid var(--insilos-cyan-primary, #00F2FE) !important;
+            outline-offset: 1px;
+          }
+        }
+      }
+
+      .o_searchview {
+        background: #262626 !important;
+        border: 1px solid #525252 !important;
+
+        &:focus-within {
+          background: #1e1e1e !important;
+          border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+          box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.25) !important;
+        }
+
+        .o_searchview_input_container {
+          input,
+          .o_searchview_input {
+            color: #f4f4f4 !important;
+
+            &::placeholder {
+              color: #a8a8a8 !important;
+            }
+          }
+        }
+
+        .o_searchview_icon {
+          color: #a8a8a8 !important;
+        }
+      }
+    }
+
+    /* Form Renderer & Container */
+    .o_form_renderer {
+      background-color: #161616 !important;
+
+      .o_setting_container {
+        background-color: #161616 !important;
+
+        /* Sidebar Navigation */
+        .settings_tab {
+          background-color: #1e1e1e !important;
+          border-right: 1px solid #393939 !important;
+
+          .tab {
+            color: #a8a8a8 !important;
+
+            &:hover {
+              background-color: rgba(141, 141, 141, 0.12) !important;
+              color: #f4f4f4 !important;
+            }
+
+            &.selected {
+              background-color: rgba(0, 242, 254, 0.12) !important;
+              color: var(--insilos-cyan-primary, #00F2FE) !important;
+
+              &::before {
+                background-color: var(--insilos-cyan-primary, #00F2FE) !important;
+              }
+            }
+          }
+        }
+
+        /* Main Content Area */
+        .settings {
+          background-color: #161616 !important;
+
+          > .app_settings_block {
+            h2 {
+              color: #f4f4f4 !important;
+              border-bottom-color: #393939 !important;
+
+              &::after {
+                background: var(--insilos-cyan-primary, #00F2FE) !important;
+              }
+            }
+
+            h3 {
+              color: #a8a8a8 !important;
+            }
+
+            /* Setting Cards */
+            .o_settings_container {
+              .o_setting_box {
+                background: #262626 !important;
+                border: 1px solid #393939 !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+
+                &:hover {
+                  border-color: #525252 !important;
+                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+                }
+
+                /* Left Pane Toggle */
+                .o_setting_left_pane {
+                  .form-check-input[type="checkbox"],
+                  input[type="checkbox"] {
+                    background-color: #525252 !important;
+
+                    &::before {
+                      background-color: #ffffff !important;
+                    }
+
+                    &:checked {
+                      background-color: var(--insilos-cyan-primary, #00F2FE) !important;
+
+                      &::before {
+                        background-color: #161616 !important;
+                      }
+                    }
+
+                    &:focus {
+                      box-shadow: 0 0 0 2px var(--insilos-cyan-primary, #00F2FE) !important;
+                    }
+                  }
+                }
+
+                /* Right Pane */
+                .o_setting_right_pane {
+                  .o_form_label {
+                    color: #f4f4f4 !important;
+                  }
+
+                  .text-muted,
+                  .o_form_label + div {
+                    color: #a8a8a8 !important;
+                  }
+
+                  /* Sub-options */
+                  .mt-3.d-flex,
+                  .content-group {
+                    border-top: 1px dashed #393939 !important;
+
+                    .form-check-input[type="checkbox"],
+                    input[type="checkbox"] {
+                      background-color: #1e1e1e !important;
+                      border-color: #525252 !important;
+
+                      &:checked {
+                        background-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                        border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                      }
+
+                      &:focus {
+                        box-shadow: 0 0 0 2px var(--insilos-cyan-primary, #00F2FE) !important;
+                      }
+                    }
+
+                    label {
+                      color: #f4f4f4 !important;
+                    }
+
+                    .text-muted {
+                      color: #a8a8a8 !important;
+                    }
+                  }
+
+                  /* Radio Buttons */
+                  input[type="radio"],
+                  .form-check-input[type="radio"],
+                  .o_radio_input {
+                    border-color: #525252 !important;
+                    background-color: #1e1e1e !important;
+
+                    &:checked {
+                      border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                      background-color: #1e1e1e !important;
+
+                      &::after {
+                        background-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                      }
+                    }
+
+                    &:focus {
+                      box-shadow: 0 0 0 2px var(--insilos-cyan-primary, #00F2FE) !important;
+                    }
+                  }
+
+                  .form-check.o_radio_item,
+                  .form-check {
+                    label.form-check-label {
+                      color: #f4f4f4 !important;
+                    }
+                  }
+
+                  /* Inputs */
+                  .o_field_widget {
+                    input.o_input,
+                    select.o_input,
+                    .o_input_dropdown > .o_input {
+                      background: #1e1e1e !important;
+                      border: 1px solid #525252 !important;
+                      color: #f4f4f4 !important;
+
+                      &:focus {
+                        border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                        box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.25) !important;
+                      }
+                    }
+                  }
+
+                  /* Action buttons & links */
+                  button.btn-primary {
+                    background: var(--insilos-cyan-primary, #00F2FE) !important;
+                    border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                    color: #161616 !important;
+
+                    &:hover {
+                      background: #38bdf8 !important;
+                      border-color: #38bdf8 !important;
+                    }
+
+                    &:focus-visible {
+                      outline: 2px solid var(--insilos-cyan-primary, #00F2FE) !important;
+                    }
+                  }
+
+                  button.btn-secondary {
+                    background: transparent !important;
+                    border-color: #525252 !important;
+                    color: #f4f4f4 !important;
+
+                    &:hover {
+                      background: rgba(141, 141, 141, 0.12) !important;
+                      border-color: #8d8d8d !important;
+                    }
+
+                    &:focus-visible {
+                      outline: 2px solid var(--insilos-cyan-primary, #00F2FE) !important;
+                    }
+                  }
+
+                  button.btn-link,
+                  a.oe-link {
+                    color: var(--insilos-cyan-primary, #00F2FE) !important;
+
+                    &:hover {
+                      color: #38bdf8 !important;
+                    }
+                  }
+                }
+              }
+            }
+
+            /* Developer Tools & About */
+            .o_dev_about_row {
+              .o_dev_col,
+              .o_about_col {
+                .o_setting_box {
+                  background: #262626 !important;
+                  border: 1px solid #393939 !important;
+
+                  &:hover {
+                    border-color: #525252 !important;
+                  }
+                }
               }
             }
           }
