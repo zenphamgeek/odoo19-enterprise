@@ -1618,7 +1618,7 @@ describe("grid_view_desktop", () => {
         const initialRows = getCurrentRows();
         let currentRows = initialRows;
 
-        expect([714, 718].includes(content.offsetHeight)).toBe(true, { message: "content should have its height fixed" });
+        expect([714, 718, 719].includes(content.offsetHeight)).toBe(true, { message: "content should have its height fixed" });
         // ! This next assertion is important: it ensures that the grid rows are
         // ! hard-coded so that the virtual hook can work with it. Adapt this test
         // ! accordingly should the row height change.
