@@ -149,7 +149,17 @@
         border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
         border-radius: 15px !important;
         clip-path: none !important;
+        -webkit-clip-path: none !important;
         margin: 0 !important;
+
+        &.o_first,
+        &.o_last {
+          clip-path: none !important;
+          -webkit-clip-path: none !important;
+          margin: 0 !important;
+          border-radius: 15px !important;
+          padding: 0 12px 0 10px !important;
+        }
         background-color: var(--insilos-bg-subtle, #f8fafc) !important;
         color: var(--insilos-text-secondary, #475569) !important;
         box-shadow: none !important;
@@ -253,6 +263,44 @@
       /* Document Title (Object Header) & Employee Header */
       .oe_title {
         margin-bottom: 20px !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 6px 10px !important;
+
+        > .o_form_label {
+          order: 1 !important;
+          margin-bottom: 0 !important;
+          font-size: 13px !important;
+          font-weight: 600 !important;
+          color: var(--insilos-text-secondary, #475569) !important;
+          letter-spacing: 0.01em;
+        }
+
+        > div:has([name="sap_document_type"]),
+        > [name="sap_document_type"],
+        > div:has(> .o_field_badge) {
+          order: 2 !important;
+          margin: 0 !important;
+          display: inline-flex !important;
+          align-items: center !important;
+
+          .badge {
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            padding: 2px 8px !important;
+            border-radius: var(--insilos-radius-xs, 2px) !important;
+            vertical-align: middle !important;
+          }
+        }
+
+        > h1,
+        > .o_employee_form_header_info {
+          order: 3 !important;
+          width: 100% !important;
+          margin-top: 4px !important;
+          margin-bottom: 0 !important;
+        }
       }
 
       .oe_title h1,
@@ -489,20 +537,162 @@
     }
 
     button.btn-link,
-    .o-mail-Chatter-search {
-      height: 30px !important;
+    .o-mail-Chatter-search,
+    .o-mail-Chatter-attachFiles,
+    .o-mail-Followers-button {
+      height: 28px !important;
+      min-width: 28px !important;
+      padding: 0 6px !important;
+      border-radius: var(--insilos-radius-xs, 2px) !important;
+      border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+      background-color: var(--insilos-bg-surface, #ffffff) !important;
+      color: var(--insilos-text-secondary, #475569) !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
+      transition: all var(--insilos-transition-fast);
+
+      &:hover {
+        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+        border-color: var(--insilos-border-strong, #94a3b8) !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
+      }
     }
 
     .o-mail-Followers {
-      height: 30px !important;
+      height: 28px !important;
       display: inline-flex !important;
       align-items: center !important;
 
       .btn {
-        height: 30px !important;
+        height: 28px !important;
+        padding: 0 8px !important;
+        border-radius: var(--insilos-radius-xs, 2px) !important;
+      }
+
+      .o-mail-Followers-counter {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 16px !important;
+        height: 16px !important;
+        border-radius: 8px !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        background: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.1)) !important;
+        color: var(--insilos-primary, #0b2e64) !important;
+        margin-left: 4px !important;
+        position: static !important;
+      }
+    }
+  }
+
+  /* Avatars: Circular, transparent background with round border */
+  .o-mail-Message-avatarContainer,
+  .o-mail-Message-avatarContainer img,
+  .o-mail-Message-avatar,
+  .o_avatar {
+    border-radius: 50% !important;
+    background: transparent !important;
+    border: 2px solid var(--insilos-primary, #0b2e64) !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Messenger-style Staggered Thread Layout */
+  .o-mail-Thread {
+    padding: 16px 12px !important;
+    gap: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .o-mail-Message {
+    margin-bottom: 8px !important;
+    width: 100% !important;
+
+    /* Self-authored (Current User / Administrator) -> Right-aligned */
+    &.o-selfAuthored {
+      display: flex !important;
+      justify-content: flex-end !important;
+
+      .o-mail-Message-core {
+        flex-direction: row-reverse !important;
+        max-width: 85% !important;
+        margin-left: auto !important;
+      }
+
+      .o-mail-Message-sidebar {
+        margin-left: 8px !important;
+        margin-right: 0 !important;
+        align-self: flex-start !important;
+
+        .o-mail-Message-avatarContainer,
+        img {
+          border-color: var(--insilos-primary, #0b2e64) !important;
+        }
+      }
+
+      .o-mail-Message-header {
+        flex-direction: row-reverse !important;
+        text-align: right !important;
+        gap: 6px !important;
+      }
+
+      .o-mail-Message-contentContainer {
+        justify-content: flex-end !important;
+      }
+
+      .o-mail-Message-body,
+      .o_track {
+        background-color: rgba(11, 46, 100, 0.07) !important;
+        border: 1px solid rgba(11, 46, 100, 0.15) !important;
+        border-radius: 12px 2px 12px 12px !important;
+        padding: 8px 12px !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+      }
+    }
+
+    /* Others / Bot (e.g. InsilosBot) -> Left-aligned */
+    &:not(.o-selfAuthored) {
+      display: flex !important;
+      justify-content: flex-start !important;
+
+      .o-mail-Message-core {
+        flex-direction: row !important;
+        max-width: 85% !important;
+        margin-right: auto !important;
+      }
+
+      .o-mail-Message-sidebar {
+        margin-right: 8px !important;
+        margin-left: 0 !important;
+        align-self: flex-start !important;
+
+        .o-mail-Message-avatarContainer,
+        img {
+          border-color: var(--insilos-border-strong, #94a3b8) !important;
+        }
+      }
+
+      .o-mail-Message-header {
+        flex-direction: row !important;
+        text-align: left !important;
+        gap: 6px !important;
+      }
+
+      .o-mail-Message-contentContainer {
+        justify-content: flex-start !important;
+      }
+
+      .o-mail-Message-body,
+      .o_track {
+        background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+        border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+        border-radius: 2px 12px 12px 12px !important;
+        padding: 8px 12px !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
       }
     }
   }
@@ -698,6 +888,17 @@ body.o_dark_mode,
           background-color: var(--insilos-bg-subtle, #0b0f19) !important;
           border-color: rgba(255, 255, 255, 0.12) !important;
           color: var(--insilos-text-secondary, #cbd5e1) !important;
+          clip-path: none !important;
+          -webkit-clip-path: none !important;
+          margin: 0 !important;
+
+          &.o_first,
+          &.o_last {
+            clip-path: none !important;
+            -webkit-clip-path: none !important;
+            margin: 0 !important;
+            border-radius: 15px !important;
+          }
 
           /* Completed milestone bullet node */
           &::before {
@@ -857,6 +1058,64 @@ body.o_dark_mode,
         background-color: var(--insilos-bg-card, #141e33) !important;
         border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
         color: var(--insilos-text-primary, #f8fafc) !important;
+      }
+
+      button.btn-link,
+      .o-mail-Chatter-search,
+      .o-mail-Chatter-attachFiles,
+      .o-mail-Followers-button {
+        background-color: var(--insilos-bg-surface, #0f172a) !important;
+        border-color: rgba(255, 255, 255, 0.14) !important;
+        color: var(--insilos-text-secondary, #cbd5e1) !important;
+
+        &:hover {
+          background-color: #1e293b !important;
+          border-color: var(--insilos-cyan-primary, #00f0ff) !important;
+          color: #ffffff !important;
+        }
+      }
+
+      .o-mail-Followers-counter {
+        background: rgba(0, 240, 255, 0.15) !important;
+        color: var(--insilos-cyan-primary, #00f0ff) !important;
+      }
+    }
+
+    /* Dark Mode Avatars: Circular transparent with Cyan border */
+    .o-mail-Message-avatarContainer,
+    .o-mail-Message-avatarContainer img,
+    .o-mail-Message-avatar,
+    .o_avatar {
+      border-color: var(--insilos-cyan-primary, #00f0ff) !important;
+      background: transparent !important;
+    }
+
+    /* Dark Mode Messenger Thread Bubbles */
+    .o-mail-Message.o-selfAuthored {
+      .o-mail-Message-sidebar .o-mail-Message-avatarContainer,
+      .o-mail-Message-sidebar img {
+        border-color: var(--insilos-cyan-primary, #00f0ff) !important;
+      }
+
+      .o-mail-Message-body,
+      .o_track {
+        background-color: rgba(0, 240, 255, 0.1) !important;
+        border-color: rgba(0, 240, 255, 0.25) !important;
+        color: #f1f5f9 !important;
+      }
+    }
+
+    .o-mail-Message:not(.o-selfAuthored) {
+      .o-mail-Message-sidebar .o-mail-Message-avatarContainer,
+      .o-mail-Message-sidebar img {
+        border-color: rgba(255, 255, 255, 0.2) !important;
+      }
+
+      .o-mail-Message-body,
+      .o_track {
+        background-color: #1e293b !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        color: #cbd5e1 !important;
       }
     }
   }
