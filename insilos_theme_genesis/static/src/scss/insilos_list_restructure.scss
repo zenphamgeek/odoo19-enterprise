@@ -33,6 +33,7 @@
 
           th {
             background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+            background-image: none !important;
             color: var(--insilos-text-secondary, #475569) !important;
             font-size: 11px !important;
             font-weight: 650 !important;
@@ -596,6 +597,97 @@ body.o_dark_mode,
 .o_dark_mode,
 [data-bs-theme="dark"],
 [data-theme="dark"] {
+  .o_list_view {
+    background-color: var(--insilos-bg-canvas, #070b14) !important;
+
+    .o_list_renderer {
+      background-color: var(--insilos-bg-surface, #0f172a) !important;
+      border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+
+      .o_list_table {
+        --bs-table-bg: transparent !important;
+        --bs-table-color: #f8fafc !important;
+        background-color: transparent !important;
+
+        thead tr th {
+          background-color: var(--insilos-bg-subtle, #0b0f19) !important;
+          background-image: none !important;
+          color: var(--insilos-text-secondary, #cbd5e1) !important;
+          border-bottom-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+
+          &.o_column_sortable:hover {
+            background-color: #1e293b !important;
+            color: var(--insilos-primary, #00f2fe) !important;
+          }
+        }
+
+        tbody tr.o_data_row {
+          background-color: var(--insilos-bg-surface, #0f172a) !important;
+
+          td {
+            background-color: var(--insilos-bg-surface, #0f172a) !important;
+            color: var(--insilos-text-primary, #f8fafc) !important;
+            border-bottom-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.08)) !important;
+
+            .o_field_date,
+            .o_field_datetime,
+            &.o_date_cell {
+              color: var(--insilos-text-secondary, #cbd5e1) !important;
+            }
+
+            &.o_list_record_selector {
+              .form-check-input,
+              .o-checkbox input {
+                background-color: #141e33 !important;
+                border-color: rgba(255, 255, 255, 0.25) !important;
+
+                &:checked,
+                &:indeterminate {
+                  background-color: var(--insilos-primary, #00f2fe) !important;
+                  border-color: var(--insilos-primary, #00f2fe) !important;
+                }
+              }
+            }
+          }
+
+          &:hover {
+            background-color: #162238 !important;
+
+            td {
+              background-color: #162238 !important;
+            }
+
+            &::before {
+              background-color: var(--insilos-primary, #00f2fe) !important;
+            }
+          }
+
+          &.o_data_row_selected {
+            background-color: rgba(0, 242, 254, 0.08) !important;
+
+            td {
+              background-color: rgba(0, 242, 254, 0.08) !important;
+            }
+
+            &::before {
+              background-color: var(--insilos-primary, #00f2fe) !important;
+            }
+          }
+        }
+
+        tfoot {
+          background-color: var(--insilos-bg-subtle, #0b0f19) !important;
+          border-top-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+
+          tr td {
+            color: var(--insilos-text-primary, #f8fafc) !important;
+          }
+        }
+      }
+    }
+  }
+
   .is_floating_batch_action_bar,
   .o_floating_batch_action_bar {
     background: rgba(10, 15, 29, 0.95);
@@ -639,5 +731,6 @@ body.o_dark_mode,
     }
   }
 }
+
 
 
