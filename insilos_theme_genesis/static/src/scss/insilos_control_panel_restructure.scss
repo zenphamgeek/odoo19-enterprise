@@ -6,7 +6,7 @@
 
 .o_control_panel {
   min-height: var(--insilos-control-panel-height, 44px) !important;
-  background-color: var(--insilos-bg-header, #ffffff) !important;
+  background-color: var(--insilos-bg-subtle, #f8fafc) !important;
   border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
   padding: 6px 16px !important;
   display: flex !important;
@@ -201,8 +201,7 @@
     gap: 6px !important;
 
     .btn,
-    .o_form_button_create,
-    .o_list_button_add {
+    .o_form_button_create {
       height: 32px !important;
       line-height: 1 !important;
       padding: 0 14px !important;
@@ -213,20 +212,31 @@
       align-items: center !important;
       justify-content: center !important;
       gap: 6px !important;
-      border: 1px solid var(--insilos-primary, #0b2e64) !important;
-      background-color: var(--insilos-primary, #0b2e64) !important;
-      color: #ffffff !important;
+      border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
+      background-color: var(--insilos-bg-surface, #ffffff) !important;
+      color: var(--insilos-primary, #0b2e64) !important;
       box-shadow: none !important;
       transition: all var(--insilos-transition-fast);
 
       &:hover {
-        background-color: var(--insilos-primary-hover, #082147) !important;
-        border-color: var(--insilos-primary-hover, #082147) !important;
+        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+        border-color: var(--insilos-primary, #0b2e64) !important;
       }
 
       &:focus-visible {
         outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
         outline-offset: 1px !important;
+      }
+    }
+
+    .o_list_button_add {
+      background-color: var(--insilos-primary, #0b2e64) !important;
+      border: 1px solid var(--insilos-primary, #0b2e64) !important;
+      color: #ffffff !important;
+
+      &:hover {
+        background-color: var(--insilos-primary-hover, #082147) !important;
+        border-color: var(--insilos-primary-hover, #082147) !important;
       }
     }
   }
@@ -413,11 +423,22 @@
       }
     }
 
-    .o_searchview_input {
+    .o_searchview_input,
+    input.o_searchview_input {
       font-size: 12.5px !important;
       color: var(--insilos-text-primary, #0f172a) !important;
       background: transparent !important;
       border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+
+      &:focus,
+      &.focus,
+      &:focus-visible {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
 
       &::placeholder {
         color: var(--insilos-text-muted, #94a3b8) !important;
@@ -611,18 +632,38 @@ body.o_dark_mode,
       }
     }
 
+    .o_control_panel {
+      background-color: #080d19 !important;
+      border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
     .o_control_panel_main_buttons {
       .btn,
-      .o_form_button_create,
+      .o_form_button_create {
+        background-color: rgba(255, 255, 255, 0.04) !important;
+        border: 1px solid rgba(0, 242, 254, 0.35) !important;
+        color: #00f2fe !important;
+        font-weight: 600 !important;
+
+        &:hover {
+          background-color: rgba(0, 242, 254, 0.12) !important;
+          border-color: #00f2fe !important;
+        }
+
+        &:focus-visible {
+          outline: 2px solid #00f2fe !important;
+        }
+      }
+
       .o_list_button_add {
         background-color: var(--insilos-primary, #00f2fe) !important;
-        border-color: var(--insilos-primary, #00f2fe) !important;
+        border: 1px solid var(--insilos-primary, #00f2fe) !important;
         color: #05101e !important;
         font-weight: 600 !important;
 
         &:hover {
-          background-color: var(--insilos-primary-hover, #38bdf8) !important;
-          border-color: var(--insilos-primary-hover, #38bdf8) !important;
+          background-color: #38bdf8 !important;
+          border-color: #38bdf8 !important;
         }
       }
     }
@@ -632,6 +673,7 @@ body.o_dark_mode,
         background-color: var(--insilos-primary, #00f2fe) !important;
         border-color: var(--insilos-primary, #00f2fe) !important;
         color: var(--insilos-text-on-primary, #05101e) !important;
+        font-weight: 600 !important;
 
         &:hover {
           background-color: var(--insilos-primary-hover, #38bdf8) !important;
@@ -658,6 +700,29 @@ body.o_dark_mode,
       &:focus-within {
         border-color: #00f2fe !important;
         box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.25) !important;
+      }
+
+      .o_searchview,
+      .o_searchview_input_container {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+
+      .o_searchview_input,
+      input.o_searchview_input {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        color: #f8fafc !important;
+
+        &:focus,
+        &.focus,
+        &:focus-visible {
+          border: none !important;
+          outline: none !important;
+          box-shadow: none !important;
+        }
       }
 
       .o_searchview_facet {

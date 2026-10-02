@@ -12,10 +12,10 @@
   .o_form_statusbar {
     background-color: var(--insilos-bg-surface, #ffffff) !important;
     border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-    padding: 8px 24px !important;
-    height: 48px !important;
-    min-height: 48px !important;
-    max-height: 48px !important;
+    padding: 6px 20px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
     box-sizing: border-box !important;
     margin: 0 -24px 20px -24px !important;
     display: flex !important;
@@ -29,8 +29,8 @@
       flex-wrap: nowrap !important;
       align-items: center !important;
       gap: 6px !important;
-      height: 32px !important;
-      max-height: 32px !important;
+      height: 30px !important;
+      max-height: 30px !important;
       overflow-x: auto !important;
       overflow-y: hidden !important;
       scrollbar-width: none;
@@ -39,10 +39,10 @@
       }
 
       .btn {
-        height: 32px !important;
+        height: 30px !important;
         line-height: 1 !important;
-        padding: 0 14px !important;
-        font-size: 12.5px !important;
+        padding: 0 12px !important;
+        font-size: 12px !important;
         border-radius: var(--insilos-radius-sm, 4px) !important;
         font-weight: 600 !important;
         display: inline-flex !important;
@@ -77,80 +77,148 @@
       }
     }
 
-    /* Sequential Chevron Workflow Stages (SAP Fiori Process Flow Chevrons) */
+    /* ========================================================================
+       Enterprise Process Flow Timeline Stepper (SAP Fiori Linear Flow)
+       Modern linear timeline with milestone bullet nodes and connecting tracks
+       ======================================================================== */
     .o_statusbar_status {
       display: flex !important;
-      flex-flow: row-reverse wrap-reverse !important;
+      flex-flow: row-reverse nowrap !important;
       align-items: center !important;
-      height: 32px !important;
-      padding: 0 !important;
+      height: 30px !important;
+      min-height: 30px !important;
+      max-height: 30px !important;
+      padding: 0 4px !important;
       margin: 0 !important;
       border: none !important;
       background: transparent !important;
-      gap: 2px !important;
+      gap: 0 !important;
       overflow: visible !important;
       margin-left: auto !important;
 
+      .o_arrow_button_wrap {
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+        height: 30px !important;
+
+        &.d-none {
+          display: none !important;
+        }
+
+        /* Timeline Connector Arrow between milestones (points from earlier to later stage) */
+        & + .o_arrow_button_wrap::after {
+          content: '›' !important;
+          font-size: 15px !important;
+          font-weight: 700 !important;
+          color: var(--insilos-border-strong, #94a3b8) !important;
+          margin: 0 6px !important;
+          line-height: 1 !important;
+          display: inline-block !important;
+          pointer-events: none;
+        }
+      }
+
+      /* Native dropdown fallback if screen is small */
+      > button.dropdown-toggle {
+        height: 30px !important;
+        line-height: 28px !important;
+        padding: 0 12px !important;
+        font-size: 11.5px !important;
+        border-radius: 15px !important;
+        background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+        border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
+
+        &.d-none {
+          display: none !important;
+        }
+      }
+
       .btn.o_arrow_button:not(.d-none) {
-        height: 32px !important;
-        line-height: 32px !important;
+        height: 30px !important;
+        min-height: 30px !important;
+        max-height: 30px !important;
+        line-height: 28px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        padding: 0 16px 0 22px !important;
+        padding: 0 12px 0 10px !important;
         font-size: 12px !important;
-        font-weight: 600 !important;
-        border: none !important;
-        border-radius: 0 !important;
-        margin-left: -10px !important;
-        clip-path: polygon(0% 0%, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0% 100%, 10px 50%) !important;
+        font-weight: 550 !important;
+        border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+        border-radius: 15px !important;
+        clip-path: none !important;
+        margin: 0 !important;
         background-color: var(--insilos-bg-subtle, #f8fafc) !important;
         color: var(--insilos-text-secondary, #475569) !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        transition: all var(--insilos-transition-fast);
+        box-shadow: none !important;
+        gap: 6px !important;
         position: relative !important;
+        transition: all var(--insilos-transition-fast);
         cursor: pointer;
 
-        /* Earliest stage (far left visually = .o_last in reversed DOM) */
-        &.o_last {
-          clip-path: polygon(0% 0%, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0% 100%) !important;
-          margin-left: 0 !important;
-          padding-left: 14px !important;
-          border-top-left-radius: var(--insilos-radius-xs, 2px) !important;
-          border-bottom-left-radius: var(--insilos-radius-xs, 2px) !important;
-        }
-
-        /* Final stage (far right visually = .o_first in reversed DOM) */
-        &.o_first {
-          clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 10px 50%) !important;
-          padding-right: 14px !important;
-          border-top-right-radius: var(--insilos-radius-xs, 2px) !important;
-          border-bottom-right-radius: var(--insilos-radius-xs, 2px) !important;
-        }
-
-        /* Single stage fallback */
-        &.o_first.o_last {
-          clip-path: none !important;
-          border-radius: var(--insilos-radius-xs, 2px) !important;
-        }
-
-        /* Active Milestone in High-Contrast Brand Accent */
-        &.btn-primary,
-        &.o_arrow_button_current {
+        /* Completed stage node (Previous milestone) */
+        &::before {
+          content: '✓' !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 14px !important;
+          height: 14px !important;
+          border-radius: 50% !important;
           background-color: var(--insilos-primary, #0b2e64) !important;
           color: #ffffff !important;
+          font-size: 9px !important;
+          font-weight: 700 !important;
+          line-height: 1 !important;
+        }
+
+        /* Active Milestone in Process Flow (Current stage) */
+        &.btn-primary,
+        &.o_arrow_button_current {
+          background-color: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08)) !important;
+          border: 1px solid var(--insilos-primary, #0b2e64) !important;
+          color: var(--insilos-primary, #0b2e64) !important;
           font-weight: 700 !important;
           z-index: 2 !important;
-          box-shadow: 0 1px 3px rgba(11, 46, 100, 0.25) !important;
+
+          &::before {
+            content: '●' !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 14px !important;
+            height: 14px !important;
+            border-radius: 50% !important;
+            background-color: var(--insilos-primary, #0b2e64) !important;
+            color: #ffffff !important;
+            font-size: 8px !important;
+            line-height: 1 !important;
+            box-shadow: 0 0 0 2px rgba(11, 46, 100, 0.2) !important;
+          }
         }
 
         /* Inactive Upcoming Stages */
         &:not(.o_arrow_button_current):not(.btn-primary) {
+          background-color: transparent !important;
+          border-color: var(--insilos-border-subtle, #e2e8f0) !important;
+          color: var(--insilos-text-muted, #94a3b8) !important;
+
+          &::before {
+            content: '' !important;
+            display: inline-block !important;
+            width: 9px !important;
+            height: 9px !important;
+            border-radius: 50% !important;
+            border: 1.5px solid var(--insilos-border-medium, #cbd5e1) !important;
+            background: transparent !important;
+          }
+
           &:hover {
+            border-color: var(--insilos-border-strong, #94a3b8) !important;
+            color: var(--insilos-text-primary, #0f172a) !important;
             background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-            color: var(--insilos-primary, #0b2e64) !important;
           }
         }
 
@@ -374,10 +442,10 @@
 
   .o_ChatterTopbar,
   .o-mail-Chatter-topbar {
-    height: 48px !important;
-    min-height: 48px !important;
-    max-height: 48px !important;
-    padding: 8px 16px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding: 6px 16px !important;
     box-sizing: border-box !important;
     display: flex !important;
     align-items: center !important;
@@ -385,9 +453,9 @@
     border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
 
     .btn {
-      height: 32px !important;
+      height: 30px !important;
       line-height: 1 !important;
-      font-size: 12.5px !important;
+      font-size: 12px !important;
       font-weight: 600 !important;
       border-radius: var(--insilos-radius-sm, 4px) !important;
       display: inline-flex !important;
@@ -422,19 +490,19 @@
 
     button.btn-link,
     .o-mail-Chatter-search {
-      height: 32px !important;
+      height: 30px !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
     }
 
     .o-mail-Followers {
-      height: 32px !important;
+      height: 30px !important;
       display: inline-flex !important;
       align-items: center !important;
 
       .btn {
-        height: 32px !important;
+        height: 30px !important;
       }
     }
   }
@@ -612,22 +680,64 @@ body.o_dark_mode,
         background-color: transparent !important;
         border: none !important;
 
+        .o_arrow_button_wrap + .o_arrow_button_wrap::after {
+          color: rgba(255, 255, 255, 0.28) !important;
+        }
+
+        > button.dropdown-toggle {
+          background-color: var(--insilos-bg-subtle, #0b0f19) !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+          color: var(--insilos-text-primary, #f8fafc) !important;
+
+          &.d-none {
+            display: none !important;
+          }
+        }
+
         .btn.o_arrow_button:not(.d-none) {
           background-color: var(--insilos-bg-subtle, #0b0f19) !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
           color: var(--insilos-text-secondary, #cbd5e1) !important;
 
-          &:hover:not(.o_arrow_button_current):not(.btn-primary) {
-            background-color: #1e293b !important;
-            color: var(--insilos-primary, #00f2fe) !important;
-          }
-
-          &.btn-primary,
-          &.o_arrow_button_current {
+          /* Completed milestone bullet node */
+          &::before {
             background-color: var(--insilos-primary, #00f2fe) !important;
             color: #05101e !important;
+          }
+
+          /* Active Milestone */
+          &.btn-primary,
+          &.o_arrow_button_current {
+            background-color: rgba(0, 242, 254, 0.12) !important;
+            border-color: var(--insilos-primary, #00f2fe) !important;
+            color: var(--insilos-primary, #00f2fe) !important;
             font-weight: 700 !important;
             z-index: 2 !important;
-            box-shadow: 0 0 12px rgba(0, 242, 254, 0.25) !important;
+            box-shadow: none !important;
+
+            &::before {
+              background-color: var(--insilos-primary, #00f2fe) !important;
+              color: #05101e !important;
+              box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.3) !important;
+            }
+          }
+
+          /* Upcoming Stages */
+          &:not(.o_arrow_button_current):not(.btn-primary) {
+            background-color: transparent !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            color: var(--insilos-text-muted, #64748b) !important;
+
+            &::before {
+              border-color: rgba(255, 255, 255, 0.25) !important;
+              background: transparent !important;
+            }
+
+            &:hover {
+              background-color: #1e293b !important;
+              border-color: rgba(255, 255, 255, 0.25) !important;
+              color: #f8fafc !important;
+            }
           }
         }
       }
