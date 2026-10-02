@@ -10,18 +10,89 @@
   border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
   padding: 6px 16px !important;
   display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: center !important;
   transition: background-color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
 
-  /* --------------------------------------------------------------------------
-     1. Breadcrumb Navigation (Fiori Hierarchy Trail)
-     -------------------------------------------------------------------------- */
-  .o_breadcrumb {
+  .o_control_panel_main {
+    width: 100% !important;
     display: flex !important;
     align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 36px !important;
+    gap: 12px !important;
+  }
+
+  .o_control_panel_breadcrumbs {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    min-height: 32px !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     1. Breadcrumb Navigation (IBM Carbon Flat Trail + SAP Fiori Path)
+     Single horizontal line, 12px muted text, clean separator, NO orange
+     -------------------------------------------------------------------------- */
+  .o_breadcrumb {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
     margin: 0 !important;
-    font-size: 13.5px !important;
+    background: transparent !important;
+    background-color: transparent !important;
+
+    ol.breadcrumb {
+      background: transparent !important;
+      background-color: transparent !important;
+      display: inline-flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      list-style: none !important;
+
+      .breadcrumb-item {
+        display: inline-flex !important;
+        align-items: center !important;
+        font-size: 12.5px !important;
+        font-weight: 500 !important;
+        color: var(--insilos-text-secondary, #475569) !important;
+
+        a {
+          color: var(--insilos-text-secondary, #475569) !important;
+          text-decoration: none !important;
+          font-weight: 500 !important;
+          transition: color var(--insilos-transition-fast);
+
+          &:hover {
+            color: var(--insilos-primary, #0b2e64) !important;
+          }
+        }
+
+        &::after {
+          content: '/' !important;
+          padding: 0 6px !important;
+          color: var(--insilos-text-muted, #94a3b8) !important;
+          font-weight: 400 !important;
+        }
+
+        &::before {
+          display: none !important;
+        }
+      }
+    }
+
+    .o_last_breadcrumb_item {
+      font-size: 13.5px !important;
+      font-weight: 700 !important;
+      color: var(--insilos-text-primary, #0f172a) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      white-space: nowrap !important;
+    }
 
     .o_breadcrumb_item {
       font-weight: 500 !important;
@@ -47,16 +118,119 @@
 
       & + .o_breadcrumb_item::before {
         content: '/' !important;
-        padding: 0 8px !important;
+        padding: 0 6px !important;
         color: var(--insilos-text-muted, #94a3b8) !important;
         font-weight: 400 !important;
       }
     }
   }
 
+  .o_control_panel_breadcrumbs_actions {
+    display: inline-flex !important;
+    align-items: center !important;
+
+    .btn,
+    .btn-light,
+    .o_btn_circle {
+      width: 28px !important;
+      height: 28px !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      border-radius: var(--insilos-radius-xs, 2px) !important;
+      color: var(--insilos-text-secondary, #475569) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all var(--insilos-transition-fast);
+
+      &::before {
+        display: none !important;
+        background: transparent !important;
+      }
+
+      &:hover {
+        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
+      }
+    }
+  }
+
+  /* Form Status Indicator (Save / Discard buttons in header) */
+  .o_form_status_indicator {
+    display: inline-flex !important;
+    align-items: center !important;
+
+    .btn,
+    .btn-light,
+    .o_form_button_save,
+    .o_form_button_cancel {
+      width: 28px !important;
+      height: 28px !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      color: var(--insilos-text-secondary, #475569) !important;
+      border-radius: var(--insilos-radius-xs, 2px) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all var(--insilos-transition-fast);
+
+      &:hover {
+        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+        color: var(--insilos-text-primary, #0f172a) !important;
+      }
+    }
+
+    .o_form_button_save:hover {
+      color: var(--insilos-primary, #0b2e64) !important;
+    }
+
+    .o_form_button_cancel:hover {
+      color: var(--insilos-critical, #bb0000) !important;
+    }
+  }
+
   /* --------------------------------------------------------------------------
-     2. Action Buttons (IBM Carbon Precision 4px Radii — No Candy Pills)
+     2. Main Buttons (IBM Carbon Precision 4px Radii Button)
      -------------------------------------------------------------------------- */
+  .o_control_panel_main_buttons {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+
+    .btn,
+    .o_form_button_create,
+    .o_list_button_add {
+      height: 32px !important;
+      line-height: 1 !important;
+      padding: 0 14px !important;
+      font-size: 12.5px !important;
+      font-weight: 600 !important;
+      border-radius: var(--insilos-radius-sm, 4px) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      border: 1px solid var(--insilos-primary, #0b2e64) !important;
+      background-color: var(--insilos-primary, #0b2e64) !important;
+      color: #ffffff !important;
+      box-shadow: none !important;
+      transition: all var(--insilos-transition-fast);
+
+      &:hover {
+        background-color: var(--insilos-primary-hover, #082147) !important;
+        border-color: var(--insilos-primary-hover, #082147) !important;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+        outline-offset: 1px !important;
+      }
+    }
+  }
+
   .o_cp_buttons {
     display: flex !important;
     align-items: center !important;
@@ -368,11 +542,88 @@ body.o_dark_mode,
     background-color: var(--insilos-bg-header, #0f172a) !important;
     border-bottom: 1px solid var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
 
-    .o_breadcrumb .o_breadcrumb_item {
-      color: var(--insilos-text-secondary, #cbd5e1) !important;
-
-      &.active, &:last-child {
+    .o_breadcrumb {
+      ol.breadcrumb .breadcrumb-item {
+        color: var(--insilos-text-secondary, #cbd5e1) !important;
+        a {
+          color: var(--insilos-text-secondary, #cbd5e1) !important;
+          &:hover {
+            color: var(--insilos-primary, #00f2fe) !important;
+          }
+        }
+        &::after {
+          color: #64748b !important;
+        }
+      }
+      .o_last_breadcrumb_item {
         color: var(--insilos-text-primary, #f8fafc) !important;
+      }
+      .o_breadcrumb_item {
+        color: var(--insilos-text-secondary, #cbd5e1) !important;
+
+        &.active, &:last-child {
+          color: var(--insilos-text-primary, #f8fafc) !important;
+        }
+      }
+    }
+
+    .o_control_panel_breadcrumbs_actions {
+      .btn,
+      .btn-light,
+      .o_btn_circle {
+        background: transparent !important;
+        border: none !important;
+        color: var(--insilos-text-secondary, #cbd5e1) !important;
+
+        &::before {
+          display: none !important;
+          background: transparent !important;
+        }
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.08) !important;
+          color: #ffffff !important;
+        }
+      }
+    }
+
+    .o_form_status_indicator {
+      .btn,
+      .btn-light,
+      .o_form_button_save,
+      .o_form_button_cancel {
+        background: transparent !important;
+        border: none !important;
+        color: var(--insilos-text-secondary, #cbd5e1) !important;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.08) !important;
+          color: #ffffff !important;
+        }
+      }
+
+      .o_form_button_save:hover {
+        color: var(--insilos-primary, #00f2fe) !important;
+      }
+
+      .o_form_button_cancel:hover {
+        color: #ff4d4f !important;
+      }
+    }
+
+    .o_control_panel_main_buttons {
+      .btn,
+      .o_form_button_create,
+      .o_list_button_add {
+        background-color: var(--insilos-primary, #00f2fe) !important;
+        border-color: var(--insilos-primary, #00f2fe) !important;
+        color: #05101e !important;
+        font-weight: 600 !important;
+
+        &:hover {
+          background-color: var(--insilos-primary-hover, #38bdf8) !important;
+          border-color: var(--insilos-primary-hover, #38bdf8) !important;
+        }
       }
     }
 
