@@ -512,54 +512,107 @@
       white-space: nowrap !important;
     }
 
-    /* Bottom docked action bar for Send message, Log note, Activity */
+    /* Telegram-Style Bottom Docked Action Bar */
     > .d-flex.gap-1 {
       position: absolute !important;
       bottom: 0 !important;
       left: 0 !important;
       right: 0 !important;
-      height: 52px !important;
-      padding: 10px 16px !important;
-      background: var(--insilos-bg-surface, #ffffff) !important;
-      border-top: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+      height: 60px !important;
+      padding: 10px 14px !important;
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(12px) !important;
+      border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
       z-index: 10 !important;
-      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04) !important;
-      gap: 8px !important;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04) !important;
+      gap: 10px !important;
       display: flex !important;
       align-items: center !important;
+      justify-content: space-between !important;
 
       .btn {
-        height: 32px !important;
+        height: 38px !important;
         line-height: 1 !important;
-        font-size: 12.5px !important;
-        font-weight: 600 !important;
-        border-radius: var(--insilos-radius-sm, 4px) !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.01em !important;
+        border-radius: 20px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        padding: 0 14px !important;
-        gap: 6px !important;
+        padding: 0 16px !important;
+        gap: 7px !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: none !important;
+        border: none !important;
+        flex: 1 1 0 !important;
+        cursor: pointer !important;
 
+        /* 1. Send message: Telegram Signature Blue Pill */
         &.btn-primary,
         &.o-mail-Chatter-sendMessage {
-          background-color: var(--insilos-primary, #0b2e64) !important;
-          border-color: var(--insilos-primary, #0b2e64) !important;
+          background: linear-gradient(135deg, #2481cc 0%, #3390ec 100%) !important;
           color: #ffffff !important;
+          box-shadow: 0 2px 8px rgba(36, 129, 204, 0.3) !important;
+
+          &::before {
+            content: '' !important;
+            width: 16px !important;
+            height: 16px !important;
+            background: currentColor !important;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='22' y1='2' x2='11' y2='13'%3E%3C/line%3E%3Cpolygon points='22 2 15 22 11 13 2 9 22 2'%3E%3C/polygon%3E%3C/svg%3E") no-repeat center / contain !important;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='22' y1='2' x2='11' y2='13'%3E%3C/line%3E%3Cpolygon points='22 2 15 22 11 13 2 9 22 2'%3E%3C/polygon%3E%3C/svg%3E") no-repeat center / contain !important;
+            flex-shrink: 0 !important;
+          }
 
           &:hover {
-            background-color: var(--insilos-primary-hover, #082147) !important;
-            border-color: var(--insilos-primary-hover, #082147) !important;
+            background: linear-gradient(135deg, #1c74be 0%, #2982dc 100%) !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(36, 129, 204, 0.4) !important;
           }
         }
 
-        &.btn-secondary {
-          background-color: var(--insilos-bg-surface, #ffffff) !important;
-          border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
-          color: var(--insilos-text-primary, #0f172a) !important;
+        /* 2. Log note: Telegram Soft Pill with Note Icon */
+        &.o-mail-Chatter-logNote {
+          background: #f0f4f8 !important;
+          color: #2481cc !important;
+
+          &::before {
+            content: '' !important;
+            width: 15px !important;
+            height: 15px !important;
+            background: currentColor !important;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'%3E%3C/path%3E%3Cpath d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'%3E%3C/path%3E%3C/svg%3E") no-repeat center / contain !important;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'%3E%3C/path%3E%3Cpath d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'%3E%3C/path%3E%3C/svg%3E") no-repeat center / contain !important;
+            flex-shrink: 0 !important;
+          }
 
           &:hover {
-            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-            border-color: var(--insilos-border-strong, #94a3b8) !important;
+            background: #e2eaf2 !important;
+            color: #1c74be !important;
+            transform: translateY(-1px) !important;
+          }
+        }
+
+        /* 3. Activity: Telegram Soft Pill with Calendar Check Icon */
+        &.o-mail-Chatter-activity {
+          background: #f0f4f8 !important;
+          color: #2481cc !important;
+
+          &::before {
+            content: '' !important;
+            width: 15px !important;
+            height: 15px !important;
+            background: currentColor !important;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3Cpath d='M9 16l2 2 4-4'%3E%3C/path%3E%3C/svg%3E") no-repeat center / contain !important;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3Cpath d='M9 16l2 2 4-4'%3E%3C/path%3E%3C/svg%3E") no-repeat center / contain !important;
+            flex-shrink: 0 !important;
+          }
+
+          &:hover {
+            background: #e2eaf2 !important;
+            color: #1c74be !important;
+            transform: translateY(-1px) !important;
           }
         }
       }
@@ -621,7 +674,7 @@
     order: 2 !important;
     flex: 1 1 auto !important;
     overflow-y: auto !important;
-    padding-bottom: 56px !important;
+    padding-bottom: 72px !important;
   }
 
   /* Avatars: Circular, transparent background with round border */
@@ -1083,27 +1136,34 @@ body.o_dark_mode,
       }
 
       > .d-flex.gap-1 {
-        background: #0f172a !important;
-        border-top-color: rgba(255, 255, 255, 0.1) !important;
-        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25) !important;
+        background: rgba(15, 23, 42, 0.95) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3) !important;
 
-        .btn.btn-primary,
-        .btn.o-mail-Chatter-sendMessage {
-          background-color: var(--insilos-primary, #00f2fe) !important;
-          border-color: var(--insilos-primary, #00f2fe) !important;
-          color: #05101e !important;
+        .btn {
+          &.btn-primary,
+          &.o-mail-Chatter-sendMessage {
+            background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(0, 180, 216, 0.35) !important;
 
-          &:hover {
-            background-color: #38bdf8 !important;
-            border-color: #38bdf8 !important;
+            &:hover {
+              background: linear-gradient(135deg, #0096c7 0%, #023e8a 100%) !important;
+              box-shadow: 0 4px 14px rgba(0, 180, 216, 0.45) !important;
+            }
           }
-        }
 
-        .btn.btn-secondary,
-        .btn:not(.btn-primary):not(.btn-link) {
-          background-color: var(--insilos-bg-card, #141e33) !important;
-          border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
-          color: var(--insilos-text-primary, #f8fafc) !important;
+          &.o-mail-Chatter-logNote,
+          &.o-mail-Chatter-activity {
+            background: #1e293b !important;
+            color: #7dd3fc !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+            &:hover {
+              background: #283548 !important;
+              color: #ffffff !important;
+            }
+          }
         }
       }
 
