@@ -23,14 +23,14 @@
     justify-content: space-between !important;
     transition: background-color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
 
-    /* Action Buttons (Left) */
+    /* Action Buttons (Left) — Telegram Pill Button Style */
     .o_statusbar_buttons {
       display: flex !important;
       flex-wrap: nowrap !important;
       align-items: center !important;
       gap: 6px !important;
-      height: 30px !important;
-      max-height: 30px !important;
+      height: 32px !important;
+      max-height: 32px !important;
       overflow-x: auto !important;
       overflow-y: hidden !important;
       scrollbar-width: none;
@@ -39,39 +39,56 @@
       }
 
       .btn {
-        height: 30px !important;
-        line-height: 1 !important;
-        padding: 0 12px !important;
-        font-size: 12px !important;
-        border-radius: var(--insilos-radius-sm, 4px) !important;
-        font-weight: 600 !important;
+        height: 32px !important;
+        line-height: 32px !important;
+        padding: 0 16px !important;
+        font-size: 12.5px !important;
+        border-radius: 20px !important;
+        font-weight: 550 !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         gap: 6px !important;
         flex-shrink: 0 !important;
         white-space: nowrap !important;
-        transition: all var(--insilos-transition-fast);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: none !important;
+        border: none !important;
+        cursor: pointer !important;
 
+        /* Primary Action: Telegram Signature Blue Pill */
         &.btn-primary {
-          background-color: var(--insilos-primary, #0b2e64) !important;
-          border: 1px solid var(--insilos-primary, #0b2e64) !important;
-          color: var(--insilos-text-on-primary, #ffffff) !important;
+          background: linear-gradient(135deg, #2481cc 0%, #3390ec 100%) !important;
+          color: #ffffff !important;
+          box-shadow: 0 2px 8px rgba(36, 129, 204, 0.28) !important;
 
           &:hover {
-            background-color: var(--insilos-primary-hover, #082147) !important;
-            border-color: var(--insilos-primary-hover, #082147) !important;
+            background: linear-gradient(135deg, #1c74be 0%, #2982dc 100%) !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(36, 129, 204, 0.38) !important;
+          }
+
+          &:active {
+            transform: translateY(0) !important;
+            box-shadow: 0 1px 4px rgba(36, 129, 204, 0.25) !important;
           }
         }
 
+        /* Secondary Actions: Telegram Soft Reply Pill */
         &.btn-secondary {
-          background-color: var(--insilos-bg-surface, #ffffff) !important;
-          border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
-          color: var(--insilos-text-primary, #0f172a) !important;
+          background: #f0f4f8 !important;
+          color: #2481cc !important;
+          border: 1px solid rgba(36, 129, 204, 0.15) !important;
 
           &:hover {
-            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-            border-color: var(--insilos-border-strong, #94a3b8) !important;
+            background: #e2eaf2 !important;
+            color: #1c74be !important;
+            border-color: rgba(36, 129, 204, 0.28) !important;
+            transform: translateY(-1px) !important;
+          }
+
+          &:active {
+            transform: translateY(0) !important;
           }
         }
       }
@@ -944,16 +961,29 @@ body.o_dark_mode,
       background-color: var(--insilos-bg-surface, #0f172a) !important;
       border-bottom-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
 
-      .o_statusbar_buttons .btn.btn-primary {
-        background-color: var(--insilos-primary, #00f2fe) !important;
-        border-color: var(--insilos-primary, #00f2fe) !important;
-        color: var(--insilos-text-on-primary, #05101e) !important;
-      }
+      .o_statusbar_buttons .btn {
+        &.btn-primary {
+          background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%) !important;
+          color: #ffffff !important;
+          box-shadow: 0 2px 10px rgba(0, 180, 216, 0.35) !important;
 
-      .o_statusbar_buttons .btn.btn-secondary {
-        background-color: var(--insilos-bg-card, #141e33) !important;
-        border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
-        color: var(--insilos-text-primary, #f8fafc) !important;
+          &:hover {
+            background: linear-gradient(135deg, #0096c7 0%, #023e8a 100%) !important;
+            box-shadow: 0 4px 14px rgba(0, 180, 216, 0.45) !important;
+          }
+        }
+
+        &.btn-secondary {
+          background: #1e293b !important;
+          color: #7dd3fc !important;
+          border: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+          &:hover {
+            background: #283548 !important;
+            color: #ffffff !important;
+            border-color: rgba(125, 211, 252, 0.25) !important;
+          }
+        }
       }
 
       .o_statusbar_status {
