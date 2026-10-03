@@ -1,0 +1,390 @@
+/* ==============================================================================
+   INSILOS SOVEREIGN ENTERPRISE AUTHENTICATION SUITE — SCSS ARCHITECTURE
+   Routes: /web/login, /web/reset_password, /web/signup, /web/login_successful
+   Tri-Pillar Standards: IBM Carbon 11 + SAP Fiori Horizon + Telegram Capsule
+   ============================================================================== */
+
+:root {
+  --insilos-auth-canvas-dark: #070B14;
+  --insilos-auth-surface-dark: rgba(13, 19, 38, 0.85);
+  --insilos-auth-showcase-bg: #0A1124;
+  --insilos-auth-border: rgba(255, 255, 255, 0.10);
+  --insilos-auth-border-focus: #00F0FF;
+  --insilos-cyan-glow: rgba(0, 240, 255, 0.28);
+  --insilos-blue-tg-start: #2481cc;
+  --insilos-blue-tg-end: #3390ec;
+  --insilos-text-main: #0F172A;
+  --insilos-text-muted: #64748B;
+  --insilos-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --insilos-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ------------------------------------------------------------------------------
+   1. Page Viewport Enclosure & Background Canvas
+   ------------------------------------------------------------------------------ */
+body.insilos_auth_body,
+body:has(.insilos_auth_portal_wrapper) {
+  font-family: var(--insilos-font-sans) !important;
+  background-color: #070B14 !important;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(0, 240, 255, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 88% 82%, rgba(36, 129, 204, 0.09) 0%, transparent 55%),
+    linear-gradient(180deg, #050810 0%, #0B132B 100%) !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  min-height: 100vh !important;
+  margin: 0 !important;
+  color: #0F172A;
+
+  #wrapwrap {
+    background: transparent !important;
+    min-height: 100vh !important;
+  }
+
+  /* Hide default legacy header / footer in dedicated auth view */
+  #wrapwrap > header,
+  #wrapwrap > footer,
+  .o_footer_copyright {
+    display: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   2. Master Glassmorphic Portal Card (1160px Dual-Pane)
+   ------------------------------------------------------------------------------ */
+.insilos_auth_portal_wrapper {
+  min-height: 100vh;
+  padding: 2rem 1.25rem;
+  box-sizing: border-box;
+
+  .insilos_auth_portal_card {
+    width: 100%;
+    max-width: 1140px;
+    min-height: 640px;
+    border-radius: 20px !important;
+    background: #ffffff;
+    box-shadow: 
+      0 20px 60px -15px rgba(0, 0, 0, 0.45),
+      0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+      0 0 32px -8px rgba(0, 240, 255, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    transition: all 0.25s ease-in-out;
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   3. Left Pane: Enterprise Hero Showcase (45% Width)
+   ------------------------------------------------------------------------------ */
+.insilos_auth_hero_showcase {
+  flex: 0 0 45%;
+  max-width: 45%;
+  background: #0A1124 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.10) 0%, transparent 60%),
+      radial-gradient(circle at 85% 85%, rgba(36, 129, 204, 0.14) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero_brand_header,
+  .hero_trust_badges,
+  .hero_brand_footer {
+    position: relative;
+    z-index: 2;
+  }
+
+  .text-cyan-gradient {
+    background: linear-gradient(135deg, #00f0ff 0%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  .bg-cyan-subtle {
+    background: rgba(0, 240, 255, 0.10) !important;
+  }
+  .text-cyan {
+    color: #00f0ff !important;
+  }
+
+  /* Live Pulse Beacon */
+  .pulse-beacon {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: beacon-pulse 2s infinite;
+  }
+}
+
+@keyframes beacon-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   4. Right Pane: Authentication Form
+   ------------------------------------------------------------------------------ */
+.insilos_auth_form_pane {
+  flex: 1 1 55%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .auth_title {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+  }
+
+  .auth_subtitle {
+    color: #64748b !important;
+    font-size: 13.5px !important;
+  }
+
+  /* Form Labels */
+  .form-label,
+  .col-form-label {
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    letter-spacing: 0.01em;
+    margin-bottom: 5px !important;
+  }
+
+  /* Form Inputs (42px Height, Sharp 6px Radius, 1.5px Border) */
+  .form-control {
+    height: 42px !important;
+    line-height: 42px !important;
+    padding: 0 14px !important;
+    border-radius: 8px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    font-size: 13.5px !important;
+    color: #0f172a !important;
+    background-color: #f8fafc !important;
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    &::placeholder {
+      color: #94a3b8 !important;
+      font-size: 13px !important;
+    }
+
+    &:hover {
+      border-color: #94a3b8 !important;
+      background-color: #ffffff !important;
+    }
+
+    &:focus {
+      background-color: #ffffff !important;
+      border-color: #0f62fe !important;
+      box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.18) !important;
+      outline: none !important;
+    }
+  }
+
+  .input-group {
+    .btn.o_show_password {
+      border: 1.5px solid #cbd5e1 !important;
+      border-left: none !important;
+      background: #f8fafc !important;
+      border-top-right-radius: 8px !important;
+      border-bottom-right-radius: 8px !important;
+      color: #64748b !important;
+
+      &:hover {
+        color: #0f62fe !important;
+        background: #f1f5f9 !important;
+      }
+    }
+  }
+
+  /* Telegram-Style Capsule Primary Button */
+  .oe_login_buttons {
+    .btn-primary {
+      height: 44px !important;
+      line-height: 44px !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.02em !important;
+      border-radius: 22px !important;
+      background: linear-gradient(135deg, #2481cc 0%, #3390ec 100%) !important;
+      border: none !important;
+      box-shadow: 0 3px 12px rgba(36, 129, 204, 0.35) !important;
+      color: #ffffff !important;
+      padding: 0 24px !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      cursor: pointer !important;
+
+      &:hover {
+        background: linear-gradient(135deg, #1c74be 0%, #2982dc 100%) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 18px rgba(36, 129, 204, 0.45) !important;
+      }
+
+      &:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 6px rgba(36, 129, 204, 0.3) !important;
+      }
+    }
+
+    .btn-link {
+      color: #2481cc !important;
+      font-size: 12.5px !important;
+      font-weight: 500 !important;
+      text-decoration: none !important;
+
+      &:hover {
+        color: #1c74be !important;
+        text-decoration: underline !important;
+      }
+    }
+  }
+
+  /* Meta Links in Footer */
+  .auth_meta_link {
+    color: #64748b !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+
+    span {
+      color: #0f62fe !important;
+      font-weight: 600 !important;
+    }
+
+    &:hover {
+      color: #0f172a !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   5. Dark Mode Compatibility
+   ------------------------------------------------------------------------------ */
+body.o_dark_mode,
+[data-bs-theme="dark"] {
+  .insilos_auth_portal_wrapper {
+    .insilos_auth_portal_card {
+      background: rgba(15, 23, 42, 0.88) !important;
+      backdrop-filter: blur(28px) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+      box-shadow:
+        0 24px 70px -15px rgba(0, 0, 0, 0.75),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+        0 0 35px -8px rgba(0, 240, 255, 0.35) !important;
+    }
+
+    .insilos_auth_form_pane {
+      background: transparent !important;
+
+      .auth_title {
+        color: #f8fafc !important;
+      }
+      .auth_subtitle {
+        color: #94a3b8 !important;
+      }
+      .form-label,
+      .col-form-label {
+        color: #cbd5e1 !important;
+      }
+
+      .form-control {
+        background-color: rgba(30, 41, 59, 0.7) !important;
+        border-color: rgba(255, 255, 255, 0.15) !important;
+        color: #f8fafc !important;
+
+        &::placeholder {
+          color: #64748b !important;
+        }
+
+        &:hover {
+          border-color: rgba(255, 255, 255, 0.3) !important;
+          background-color: rgba(30, 41, 59, 0.9) !important;
+        }
+
+        &:focus {
+          border-color: #00f0ff !important;
+          box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.25) !important;
+        }
+      }
+
+      .input-group .btn.o_show_password {
+        background-color: rgba(30, 41, 59, 0.7) !important;
+        border-color: rgba(255, 255, 255, 0.15) !important;
+        color: #94a3b8 !important;
+
+        &:hover {
+          color: #00f0ff !important;
+        }
+      }
+
+      .oe_login_buttons .btn-primary {
+        background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%) !important;
+        box-shadow: 0 3px 14px rgba(0, 180, 216, 0.4) !important;
+
+        &:hover {
+          background: linear-gradient(135deg, #0096c7 0%, #023e8a 100%) !important;
+          box-shadow: 0 6px 20px rgba(0, 180, 216, 0.5) !important;
+        }
+      }
+
+      .auth_footer_block {
+        border-color: rgba(255, 255, 255, 0.1) !important;
+      }
+
+      .auth_meta_link {
+        color: #94a3b8 !important;
+        span {
+          color: #00f0ff !important;
+        }
+        &:hover {
+          color: #ffffff !important;
+        }
+      }
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   6. Mobile & Tablet Responsive Behavior
+   ------------------------------------------------------------------------------ */
+@media (max-width: 991.98px) {
+  .insilos_auth_portal_wrapper {
+    padding: 1rem !important;
+
+    .insilos_auth_portal_card {
+      max-width: 480px !important;
+      min-height: auto !important;
+      border-radius: 16px !important;
+    }
+
+    .insilos_auth_hero_showcase {
+      display: none !important;
+    }
+
+    .insilos_auth_form_pane {
+      flex: 1 1 100% !important;
+      padding: 2rem 1.5rem !important;
+    }
+  }
+}

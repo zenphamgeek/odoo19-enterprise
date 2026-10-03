@@ -35,3 +35,71 @@
         }
     }
 }
+
+/* =========================================================================
+   SOP-RAG Interactive Evidence-Grounded Citation Chips
+   ========================================================================= */
+.o_ai_citation_sup {
+    top: -0.35em;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    position: relative;
+
+    .o_ai_citation_badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.15rem 0.55rem;
+        font-family: var(--insilos-font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: 0.02em;
+        text-decoration: none !important;
+        border-radius: 12px;
+        background-color: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08));
+        color: var(--insilos-primary, #0B2E64);
+        border: 1px solid var(--insilos-primary-subtle, rgba(11, 46, 100, 0.2));
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+
+        i.ph {
+            font-size: 12px;
+            color: var(--insilos-cyan-primary, #00F0FF);
+        }
+
+        &:hover {
+            background-color: var(--insilos-primary, #0B2E64);
+            color: #ffffff;
+            border-color: var(--insilos-primary, #0B2E64);
+            box-shadow: 0 2px 6px rgba(11, 46, 100, 0.25);
+            transform: translateY(-1px);
+
+            i.ph {
+                color: #ffffff;
+            }
+        }
+    }
+}
+
+body.o_dark_mode {
+    .o_ai_citation_sup .o_ai_citation_badge {
+        background-color: rgba(0, 240, 255, 0.12);
+        color: #00F0FF;
+        border-color: rgba(0, 240, 255, 0.35);
+
+        i.ph {
+            color: #00F0FF;
+        }
+
+        &:hover {
+            background-color: #00F0FF;
+            color: #0F172A;
+            border-color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+
+            i.ph {
+                color: #0F172A;
+            }
+        }
+    }
+}

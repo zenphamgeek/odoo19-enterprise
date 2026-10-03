@@ -33,7 +33,7 @@ export class VoipSystrayItem extends Component {
         if (this.userAgent.activeSession?.isOnHold) {
             return "fa fa-pause";
         }
-        return "oi oi-voip";
+        return "oi oi-voip ph ph-phone";
     }
 
     /**

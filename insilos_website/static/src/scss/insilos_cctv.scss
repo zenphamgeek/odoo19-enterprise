@@ -249,6 +249,30 @@
             }
         }
 
+        // Live RT Telemetry Stream HUD
+        .ins-cctv-rt-stream {
+            position: absolute;
+            bottom: 42px;
+            left: 14px;
+            right: 14px;
+            padding: 6px 14px;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            z-index: 6;
+            font-family: var(--bs-font-monospace);
+            font-size: 0.72rem;
+            color: #94a3b8;
+            pointer-events: none;
+            transition: all 0.3s ease;
+
+            &.is-alarm {
+                border-color: rgba(239, 68, 68, 0.6);
+                background: rgba(239, 68, 68, 0.2);
+            }
+        }
+
         // AI Vision Bounding Box Layer
         .ins-cctv-overlay-layer {
             position: absolute;

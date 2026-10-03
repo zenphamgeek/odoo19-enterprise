@@ -1,7 +1,7 @@
 /* ==========================================================================
    IBM Carbon Module Catalog + SAP Fiori App Finder
    Structured search panel with 2px indicator, 4px architectural cards,
-   48px square app icons, 2px micro-radii buttons, and zero pill geometry.
+   52px square app icons, 2px micro-radii buttons, and zero pill geometry.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -78,14 +78,56 @@
 }
 
 /* --------------------------------------------------------------------------
-   2. Apps Kanban Grid & Cards (Carbon Architectural Geometry)
+   2. Apps Kanban Grid & Cards (Carbon Architectural 2-Column Geometry)
    -------------------------------------------------------------------------- */
 .o_kanban_view.o_modules_kanban {
   background-color: var(--insilos-bg-canvas, #f4f6f8);
 
   .o_kanban_renderer {
     padding: 24px 32px 64px;
-    gap: 16px;
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+
+    @media (max-width: 1100px) {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+    @media (max-width: 700px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* ----------------------------------------------------------------------
+       Eradicate Empty Ghost Cards (.o_kanban_ghost, :empty) from Viewport
+       ---------------------------------------------------------------------- */
+    .o_kanban_ghost,
+    .o_kanban_record.o_kanban_ghost,
+    .o_kanban_renderer > .o_kanban_ghost,
+    .o_kanban_renderer > div.o_kanban_ghost,
+    .o_kanban_record:empty {
+      display: none !important;
+      visibility: hidden !important;
+      position: absolute !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      min-height: 0 !important;
+      max-height: 0 !important;
+      width: 0 !important;
+      min-width: 0 !important;
+      max-width: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      pointer-events: none !important;
+      overflow: hidden !important;
+    }
 
     .o_kanban_record {
       background: var(--insilos-bg-card, #ffffff);
@@ -95,19 +137,22 @@
       padding: 16px;
       box-shadow: var(--insilos-shadow-card, 0 1px 3px rgba(0, 0, 0, 0.06));
       transition: border-color var(--insilos-transition-fast), box-shadow var(--insilos-transition-fast), background-color var(--insilos-transition-fast);
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 16px;
-      min-width: 320px;
+      display: grid !important;
+      grid-template-columns: 84px 1fr !important;
+      grid-template-rows: auto 1fr auto !important;
+      column-gap: 16px !important;
+      row-gap: 10px !important;
+      min-width: 0 !important;
+      width: 100% !important;
+      min-height: 128px;
       position: relative;
       overflow: hidden;
+      align-items: stretch !important;
 
       &:hover {
         border-color: var(--insilos-border-medium, #cbd5e1);
         border-left: 3px solid var(--insilos-accent, #0f62fe);
         box-shadow: var(--insilos-shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.08));
-        /* NO translateY hover */
       }
 
       &:focus-visible {
@@ -115,20 +160,62 @@
         outline-offset: -2px;
       }
 
-      /* Aside: App Icon (48px Square, 4px Radius) */
+      /* 3-dot Dropdown Menu positioning (strictly out-of-flow) */
+      .o_dropdown_kanban {
+        position: absolute !important;
+        top: 10px !important;
+        right: 10px !important;
+        z-index: 5 !important;
+        width: auto !important;
+
+        button {
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          color: var(--insilos-text-secondary, #64748b) !important;
+          padding: 2px 6px !important;
+
+          &:hover {
+            color: var(--insilos-text-primary, #0f172a) !important;
+          }
+        }
+      }
+
+      /* ======================================================================
+         Column 1: App Icon (Top)
+         ====================================================================== */
       > aside {
-        flex-shrink: 0;
+        grid-column: 1 !important;
+        grid-row: 1 / 3 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        width: 100% !important;
+
+        .o_field_image_url {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 52px !important;
+          height: 52px !important;
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
 
         img {
-          width: 48px;
-          height: 48px;
-          min-width: 48px;
-          min-height: 48px;
-          border-radius: var(--insilos-radius-architectural, 4px);
-          border: 1px solid var(--insilos-border-subtle, #e2e8f0);
-          box-shadow: var(--insilos-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
-          object-fit: cover;
-          background-color: var(--insilos-bg-hover, #f1f5f9);
+          width: 52px !important;
+          height: 52px !important;
+          min-width: 52px !important;
+          min-height: 52px !important;
+          max-width: 52px !important;
+          max-height: 52px !important;
+          border-radius: var(--insilos-radius-architectural, 4px) !important;
+          border: none !important;
+          box-shadow: none !important;
+          object-fit: contain !important;
+          background-color: transparent !important;
         }
 
         .oe_module_flag {
@@ -137,31 +224,40 @@
         }
       }
 
-      /* Main: Content & Info */
+      /* ======================================================================
+         Column 2: Title, Description, and Actions
+         Inner containers use display: contents to participate directly in grid
+         ====================================================================== */
+      > .o_record_main,
       > main {
-        flex: 1;
-        min-width: 0;
-        margin-right: 0 !important;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        display: contents !important;
 
+        /* Column 2 (Top): Module Title */
         h2 {
-          font-size: 13.5px;
+          grid-column: 2 !important;
+          grid-row: 1 !important;
+          font-size: 14.5px;
           font-weight: 650;
           color: var(--insilos-text-primary, #0f172a);
-          margin: 0 0 4px 0;
+          margin: 0 !important;
+          padding-right: 28px !important;
           letter-spacing: -0.01em;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          line-height: 1.3;
         }
 
-        small.text-muted {
+        /* Column 2 (Middle): Module Description & Technical Identifier */
+        small.text-muted,
+        small {
+          grid-column: 2 !important;
+          grid-row: 2 !important;
           font-size: 12px;
           color: var(--insilos-text-secondary, #475569) !important;
           line-height: 1.4;
-          margin-bottom: 12px;
+          margin: 0 !important;
+          padding-right: 28px !important;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
@@ -178,49 +274,49 @@
           }
         }
 
-        /* Footer: Actions & Status */
+        /* Footer: Actions dissolved into grid via display: contents */
         footer {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding-top: 12px;
-          border-top: 1px solid var(--insilos-border-subtle, #e2e8f0);
-          margin-top: auto;
-          gap: 8px;
+          display: contents !important;
 
-          /* "Installed" Status Badge */
+          /* ------------------------------------------------------------------
+             Column 1 (Bottom): Primary Action / Status Button under Icon
+             ------------------------------------------------------------------ */
+          button.btn-primary,
           button.d-flex.align-items-center.text-muted,
-          button.text-muted:disabled,
-          .badge-installed {
-            background-color: var(--insilos-positive-bg, #e7f6ed) !important;
-            color: var(--insilos-positive, #107e3e) !important;
-            border: 1px solid var(--insilos-positive-border, rgba(16, 126, 62, 0.3)) !important;
+          button.text-muted,
+          .badge-installed,
+          a.btn-info,
+          button[name="button_immediate_install"],
+          button[name="button_immediate_upgrade"],
+          button[disabled] {
+            grid-column: 1 !important;
+            grid-row: 3 !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 5px 4px !important;
             font-size: 11px !important;
-            font-weight: 600 !important;
-            padding: 4px 8px !important;
-            border-radius: var(--insilos-radius-micro, 2px) !important;
-            cursor: default !important;
+            font-weight: 650 !important;
+            text-align: center !important;
+            justify-content: center !important;
             display: inline-flex !important;
             align-items: center !important;
-            gap: 4px !important;
-            line-height: 14px !important;
-
-            &::before {
-              content: '✓';
-              font-weight: 700;
-              margin-right: 2px;
-            }
+            border-radius: var(--insilos-radius-micro, 2px) !important;
+            float: none !important;
+            box-sizing: border-box !important;
+            height: 28px !important;
+            line-height: 1 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
           }
 
-          /* "Activate" / "Install" Button (IBM Carbon Primary Button) */
+          /* "Activate" Button (IBM Carbon Primary Button) */
           button.btn-primary {
             background: var(--insilos-primary, #0b2e64) !important;
             border: 1px solid var(--insilos-primary, #0b2e64) !important;
             color: #ffffff !important;
-            font-weight: 600 !important;
-            font-size: 12px !important;
-            padding: 4px 12px !important;
-            border-radius: var(--insilos-radius-micro, 2px) !important;
             box-shadow: none !important;
             transition: background-color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
 
@@ -236,20 +332,77 @@
             }
           }
 
-          /* "Learn More" / "Module Info" / Secondary Action Buttons */
-          a.btn-secondary,
-          button.btn-secondary {
-            background: transparent !important;
-            border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
-            color: var(--insilos-text-secondary, #475569) !important;
-            font-weight: 500 !important;
-            font-size: 11.5px !important;
-            padding: 4px 10px !important;
-            border-radius: var(--insilos-radius-micro, 2px) !important;
-            transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
+          /* "Installed" Status Badge (SAP Fiori Horizon Positive Semantic) */
+          button.d-flex.align-items-center.text-muted,
+          button.text-muted:disabled,
+          .badge-installed {
+            background-color: var(--insilos-positive-bg, #e7f6ed) !important;
+            color: var(--insilos-positive, #107e3e) !important;
+            border: 1px solid var(--insilos-positive-border, rgba(16, 126, 62, 0.3)) !important;
+            cursor: default !important;
+            gap: 4px !important;
+
+            &::before {
+              content: '✓';
+              font-weight: 700;
+              margin-right: 2px;
+            }
+          }
+
+          /* Upgrade / Buy Button (SAP Fiori Information Semantic) */
+          a.btn-info,
+          button.btn-info {
+            background-color: var(--insilos-information-bg, #e8f2fe) !important;
+            color: var(--insilos-information, #0070f2) !important;
+            border: 1px solid var(--insilos-information-border, rgba(0, 112, 242, 0.3)) !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
 
             &:hover {
-              background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12)) !important;
+              background-color: var(--insilos-information, #0070f2) !important;
+              color: #ffffff !important;
+            }
+          }
+
+          /* Processing / Disabled Action Buttons */
+          button[disabled] {
+            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+            border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
+            color: var(--insilos-text-tertiary, #64748b) !important;
+            cursor: not-allowed !important;
+            opacity: 0.8 !important;
+          }
+
+          /* ------------------------------------------------------------------
+             Column 2 (Bottom): "Learn More" / "Module Info" Secondary Action
+             Full width (100%) across description column
+             ------------------------------------------------------------------ */
+          a.btn-secondary,
+          button.btn-secondary:not([disabled]),
+          #module_info {
+            grid-column: 2 !important;
+            grid-row: 3 !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 5px 12px !important;
+            font-size: 12px !important;
+            font-weight: 550 !important;
+            text-align: center !important;
+            justify-content: center !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            border-radius: var(--insilos-radius-micro, 2px) !important;
+            float: none !important;
+            box-sizing: border-box !important;
+            height: 28px !important;
+            line-height: 1 !important;
+            background: var(--insilos-bg-subtle, #f8fafc) !important;
+            border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
+            color: var(--insilos-text-primary, #0f172a) !important;
+            transition: all var(--insilos-transition-fast) !important;
+
+            &:hover {
+              background-color: var(--insilos-bg-hover, #f1f5f9) !important;
               color: var(--insilos-text-primary, #0f172a) !important;
               border-color: var(--insilos-border-strong, #94a3b8) !important;
               transform: none !important;
@@ -260,23 +413,6 @@
               outline-offset: 2px !important;
             }
           }
-
-          /* Upgrade / Info Button */
-          a.btn-info,
-          button.btn-info {
-            background-color: var(--insilos-information-bg, #e8f2fe) !important;
-            color: var(--insilos-information, #0070f2) !important;
-            border: 1px solid var(--insilos-information-border, rgba(0, 112, 242, 0.3)) !important;
-            font-size: 11.5px !important;
-            font-weight: 600 !important;
-            padding: 4px 10px !important;
-            border-radius: var(--insilos-radius-micro, 2px) !important;
-
-            &:hover {
-              background-color: var(--insilos-information, #0070f2) !important;
-              color: #ffffff !important;
-            }
-          }
         }
       }
     }
@@ -284,7 +420,7 @@
 }
 
 /* ==========================================================================
-   Dark Mode Overrides (IBM Carbon Gray 100 & SAP Fiori Horizon Dark)
+   3. Dark Mode Overrides (IBM Carbon Gray 100 & SAP Fiori Horizon Dark)
    ========================================================================== */
 body.o_dark_mode,
 .o_dark_mode,
@@ -335,23 +471,37 @@ body.o_dark_mode,
         border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
 
         &:hover {
-          border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18)) !important;
+          border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.2)) !important;
           border-left-color: var(--insilos-cyan-primary, #00f2fe) !important;
+        }
+
+        .o_dropdown_kanban {
+          button {
+            color: var(--insilos-text-tertiary, #94a3b8) !important;
+            background: transparent !important;
+            border: none !important;
+
+            &:hover {
+              color: #ffffff !important;
+            }
+          }
         }
 
         > aside {
           img {
-            border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1));
+            border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.12));
             background-color: var(--insilos-bg-hover, #1e293b);
           }
         }
 
+        > .o_record_main,
         > main {
           h2 {
-            color: var(--insilos-text-primary, #f8fafc);
+            color: var(--insilos-text-primary, #f8fafc) !important;
           }
 
-          small.text-muted {
+          small.text-muted,
+          small {
             color: var(--insilos-text-secondary, #cbd5e1) !important;
 
             code {
@@ -361,8 +511,6 @@ body.o_dark_mode,
           }
 
           footer {
-            border-top-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1));
-
             button.d-flex.align-items-center.text-muted,
             button.text-muted:disabled,
             .badge-installed {
@@ -383,14 +531,16 @@ body.o_dark_mode,
             }
 
             a.btn-secondary,
-            button.btn-secondary {
-              border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18)) !important;
-              color: var(--insilos-text-secondary, #cbd5e1) !important;
+            button.btn-secondary:not([disabled]),
+            #module_info {
+              background: rgba(255, 255, 255, 0.05) !important;
+              border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.16)) !important;
+              color: #f1f5f9 !important;
 
               &:hover {
-                background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12)) !important;
-                color: var(--insilos-text-primary, #f8fafc) !important;
-                border-color: var(--insilos-border-strong, rgba(255, 255, 255, 0.32)) !important;
+                background-color: rgba(0, 240, 255, 0.12) !important;
+                color: #00f0ff !important;
+                border-color: #00f0ff !important;
               }
             }
 
@@ -405,9 +555,68 @@ body.o_dark_mode,
                 color: #ffffff !important;
               }
             }
+
+            button[disabled] {
+              background-color: rgba(255, 255, 255, 0.06) !important;
+              border-color: rgba(255, 255, 255, 0.12) !important;
+              color: #64748b !important;
+            }
           }
         }
       }
     }
   }
 }
+
+/* ==========================================================================
+   Responsive Adaptations (Tablet & Mobile Viewports)
+   ========================================================================== */
+.o_kanban_view.o_modules_kanban {
+  /* --- Tablet Viewport (<= 768px) --- */
+  @media (max-width: 768px) {
+    .o_kanban_renderer {
+      padding: 16px 12px 48px !important;
+      gap: 12px !important;
+
+      .o_kanban_record {
+        min-width: 280px !important;
+        width: 100% !important;
+        padding: 14px !important;
+        column-gap: 14px !important;
+        row-gap: 10px !important;
+      }
+    }
+  }
+
+  /* --- Mobile Viewport (<= 480px) --- */
+  @media (max-width: 480px) {
+    .o_kanban_renderer {
+      padding: 12px 8px 36px !important;
+      gap: 10px !important;
+
+      .o_kanban_record {
+        grid-template-columns: 72px 1fr !important;
+        column-gap: 12px !important;
+        row-gap: 8px !important;
+        padding: 12px !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        min-height: auto !important;
+
+        aside,
+        .o_kanban_image {
+          width: 52px !important;
+          height: 52px !important;
+        }
+
+        .btn,
+        button,
+        a.btn {
+          min-height: 28px !important;
+          touch-action: manipulation;
+        }
+      }
+    }
+  }
+}
+

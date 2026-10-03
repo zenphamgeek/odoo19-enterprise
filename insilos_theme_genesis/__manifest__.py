@@ -34,6 +34,10 @@
             'insilos_theme_genesis/static/src/views/list/floating_action_bar/floating_action_bar.js',
             'insilos_theme_genesis/static/src/views/list/list_view_extension.xml',
             'insilos_theme_genesis/static/src/views/list/list_controller_patch.js',
+            'insilos_theme_genesis/static/src/icons/insilos_icon_normalizer.js',
+        ],
+        'web.assets_frontend': [
+            'insilos_theme_genesis/static/src/scss/insilos_public_auth.scss',
         ],
     },
     'installable': True,

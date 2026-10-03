@@ -10,6 +10,117 @@
                  data-name="Insilos AI CCTV Safety Camera"
                  data-bs-theme="dark"
                  id="insilos_cctv_camera_section">
+            <style>
+                .s_insilos_cctv_ai_camera .ins-cctv-viewport {
+                    position: relative !important;
+                    width: 100% !important;
+                    aspect-ratio: 16 / 9;
+                    min-height: 440px;
+                    background-color: #030712 !important;
+                    border-radius: 1rem !important;
+                    overflow: hidden !important;
+                    border: 1px solid rgba(255, 128, 0, 0.35) !important;
+                    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 128, 0, 0.15) !important;
+                    user-select: none !important;
+                }
+                @media (max-width: 767.98px) {
+                    .s_insilos_cctv_ai_camera .ins-cctv-viewport {
+                        min-height: 280px !important;
+                        aspect-ratio: auto !important;
+                        height: 320px !important;
+                    }
+                }
+                .s_insilos_cctv_ai_camera .ins-cctv-overlay-layer {
+                    position: absolute !important;
+                    inset: 0 !important;
+                    z-index: 5 !important;
+                    pointer-events: none !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-cctv-box {
+                    position: absolute !important;
+                    border-radius: 4px !important;
+                    box-sizing: border-box !important;
+                    pointer-events: none !important;
+                    transition: opacity 0.25s ease, transform 0.2s ease, border-color 0.2s ease !important;
+                    opacity: 1 !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-cctv-box.is-hidden {
+                    display: none !important;
+                    opacity: 0 !important;
+                    visibility: hidden !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-cctv-box .ins-cctv-box-tag {
+                    position: absolute !important;
+                    top: -24px !important;
+                    left: -2px !important;
+                    font-family: var(--bs-font-monospace, monospace) !important;
+                    font-size: 0.68rem !important;
+                    font-weight: 700 !important;
+                    padding: 2px 7px !important;
+                    border-radius: 3px !important;
+                    white-space: nowrap !important;
+                    text-transform: uppercase !important;
+                    letter-spacing: 0.04em !important;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-bbox-helmet {
+                    border: 2px solid #10b981 !important;
+                    background-color: rgba(16, 185, 129, 0.14) !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-bbox-helmet .ins-cctv-box-tag {
+                    background-color: #10b981 !important;
+                    color: #022c22 !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-bbox-vest {
+                    border: 2px solid #06b6d4 !important;
+                    background-color: rgba(6, 182, 212, 0.14) !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-bbox-vest .ins-cctv-box-tag {
+                    background-color: #06b6d4 !important;
+                    color: #083344 !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-bbox-person {
+                    border: 1px dashed rgba(255, 255, 255, 0.4) !important;
+                    background-color: rgba(255, 255, 255, 0.03) !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-bbox-person .ins-cctv-box-tag {
+                    background-color: rgba(30, 41, 59, 0.9) !important;
+                    color: #cbd5e1 !important;
+                    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-bbox-danger-zone {
+                    border: 2px dashed #f59e0b !important;
+                    background-color: rgba(245, 158, 11, 0.12) !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-bbox-danger-zone .ins-cctv-box-tag {
+                    background-color: #f59e0b !important;
+                    color: #451a03 !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-cctv-box.is-violation {
+                    border: 2px solid #ef4444 !important;
+                    background-color: rgba(239, 68, 68, 0.25) !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-cctv-box.is-violation .ins-cctv-box-tag {
+                    background-color: #ef4444 !important;
+                    color: #ffffff !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-cctv-rt-stream {
+                    position: absolute !important;
+                    bottom: 42px !important;
+                    left: 14px !important;
+                    right: 14px !important;
+                    padding: 6px 14px !important;
+                    background: rgba(3, 7, 18, 0.85) !important;
+                    backdrop-filter: blur(8px) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                    border-radius: 8px !important;
+                    z-index: 6 !important;
+                    font-family: var(--bs-font-monospace, monospace) !important;
+                    font-size: 0.72rem !important;
+                    color: #94a3b8 !important;
+                    pointer-events: none !important;
+                }
+            </style>
             <div class="container position-relative z-1 py-4">
 
                 <!-- Section Header -->
@@ -115,7 +226,7 @@
                             </div>
 
                             <!-- Industrial HTML5 Video Player (Authentic Site Supervisor with Hard Hat & PPE) -->
-                            <video class="ins-cctv-video" loop="loop" muted="muted" playsinline="playsinline" autoplay="autoplay" preload="metadata" poster="/insilos_website/static/src/video/cctv_ppe/cctv_cam02_poster.webp">
+                            <video class="ins-cctv-video" loop="loop" muted="muted" playsinline="playsinline" preload="none" poster="/insilos_website/static/src/video/cctv_ppe/cctv_cam02_poster.webp">
                                 <source class="ins-cctv-video-source" src="/insilos_website/static/src/video/cctv_ppe/cctv_cam02_site_communication.mp4" type="video/mp4"/>
                             </video>
 
@@ -382,8 +493,8 @@
                     </div>
                     <div class="modal-body p-0 bg-black position-relative">
                         <div class="ratio ratio-16x9">
-                            <video id="insilosHseCinemaPlayer" class="w-100 h-100" controls="controls" playsinline="playsinline" preload="metadata" poster="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_poster.webp">
-                                <source src="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_GOLD_MASTER.mp4" type="video/mp4"/>
+                            <video id="insilosHseCinemaPlayer" class="w-100 h-100" controls="controls" playsinline="playsinline" preload="none" poster="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_poster.webp?v=20261003_sovereign">
+                                <source src="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_GOLD_MASTER.mp4?v=20261003_sovereign" type="video/mp4"/>
                                 Trình duyệt của bạn không hỗ trợ định dạng video MP4.
                             </video>
                         </div>

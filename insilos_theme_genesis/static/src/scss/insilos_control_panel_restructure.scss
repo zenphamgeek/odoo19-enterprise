@@ -303,17 +303,35 @@
   .o_cp_searchview {
     height: 34px !important;
     min-height: 34px !important;
-    border-radius: var(--insilos-radius-sm, 4px) !important;
+    border-radius: 20px !important;
     background-color: var(--insilos-bg-surface, #ffffff) !important;
     border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
-    padding: 0 4px !important;
+    padding: 0 10px !important;
     display: flex !important;
     align-items: center !important;
     transition: all var(--insilos-transition-fast);
 
     &:focus-within {
-      border-color: var(--insilos-border-focus, #0f62fe) !important;
-      box-shadow: 0 0 0 2px var(--insilos-primary-subtle, rgba(15, 98, 254, 0.2)) !important;
+      border-color: #2481cc !important;
+      box-shadow: 0 0 0 2px rgba(36, 129, 204, 0.18) !important;
+    }
+
+    input,
+    .o_searchview_input,
+    input.o_searchview_input {
+      outline: none !important;
+      outline-offset: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+
+      &:focus,
+      &.focus,
+      &:focus-visible {
+        outline: none !important;
+        outline-offset: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
     }
 
     .o_searchview {
@@ -506,12 +524,17 @@
   }
 
   /* --------------------------------------------------------------------------
-     5. Pager Navigation (Tabular Numbers & Micro-Arrows)
+     5. Pager Navigation & Utility Controls (Telegram Capsule Pill Standard)
      -------------------------------------------------------------------------- */
   .o_pager {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 6px !important;
+    gap: 4px !important;
+    height: 32px !important;
+    background-color: rgba(0, 0, 0, 0.03) !important;
+    border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+    border-radius: 20px !important;
+    padding: 0 6px 0 10px !important;
 
     .o_pager_value {
       font-family: var(--insilos-font-mono);
@@ -529,53 +552,114 @@
     }
 
     .btn-group {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 2px !important;
+
       .btn {
-        width: 28px !important;
-        height: 28px !important;
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
         padding: 0 !important;
-        border-radius: var(--insilos-radius-xs, 2px) !important;
-        border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-        background-color: var(--insilos-bg-surface, #ffffff) !important;
+        border-radius: 50% !important;
+        border: none !important;
+        background-color: transparent !important;
         color: var(--insilos-text-secondary, #475569) !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
+        transition: all var(--insilos-transition-fast);
 
         &:hover:not(:disabled) {
-          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-          color: var(--insilos-text-primary, #0f172a) !important;
+          background-color: rgba(36, 129, 204, 0.12) !important;
+          color: #2481cc !important;
         }
 
         &:disabled {
-          opacity: 0.4 !important;
+          opacity: 0.3 !important;
+        }
+
+        i, .oi {
+          font-size: 11px !important;
         }
       }
     }
 
     .o_knowledge_icon_search,
     button.o_knowledge_icon_search {
-      width: 28px !important;
-      height: 28px !important;
-      min-width: 28px !important;
+      width: 26px !important;
+      height: 26px !important;
+      min-width: 26px !important;
       padding: 0 !important;
-      border-radius: var(--insilos-radius-xs, 2px) !important;
-      border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-      background-color: var(--insilos-bg-surface, #ffffff) !important;
-      color: var(--insilos-text-secondary, #475569) !important;
+      border-radius: 50% !important;
+      border: none !important;
+      background-color: transparent !important;
+      color: var(--insilos-primary, #0b2e64) !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
       transition: all var(--insilos-transition-fast);
 
       &:hover {
-        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-        border-color: var(--insilos-border-strong, #94a3b8) !important;
-        color: var(--insilos-text-primary, #0f172a) !important;
+        background-color: rgba(36, 129, 204, 0.12) !important;
+        transform: scale(1.08) !important;
       }
 
-      svg, i {
-        width: 15px !important;
-        height: 15px !important;
+      svg {
+        width: 17px !important;
+        height: 17px !important;
+        fill: #0b2e64 !important;
+
+        path:first-child {
+          fill: #00f0ff !important;
+          opacity: 0.35 !important;
+        }
+
+        path:last-child {
+          fill: #0b2e64 !important;
+        }
+      }
+
+      i {
+        font-size: 13px !important;
+        color: var(--insilos-primary, #0b2e64) !important;
+      }
+    }
+  }
+
+  .o_knowledge_icon_search,
+  button.o_knowledge_icon_search {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    padding: 0 !important;
+    border-radius: 20px !important;
+    border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+    background-color: rgba(36, 129, 204, 0.06) !important;
+    color: var(--insilos-primary, #0b2e64) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all var(--insilos-transition-fast);
+
+    &:hover {
+      background-color: rgba(36, 129, 204, 0.14) !important;
+      border-color: rgba(36, 129, 204, 0.3) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    svg {
+      width: 18px !important;
+      height: 18px !important;
+      fill: #0b2e64 !important;
+
+      path:first-child {
+        fill: #00f0ff !important;
+        opacity: 0.35 !important;
+      }
+
+      path:last-child {
+        fill: #0b2e64 !important;
       }
     }
   }
@@ -815,21 +899,67 @@ body.o_dark_mode,
       }
     }
 
-    .o_pager .btn-group .btn {
-      background-color: var(--insilos-bg-card, #141e33) !important;
-      border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
-      color: var(--insilos-text-primary, #f8fafc) !important;
+    .o_pager {
+      background-color: rgba(255, 255, 255, 0.04) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+
+      .o_pager_value,
+      .o_pager_limit {
+        color: #f8fafc !important;
+      }
+
+      .btn-group .btn {
+        background-color: transparent !important;
+        border: none !important;
+        color: #cbd5e1 !important;
+
+        &:hover:not(:disabled) {
+          background-color: rgba(0, 242, 254, 0.15) !important;
+          color: #00f2fe !important;
+        }
+      }
+
+      .o_knowledge_icon_search,
+      button.o_knowledge_icon_search {
+        background-color: transparent !important;
+        border: none !important;
+
+        svg {
+          fill: #00f2fe !important;
+
+          path:first-child {
+            fill: #60a5fa !important;
+            opacity: 0.4 !important;
+          }
+
+          path:last-child {
+            fill: #00f2fe !important;
+          }
+        }
+      }
     }
 
     .o_knowledge_icon_search,
     button.o_knowledge_icon_search {
-      background-color: var(--insilos-bg-card, #141e33) !important;
-      border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
-      color: var(--insilos-text-primary, #f8fafc) !important;
+      background-color: rgba(0, 242, 254, 0.08) !important;
+      border-color: rgba(0, 242, 254, 0.25) !important;
 
       &:hover {
-        background-color: #1e293b !important;
-        border-color: var(--insilos-primary, #00f2fe) !important;
+        background-color: rgba(0, 242, 254, 0.18) !important;
+        border-color: #00f2fe !important;
+      }
+
+      svg {
+        fill: #00f2fe !important;
+
+        path:first-child {
+          fill: #60a5fa !important;
+          opacity: 0.4 !important;
+        }
+
+        path:last-child {
+          fill: #00f2fe !important;
+        }
       }
     }
   }

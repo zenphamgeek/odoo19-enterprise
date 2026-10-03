@@ -26,7 +26,7 @@ def get_attachment_ids_from_text(text):
 
 def apply_numeric_citations(text, attachment_data, link_attrs='target="_blank" rel="noreferrer noopener"'):
     """
-    Replace inline citations with numbered, clickable citations [1][2]...
+    Replace inline citations with numbered, interactive evidence-grounded citation badges [1][2]...
     :param text: The input text containing citation placeholders (e.g., [SOURCE:ID1, ID2, ...])
     :param attachment_data: Map of attachment_id -> {'url', 'source_name'}
     :param link_attrs: HTML attributes for the citation link
@@ -49,13 +49,31 @@ def apply_numeric_citations(text, attachment_data, link_attrs='target="_blank" r
                 attachment_info = attachment_data.get(attachment_id_int, {})
                 if not attachment_info:
                     continue
-                href = attachment_info['url']
+                href = attachment_info.get('url', '')
+                source_name = attachment_info.get('source_name', f'Source {attachment_id_int}')
+                # Clean up display name (e.g., trim long extensions or prefixes)
+                display_label = source_name.rsplit('/', 1)[-1]
+                if len(display_label) > 28:
+                    display_label = display_label[:25] + "..."
+
                 if attachment_id_int not in resolved_citations:
                     citation_num = len(resolved_citations) + 1
                     resolved_citations[attachment_id_int] = citation_num
                 else:
                     citation_num = resolved_citations[attachment_id_int]
-                citation_html = f'<sup><a href="{href}" {link_attrs} style="text-decoration: none;"> [{citation_num}] </a></sup>'
+
+                # Evidence-Grounded Interactive Citation Chip (SAP Fiori / IBM Carbon Style)
+                citation_html = (
+                    f'<sup class="o_ai_citation_sup ms-1">'
+                    f'<a href="{href}" {link_attrs} '
+                    f'class="o_ai_citation_badge badge rounded-pill" '
+                    f'data-attachment-id="{attachment_id_int}" '
+                    f'data-source-name="{source_name}" '
+                    f'title="{source_name}">'
+                    f'<i class="ph ph-file-text me-1" aria-hidden="true"></i>'
+                    f'[{citation_num}] {display_label}'
+                    f'</a></sup>'
+                )
                 new_content += citation_html
 
     return new_content

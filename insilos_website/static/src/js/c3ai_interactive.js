@@ -426,7 +426,7 @@ function initInsilosInteractive() {
         let activeBuffer = "A"; // "A" or "B"
         let timer = null;
         let isPaused = false;
-        const CYCLE_DURATION = 8000;
+        const CYCLE_DURATION = 14000;
 
         // Scene Transition Engine State (Blade, Glitch, Iris, Warp, Luma, Shutter)
         let currentFxMode = "cycle";
@@ -1094,7 +1094,7 @@ function initInsilosInteractive() {
                 let currentLayer = 1;
                 let isHovered = false;
                 let isIntersecting = true;
-                const cycleDuration = 7000;
+                const cycleDuration = 14000;
 
                 function startCockpitCycle() {
                     stopCockpitCycle();
@@ -1530,7 +1530,7 @@ function initInsilosInteractive() {
             topoObserver.observe(topo, { attributes: true });
         });
     }
-    
+
     // ── Insilos 12 Gold Master Suite Controller & Cinema Theater Modal ──
     function initGoldMasterSuite() {
         const suite = document.querySelector('#insilos-gold-suite');
@@ -1996,6 +1996,7 @@ function initInsilosInteractive() {
 
     initGoldMasterSuite();
     initPlatformTopology();
+    init3DRoadmap();
     initPricingConfigurator();
     initResourceFilters();
     initDemoWizard();
@@ -3351,6 +3352,161 @@ function initDigitalTwinSimulator() {
     switchDigitalTwinAsset('substation');
 }
 
+// =========================================================================
+// 3D INTERACTIVE ENTERPRISE ROADMAP CONTROLLER
+// =========================================================================
+
+function init3DRoadmap() {
+    const viewports = document.querySelectorAll('.ins-3d-roadmap-viewport');
+    if (!viewports.length) return;
+
+    viewports.forEach(viewport => {
+        if (viewport.__roadmap_initialized) return;
+        viewport.__roadmap_initialized = true;
+
+        const cards = viewport.querySelectorAll('.ins-roadmap-card');
+        const milestones = viewport.querySelectorAll('.ins-milestone-node');
+        const progressBar = viewport.querySelector('.ins-roadmap-rail-progress');
+        const rail = viewport.querySelector('.ins-roadmap-rail');
+        const dossierPanes = viewport.querySelectorAll('.ins-dossier-pane');
+        const phaseTitleEl = viewport.querySelector('.ins-dossier-phase-title');
+        const phaseSubEl = viewport.querySelector('.ins-dossier-phase-sub');
+        const prevBtn = viewport.querySelector('.ins-nav-prev');
+        const nextBtn = viewport.querySelector('.ins-nav-next');
+        const modeBtns = viewport.querySelectorAll('.ins-mode-btn');
+
+        let currentPhase = 1;
+
+        const progressMap = {
+            1: '25%',
+            2: '50%',
+            3: '75%',
+            4: '100%'
+        };
+
+        function activatePhase(phaseNum) {
+            currentPhase = parseInt(phaseNum, 10);
+            if (isNaN(currentPhase) || currentPhase < 1) currentPhase = 1;
+            if (currentPhase > 4) currentPhase = 4;
+
+            viewport.setAttribute('data-active-phase', currentPhase);
+            if (rail) rail.setAttribute('data-active-phase', currentPhase);
+
+            // Update Cards
+            cards.forEach(card => {
+                const phase = parseInt(card.getAttribute('data-phase'), 10);
+                if (phase === currentPhase) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+
+            // Update Milestones
+            milestones.forEach(m => {
+                const phase = parseInt(m.getAttribute('data-phase'), 10);
+                if (phase === currentPhase) {
+                    m.classList.add('active');
+                } else {
+                    m.classList.remove('active');
+                }
+            });
+
+            // Update Progress Rail
+            if (progressBar) {
+                progressBar.style.width = progressMap[currentPhase] || '25%';
+            }
+
+            // Update Dossier Panes
+            dossierPanes.forEach(pane => {
+                const phase = parseInt(pane.getAttribute('data-phase'), 10);
+                if (phase === currentPhase) {
+                    pane.classList.add('active');
+                    const title = pane.getAttribute('data-phase-title');
+                    const sub = pane.getAttribute('data-phase-sub');
+                    if (phaseTitleEl && title) phaseTitleEl.textContent = title;
+                    if (phaseSubEl && sub) phaseSubEl.textContent = sub;
+                } else {
+                    pane.classList.remove('active');
+                }
+            });
+        }
+
+        // Click on Cards
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                const phase = card.getAttribute('data-phase');
+                if (phase) activatePhase(phase);
+            });
+        });
+
+        // Click on Milestones
+        milestones.forEach(m => {
+            m.addEventListener('click', (e) => {
+                e.preventDefault();
+                const phase = m.getAttribute('data-phase');
+                if (phase) activatePhase(phase);
+            });
+        });
+
+        // Prev / Next Navigation
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                activatePhase(currentPhase > 1 ? currentPhase - 1 : 4);
+            });
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                activatePhase(currentPhase < 4 ? currentPhase + 1 : 1);
+            });
+        }
+
+        // Mode switcher: Isometric 3D / Flat / Focus
+        modeBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const mode = btn.getAttribute('data-mode');
+                viewport.classList.remove('ins-isometric-active', 'ins-flat-active', 'ins-focus-active');
+                if (mode === 'isometric') {
+                    viewport.classList.add('ins-isometric-active');
+                } else if (mode === 'flat') {
+                    viewport.classList.add('ins-flat-active');
+                } else if (mode === 'focus') {
+                    viewport.classList.add('ins-focus-active');
+                }
+            });
+        });
+
+        // Mouse parallax tilt on viewport
+        viewport.addEventListener('mousemove', e => {
+            if (!viewport.classList.contains('ins-isometric-active')) return;
+            const rect = viewport.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const tiltX = ((y - centerY) / centerY) * -6;
+            const tiltY = ((x - centerX) / centerX) * 6;
+            viewport.style.setProperty('--tilt-x', `${tiltX.toFixed(2)}deg`);
+            viewport.style.setProperty('--tilt-y', `${tiltY.toFixed(2)}deg`);
+        });
+
+        viewport.addEventListener('mouseleave', () => {
+            viewport.style.setProperty('--tilt-x', '0deg');
+            viewport.style.setProperty('--tilt-y', '0deg');
+        });
+
+        // Initialize: Activate phase 1 with isometric mode
+        viewport.classList.add('ins-isometric-active');
+        activatePhase(1);
+    });
+}
+
 if (!window.__insilos_bootstrap_registered) {
     window.__insilos_bootstrap_registered = true;
     if (document.readyState === "loading") {
@@ -3383,4 +3539,5 @@ window.initKnowledgeGraphVisualizer = initKnowledgeGraphVisualizer;
 window.initHsCodeRecommender = initHsCodeRecommender;
 window.initRoiEngineeringStudio = initRoiEngineeringStudio;
 window.initDigitalTwinSimulator = initDigitalTwinSimulator;
+window.init3DRoadmap = init3DRoadmap;
 

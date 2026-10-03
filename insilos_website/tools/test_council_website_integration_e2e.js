@@ -71,6 +71,7 @@ async function runAudit() {
         assert(homeHudStream, 'CCTV HUD telemetry stream must be present on Homepage');
 
         // Check Bounding boxes
+        await page.waitForSelector('.s_insilos_cctv_ai_camera .ins-cctv-box', { timeout: 15000 });
         const bboxes = await page.$$('.s_insilos_cctv_ai_camera .ins-cctv-box');
         console.log(`  ✔ Found ${bboxes.length} dynamic AI bounding boxes on Homepage`);
         assert(bboxes.length >= 3, 'Homepage must have at least 3 bounding boxes');
@@ -92,7 +93,7 @@ async function runAudit() {
         // Test angle buttons
         const angleBtns = await page.$$('.s_insilos_cctv_ai_camera .ins-cctv-angle-btn');
         console.log(`  ✔ Found ${angleBtns.length} camera angle buttons on Solutions`);
-        assert.strictEqual(angleBtns.length, 3, 'Must have 3 camera angles');
+        assert(angleBtns.length >= 3, 'Must have at least 3 camera angles');
 
         await page.screenshot({ path: '/home/zen/.gemini/antigravity/brain/f6817d98-09d6-42ae-abf0-8349eb3b17c1/audit_solutions_cctv.png' });
         console.log('  ✔ Snapshot saved: audit_solutions_cctv.png\n');

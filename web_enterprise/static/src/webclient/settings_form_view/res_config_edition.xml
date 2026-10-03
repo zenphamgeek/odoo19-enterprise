@@ -3,20 +3,24 @@
 
     <t t-inherit="res_config_edition" t-inherit-mode="extension">
 
-        <xpath expr="//h3" position="replace">
-            <h3 class="px-0">
-                Insilos <t t-out="serverVersion"/> (Enterprise Edition)
-            </h3>
+        <xpath expr="//div[hasclass('user-heading')]" position="replace">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div class="user-heading flex-grow-1">
+                    <h3 class="px-0 mb-1">
+                        Insilos <t t-out="serverVersion"/> (Enterprise Edition)
+                    </h3>
+                    <t t-if="expirationDate">
+                        <h5 class="text-muted mb-0">Database expiration: <t t-out="expirationDate"/></h5>
+                    </t>
+                </div>
+                <div class="o_about_logo_right ms-3 flex-shrink-0">
+                    <img src="/web/static/img/insilos_square_logo.png" alt="Insilos Enterprise" class="o_about_square_logo" width="72" height="72" style="width: 72px; height: 72px; max-width: 72px; max-height: 72px; border-radius: 12px; object-fit: contain; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; background: #ffffff; padding: 4px;"/>
+                </div>
+            </div>
         </xpath>
 
         <xpath expr="//*[@id='license']" position="replace">
             <a id="license" target="_blank" href="https://insilos.com/license" style="text-decoration: underline;">Insilos Enterprise Edition License V1.0</a>
-        </xpath>
-
-        <xpath expr="//h3" position="after">
-            <t t-if="expirationDate">
-                <h5>Database expiration: <t t-out="expirationDate"/></h5>
-            </t>
         </xpath>
 
     </t>

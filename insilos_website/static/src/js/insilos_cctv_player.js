@@ -951,12 +951,22 @@
         renderBoundingBoxes(boxes) {
             if (!this.overlayContainerEl) return;
             this.overlayContainerEl.innerHTML = '';
+            this.overlayContainerEl.style.position = 'absolute';
+            this.overlayContainerEl.style.inset = '0';
+            this.overlayContainerEl.style.zIndex = '5';
+            this.overlayContainerEl.style.pointerEvents = 'none';
 
             boxes.forEach((b) => {
                 const boxDiv = document.createElement('div');
                 boxDiv.id = b.id;
                 boxDiv.className = 'ins-cctv-box ins-bbox-' + b.type;
                 boxDiv.setAttribute('data-layer', b.layer);
+
+                boxDiv.style.position = 'absolute';
+                boxDiv.style.boxSizing = 'border-box';
+                boxDiv.style.borderRadius = '4px';
+                boxDiv.style.pointerEvents = 'none';
+                boxDiv.style.transition = 'opacity 0.25s ease, transform 0.2s ease, border-color 0.2s ease';
 
                 // Initial position from first keyframe
                 const initKf = (b.keyframes && b.keyframes.length > 0) ? b.keyframes[0] : { x: 0.1, y: 0.1, w: 0.2, h: 0.2, conf: 0.99 };
@@ -968,8 +978,43 @@
                 const tagSpan = document.createElement('span');
                 tagSpan.className = 'ins-cctv-box-tag';
                 tagSpan.textContent = b.baseTag + ' // ' + (initKf.conf * 100).toFixed(1) + '%';
-                boxDiv.appendChild(tagSpan);
+                tagSpan.style.position = 'absolute';
+                tagSpan.style.top = '-24px';
+                tagSpan.style.left = '-2px';
+                tagSpan.style.fontSize = '0.68rem';
+                tagSpan.style.fontWeight = '700';
+                tagSpan.style.padding = '2px 7px';
+                tagSpan.style.borderRadius = '3px';
+                tagSpan.style.whiteSpace = 'nowrap';
+                tagSpan.style.textTransform = 'uppercase';
+                tagSpan.style.letterSpacing = '0.04em';
+                tagSpan.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.5)';
 
+                // Defensive styling based on type
+                if (b.type === 'helmet') {
+                    boxDiv.style.border = '2px solid #10b981';
+                    boxDiv.style.backgroundColor = 'rgba(16, 185, 129, 0.14)';
+                    tagSpan.style.backgroundColor = '#10b981';
+                    tagSpan.style.color = '#022c22';
+                } else if (b.type === 'vest') {
+                    boxDiv.style.border = '2px solid #06b6d4';
+                    boxDiv.style.backgroundColor = 'rgba(6, 182, 212, 0.14)';
+                    tagSpan.style.backgroundColor = '#06b6d4';
+                    tagSpan.style.color = '#083344';
+                } else if (b.type === 'danger-zone') {
+                    boxDiv.style.border = '2px dashed #f59e0b';
+                    boxDiv.style.backgroundColor = 'rgba(245, 158, 11, 0.12)';
+                    tagSpan.style.backgroundColor = '#f59e0b';
+                    tagSpan.style.color = '#451a03';
+                } else if (b.type === 'person') {
+                    boxDiv.style.border = '1px dashed rgba(255, 255, 255, 0.4)';
+                    boxDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
+                    tagSpan.style.backgroundColor = 'rgba(30, 41, 59, 0.9)';
+                    tagSpan.style.color = '#cbd5e1';
+                    tagSpan.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+                }
+
+                boxDiv.appendChild(tagSpan);
                 this.overlayContainerEl.appendChild(boxDiv);
             });
 
@@ -981,15 +1026,22 @@
             const allBoxes = this.overlayContainerEl.querySelectorAll('.ins-cctv-box');
             allBoxes.forEach((box) => {
                 const layer = box.getAttribute('data-layer');
+                let visible = true;
                 if (layer === 'helmet') {
-                    if (this.layerVisibility.helmet) box.classList.remove('is-hidden');
-                    else box.classList.add('is-hidden');
+                    visible = this.layerVisibility.helmet;
                 } else if (layer === 'vest') {
-                    if (this.layerVisibility.vest) box.classList.remove('is-hidden');
-                    else box.classList.add('is-hidden');
+                    visible = this.layerVisibility.vest;
                 } else if (layer === 'danger') {
-                    if (this.layerVisibility.danger) box.classList.remove('is-hidden');
-                    else box.classList.add('is-hidden');
+                    visible = this.layerVisibility.danger;
+                }
+                if (visible) {
+                    box.classList.remove('is-hidden');
+                    box.style.display = 'block';
+                    box.style.opacity = '1';
+                } else {
+                    box.classList.add('is-hidden');
+                    box.style.display = 'none';
+                    box.style.opacity = '0';
                 }
             });
         }
@@ -1004,9 +1056,15 @@
             if (targetBox) {
                 targetBox.classList.add('is-violation');
                 targetBox.classList.remove('is-hidden');
+                targetBox.style.display = 'block';
+                targetBox.style.opacity = '1';
+                targetBox.style.border = '2px solid #ef4444';
+                targetBox.style.backgroundColor = 'rgba(239, 68, 68, 0.25)';
                 const tagEl = targetBox.querySelector('.ins-cctv-box-tag');
                 if (tagEl) {
                     tagEl.textContent = '🚨 VIOLATION // ' + cam.violationCode;
+                    tagEl.style.backgroundColor = '#ef4444';
+                    tagEl.style.color = '#ffffff';
                 }
             }
 
@@ -1014,9 +1072,13 @@
             const personBoxes = this.root.querySelectorAll('.ins-bbox-person');
             personBoxes.forEach((pBox) => {
                 pBox.classList.add('is-violation');
+                pBox.style.border = '2px solid #ef4444';
+                pBox.style.backgroundColor = 'rgba(239, 68, 68, 0.25)';
                 const pTag = pBox.querySelector('.ins-cctv-box-tag');
                 if (pTag) {
                     pTag.textContent = '🚨 VÙNG VI PHẠM AN TOÀN';
+                    pTag.style.backgroundColor = '#ef4444';
+                    pTag.style.color = '#ffffff';
                 }
             });
 

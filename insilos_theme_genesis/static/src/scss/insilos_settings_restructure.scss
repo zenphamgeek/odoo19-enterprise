@@ -239,20 +239,14 @@
             letter-spacing: -0.015em;
             padding: 16px 0 10px 0 !important;
             margin: 20px 0 14px 0 !important;
-            border-bottom: 2px solid var(--insilos-border-subtle);
+            border-bottom: 1px solid var(--insilos-border-subtle);
+            border-left: none !important;
             display: flex;
             align-items: center;
             position: relative;
 
             &::after {
-              content: '';
-              position: absolute;
-              bottom: -2px;
-              left: 0;
-              width: 50px;
-              height: 2.5px;
-              background: var(--insilos-primary);
-              border-radius: 2px;
+              display: none !important;
             }
           }
 
@@ -395,7 +389,25 @@
                   color: var(--insilos-text-primary);
                   margin-bottom: 2px;
                   letter-spacing: -0.01em;
-                  display: block;
+                  display: inline-block !important;
+                  margin-right: 6px !important;
+                  vertical-align: middle !important;
+                }
+
+                .o_doc_link,
+                a.o_doc_link,
+                .oi-help,
+                .fa-question-circle {
+                  display: inline-flex !important;
+                  align-items: center !important;
+                  vertical-align: middle !important;
+                  margin-bottom: 2px !important;
+                  color: var(--insilos-primary) !important;
+                  text-decoration: none !important;
+
+                  &:hover {
+                    opacity: 0.8;
+                  }
                 }
 
                 .text-muted,
@@ -637,6 +649,82 @@
                 margin: 0 !important;
                 min-height: 100%;
               }
+
+              /* App-Icon Developer Tools Tiles */
+              .o_dev_tools_tiles {
+                .o_dev_tile_btn {
+                  flex: 1 1 100px;
+                  max-width: 130px;
+                  min-height: 96px;
+                  background: var(--insilos-surface-card, #ffffff);
+                  border: 1px solid var(--insilos-border-subtle, #e2e8f0);
+                  border-radius: 8px;
+                  transition: all 0.15s ease-in-out;
+                  cursor: pointer;
+                  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+                  .o_dev_tile_icon {
+                    width: 42px;
+                    height: 42px;
+                    border-radius: 8px;
+                    background: rgba(255, 128, 0, 0.08);
+                    color: #FF8000;
+                    border: 1px solid rgba(255, 128, 0, 0.15);
+                    transition: all 0.15s ease;
+
+                    i {
+                      font-size: 20px;
+                      line-height: 1;
+                    }
+                  }
+
+                  .o_dev_tile_name {
+                    font-size: 12px;
+                    color: var(--insilos-text-primary, #0f172a);
+                    line-height: 1.2;
+                  }
+
+                  &:hover {
+                    border-color: #FF8000;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(255, 128, 0, 0.12);
+
+                    .o_dev_tile_icon {
+                      background: #FF8000;
+                      color: #ffffff;
+                    }
+                  }
+
+                  &.o_dev_tile_active {
+                    border-color: rgba(239, 68, 68, 0.3);
+                    .o_dev_tile_icon {
+                      background: rgba(239, 68, 68, 0.08);
+                      border-color: rgba(239, 68, 68, 0.2);
+                    }
+                    &:hover {
+                      border-color: #ef4444;
+                      .o_dev_tile_icon {
+                        background: #ef4444;
+                        color: #ffffff;
+                      }
+                    }
+                  }
+                }
+              }
+
+              /* About Card Square Logo Right-Aligned */
+              .o_about_logo_right {
+                .o_about_square_logo {
+                  width: 72px;
+                  height: 72px;
+                  border-radius: 12px;
+                  object-fit: contain;
+                  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                  border: 1px solid var(--insilos-border-subtle, #e2e8f0);
+                  background: #ffffff;
+                  padding: 4px;
+                }
+              }
             }
           }
         }
@@ -770,9 +858,10 @@ body.o_dark_mode,
             h2 {
               color: #f4f4f4 !important;
               border-bottom-color: #393939 !important;
+              border-left: none !important;
 
               &::after {
-                background: var(--insilos-cyan-primary, #00F2FE) !important;
+                display: none !important;
               }
             }
 
@@ -955,11 +1044,80 @@ body.o_dark_mode,
                     border-color: #525252 !important;
                   }
                 }
+
+                .o_dev_tools_tiles {
+                  .o_dev_tile_btn {
+                    background: #1e1e1e !important;
+                    border-color: #393939 !important;
+                    .o_dev_tile_name {
+                      color: #f4f4f4 !important;
+                    }
+                    .o_dev_tile_icon {
+                      background: rgba(0, 242, 254, 0.1) !important;
+                      border-color: rgba(0, 242, 254, 0.25) !important;
+                      color: #00F2FE !important;
+                    }
+                    &:hover {
+                      border-color: #00F2FE !important;
+                      box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2) !important;
+                      .o_dev_tile_icon {
+                        background: #00F2FE !important;
+                        color: #05101E !important;
+                      }
+                    }
+                    &.o_dev_tile_active {
+                      border-color: rgba(239, 68, 68, 0.4) !important;
+                      .o_dev_tile_icon {
+                        background: rgba(239, 68, 68, 0.15) !important;
+                        color: #ef4444 !important;
+                      }
+                      &:hover {
+                        border-color: #ef4444 !important;
+                        .o_dev_tile_icon {
+                          background: #ef4444 !important;
+                          color: #ffffff !important;
+                        }
+                      }
+                    }
+                  }
+                }
+
+                .o_about_logo_right {
+                  .o_about_square_logo {
+                    background: #262626 !important;
+                    border-color: #393939 !important;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+                  }
+                }
               }
             }
           }
         }
       }
     }
+  }
+}
+
+/* Universal About Card Square Logo */
+.o_about_square_logo,
+.o_about_logo_right img {
+  width: 72px !important;
+  height: 72px !important;
+  max-width: 72px !important;
+  max-height: 72px !important;
+  border-radius: 12px !important;
+  object-fit: contain !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+  background: #ffffff !important;
+  padding: 4px !important;
+}
+
+body.o_dark_mode {
+  .o_about_square_logo,
+  .o_about_logo_right img {
+    background: #262626 !important;
+    border-color: #393939 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
   }
 }

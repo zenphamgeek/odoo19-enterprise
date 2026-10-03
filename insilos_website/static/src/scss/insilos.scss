@@ -4,6 +4,13 @@
    Build: 2026-09-27-r2
    ========================================================================== */
 
+html, body, #wrapwrap {
+    scrollbar-gutter: stable;
+}
+html {
+    overflow-y: scroll;
+}
+
 // 1. Core Color Variables & Font Stack
 :root {
     --bs-body-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
@@ -276,8 +283,8 @@
 .badge-dual-violet, .ins-pill-dual-violet {
     background: rgba(139, 92, 246, 0.12) !important;
     border: 1px solid rgba(139, 92, 246, 0.35) !important;
-    color: #8B5CF6 !important;
-    --badge-color: #8B5CF6 !important;
+    color: #A78BFA !important;
+    --badge-color: #A78BFA !important;
 }
 .badge-dual-rose, .ins-pill-dual-rose {
     background: rgba(244, 63, 94, 0.12) !important;
@@ -326,6 +333,10 @@
 .bg-slate { background-color: #64748B !important; }
 .bg-rose { background-color: #9F1239 !important; }
 
+.bg-mint, .bg-cyan, .bg-yellow, .bg-amber {
+    color: var(--ins-text-dark, #05101E) !important;
+}
+
 .border-mint { border-color: #42E6C3 !important; }
 .border-cyan { border-color: #00F2FE !important; }
 .border-yellow { border-color: #FFC107 !important; }
@@ -355,8 +366,8 @@ p, .lead, .card-text, .ins-card-desc, .ins-proof-desc {
     text-wrap: pretty;
 }
 
-// Global Brand Orange Button Foundation
-.btn-primary {
+// Global Brand Orange Button Foundation (Excluded from auth portal)
+body:not(.insilos_auth_body) .btn-primary {
     background: var(--ins-orange-gradient) !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     color: #FFFFFF !important;
@@ -382,16 +393,56 @@ header#top, header.o_header_standard {
     background-color: var(--ins-slate-950) !important;
     border-bottom: 1px solid var(--ins-border-subtle) !important;
 
-    .navbar-brand, .logo {
+    .navbar-brand, .navbar-brand.logo, .logo {
         display: inline-flex !important;
         align-items: center !important;
+        flex: 0 0 180px !important;
+        min-width: 180px !important;
+        max-width: 180px !important;
+        width: 180px !important;
+        height: 38px !important;
 
         img, .img {
+            width: 180px !important;
+            min-width: 180px !important;
+            max-width: 180px !important;
             height: 38px !important;
             max-height: 38px !important;
-            width: auto !important;
+            aspect-ratio: 180 / 38 !important;
             object-fit: contain !important;
         }
+    }
+
+    @media (min-width: 1200px) {
+        .ins-nav-wrapper {
+            min-width: 825px !important;
+            width: 825px !important;
+            flex: 0 0 825px !important;
+            margin-left: 1.5rem !important;
+        }
+
+        #top_menu {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            gap: 4px !important;
+        }
+
+        #top_menu > .ins-nav-item:nth-child(1) { min-width: 92px !important; width: 92px !important; flex: 0 0 92px !important; }
+        #top_menu > .ins-nav-item:nth-child(2) { min-width: 118px !important; width: 118px !important; flex: 0 0 118px !important; }
+        #top_menu > .ins-nav-item:nth-child(3) { min-width: 123px !important; width: 123px !important; flex: 0 0 123px !important; }
+        #top_menu > .ins-nav-item:nth-child(4) { min-width: 107px !important; width: 107px !important; flex: 0 0 107px !important; }
+        #top_menu > .ins-nav-item:nth-child(5) { min-width: 185px !important; width: 185px !important; flex: 0 0 185px !important; }
+        #top_menu > .ins-nav-item:nth-child(6) { min-width: 82px !important; width: 82px !important; flex: 0 0 82px !important; }
+        #top_menu > .ins-nav-item:nth-child(7) { min-width: 100px !important; width: 100px !important; flex: 0 0 100px !important; }
+
+        ul.navbar-nav.align-items-center.gap-2.flex-shrink-0 {
+            margin-left: 0 !important;
+        }
+    }
+
+    .ins-nav-item {
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
     }
 
     .navbar {
@@ -2483,26 +2534,181 @@ pre, code, kbd, samp {
 // ==========================================================================
 // MASTERPIECE HERO HEADLINE & SILO CONTRAST BADGE
 // ==========================================================================
-.ins-hero-headline {
-    font-size: clamp(1.75rem, 2.35vw, 2.5rem);
+.ins-hero-badge-row {
+    height: 28px;
+    min-height: 28px;
+    line-height: 1;
+    overflow: hidden;
+}
+
+.ins-hero-action-buttons {
+    min-height: 110px !important;
+    gap: 1rem !important;
+    contain: layout style;
+}
+
+.ins-hero-action-buttons .btn,
+.ins-hero-act-pane a.btn,
+.ins-hero-act-pane button.btn,
+a.btn.btn-outline-secondary.rounded-pill,
+a.btn.btn-primary.rounded-pill,
+button.btn.btn-primary.rounded-pill,
+button.btn.btn-outline-secondary.rounded-pill {
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    line-height: 26px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+}
+
+.ins-hero-headline,
+.ins-hero-act-pane h1,
+.ins-hero-act-pane .display-3,
+.ins-hero-act-pane .display-4 {
+    font-size: clamp(1.4rem, 2.35vw, 2.5rem);
     line-height: 1.22;
     letter-spacing: -0.025em;
     font-weight: 800;
     font-family: var(--bs-body-font-family);
     color: #FFFFFF;
+    min-height: 124px;
+}
+
+@media (min-width: 1200px) {
+    .ins-hero-headline,
+    .ins-hero-act-pane h1,
+    .ins-hero-act-pane .display-3,
+    .ins-hero-act-pane .display-4 {
+        font-size: clamp(1.75rem, 2.15vw, 2.2rem) !important;
+        height: 180px !important;
+        min-height: 180px !important;
+        max-height: 180px !important;
+        line-height: 1.22 !important;
+        margin-bottom: 1rem !important;
+        overflow: hidden !important;
+    }
+
+    .ins-hero-desc,
+    .ins-hero-act-pane p.lead,
+    .ins-hero-act-pane p.ins-hero-desc {
+        height: 130px !important;
+        min-height: 130px !important;
+        max-height: 130px !important;
+        line-height: 1.6 !important;
+        margin-bottom: 1.5rem !important;
+        overflow: hidden !important;
+    }
+
+    #insilos_hero_showcase,
+    .ins-hero-showcase {
+        min-height: 960px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .ins-hero-headline,
+    .ins-hero-act-pane h1,
+    .ins-hero-act-pane .display-3,
+    .ins-hero-act-pane .display-4 {
+        min-height: 200px !important;
+    }
+
+    .ins-hero-desc {
+        min-height: 215px !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+    .ins-hero-headline,
+    .ins-hero-act-pane h1,
+    .ins-hero-act-pane .display-3,
+    .ins-hero-act-pane .display-4 {
+        font-size: clamp(1.45rem, 2.3vw, 1.75rem) !important;
+        line-height: 1.22 !important;
+        height: 160px !important;
+        min-height: 160px !important;
+        max-height: 160px !important;
+        overflow: hidden !important;
+    }
+
+    .ins-hero-desc,
+    .ins-hero-act-pane p.lead,
+    .ins-hero-act-pane p.ins-hero-desc,
+    .ins-hero-act-pane p {
+        height: 140px !important;
+        min-height: 140px !important;
+        max-height: 140px !important;
+        line-height: 1.6 !important;
+        margin-bottom: 1.5rem !important;
+        overflow: hidden !important;
+    }
+
+    #insilos_hero_showcase,
+    .ins-hero-showcase {
+        min-height: 750px !important;
+    }
+}
+
+.ins-hero-connectors {
+    min-height: 48px;
+}
+
+@media (max-width: 991px) {
+    .ins-hero-content-layer .border-top,
+    .d-flex.flex-wrap.align-items-center.gap-2.pt-3.border-top,
+    .d-flex.align-items-center.pt-3.border-top,
+    .ins-hero-connectors {
+        min-height: 75px !important;
+
+        .badge {
+            font-size: 0.75rem !important;
+        }
+    }
+
+    .ins-hero-pill-nav {
+        min-height: 75px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .ins-hero-act-pane .d-flex.flex-column {
+        min-height: 180px;
+    }
+}
+
+.ins-hero-act-pane .d-flex.flex-column.flex-sm-row a.btn,
+.ins-hero-act-pane .d-flex.flex-column.flex-sm-row button.btn {
+    min-width: 220px;
+    text-align: center;
+    justify-content: center;
+}
+
+.col-lg-4.text-center.text-lg-end > .p-4.rounded-4.bg-white-05 {
+    width: 100% !important;
+    max-width: 380px !important;
+    margin: 0 auto !important;
 }
 
 .ins-silo-badge {
     display: inline-flex;
     align-items: center;
-    padding: 0.12rem 0.75rem;
+    justify-content: center;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 0.75rem;
     font-size: 0.74em;
     font-weight: 700;
     color: #FCA5A5;
     background: rgba(239, 68, 68, 0.1);
     border: 1px solid rgba(239, 68, 68, 0.28);
     border-radius: 9999px;
-    vertical-align: 0.12em;
+    vertical-align: middle;
     letter-spacing: 0.02em;
     white-space: nowrap;
     transition: all 0.25s ease;
@@ -2529,6 +2735,7 @@ pre, code, kbd, samp {
     perspective-origin: 65% 45%;
     transform-style: preserve-3d;
     padding: 0.5rem 0.25rem 0.75rem 0.75rem;
+    min-height: 520px;
 }
 
 .ins-cloud-cockpit {
@@ -2589,7 +2796,7 @@ pre, code, kbd, samp {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
+        flex-wrap: nowrap !important;
         gap: 0.5rem;
         transform: translateZ(15px);
     }
@@ -3210,7 +3417,8 @@ pre, code, kbd, samp {
     justify-content: center;
 }
 
-.ins-hero-video-viewport {
+.ins-hero-video-viewport,
+.ins-hero-video-container {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -3219,17 +3427,16 @@ pre, code, kbd, samp {
     z-index: 0;
     pointer-events: none;
     background: #070B14;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .ins-hero-video {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
     object-fit: cover;
     opacity: 0;
     transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -3299,18 +3506,17 @@ pre, code, kbd, samp {
     }
 }
 
-@media (max-width: 767.98px) {
+.ins-hero-poster-fallback {
+    display: block !important;
+}
+
+@media (max-width: 991.98px) {
     .ins-hero-video {
         display: none !important;
     }
     .ins-hero-poster-fallback {
         display: block !important;
-    }
-}
-
-@media (min-width: 768px) {
-    .ins-hero-poster-fallback {
-        display: none;
+        opacity: 1 !important;
     }
 }
 
@@ -3356,19 +3562,31 @@ pre, code, kbd, samp {
 .ins-hero-content-layer {
     position: relative;
     z-index: 4;
+
+    > .row {
+        align-items: flex-start !important;
+    }
 }
 
 // Act Transitions
 .ins-hero-act-pane {
     display: none;
     opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition: opacity 0.3s ease;
+    min-height: 520px;
+
+    @media (max-width: 991.98px) {
+        min-height: 560px;
+    }
+
+    @media (max-width: 575.98px) {
+        min-height: 640px;
+    }
 
     &.active {
         display: block;
         opacity: 1;
-        transform: translateY(0);
+        transform: none;
     }
 }
 
@@ -3379,6 +3597,7 @@ pre, code, kbd, samp {
     margin-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 1.25rem;
+    right: 1.5rem !important;
 }
 
 .ins-stepper-tab {
@@ -4306,14 +4525,23 @@ pre, code, kbd, samp {
 }
 
 // Scene Transition UI Controls
+div#ins_scene_fx_controls,
+#ins_scene_fx_controls,
 .ins-scene-fx-group {
     background: rgba(15, 23, 42, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 6px;
     padding: 2px;
     backdrop-filter: blur(8px);
+    min-width: 388px;
+    flex-shrink: 0;
+    position: relative;
+    right: 1.5rem !important;
 
     .btn.ins-btn-fx {
+        min-width: 52px;
+        text-align: center;
+        padding: 2px 4px;
         font-size: 0.65rem;
         font-family: var(--bs-font-monospace);
         font-weight: 600;
@@ -4364,7 +4592,110 @@ pre, code, kbd, samp {
     max-height: 240px !important;
 }
 
-.ins-hero-fade-bottom, .ins-gradient-fade-up {
+// Geometry & Aspect-Ratio Locking for Zero Layout Shifts (CLS <= 0.05)
+.ins-video-card video,
+.ins-showcase-video,
+.ins-video-showcase,
+.ins-cctv-stream-container,
+.ins-cctv-viewport,
+.ins-cctv-video,
+.ins-video-card-thumb,
+.ins-video-ident,
+.ins-video-telemetry-viewport,
+.ins-3d-canvas-wrapper {
+    aspect-ratio: 16 / 9;
+}
+
+.ins-card-img-top,
+.ins-img-cover,
+.ins-focus-tech,
+.ins-focus-center,
+.ins-focus-machinery,
+.ins-focus-wide {
+    aspect-ratio: 16 / 10;
+}
+
+section.s_cover.ins-radial-glow,
+.ins-hero-showcase {
+    min-height: 580px;
+}
+
+// Stabilize Showcase-3D Hero Cinematic section against vertical shift
+section.s_cover[data-name="Insilos 3D Hero Cinematic"],
+.s_insilos_hero_cinematic {
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding-top: 100px !important;
+    min-height: 100vh !important;
+
+    .col-lg-8.mx-auto.text-center {
+        min-height: 740px;
+    }
+
+    h1 {
+        min-height: 320px !important;
+    }
+
+    p.lead {
+        min-height: 104px !important;
+    }
+
+    @media (max-width: 768px) {
+        min-height: 667px !important;
+
+        h1 {
+            min-height: 226px !important;
+        }
+
+        p.lead {
+            min-height: 180px !important;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .d-flex.flex-column.flex-sm-row button.btn {
+            min-width: 330px !important;
+            width: 330px !important;
+            height: 52px !important;
+            min-height: 52px !important;
+            justify-content: center !important;
+        }
+        .d-flex.flex-column.flex-sm-row a.btn {
+            min-width: 310px !important;
+            width: 310px !important;
+            height: 52px !important;
+            min-height: 52px !important;
+            justify-content: center !important;
+        }
+        .d-flex.flex-column.flex-sm-row {
+            width: 656px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+    }
+}
+
+// Stabilize hero content rows against cross-axis alignment shifts
+.ins-hero-content-layer .row,
+.ins-hero-section .row {
+    align-items: flex-start !important;
+}
+
+// Prevent badge rows from wrapping onto multiple lines during font swap
+.ins-hero-content-layer .d-flex.gap-2.mb-3,
+.ins-hero-section .d-flex.gap-2.mb-3 {
+    flex-wrap: nowrap !important;
+}
+
+div.ins-hero-fade-bottom.h-50,
+.ins-hero-fade-bottom {
+    top: 0 !important;
+    bottom: 0 !important;
+    height: 100% !important;
+    background: linear-gradient(to top, rgba(7, 11, 20, 1) 0%, rgba(7, 11, 20, 0.95) 150px, transparent 400px) !important;
+}
+
+.ins-gradient-fade-up {
     background: linear-gradient(to top, rgba(7, 11, 20, 1) 0%, transparent 100%) !important;
 }
 
@@ -6840,3 +7171,557 @@ pre, code, kbd, samp {
 .ins-footer-hotline-card-styled {
     background-color: rgba(15, 23, 42, 0.65);
 }
+
+/* Utility classes for progress bars & table widths (Zero inline styles) */
+.ins-progress-h6 {
+    height: 6px !important;
+}
+.ins-w-95 {
+    width: 94.8% !important;
+}
+.ins-w-99 {
+    width: 99.8% !important;
+}
+.ins-w-98 {
+    width: 98.8% !important;
+}
+.ins-w-72 {
+    width: 71.6% !important;
+}
+.ins-col-w-25 {
+    width: 25% !important;
+}
+.ins-col-w-22 {
+    width: 22% !important;
+}
+.ins-col-w-23 {
+    width: 23% !important;
+}
+.ins-col-w-30 {
+    width: 30% !important;
+}
+
+/* ==========================================================================
+   3D INTERACTIVE ENTERPRISE ROADMAP (s_ins_3d_roadmap)
+   C-Suite Proof-of-Value Playbook with 3D Depth, Milestone Rail & Telemetry
+   ========================================================================== */
+
+.ins-3d-roadmap-viewport {
+    position: relative;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+
+    // View Mode Switcher
+    .ins-roadmap-mode-bar {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+
+        .ins-mode-btn {
+            font-family: var(--bs-font-monospace);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #94A3B8;
+            cursor: pointer;
+            transition: all 0.25s ease;
+
+            &:hover, &.active {
+                background: rgba(255, 128, 0, 0.18);
+                border-color: #FF8000;
+                color: #FF8000;
+                box-shadow: 0 0 16px rgba(255, 128, 0, 0.25);
+            }
+        }
+    }
+
+    // Milestone Progress Rail
+    .ins-roadmap-rail {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2.75rem;
+        padding: 0 2rem;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 18px;
+            left: 3rem;
+            right: 3rem;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .ins-roadmap-rail-progress {
+            position: absolute;
+            top: 18px;
+            left: 3rem;
+            height: 3px;
+            background: linear-gradient(90deg, #FF8000 0%, #00E5FF 50%, #10B981 100%);
+            z-index: 2;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 16px rgba(255, 128, 0, 0.6);
+            border-radius: 999px;
+            width: 25%;
+        }
+
+        .ins-milestone-node {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.3s ease;
+
+            &:hover {
+                transform: translateY(-3px);
+            }
+
+            &.active {
+                .ins-milestone-dot {
+                    background: #FF8000;
+                    border-color: #FFA033;
+                    box-shadow: 0 0 20px rgba(255, 128, 0, 0.8), 0 0 35px rgba(255, 128, 0, 0.4);
+                    transform: scale(1.2);
+                    color: #000;
+                }
+
+                .ins-milestone-badge {
+                    color: #FF8000;
+                    font-weight: 700;
+                }
+            }
+
+            .ins-milestone-dot {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background: #0B1120;
+                border: 2px solid rgba(255, 255, 255, 0.25);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: var(--bs-font-monospace);
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: #FFFFFF;
+                transition: all 0.3s ease;
+                margin-bottom: 0.5rem;
+            }
+
+            .ins-milestone-badge {
+                font-family: var(--bs-font-monospace);
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: #94A3B8;
+                letter-spacing: 0.05em;
+                transition: color 0.3s ease;
+                text-align: center;
+            }
+
+            .ins-milestone-sub {
+                font-size: 0.65rem;
+                color: #64748B;
+                font-family: var(--bs-font-monospace);
+                text-align: center;
+            }
+        }
+    }
+
+    // 3D Isometric Card Deck
+    .ins-roadmap-deck {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.25rem;
+        transform-style: preserve-3d;
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+        @media (max-width: 991px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 575px) {
+            grid-template-columns: 1fr;
+        }
+
+        .ins-roadmap-card {
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: 16px;
+                padding: 1px;
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent 60%);
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                pointer-events: none;
+            }
+
+            &:hover {
+                transform: translateY(-8px) translateZ(15px);
+                border-color: rgba(255, 128, 0, 0.45);
+                box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 24px rgba(255, 128, 0, 0.2);
+            }
+
+            &.active {
+                border-color: #FF8000;
+                background: rgba(15, 23, 42, 0.96);
+                transform: translateY(-10px) translateZ(25px);
+                box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 32px rgba(255, 128, 0, 0.35);
+
+                .ins-roadmap-card-tag {
+                    background: rgba(255, 128, 0, 0.2);
+                    border-color: #FF8000;
+                    color: #FF8000;
+                }
+
+                .ins-card-pictogram {
+                    background: rgba(255, 128, 0, 0.18);
+                    border-color: #FF8000;
+                    box-shadow: 0 0 20px rgba(255, 128, 0, 0.4);
+                }
+
+                .ins-roadmap-active-badge {
+                    opacity: 1;
+                }
+            }
+
+            .ins-roadmap-card-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+
+                .ins-roadmap-card-tag {
+                    font-family: var(--bs-font-monospace);
+                    font-size: 0.7rem;
+                    font-weight: 700;
+                    letter-spacing: 0.08em;
+                    padding: 0.25rem 0.65rem;
+                    border-radius: 999px;
+                    background: rgba(255, 255, 255, 0.06);
+                    border: 1px solid rgba(255, 255, 255, 0.12);
+                    color: #94A3B8;
+                    transition: all 0.3s ease;
+                }
+
+                .ins-roadmap-card-days {
+                    font-family: var(--bs-font-monospace);
+                    font-size: 0.7rem;
+                    color: #64748B;
+                }
+            }
+
+            .ins-card-pictogram {
+                width: 52px;
+                height: 52px;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1rem;
+                transition: all 0.3s ease;
+
+                svg {
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+
+            .ins-roadmap-card-title {
+                font-size: 1.05rem;
+                font-weight: 700;
+                color: #FFFFFF;
+                margin-bottom: 0.5rem;
+                line-height: 1.35;
+            }
+
+            .ins-roadmap-card-summary {
+                font-size: 0.8rem;
+                color: #94A3B8;
+                line-height: 1.5;
+                margin-bottom: 1rem;
+            }
+
+            .ins-roadmap-card-meter {
+                background: rgba(0, 0, 0, 0.4);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 8px;
+                padding: 0.6rem 0.8rem;
+                margin-bottom: 1rem;
+
+                .ins-meter-label {
+                    display: flex;
+                    justify-content: space-between;
+                    font-family: var(--bs-font-monospace);
+                    font-size: 0.65rem;
+                    color: #64748B;
+                    margin-bottom: 0.35rem;
+                }
+
+                .ins-meter-value {
+                    font-family: var(--bs-font-monospace);
+                    font-size: 0.95rem;
+                    font-weight: 700;
+                    color: #00E5FF;
+                }
+            }
+
+            .ins-roadmap-card-footer {
+                padding-top: 0.75rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: #10B981;
+                margin-top: auto;
+            }
+
+            .ins-roadmap-active-badge {
+                position: absolute;
+                top: -10px;
+                right: 14px;
+                background: #FF8000;
+                color: #000;
+                font-family: var(--bs-font-monospace);
+                font-size: 0.6rem;
+                font-weight: 800;
+                padding: 2px 8px;
+                border-radius: 999px;
+                letter-spacing: 0.06em;
+                box-shadow: 0 0 10px rgba(255, 128, 0, 0.6);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+        }
+    }
+
+    // Interactive Deep-Dive Dossier Cockpit (Expanded Details Inspector)
+    .ins-roadmap-dossier {
+        margin-top: 2rem;
+        background: rgba(11, 17, 32, 0.92);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 128, 0, 0.35);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 128, 0, 0.15);
+        transition: all 0.4s ease;
+
+        .ins-dossier-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.75rem;
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+            gap: 1rem;
+
+            .ins-dossier-phase-info {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+
+                .ins-phase-dot {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background: #FF8000;
+                    box-shadow: 0 0 10px #FF8000;
+                    animation: insTopoPulse 2s infinite;
+                }
+
+                .ins-dossier-phase-title {
+                    font-size: 1rem;
+                    font-weight: 700;
+                    color: #FFFFFF;
+                }
+
+                .ins-dossier-phase-sub {
+                    font-family: var(--bs-font-monospace);
+                    font-size: 0.75rem;
+                    color: #94A3B8;
+                }
+            }
+
+            .ins-dossier-nav-controls {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                .ins-nav-btn {
+                    background: rgba(255, 255, 255, 0.06);
+                    border: 1px solid rgba(255, 255, 255, 0.12);
+                    color: #94A3B8;
+                    border-radius: 8px;
+                    padding: 0.35rem 0.75rem;
+                    font-size: 0.75rem;
+                    font-family: var(--bs-font-monospace);
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        background: rgba(255, 128, 0, 0.15);
+                        border-color: #FF8000;
+                        color: #FF8000;
+                    }
+                }
+            }
+        }
+
+        .ins-dossier-body {
+            padding: 2rem;
+
+            .ins-dossier-pane {
+                display: none;
+                animation: insFadeIn 0.35s ease;
+
+                &.active {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    // 3D Perspective Tilt on Hover Deck
+    &.ins-isometric-active .ins-roadmap-deck {
+        transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    }
+
+    // Flat Grid Mode
+    &.ins-flat-active {
+        perspective: none;
+        .ins-roadmap-deck {
+            transform: none !important;
+            .ins-roadmap-card {
+                transform: none !important;
+                &:hover {
+                    transform: translateY(-6px) !important;
+                }
+                &.active {
+                    transform: translateY(-8px) !important;
+                }
+            }
+        }
+    }
+
+    // Phase Focus Mode
+    &.ins-focus-active {
+        .ins-roadmap-deck {
+            .ins-roadmap-card {
+                opacity: 0.35;
+                transition: all 0.4s ease;
+                &:hover {
+                    opacity: 0.7;
+                }
+                &.active {
+                    opacity: 1;
+                    transform: translateY(-12px) scale(1.03);
+                    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 128, 0, 0.45);
+                }
+            }
+        }
+    }
+
+    .ins-roadmap-rail {
+        &[data-active-phase="1"] .ins-roadmap-rail-progress { width: 25%; }
+        &[data-active-phase="2"] .ins-roadmap-rail-progress { width: 50%; }
+        &[data-active-phase="3"] .ins-roadmap-rail-progress { width: 75%; }
+        &[data-active-phase="4"] .ins-roadmap-rail-progress { width: 100%; }
+    }
+}
+
+// =============================================================================
+// CORE WEB VITALS HARDENING (ITERATION 2 - CWV RIGIDITY)
+// =============================================================================
+html, body, #wrapwrap {
+    scrollbar-gutter: stable;
+}
+html {
+    overflow-y: scroll;
+}
+
+.ins-hero-act-pane h1, .ins-hero-headline, .display-3 {
+    text-wrap: normal !important;
+    line-height: 1.25 !important;
+}
+
+.ins-hero-act-pane h1 .ins-gradient-headline {
+    display: block !important;
+}
+
+.ins-hero-act-pane .d-flex.flex-column.flex-sm-row {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+
+    > a.btn, > button.btn {
+        flex: 0 0 auto !important;
+        margin-right: 0.75rem !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .ins-hero-headline, .ins-hero-act-pane h1, .display-3 {
+        font-size: clamp(1.75rem, 2.15vw, 2.2rem) !important;
+        min-height: 180px !important;
+    }
+    .ins-hero-desc, .ins-hero-act-pane p.lead, .lead {
+        min-height: 130px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .ins-hero-headline, .ins-hero-act-pane h1, .display-3 {
+        font-size: clamp(1.65rem, 2.5vw, 2rem) !important;
+        min-height: 180px !important;
+    }
+    .ins-hero-desc, .ins-hero-act-pane p.lead, .lead {
+        min-height: 130px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .ins-hero-headline, .ins-hero-act-pane h1, .display-3 {
+        font-size: 1.65rem !important;
+        min-height: 220px !important;
+    }
+    .ins-hero-desc, .ins-hero-act-pane p.lead, .lead {
+        min-height: 215px !important;
+    }
+}
+
+
+
+

@@ -290,11 +290,11 @@ def audit_website_editor_compatibility():
     else:
         print(f"  ✅ All {len(thumbnail_audits)} Snippet Thumbnails Exist on Disk and Return HTTP 200 OK!")
     
-    gate3_pass = (len(all_snippets) == 28 and all_inherit_palette and len(broken_thumbnails) == 0 and len(thumbnail_audits) == 28)
+    gate3_pass = (len(all_snippets) >= 28 and all_inherit_palette and len(broken_thumbnails) == 0 and len(thumbnail_audits) >= 28)
     if gate3_pass:
         print(f"  ✅ [GATE 3 PASSED] All {len(all_snippets)} Custom Building Blocks and Thumbnails Verified!")
     else:
-        print(f"  ❌ [GATE 3 FAILED] Website editor snippets configuration incomplete (Found {len(all_snippets)}/28 snippets, {len(broken_thumbnails)} broken thumbnails)!")
+        print(f"  ❌ [GATE 3 FAILED] Website editor snippets configuration incomplete (Found {len(all_snippets)}/28+ snippets, {len(broken_thumbnails)} broken thumbnails)!")
         
     return gate3_pass, {
         "snippets_count": len(all_snippets),

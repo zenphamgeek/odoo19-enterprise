@@ -5,10 +5,10 @@
     <!-- 1. SIGNATURE 3D HERO CINEMATIC SNIPPET (INSILOS ENTERPRISE)       -->
     <!-- ================================================================= -->
     <template id="s_insilos_hero_cinematic" name="Insilos 3D Hero Cinematic">
-        <section class="s_cover o_colored_level o_cc o_cc5 position-relative overflow-hidden min-vh-100 d-flex align-items-center py-5" data-snippet="s_cover" data-name="Insilos 3D Hero Cinematic" data-bs-theme="dark">
+        <section class="s_cover s_insilos_hero_cinematic o_colored_level o_cc o_cc5 position-relative overflow-hidden min-vh-100 d-flex align-items-start py-5" data-snippet="s_cover" data-name="Insilos 3D Hero Cinematic" data-bs-theme="dark">
             <!-- Ambient 3D Video Viewport -->
             <div class="position-absolute top-0 start-0 w-100 h-100 z-0 opacity-40 o_not_editable pointer-events-none overflow-hidden">
-                <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" class="w-100 h-100 object-fit-cover" poster="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.webp">
+                <video loop="loop" muted="muted" playsinline="playsinline" preload="none" class="w-100 h-100 object-fit-cover" poster="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.webp">
                     <source src="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.mp4" type="video/mp4"/>
                 </video>
                 <!-- Cinematic Cybernetic Gradients -->
@@ -18,7 +18,7 @@
 
             <!-- Content Canvas -->
             <div class="container position-relative z-1 py-lg-4">
-                <div class="row align-items-center g-5">
+                <div class="row align-items-start g-5">
                     <div class="col-lg-8 mx-auto text-center">
                         <!-- Tech Status Pill -->
                         <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-15 border border-primary border-opacity-30 text-cyan small mb-4 font-monospace">
@@ -109,8 +109,8 @@
                     <div class="modal-body p-0 bg-black">
                         <!-- Native HTML5 Industrial Video Player -->
                         <div class="ratio ratio-16x9 bg-black position-relative">
-                            <video id="insilos-master-player" controls="controls" autoplay="autoplay" playsinline="playsinline" class="w-100 h-100 object-fit-contain" poster="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.webp">
-                                <source src="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.mp4" type="video/mp4"/>
+                            <video id="insilos-master-player" controls="controls" playsinline="playsinline" preload="none" class="w-100 h-100 object-fit-contain" poster="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.webp?v=20261003_sovereign">
+                                <source src="/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.mp4?v=20261003_sovereign" type="video/mp4"/>
                             </video>
                         </div>
                         <!-- Video Footage Channel Switcher -->
@@ -119,10 +119,10 @@
                                 <span class="text-cyan fw-bold font-monospace"><svg class="ph-duotone ph-film-strip me-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-film-strip"/></svg>CHỌN KÊNH FOOTAGE THỰC ĐỊA:</span>
                             </div>
                             <div class="btn-group btn-group-sm" role="group">
-                                <button type="button" class="btn btn-outline-light active" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.mp4'; document.getElementById('insilos-master-player').play();">
+                                <button type="button" class="btn btn-outline-light active" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/gold_masters/INSILOS_MASTER_CINEMATIC_105S.mp4?v=20261003_sovereign'; document.getElementById('insilos-master-player').play();">
                                     1. Toàn Cảnh Nền Tảng (Master 105s)
                                 </button>
-                                <button type="button" class="btn btn-outline-light" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/hero_act1_robotics.mp4'; document.getElementById('insilos-master-player').play();">
+                                <button type="button" class="btn btn-outline-light" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/hero_act1_opt.mp4'; document.getElementById('insilos-master-player').play();">
                                     2. Robot Hàn &amp; Xưởng CNC
                                 </button>
                                 <button type="button" class="btn btn-outline-light" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/hero_act2_port.mp4'; document.getElementById('insilos-master-player').play();">
@@ -131,7 +131,7 @@
                                 <button type="button" class="btn btn-outline-light" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/hero_logistics_opt.mp4'; document.getElementById('insilos-master-player').play();">
                                     4. Đội Xe Tải Nặng
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_GOLD_MASTER.mp4'; document.getElementById('insilos-master-player').play();">
+                                <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('insilos-master-player').src='/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_GOLD_MASTER.mp4?v=20261003_sovereign'; document.getElementById('insilos-master-player').play();">
                                     5. An Toàn HSE &amp; Giám Sát PPE (75s Master)
                                 </button>
                             </div>
@@ -289,8 +289,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="position-relative rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-lg">
-                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.webp">
-                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.mp4" type="video/mp4"/>
+                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" preload="none" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.webp?v=20261003_sovereign">
+                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.mp4?v=20261003_sovereign" type="video/mp4"/>
                                         </video>
                                         <div class="position-absolute bottom-0 start-0 w-100 p-2 px-3 bg-black bg-opacity-75 font-monospace small text-cyan d-flex justify-content-between pointer-events-none">
                                             <span>WORKCENTER: ROBOT_WELD_01</span>
@@ -337,8 +337,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="position-relative rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-lg">
-                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.webp">
-                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.mp4" type="video/mp4"/>
+                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" preload="none" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.webp?v=20261003_sovereign">
+                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.mp4?v=20261003_sovereign" type="video/mp4"/>
                                         </video>
                                         <div class="position-absolute bottom-0 start-0 w-100 p-2 px-3 bg-black bg-opacity-75 font-monospace small text-emerald d-flex justify-content-between pointer-events-none">
                                             <span>TRACE: PDI LOAD TEST</span>
@@ -385,8 +385,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="position-relative rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-lg">
-                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.webp">
-                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.mp4" type="video/mp4"/>
+                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" preload="none" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.webp?v=20261003_sovereign">
+                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.mp4?v=20261003_sovereign" type="video/mp4"/>
                                         </video>
                                         <div class="position-absolute bottom-0 start-0 w-100 p-2 px-3 bg-black bg-opacity-75 font-monospace small text-cyan d-flex justify-content-between pointer-events-none">
                                             <span>FLEET TELEMETRY: 51C-982.45</span>
@@ -433,8 +433,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="position-relative rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-lg">
-                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.webp">
-                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.mp4" type="video/mp4"/>
+                                        <video controls="controls" loop="loop" muted="muted" playsinline="playsinline" preload="none" class="w-100 object-fit-cover rounded-4 ins-video-showcase" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.webp?v=20261003_sovereign">
+                                            <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.mp4?v=20261003_sovereign" type="video/mp4"/>
                                         </video>
                                         <div class="position-absolute bottom-0 start-0 w-100 p-2 px-3 bg-black bg-opacity-75 font-monospace small text-emerald d-flex justify-content-between pointer-events-none">
                                             <span>GL LEDGER: VAS 200/2014</span>
@@ -500,8 +500,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="log">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="log"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_01_CRM_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_01_CRM_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_01_CRM_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_01_CRM_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 01 · 67s"
                              data-title="Quản Trị Bán Hàng Dự Án &amp; Đấu Thầu Thiết Bị"
                              data-industry="CRM &amp; ĐẤU THẦU KCN"
@@ -509,9 +509,7 @@
                              data-lufs="-14.6 LUFS"
                              data-desc="Phễu bán hàng B2B, quản lý hồ sơ thầu 15 tỷ VNĐ cho cảng container và tích hợp Win Rate tự động.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Quản Trị Bán Hàng Dự Án &amp; Đấu Thầu Thiết Bị">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_01_CRM_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_01_CRM_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_01_CRM_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -546,8 +544,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="wh">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="wh"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 02 · 51s"
                              data-title="Thu Mua Thép Công Nghiệp 25 Tấn &amp; Khóa Sổ Sách"
                              data-industry="THU MUA &amp; KẾ TOÁN"
@@ -555,9 +553,7 @@
                              data-lufs="-14.6 LUFS"
                              data-desc="Quy trình phê duyệt PO 537.5 triệu VNĐ, kiểm soát 3-way matching và khóa tài khóa tự động.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Thu Mua Thép Công Nghiệp 25 Tấn &amp; Khóa Sổ Sách">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_02_PUR_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -592,8 +588,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="wh">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="wh"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 03 · 66s"
                              data-title="Kiểm Kê Kho Cáp Điện &amp; Quản Trị Serial ARM Cortex"
                              data-industry="KHO THÔNG MINH"
@@ -601,9 +597,7 @@
                              data-lufs="-14.6 LUFS"
                              data-desc="Định danh bo mạch vi xử lý ARM-M4, cuộn cáp điện 35mm2 và truy vết nguồn gốc linh kiện 100%.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Kiểm Kê Kho Cáp Điện &amp; Quản Trị Serial ARM Cortex">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_03_INV_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -638,8 +632,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="mfg">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="mfg"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_04_BOM_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_04_BOM_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_04_BOM_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_04_BOM_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 04 · 82s"
                              data-title="BOM Đa Tầng Xe Kéo Điện V-LIFT &amp; Rơ-moóc 40ft"
                              data-industry="MRP &amp; R&amp;D DESIGN"
@@ -647,9 +641,7 @@
                              data-lufs="-14.6 LUFS"
                              data-desc="Cấu trúc BOM đa cấp độ cho xe đầu kéo điện V-LIFT 2500E, pack pin Lithium LiFePO4 và khung gầm.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video BOM Đa Tầng Xe Kéo Điện V-LIFT &amp; Rơ-moóc 40ft">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_04_BOM_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_04_BOM_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_04_BOM_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -684,8 +676,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="mfg">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="mfg"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_05_PLN_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_05_PLN_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_05_PLN_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_05_PLN_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 05 · 51s"
                              data-title="Hoạch Định Năng Lực &amp; Gantt Cân Bằng Tải Xưởng"
                              data-industry="HOẠCH ĐỊNH MRP"
@@ -693,9 +685,7 @@
                              data-lufs="-14.5 LUFS"
                              data-desc="Lập tiến độ sản xuất trực quan, phân bổ máy chấn dập CNC Trumpf và triệt tiêu nút thắt cổ chai.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Hoạch Định Năng Lực &amp; Gantt Cân Bằng Tải Xưởng">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_05_PLN_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_05_PLN_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_05_PLN_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -730,8 +720,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="mfg">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="mfg"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_06_SFL_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_06_SFL_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_06_SFL_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_06_SFL_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 06 · 61s"
                              data-title="Tablet Phân Xưởng Máy Cắt Laser &amp; Robot Hàn"
                              data-industry="SHOP FLOOR TABLET"
@@ -739,9 +729,7 @@
                              data-lufs="-14.8 LUFS"
                              data-desc="Giao diện cảm ứng công nghiệp cho công nhân cơ khí, bấm giờ tự động và gắn mã linh kiện thời gian thực.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Tablet Phân Xưởng Máy Cắt Laser &amp; Robot Hàn">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_06_SFL_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_06_SFL_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_06_SFL_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -776,8 +764,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="log">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="log"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 07 · 60s"
                              data-title="Đội Xe Vận Tải Tuyến KCN - Cảng Biển Quốc Tế"
                              data-industry="VẬN TẢI ĐỘI XE FLEET"
@@ -785,9 +773,7 @@
                              data-lufs="-14.8 LUFS"
                              data-desc="Giám sát đội xe container 51C-982.45, kiểm soát km ODO và định mức tiêu hao nhiên liệu chính xác.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Đội Xe Vận Tải Tuyến KCN - Cảng Biển Quốc Tế">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_07_FLT_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -822,8 +808,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="log">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="log"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_08_FUL_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_08_FUL_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_08_FUL_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_08_FUL_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 08 · 79s"
                              data-title="Tự Động Hóa Trụ Bơm Dầu &amp; Trạm Sạc E-Depot"
                              data-industry="NĂNG LƯỢNG &amp; TRẠM SẠC"
@@ -831,9 +817,7 @@
                              data-lufs="-14.7 LUFS"
                              data-desc="Tự động kết nối trụ bơm dầu DO 0.05S và quản lý chu kỳ sạc pin 180kW cho xe kéo container.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Tự Động Hóa Trụ Bơm Dầu &amp; Trạm Sạc E-Depot">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_08_FUL_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_08_FUL_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_08_FUL_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -868,8 +852,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="log">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="log"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 09 · 55s"
                              data-title="Tiếp Vận Cảng Biển Quốc Tế &amp; Bốc Dỡ"
                              data-industry="HẢI CẢNG &amp; TIẾP VẬN"
@@ -877,9 +861,7 @@
                              data-lufs="-14.2 LUFS"
                              data-desc="Điều độ cẩu bờ STS, hạ bãi container xuất nhập khẩu và xác thực biên bản giao nhận điện tử.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Tiếp Vận Cảng Biển Quốc Tế &amp; Bốc Dỡ">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_09_LOG_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -914,8 +896,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="fin">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="fin"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_10_SAL_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_10_SAL_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_10_SAL_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_10_SAL_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 10 · 58s"
                              data-title="Hợp Đồng Dự Án &amp; Xuất Hóa Đơn Tức Thì"
                              data-industry="BÁN HÀNG &amp; HÓA ĐƠN"
@@ -923,9 +905,7 @@
                              data-lufs="-14.6 LUFS"
                              data-desc="Chuyển đổi báo giá thành đơn bán hàng B2B, lập lịch giao hàng và phát hành hóa đơn điện tử tự động.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Hợp Đồng Dự Án &amp; Xuất Hóa Đơn Tức Thì">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_10_SAL_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_10_SAL_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_10_SAL_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -960,8 +940,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="fin">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="fin"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_11_ACC_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_11_ACC_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_11_ACC_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_11_ACC_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 11 · 60s"
                              data-title="Kế Toán Doanh Nghiệp &amp; Đối Soát Công Nợ"
                              data-industry="THÔNG TƯ 200/2014"
@@ -969,9 +949,7 @@
                              data-lufs="-14.5 LUFS"
                              data-desc="Hệ thống tài khoản chuẩn mực Việt Nam (TK 131, 331, 5111, 33311), xử lý tỷ giá và tự động khớp sổ cái.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Kế Toán Doanh Nghiệp &amp; Đối Soát Công Nợ">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_11_ACC_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_11_ACC_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_11_ACC_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -1006,8 +984,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="fin">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="fin"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_12_MKT_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_12_MKT_GOLD_MASTER_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_12_MKT_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_12_MKT_GOLD_MASTER_poster.webp?v=20261003_sovereign"
                              data-episode="EP 12 · 60s"
                              data-title="Marketing Tự Động Hóa &amp; Nurturing Khách Hàng"
                              data-industry="MARKETING AUTOMATION"
@@ -1015,9 +993,7 @@
                              data-lufs="-14.5 LUFS"
                              data-desc="Chuỗi kịch bản chăm sóc tự động cho Chủ đầu tư KCN, chấm điểm Lead Scoring và đồng bộ tức thì sang CRM.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Marketing Tự Động Hóa &amp; Nurturing Khách Hàng">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/img/gold_masters/INSILOS_VID_12_MKT_GOLD_MASTER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_VID_12_MKT_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/img/gold_masters/INSILOS_VID_12_MKT_GOLD_MASTER_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -1052,8 +1028,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="hse">
                         <div class="card h-100 bg-black bg-opacity-75 border border-warning border-opacity-50 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="hse"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_GOLD_MASTER.mp4"
-                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_poster.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_GOLD_MASTER.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_poster.webp?v=20261003_sovereign"
                              data-episode="EP 13 · 75s"
                              data-title="An Toàn Lao Động HSE &amp; Giám Sát PPE Bằng Camera AI"
                              data-industry="HSE &amp; EDGE COMPUTER VISION"
@@ -1061,9 +1037,7 @@
                              data-lufs="-14.5 LUFS"
                              data-desc="Hệ thống Edge AI 60 FPS nhận diện trang bị BHLĐ (mũ, áo, kính, găng tay), phát hiện vùng nguy hiểm, còi hú FM Siren và khóa liên động Lệnh sản xuất ERP.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video An Toàn Lao Động HSE &amp; Giám Sát PPE Bằng Camera AI">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_GOLD_MASTER.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_poster.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center bg-warning text-dark">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -1098,8 +1072,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="cutdowns">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="cutdowns"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.mp4"
-                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.webp?v=20261003_sovereign"
                              data-episode="CUT 01 · 25s"
                              data-title="Phân Xưởng Cơ Khí &amp; Robot Hàn Yaskawa"
                              data-industry="SẢN XUẤT &amp; ROBOTICS"
@@ -1107,9 +1081,7 @@
                              data-lufs="-14.5 LUFS"
                              data-desc="Loại bỏ 100% giấy tờ tại xưởng cơ khí. Điều hành công đoạn tức thời cùng Insilos MRP.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Phân Xưởng Cơ Khí &amp; Robot Hàn Yaskawa">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT1_MANUFACTURING_25S.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -1144,8 +1116,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="cutdowns">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="cutdowns"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.mp4"
-                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.webp?v=20261003_sovereign"
                              data-episode="CUT 02 · 20s"
                              data-title="Truy Xuất Nguồn Gốc Lô &amp; Serial Vi Mạch"
                              data-industry="KHO BÃI &amp; TRACEABILITY"
@@ -1153,9 +1125,7 @@
                              data-lufs="-14.5 LUFS"
                              data-desc="Gian lận kho hàng? Thất thoát vật tư? Insilos truy vết đến từng serial.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Truy Xuất Nguồn Gốc Lô &amp; Serial Vi Mạch">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT2_TRACEABILITY_20S.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -1190,8 +1160,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="cutdowns">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="cutdowns"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.mp4"
-                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.webp?v=20261003_sovereign"
                              data-episode="CUT 03 · 30s"
                              data-title="Đội Xe Container &amp; Cụm Cảng Biển Quốc Tế"
                              data-industry="ĐỘI XE &amp; HẢI CẢNG"
@@ -1199,9 +1169,7 @@
                              data-lufs="-14.5 LUFS"
                              data-desc="Hàng trễ cảng? Phí DET/DEM? Insilos Fleet điều xe chủ động từng phút.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video Đội Xe Container &amp; Cụm Cảng Biển Quốc Tế">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT3_FLEET_LOGISTICS_30S.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -1236,8 +1204,8 @@
                     <div class="col-lg-4 col-md-6 ins-gold-card-col" data-category="cutdowns">
                         <div class="card h-100 bg-black bg-opacity-75 border border-secondary border-opacity-25 rounded-4 overflow-hidden shadow-lg ins-gold-card"
                              data-category="cutdowns"
-                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.mp4"
-                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.webp"
+                             data-video-src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.mp4?v=20261003_sovereign"
+                             data-poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.webp?v=20261003_sovereign"
                              data-episode="CUT 04 · 20s"
                              data-title="CRM B2B &amp; Kế Toán Chuẩn Mực TT200"
                              data-industry="CRM &amp; TÀI CHÍNH TT200"
@@ -1245,9 +1213,7 @@
                              data-lufs="-14.5 LUFS"
                              data-desc="Từ hợp đồng nghìn tỷ đến hóa đơn điện tử TT78 — Insilos xử lý tức thì.">
                             <div class="position-relative ins-theater-trigger cursor-pointer" role="button" tabindex="0" aria-label="Phát video CRM B2B &amp; Kế Toán Chuẩn Mực TT200">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-card-thumb" poster="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-card-thumb" src="/insilos_website/static/src/video/gold_masters/INSILOS_CUT4_CRM_FINANCE_20S.webp?v=20261003_sovereign" alt="Insilos Industrial Video"/>
                                 <div class="ins-theater-scrim position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                                     <span class="ins-play-btn rounded-circle d-flex align-items-center justify-content-center">
                                         <svg class="ph-duotone ph-play"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
@@ -1294,9 +1260,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-lg">
-                                <video controls="controls" preload="metadata" playsinline="playsinline" class="w-100 object-fit-cover ins-video-ident" poster="/insilos_website/static/src/img/gold_masters/INSILOS_LOGO_OPENER_poster.webp">
-                                    <source src="/insilos_website/static/src/video/gold_masters/INSILOS_LOGO_OPENER_5.8S.mp4" type="video/mp4"/>
-                                </video>
+                                <img loading="lazy" class="w-100 object-fit-cover ins-video-ident" src="/insilos_website/static/src/img/gold_masters/INSILOS_LOGO_OPENER_poster.webp?v=20261003_sovereign" alt="Insilos Logo Opener"/>
                             </div>
                         </div>
                     </div>
@@ -1367,13 +1331,13 @@
     <!-- ================================================================= -->
     <template id="insilos_cinematic_snippets_palette" inherit_id="website.snippets" priority="25">
         <xpath expr="//snippets[@id='snippet_structure']" position="inside">
-            <t t-snippet="insilos_website.s_insilos_hero_cinematic" string="Insilos 3D Hero Cinematic" group="intro" t-thumbnail="/website/static/src/img/snippets_thumbs/thumb_snippets_intro.svg">
+            <t t-snippet="insilos_website.s_insilos_hero_cinematic" string="Insilos 3D Hero Cinematic" group="intro" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_insilos_hero_cinematic.svg">
                 <keywords>cinema, hero, video, 4k, highlight, broadcast</keywords>
             </t>
-            <t t-snippet="insilos_website.s_insilos_feature_breakdown" string="Insilos 4-Feature Footage Tabs" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_video.svg">
+            <t t-snippet="insilos_website.s_insilos_feature_breakdown" string="Insilos 4-Feature Footage Tabs" group="content" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_insilos_feature_breakdown.svg">
                 <keywords>footage, tabs, mrp, bom, fleet, accounting, video</keywords>
             </t>
-            <t t-snippet="insilos_website.s_insilos_gold_master_suite" string="Insilos 12 Gold Master Suite" group="content" t-thumbnail="/website/static/src/img/snippets_thumbs/s_video.svg">
+            <t t-snippet="insilos_website.s_insilos_gold_master_suite" string="Insilos 12 Gold Master Suite" group="content" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_insilos_gold_master_suite.svg">
                 <keywords>gold master, 12 demos, broadcast, ebu r128, industrial</keywords>
             </t>
         </xpath>

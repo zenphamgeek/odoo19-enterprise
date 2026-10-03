@@ -34,6 +34,7 @@
             "insilos_website/static/src/scss/insilos_megamenu.scss",
             "insilos_website/static/src/scss/insilos_3d.scss",
             "insilos_website/static/src/scss/insilos_cctv.scss",
+            "insilos_website/static/src/scss/insilos_public_auth.scss",
             "insilos_website/static/src/lib/three/three.min.js",
             "insilos_website/static/src/js/reveal.js",
             "insilos_website/static/src/js/c3ai_interactive.js",

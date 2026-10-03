@@ -129,6 +129,7 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
                 boxes: this.state.visibleBoxes[0] || [],
                 mode: 'img',
                 pageLayer: element,
+                boxType: this.activeBoxType,
             });
             proms.push(boxLayerApp.mount(element.parentElement));
             this.boxLayerApps = [boxLayerApp];
@@ -153,6 +154,7 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
                     boxes: this.state.visibleBoxes[pageNum] || [],
                     mode: 'pdf',
                     pageLayer: pageLayer,
+                    boxType: this.activeBoxType,
                 });
                 proms.push(boxLayerApp.mount(pageLayer));
                 this.boxLayerApps.push(boxLayerApp);
@@ -184,7 +186,7 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
             if (this.activeField !== undefined) {
                 const dataToFetch = this.recordId !== this.props.record.resId;
                 if (dataToFetch) {
-                    this.orm.call(this.recordModel, 'get_boxes', [this.props.record.resId]).then((boxes) => {
+                    return this.orm.call(this.recordModel, 'get_boxes', [this.props.record.resId]).then((boxes) => {
                         this.recordId = this.props.record.resId;
                         this.boxes = reactive(boxes);
 
@@ -203,15 +205,16 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
                         }
 
                         this.state.visibleBoxes = this.boxes[this.activeBoxType] || {};
-                        this.renderBoxLayers(attachment);
+                        return this.renderBoxLayers(attachment);
                     });
                 }
                 else {
                     this.state.visibleBoxes = this.boxes[this.activeBoxType] || {};
-                    this.renderBoxLayers(attachment);
+                    return this.renderBoxLayers(attachment);
                 }
             }
         }
+        return Promise.resolve();
     }
 
     /**
@@ -224,16 +227,15 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
         if (iframe) {
             const iframeDoc = iframe.contentDocument;
             if (iframeDoc) {
-                this.renderExtract(iframe);
-                return;
+                return this.renderExtract(iframe);
             }
         }
         // Case img
         const attachment = win.document.getElementById('attachment_img');
         if (attachment && attachment.complete) {
-            this.renderExtract(attachment);
-            return;
+            return this.renderExtract(attachment);
         }
+        return Promise.resolve();
     }
 
     resetActiveField() {
@@ -461,15 +463,221 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
         return axes;
     }
 
+    /**
+     * Finds the DOM element for the box on PDF or Image viewer,
+     * smoothly scrolls it into view, and highlights it with an active radar glow.
+     *
+     * @param {number|string} boxId
+     * @param {number|string} [pageNumber]
+     */
+    scrollToBox(boxId, pageNumber) {
+        const win = this.mailPopoutService.externalWindow || window;
+        const iframe = win.document.querySelector('.o-mail-Attachment iframe');
+        const pdfDoc = iframe?.contentDocument;
+        const mainDoc = win.document;
+
+        // Clear active focus across documents
+        const clearFocus = (doc) => {
+            if (!doc) return;
+            doc.querySelectorAll('.o_box_active_focus').forEach((el) => {
+                el.classList.remove('o_box_active_focus');
+            });
+        };
+        clearFocus(pdfDoc);
+        clearFocus(mainDoc);
+
+        const tryFocusBox = () => {
+            let boxEl = null;
+            if (pdfDoc) {
+                if (pageNumber !== undefined && pageNumber !== null) {
+                    const pageEl = pdfDoc.querySelector(`.page[data-page-number="${pageNumber}"]`);
+                    boxEl = pageEl?.querySelector(`.o_extract_mixin_box[data-id="${boxId}"]`);
+                }
+                if (!boxEl) {
+                    boxEl = pdfDoc.querySelector(`.o_extract_mixin_box[data-id="${boxId}"]`);
+                }
+            }
+            if (!boxEl) {
+                boxEl = mainDoc.querySelector(`.o_extract_mixin_box[data-id="${boxId}"]`);
+            }
+
+            if (boxEl) {
+                boxEl.classList.add('o_box_active_focus');
+                boxEl.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'center',
+                });
+                return true;
+            }
+            return false;
+        };
+
+        if (!tryFocusBox()) {
+            if (pdfDoc && pageNumber !== undefined && pageNumber !== null) {
+                const pageEl = pdfDoc.querySelector(`.page[data-page-number="${pageNumber}"]`);
+                if (pageEl) {
+                    pageEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+            requestAnimationFrame(() => {
+                tryFocusBox();
+            });
+        }
+    }
+
+    /**
+     * Extracts the current textual/primitive value from a field widget
+     * based on record data, input elements, or textContent.
+     */
+    getFieldValue(fieldWidget, fullFieldName) {
+        let value = null;
+        if (fullFieldName) {
+            if (fullFieldName.includes('.')) {
+                const [parentField, fieldName] = fullFieldName.split('.');
+                const parentEl = fieldWidget.closest('tbody');
+                if (parentEl) {
+                    const childrenArray = Array.from(parentEl.children);
+                    const rowIndex = childrenArray.indexOf(fieldWidget.closest('tr'));
+                    const rowRecord = this.props.record.data[parentField]?.records?.[rowIndex];
+                    value = rowRecord?.data?.[fieldName];
+                }
+            } else {
+                value = this.props.record.data[fullFieldName];
+            }
+        }
+
+        // Handle relational fields (Many2one [id, display_name] or { id, display_name })
+        if (Array.isArray(value) && value.length >= 2) {
+            return String(value[1]).trim();
+        }
+        if (value && typeof value === 'object' && 'display_name' in value) {
+            return String(value.display_name).trim();
+        }
+        if (value !== undefined && value !== null && value !== false && value !== '') {
+            return String(value).trim();
+        }
+
+        // Fallback to DOM input value or textContent
+        const inputEl = fieldWidget.querySelector('input, textarea, select');
+        if (inputEl && inputEl.value) {
+            return String(inputEl.value).trim();
+        }
+        const text = fieldWidget.textContent?.trim();
+        return text || null;
+    }
+
+    /**
+     * Finds the best matching OCR box using fuzzy matching, numeric normalization,
+     * token overlap, and confidence scoring.
+     */
+    findBestMatchingBox(targetValue, boxType, fullFieldName) {
+        if (!targetValue || !this.boxes) {
+            return null;
+        }
+        const cleanTarget = String(targetValue).trim().toLowerCase();
+        if (!cleanTarget) {
+            return null;
+        }
+
+        const candidateBoxesByPage = this.boxes[boxType] || {};
+        const allCandidates = [];
+        for (const [pageNumber, pageBoxes] of Object.entries(candidateBoxesByPage)) {
+            for (const box of pageBoxes) {
+                allCandidates.push({
+                    box,
+                    page: box.page !== undefined ? box.page : parseInt(pageNumber, 10),
+                });
+            }
+        }
+
+        if (!allCandidates.length) {
+            return null;
+        }
+
+        const normalizeNum = (str) => String(str).replace(/[^\d.,]/g, '').replace(/,/g, '.');
+        const normalizePunctuation = (str) => String(str).toLowerCase().replace(/[^\w\s]/gi, ' ').replace(/\s+/g, ' ').trim();
+
+        const normalizedTarget = normalizePunctuation(cleanTarget);
+        const targetWords = normalizedTarget.split(' ').filter(Boolean);
+
+        let bestCandidate = null;
+        let highestScore = 0;
+
+        for (const candidate of allCandidates) {
+            const box = candidate.box;
+            if (!box.text) continue;
+
+            const boxRaw = String(box.text).trim();
+            const boxLower = boxRaw.toLowerCase();
+            const boxNormalized = normalizePunctuation(boxLower);
+            const boxWords = boxNormalized.split(' ').filter(Boolean);
+
+            let score = 0;
+
+            // 1. Exact string match
+            if (boxLower === cleanTarget) {
+                score = 100;
+            }
+            // 2. Exact match after punctuation normalization
+            else if (boxNormalized === normalizedTarget && normalizedTarget.length > 0) {
+                score = 95;
+            }
+            // 3. Numeric match for number / float / monetary
+            else if (boxType === 'number') {
+                const numTarget = normalizeNum(cleanTarget);
+                const numBox = normalizeNum(boxRaw);
+                if (numTarget && numBox && numTarget === numBox) {
+                    score = 90;
+                } else if (numTarget && numBox && (numTarget.endsWith(numBox) || numBox.endsWith(numTarget))) {
+                    score = 75;
+                }
+            }
+            // 4. Substring / Containment match
+            else if (cleanTarget.includes(boxLower) && boxLower.length >= 3) {
+                score = 60 + Math.min(30, (boxLower.length / cleanTarget.length) * 30);
+            } else if (boxLower.includes(cleanTarget) && cleanTarget.length >= 3) {
+                score = 60 + Math.min(30, (cleanTarget.length / boxLower.length) * 30);
+            }
+            // 5. Token overlap / Jaccard similarity for multi-word fields
+            else if (targetWords.length > 0 && boxWords.length > 0) {
+                const intersection = targetWords.filter(w => boxWords.includes(w)).length;
+                if (intersection > 0) {
+                    const jaccard = intersection / (new Set([...targetWords, ...boxWords]).size);
+                    score = 40 + jaccard * 40;
+                }
+            }
+
+            // Feature / field affinity bonus if previously annotated
+            const boxFeature = box.feature || box.fieldName || box.field_name;
+            if (boxFeature && fullFieldName && (boxFeature === fullFieldName || fullFieldName.endsWith(boxFeature))) {
+                score += 15;
+            }
+
+            // Confidence weighting bonus (up to 5 points)
+            const confRatio = box.confidence !== undefined ? (box.confidence > 1 ? box.confidence / 100 : box.confidence) : 0.8;
+            score += confRatio * 5;
+
+            if (score > highestScore && score >= 50) {
+                highestScore = score;
+                bestCandidate = candidate;
+            }
+        }
+
+        return bestCandidate ? { ...bestCandidate.box, page: bestCandidate.page } : null;
+    }
+
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
 
     /**
      * Called when a field widget gains focus.
-     * It serves as the entry point to render the boxes of the focused field.
+     * It serves as the entry point to render the boxes of the focused field,
+     * finds the best matching box if the field has an existing value,
+     * and performs two-way scroll sync with active radar focus.
      */
-    onFocusFieldWidget(fieldWidget) {
+    async onFocusFieldWidget(fieldWidget) {
         const fullFieldName = this.getFullFieldName(fieldWidget);
         const fieldType = this.getBoxType(fullFieldName);
         if (!fieldType) {
@@ -481,14 +689,47 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
         this.activeBoxType = fieldType;
         this.activeFieldEl = fieldWidget;
 
-        this.showBoxes();
+        await this.showBoxes();
+
+        // Two-way scroll sync: if field already has a value, find matching box & scroll
+        const fieldValue = this.getFieldValue(fieldWidget, fullFieldName);
+        if (fieldValue) {
+            const bestBox = this.findBestMatchingBox(fieldValue, fieldType, fullFieldName);
+            if (bestBox) {
+                // Clear highlighted state across all visible boxes
+                for (const pageBoxes of Object.values(this.state.visibleBoxes || {})) {
+                    for (const b of pageBoxes) {
+                        b.isHighlighted = false;
+                    }
+                }
+
+                // Highlight matched box in reactive state
+                const targetBox = (this.state.visibleBoxes[bestBox.page] || []).find(b => b.id === bestBox.id);
+                if (targetBox) {
+                    targetBox.isHighlighted = true;
+                } else {
+                    bestBox.isHighlighted = true;
+                }
+
+                // Scroll to box on PDF/image viewer and activate radar pulse
+                this.scrollToBox(bestBox.id, bestBox.page);
+            }
+        }
     }
 
     /**
      * Called when a field widget loses focus.
-     * It hides all boxes.
+     * It removes active focus effects and hides all boxes.
      */
     onBlurFieldWidget() {
+        const win = this.mailPopoutService.externalWindow || window;
+        const iframe = win.document.querySelector('.o-mail-Attachment iframe');
+        const pdfDoc = iframe?.contentDocument;
+        [pdfDoc, win.document].forEach((doc) => {
+            doc?.querySelectorAll('.o_box_active_focus').forEach((el) => {
+                el.classList.remove('o_box_active_focus');
+            });
+        });
         this.resetActiveField();
     }
 

@@ -21,6 +21,7 @@ export class BoxLayer extends Component {
         onClickBoxCallback: Function,
         onBoxesSelectionCallback: Function,
         mode: String,
+        boxType: { type: String, optional: true },
     };
     /**
      * @override

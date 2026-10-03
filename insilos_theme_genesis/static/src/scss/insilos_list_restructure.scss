@@ -62,9 +62,11 @@
             }
 
             &.o_list_record_selector {
-              width: 38px !important;
+              width: 44px !important;
+              min-width: 44px !important;
               padding-left: 14px !important;
-              padding-right: 0 !important;
+              padding-right: 6px !important;
+              overflow: visible !important;
             }
 
             &.o_list_number_th {
@@ -112,6 +114,7 @@
             max-height: var(--insilos-table-row-height, 34px) !important;
             box-sizing: border-box !important;
             font-size: 12.5px !important;
+            font-weight: 400 !important;
             color: var(--insilos-text-primary, #0f172a) !important;
             vertical-align: middle !important;
             border: none !important;
@@ -121,9 +124,10 @@
 
             /* Checkbox selector (2px square, 15px x 15px) */
             &.o_list_record_selector {
-              width: 38px !important;
+              width: 44px !important;
+              min-width: 44px !important;
               padding-left: 14px !important;
-              padding-right: 0 !important;
+              padding-right: 6px !important;
               vertical-align: middle !important;
 
               .o-checkbox,
@@ -161,7 +165,7 @@
               }
             }
 
-            /* Numeric & Monetary Cells (IBM Tabular Figures) */
+            /* Numeric & Monetary Cells (IBM Tabular Figures - Regular 400 Weight) */
             &.o_monetary_cell,
             &.o_list_number,
             .o_field_monetary,
@@ -170,11 +174,12 @@
               font-family: var(--insilos-font-mono) !important;
               font-variant-numeric: tabular-nums !important;
               font-size: 12.5px !important;
-              font-weight: 550 !important;
+              font-weight: 400 !important;
               letter-spacing: -0.01em;
               text-align: right !important;
               direction: ltr !important;
               white-space: nowrap !important;
+              min-width: 130px !important;
             }
 
             /* Date & Timestamp Cells */
@@ -276,29 +281,36 @@
       }
 
       /* ----------------------------------------------------------------------
-         3. Table Footer (Totals & Aggregations)
+         3. Table Footer (Totals & Aggregations - Prominent 14px Bold Hierarchy)
          ---------------------------------------------------------------------- */
       tfoot {
         position: sticky !important;
         bottom: 0 !important;
+        z-index: 2 !important;
 
         tr {
-          height: 36px !important;
-          background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+          height: 38px !important;
+          background-color: var(--insilos-bg-subtle, #f1f5f9) !important;
 
           td {
-            padding: 0 12px !important;
-            font-size: 12.5px !important;
+            padding: 0 8px !important;
+            font-size: 14px !important;
             font-weight: 700 !important;
             color: var(--insilos-text-primary, #0f172a) !important;
-            border-top: 2px solid var(--insilos-border-medium, #cbd5e1) !important;
+            border-top: 2px solid var(--insilos-border-strong, #94a3b8) !important;
+            border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
             font-family: var(--insilos-font-mono) !important;
             font-variant-numeric: tabular-nums !important;
+            letter-spacing: -0.01em;
 
             &.o_list_number {
               text-align: right !important;
               direction: ltr !important;
               white-space: nowrap !important;
+              font-size: 14px !important;
+              font-weight: 700 !important;
+              color: var(--insilos-primary, #0b2e64) !important;
+              min-width: 130px !important;
             }
           }
         }
@@ -678,10 +690,20 @@ body.o_dark_mode,
 
         tfoot {
           background-color: var(--insilos-bg-subtle, #0b0f19) !important;
-          border-top-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+          border-top-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.2)) !important;
 
           tr td {
             color: var(--insilos-text-primary, #f8fafc) !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            padding: 0 8px !important;
+
+            &.o_list_number {
+              color: var(--insilos-primary, #00f2fe) !important;
+              font-size: 14px !important;
+              font-weight: 700 !important;
+              min-width: 130px !important;
+            }
           }
         }
       }

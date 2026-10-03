@@ -3,10 +3,16 @@
     <t t-name="iap_extract.Box">
         <div
             t-attf-class="o_extract_mixin_box
+                o_confidence_#{confidenceTier}
                 #{state.isHighlighted ? 'highlighted' : ''}
                 #{state.backgroundFadeout ? 'fadeout' : ''}"
             t-att-data-id="state.id"
             t-att-data-field-name="state.feature"
+            t-att-data-box-type="boxType"
+            t-att-data-confidence="confidencePercent"
+            t-att-data-confidence-tier="confidenceTier"
+            t-att-data-tooltip="tooltipText"
+            t-att-title="tooltipText"
             t-att-style="style"
             t-on-click="onClick"
             t-on-mousedown.stop.prevent=""
@@ -27,6 +33,7 @@
                     box="box"
                     pageWidth="pageWidth"
                     pageHeight="pageHeight"
+                    boxType="props.boxType"
                     onClickBoxCallback="props.onClickBoxCallback"
                 />
             </t>

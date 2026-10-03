@@ -26,6 +26,73 @@
     transform-origin: center center;
   }
 
+  /* =========================================================================
+     Confidence Heatmap Levels (High, Medium, Low)
+     ========================================================================= */
+
+  /* High Confidence: >= 90% (Emerald #10B981 - viền 2px, nền mờ 15%) */
+  .o_extract_mixin_box_layer > .o_extract_mixin_box.o_confidence_high,
+  .o_extract_mixin_box_layer > .o_extract_mixin_box[data-confidence-tier="high"] {
+    border: 2px solid #10B981;
+    background-color: rgba(16, 185, 129, 0.15);
+  }
+  .o_extract_mixin_box_layer:not(.is-selecting) > .o_extract_mixin_box.o_confidence_high:hover,
+  .o_extract_mixin_box_layer:not(.is-selecting) > .o_extract_mixin_box[data-confidence-tier="high"]:hover {
+    border-color: #059669;
+    background-color: rgba(16, 185, 129, 0.28);
+  }
+
+  /* Medium Confidence: 70-89% (Amber #F59E0B) */
+  .o_extract_mixin_box_layer > .o_extract_mixin_box.o_confidence_medium,
+  .o_extract_mixin_box_layer > .o_extract_mixin_box[data-confidence-tier="medium"] {
+    border: 2px solid #F59E0B;
+    background-color: rgba(245, 158, 11, 0.15);
+  }
+  .o_extract_mixin_box_layer:not(.is-selecting) > .o_extract_mixin_box.o_confidence_medium:hover,
+  .o_extract_mixin_box_layer:not(.is-selecting) > .o_extract_mixin_box[data-confidence-tier="medium"]:hover {
+    border-color: #D97706;
+    background-color: rgba(245, 158, 11, 0.28);
+  }
+
+  /* Low Confidence: < 70% (Crimson #EF4444) */
+  .o_extract_mixin_box_layer > .o_extract_mixin_box.o_confidence_low,
+  .o_extract_mixin_box_layer > .o_extract_mixin_box[data-confidence-tier="low"] {
+    border: 2px solid #EF4444;
+    background-color: rgba(239, 68, 68, 0.15);
+  }
+  .o_extract_mixin_box_layer:not(.is-selecting) > .o_extract_mixin_box.o_confidence_low:hover,
+  .o_extract_mixin_box_layer:not(.is-selecting) > .o_extract_mixin_box[data-confidence-tier="low"]:hover {
+    border-color: #DC2626;
+    background-color: rgba(239, 68, 68, 0.28);
+  }
+
+  /* =========================================================================
+     Active Focus & Radar Pulsing Animation (Cyan Neon - IBM Carbon / Insilos Horizon)
+     ========================================================================= */
+  @keyframes o_box_radar_pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.85), 0 0 10px rgba(0, 240, 255, 0.7);
+      border-color: #00F0FF;
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(0, 240, 255, 0.15), 0 0 20px rgba(0, 240, 255, 0.9);
+      border-color: #70FFFF;
+    }
+    100% {
+      box-shadow: 0 0 0 14px rgba(0, 240, 255, 0), 0 0 10px rgba(0, 240, 255, 0.7);
+      border-color: #00F0FF;
+    }
+  }
+
+  .o_extract_mixin_box_layer > .o_extract_mixin_box.o_box_active_focus,
+  .o_extract_mixin_box.o_box_active_focus {
+    z-index: 1000 !important;
+    border: 2px solid #00F0FF !important;
+    background-color: rgba(0, 240, 255, 0.25) !important;
+    animation: o_box_radar_pulse 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite !important;
+    outline: none !important;
+  }
+
   .o_extract_mixin_box_layer:not(.is-selecting) > .o_extract_mixin_box:hover,
   .o_extract_mixin_box_layer > .o_extract_mixin_box.highlighted  {
     border: 2px solid rgba(0,0,255,0.8) !important;
