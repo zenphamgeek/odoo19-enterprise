@@ -7,7 +7,7 @@
    - Strict 0 Inline Styles & 100% Brand Orange #FF8000 Unified Buttons
    ========================================================================== */
 
-// 1. Executive Glassmorphism Header Container
+// 1. Executive Glassmorphism Header Container & Balanced Menubar
 header#top,
 header.o_header_standard,
 .ins-glass-header {
@@ -27,6 +27,35 @@ header.o_header_standard,
         border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
         box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55),
                     0 0 40px rgba(255, 128, 0, 0.04) !important;
+    }
+
+    nav.navbar {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    #o_main_nav.container,
+    #o_main_nav.container-fluid,
+    #o_main_nav,
+    .o_main_nav {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: clamp(1.25rem, 2.5vw, 2.75rem) !important;
+        padding-right: clamp(1.25rem, 2.5vw, 2.75rem) !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+    }
+
+    ul.navbar-nav.justify-content-end {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+        gap: 0.5rem !important;
+        margin-left: auto !important;
     }
 }
 
@@ -447,3 +476,104 @@ header.o_header_standard,
 .x-small {
     font-size: 0.7rem !important;
 }
+
+// 7. Responsive Menubar Density & Anti-Overflow Rules
+@media (max-width: 1600px) {
+    .ins-glass-header {
+        li:has(a[href^="tel"]),
+        li:has(.s_text_block),
+        .s_text_block {
+            display: none !important;
+        }
+
+        .ins-badge-micro-tag {
+            display: none !important;
+        }
+    }
+}
+
+@media (max-width: 1500px) {
+    .ins-glass-header {
+        .ins-nav-item .nav-link {
+            padding: 0.3rem 0.52rem !important;
+            font-size: 0.86rem !important;
+            gap: 0.15rem !important;
+        }
+
+        #top_menu {
+            gap: 0.1rem !important;
+        }
+
+        .navbar-brand.logo {
+            margin-right: 1rem !important;
+        }
+
+        ul.navbar-nav.justify-content-end {
+            gap: 0.35rem !important;
+            padding-left: 0.5rem !important;
+        }
+
+        a[href*="demo"],
+        a[href*="request-demo"],
+        .btn-primary.rounded-pill {
+            padding: 0.34rem 0.85rem !important;
+            font-size: 0.85rem !important;
+        }
+    }
+}
+
+@media (max-width: 1366px) {
+    .ins-glass-header {
+        .ins-nav-item .nav-link {
+            padding: 0.26rem 0.4rem !important;
+            font-size: 0.81rem !important;
+        }
+
+        #top_menu {
+            gap: 0.05rem !important;
+        }
+
+        .navbar-brand.logo {
+            margin-right: 0.65rem !important;
+
+            img {
+                height: 30px !important;
+            }
+        }
+
+        a[href*="demo"],
+        a[href*="request-demo"],
+        .btn-primary.rounded-pill {
+            padding: 0.3rem 0.75rem !important;
+            font-size: 0.81rem !important;
+        }
+
+        .o_nav_link_btn {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+            font-size: 0.81rem !important;
+        }
+    }
+}
+
+@media (max-width: 1240px) {
+    .ins-glass-header {
+        .ins-nav-item .nav-link {
+            padding: 0.24rem 0.32rem !important;
+            font-size: 0.78rem !important;
+        }
+
+        .ins-has-megamenu .nav-link svg {
+            display: none !important;
+        }
+
+        a[href*="demo"],
+        a[href*="request-demo"],
+        .btn-primary.rounded-pill {
+            padding: 0.28rem 0.65rem !important;
+            font-size: 0.78rem !important;
+        }
+    }
+}
+
+

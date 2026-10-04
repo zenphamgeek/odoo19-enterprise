@@ -415,28 +415,24 @@ header#top, header.o_header_standard {
 
     @media (min-width: 1200px) {
         .ins-nav-wrapper {
-            min-width: 825px !important;
-            width: 825px !important;
-            flex: 0 0 825px !important;
-            margin-left: 1.5rem !important;
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
         #top_menu {
             display: flex !important;
             flex-wrap: nowrap !important;
-            gap: 4px !important;
+            align-items: center !important;
         }
 
-        #top_menu > .ins-nav-item:nth-child(1) { min-width: 92px !important; width: 92px !important; flex: 0 0 92px !important; }
-        #top_menu > .ins-nav-item:nth-child(2) { min-width: 118px !important; width: 118px !important; flex: 0 0 118px !important; }
-        #top_menu > .ins-nav-item:nth-child(3) { min-width: 123px !important; width: 123px !important; flex: 0 0 123px !important; }
-        #top_menu > .ins-nav-item:nth-child(4) { min-width: 107px !important; width: 107px !important; flex: 0 0 107px !important; }
-        #top_menu > .ins-nav-item:nth-child(5) { min-width: 185px !important; width: 185px !important; flex: 0 0 185px !important; }
-        #top_menu > .ins-nav-item:nth-child(6) { min-width: 82px !important; width: 82px !important; flex: 0 0 82px !important; }
-        #top_menu > .ins-nav-item:nth-child(7) { min-width: 100px !important; width: 100px !important; flex: 0 0 100px !important; }
+        #top_menu > .ins-nav-item {
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+        }
 
         ul.navbar-nav.align-items-center.gap-2.flex-shrink-0 {
-            margin-left: 0 !important;
+            margin-left: auto !important;
         }
     }
 
