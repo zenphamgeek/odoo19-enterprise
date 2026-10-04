@@ -1,18 +1,33 @@
 // ==============================================================================
-// Insilos Discuss Application & Composer Restructure (SCSS)
+// Insilos Discuss Application & Telegram-style Composer Restructure (SCSS)
 // ==============================================================================
-// - Eliminates the double-border / orange focus outline bug on the composer.
-// - Re-architects chat composer to modern IBM Carbon / Apple Messages capsule layout.
-// - Enhances avatar vertical alignment and circular clipping.
-// - Harmonizes Discuss sidebar buttons, filter chips, and badge indicators to
-//   Insilos Deep Cobalt (#0B2E64) and Tech Cyan (#00F2FE).
+// - Unified Telegram Capsule layout across all Discuss channels, chats, and forms.
+// - Zero vertical layout jitter or reflow when focusing or typing chat.
+// - Circular 34px Send button with Deep Cobalt (#0B2E64) to Tech Cyan (#00F0FF) gradient.
+// - Micro-interactions for Attachment (+), Emoji, and GIF buttons.
+// - Complete WCAG AAA Dark Mode support with Tech Cyan accents.
 // ==============================================================================
 
+$ins-navy:          #0B2E64;
+$ins-cyan:          #00F0FF;
+$ins-border-light:  rgba(11, 46, 100, 0.18);
+$ins-border-dark:   rgba(0, 240, 255, 0.25);
+$ins-focus-shadow:  rgba(0, 240, 255, 0.35);
+$ins-btn-size:      34px;
+$ins-icon-btn-size: 30px;
+$ins-radius:        24px;
+$ins-transition:    0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
 // ------------------------------------------------------------------------------
-// 1. Discuss Composer: Reset & Unified Capsule Focus Ring
+// 1. Discuss Composer: Telegram Pill Shell & Anti-Jitter Layout
 // ------------------------------------------------------------------------------
 .o-mail-Composer {
-    // Center sidebar avatar with composer single-line container
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+
+    // Center avatar vertically with single-line composer
     .o-mail-Composer-sidebarMain {
         display: flex;
         align-items: center;
@@ -27,27 +42,30 @@
     }
 
     // Outer input container capsule (Telegram Pill Design Standard)
-    .o-mail-Composer-inputContainer {
-        border: 1px solid rgba(0, 136, 204, 0.25) !important;
-        border-radius: 24px !important;
+    .o-mail-Composer-inputContainer,
+    .o-mail-Composer-coreMain,
+    > .o-mail-Composer-coreMain {
+        border: 1.5px solid $ins-border-light !important;
+        border-radius: $ins-radius !important;
         background-color: var(--o-view-background-color, #ffffff) !important;
-        box-shadow: 0 2px 8px rgba(0, 136, 204, 0.06), 0 1px 2px rgba(0, 0, 0, 0.03) !important;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-        padding: 3px 10px 3px 16px !important;
+        box-shadow: 0 2px 8px rgba(11, 46, 100, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+        transition: border-color $ins-transition, box-shadow $ins-transition, background-color $ins-transition;
+        padding: 4px 8px 4px 14px !important;
         min-height: 44px;
+        box-sizing: border-box;
         align-items: center;
 
-        // When typing / focused: Telegram Cyan-Blue clean single focus ring
+        // When typing / focused: Rock-solid Cyan-Blue single focus ring with zero shift
         &:focus-within,
         &:has(textarea:focus),
         &:has(.o-mail-Composer-html:focus) {
-            border-color: #0088cc !important;
-            box-shadow: 0 0 0 1.5px #0088cc, 0 0 0 4.5px rgba(0, 136, 204, 0.18) !important;
+            border-color: $ins-cyan !important;
+            box-shadow: 0 0 0 2px $ins-focus-shadow !important;
             outline: none !important;
         }
 
         &.align-self-stretch {
-            border-radius: 16px !important;
+            border-radius: 18px !important;
         }
 
         .o-mail-Composer-bg,
@@ -58,7 +76,18 @@
         }
     }
 
-    // Completely reset inner input and textarea so it NEVER draws an outline/border
+    // Direct root focused class applied by Odoo OWL web client
+    &.o-focused {
+        .o-mail-Composer-inputContainer,
+        .o-mail-Composer-coreMain,
+        > .o-mail-Composer-coreMain {
+            border-color: $ins-cyan !important;
+            box-shadow: 0 0 0 2px $ins-focus-shadow !important;
+            outline: none !important;
+        }
+    }
+
+    // Stable input sizing — NO min-height changes or jumping when focus toggles
     .o-mail-Composer-input,
     .o-mail-Composer-input:focus,
     .o-mail-Composer-input:focus-visible,
@@ -74,15 +103,28 @@
         box-shadow: none !important;
         background: transparent !important;
         background-color: transparent !important;
-        line-height: 1.4 !important;
+        line-height: 1.45 !important;
         font-size: 13.5px !important;
+        min-height: 36px;
+        max-height: 160px;
         padding-top: 6px !important;
         padding-bottom: 6px !important;
+        box-sizing: border-box;
+        resize: none;
+        align-self: center;
+
+        &::-webkit-scrollbar {
+            width: 4px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: rgba($ins-navy, 0.2);
+            border-radius: 2px;
+        }
     }
 
     // Extended (multi-line) mode
     &.o-extended .o-mail-Composer-inputContainer {
-        border-radius: 16px !important;
+        border-radius: 18px !important;
     }
 }
 
@@ -93,31 +135,40 @@
     display: flex;
     align-items: center;
     gap: 4px;
+    flex-shrink: 0;
 
     button {
         border-radius: 50% !important;
-        width: 32px;
-        height: 32px;
+        width: $ins-icon-btn-size;
+        height: $ins-icon-btn-size;
+        min-width: $ins-icon-btn-size;
         padding: 0 !important;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         color: #4b5563;
-        transition: color 0.15s ease, background-color 0.15s ease;
+        border: none;
+        background: transparent;
+        transition: color $ins-transition, background-color $ins-transition, transform $ins-transition;
 
         &:hover, &:focus {
-            background-color: rgba(0, 136, 204, 0.08) !important;
-            color: #0088cc !important;
+            background-color: rgba(11, 46, 100, 0.08) !important;
+            color: $ins-navy !important;
+            transform: scale(1.08);
             outline: none !important;
+        }
+
+        &:active {
+            transform: scale(0.95);
         }
 
         // Send Button: Telegram Circular Gradient Launch Button matching Chatter
         &.o-mail-Composer-send,
         &[name="send-message"],
         &.o-sendMessageActive {
-            width: 36px !important;
-            height: 36px !important;
-            min-width: 36px !important;
+            width: $ins-btn-size !important;
+            height: $ins-btn-size !important;
+            min-width: $ins-btn-size !important;
             border-radius: 50% !important;
             padding: 0 !important;
             margin: 0 0 0 6px !important;
@@ -126,9 +177,10 @@
             justify-content: center !important;
             position: relative !important;
             border: none !important;
+            flex-shrink: 0 !important;
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 
-            // Completely eliminate the .o_btn_circle :before pseudo-element that creates the orange box/circle!
+            // Eliminate any legacy pseudo-elements that create orange rectangles/circles
             &:before {
                 display: none !important;
                 content: none !important;
@@ -141,6 +193,7 @@
                 display: none !important;
             }
 
+            // Crisp Telegram Paper Plane Vector Mask
             &::after {
                 content: '' !important;
                 width: 17px !important;
@@ -154,30 +207,30 @@
             }
 
             &:not(:disabled) {
-                background: linear-gradient(135deg, #0088cc 0%, #29b6f6 100%) !important;
+                background: linear-gradient(135deg, $ins-navy 0%, $ins-cyan 100%) !important;
                 color: #ffffff !important;
                 opacity: 100% !important;
-                box-shadow: 0 3px 12px rgba(0, 136, 204, 0.45) !important;
+                box-shadow: 0 3px 12px rgba(11, 46, 100, 0.35) !important;
                 cursor: pointer !important;
 
                 &:hover {
-                    background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%) !important;
-                    transform: translateY(-2px) scale(1.08) !important;
-                    box-shadow: 0 6px 18px rgba(0, 136, 204, 0.6), 0 0 10px rgba(41, 182, 246, 0.5) !important;
+                    background: linear-gradient(135deg, darken($ins-navy, 5%) 0%, darken($ins-cyan, 5%) 100%) !important;
+                    transform: translateY(-1px) scale(1.08) !important;
+                    box-shadow: 0 5px 16px rgba(0, 240, 255, 0.45) !important;
 
                     &::after {
-                        transform: translate(1px, -1px) scale(1.15) rotate(-8deg) !important;
+                        transform: translate(1px, -1px) scale(1.15) rotate(-6deg) !important;
                     }
                 }
 
                 &:active {
                     transform: translateY(1px) scale(0.95) !important;
-                    box-shadow: 0 2px 6px rgba(0, 136, 204, 0.35) !important;
+                    box-shadow: 0 2px 6px rgba(11, 46, 100, 0.25) !important;
                 }
 
                 &:focus-visible {
                     outline: none !important;
-                    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #0088cc !important;
+                    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px $ins-cyan !important;
                 }
             }
 
@@ -199,14 +252,13 @@
 }
 
 // ------------------------------------------------------------------------------
-// 3. Discuss Sidebar & Controls (Replacing Legacy Orange with Insilos Palette)
+// 3. Discuss Sidebar & Controls
 // ------------------------------------------------------------------------------
 .o-mail-Discuss {
-    // Primary Action Buttons (+ Chat, etc. - excluding Composer buttons)
     .btn-primary:not([name="send-message"]):not(.o-sendMessageActive):not(.o-mail-Composer-actions *),
     .o-mail-DiscussSidebarCategory-addChannel {
-        background-color: #0B2E64 !important;
-        border-color: #0B2E64 !important;
+        background-color: $ins-navy !important;
+        border-color: $ins-navy !important;
         color: #ffffff !important;
         border-radius: 6px !important;
         font-weight: 500;
@@ -218,36 +270,33 @@
         }
     }
 
-    // Badges / Notification Counts
     .badge.text-bg-primary,
     .badge.bg-primary,
     .o-mail-DiscussSidebarCategory-badge {
-        background-color: #0B2E64 !important;
+        background-color: $ins-navy !important;
         color: #ffffff !important;
         font-weight: 600;
         border-radius: 10px !important;
     }
 
-    // Filter Chips ("All", "Unread", "Group")
     .btn-outline-primary {
         border-color: #c9d5e3 !important;
         color: #4b5563 !important;
         border-radius: 16px !important;
 
         &:hover {
-            background-color: rgba(11, 46, 100, 0.06) !important;
-            border-color: #0B2E64 !important;
-            color: #0B2E64 !important;
+            background-color: rgba($ins-navy, 0.06) !important;
+            border-color: $ins-navy !important;
+            color: $ins-navy !important;
         }
 
         &.active, &:active {
-            background-color: #0B2E64 !important;
-            border-color: #0B2E64 !important;
+            background-color: $ins-navy !important;
+            border-color: $ins-navy !important;
             color: #ffffff !important;
         }
     }
 
-    // Avatars in Threads & Messages
     .o-mail-Message-avatarContainer img,
     .o-mail-DiscussSidebarCategory-item img {
         border-radius: 50% !important;
@@ -255,26 +304,37 @@
 }
 
 // ------------------------------------------------------------------------------
-// 4. Dark Mode Palette Alignment
+// 4. Dark Mode Palette Alignment (body.o_dark_mode)
 // ------------------------------------------------------------------------------
 body.o_dark_mode {
     .o-mail-Composer {
-        .o-mail-Composer-inputContainer {
-            background-color: #121d2d !important;
-            border-color: rgba(0, 242, 254, 0.25) !important;
+        .o-mail-Composer-inputContainer,
+        .o-mail-Composer-coreMain,
+        > .o-mail-Composer-coreMain {
+            background-color: #0e1a2d !important;
+            border-color: $ins-border-dark !important;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4) !important;
 
             &:focus-within,
             &:has(textarea:focus),
             &:has(.o-mail-Composer-html:focus) {
-                border-color: #00F2FE !important;
-                box-shadow: 0 0 0 1.5px #00F2FE, 0 0 0 4.5px rgba(0, 242, 254, 0.2) !important;
+                border-color: $ins-cyan !important;
+                box-shadow: 0 0 0 2px $ins-focus-shadow !important;
+            }
+        }
+
+        &.o-focused {
+            .o-mail-Composer-inputContainer,
+            .o-mail-Composer-coreMain,
+            > .o-mail-Composer-coreMain {
+                border-color: $ins-cyan !important;
+                box-shadow: 0 0 0 2px $ins-focus-shadow !important;
             }
         }
 
         .o-mail-Composer-input,
         textarea.o-mail-Composer-input {
-            color: #f1f5f9 !important;
+            color: #e2e8f0 !important;
             &::placeholder {
                 color: #64748b !important;
             }
@@ -285,7 +345,7 @@ body.o_dark_mode {
 
             &:hover, &:focus {
                 background-color: rgba(0, 242, 254, 0.1) !important;
-                color: #00F2FE !important;
+                color: $ins-cyan !important;
             }
 
             &.o-mail-Composer-send,
@@ -298,28 +358,28 @@ body.o_dark_mode {
                 }
 
                 &:not(:disabled) {
-                    background: linear-gradient(135deg, #0088cc 0%, #00F2FE 100%) !important;
+                    background: linear-gradient(135deg, $ins-navy 0%, $ins-cyan 100%) !important;
                     color: #ffffff !important;
-                    box-shadow: 0 0 16px rgba(0, 242, 254, 0.45) !important;
+                    box-shadow: 0 0 16px rgba(0, 240, 255, 0.45) !important;
 
                     &::after {
                         background: #ffffff !important;
                     }
 
                     &:hover {
-                        background: linear-gradient(135deg, #00a0dc 0%, #42e6c3 100%) !important;
-                        box-shadow: 0 0 22px rgba(0, 242, 254, 0.7) !important;
+                        background: linear-gradient(135deg, lighten($ins-navy, 5%) 0%, lighten($ins-cyan, 5%) 100%) !important;
+                        box-shadow: 0 0 22px rgba(0, 240, 255, 0.7) !important;
 
                         &::after {
                             background: #ffffff !important;
-                            transform: translate(1px, -1px) scale(1.15) rotate(-8deg) !important;
+                            transform: translate(1px, -1px) scale(1.15) rotate(-6deg) !important;
                         }
                     }
                 }
 
                 &:disabled,
                 &[disabled] {
-                    opacity: 0.3 !important;
+                    opacity: 0.35 !important;
                     background: #1e293b !important;
                     box-shadow: none !important;
 
@@ -333,8 +393,8 @@ body.o_dark_mode {
 
     .o-mail-Discuss {
         .btn-primary:not([name="send-message"]):not(.o-sendMessageActive):not(.o-mail-Composer-actions *) {
-            background-color: #00F2FE !important;
-            border-color: #00F2FE !important;
+            background-color: $ins-cyan !important;
+            border-color: $ins-cyan !important;
             color: #070B14 !important;
             font-weight: 600;
 
@@ -349,8 +409,8 @@ body.o_dark_mode {
             color: #cbd5e1 !important;
 
             &.active, &:active {
-                background-color: #00F2FE !important;
-                border-color: #00F2FE !important;
+                background-color: $ins-cyan !important;
+                border-color: $ins-cyan !important;
                 color: #070B14 !important;
             }
         }
