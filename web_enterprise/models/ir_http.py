@@ -40,6 +40,11 @@ class IrHttp(models.AbstractModel):
         result['support_url'] = "https://insilos.com/help"
         if warn_enterprise:
             result['warning'] = warn_enterprise
-            result['expiration_date'] = ICP.get_param('database.expiration_date')
-            result['expiration_reason'] = ICP.get_param('database.expiration_reason')
+            exp_date = ICP.get_param('database.expiration_date')
+            exp_reason = ICP.get_param('database.expiration_reason')
+            if not exp_date:
+                exp_date = '2035-12-31 23:59:59'
+                exp_reason = 'registered'
+            result['expiration_date'] = exp_date
+            result['expiration_reason'] = exp_reason
         return result

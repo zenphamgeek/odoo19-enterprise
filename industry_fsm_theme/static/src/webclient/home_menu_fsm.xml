@@ -3,26 +3,45 @@
 
     <t t-inherit="web_enterprise.HomeMenu" t-inherit-mode="extension">
         <xpath expr="//div[hasclass('o_apps')]" position="before">
-            <!-- FSM Field Operations Quick Bar -->
-            <div t-if="fsmState &amp;&amp; fsmState.isFsmActive" class="w_fsm_quick_bar mt-4 mb-2 p-3 rounded-3 border bg-body-tertiary border-light-subtle user-select-none shadow-sm">
-                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="w_fsm_badge_icon rounded-circle p-2 bg-primary-subtle text-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"/><path d="M128,64a64,64,0,1,0,64,64A64.07,64.07,0,0,0,128,64Zm0,112a48,48,0,1,1,48-48A48.05,48.05,0,0,1,128,176Z"/></svg>
+            <!-- Insilos Executive Field Command & Telemetry Widget -->
+            <div t-if="fsmState &amp;&amp; fsmState.isFsmActive" class="ins_field_command_bar user-select-none mt-4 mb-2">
+                <div class="ins_command_inner d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <!-- Left: Telemetry & Radar Indicator -->
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="ins_radar_beacon position-relative d-flex align-items-center justify-content-center">
+                            <span class="ins_beacon_pulse"></span>
+                            <span class="ins_beacon_dot"></span>
+                            <svg class="ins_beacon_icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 256 256" fill="currentColor">
+                                <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm40-88a40,40,0,1,1-40-40A40,40,0,0,1,168,128Z" opacity="0.2"/>
+                                <path d="M128,112a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0-32a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm0-128A96,96,0,1,0,224,128,96.11,96.11,0,0,0,128,32Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,208Z"/>
+                            </svg>
                         </div>
-                        <div>
-                            <h6 class="fw-bold mb-0 text-body">Field Operations Overview</h6>
-                            <span class="text-muted small">Real-time Field Service Management Status</span>
+                        <div class="d-flex flex-column">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="ins_command_title">EXECUTIVE FIELD COMMAND</span>
+                                <span class="ins_live_badge">LIVE</span>
+                            </div>
+                            <span class="ins_command_subtitle">Autonomous Dispatch &amp; Telemetry Status</span>
                         </div>
                     </div>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-primary d-flex align-items-center gap-1 rounded-pill px-3" t-on-click="() => this.openFsmTasks('my')">
-                            <span>My Field Tasks</span>
-                            <span class="badge bg-white text-primary rounded-pill ms-1" t-esc="fsmState.todayTasks || 0"/>
+
+                    <!-- Right: Luxury Capsule Control Pills -->
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <button class="ins_cmd_pill ins_cmd_pill_primary d-flex align-items-center gap-2" t-on-click="() => this.openFsmTasks('my')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 256 256" fill="currentColor">
+                                <path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"/>
+                                <path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/>
+                            </svg>
+                            <span>Active Field Tasks</span>
+                            <span class="ins_cmd_counter" t-esc="fsmState.todayTasks || 0"/>
                         </button>
-                        <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 rounded-pill px-3" t-on-click="() => this.openFsmTasks('unassigned')">
-                            <span>Unassigned Orders</span>
-                            <span class="badge bg-secondary text-white rounded-pill ms-1" t-esc="fsmState.unassignedOrders || 0"/>
+                        <button class="ins_cmd_pill ins_cmd_pill_secondary d-flex align-items-center gap-2" t-on-click="() => this.openFsmTasks('unassigned')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 256 256" fill="currentColor">
+                                <path d="M208,40H48A16,16,0,0,0,32,56v48a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40Z" opacity="0.2"/>
+                                <path d="M208,32H48A24,24,0,0,0,24,56v48a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V56A24,24,0,0,0,208,32Zm8,72a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8Zm-16,40H56a8,8,0,0,0,0,16H200a8,8,0,0,0,0-16Zm-40,32H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16Z"/>
+                            </svg>
+                            <span>Pending Dispatch</span>
+                            <span class="ins_cmd_counter ins_counter_warn" t-esc="fsmState.unassignedOrders || 0"/>
                         </button>
                     </div>
                 </div>
