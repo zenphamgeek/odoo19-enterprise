@@ -1,0 +1,43 @@
+/* ==============================================================================
+ * Insilos UI Performance & CSS Containment Layer
+ * ==============================================================================
+ * Accelerates rendering of high-cardinality collections (List rows, Kanban columns,
+ * Dashboard KPI cards, and Chatter message streams).
+ * Implements CSS containment and content-visibility: auto to skip offscreen layout/paint.
+ * Designed following Hard Refactor Architecture recommendations.
+ * ============================================================================== */
+
+// 1. Structured Data Table / List Rows: isolate layout/paint, skip offscreen render work
+.o_list_table tbody > tr {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 38px;
+    contain: layout paint style;
+}
+
+// 2. Kanban Columns: each column acts as an independent containment root
+.o_kanban_group {
+    contain: content;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+}
+
+// 3. Kanban Cards: micro-containment for smoother 60fps drag & drop interaction
+.o_kanban_record {
+    contain: layout paint style;
+}
+
+// 4. Dashboard KPI Cards: independent containment roots for instant widget rendering
+.o_dashboard .o_kpi_card,
+.insilos-kpi-card,
+.o_dashboard_card {
+    contain: content;
+    content-visibility: auto;
+    contain-intrinsic-size: 240px 160px;
+}
+
+// 5. Discuss / Chatter Message Stream: accelerate long thread scrolling
+.o-mail-MessageList .o-mail-Message {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 64px;
+    contain: layout paint style;
+}

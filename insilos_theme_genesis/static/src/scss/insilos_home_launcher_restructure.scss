@@ -297,3 +297,14 @@ body.o_dark_mode,
     }
   }
 }
+
+// Suppress legacy tour pointer cursor footprint on Home Menu / App Launcher
+body:has(.o_home_menu) .o_tour_pointer,
+body.o_home_menu_background .o_tour_pointer,
+.o_home_menu ~ .o-overlay-item .o_tour_pointer,
+.o_home_menu_background .o_tour_pointer {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+

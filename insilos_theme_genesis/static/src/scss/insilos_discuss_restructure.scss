@@ -1,0 +1,358 @@
+// ==============================================================================
+// Insilos Discuss Application & Composer Restructure (SCSS)
+// ==============================================================================
+// - Eliminates the double-border / orange focus outline bug on the composer.
+// - Re-architects chat composer to modern IBM Carbon / Apple Messages capsule layout.
+// - Enhances avatar vertical alignment and circular clipping.
+// - Harmonizes Discuss sidebar buttons, filter chips, and badge indicators to
+//   Insilos Deep Cobalt (#0B2E64) and Tech Cyan (#00F2FE).
+// ==============================================================================
+
+// ------------------------------------------------------------------------------
+// 1. Discuss Composer: Reset & Unified Capsule Focus Ring
+// ------------------------------------------------------------------------------
+.o-mail-Composer {
+    // Center sidebar avatar with composer single-line container
+    .o-mail-Composer-sidebarMain {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 4px !important;
+
+        .o-mail-Avatar,
+        .o-mail-Avatar img,
+        .rounded {
+            border-radius: 50% !important;
+        }
+    }
+
+    // Outer input container capsule (Telegram Pill Design Standard)
+    .o-mail-Composer-inputContainer {
+        border: 1px solid rgba(0, 136, 204, 0.25) !important;
+        border-radius: 24px !important;
+        background-color: var(--o-view-background-color, #ffffff) !important;
+        box-shadow: 0 2px 8px rgba(0, 136, 204, 0.06), 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        padding: 3px 10px 3px 16px !important;
+        min-height: 44px;
+        align-items: center;
+
+        // When typing / focused: Telegram Cyan-Blue clean single focus ring
+        &:focus-within,
+        &:has(textarea:focus),
+        &:has(.o-mail-Composer-html:focus) {
+            border-color: #0088cc !important;
+            box-shadow: 0 0 0 1.5px #0088cc, 0 0 0 4.5px rgba(0, 136, 204, 0.18) !important;
+            outline: none !important;
+        }
+
+        &.align-self-stretch {
+            border-radius: 16px !important;
+        }
+
+        .o-mail-Composer-bg,
+        .o-mail-Composer-quickActions,
+        .o-mail-Composer-moreActions {
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+    }
+
+    // Completely reset inner input and textarea so it NEVER draws an outline/border
+    .o-mail-Composer-input,
+    .o-mail-Composer-input:focus,
+    .o-mail-Composer-input:focus-visible,
+    textarea.o-mail-Composer-input,
+    textarea.o-mail-Composer-input:focus,
+    textarea.o-mail-Composer-input:focus-visible,
+    .o-mail-Composer-inputStyle,
+    .o-mail-Composer-inputStyle:focus,
+    .o-mail-Composer-inputStyle:focus-visible {
+        outline: none !important;
+        outline-offset: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        line-height: 1.4 !important;
+        font-size: 13.5px !important;
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
+    }
+
+    // Extended (multi-line) mode
+    &.o-extended .o-mail-Composer-inputContainer {
+        border-radius: 16px !important;
+    }
+}
+
+// ------------------------------------------------------------------------------
+// 2. Composer Action Buttons & Send Button (Telegram Style Standard)
+// ------------------------------------------------------------------------------
+.o-mail-Composer-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    button {
+        border-radius: 50% !important;
+        width: 32px;
+        height: 32px;
+        padding: 0 !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #4b5563;
+        transition: color 0.15s ease, background-color 0.15s ease;
+
+        &:hover, &:focus {
+            background-color: rgba(0, 136, 204, 0.08) !important;
+            color: #0088cc !important;
+            outline: none !important;
+        }
+
+        // Send Button: Telegram Circular Gradient Launch Button matching Chatter
+        &.o-mail-Composer-send,
+        &[name="send-message"],
+        &.o-sendMessageActive {
+            width: 36px !important;
+            height: 36px !important;
+            min-width: 36px !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            margin: 0 0 0 6px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: relative !important;
+            border: none !important;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+
+            // Completely eliminate the .o_btn_circle :before pseudo-element that creates the orange box/circle!
+            &:before {
+                display: none !important;
+                content: none !important;
+                background: none !important;
+            }
+
+            i[data-icon="send"],
+            .oi-send,
+            i {
+                display: none !important;
+            }
+
+            &::after {
+                content: '' !important;
+                width: 17px !important;
+                height: 17px !important;
+                background: #ffffff !important;
+                -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='22' y1='2' x2='11' y2='13'%3E%3C/line%3E%3Cpolygon points='22 2 15 22 11 13 2 9 22 2'%3E%3C/polygon%3E%3C/svg%3E") no-repeat center / contain !important;
+                mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='22' y1='2' x2='11' y2='13'%3E%3C/line%3E%3Cpolygon points='22 2 15 22 11 13 2 9 22 2'%3E%3C/polygon%3E%3C/svg%3E") no-repeat center / contain !important;
+                flex-shrink: 0 !important;
+                transform: translate(-1px, 1px);
+                transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+            }
+
+            &:not(:disabled) {
+                background: linear-gradient(135deg, #0088cc 0%, #29b6f6 100%) !important;
+                color: #ffffff !important;
+                opacity: 100% !important;
+                box-shadow: 0 3px 12px rgba(0, 136, 204, 0.45) !important;
+                cursor: pointer !important;
+
+                &:hover {
+                    background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%) !important;
+                    transform: translateY(-2px) scale(1.08) !important;
+                    box-shadow: 0 6px 18px rgba(0, 136, 204, 0.6), 0 0 10px rgba(41, 182, 246, 0.5) !important;
+
+                    &::after {
+                        transform: translate(1px, -1px) scale(1.15) rotate(-8deg) !important;
+                    }
+                }
+
+                &:active {
+                    transform: translateY(1px) scale(0.95) !important;
+                    box-shadow: 0 2px 6px rgba(0, 136, 204, 0.35) !important;
+                }
+
+                &:focus-visible {
+                    outline: none !important;
+                    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #0088cc !important;
+                }
+            }
+
+            &:disabled,
+            &[disabled] {
+                opacity: 0.45 !important;
+                background: #e2e8f0 !important;
+                box-shadow: none !important;
+                cursor: not-allowed !important;
+                transform: none !important;
+
+                &::after {
+                    background: #94a3b8 !important;
+                    transform: translate(-1px, 1px) !important;
+                }
+            }
+        }
+    }
+}
+
+// ------------------------------------------------------------------------------
+// 3. Discuss Sidebar & Controls (Replacing Legacy Orange with Insilos Palette)
+// ------------------------------------------------------------------------------
+.o-mail-Discuss {
+    // Primary Action Buttons (+ Chat, etc. - excluding Composer buttons)
+    .btn-primary:not([name="send-message"]):not(.o-sendMessageActive):not(.o-mail-Composer-actions *),
+    .o-mail-DiscussSidebarCategory-addChannel {
+        background-color: #0B2E64 !important;
+        border-color: #0B2E64 !important;
+        color: #ffffff !important;
+        border-radius: 6px !important;
+        font-weight: 500;
+
+        &:hover, &:focus {
+            background-color: #08224b !important;
+            border-color: #08224b !important;
+            color: #ffffff !important;
+        }
+    }
+
+    // Badges / Notification Counts
+    .badge.text-bg-primary,
+    .badge.bg-primary,
+    .o-mail-DiscussSidebarCategory-badge {
+        background-color: #0B2E64 !important;
+        color: #ffffff !important;
+        font-weight: 600;
+        border-radius: 10px !important;
+    }
+
+    // Filter Chips ("All", "Unread", "Group")
+    .btn-outline-primary {
+        border-color: #c9d5e3 !important;
+        color: #4b5563 !important;
+        border-radius: 16px !important;
+
+        &:hover {
+            background-color: rgba(11, 46, 100, 0.06) !important;
+            border-color: #0B2E64 !important;
+            color: #0B2E64 !important;
+        }
+
+        &.active, &:active {
+            background-color: #0B2E64 !important;
+            border-color: #0B2E64 !important;
+            color: #ffffff !important;
+        }
+    }
+
+    // Avatars in Threads & Messages
+    .o-mail-Message-avatarContainer img,
+    .o-mail-DiscussSidebarCategory-item img {
+        border-radius: 50% !important;
+    }
+}
+
+// ------------------------------------------------------------------------------
+// 4. Dark Mode Palette Alignment
+// ------------------------------------------------------------------------------
+body.o_dark_mode {
+    .o-mail-Composer {
+        .o-mail-Composer-inputContainer {
+            background-color: #121d2d !important;
+            border-color: rgba(0, 242, 254, 0.25) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4) !important;
+
+            &:focus-within,
+            &:has(textarea:focus),
+            &:has(.o-mail-Composer-html:focus) {
+                border-color: #00F2FE !important;
+                box-shadow: 0 0 0 1.5px #00F2FE, 0 0 0 4.5px rgba(0, 242, 254, 0.2) !important;
+            }
+        }
+
+        .o-mail-Composer-input,
+        textarea.o-mail-Composer-input {
+            color: #f1f5f9 !important;
+            &::placeholder {
+                color: #64748b !important;
+            }
+        }
+
+        .o-mail-Composer-actions button {
+            color: #94a3b8;
+
+            &:hover, &:focus {
+                background-color: rgba(0, 242, 254, 0.1) !important;
+                color: #00F2FE !important;
+            }
+
+            &.o-mail-Composer-send,
+            &[name="send-message"],
+            &.o-sendMessageActive {
+                &:before {
+                    display: none !important;
+                    content: none !important;
+                    background: none !important;
+                }
+
+                &:not(:disabled) {
+                    background: linear-gradient(135deg, #0088cc 0%, #00F2FE 100%) !important;
+                    color: #ffffff !important;
+                    box-shadow: 0 0 16px rgba(0, 242, 254, 0.45) !important;
+
+                    &::after {
+                        background: #ffffff !important;
+                    }
+
+                    &:hover {
+                        background: linear-gradient(135deg, #00a0dc 0%, #42e6c3 100%) !important;
+                        box-shadow: 0 0 22px rgba(0, 242, 254, 0.7) !important;
+
+                        &::after {
+                            background: #ffffff !important;
+                            transform: translate(1px, -1px) scale(1.15) rotate(-8deg) !important;
+                        }
+                    }
+                }
+
+                &:disabled,
+                &[disabled] {
+                    opacity: 0.3 !important;
+                    background: #1e293b !important;
+                    box-shadow: none !important;
+
+                    &::after {
+                        background: #64748b !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .o-mail-Discuss {
+        .btn-primary:not([name="send-message"]):not(.o-sendMessageActive):not(.o-mail-Composer-actions *) {
+            background-color: #00F2FE !important;
+            border-color: #00F2FE !important;
+            color: #070B14 !important;
+            font-weight: 600;
+
+            &:hover {
+                background-color: #42e6c3 !important;
+                border-color: #42e6c3 !important;
+            }
+        }
+
+        .btn-outline-primary {
+            border-color: #2a3d58 !important;
+            color: #cbd5e1 !important;
+
+            &.active, &:active {
+                background-color: #00F2FE !important;
+                border-color: #00F2FE !important;
+                color: #070B14 !important;
+            }
+        }
+    }
+}
