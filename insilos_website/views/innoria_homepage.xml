@@ -8,7 +8,18 @@
     <!-- REUSABLE INNORIA NAVBAR (Official Logo, Nav Links & Contact CTA)       -->
     <!-- ===================================================================== -->
     <template id="innoria_navbar" name="INNORIA Navbar">
-        <nav class="navbar navbar-expand-lg innoria-navbar" id="innoria_main_nav">
+        <nav class="navbar navbar-expand-lg innoria-navbar" id="innoria_main_nav" style="background-color: rgba(255, 255, 255, 0.98) !important; border-bottom: 1px solid #E2E8F0 !important; box-shadow: 0 4px 20px -2px rgba(2, 132, 199, 0.08) !important;">
+            <style>
+                #wrapwrap { background-color: #FFFFFF !important; }
+                .innoria-navbar { background-color: rgba(255, 255, 255, 0.98) !important; border-bottom: 1px solid #E2E8F0 !important; }
+                .innoria-navbar .nav-link { color: #0F172A !important; font-weight: 600 !important; font-size: 0.9rem !important; }
+                .innoria-navbar .nav-link:hover { color: #0284C7 !important; }
+                .innoria-navbar .dropdown-menu { background-color: #FFFFFF !important; border: 1px solid #E2E8F0 !important; }
+                .innoria-navbar .dropdown-item { color: #0F172A !important; }
+                .innoria-navbar .dropdown-item:hover { background-color: #F0F9FF !important; color: #0284C7 !important; }
+                .btn-innoria-nav { background: linear-gradient(135deg, #0ABBDB 0%, #0284C7 100%) !important; color: #FFFFFF !important; border: none !important; border-radius: 9999px !important; font-weight: 700 !important; padding: 0.5rem 1.25rem !important; box-shadow: 0 4px 14px rgba(10, 187, 219, 0.35) !important; }
+                .btn-innoria-nav:hover { background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%) !important; color: #FFFFFF !important; transform: translateY(-1px) !important; }
+            </style>
             <div class="container d-flex align-items-center justify-content-between">
                 <!-- Brand Logo -->
                 <a class="navbar-brand py-0 d-flex align-items-center" href="/">
@@ -16,7 +27,7 @@
                 </a>
 
                 <!-- Navbar Toggler for Mobile -->
-                <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#innoriaNavContent" aria-controls="innoriaNavContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler border-0 text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#innoriaNavContent" aria-controls="innoriaNavContent" aria-expanded="false" aria-label="Toggle navigation">
                     <svg class="ph-duotone ph-list" style="width: 1.75rem; height: 1.75rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-list"/></svg>
                 </button>
 
@@ -30,10 +41,10 @@
                             <a class="nav-link dropdown-toggle" href="#" id="innoriaPlatformDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Platform
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-dark border-0 shadow-lg" aria-labelledby="innoriaPlatformDropdown" style="background-color: #1F2937; border: 1px solid rgba(255,255,255,0.08) !important;">
-                                <li><a class="dropdown-item py-2 text-white" href="/platform"><strong style="color: #0ABBDB;">MOJO AI</strong> — AI Agent Platform</a></li>
-                                <li><a class="dropdown-item py-2 text-white" href="/no-code-platform"><strong style="color: #FF8000;">DIGIFORCE</strong> — No-Code Engine</a></li>
-                                <li><a class="dropdown-item py-2 text-white" href="/blockchain"><strong style="color: #8B5CF6;">MOJOVERSE</strong> — Enterprise Web3</a></li>
+                            <ul class="dropdown-menu border-0 shadow-lg" aria-labelledby="innoriaPlatformDropdown" style="background-color: #FFFFFF; border: 1px solid #E2E8F0 !important; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.08) !important;">
+                                <li><a class="dropdown-item py-2 text-dark" href="/platform"><strong style="color: #0ABBDB;">MOJO AI</strong> — AI Agent Platform</a></li>
+                                <li><a class="dropdown-item py-2 text-dark" href="/no-code-platform"><strong style="color: #FF8000;">DIGIFORCE</strong> — No-Code Engine</a></li>
+                                <li><a class="dropdown-item py-2 text-dark" href="/blockchain"><strong style="color: #8B5CF6;">MOJOVERSE</strong> — Enterprise Web3</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -65,18 +76,17 @@
             <!-- Reusable Innoria Navbar -->
             <t t-call="insilos_website.innoria_navbar"/>
 
-            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5" style="background-color: var(--innoria-dark-canvas);">
+            <main id="wrap" class="oe_structure o_colored_level" style="background-color: #FFFFFF; color: #0F172A;">
                 <div class="oe_structure oe_empty" id="oe_structure_innoria_home_top"/>
 
                 <!-- ========================================================= -->
                 <!-- 1. HERO COVER WITH AUTHENTIC BANNER & 3D TOPOLOGY         -->
                 <!-- ========================================================= -->
-                <section class="s_cover position-relative o_colored_level o_cc o_cc5 pt80 pb60 overflow-hidden innoria-hero-section"
+                <section class="s_cover position-relative o_colored_level pt80 pb60 overflow-hidden innoria-hero-section"
                          data-snippet="s_cover"
                          data-name="Innoria 3D Sovereign Hero"
-                         data-bs-theme="dark"
                          id="innoria_hero_cover"
-                         style="background-image: radial-gradient(circle at 50% 10%, rgba(10, 187, 219, 0.18) 0%, transparent 65%);">
+                         style="background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 50%, #F8FAFC 100%);">
                     
                     <div class="container position-relative z-1 py-lg-2">
                         <!-- Hero Header Row -->
@@ -86,21 +96,21 @@
                                     <span class="d-inline-block rounded-circle bg-info" style="width: 8px; height: 8px; box-shadow: 0 0 8px #0ABBDB;"/>
                                     <span>INNORIA SOVEREIGN PLATFORM // TAILORED TECHNOLOGY</span>
                                 </div>
-                                <h1 class="display-3 fw-bold text-white mb-3 lh-sm">
+                                <h1 class="display-3 fw-bold text-dark mb-3 lh-sm">
                                     Biến Thách Thức Vận Hành Thành Giải Pháp Số Trong
                                     <span class="text-innoria-gradient d-inline-block position-relative">
                                         30 Ngày Go-Live
                                     </span>
                                 </h1>
-                                <p class="lead text-secondary fs-5 col-lg-10 mx-auto mb-4">
-                                    Innoria mang nghệ thuật vào công nghệ (<em class="text-white">Brings art into technology</em>) — The Innovation of Real-life Intelligent Application. Hợp nhất Low-Code <strong class="text-white">DIGIFORCE</strong>, hệ sinh thái trí tuệ nhân tạo đa tác nhân <strong class="text-white">MOJO AI</strong>, blockchain <strong class="text-white">MOJOVERSE</strong> và lõi ERP thông minh.
+                                <p class="lead fs-5 col-lg-10 mx-auto mb-4" style="color: #334155 !important;">
+                                    Innoria mang nghệ thuật vào công nghệ (<em class="text-dark">Brings art into technology</em>) — The Innovation of Real-life Intelligent Application. Hợp nhất Low-Code <strong class="text-dark">DIGIFORCE</strong>, hệ sinh thái trí tuệ nhân tạo đa tác nhân <strong class="text-dark">MOJO AI</strong>, blockchain <strong class="text-dark">MOJOVERSE</strong> và lõi ERP thông minh.
                                 </p>
                                 <div class="d-flex flex-wrap align-items-center justify-content-center gap-3">
                                     <a href="#innoria_topology_section" class="btn btn-primary rounded-pill px-4 py-3 fw-bold d-inline-flex align-items-center gap-2 shadow-sm" style="background: var(--innoria-cyan); border-color: var(--innoria-cyan); color: #05101E;">
                                         <span>Khám Phá Sơ Đồ Kiến Trúc 3D</span>
                                         <svg class="ph-duotone ph-arrow-down" style="width: 1.15rem; height: 1.15rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-down"/></svg>
                                     </a>
-                                    <a href="#innoria_contact_section" class="btn btn-outline-light rounded-pill px-4 py-3 fw-bold d-inline-flex align-items-center gap-2">
+                                    <a href="#innoria_contact_section" class="btn btn-outline-primary rounded-pill px-4 py-3 fw-bold d-inline-flex align-items-center gap-2" style="border-color: #0284C7; color: #0284C7; background: #FFFFFF;">
                                         <span>Đặt Lịch Tư Vấn 3 Giờ Cùng Chuyên Gia</span>
                                         <svg class="ph-duotone ph-calendar" style="width: 1.15rem; height: 1.15rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-calendar"/></svg>
                                     </a>
@@ -121,7 +131,7 @@
 
                                     <!-- Floating Interactive HUD Bar -->
                                     <div class="innoria-hud-control-bar">
-                                        <span class="d-inline-flex align-items-center gap-2 px-3 py-1 text-white small font-monospace border-end border-secondary border-opacity-25 me-1">
+                                        <span class="d-inline-flex align-items-center gap-2 px-3 py-1 text-dark small font-monospace border-end border-slate-300 me-1">
                                             <span class="d-inline-block rounded-circle bg-info" style="width: 7px; height: 7px; box-shadow: 0 0 6px #0ABBDB;"/>
                                             <span>TOPOLOGY NODES</span>
                                         </span>
@@ -148,27 +158,27 @@
                         <!-- 4 Quick Metric Badges -->
                         <div class="row g-3 text-center mt-3">
                             <div class="col-6 col-md-3">
-                                <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
-                                    <div class="text-secondary small text-uppercase fw-semibold">Thời Gian Triển Khai</div>
-                                    <div class="fs-4 fw-bold text-white mt-1">30 Ngày Go-Live</div>
+                                <div class="p-3 rounded-3 bg-white border border-slate-200 shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
+                                    <div class="text-muted small text-uppercase fw-semibold" style="color: #64748B;">Thời Gian Triển Khai</div>
+                                    <div class="fs-4 fw-bold text-dark mt-1">30 Ngày Go-Live</div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-3">
-                                <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
-                                    <div class="text-secondary small text-uppercase fw-semibold">Chi Phí Sở Hữu TCO</div>
-                                    <div class="fs-4 fw-bold text-innoria-mint mt-1">-50% So Với Truyền Thống</div>
+                                <div class="p-3 rounded-3 bg-white border border-slate-200 shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
+                                    <div class="text-muted small text-uppercase fw-semibold" style="color: #64748B;">Chi Phí Sở Hữu TCO</div>
+                                    <div class="fs-4 fw-bold mt-1" style="color: #0284C7;">-50% So Với Truyền Thống</div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-3">
-                                <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
-                                    <div class="text-secondary small text-uppercase fw-semibold">Độ Chuẩn Xác VLM AI</div>
-                                    <div class="fs-4 fw-bold text-innoria-cyan mt-1">99.8% Nhận Diện</div>
+                                <div class="p-3 rounded-3 bg-white border border-slate-200 shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
+                                    <div class="text-muted small text-uppercase fw-semibold" style="color: #64748B;">Độ Chuẩn Xác VLM AI</div>
+                                    <div class="fs-4 fw-bold mt-1" style="color: #0ABBDB;">99.8% Nhận Diện</div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-3">
-                                <div class="p-3 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
-                                    <div class="text-secondary small text-uppercase fw-semibold">Môi Trường Vận Hành</div>
-                                    <div class="fs-4 fw-bold text-innoria-amber mt-1">Air-Gapped &amp; Sovereign</div>
+                                <div class="p-3 rounded-3 bg-white border border-slate-200 shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
+                                    <div class="text-muted small text-uppercase fw-semibold" style="color: #64748B;">Môi Trường Vận Hành</div>
+                                    <div class="fs-4 fw-bold mt-1" style="color: #EA580C;">Air-Gapped &amp; Sovereign</div>
                                 </div>
                             </div>
                         </div>
@@ -178,10 +188,10 @@
                 <!-- ========================================================= -->
                 <!-- 2. AUTHENTIC CLIENT TRUST LOGOS (innoria.com References)  -->
                 <!-- ========================================================= -->
-                <section class="s_references o_colored_level o_cc o_cc5 innoria-client-strip"
+                <section class="s_references o_colored_level innoria-client-strip"
                          data-snippet="s_references"
                          data-name="Innoria Internationally Trusts"
-                         data-bs-theme="dark">
+                         style="background: #F8FAFC; border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0;">
                     <div class="container text-center">
                         <div class="d-inline-flex align-items-center gap-2 mb-2 font-monospace small text-secondary">
                             <span>INTERNATIONALLY TRUSTS // WHERE WORK BECOMES LIGHT AND FREE</span>
@@ -206,19 +216,19 @@
                 <!-- ========================================================= -->
                 <!-- 3. AUTHENTIC INNORIA ARCHITECTURE DIAGRAM SECTION         -->
                 <!-- ========================================================= -->
-                <section class="s_image_text o_colored_level o_cc o_cc5 py-5 position-relative"
+                <section class="s_image_text o_colored_level py-5 position-relative"
                          data-snippet="s_image_text"
                          data-name="Innoria Platform Architecture"
-                         data-bs-theme="dark"
-                         id="platform">
+                         id="platform"
+                         style="background: #FFFFFF;">
                     <div class="container py-4">
                         <div class="row mb-5 text-center">
                             <div class="col-lg-9 mx-auto">
                                 <span class="badge badge-innoria-cyan mb-2">KIẾN TRÚC ĐỘC QUYỀN // ARCHITECTURE</span>
-                                <h2 class="display-5 fw-bold text-white mb-3">
+                                <h2 class="display-5 fw-bold text-dark mb-3">
                                     Từ Bài Toán Đến Giải Pháp <span class="text-innoria-gradient">Trong 30 Ngày</span>
                                 </h2>
-                                <p class="lead text-secondary fs-5 col-lg-10 mx-auto">
+                                <p class="lead fs-5 col-lg-10 mx-auto" style="color: #334155 !important;">
                                     Kiến trúc Innoria Platform tích hợp liền mạch giữa No-Code Platform, Dịch Vụ Nền Tảng, Trí Tuệ Nhân Tạo và Hạ Tầng Hồ Dữ Liệu Doanh Nghiệp (Data Lake).
                                 </p>
                             </div>
@@ -227,40 +237,40 @@
                         <!-- Architecture Diagram SVG Display -->
                         <div class="row align-items-center g-5">
                             <div class="col-lg-7 text-center">
-                                <div class="p-3 rounded-4 bg-dark bg-opacity-60 border border-secondary border-opacity-30 shadow-lg">
+                                <div class="p-3 rounded-4 bg-white border shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 10px 30px rgba(10, 187, 219, 0.08);">
                                     <img src="/insilos_website/static/src/img/innoria/architecture_innoria_platform_grey.svg" alt="Innoria Platform Architecture Diagram" class="img-fluid rounded-3" loading="eager" style="max-height: 480px; width: 100%; object-fit: contain; filter: drop-shadow(0 0 20px rgba(10, 187, 219, 0.2));"/>
                                 </div>
                             </div>
                             <div class="col-lg-5">
                                 <div class="d-flex flex-column gap-4">
-                                    <div class="p-3 rounded-3 bg-dark bg-opacity-40 border border-secondary border-opacity-20">
+                                    <div class="p-3 rounded-3 bg-white border shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);">
                                         <div class="d-flex align-items-center gap-3 mb-2">
                                             <div class="p-2 rounded bg-info bg-opacity-20 text-innoria-cyan">
                                                 <svg class="ph-duotone ph-stack" style="width: 1.4rem; height: 1.4rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-stack"/></svg>
                                             </div>
-                                            <h4 class="text-white mb-0 fs-5">No-code Platform</h4>
+                                            <h4 class="text-dark mb-0 fs-5">No-code Platform</h4>
                                         </div>
-                                        <p class="text-secondary small mb-0">Xây dựng ứng dụng doanh nghiệp tốc độ cao qua giao diện kéo thả trực quan, tự sinh API REST/GraphQL chuẩn mực.</p>
+                                        <p class="small mb-0" style="color: #475569 !important;">Xây dựng ứng dụng doanh nghiệp tốc độ cao qua giao diện kéo thả trực quan, tự sinh API REST/GraphQL chuẩn mực.</p>
                                     </div>
 
-                                    <div class="p-3 rounded-3 bg-dark bg-opacity-40 border border-secondary border-opacity-20">
+                                    <div class="p-3 rounded-3 bg-white border shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);">
                                         <div class="d-flex align-items-center gap-3 mb-2">
                                             <div class="p-2 rounded bg-primary bg-opacity-20 text-innoria-mint">
                                                 <svg class="ph-duotone ph-cpu" style="width: 1.4rem; height: 1.4rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
                                             </div>
-                                            <h4 class="text-white mb-0 fs-5">Artificial Intelligence</h4>
+                                            <h4 class="text-dark mb-0 fs-5">Artificial Intelligence</h4>
                                         </div>
-                                        <p class="text-secondary small mb-0">Generative AI, Explainable AI và Human-Machine Understanding hỗ trợ ra quyết định thời gian thực.</p>
+                                        <p class="small mb-0" style="color: #475569 !important;">Generative AI, Explainable AI và Human-Machine Understanding hỗ trợ ra quyết định thời gian thực.</p>
                                     </div>
 
-                                    <div class="p-3 rounded-3 bg-dark bg-opacity-40 border border-secondary border-opacity-20">
+                                    <div class="p-3 rounded-3 bg-white border shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);">
                                         <div class="d-flex align-items-center gap-3 mb-2">
                                             <div class="p-2 rounded bg-warning bg-opacity-20 text-innoria-amber">
                                                 <svg class="ph-duotone ph-database" style="width: 1.4rem; height: 1.4rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-database"/></svg>
                                             </div>
-                                            <h4 class="text-white mb-0 fs-5">Data Lake &amp; Core ERP</h4>
+                                            <h4 class="text-dark mb-0 fs-5">Data Lake &amp; Core ERP</h4>
                                         </div>
-                                        <p class="text-secondary small mb-0">Đồng bộ hoá nguồn dữ liệu đa dạng: ERP, GRC (Quản trị rủi ro), IIoT cảm biến và sổ cái phi tập trung.</p>
+                                        <p class="small mb-0" style="color: #475569 !important;">Đồng bộ hoá nguồn dữ liệu đa dạng: ERP, GRC (Quản trị rủi ro), IIoT cảm biến và sổ cái phi tập trung.</p>
                                     </div>
                                 </div>
                             </div>
@@ -271,18 +281,18 @@
                 <!-- ========================================================= -->
                 <!-- 4. THE 4-STAGE CADENCE (3H -> 3D -> 3W -> 3M)             -->
                 <!-- ========================================================= -->
-                <section class="s_process_steps o_colored_level o_cc o_cc5 py-5 position-relative"
+                <section class="s_process_steps o_colored_level py-5 position-relative"
                          data-snippet="s_process_steps"
                          data-name="Innoria 4-Stage Cadence"
-                         data-bs-theme="dark">
+                         style="background: #F8FAFC;">
                     <div class="container py-4">
                         <div class="row mb-5 text-center">
                             <div class="col-lg-8 mx-auto">
                                 <span class="badge badge-innoria-orange mb-2">QUY TRÌNH CHUẨN MỰC // METHODOLOGY</span>
-                                <h2 class="display-5 fw-bold text-white mb-3">
+                                <h2 class="display-5 fw-bold text-dark mb-3">
                                     Lộ Trình Triển Khai Thực Chiến <span class="text-innoria-gradient-orange">4 Giai Đoạn</span>
                                 </h2>
-                                <p class="lead text-secondary fs-5 col-lg-10 mx-auto">
+                                <p class="lead fs-5 col-lg-10 mx-auto" style="color: #334155 !important;">
                                     Phương pháp triển khai tinh gọn của Innoria loại bỏ độ trễ phân tích cồng kềnh, chuyển hóa ý tưởng thành ứng dụng thực chiến rõ ràng.
                                 </p>
                             </div>
@@ -294,10 +304,10 @@
                                 <div class="innoria-cadence-card">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <span class="cadence-badge">3H</span>
-                                        <span class="badge bg-secondary bg-opacity-25 text-white small">Giai Đoạn 1</span>
+                                        <span class="badge bg-light text-secondary border small">Giai Đoạn 1</span>
                                     </div>
-                                    <h4 class="text-white fs-5 fw-bold mb-2">Executive Briefing</h4>
-                                    <p class="text-secondary small mb-3">Khảo sát chuyên sâu cùng ban lãnh đạo, định vị điểm nghẽn vận hành và xác lập khung giải pháp khả thi ngay trong buổi làm việc đầu tiên.</p>
+                                    <h4 class="text-dark fs-5 fw-bold mb-2">Executive Briefing</h4>
+                                    <p class="small mb-3" style="color: #475569 !important;">Khảo sát chuyên sâu cùng ban lãnh đạo, định vị điểm nghẽn vận hành và xác lập khung giải pháp khả thi ngay trong buổi làm việc đầu tiên.</p>
                                     <ul class="list-unstyled small text-secondary mb-0">
                                         <li class="mb-1"><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Phân tích Scope &amp; Bottleneck</li>
                                         <li><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Phác thảo User Journey</li>
@@ -310,10 +320,10 @@
                                 <div class="innoria-cadence-card">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <span class="cadence-badge">3D</span>
-                                        <span class="badge bg-secondary bg-opacity-25 text-white small">Giai Đoạn 2</span>
+                                        <span class="badge bg-light text-secondary border small">Giai Đoạn 2</span>
                                     </div>
-                                    <h4 class="text-white fs-5 fw-bold mb-2">Tech Assessment &amp; POC</h4>
-                                    <p class="text-secondary small mb-3">Đánh giá hạ tầng kỹ thuật, dựng mô hình tương tác mẫu (POC) và kiểm chứng mức độ tương thích dữ liệu thực tế của doanh nghiệp.</p>
+                                    <h4 class="text-dark fs-5 fw-bold mb-2">Tech Assessment &amp; POC</h4>
+                                    <p class="small mb-3" style="color: #475569 !important;">Đánh giá hạ tầng kỹ thuật, dựng mô hình tương tác mẫu (POC) và kiểm chứng mức độ tương thích dữ liệu thực tế của doanh nghiệp.</p>
                                     <ul class="list-unstyled small text-secondary mb-0">
                                         <li class="mb-1"><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Wireframe &amp; Prototype</li>
                                         <li><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Kiểm chứng kiến trúc bảo mật</li>
@@ -326,10 +336,10 @@
                                 <div class="innoria-cadence-card">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <span class="cadence-badge">3W</span>
-                                        <span class="badge bg-secondary bg-opacity-25 text-white small">Giai Đoạn 3</span>
+                                        <span class="badge bg-light text-secondary border small">Giai Đoạn 3</span>
                                     </div>
-                                    <h4 class="text-white fs-5 fw-bold mb-2">High-Fidelity Pilot (MVP)</h4>
-                                    <p class="text-secondary small mb-3">Hoàn thiện phiên bản MVP với đầy đủ luồng nghiệp vụ cốt lõi, chạy thử nghiệm trên môi trường sandbox độc lập cùng người dùng thực tế.</p>
+                                    <h4 class="text-dark fs-5 fw-bold mb-2">High-Fidelity Pilot (MVP)</h4>
+                                    <p class="small mb-3" style="color: #475569 !important;">Hoàn thiện phiên bản MVP với đầy đủ luồng nghiệp vụ cốt lõi, chạy thử nghiệm trên môi trường sandbox độc lập cùng người dùng thực tế.</p>
                                     <ul class="list-unstyled small text-secondary mb-0">
                                         <li class="mb-1"><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Pilot Sandbox có dữ liệu thật</li>
                                         <li><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Đo lường phản hồi vận hành</li>
@@ -342,10 +352,10 @@
                                 <div class="innoria-cadence-card">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <span class="cadence-badge">3M</span>
-                                        <span class="badge bg-secondary bg-opacity-25 text-white small">Giai Đoạn 4</span>
+                                        <span class="badge bg-light text-secondary border small">Giai Đoạn 4</span>
                                     </div>
-                                    <h4 class="text-white fs-5 fw-bold mb-2">Enterprise Production</h4>
-                                    <p class="text-secondary small mb-3">Mở rộng quy mô giải pháp trên toàn bộ phòng ban hoặc nhà máy, chuyển giao mã nguồn và kích hoạt hệ thống bảo mật Sovereign Cloud.</p>
+                                    <h4 class="text-dark fs-5 fw-bold mb-2">Enterprise Production</h4>
+                                    <p class="small mb-3" style="color: #475569 !important;">Mở rộng quy mô giải pháp trên toàn bộ phòng ban hoặc nhà máy, chuyển giao mã nguồn và kích hoạt hệ thống bảo mật Sovereign Cloud.</p>
                                     <ul class="list-unstyled small text-secondary mb-0">
                                         <li class="mb-1"><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Vận hành chính thức (Go-Live)</li>
                                         <li><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>SLA Hỗ trợ kỹ thuật 24/7</li>
@@ -359,18 +369,18 @@
                 <!-- ========================================================= -->
                 <!-- 5. CORE PLATFORM ECOSYSTEM WITH AUTHENTIC LOGOS           -->
                 <!-- ========================================================= -->
-                <section class="s_three_columns o_colored_level o_cc o_cc5 py-5 position-relative"
+                <section class="s_three_columns o_colored_level py-5 position-relative"
                          data-snippet="s_three_columns"
                          data-name="Innoria Core Platforms"
-                         data-bs-theme="dark">
+                         style="background: #FFFFFF;">
                     <div class="container py-4">
                         <div class="row mb-5 text-center">
                             <div class="col-lg-8 mx-auto">
                                 <span class="badge badge-innoria-cyan mb-2">HỆ SINH THÁI CÔNG NGHỆ // ECOSYSTEM</span>
-                                <h2 class="display-5 fw-bold text-white mb-3">
+                                <h2 class="display-5 fw-bold text-dark mb-3">
                                     4 Trụ Cột Công Nghệ Độc Lập
                                 </h2>
-                                <p class="lead text-secondary fs-5 col-lg-10 mx-auto">
+                                <p class="lead fs-5 col-lg-10 mx-auto" style="color: #334155 !important;">
                                     Các giải pháp của Innoria được xây dựng trên nền tảng module hoá cao cấp, sẵn sàng tích hợp hoặc vận hành độc lập theo nhu cầu doanh nghiệp.
                                 </p>
                             </div>
@@ -383,11 +393,11 @@
                                     <div class="eco-icon-wrapper">
                                         <img src="/insilos_website/static/src/img/innoria/group_52424.webp" alt="DIGIFORCE" class="img-fluid" loading="eager"/>
                                     </div>
-                                    <span class="badge bg-secondary bg-opacity-25 text-white small mb-2 font-monospace">LOW-CODE / NO-CODE</span>
-                                    <h3 class="text-white fs-4 fw-bold mb-2">DIGIFORCE</h3>
-                                    <p class="text-secondary small mb-3">Nền tảng phát triển ứng dụng siêu tốc. Cho phép đội ngũ nghiệp vụ và chuyên gia CNTT cùng hợp tác xây dựng phần mềm doanh nghiệp thông qua giao diện trực quan kéo thả.</p>
+                                    <span class="badge bg-light text-primary border small mb-2 font-monospace">LOW-CODE / NO-CODE</span>
+                                    <h3 class="text-dark fs-4 fw-bold mb-2">DIGIFORCE</h3>
+                                    <p class="small mb-3" style="color: #475569 !important;">Nền tảng phát triển ứng dụng siêu tốc. Cho phép đội ngũ nghiệp vụ và chuyên gia CNTT cùng hợp tác xây dựng phần mềm doanh nghiệp thông qua giao diện trực quan kéo thả.</p>
                                     <div class="border-top border-secondary border-opacity-20 pt-3 mt-auto">
-                                        <div class="small text-white fw-semibold mb-1">Điểm nổi bật:</div>
+                                        <div class="small text-dark fw-semibold mb-1">Điểm nổi bật:</div>
                                         <ul class="list-unstyled small text-secondary mb-0">
                                             <li>• Rút ngắn 70% thời gian code</li>
                                             <li>• Tự động sinh REST/GraphQL API</li>
@@ -402,11 +412,11 @@
                                     <div class="eco-icon-wrapper">
                                         <img src="/insilos_website/static/src/img/innoria/logo_innoria_eco_2.webp" alt="MOJO AI" class="img-fluid" loading="eager"/>
                                     </div>
-                                    <span class="badge bg-secondary bg-opacity-25 text-white small mb-2 font-monospace">AGENTIC AI SWARM</span>
-                                    <h3 class="text-white fs-4 fw-bold mb-2">MOJO AI</h3>
-                                    <p class="text-secondary small mb-3">Bộ công cụ xây dựng tác nhân AI tự hành. Tích hợp thị giác máy tính VLM (See-Detect-Analyze-Adapt) và mạng lưới suy luận độc lập (Reason-Solve-Plan-Execute).</p>
+                                    <span class="badge bg-light text-primary border small mb-2 font-monospace">AGENTIC AI SWARM</span>
+                                    <h3 class="text-dark fs-4 fw-bold mb-2">MOJO AI</h3>
+                                    <p class="small mb-3" style="color: #475569 !important;">Bộ công cụ xây dựng tác nhân AI tự hành. Tích hợp thị giác máy tính VLM (See-Detect-Analyze-Adapt) và mạng lưới suy luận độc lập (Reason-Solve-Plan-Execute).</p>
                                     <div class="border-top border-secondary border-opacity-20 pt-3 mt-auto">
-                                        <div class="small text-white fw-semibold mb-1">Điểm nổi bật:</div>
+                                        <div class="small text-dark fw-semibold mb-1">Điểm nổi bật:</div>
                                         <ul class="list-unstyled small text-secondary mb-0">
                                             <li>• Độ trễ suy luận &lt; 200ms</li>
                                             <li>• Chống ảo giác dữ liệu 100%</li>
@@ -421,11 +431,11 @@
                                     <div class="eco-icon-wrapper">
                                         <img src="/insilos_website/static/src/img/innoria/logo_innoria_eco_1.webp" alt="MOJOVERSE" class="img-fluid" loading="eager"/>
                                     </div>
-                                    <span class="badge bg-secondary bg-opacity-25 text-white small mb-2 font-monospace">ENTERPRISE WEB3</span>
-                                    <h3 class="text-white fs-4 fw-bold mb-2">MOJOVERSE</h3>
-                                    <p class="text-secondary small mb-3">Hạ tầng chuỗi khối doanh nghiệp phục vụ minh bạch hoá chuỗi cung ứng. Cung cấp hộ chiếu sản phẩm số (DPP), định danh phi tập trung và truy vết nguồn gốc hàng hóa.</p>
+                                    <span class="badge bg-light text-primary border small mb-2 font-monospace">ENTERPRISE WEB3</span>
+                                    <h3 class="text-dark fs-4 fw-bold mb-2">MOJOVERSE</h3>
+                                    <p class="small mb-3" style="color: #475569 !important;">Hạ tầng chuỗi khối doanh nghiệp phục vụ minh bạch hoá chuỗi cung ứng. Cung cấp hộ chiếu sản phẩm số (DPP), định danh phi tập trung và truy vết nguồn gốc hàng hóa.</p>
                                     <div class="border-top border-secondary border-opacity-20 pt-3 mt-auto">
-                                        <div class="small text-white fw-semibold mb-1">Điểm nổi bật:</div>
+                                        <div class="small text-dark fw-semibold mb-1">Điểm nổi bật:</div>
                                         <ul class="list-unstyled small text-secondary mb-0">
                                             <li>• Xác thực tức thì không phí Gas</li>
                                             <li>• Chống làm giả hồ sơ xuất khẩu</li>
@@ -440,11 +450,11 @@
                                     <div class="eco-icon-wrapper">
                                         <svg class="ph-duotone ph-buildings text-innoria-cyan" style="width: 30px; height: 30px;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-buildings"/></svg>
                                     </div>
-                                    <span class="badge bg-secondary bg-opacity-25 text-white small mb-2 font-monospace">AUTONOMOUS OPERATIONS</span>
-                                    <h3 class="text-white fs-4 fw-bold mb-2">Intelligent ERP</h3>
-                                    <p class="text-secondary small mb-3">Hệ thống quản trị doanh nghiệp hợp nhất. Tích hợp sẵn chuẩn mực kế toán Việt Nam (Thông tư 200, Hóa đơn điện tử Thông tư 78), đối soát tự động và giám sát tài chính thời gian thực.</p>
+                                    <span class="badge bg-light text-primary border small mb-2 font-monospace">AUTONOMOUS OPERATIONS</span>
+                                    <h3 class="text-dark fs-4 fw-bold mb-2">Intelligent ERP</h3>
+                                    <p class="small mb-3" style="color: #475569 !important;">Hệ thống quản trị doanh nghiệp hợp nhất. Tích hợp sẵn chuẩn mực kế toán Việt Nam (Thông tư 200, Hóa đơn điện tử Thông tư 78), đối soát tự động và giám sát tài chính thời gian thực.</p>
                                     <div class="border-top border-secondary border-opacity-20 pt-3 mt-auto">
-                                        <div class="small text-white fw-semibold mb-1">Điểm nổi bật:</div>
+                                        <div class="small text-dark fw-semibold mb-1">Điểm nổi bật:</div>
                                         <ul class="list-unstyled small text-secondary mb-0">
                                             <li>• Tự động đối soát công nợ</li>
                                             <li>• Giảm 85% thao tác thủ công</li>
@@ -459,19 +469,19 @@
                 <!-- ========================================================= -->
                 <!-- 6. KEY TECHNOLOGY SERVICES WITH AUTHENTIC INNORIA IMAGES  -->
                 <!-- ========================================================= -->
-                <section class="s_features o_colored_level o_cc o_cc5 py-5 position-relative"
+                <section class="s_features o_colored_level py-5 position-relative"
                          data-snippet="s_features"
                          data-name="Innoria Key Services"
-                         data-bs-theme="dark"
-                         id="services">
+                         id="services"
+                         style="background: #F8FAFC;">
                     <div class="container py-4">
                         <div class="row mb-5 text-center">
                             <div class="col-lg-8 mx-auto">
                                 <span class="badge badge-innoria-cyan mb-2">DỊCH VỤ CÔNG NGHỆ CHUYÊN SÂU // SERVICES</span>
-                                <h2 class="display-5 fw-bold text-white mb-3">
+                                <h2 class="display-5 fw-bold text-dark mb-3">
                                     Đội Ngũ Kỹ Sư Cấp Cao Đồng Hành Cùng Doanh Nghiệp
                                 </h2>
-                                <p class="lead text-secondary fs-5 col-lg-10 mx-auto">
+                                <p class="lead fs-5 col-lg-10 mx-auto" style="color: #334155 !important;">
                                     Không chỉ cung cấp phần mềm, Innoria cử các chuyên gia kiến trúc giải pháp tham gia trực tiếp vào toàn bộ hành trình số hóa của bạn.
                                 </p>
                             </div>
@@ -486,8 +496,8 @@
                                         <span class="service-badge">01 // AIaaS</span>
                                     </div>
                                     <div class="service-content">
-                                        <h4 class="text-white fs-5 fw-bold mb-2">AI as a Service</h4>
-                                        <p class="text-secondary small mb-0">Tích hợp mô hình AI chuyên sâu vào hệ thống sẵn có qua API bảo mật cao: Generative AI, AI Agent, AI kiểm duyệt nội dung và chăm sóc khách hàng tự động.</p>
+                                        <h4 class="text-dark fs-5 fw-bold mb-2">AI as a Service</h4>
+                                        <p class="small mb-0" style="color: #475569 !important;">Tích hợp mô hình AI chuyên sâu vào hệ thống sẵn có qua API bảo mật cao: Generative AI, AI Agent, AI kiểm duyệt nội dung và chăm sóc khách hàng tự động.</p>
                                     </div>
                                 </div>
                             </div>
@@ -500,8 +510,8 @@
                                         <span class="service-badge">02 // Transformation</span>
                                     </div>
                                     <div class="service-content">
-                                        <h4 class="text-white fs-5 fw-bold mb-2">Digital Transformation</h4>
-                                        <p class="text-secondary small mb-0">Tự động hoá văn phòng, RPA, phát hiện lỗi sản phẩm qua camera công nghiệp, giúp doanh nghiệp trở nên tinh gọn, linh hoạt và lấy khách hàng làm trung tâm.</p>
+                                        <h4 class="text-dark fs-5 fw-bold mb-2">Digital Transformation</h4>
+                                        <p class="small mb-0" style="color: #475569 !important;">Tự động hoá văn phòng, RPA, phát hiện lỗi sản phẩm qua camera công nghiệp, giúp doanh nghiệp trở nên tinh gọn, linh hoạt và lấy khách hàng làm trung tâm.</p>
                                     </div>
                                 </div>
                             </div>
@@ -514,8 +524,8 @@
                                         <span class="service-badge">03 // Development</span>
                                     </div>
                                     <div class="service-content">
-                                        <h4 class="text-white fs-5 fw-bold mb-2">Development Services</h4>
-                                        <p class="text-secondary small mb-0">Hiện đại hóa phần mềm cũ (Legacy Code), chuyển đổi kiến trúc Monolithic sang Microservices và Cloud-Native mượt mà không làm gián đoạn vận hành.</p>
+                                        <h4 class="text-dark fs-5 fw-bold mb-2">Development Services</h4>
+                                        <p class="small mb-0" style="color: #475569 !important;">Hiện đại hóa phần mềm cũ (Legacy Code), chuyển đổi kiến trúc Monolithic sang Microservices và Cloud-Native mượt mà không làm gián đoạn vận hành.</p>
                                     </div>
                                 </div>
                             </div>
@@ -528,8 +538,8 @@
                                         <span class="service-badge">04 // Blockchain &amp; ODC</span>
                                     </div>
                                     <div class="service-content">
-                                        <h4 class="text-white fs-5 fw-bold mb-2">Dedicated ODC &amp; Web3</h4>
-                                        <p class="text-secondary small mb-0">Xây dựng trung tâm phát triển phần mềm chuyên trách cho các tập đoàn quốc tế, đảm bảo chuẩn bảo mật ISO 27001 và CMMI cấp cao.</p>
+                                        <h4 class="text-dark fs-5 fw-bold mb-2">Dedicated ODC &amp; Web3</h4>
+                                        <p class="small mb-0" style="color: #475569 !important;">Xây dựng trung tâm phát triển phần mềm chuyên trách cho các tập đoàn quốc tế, đảm bảo chuẩn bảo mật ISO 27001 và CMMI cấp cao.</p>
                                     </div>
                                 </div>
                             </div>
@@ -540,19 +550,19 @@
                 <!-- ========================================================= -->
                 <!-- 7. INDUSTRY VERTICAL SOLUTIONS                            -->
                 <!-- ========================================================= -->
-                <section class="s_text_image o_colored_level o_cc o_cc5 py-5 position-relative"
+                <section class="s_text_image o_colored_level py-5 position-relative"
                          data-snippet="s_text_image"
                          data-name="Innoria Vertical Solutions"
-                         data-bs-theme="dark"
-                         id="solutions">
+                         id="solutions"
+                         style="background: #FFFFFF;">
                     <div class="container py-4">
                         <div class="row mb-5 text-center">
                             <div class="col-lg-8 mx-auto">
                                 <span class="badge badge-innoria-orange mb-2">GIẢI PHÁP CHUYÊN SÂU // SOLUTIONS</span>
-                                <h2 class="display-5 fw-bold text-white mb-3">
+                                <h2 class="display-5 fw-bold text-dark mb-3">
                                     Ứng Dụng Thực Chiến Cho Từng Ngành Công Nghiệp
                                 </h2>
-                                <p class="lead text-secondary fs-5 col-lg-10 mx-auto">
+                                <p class="lead fs-5 col-lg-10 mx-auto" style="color: #334155 !important;">
                                     Được tôi luyện qua hàng trăm dự án sản xuất, kho vận và bán lẻ với yêu cầu tuân thủ khắt khe nhất.
                                 </p>
                             </div>
@@ -561,13 +571,13 @@
                         <div class="row g-4">
                             <!-- Solution 1: Permit to Work -->
                             <div class="col-md-6 col-lg-4">
-                                <div class="p-4 rounded-3 bg-dark bg-opacity-40 border border-secondary border-opacity-25 h-100">
+                                <div class="p-4 rounded-3 bg-white border h-100 shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
-                                        <span class="badge bg-secondary bg-opacity-25 text-white small">AN TOÀN HSE</span>
+                                        <span class="badge badge-innoria-blue small">AN TOÀN HSE</span>
                                         <span class="text-secondary small font-monospace">e-PTW // ISO 45001</span>
                                     </div>
-                                    <h4 class="text-white fs-5 fw-bold mb-2">Permit to Work Điện Tử</h4>
-                                    <p class="text-secondary small mb-3">Số hóa toàn diện giấy phép làm việc nguy hiểm (hàn cắt, làm việc trên cao, không gian kín). Tích hợp chữ ký số và cảnh báo tự động khi phát hiện công nhân không mang đồ bảo hộ.</p>
+                                    <h4 class="text-dark fs-5 fw-bold mb-2">Permit to Work Điện Tử</h4>
+                                    <p class="small mb-3" style="color: #475569 !important;">Số hóa toàn diện giấy phép làm việc nguy hiểm (hàn cắt, làm việc trên cao, không gian kín). Tích hợp chữ ký số và cảnh báo tự động khi phát hiện công nhân không mang đồ bảo hộ.</p>
                                     <div class="d-flex align-items-center justify-content-between pt-2 border-top border-secondary border-opacity-20 text-secondary small">
                                         <span>100% Không dùng giấy</span>
                                         <span class="text-innoria-mint">0 Tai nạn vi phạm</span>
@@ -577,13 +587,13 @@
 
                             <!-- Solution 2: Equipment Reliability -->
                             <div class="col-md-6 col-lg-4">
-                                <div class="p-4 rounded-3 bg-dark bg-opacity-40 border border-secondary border-opacity-25 h-100">
+                                <div class="p-4 rounded-3 bg-white border h-100 shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
-                                        <span class="badge bg-secondary bg-opacity-25 text-white small">BẢO TRÌ DỰ BÁO</span>
+                                        <span class="badge badge-innoria-blue small">BẢO TRÌ DỰ BÁO</span>
                                         <span class="text-secondary small font-monospace">RCM // IOT FFT</span>
                                     </div>
-                                    <h4 class="text-white fs-5 fw-bold mb-2">Quản Trị Độ Tin Cậy Thiết Bị</h4>
-                                    <p class="text-secondary small mb-3">Thu thập dữ liệu cảm biến rung động, nhiệt độ vòng bi động cơ và áp suất thủy lực. Mô hình AI phân tích phổ tần FFT để cảnh báo hỏng hóc trước 14 ngày.</p>
+                                    <h4 class="text-dark fs-5 fw-bold mb-2">Quản Trị Độ Tin Cậy Thiết Bị</h4>
+                                    <p class="small mb-3" style="color: #475569 !important;">Thu thập dữ liệu cảm biến rung động, nhiệt độ vòng bi động cơ và áp suất thủy lực. Mô hình AI phân tích phổ tần FFT để cảnh báo hỏng hóc trước 14 ngày.</p>
                                     <div class="d-flex align-items-center justify-content-between pt-2 border-top border-secondary border-opacity-20 text-secondary small">
                                         <span>OEE Thiết Bị &gt; 98.5%</span>
                                         <span class="text-innoria-mint">Giảm 40% dừng máy</span>
@@ -593,13 +603,13 @@
 
                             <!-- Solution 3: e-CO -->
                             <div class="col-md-6 col-lg-4">
-                                <div class="p-4 rounded-3 bg-dark bg-opacity-40 border border-secondary border-opacity-25 h-100">
+                                <div class="p-4 rounded-3 bg-white border h-100 shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
-                                        <span class="badge bg-secondary bg-opacity-25 text-white small">XUẤT NHẬP KHẨU</span>
+                                        <span class="badge badge-innoria-blue small">XUẤT NHẬP KHẨU</span>
                                         <span class="text-secondary small font-monospace">e-CO // FTA RULES</span>
                                     </div>
-                                    <h4 class="text-white fs-5 fw-bold mb-2">Chứng Nhận Xuất Xứ Số (e-CO)</h4>
-                                    <p class="text-secondary small mb-3">Hệ thống bóc tách định mức BOM sản phẩm, đối soát tiêu chuẩn xuất xứ (RVC, CTC) theo các hiệp định thương mại EVFTA, CPTPP và kết nối trực tiếp cổng dịch vụ công.</p>
+                                    <h4 class="text-dark fs-5 fw-bold mb-2">Chứng Nhận Xuất Xứ Số (e-CO)</h4>
+                                    <p class="small mb-3" style="color: #475569 !important;">Hệ thống bóc tách định mức BOM sản phẩm, đối soát tiêu chuẩn xuất xứ (RVC, CTC) theo các hiệp định thương mại EVFTA, CPTPP và kết nối trực tiếp cổng dịch vụ công.</p>
                                     <div class="d-flex align-items-center justify-content-between pt-2 border-top border-secondary border-opacity-20 text-secondary small">
                                         <span>Thông quan &lt; 2 giờ</span>
                                         <span class="text-innoria-mint">Khớp chuẩn 100% FTA</span>
@@ -609,13 +619,13 @@
 
                             <!-- Solution 4: Industrial AI Vision -->
                             <div class="col-md-6 col-lg-4">
-                                <div class="p-4 rounded-3 bg-dark bg-opacity-40 border border-secondary border-opacity-25 h-100">
+                                <div class="p-4 rounded-3 bg-white border h-100 shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
-                                        <span class="badge bg-secondary bg-opacity-25 text-white small">AI THỊ GIÁC</span>
+                                        <span class="badge badge-innoria-blue small">AI THỊ GIÁC</span>
                                         <span class="text-secondary small font-monospace">VLM // EDGE CAMERA</span>
                                     </div>
-                                    <h4 class="text-white fs-5 fw-bold mb-2">Ultra AI Vision Công Nghiệp</h4>
-                                    <p class="text-secondary small mb-3">Kiểm tra lỗi sản phẩm cơ khí chính xác, mối hàn và bề mặt vật liệu ngay trên dây chuyền với camera công nghiệp FPS cao. Phát hiện lỗi micro không thể thấy bằng mắt thường.</p>
+                                    <h4 class="text-dark fs-5 fw-bold mb-2">Ultra AI Vision Công Nghiệp</h4>
+                                    <p class="small mb-3" style="color: #475569 !important;">Kiểm tra lỗi sản phẩm cơ khí chính xác, mối hàn và bề mặt vật liệu ngay trên dây chuyền với camera công nghiệp FPS cao. Phát hiện lỗi micro không thể thấy bằng mắt thường.</p>
                                     <div class="d-flex align-items-center justify-content-between pt-2 border-top border-secondary border-opacity-20 text-secondary small">
                                         <span>99.8% Chuẩn xác</span>
                                         <span class="text-innoria-mint">Tốc độ &lt; 50ms/khung</span>
@@ -625,13 +635,13 @@
 
                             <!-- Solution 5: CPG Visualytics -->
                             <div class="col-md-6 col-lg-4">
-                                <div class="p-4 rounded-3 bg-dark bg-opacity-40 border border-secondary border-opacity-25 h-100">
+                                <div class="p-4 rounded-3 bg-white border h-100 shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
-                                        <span class="badge bg-secondary bg-opacity-25 text-white small">BÁN LẺ &amp; FMCG</span>
+                                        <span class="badge badge-innoria-blue small">BÁN LẺ &amp; FMCG</span>
                                         <span class="text-secondary small font-monospace">SHELF AI // POSM</span>
                                     </div>
-                                    <h4 class="text-white fs-5 fw-bold mb-2">CPG Visualytics &amp; Quầy Kệ</h4>
-                                    <p class="text-secondary small mb-3">Nhận diện tỷ lệ diện tích trưng bày (Share of Shelf), phát hiện hàng hết date hoặc thiếu hàng trên quầy kệ siêu thị thông qua ảnh chụp của nhân viên tiếp thị.</p>
+                                    <h4 class="text-dark fs-5 fw-bold mb-2">CPG Visualytics &amp; Quầy Kệ</h4>
+                                    <p class="small mb-3" style="color: #475569 !important;">Nhận diện tỷ lệ diện tích trưng bày (Share of Shelf), phát hiện hàng hết date hoặc thiếu hàng trên quầy kệ siêu thị thông qua ảnh chụp của nhân viên tiếp thị.</p>
                                     <div class="d-flex align-items-center justify-content-between pt-2 border-top border-secondary border-opacity-20 text-secondary small">
                                         <span>Đối soát trong 3 giây</span>
                                         <span class="text-innoria-mint">Tăng 18% doanh số kệ</span>
@@ -641,13 +651,13 @@
 
                             <!-- Solution 6: Accounting VAS 200 -->
                             <div class="col-md-6 col-lg-4">
-                                <div class="p-4 rounded-3 bg-dark bg-opacity-40 border border-secondary border-opacity-25 h-100">
+                                <div class="p-4 rounded-3 bg-white border h-100 shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
-                                        <span class="badge bg-secondary bg-opacity-25 text-white small">TÀI CHÍNH</span>
+                                        <span class="badge badge-innoria-blue small">TÀI CHÍNH</span>
                                         <span class="text-secondary small font-monospace">TT 200 // TT 78</span>
                                     </div>
-                                    <h4 class="text-white fs-5 fw-bold mb-2">Quản Trị Tài Chính VAS 200</h4>
-                                    <p class="text-secondary small mb-3">Tự động kết nối hóa đơn điện tử Tổng Cục Thuế, tự động đối chiếu hóa đơn đầu vào với phiếu nhập kho và định khoản kế toán không cần gõ tay chứng từ.</p>
+                                    <h4 class="text-dark fs-5 fw-bold mb-2">Quản Trị Tài Chính VAS 200</h4>
+                                    <p class="small mb-3" style="color: #475569 !important;">Tự động kết nối hóa đơn điện tử Tổng Cục Thuế, tự động đối chiếu hóa đơn đầu vào với phiếu nhập kho và định khoản kế toán không cần gõ tay chứng từ.</p>
                                     <div class="d-flex align-items-center justify-content-between pt-2 border-top border-secondary border-opacity-20 text-secondary small">
                                         <span>Tiết kiệm 80% giờ làm</span>
                                         <span class="text-innoria-mint">Không sai sót số liệu</span>
@@ -661,18 +671,18 @@
                 <!-- ========================================================= -->
                 <!-- 8. PROOF NUMBERS SECTION                                  -->
                 <!-- ========================================================= -->
-                <section class="s_numbers o_colored_level o_cc o_cc5 py-5 position-relative border-top border-bottom border-secondary border-opacity-20"
+                <section class="s_numbers o_colored_level py-5 position-relative border-top border-bottom"
                          data-snippet="s_numbers"
                          data-name="Innoria Proof Numbers"
-                         data-bs-theme="dark">
+                         style="background: #F0F9FF; border-color: #BAE6FD !important;">
                     <div class="container py-3">
                         <div class="row text-center g-4">
                             <div class="col-6 col-lg-3">
-                                <div class="display-4 fw-bold text-white mb-1">140+</div>
+                                <div class="display-4 fw-bold text-dark mb-1">140+</div>
                                 <div class="text-secondary small text-uppercase fw-semibold">Dự Án Đã Chuyển Giao</div>
                             </div>
                             <div class="col-6 col-lg-3">
-                                <div class="display-4 fw-bold text-innoria-mint mb-1">30 Ngày</div>
+                                <div class="display-4 fw-bold mb-1" style="color: #0284C7;">30 Ngày</div>
                                 <div class="text-secondary small text-uppercase fw-semibold">Thời Gian Go-Live Chuẩn</div>
                             </div>
                             <div class="col-6 col-lg-3">
@@ -680,7 +690,7 @@
                                 <div class="text-secondary small text-uppercase fw-semibold">Độ Chính Xác Tác Nhân AI</div>
                             </div>
                             <div class="col-6 col-lg-3">
-                                <div class="display-4 fw-bold text-innoria-amber mb-1">-50%</div>
+                                <div class="display-4 fw-bold mb-1" style="color: #EA580C;">-50%</div>
                                 <div class="text-secondary small text-uppercase fw-semibold">Tiết Kiệm Chi Phí TCO</div>
                             </div>
                         </div>
@@ -690,11 +700,11 @@
                 <!-- ========================================================= -->
                 <!-- 9. VIP CONSULTATION LEAD CAPTURE FORM                     -->
                 <!-- ========================================================= -->
-                <section class="s_call_to_action o_colored_level o_cc o_cc5 py-5 position-relative overflow-hidden"
+                <section class="s_call_to_action o_colored_level py-5 position-relative overflow-hidden"
                          data-snippet="s_call_to_action"
                          data-name="Innoria VIP Consultation Form"
-                         data-bs-theme="dark"
-                         id="innoria_contact_section">
+                         id="innoria_contact_section"
+                         style="background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);">
                     <div class="container py-4">
                         <div class="row align-items-center g-5">
                             <div class="col-lg-6">
@@ -702,11 +712,11 @@
                                     <span class="d-inline-block rounded-circle bg-warning" style="width: 7px; height: 7px; box-shadow: 0 0 6px #FF9C00;"/>
                                     <span>KHỞI ĐỘNG CÙNG CHUYÊN GIA</span>
                                 </div>
-                                <h2 class="display-5 fw-bold text-white mb-3">
+                                <h2 class="display-5 fw-bold text-dark mb-3">
                                     Sẵn Sàng Rút Ngắn Thời Gian Phát Triển Xuống 30 Ngày?
                                 </h2>
-                                <p class="lead text-secondary fs-5 mb-4">
-                                    Để lại thông tin để đặt lịch phiên làm việc <strong class="text-white">3 Hours Executive Briefing</strong> hoàn toàn miễn phí. Đội ngũ kỹ sư trưởng của Innoria sẽ phân tích trực tiếp bài toán của bạn và gửi lại bản thiết kế kiến trúc sơ bộ trong vòng 72 giờ.
+                                <p class="lead fs-5 mb-4" style="color: #334155 !important;">
+                                    Để lại thông tin để đặt lịch phiên làm việc <strong class="text-dark">3 Hours Executive Briefing</strong> hoàn toàn miễn phí. Đội ngũ kỹ sư trưởng của Innoria sẽ phân tích trực tiếp bài toán của bạn và gửi lại bản thiết kế kiến trúc sơ bộ trong vòng 72 giờ.
                                 </p>
                                 <ul class="list-unstyled text-secondary small d-flex flex-column gap-2 mb-0">
                                     <li class="d-flex align-items-center gap-2"><svg class="ph-duotone ph-check-circle text-innoria-cyan" style="width: 1.25rem; height: 1.25rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>Khảo sát 1:1 cùng CTO &amp; Solution Architect</li>
@@ -716,24 +726,24 @@
                             </div>
 
                             <div class="col-lg-6">
-                                <div class="p-4 p-md-5 rounded-4 bg-dark bg-opacity-60 border border-secondary border-opacity-30 shadow-lg">
-                                    <h4 class="text-white fw-bold mb-4">Đăng Ký Tư Vấn Giải Pháp</h4>
+                                <div class="p-4 p-md-5 rounded-4 bg-white shadow-lg" style="border: 1px solid #E2E8F0; box-shadow: 0 20px 40px rgba(2, 132, 199, 0.08);">
+                                    <h4 class="text-dark fw-bold mb-4">Đăng Ký Tư Vấn Giải Pháp</h4>
                                     <form action="/website/form/" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-3">
                                         <div>
-                                            <label class="form-label text-secondary small mb-1">Họ và tên *</label>
-                                            <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-40 rounded-3" placeholder="Nguyễn Văn A" required="required"/>
+                                            <label class="form-label text-dark small fw-semibold mb-1">Họ và tên *</label>
+                                            <input type="text" class="form-control bg-white text-dark rounded-3" style="border: 1px solid #CBD5E1; color: #0F172A;" placeholder="Nguyễn Văn A" required="required"/>
                                         </div>
                                         <div>
-                                            <label class="form-label text-secondary small mb-1">Email doanh nghiệp *</label>
-                                            <input type="email" class="form-control bg-dark text-white border-secondary border-opacity-40 rounded-3" placeholder="name@company.com" required="required"/>
+                                            <label class="form-label text-dark small fw-semibold mb-1">Email doanh nghiệp *</label>
+                                            <input type="email" class="form-control bg-white text-dark rounded-3" style="border: 1px solid #CBD5E1; color: #0F172A;" placeholder="name@company.com" required="required"/>
                                         </div>
                                         <div>
-                                            <label class="form-label text-secondary small mb-1">Số điện thoại *</label>
-                                            <input type="tel" class="form-control bg-dark text-white border-secondary border-opacity-40 rounded-3" placeholder="0901 234 567" required="required"/>
+                                            <label class="form-label text-dark small fw-semibold mb-1">Số điện thoại *</label>
+                                            <input type="tel" class="form-control bg-white text-dark rounded-3" style="border: 1px solid #CBD5E1; color: #0F172A;" placeholder="0901 234 567" required="required"/>
                                         </div>
                                         <div>
-                                            <label class="form-label text-secondary small mb-1">Bài toán hoặc phân hệ cần tư vấn</label>
-                                            <textarea class="form-control bg-dark text-white border-secondary border-opacity-40 rounded-3" rows="3" placeholder="Ví dụ: DIGIFORCE Low-Code, MOJO AI Vision, e-PTW..."></textarea>
+                                            <label class="form-label text-dark small fw-semibold mb-1">Bài toán hoặc phân hệ cần tư vấn</label>
+                                            <textarea class="form-control bg-white text-dark rounded-3" style="border: 1px solid #CBD5E1; color: #0F172A;" rows="3" placeholder="Ví dụ: DIGIFORCE Low-Code, MOJO AI Vision, e-PTW..."></textarea>
                                         </div>
                                         <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 mt-2 shadow-sm d-inline-flex align-items-center justify-content-center gap-2" style="background: var(--innoria-orange); border-color: var(--innoria-orange); color: #FFFFFF;">
                                             <span>Gửi Yêu Cầu Cho Chuyên Gia</span>
@@ -758,17 +768,17 @@
     <!-- REUSABLE INNORIA FOOTER (Authentic Grayscale Logo & Info)             -->
     <!-- ===================================================================== -->
     <template id="innoria_footer" name="INNORIA Footer">
-        <footer class="innoria-footer py-5" id="company" style="background-color: #0B0F17 !important; color: #94A3B8 !important; border-top: 1px solid rgba(10, 187, 219, 0.25) !important;">
+        <footer class="innoria-footer py-5" id="company" style="background-color: #F8FAFC !important; color: #475569 !important; border-top: 1px solid #E2E8F0 !important;">
             <style>
-                .innoria-footer h6 { color: #FFFFFF !important; font-weight: 700 !important; font-size: 0.85rem !important; letter-spacing: 0.08em !important; text-transform: uppercase !important; margin-bottom: 1rem !important; }
-                .innoria-footer-link { color: #94A3B8 !important; text-decoration: none !important; transition: color 0.2s ease !important; }
-                .innoria-footer-link:hover { color: #0ABBDB !important; text-decoration: underline !important; }
+                .innoria-footer h6 { color: #0F172A !important; font-weight: 700 !important; font-size: 0.85rem !important; letter-spacing: 0.08em !important; text-transform: uppercase !important; margin-bottom: 1rem !important; }
+                .innoria-footer-link { color: #475569 !important; text-decoration: none !important; transition: color 0.2s ease !important; }
+                .innoria-footer-link:hover { color: #0284C7 !important; text-decoration: underline !important; }
             </style>
             <div class="container">
                 <div class="row g-4 mb-4">
                     <!-- Company Identity -->
                     <div class="col-lg-4">
-                        <img src="/insilos_website/static/src/img/innoria/innoria_logo_grayscale.svg" alt="INNORIA Logo" class="footer-logo mb-3" width="160" height="48"/>
+                        <img src="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA Logo" class="footer-logo mb-3" width="160" height="48"/>
                         <p class="small text-secondary mb-3">
                             The future technology needs a new vision, new motivation and new people. Set core values for each product using uniformed data, automated and intelligence business processes. Along with governance, risk and compliance.
                         </p>
@@ -779,7 +789,7 @@
 
                     <!-- Core Navigation -->
                     <div class="col-6 col-lg-2">
-                        <h6 class="text-white fw-bold mb-3">PLATFORM</h6>
+                        <h6 class="text-dark fw-bold mb-3">PLATFORM</h6>
                         <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
                             <li><a href="/platform" class="innoria-footer-link">MOJO AI Platform</a></li>
                             <li><a href="/no-code-platform" class="innoria-footer-link">DIGIFORCE No-Code</a></li>
@@ -791,7 +801,7 @@
 
                     <!-- Solutions -->
                     <div class="col-6 col-lg-3">
-                        <h6 class="text-white fw-bold mb-3">SOLUTIONS</h6>
+                        <h6 class="text-dark fw-bold mb-3">SOLUTIONS</h6>
                         <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
                             <li><a href="/industries" class="innoria-footer-link">Ultra AI Vision Công Nghiệp</a></li>
                             <li><a href="/solutions" class="innoria-footer-link">Quản Trị ERP &amp; Hóa Đơn Tự Động</a></li>
@@ -803,9 +813,9 @@
 
                     <!-- Contact & Legal -->
                     <div class="col-lg-3">
-                        <h6 class="text-white fw-bold mb-3">CONNECT</h6>
+                        <h6 class="text-dark fw-bold mb-3">CONNECT</h6>
                         <div class="small text-secondary mb-2">
-                            <strong class="text-white">UNG DUNG SANG TAO LLC</strong><br/>
+                            <strong class="text-dark">UNG DUNG SANG TAO LLC</strong><br/>
                             Mã số DN (Tax ID): 0313683499
                         </div>
                         <div class="small text-secondary mb-2">
@@ -823,8 +833,8 @@
                 <div class="border-top border-secondary border-opacity-20 pt-3 d-flex flex-column flex-md-row align-items-center justify-content-between small text-secondary">
                     <div>Bản quyền thuộc về INNORIA | Tailored Technology Solutions</div>
                     <div class="d-flex align-items-center gap-3 mt-2 mt-md-0">
-                        <span class="badge bg-secondary bg-opacity-25 text-white">ISO 27001 // SOC-2</span>
-                        <span class="badge bg-secondary bg-opacity-25 text-white">100% Air-Gapped Ready</span>
+                        <span class="badge bg-light text-dark border">ISO 27001 // SOC-2</span>
+                        <span class="badge bg-light text-dark border">100% Air-Gapped Ready</span>
                     </div>
                 </div>
             </div>

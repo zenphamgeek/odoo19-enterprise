@@ -36,14 +36,14 @@
     // =========================================================================
 
     const BRAND_PALETTE = {
-        electricSapphire: 0x2F80ED, // Primary brand blue (#2F80ED)
-        mintCyan: 0xB2FFDA,         // High-contrast mint cyan (#B2FFDA)
+        electricSapphire: 0x0284C7, // Corporate ocean blue (#0284C7)
+        mintCyan: 0x0ABBDB,         // Innoria cyan (#0ABBDB)
         techCyan: 0x0ABBDB,         // Vivid tech cyan (#0ABBDB)
-        warmAmber: 0xFF9C00,        // Blockchain warm amber (#FF9C00)
-        warmAmberAccent: 0xFE8B20,  // Deep amber (#FE8B20)
-        darkBase: 0x05101E,         // Deep space dark base (#05101E)
-        gridLines: 0x112740,        // Subtle coordinate grid (#112740)
-        whiteHighContrast: 0xFFFFFF // High contrast white
+        warmAmber: 0xFF8000,        // Brand orange (#FF8000)
+        warmAmberAccent: 0xEA580C,  // Deep orange (#EA580C)
+        darkBase: 0xF0F9FF,         // Light ice blue base (#F0F9FF)
+        gridLines: 0xBAE6FD,        // Soft blue grid lines (#BAE6FD)
+        whiteHighContrast: 0x0F172A // Dark slate (#0F172A)
     };
 
     const TOPOLOGY_NODES_DATA = [
@@ -266,12 +266,12 @@
 
         _initScene() {
             this.scene = new THREE.Scene();
-            this.scene.fog = new THREE.FogExp2(BRAND_PALETTE.darkBase, 0.035);
+            this.scene.fog = new THREE.FogExp2(0xF0F9FF, 0.015);
 
             // Sovereign Grid Plane (XZ Plane)
             const grid = new THREE.GridHelper(24, 48, BRAND_PALETTE.electricSapphire, BRAND_PALETTE.gridLines);
             grid.position.y = -2.8;
-            grid.material.opacity = 0.22;
+            grid.material.opacity = 0.55;
             grid.material.transparent = true;
             this.scene.add(grid);
 
@@ -314,7 +314,7 @@
 
         _initLights() {
             // Ambient base
-            const ambient = new THREE.AmbientLight(0x0e1c31, 1.8);
+            const ambient = new THREE.AmbientLight(0xFFFFFF, 2.2);
             this.scene.add(ambient);
 
             // Sovereign Core Key Light
