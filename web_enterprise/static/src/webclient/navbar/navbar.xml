@@ -7,11 +7,16 @@
     </xpath>
     <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="replace">
         <!-- Insilos Master Brand Logo (Visible only on Home Menu / Root) -->
-        <img t-if="!this.isInApp"
-             src="/web/static/img/insilos_logo.svg"
-             alt="Insilos"
-             class="o_insilos_brand_logo d-none d-sm-inline-block align-middle ms-2 me-3"
-             style="height: 24px; width: auto;"/>
+        <t t-if="!this.isInApp">
+            <img src="/web/static/img/insilos_logo.svg"
+                 alt="Insilos"
+                 class="o_insilos_brand_logo o_insilos_brand_logo_light d-none d-sm-inline-block align-middle ms-2 me-3"
+                 style="height: 24px; width: auto;"/>
+            <img src="/web/static/img/insilos_logo_dark.svg"
+                 alt="Insilos"
+                 class="o_insilos_brand_logo o_insilos_brand_logo_dark align-middle ms-2 me-3"
+                 style="height: 24px; width: auto;"/>
+        </t>
 
         <!-- Insilos App Launcher Button (Visible in Module Views or with Background Action) -->
         <t t-if="this.isInApp or this.hasBackgroundAction">
@@ -21,23 +26,19 @@
                 </t>
                 <t t-else="">
                     <i class="o_menu_toggle_icon ph-duotone ph-arrow-left fs-4 o_menu_toggle_back_icon d-none"/>
-                    <img src="/web/static/img/insilos_mark.svg" alt="App Launcher" class="o_insilos_launcher_icon"/>
+                    <img src="/web/static/img/insilos_mark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_light"/>
+                    <img src="/web/static/img/insilos_mark_dark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_dark"/>
                 </t>
             </a>
             <a t-else="" t-att-href="pwa.startUrl" class="o_menu_toggle o_navbar_apps_menu border-0 align-items-center justify-content-center" t-ref="this.menuApps" title="App Launcher" aria-label="App Launcher">
-                <img src="/web/static/img/insilos_mark.svg" alt="App Launcher" class="o_insilos_launcher_icon"/>
+                <img src="/web/static/img/insilos_mark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_light"/>
+                <img src="/web/static/img/insilos_mark_dark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_dark"/>
             </a>
         </t>
 
-        <!-- Current App Brand & Compact Scaled Icon -->
+        <!-- Current App Brand Title (Without Redundant App Icon) -->
         <t t-if="!(this.ui?.isSmall || env.isSmall) and currentApp">
             <div class="o_menu_brand_wrapper d-inline-flex align-items-center h-100">
-                <img
-                    t-if="currentApp.webIconData"
-                    t-att-src="currentApp.webIconData"
-                    class="o_menu_brand_icon"
-                    t-att-alt="currentApp.name"
-                    t-ref="appIcon"/>
                 <span t-out="currentApp.name" class="o_menu_brand"/>
             </div>
         </t>

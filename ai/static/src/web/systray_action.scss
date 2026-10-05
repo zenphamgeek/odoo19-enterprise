@@ -1,53 +1,57 @@
 /* Insilos AI Systray Brain Icon & Action Button */
 .o_ai_systray_btn {
-    position: relative;
     border-radius: 4px !important;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border: 1px solid rgba(0, 240, 255, 0.3) !important;
-    background: rgba(0, 240, 255, 0.06) !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
     padding: 4px 6px !important;
 
     .ai-systray-icon {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         display: block;
-        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
-    }
-
-    .insilos-brain-glow-dot {
-        width: 6px;
-        height: 6px;
-        background-color: #00F0FF !important;
-        box-shadow: 0 0 8px #00F0FF;
-        animation: insilosBrainPulse 2.5s infinite ease-in-out;
+        transition: transform 0.15s ease;
     }
 
     &:hover {
-        background: rgba(0, 240, 255, 0.15) !important;
-        border-color: #00F0FF !important;
-        box-shadow: 0 0 10px rgba(0, 240, 255, 0.35) !important;
+        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+        border-color: transparent !important;
 
         .ai-systray-icon {
-            transform: scale(1.15);
-            filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.6));
+            transform: scale(1.08);
         }
     }
 
     &:active .ai-systray-icon {
-        transform: scale(0.92);
+        transform: scale(0.95);
     }
 }
 
-@keyframes insilosBrainPulse {
-    0%, 100% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 12px #00F0FF; }
-}
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
+    .o_ai_systray_btn {
+        background: transparent !important;
+        border-color: transparent !important;
 
-body.o_dark_mode .o_ai_systray_btn {
-    background: rgba(0, 240, 255, 0.1) !important;
-    border-color: rgba(0, 240, 255, 0.4) !important;
+        .ai-systray-icon {
+            path[stroke="#0B2E64"] {
+                stroke: #00F0FF !important;
+            }
+            path[fill="#0B2E64"] {
+                fill: #00F0FF !important;
+            }
+            path[stroke="#00A3FF"] {
+                stroke: #00F0FF !important;
+            }
+            path[fill="#00A3FF"] {
+                fill: #00F0FF !important;
+            }
+        }
 
-    .ai-systray-icon path[stroke="#0B2E64"] {
-        stroke: #A5D8FF !important;
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+        }
     }
 }

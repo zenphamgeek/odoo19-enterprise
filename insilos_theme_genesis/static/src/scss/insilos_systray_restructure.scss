@@ -74,6 +74,13 @@ header.o_navbar {
         height: 19px !important;
         object-fit: contain !important;
         display: block !important;
+
+        &.o_insilos_launcher_icon_light {
+          display: block !important;
+        }
+        &.o_insilos_launcher_icon_dark {
+          display: none !important;
+        }
       }
 
       i.o_menu_toggle_icon {
@@ -122,6 +129,13 @@ header.o_navbar {
       margin-right: 12px !important;
       flex-shrink: 0 !important;
       transition: opacity var(--insilos-transition-fast);
+
+      &.o_insilos_brand_logo_light {
+        display: inline-block !important;
+      }
+      &.o_insilos_brand_logo_dark {
+        display: none !important;
+      }
 
       &.o_hidden {
         display: none !important;
@@ -370,43 +384,27 @@ header.o_navbar {
           box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
         }
 
-        /* Dedicated Insilos AI Copilot Brain Button */
+        /* Clean Insilos AI Copilot Brain Button */
         &.o_ai_systray_btn,
         &[title*="AI"],
         &[title*="Ask AI"] {
-          background: linear-gradient(135deg, rgba(11, 46, 100, 0.05) 0%, rgba(0, 240, 255, 0.12) 100%) !important;
-          border: 1.5px solid rgba(0, 163, 255, 0.35) !important;
-          box-shadow: 0 0 8px rgba(0, 240, 255, 0.2) !important;
-          position: relative !important;
+          background: transparent !important;
+          border-color: transparent !important;
 
           .ai-systray-icon {
-            width: 20px !important;
-            height: 20px !important;
+            width: 18px !important;
+            height: 18px !important;
             object-fit: contain !important;
             display: block !important;
-            animation: insilosBrainFloat 3s ease-in-out infinite alternate !important;
-            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-          }
-
-          .insilos-brain-glow-dot {
-            width: 7px !important;
-            height: 7px !important;
-            background: #00F0FF !important;
-            border-radius: 50% !important;
-            position: absolute !important;
-            top: 3px !important;
-            right: 3px !important;
-            box-shadow: 0 0 8px #00F0FF, 0 0 12px #00F0FF !important;
-            animation: insilosDotPulse 2s infinite ease-in-out !important;
+            transition: transform 0.15s ease !important;
           }
 
           &:hover {
-            background: linear-gradient(135deg, rgba(11, 46, 100, 0.1) 0%, rgba(0, 240, 255, 0.25) 100%) !important;
-            border-color: #00F0FF !important;
-            box-shadow: 0 0 14px rgba(0, 240, 255, 0.5) !important;
+            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+            border-color: transparent !important;
 
             .ai-systray-icon {
-              transform: scale(1.15) !important;
+              transform: scale(1.08) !important;
             }
           }
         }
@@ -783,12 +781,22 @@ body.o_dark_mode,
     border-bottom: 1px solid var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
 
     .o_main_navbar {
-      .o_insilos_brand_logo {
-        filter: brightness(0) invert(1) !important;
+      .o_insilos_brand_logo.o_insilos_brand_logo_light {
+        display: none !important;
+      }
+      .o_insilos_brand_logo.o_insilos_brand_logo_dark {
+        display: inline-block !important;
       }
 
       .o_navbar_apps_menu,
       .o_menu_toggle {
+        .o_insilos_launcher_icon.o_insilos_launcher_icon_light {
+          display: none !important;
+        }
+        .o_insilos_launcher_icon.o_insilos_launcher_icon_dark {
+          display: block !important;
+        }
+
         &:hover {
           background-color: rgba(255, 255, 255, 0.08) !important;
         }
@@ -843,28 +851,31 @@ body.o_dark_mode,
           &.o_ai_systray_btn,
           &[title*="AI"],
           &[title*="Ask AI"] {
-            background: rgba(0, 240, 255, 0.1) !important;
-            border-color: rgba(0, 240, 255, 0.45) !important;
+            background: transparent !important;
+            border-color: transparent !important;
             color: #00F0FF !important;
 
             .ai-systray-icon {
-              filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.7)) !important;
+              width: 18px !important;
+              height: 18px !important;
               path[stroke="#0B2E64"] {
                 stroke: #00F0FF !important;
               }
               path[fill="#0B2E64"] {
                 fill: #00F0FF !important;
               }
-            }
-
-            .insilos-brain-glow-dot {
-              box-shadow: 0 0 10px #00F0FF, 0 0 18px #00F0FF !important;
+              path[stroke="#00A3FF"] {
+                stroke: #00F0FF !important;
+              }
+              path[fill="#00A3FF"] {
+                fill: #00F0FF !important;
+              }
             }
 
             &:hover {
-              background: rgba(0, 240, 255, 0.22) !important;
-              border-color: #00F0FF !important;
-              box-shadow: 0 0 16px rgba(0, 240, 255, 0.6) !important;
+              background: rgba(0, 240, 255, 0.12) !important;
+              border-color: transparent !important;
+              color: #00F0FF !important;
             }
           }
 
