@@ -6,100 +6,123 @@
         <field name="model">res.config.settings</field>
         <field name="priority">99</field>
         <field name="arch" type="xml">
-            <form string="HS Code &amp; Customs Knowledge Hub" create="false" edit="false">
-                <sheet class="w-100">
-                    <!-- Header Banner -->
-                    <div class="p-4 mb-4 rounded bg-primary text-white shadow-sm w-100">
+            <form string="HS Code &amp; Customs Knowledge Hub" class="o_form_view insilos_hub_form" create="false" edit="false">
+                <sheet class="insilos_hub_sheet">
+                    <!-- Standardized Hero Banner -->
+                    <div class="insilos_hub_hero">
                         <div class="row g-3 align-items-center">
-                            <div class="col-12 col-md-9">
-                                <h2 class="fw-bold text-white mb-2">Trung tâm Tri thức Mã HS &amp; Phán quyết Hải quan (HS &amp; Customs Hub)</h2>
-                                <p class="mb-0 text-white-50 small">
-                                    Đồng bộ cơ sở dữ liệu Biểu thuế XNK Việt Nam, Phán quyết xác định trước mã số của Tổng cục Hải quan và tự động gán mã HS cho Master Data hàng hóa.
+                            <div class="col-12 col-lg-9">
+                                <div class="insilos_hub_eyebrow">
+                                    <i class="ph-bold ph-scales me-1"/> VIETNAM CUSTOMS KNOWLEDGE HUB
+                                </div>
+                                <h2 class="insilos_hub_title">Trung tâm Tri thức Mã HS &amp; Phán quyết Hải quan (HS &amp; Customs Hub)</h2>
+                                <p class="insilos_hub_desc">
+                                    Đồng bộ cơ sở dữ liệu Biểu thuế XNK Việt Nam, Phán quyết xác định trước mã số của Tổng cục Hải quan và tự động gán mã HS cho Master Data hàng hóa theo chuẩn SAP Fiori Horizon &amp; IBM Carbon.
                                 </p>
                             </div>
-                            <div class="col-12 col-md-3 text-md-end">
-                                <span class="badge bg-light text-dark px-3 py-2">Vietnam Customs Ready</span>
+                            <div class="col-12 col-lg-3 text-lg-end">
+                                <div class="insilos_hub_telemetry_badge d-inline-block text-start text-lg-center">
+                                    <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                        <span class="insilos_pulse_dot"/>
+                                        <span class="insilos_hub_status_text">CUSTOMS SYNCED</span>
+                                    </div>
+                                    <span class="insilos_hub_metric_num">4 BƯỚC</span>
+                                    <small class="insilos_hub_metric_label">HS Classification Suite</small>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- 4-Step Interactive Onboarding Header -->
+                    <div class="insilos_hub_section_header">
+                        <div class="insilos_section_left">
+                            <div class="insilos_section_icon"><i class="ph-bold ph-git-merge"/></div>
+                            <h4 class="insilos_section_title">Quy trình 4 Bước Quản trị Tri thức Phân loại HS &amp; Biểu thuế:</h4>
+                        </div>
+                        <span class="insilos_section_badge">4-STAGE PIPELINE</span>
+                    </div>
+
                     <!-- 4-Step Interactive Onboarding Cards -->
-                    <h4 class="fw-bold mb-3 text-primary">Quy trình 4 Bước Quản trị Tri thức Phân loại HS &amp; Biểu thuế:</h4>
                     <div class="row g-3 mb-4 w-100">
                         <!-- Step 1: HS Tariff Schedule -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-primary me-2">1</span>
-                                        <h5 class="card-title fw-bold mb-0 text-primary">Biểu thuế XNK</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Tra cứu mã HS 8 số, thuế suất MFN, FTA (EVFTA, CPTPP), thuế GTGT và quy định quản lý chuyên ngành chi tiết.
-                                    </p>
-                                    <button name="%(action_is_hs_tariff)d" string="Search Tariff Schedule" type="action" class="btn btn-outline-primary w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">01</span>
+                                    <span class="insilos_card_tag">Tariff Matrix</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-table me-2"/>Biểu thuế XNK</h5>
+                                <p class="insilos_card_desc">
+                                    Tra cứu mã HS 8 số, thuế suất MFN, FTA (EVFTA, CPTPP), thuế GTGT và quy định quản lý chuyên ngành chi tiết.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_hs_tariff)d" string="Tariff Schedule" type="action" class="btn btn-sm btn-hub-primary w-100" icon="table"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 2: Customs Advance Rulings -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-success me-2">2</span>
-                                        <h5 class="card-title fw-bold mb-0 text-success">Phán quyết Hải quan</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Kho lưu trữ văn bản Xác định trước mã số (Tổng cục Hải quan), căn cứ phân loại và chữ ký số SHA-256 bảo đảm tính pháp lý.
-                                    </p>
-                                    <button name="%(action_is_customs_ruling)d" string="View Customs Rulings" type="action" class="btn btn-outline-success w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">02</span>
+                                    <span class="insilos_card_tag">Advance Ruling</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-certificate me-2"/>Phán quyết Hải quan</h5>
+                                <p class="insilos_card_desc">
+                                    Kho lưu trữ văn bản Xác định trước mã số (Tổng cục Hải quan), căn cứ phân loại và chữ ký số SHA-256 bảo đảm tính pháp lý.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_customs_ruling)d" string="Customs Rulings" type="action" class="btn btn-sm btn-hub-primary w-100" icon="certificate"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 3: Product Master HS Integration -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-warning text-dark me-2">3</span>
-                                        <h5 class="card-title fw-bold mb-0 text-warning">Gán Mã HS Vật tư</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Gán trực tiếp mã HS chính thức vào Master Data Sản phẩm, tự động tính toán nghĩa vụ thuế và quản lý chuyên ngành.
-                                    </p>
-                                    <button name="%(product.product_template_action)d" string="Product Catalog" type="action" class="btn btn-outline-warning w-100 mt-auto text-dark"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">03</span>
+                                    <span class="insilos_card_tag">Product Master</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-package me-2"/>Gán Mã HS Vật tư</h5>
+                                <p class="insilos_card_desc">
+                                    Gán trực tiếp mã HS chính thức vào Master Data Sản phẩm, tự động tính toán nghĩa vụ thuế và quản lý chuyên ngành.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(product.product_template_action)d" string="Product Catalog" type="action" class="btn btn-sm btn-hub-primary w-100" icon="package"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 4: Webhook & Sync Audit -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-secondary me-2">4</span>
-                                        <h5 class="card-title fw-bold mb-0 text-secondary">Đồng bộ &amp; Nhật ký</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Giám sát các sự kiện đồng bộ tự động từ Hermes Agent Webhook Hub và kiểm tra nhật ký xác thực HMAC-SHA256.
-                                    </p>
-                                    <button name="%(action_is_hs_sync_log)d" string="Sync Audit Logs" type="action" class="btn btn-outline-secondary w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">04</span>
+                                    <span class="insilos_card_tag">Sync Audit</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-broadcast me-2"/>Đồng bộ &amp; Nhật ký</h5>
+                                <p class="insilos_card_desc">
+                                    Giám sát các sự kiện đồng bộ tự động từ Hermes Agent Webhook Hub và kiểm tra nhật ký xác thực HMAC-SHA256.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_hs_sync_log)d" string="Sync Audit Logs" type="action" class="btn btn-sm btn-hub-primary w-100" icon="broadcast"/>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Quick Reference Links -->
-                    <div class="card border shadow-sm rounded p-3 bg-light w-100">
-                        <div class="row g-3 align-items-center justify-content-between">
-                            <div class="col-12 col-md-8">
-                                <strong class="text-dark">Cổng Tra cứu Trực tiếp:</strong>
-                                <span class="text-muted ms-2 small">Tổng cục Hải quan (customs.gov.vn) | Biểu thuế Xuất nhập khẩu Việt Nam 2026</span>
-                            </div>
-                            <div class="col-12 col-md-4 text-md-end">
-                                <button name="%(action_is_hs_sync_config_settings)d" string="Configure Integration &amp; Secret" type="action" class="btn btn-sm btn-outline-secondary"/>
+                    <!-- Quick Reference Links Grid -->
+                    <div class="row g-3 w-100">
+                        <div class="col-12">
+                            <div class="insilos_hub_footer_card">
+                                <div class="insilos_footer_heading">
+                                    <i class="ph-duotone ph-gear"/>
+                                    <h6>Cổng Tra cứu Trực tiếp &amp; Cấu hình Tích hợp Hải quan:</h6>
+                                </div>
+                                <p class="insilos_footer_desc">Tổng cục Hải quan Việt Nam (customs.gov.vn) | Biểu thuế Xuất nhập khẩu 2026. Quản trị khóa bí mật HMAC-SHA256 và endpoint nhận sự kiện tự động.</p>
+                                <button name="%(action_is_hs_sync_config_settings)d" string="Configure Integration &amp; Secret" type="action" class="btn btn-hub-outline" icon="gear"/>
                             </div>
                         </div>
                     </div>

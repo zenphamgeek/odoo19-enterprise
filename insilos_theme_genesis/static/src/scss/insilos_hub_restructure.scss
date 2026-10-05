@@ -1,0 +1,544 @@
+/* ==========================================================================
+   Insilos Hub & Guided Onboarding Workbench Restructure
+   Standardizing 7 Enterprise Hub Views (IBM Carbon 11 & SAP Fiori Horizon)
+   ========================================================================== */
+
+.o_form_view.insilos_hub_form {
+  background: var(--insilos-bg-canvas, #f4f6f8) !important;
+
+  .o_form_sheet_bg {
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+
+    .o_form_sheet.insilos_hub_sheet {
+      max-width: 1440px !important;
+      width: 100% !important;
+      margin: 0 auto !important;
+      padding: 24px 32px 48px 32px !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     1. HERO BANNER
+     -------------------------------------------------------------------------- */
+  .insilos_hub_hero {
+    background: linear-gradient(135deg, #0B2E64 0%, #0d1e3d 50%, #141E33 100%);
+    border-radius: var(--insilos-radius-lg, 8px);
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(11, 46, 100, 0.15);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .insilos_hub_eyebrow {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #00F0FF;
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: var(--insilos-radius-xs, 2px);
+      padding: 3px 10px;
+      margin-bottom: 10px;
+    }
+
+    .insilos_hub_title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+
+    .insilos_hub_desc {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, 0.78);
+      line-height: 1.55;
+      margin-bottom: 0;
+      max-width: 920px;
+    }
+
+    /* Telemetry Glass Badge on the right */
+    .insilos_hub_telemetry_badge {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--insilos-radius-md, 6px);
+      padding: 14px 20px;
+      text-align: center;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.09);
+        border-color: rgba(0, 240, 255, 0.3);
+      }
+
+      .insilos_pulse_dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10B981;
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+        animation: insilos_pulse 2s infinite;
+      }
+
+      .insilos_hub_status_text {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #10B981;
+      }
+
+      .insilos_hub_metric_num {
+        display: block;
+        font-size: 20px;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+        margin-top: 2px;
+      }
+
+      .insilos_hub_metric_label {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.6);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     2. SECTION HEADER
+     -------------------------------------------------------------------------- */
+  .insilos_hub_section_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0);
+
+    .insilos_section_left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .insilos_section_icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08));
+      color: var(--insilos-primary, #0B2E64);
+      border-radius: var(--insilos-radius-xs, 2px);
+      font-size: 14px;
+    }
+
+    .insilos_section_title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--insilos-text-primary, #0f172a);
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .insilos_section_badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--insilos-primary, #0B2E64);
+      background: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08));
+      border: 1px solid var(--insilos-primary-border, rgba(11, 46, 100, 0.25));
+      border-radius: var(--insilos-radius-xs, 2px);
+      padding: 3px 8px;
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     3. WORKFLOW CARDS GRID
+     -------------------------------------------------------------------------- */
+  .insilos_hub_card {
+    height: 100%;
+    background: var(--insilos-bg-card, #ffffff);
+    border: 1px solid var(--insilos-border-subtle, #e2e8f0);
+    border-radius: var(--insilos-radius-sm, 4px);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+      border-radius: var(--insilos-radius-sm, 4px) var(--insilos-radius-sm, 4px) 0 0;
+      transition: background 0.2s ease;
+    }
+
+    &:hover {
+      border-color: var(--insilos-border-medium, #cbd5e1);
+      box-shadow: 0 6px 16px rgba(11, 46, 100, 0.08);
+      transform: translateY(-1px);
+
+      &::before {
+        background: var(--insilos-primary, #0B2E64);
+      }
+    }
+
+    .insilos_card_header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .insilos_step_pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #ffffff;
+      background: var(--insilos-primary, #0B2E64);
+      border-radius: var(--insilos-radius-xs, 2px);
+      line-height: 1;
+    }
+
+    .insilos_card_tag {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--insilos-text-secondary, #475569);
+      background: var(--insilos-bg-subtle, #f8fafc);
+      border: 1px solid var(--insilos-border-subtle, #e2e8f0);
+      border-radius: var(--insilos-radius-xs, 2px);
+      padding: 2px 6px;
+    }
+
+    .insilos_card_title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--insilos-text-primary, #0f172a);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+
+      i {
+        font-size: 16px;
+        color: var(--insilos-primary, #0B2E64);
+      }
+    }
+
+    .insilos_card_desc {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--insilos-text-secondary, #475569);
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    /* Button Group in Cards */
+    .insilos_card_actions {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      button {
+        height: 32px !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        border-radius: var(--insilos-radius-xs, 2px) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 12px !important;
+        transition: all 0.15s ease !important;
+      }
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     4. STANDARDIZED BUTTONS
+     -------------------------------------------------------------------------- */
+  .btn-hub-primary {
+    background: var(--insilos-primary, #0B2E64) !important;
+    border: 1px solid var(--insilos-primary, #0B2E64) !important;
+    color: #ffffff !important;
+
+    &:hover, &:focus {
+      background: var(--insilos-primary-hover, #082147) !important;
+      border-color: var(--insilos-primary-hover, #082147) !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(11, 46, 100, 0.25) !important;
+    }
+  }
+
+  .btn-hub-secondary {
+    background: transparent !important;
+    border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
+    color: var(--insilos-text-primary, #0f172a) !important;
+
+    &:hover, &:focus {
+      background: var(--insilos-bg-hover, #f1f5f9) !important;
+      border-color: var(--insilos-primary, #0B2E64) !important;
+      color: var(--insilos-primary, #0B2E64) !important;
+    }
+  }
+
+  .btn-hub-outline {
+    background: transparent !important;
+    border: 1px solid var(--insilos-primary-border, rgba(11, 46, 100, 0.25)) !important;
+    color: var(--insilos-primary, #0B2E64) !important;
+
+    &:hover, &:focus {
+      background: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08)) !important;
+      border-color: var(--insilos-primary, #0B2E64) !important;
+      color: var(--insilos-primary, #0B2E64) !important;
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     5. FOOTER QUICK ACTION & REFERENCE CARDS
+     -------------------------------------------------------------------------- */
+  .insilos_hub_footer_card {
+    height: 100%;
+    background: var(--insilos-bg-card, #ffffff);
+    border: 1px solid var(--insilos-border-subtle, #e2e8f0);
+    border-radius: var(--insilos-radius-sm, 4px);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: var(--insilos-border-medium, #cbd5e1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .insilos_footer_heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+
+      i {
+        font-size: 18px;
+        color: var(--insilos-primary, #0B2E64);
+      }
+
+      h6 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--insilos-text-primary, #0f172a);
+        margin: 0;
+      }
+    }
+
+    .insilos_footer_desc {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--insilos-text-secondary, #475569);
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    button {
+      height: 34px !important;
+      font-size: 12.5px !important;
+      font-weight: 600 !important;
+      border-radius: var(--insilos-radius-xs, 2px) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   DARK MODE OVERRIDES
+   -------------------------------------------------------------------------- */
+body.o_dark_mode .o_form_view.insilos_hub_form {
+  background: #0b0f19 !important;
+
+  .insilos_hub_hero {
+    background: linear-gradient(135deg, #07152d 0%, #0b1c3a 50%, #101c36 100%);
+    border-color: rgba(0, 240, 255, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+    .insilos_hub_telemetry_badge {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.1);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(0, 240, 255, 0.4);
+      }
+    }
+  }
+
+  .insilos_hub_section_header {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+
+    .insilos_section_icon {
+      background: rgba(0, 240, 255, 0.1);
+      color: #00F0FF;
+    }
+
+    .insilos_section_title {
+      color: #f1f5f9;
+    }
+
+    .insilos_section_badge {
+      color: #00F0FF;
+      background: rgba(0, 240, 255, 0.1);
+      border-color: rgba(0, 240, 255, 0.25);
+    }
+  }
+
+  .insilos_hub_card {
+    background: #111827;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      border-color: rgba(0, 240, 255, 0.35);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+
+      &::before {
+        background: #00F0FF;
+      }
+    }
+
+    .insilos_step_pill {
+      background: #00F0FF;
+      color: #05101E;
+    }
+
+    .insilos_card_tag {
+      color: #94a3b8;
+      background: #1e293b;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .insilos_card_title {
+      color: #f1f5f9;
+
+      i {
+        color: #00F0FF;
+      }
+    }
+
+    .insilos_card_desc {
+      color: #94a3b8;
+    }
+  }
+
+  .btn-hub-primary {
+    background: #00F0FF !important;
+    border-color: #00F0FF !important;
+    color: #05101E !important;
+
+    &:hover, &:focus {
+      background: #38f4ff !important;
+      border-color: #38f4ff !important;
+      color: #05101E !important;
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.4) !important;
+    }
+  }
+
+  .btn-hub-secondary {
+    background: transparent !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #f1f5f9 !important;
+
+    &:hover, &:focus {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: #00F0FF !important;
+      color: #00F0FF !important;
+    }
+  }
+
+  .btn-hub-outline {
+    background: transparent !important;
+    border-color: rgba(0, 240, 255, 0.35) !important;
+    color: #00F0FF !important;
+
+    &:hover, &:focus {
+      background: rgba(0, 240, 255, 0.1) !important;
+      border-color: #00F0FF !important;
+      color: #00F0FF !important;
+    }
+  }
+
+  .insilos_hub_footer_card {
+    background: #111827;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      border-color: rgba(0, 240, 255, 0.25);
+    }
+
+    .insilos_footer_heading {
+      i {
+        color: #00F0FF;
+      }
+      h6 {
+        color: #f1f5f9;
+      }
+    }
+
+    .insilos_footer_desc {
+      color: #94a3b8;
+    }
+  }
+}
+
+@keyframes insilos_pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}

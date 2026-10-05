@@ -86,14 +86,27 @@ export class LogisticsIdpDashboard extends Component {
     max(rows) { return Math.max(1, ...(rows || []).map((row) => this.count(row))); }
     chartWidth(row, rows) { return Math.round(this.count(row) * 100 / this.max(rows)); }
     chartLabel(row, rows) { return _t("%s of %s", this.count(row), this.total(rows)); }
-    total(rows) { return rows.reduce((sum, row) => sum + this.count(row), 0); }
+    total(rows) { return (rows || []).reduce((sum, row) => sum + this.count(row), 0); }
     chartType(kind) { if (kind === "document_throughput") return "line"; return ["case_state", "verdict", "source", "customs_regime", "document_type", "exception_state"].includes(kind) ? "donut" : "ranking"; }
     chartColor(index) { return ["#1764ad", "#008477", "#9b6500", "#7652a4", "#be4658", "#42677a"][index % 6]; }
-    chartRows(rows, kind) { return kind === "document_throughput" ? rows : [...rows].sort((a, b) => this.count(b) - this.count(a)); }
-    donutStyle(rows) { const total = this.total(rows); if (!total) return "background: #e6edf5"; let offset = 0; return `background: conic-gradient(${rows.map((row, index) => { const start = offset; offset += this.count(row) * 100 / total; return `${this.chartColor(index)} ${start}% ${offset}%`; }).join(",")})`; }
-    lineX(index, rows) { return rows.length < 2 ? 300 : 24 + index * 552 / (rows.length - 1); }
+    chartRows(rows, kind) {
+        if (!rows || !Array.isArray(rows)) return [];
+        return kind === "document_throughput" ? rows : [...rows].sort((a, b) => this.count(b) - this.count(a));
+    }
+    donutStyle(rows) {
+        const list = rows || [];
+        const total = this.total(list);
+        if (!total) return "background: #e6edf5";
+        let offset = 0;
+        return `background: conic-gradient(${list.map((row, index) => {
+            const start = offset;
+            offset += this.count(row) * 100 / total;
+            return `${this.chartColor(index)} ${start}% ${offset}%`;
+        }).join(",")})`;
+    }
+    lineX(index, rows) { const list = rows || []; return list.length < 2 ? 300 : 24 + index * 552 / (list.length - 1); }
     lineY(row, rows) { return 176 - this.count(row) * 144 / this.max(rows); }
-    linePoints(rows) { return rows.map((row, index) => `${this.lineX(index, rows)},${this.lineY(row, rows)}`).join(" "); }
+    linePoints(rows) { return (rows || []).map((row, index) => `${this.lineX(index, rows)},${this.lineY(row, rows)}`).join(" "); }
     isEmpty() { return !Object.values(this.state.data?.metrics || {}).some((item) => item?.value); }
 }
 

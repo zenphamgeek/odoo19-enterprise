@@ -6,118 +6,140 @@
         <field name="model">res.config.settings</field>
         <field name="priority">99</field>
         <field name="arch" type="xml">
-            <form string="Pub/Sub EDA Bridge Knowledge &amp; Onboarding Hub" create="false" edit="false">
-                <sheet class="w-100">
-                    <!-- Header Banner -->
-                    <div class="p-4 mb-4 rounded bg-primary text-white shadow-sm w-100">
+            <form string="Pub/Sub EDA Bridge Knowledge &amp; Onboarding Hub" class="o_form_view insilos_hub_form" create="false" edit="false">
+                <sheet class="insilos_hub_sheet">
+                    <!-- Standardized Hero Banner -->
+                    <div class="insilos_hub_hero">
                         <div class="row g-3 align-items-center">
-                            <div class="col-12 col-md-9">
-                                <h2 class="fw-bold text-white mb-2">⚡ Trung tâm Khởi tạo &amp; Điều phối Sự kiện Pub/Sub (Event-Driven Gateway)</h2>
-                                <p class="mb-0 text-white-50 small">
+                            <div class="col-12 col-lg-9">
+                                <div class="insilos_hub_eyebrow">
+                                    <i class="ph-bold ph-broadcast me-1"/> EVENT-DRIVEN GATEWAY
+                                </div>
+                                <h2 class="insilos_hub_title">Trung tâm Khởi tạo &amp; Điều phối Sự kiện Pub/Sub (Event-Driven Gateway)</h2>
+                                <p class="insilos_hub_desc">
                                     Tự động hóa tiếp nhận sự kiện từ Google Cloud Pub/Sub, Gmail Push, Hermes AI Agent và điều phối tức thì tới Kế toán (Hóa đơn), Bán hàng (Lead CRM), Logistics (IDP Manifest) và HSE (Hóa chất &amp; CEMS).
                                 </p>
                             </div>
-                            <div class="col-12 col-md-3 text-md-end">
-                                <span class="badge bg-success px-3 py-2">Pub/Sub Engine L5 Active</span>
+                            <div class="col-12 col-lg-3 text-lg-end">
+                                <div class="insilos_hub_telemetry_badge d-inline-block text-start text-lg-center">
+                                    <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                        <span class="insilos_pulse_dot"/>
+                                        <span class="insilos_hub_status_text">PUBSUB ENGINE L5</span>
+                                    </div>
+                                    <span class="insilos_hub_metric_num">4 BƯỚC</span>
+                                    <small class="insilos_hub_metric_label">EDA Dispatcher</small>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- 4-Step Interactive Onboarding Header -->
+                    <div class="insilos_hub_section_header">
+                        <div class="insilos_section_left">
+                            <div class="insilos_section_icon"><i class="ph-bold ph-git-merge"/></div>
+                            <h4 class="insilos_section_title">Quy trình 4 Bước Tự động hóa Event-Driven Architecture:</h4>
+                        </div>
+                        <span class="insilos_section_badge">4-STAGE PIPELINE</span>
+                    </div>
+
                     <!-- 4-Step Interactive Onboarding Cards -->
-                    <h4 class="fw-bold mb-3 text-primary">Quy trình 4 Bước Tự động hóa Event-Driven Architecture:</h4>
                     <div class="row g-3 mb-4 w-100">
                         <!-- Step 1: Connect Inbound Topic -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-primary me-2">1</span>
-                                        <h5 class="card-title fw-bold mb-0 text-primary">Kênh Kết Nối</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Đăng ký Google Cloud Topic/Subscription hoặc Webhook Endpoint cho Gmail, AI Agent và Webhook bên thứ 3.
-                                    </p>
-                                    <button name="%(action_pubsub_channel)d" string="Manage Channels" type="action" class="btn btn-outline-primary w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">01</span>
+                                    <span class="insilos_card_tag">Inbound Channels</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-plugs-connected me-2"/>Kênh Kết Nối</h5>
+                                <p class="insilos_card_desc">
+                                    Đăng ký Google Cloud Topic/Subscription hoặc Webhook Endpoint cho Gmail, AI Agent và Webhook đối tác bên ngoài.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_pubsub_channel)d" string="Manage Channels" type="action" class="btn btn-sm btn-hub-primary w-100" icon="plugs-connected"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 2: Ingestion Ledger & Multi-App Dispatch -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-info text-dark me-2">2</span>
-                                        <h5 class="card-title fw-bold mb-0 text-info">Sổ Nhật Ký Event</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Giám sát các sự kiện thu nhận theo thời gian thực, bóc tách JSON payload và kiểm tra liên kết bản ghi ERP.
-                                    </p>
-                                    <button name="%(action_pubsub_event_log)d" string="Event Ledger" type="action" class="btn btn-outline-info w-100 mt-auto text-dark"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">02</span>
+                                    <span class="insilos_card_tag">Event Ledger</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-list-dashes me-2"/>Sổ Nhật Ký Event</h5>
+                                <p class="insilos_card_desc">
+                                    Giám sát luồng thông điệp thời gian thực, bóc tách JSON payload và kiểm tra liên kết bản ghi ERP.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_pubsub_event_log)d" string="Event Ledger" type="action" class="btn btn-sm btn-hub-primary w-100" icon="list-dashes"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 3: Automation Rules & Filtering -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-warning text-dark me-2">3</span>
-                                        <h5 class="card-title fw-bold mb-0 text-warning">Luật Tự Động Hóa</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Cấu hình bộ lọc Regex người gửi, từ khóa tiêu đề và điều phối chuyển tiếp cuộc gọi / thông báo email tức thì.
-                                    </p>
-                                    <button name="%(action_pubsub_automation_rule)d" string="Automation Rules" type="action" class="btn btn-outline-warning w-100 mt-auto text-dark"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">03</span>
+                                    <span class="insilos_card_tag">Rule Dispatch</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-cpu me-2"/>Luật Tự Động Hóa</h5>
+                                <p class="insilos_card_desc">
+                                    Cấu hình bộ lọc Regex người gửi, từ khóa payload và điều phối chuyển tiếp cuộc gọi / thông báo email tức thì.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_pubsub_automation_rule)d" string="Automation Rules" type="action" class="btn btn-sm btn-hub-primary w-100" icon="cpu"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 4: Outbound Publisher & Outbox -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-success me-2">4</span>
-                                        <h5 class="card-title fw-bold mb-0 text-success">Xuất Bản Sự Kiện</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Phát tán sự kiện từ Insilos ra bên ngoài qua Outbox Pattern đảm bảo tính toàn vẹn và không thất lạc thông điệp.
-                                    </p>
-                                    <button name="%(action_pubsub_outbound_event)d" string="Outbox Publisher" type="action" class="btn btn-outline-success w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">04</span>
+                                    <span class="insilos_card_tag">Outbox Publisher</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-paper-plane-tilt me-2"/>Xuất Bản Sự Kiện</h5>
+                                <p class="insilos_card_desc">
+                                    Phát tán sự kiện từ Insilos ra bên ngoài qua Outbox Pattern đảm bảo tính toàn vẹn và không thất lạc thông điệp.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_pubsub_outbound_event)d" string="Outbox Publisher" type="action" class="btn btn-sm btn-hub-primary w-100" icon="paper-plane-tilt"/>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Operational Architecture Reference -->
-                    <div class="card border shadow-sm rounded p-4 mb-4">
-                        <h4 class="fw-bold mb-3 text-primary">Sơ đồ Kiến trúc Điều phối EDA Tích hợp Đa Ứng dụng:</h4>
-                        <div class="row g-3 text-muted small">
-                            <div class="col-12 col-md-4">
-                                <div class="p-3 bg-light rounded border h-100">
-                                    <h6 class="fw-bold text-dark mb-2">1. Inbound Invoicing &amp; CRM</h6>
-                                    <p class="mb-0">
-                                        Tự động chuyển hóa hóa đơn lưu kho/vận chuyển thành Vendor Bills (Kế toán) và yêu cầu báo giá nguyên liệu thành Leads (CRM).
-                                    </p>
+                    <!-- Standards & Regulation Reference Grid -->
+                    <div class="row g-3 w-100">
+                        <div class="col-12 col-md-4">
+                            <div class="insilos_hub_footer_card">
+                                <div class="insilos_footer_heading">
+                                    <i class="ph-duotone ph-arrows-left-right"/>
+                                    <h6>1. Inbound Invoicing &amp; CRM:</h6>
                                 </div>
+                                <p class="insilos_footer_desc">Tự động chuyển hóa hóa đơn lưu kho/vận chuyển thành Vendor Bills (Kế toán) và yêu cầu báo giá nguyên liệu thành Leads (CRM).</p>
                             </div>
-                            <div class="col-12 col-md-4">
-                                <div class="p-3 bg-light rounded border h-100">
-                                    <h6 class="fw-bold text-dark mb-2">2. Logistics IDP &amp; Customs</h6>
-                                    <p class="mb-0">
-                                        Đồng bộ hồ sơ vận đơn B/L, Packing List, Tờ khai Hải quan điện tử VNACCS và tự động tạo Case Thẩm định Logistics IDP.
-                                    </p>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="insilos_hub_footer_card">
+                                <div class="insilos_footer_heading">
+                                    <i class="ph-duotone ph-scan"/>
+                                    <h6>2. Logistics IDP &amp; Customs:</h6>
                                 </div>
+                                <p class="insilos_footer_desc">Đồng bộ hồ sơ vận đơn B/L, Packing List, Tờ khai Hải quan điện tử VNACCS và tự động tạo Case Thẩm định Logistics IDP.</p>
                             </div>
-                            <div class="col-12 col-md-4">
-                                <div class="p-3 bg-light rounded border h-100">
-                                    <h6 class="fw-bold text-dark mb-2">3. HSE Chemicals &amp; ESG Telemetry</h6>
-                                    <p class="mb-0">
-                                        Tiếp nhận chứng từ SDS hóa chất 16 mục và cảnh báo nồng độ khí thải CEMS vượt ngưỡng, tự động phát sinh nhiệm vụ CAPA xử lý.
-                                    </p>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="insilos_hub_footer_card">
+                                <div class="insilos_footer_heading">
+                                    <i class="ph-duotone ph-shield-check"/>
+                                    <h6>3. HSE Chemicals &amp; ESG Telemetry:</h6>
                                 </div>
+                                <p class="insilos_footer_desc">Tiếp nhận chứng từ SDS hóa chất 16 mục và cảnh báo nồng độ khí thải CEMS vượt ngưỡng, tự động phát sinh nhiệm vụ CAPA xử lý.</p>
                             </div>
                         </div>
                     </div>

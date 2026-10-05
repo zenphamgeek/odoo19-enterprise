@@ -6,100 +6,123 @@
         <field name="model">res.config.settings</field>
         <field name="priority">99</field>
         <field name="arch" type="xml">
-            <form string="HSE Knowledge &amp; Compliance Hub" create="false" edit="false">
-                <sheet class="w-100">
-                    <!-- Header Banner -->
-                    <div class="p-4 mb-4 rounded bg-primary text-white shadow-sm w-100">
+            <form string="HSE Knowledge &amp; Compliance Hub" class="o_form_view insilos_hub_form" create="false" edit="false">
+                <sheet class="insilos_hub_sheet">
+                    <!-- Standardized Hero Banner -->
+                    <div class="insilos_hub_hero">
                         <div class="row g-3 align-items-center">
-                            <div class="col-12 col-md-9">
-                                <h2 class="fw-bold text-white mb-2">Trung tâm Quản trị An toàn, Sức khỏe &amp; Môi trường (HSE)</h2>
-                                <p class="mb-0 text-white-50 small">
-                                    Không gian theo dõi nội bộ hồ sơ Luật Hóa chất, QCVN, sổ đăng ký nghĩa vụ và giấy phép chuyên ngành; cần rà soát nguồn và thẩm quyền trước khi sử dụng.
+                            <div class="col-12 col-lg-9">
+                                <div class="insilos_hub_eyebrow">
+                                    <i class="ph-bold ph-shield-plus me-1"/> HEALTH, SAFETY &amp; ENVIRONMENT SUITE
+                                </div>
+                                <h2 class="insilos_hub_title">Trung tâm Quản trị An toàn, Sức khỏe &amp; Môi trường (HSE)</h2>
+                                <p class="insilos_hub_desc">
+                                    Không gian theo dõi nội bộ hồ sơ Luật Hóa chất, QCVN, sổ đăng ký nghĩa vụ và giấy phép chuyên ngành theo chuẩn SAP Fiori Horizon &amp; IBM Carbon; đối chiếu nguồn thẩm quyền trước khi sử dụng.
                                 </p>
                             </div>
-                            <div class="col-12 col-md-3 text-md-end">
-                                <span class="badge bg-success px-3 py-2">Internal Tracking</span>
+                            <div class="col-12 col-lg-3 text-lg-end">
+                                <div class="insilos_hub_telemetry_badge d-inline-block text-start text-lg-center">
+                                    <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                        <span class="insilos_pulse_dot"/>
+                                        <span class="insilos_hub_status_text">HSE COMPLIANT</span>
+                                    </div>
+                                    <span class="insilos_hub_metric_num">4 BƯỚC</span>
+                                    <small class="insilos_hub_metric_label">Industrial Safety Suite</small>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- 4-Step Interactive Onboarding Header -->
+                    <div class="insilos_hub_section_header">
+                        <div class="insilos_section_left">
+                            <div class="insilos_section_icon"><i class="ph-bold ph-git-merge"/></div>
+                            <h4 class="insilos_section_title">Quy trình 4 Bước Thiết lập &amp; Vận hành HSE Chuẩn hóa:</h4>
+                        </div>
+                        <span class="insilos_section_badge">4-STAGE PIPELINE</span>
+                    </div>
+
                     <!-- 4-Step Interactive Onboarding Cards -->
-                    <h4 class="fw-bold mb-3 text-primary">Quy trình 4 Bước Thiết lập &amp; Vận hành HSE Chuẩn hóa:</h4>
                     <div class="row g-3 mb-4 w-100">
                         <!-- Step 1: Facilities -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-primary me-2">1</span>
-                                        <h5 class="card-title fw-bold mb-0 text-primary">Cơ sở &amp; Kho bãi</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Khởi tạo thông tin nhà máy, kho lưu trữ hóa chất, sức chứa, người phụ trách và tiêu chuẩn PCCC/bảo vệ môi trường.
-                                    </p>
-                                    <button name="%(action_is_hse_facility)d" string="Manage Facilities" type="action" class="btn btn-outline-primary w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">01</span>
+                                    <span class="insilos_card_tag">Facility Audit</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-buildings me-2"/>Cơ sở &amp; Kho bãi</h5>
+                                <p class="insilos_card_desc">
+                                    Khởi tạo thông tin nhà máy, kho lưu trữ hóa chất, sức chứa, người phụ trách và tiêu chuẩn PCCC/bảo vệ môi trường.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_hse_facility)d" string="Manage Facilities" type="action" class="btn btn-sm btn-hub-primary w-100" icon="buildings"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 2: Chemical Substances -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-warning text-dark me-2">2</span>
-                                        <h5 class="card-title fw-bold mb-0 text-warning">Hóa chất &amp; SDS</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Theo dõi nội bộ dữ liệu CAS/UN, phân loại GHS, SDS 16 phần và nồng độ tiếp xúc OEL; đối chiếu SDS nguồn trước khi sử dụng.
-                                    </p>
-                                    <button name="%(action_is_hse_chemical_substance)d" string="Chemical Master Catalog" type="action" class="btn btn-outline-warning w-100 mt-auto text-dark"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">02</span>
+                                    <span class="insilos_card_tag">SDS &amp; GHS</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-flask me-2"/>Hóa chất &amp; SDS</h5>
+                                <p class="insilos_card_desc">
+                                    Theo dõi nội bộ dữ liệu CAS/UN, phân loại GHS, SDS 16 phần và nồng độ tiếp xúc OEL; đối chiếu SDS nguồn trước khi sử dụng.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_hse_chemical_substance)d" string="Chemical Master Catalog" type="action" class="btn btn-sm btn-hub-primary w-100" icon="flask"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 3: Permits & Licenses -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-success me-2">3</span>
-                                        <h5 class="card-title fw-bold mb-0 text-success">Giấy phép &amp; GCN</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Theo dõi hồ sơ giấy phép, chứng nhận do người dùng cung cấp và nhắc rà soát thời hạn trước 30 ngày.
-                                    </p>
-                                    <button name="%(action_is_hse_product_permit)d" string="Manage Safety Permits" type="action" class="btn btn-outline-success w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">03</span>
+                                    <span class="insilos_card_tag">Permits</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-certificate me-2"/>Giấy phép &amp; GCN</h5>
+                                <p class="insilos_card_desc">
+                                    Theo dõi hồ sơ giấy phép, chứng nhận do người dùng cung cấp và nhắc rà soát thời hạn trước 30 ngày.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_hse_product_permit)d" string="Manage Safety Permits" type="action" class="btn btn-sm btn-hub-primary w-100" icon="certificate"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 4: Legal Register -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-secondary me-2">4</span>
-                                        <h5 class="card-title fw-bold mb-0 text-secondary">Sổ Tuân thủ HSE</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Theo dõi nghĩa vụ đã ghi nhận, trạng thái rà soát nội bộ và biên bản nội bộ; không thay thế kết luận tuân thủ hoặc hồ sơ nộp cơ quan.
-                                    </p>
-                                    <button name="%(action_is_hse_legal_register)d" string="Compliance Register" type="action" class="btn btn-outline-secondary w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">04</span>
+                                    <span class="insilos_card_tag">Legal Register</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-clipboard-text me-2"/>Sổ Tuân thủ HSE</h5>
+                                <p class="insilos_card_desc">
+                                    Theo dõi nghĩa vụ đã ghi nhận, trạng thái rà soát nội bộ và biên bản nội bộ; không thay thế kết luận tuân thủ cơ quan.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_hse_legal_register)d" string="Compliance Register" type="action" class="btn btn-sm btn-hub-primary w-100" icon="clipboard-text"/>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Quick Reference Links -->
-                    <div class="card border shadow-sm rounded p-3 bg-light w-100">
-                        <div class="row g-3 align-items-center justify-content-between">
-                            <div class="col-12 col-md-8">
-                                <strong class="text-dark">Tra cứu Nhanh:</strong>
-                                <span class="text-muted ms-2 small">Luật Hóa chất 2025 | Thông tư 19/2024/TT-BCT | QCVN 05A:2020/BCT | Luật BVMT 2020</span>
-                            </div>
-                            <div class="col-12 col-md-4 text-md-end">
-                                <button name="%(action_is_hse_legal_document)d" string="Legal Documents Library" type="action" class="btn btn-sm btn-outline-secondary"/>
+                    <!-- Quick Reference Links Grid -->
+                    <div class="row g-3 w-100">
+                        <div class="col-12">
+                            <div class="insilos_hub_footer_card">
+                                <div class="insilos_footer_heading">
+                                    <i class="ph-duotone ph-books"/>
+                                    <h6>Thư viện Quy chuẩn Kỹ thuật &amp; Văn bản Pháp luật HSE:</h6>
+                                </div>
+                                <p class="insilos_footer_desc">Tra cứu nhanh Luật Hóa chất 2025 | Thông tư 19/2024/TT-BCT | QCVN 05A:2020/BCT về an toàn lưu trữ hóa chất nguy hiểm | Luật BVMT 2020.</p>
+                                <button name="%(action_is_hse_legal_document)d" string="Open Legal Documents Library" type="action" class="btn btn-hub-outline" icon="books"/>
                             </div>
                         </div>
                     </div>

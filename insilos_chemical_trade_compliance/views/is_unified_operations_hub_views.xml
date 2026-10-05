@@ -6,109 +6,145 @@
         <field name="model">res.config.settings</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <form string="Unified Operations Command Center" create="false" edit="false">
-                <sheet class="w-100">
-                    <!-- Header Banner -->
-                    <div class="p-4 mb-4 rounded bg-primary text-white shadow-sm w-100">
+            <form string="Unified Operations Command Center" class="o_form_view insilos_hub_form" create="false" edit="false">
+                <sheet class="insilos_hub_sheet">
+                    <!-- Standardized Hero Banner -->
+                    <div class="insilos_hub_hero">
                         <div class="row g-3 align-items-center">
-                            <div class="col-12 col-md-9">
-                                <span class="badge bg-warning text-dark px-3 py-1 mb-2 fw-bold">Enterprise E2E Architecture</span>
-                                <h2 class="fw-bold text-white mb-2">Trung tâm Điều hành Hợp nhất: Ngoại thương, Hải quan, Hóa chất, HSE &amp; Bảo trì Hiện trường</h2>
-                                <p class="mb-0 text-white-50 small">
-                                    Tập hợp dữ liệu nội bộ cho các bước tiếp nhận chứng từ, đối soát, rà soát tuân thủ, chuẩn bị khai báo NSW, HSE và bảo trì; người phụ trách xác nhận từng bước.
+                            <div class="col-12 col-lg-9">
+                                <div class="insilos_hub_eyebrow">
+                                    <i class="ph-bold ph-shield-check me-1"/> ENTERPRISE E2E ARCHITECTURE
+                                </div>
+                                <h2 class="insilos_hub_title">Trung tâm Điều hành Hợp nhất: Ngoại thương, Hải quan, Hóa chất, HSE &amp; Bảo trì Hiện trường</h2>
+                                <p class="insilos_hub_desc">
+                                    Tập hợp dữ liệu nội bộ cho các bước tiếp nhận chứng từ, đối soát, rà soát tuân thủ, chuẩn bị khai báo NSW, HSE và bảo trì; người phụ trách xác nhận từng bước theo quy chuẩn SAP Fiori Horizon &amp; IBM Carbon.
                                 </p>
                             </div>
-                            <div class="col-12 col-md-3 text-md-end">
-                                <div class="bg-white bg-opacity-10 p-3 rounded text-center">
-                                    <span class="fs-4 fw-bold text-white d-block">5 TRẠM</span>
-                                    <small class="text-white-50">E2E Workbench</small>
+                            <div class="col-12 col-lg-3 text-lg-end">
+                                <div class="insilos_hub_telemetry_badge d-inline-block text-start text-lg-center">
+                                    <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                        <span class="insilos_pulse_dot"/>
+                                        <span class="insilos_hub_status_text">ACTIVE WORKBENCH</span>
+                                    </div>
+                                    <span class="insilos_hub_metric_num">5 TRẠM</span>
+                                    <small class="insilos_hub_metric_label">E2E Unified Engine</small>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Visual Flow Diagram 5 Stations -->
+                    <!-- Visual Flow Diagram 5 Stations Header -->
+                    <div class="insilos_hub_section_header">
+                        <div class="insilos_section_left">
+                            <div class="insilos_section_icon"><i class="ph-bold ph-git-merge"/></div>
+                            <h4 class="insilos_section_title">Quy trình 5 Trạm Điều hành Hợp nhất Chuỗi Cung ứng &amp; Tuân thủ:</h4>
+                        </div>
+                        <span class="insilos_section_badge">5-STATION PIPELINE</span>
+                    </div>
+
+                    <!-- Visual Flow Diagram 5 Stations Cards -->
                     <div class="row g-3 mb-4 w-100">
                         <!-- Station 1 -->
-                        <div class="col-12 col-sm-6 col-lg-4 col-xl">
-                            <div class="card h-100 border shadow-sm rounded text-center p-3">
-                                <div class="badge rounded-pill bg-primary mb-2 mx-auto">1</div>
-                                <h6 class="fw-bold mb-1 text-primary">Logistics IDP</h6>
-                                <p class="text-muted small mb-3 flex-grow-1">Tiếp nhận &amp; Bóc tách OCR Invoice, B/L, Tờ khai</p>
-                                <div class="d-grid gap-1 mt-auto">
-                                    <button name="%(insilos_logistics_idp.action_logistics_documents)d" string="Inbox" type="action" class="btn btn-sm btn-outline-primary"/>
-                                    <button name="%(insilos_logistics_idp.action_logistics_cases)d" string="Control Tower" type="action" class="btn btn-sm btn-primary"/>
+                        <div class="col-12 col-md-6 col-xl">
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">01</span>
+                                    <span class="insilos_card_tag">IDP Inbound</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-file-text me-2"/>Logistics IDP</h5>
+                                <p class="insilos_card_desc">Tiếp nhận &amp; Bóc tách OCR Invoice, B/L, Packing List, Tờ khai Hải quan tự động.</p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(insilos_logistics_idp.action_logistics_documents)d" string="Document Inbox" type="action" class="btn btn-sm btn-hub-secondary" icon="tray"/>
+                                    <button name="%(insilos_logistics_idp.action_logistics_cases)d" string="Control Tower" type="action" class="btn btn-sm btn-hub-primary" icon="gauge"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Station 2 -->
-                        <div class="col-12 col-sm-6 col-lg-4 col-xl">
-                            <div class="card h-100 border shadow-sm rounded text-center p-3">
-                                <div class="badge rounded-pill bg-info text-dark mb-2 mx-auto">2</div>
-                                <h6 class="fw-bold mb-1 text-info">HS &amp; Customs</h6>
-                                <p class="text-muted small mb-3 flex-grow-1">Biểu thuế 8 số &amp; Phán quyết TCHQ</p>
-                                <div class="d-grid gap-1 mt-auto">
-                                    <button name="%(insilos_hs_sync.action_is_hs_tariff)d" string="Tariff Schedule" type="action" class="btn btn-sm btn-outline-info text-dark"/>
-                                    <button name="%(insilos_hs_sync.action_is_customs_ruling)d" string="Customs Rulings" type="action" class="btn btn-sm btn-info text-dark"/>
+                        <div class="col-12 col-md-6 col-xl">
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">02</span>
+                                    <span class="insilos_card_tag">HS Tariff</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-scales me-2"/>HS &amp; Customs</h5>
+                                <p class="insilos_card_desc">Biểu thuế XNK 8 số, thuế suất FTA, GTGT &amp; Kho phán quyết xác định trước TCHQ.</p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(insilos_hs_sync.action_is_hs_tariff)d" string="Tariff Schedule" type="action" class="btn btn-sm btn-hub-secondary" icon="table"/>
+                                    <button name="%(insilos_hs_sync.action_is_customs_ruling)d" string="Customs Rulings" type="action" class="btn btn-sm btn-hub-primary" icon="certificate"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Station 3 -->
-                        <div class="col-12 col-sm-6 col-lg-4 col-xl">
-                            <div class="card h-100 border shadow-sm rounded text-center p-3">
-                                <div class="badge rounded-pill bg-warning text-dark mb-2 mx-auto">3</div>
-                                <h6 class="fw-bold mb-1 text-warning">Chemical Trade</h6>
-                                <p class="text-muted small mb-3 flex-grow-1">Rà soát bộ quy tắc nội bộ, dữ liệu NSW &amp; sổ hạn ngạch</p>
-                                <div class="d-grid gap-1 mt-auto">
-                                    <button name="%(action_is_chemical_obligation_simulator)d" string="Simulator" type="action" class="btn btn-sm btn-outline-warning text-dark"/>
-                                    <button name="%(action_is_chemical_compliance_dossier)d" string="NSW Dossiers" type="action" class="btn btn-sm btn-warning text-dark"/>
+                        <div class="col-12 col-md-6 col-xl">
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">03</span>
+                                    <span class="insilos_card_tag">NSW Obligation</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-flask me-2"/>Chemical Trade</h5>
+                                <p class="insilos_card_desc">Rà soát bộ quy tắc nội bộ, chuẩn bị dữ liệu hồ sơ NSW &amp; sổ theo dõi hạn ngạch.</p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_chemical_obligation_simulator)d" string="Simulator" type="action" class="btn btn-sm btn-hub-secondary" icon="calculator"/>
+                                    <button name="%(action_is_chemical_compliance_dossier)d" string="NSW Dossiers" type="action" class="btn btn-sm btn-hub-primary" icon="folder-notch-open"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Station 4 -->
-                        <div class="col-12 col-sm-6 col-lg-4 col-xl">
-                            <div class="card h-100 border shadow-sm rounded text-center p-3">
-                                <div class="badge rounded-pill bg-success mb-2 mx-auto">4</div>
-                                <h6 class="fw-bold mb-1 text-success">HSE Suite</h6>
-                                <p class="text-muted small mb-3 flex-grow-1">SDS 16 phần, Giấy phép &amp; Sổ tuân thủ</p>
-                                <div class="d-grid gap-1 mt-auto">
-                                    <button name="%(insilos_hse_compliance.action_is_hse_chemical_substance)d" string="Search SDS/GHS" type="action" class="btn btn-sm btn-outline-success"/>
-                                    <button name="%(insilos_hse_compliance.action_is_hse_legal_register)d" string="HSE Register" type="action" class="btn btn-sm btn-success"/>
+                        <div class="col-12 col-md-6 col-xl">
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">04</span>
+                                    <span class="insilos_card_tag">HSE &amp; SDS</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-first-aid me-2"/>HSE Suite</h5>
+                                <p class="insilos_card_desc">Quản lý SDS 16 phần GHS, sổ tuân thủ HSE, nồng độ OEL &amp; giấy phép an toàn.</p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(insilos_hse_compliance.action_is_hse_chemical_substance)d" string="Search SDS/GHS" type="action" class="btn btn-sm btn-hub-secondary" icon="magnifying-glass"/>
+                                    <button name="%(insilos_hse_compliance.action_is_hse_legal_register)d" string="HSE Register" type="action" class="btn btn-sm btn-hub-primary" icon="clipboard-text"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Station 5 -->
-                        <div class="col-12 col-sm-6 col-lg-4 col-xl">
-                            <div class="card h-100 border shadow-sm rounded text-center p-3">
-                                <div class="badge rounded-pill bg-secondary mb-2 mx-auto">5</div>
-                                <h6 class="fw-bold mb-1 text-secondary">Field Service FSM</h6>
-                                <p class="text-muted small mb-3 flex-grow-1">Bảo trì hiện trường &amp; Sổ theo dõi 5 bước</p>
-                                <div class="d-grid gap-1 mt-auto">
-                                    <button name="%(project.action_view_task)d" string="Task List" type="action" class="btn btn-sm btn-outline-secondary"/>
-                                    <button name="%(action_is_chemical_usage_tracking)d" string="5-Stage Usage" type="action" class="btn btn-sm btn-secondary"/>
+                        <div class="col-12 col-md-6 col-xl">
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">05</span>
+                                    <span class="insilos_card_tag">Field MES</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-wrench me-2"/>Field Service FSM</h5>
+                                <p class="insilos_card_desc">Bảo trì thiết bị hiện trường, kế hoạch công tác &amp; sổ theo dõi sử dụng 5 bước.</p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(project.action_view_task)d" string="Task List" type="action" class="btn btn-sm btn-hub-secondary" icon="list-checks"/>
+                                    <button name="%(action_is_chemical_usage_tracking)d" string="5-Stage Usage" type="action" class="btn btn-sm btn-hub-primary" icon="chart-bar"/>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Interactive Quick Operations -->
+                    <!-- Interactive Quick Operations Grid -->
                     <div class="row g-3 w-100">
                         <div class="col-12 col-md-6">
-                            <div class="card border shadow-sm rounded p-3 bg-light h-100">
-                                <h6 class="fw-bold mb-2 text-primary">Thao tác Nhanh Khấu trừ &amp; Hạn ngạch:</h6>
-                                <p class="text-muted small">Rà soát số dư và lịch sử trừ lùi trong sổ hạn ngạch nội bộ theo từng chứng từ; đối chiếu với chứng từ có thẩm quyền khi cần.</p>
-                                <button name="%(action_is_chemical_permit_quota)d" string="Open Quota Ledger &amp; History" type="action" class="btn btn-outline-primary w-100 mt-auto"/>
+                            <div class="insilos_hub_footer_card">
+                                <div class="insilos_footer_heading">
+                                    <i class="ph-duotone ph-notebook"/>
+                                    <h6>Thao tác Nhanh Khấu trừ &amp; Hạn ngạch:</h6>
+                                </div>
+                                <p class="insilos_footer_desc">Rà soát số dư và lịch sử trừ lùi trong sổ hạn ngạch nội bộ theo từng chứng từ; đối chiếu với chứng từ có thẩm quyền khi cần thiết.</p>
+                                <button name="%(action_is_chemical_permit_quota)d" string="Open Quota Ledger &amp; History" type="action" class="btn btn-hub-outline w-100 mt-auto" icon="arrow-right"/>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <div class="card border shadow-sm rounded p-3 bg-light h-100">
-                                <h6 class="fw-bold mb-2 text-primary">Mô phỏng &amp; Tra cứu Nội bộ:</h6>
-                                <p class="text-muted small">Rà soát danh mục và cảnh báo theo bộ quy tắc nội bộ được cấu hình; xác nhận nguồn, hiệu lực và phạm vi trước khi sử dụng.</p>
-                                <button name="%(action_is_chemical_obligation_simulator)d" string="Launch Chemical Simulator" type="action" class="btn btn-outline-warning text-dark w-100 mt-auto"/>
+                            <div class="insilos_hub_footer_card">
+                                <div class="insilos_footer_heading">
+                                    <i class="ph-duotone ph-atom"/>
+                                    <h6>Mô phỏng &amp; Tra cứu Nghĩa vụ Nội bộ:</h6>
+                                </div>
+                                <p class="insilos_footer_desc">Rà soát danh mục và cảnh báo theo bộ quy tắc nội bộ được cấu hình; xác nhận nguồn, hiệu lực và phạm vi trước khi sử dụng.</p>
+                                <button name="%(action_is_chemical_obligation_simulator)d" string="Launch Chemical Simulator" type="action" class="btn btn-hub-outline w-100 mt-auto" icon="arrow-right"/>
                             </div>
                         </div>
                     </div>

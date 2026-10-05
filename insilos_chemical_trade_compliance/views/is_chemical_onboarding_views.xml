@@ -6,100 +6,123 @@
         <field name="model">res.config.settings</field>
         <field name="priority">99</field>
         <field name="arch" type="xml">
-            <form string="Chemical Trade Compliance Hub" create="false" edit="false">
-                <sheet class="w-100">
-                    <!-- Header Banner -->
-                    <div class="p-4 mb-4 rounded bg-primary text-white shadow-sm w-100">
+            <form string="Chemical Trade Compliance Hub" class="o_form_view insilos_hub_form" create="false" edit="false">
+                <sheet class="insilos_hub_sheet">
+                    <!-- Standardized Hero Banner -->
+                    <div class="insilos_hub_hero">
                         <div class="row g-3 align-items-center">
-                            <div class="col-12 col-md-9">
-                                <h2 class="fw-bold text-white mb-2">Trung tâm Tuân thủ Thương mại Hóa chất (Chemical Trade Compliance)</h2>
-                                <p class="mb-0 text-white-50 small">
-                                    Chuẩn bị và rà soát dữ liệu nội bộ cho nghĩa vụ hóa chất nhập khẩu, khai báo Một cửa Quốc gia (NSW) và sổ theo dõi hạn ngạch.
+                            <div class="col-12 col-lg-9">
+                                <div class="insilos_hub_eyebrow">
+                                    <i class="ph-bold ph-flask me-1"/> CHEMICAL REGULATORY GOVERNANCE
+                                </div>
+                                <h2 class="insilos_hub_title">Trung tâm Tuân thủ Thương mại Hóa chất (Chemical Trade Compliance)</h2>
+                                <p class="insilos_hub_desc">
+                                    Chuẩn bị và rà soát dữ liệu nội bộ cho nghĩa vụ hóa chất nhập khẩu, khai báo Một cửa Quốc gia (NSW) và sổ theo dõi hạn ngạch theo chuẩn SAP Fiori Horizon &amp; IBM Carbon.
                                 </p>
                             </div>
-                            <div class="col-12 col-md-3 text-md-end">
-                                <span class="badge bg-info text-dark px-3 py-2">Chuẩn bị dữ liệu NSW</span>
+                            <div class="col-12 col-lg-3 text-lg-end">
+                                <div class="insilos_hub_telemetry_badge d-inline-block text-start text-lg-center">
+                                    <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                        <span class="insilos_pulse_dot"/>
+                                        <span class="insilos_hub_status_text">NSW DATA READY</span>
+                                    </div>
+                                    <span class="insilos_hub_metric_num">4 BƯỚC</span>
+                                    <small class="insilos_hub_metric_label">Chemical Trade Engine</small>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- 4-Step Interactive Onboarding Header -->
+                    <div class="insilos_hub_section_header">
+                        <div class="insilos_section_left">
+                            <div class="insilos_section_icon"><i class="ph-bold ph-git-merge"/></div>
+                            <h4 class="insilos_section_title">Quy trình 4 Bước Vận hành Tuân thủ Hóa chất Logistics:</h4>
+                        </div>
+                        <span class="insilos_section_badge">4-STAGE PIPELINE</span>
+                    </div>
+
                     <!-- 4-Step Interactive Onboarding Cards -->
-                    <h4 class="fw-bold mb-3 text-primary">Quy trình 4 Bước Vận hành Tuân thủ Hóa chất Logistics:</h4>
                     <div class="row g-3 mb-4 w-100">
                         <!-- Step 1: Material Mapping -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-primary me-2">1</span>
-                                        <h5 class="card-title fw-bold mb-0 text-primary">Ánh xạ Vật tư ERP</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Liên kết mã vật tư mua hàng với Hóa chất Master, thiết lập mục đích sử dụng và tỷ lệ quy đổi đơn vị mua sang kg.
-                                    </p>
-                                    <button name="%(action_is_chemical_material_mapping)d" string="Material Mapping" type="action" class="btn btn-outline-primary w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">01</span>
+                                    <span class="insilos_card_tag">ERP Mapping</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-link me-2"/>Ánh xạ Vật tư ERP</h5>
+                                <p class="insilos_card_desc">
+                                    Liên kết mã vật tư mua hàng với Hóa chất Master, thiết lập mục đích sử dụng và tỷ lệ quy đổi đơn vị mua sang kg.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_chemical_material_mapping)d" string="Material Mapping" type="action" class="btn btn-sm btn-hub-primary w-100" icon="link"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 2: Obligation Simulator -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-warning text-dark me-2">2</span>
-                                        <h5 class="card-title fw-bold mb-0 text-warning">Mô phỏng Nghĩa vụ</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Rà soát theo bộ quy tắc nội bộ được cấu hình, nhận diện hồ sơ cần xem xét và tạo hồ sơ chuẩn bị để người phụ trách đối chiếu nguồn có thẩm quyền.
-                                    </p>
-                                    <button name="%(action_is_chemical_obligation_simulator)d" string="Open Simulator" type="action" class="btn btn-outline-warning w-100 mt-auto text-dark"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">02</span>
+                                    <span class="insilos_card_tag">Simulation</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-calculator me-2"/>Mô phỏng Nghĩa vụ</h5>
+                                <p class="insilos_card_desc">
+                                    Rà soát theo bộ quy tắc nội bộ được cấu hình, nhận diện hồ sơ cần xem xét và tạo hồ sơ chuẩn bị để đối chiếu thẩm quyền.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_chemical_obligation_simulator)d" string="Open Simulator" type="action" class="btn btn-sm btn-hub-primary w-100" icon="calculator"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 3: Compliance Dossier & NSW -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-success me-2">3</span>
-                                        <h5 class="card-title fw-bold mb-0 text-success">Hồ sơ &amp; NSW</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Tổng hợp hồ sơ nội bộ từ PO, tạo dữ liệu NSW JSON/XML để rà soát và in bản nháp đơn đề nghị cấp phép.
-                                    </p>
-                                    <button name="%(action_is_chemical_compliance_dossier)d" string="Manage Dossiers" type="action" class="btn btn-outline-success w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">03</span>
+                                    <span class="insilos_card_tag">NSW Dossiers</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-folder-notch-open me-2"/>Hồ sơ &amp; NSW</h5>
+                                <p class="insilos_card_desc">
+                                    Tổng hợp hồ sơ nội bộ từ PO, tạo dữ liệu NSW JSON/XML để rà soát và in bản nháp đơn đề nghị cấp phép.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_chemical_compliance_dossier)d" string="Manage Dossiers" type="action" class="btn btn-sm btn-hub-primary w-100" icon="folder-notch-open"/>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Step 4: Quota & 5-Stage Usage -->
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100 border shadow-sm rounded">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge rounded-pill bg-secondary me-2">4</span>
-                                        <h5 class="card-title fw-bold mb-0 text-secondary">Hạn ngạch &amp; Báo cáo</h5>
-                                    </div>
-                                    <p class="card-text text-muted small flex-grow-1">
-                                        Theo dõi sổ hạn ngạch nội bộ theo chứng từ và tổng hợp dữ liệu sử dụng 5 bước từ ERP Stock Moves để rà soát.
-                                    </p>
-                                    <button name="%(action_is_chemical_permit_quota)d" string="Manage Quotas" type="action" class="btn btn-outline-secondary w-100 mt-auto"/>
+                            <div class="insilos_hub_card">
+                                <div class="insilos_card_header">
+                                    <span class="insilos_step_pill">04</span>
+                                    <span class="insilos_card_tag">Quota Ledger</span>
+                                </div>
+                                <h5 class="insilos_card_title"><i class="ph-duotone ph-notebook me-2"/>Hạn ngạch &amp; Báo cáo</h5>
+                                <p class="insilos_card_desc">
+                                    Theo dõi sổ hạn ngạch nội bộ theo chứng từ và tổng hợp dữ liệu sử dụng 5 bước từ ERP Stock Moves để rà soát.
+                                </p>
+                                <div class="insilos_card_actions">
+                                    <button name="%(action_is_chemical_permit_quota)d" string="Manage Quotas" type="action" class="btn btn-sm btn-hub-primary w-100" icon="notebook"/>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Usage Tracking Quick Link -->
-                    <div class="card border shadow-sm rounded p-3 bg-light w-100">
-                        <div class="row g-3 align-items-center justify-content-between">
-                            <div class="col-12 col-md-8">
-                                <strong class="text-dark">Báo cáo Định kỳ &amp; Khấu trừ:</strong>
-                                <span class="text-muted ms-2 small">Bảng theo dõi sử dụng 5 bước (Nhu cầu → Nhập khẩu → Mua nội địa → Sử dụng → Tồn)</span>
-                            </div>
-                            <div class="col-12 col-md-4 text-md-end">
-                                <button name="%(action_is_chemical_usage_tracking)d" string="Open 5-Stage Usage" type="action" class="btn btn-sm btn-outline-secondary"/>
+                    <!-- Usage Tracking Quick Link Grid -->
+                    <div class="row g-3 w-100">
+                        <div class="col-12">
+                            <div class="insilos_hub_footer_card">
+                                <div class="insilos_footer_heading">
+                                    <i class="ph-duotone ph-chart-bar"/>
+                                    <h6>Báo cáo Định kỳ &amp; Khấu trừ Sổ Hạn ngạch:</h6>
+                                </div>
+                                <p class="insilos_footer_desc">Bảng theo dõi sử dụng 5 bước hóa chất công nghiệp (Nhu cầu → Nhập khẩu → Mua nội địa → Sử dụng thực tế → Tồn kho an toàn) theo quy định Luật Hóa chất 2025.</p>
+                                <button name="%(action_is_chemical_usage_tracking)d" string="Open 5-Stage Usage Tracking" type="action" class="btn btn-hub-outline" icon="chart-bar"/>
                             </div>
                         </div>
                     </div>

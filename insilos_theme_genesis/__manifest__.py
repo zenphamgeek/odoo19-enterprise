@@ -30,6 +30,7 @@
             'insilos_theme_genesis/static/src/scss/insilos_home_launcher_restructure.scss',
             'insilos_theme_genesis/static/src/scss/insilos_discuss_restructure.scss',
             'insilos_theme_genesis/static/src/scss/insilos_perf_containment.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_hub_restructure.scss',
             'insilos_theme_genesis/static/src/user_menu/user_menu_patch.js',
             'insilos_theme_genesis/static/src/user_menu/user_menu_extension.xml',
             'insilos_theme_genesis/static/src/views/list/floating_action_bar/floating_action_bar.xml',
