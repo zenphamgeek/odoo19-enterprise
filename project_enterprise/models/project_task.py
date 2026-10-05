@@ -138,7 +138,7 @@ class ProjectTask(models.Model):
             SQL.identifier(task2, 'planned_date_begin'),
             SQL.identifier(task2, 'date_deadline'),
         ))
-        query.add_where(domain._to_sql(self, task2, query))
+        query.add_where(domain._to_sql(models.TableSQL(task2, self, query)))
 
         # overlapping tasks must be for the same user
         task1_user_rel = query.join(task1, 'id', 'project_task_user_rel', 'task_id', 'TU1')
