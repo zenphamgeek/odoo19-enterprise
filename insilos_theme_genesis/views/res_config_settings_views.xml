@@ -6,6 +6,31 @@
         <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//widget[@name='res_config_dev_tool']" position="replace"/>
+            <xpath expr="//block[@name='companies_setting_container']" position="after">
+                <block title="Màn hình Đăng nhập &amp; 3D Interactive Hero" name="login_hero_setting_container">
+                    <setting id="login_hero_title_setting" string="Tiêu đề &amp; Phụ đề Hero Đăng nhập" help="Tùy biến tiêu đề và thông điệp hiển thị tại cột Hero bên trái màn hình đăng nhập (content.xml)">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="login_hero_title" class="col-lg-3 o_light_label" string="Tiêu đề Hero"/>
+                                <field name="login_hero_title" class="col-lg-9"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="login_hero_subtitle" class="col-lg-3 o_light_label" string="Phụ đề Hero"/>
+                                <field name="login_hero_subtitle" class="col-lg-9"/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting id="login_hero_3d_setting" string="Tiện ích 3D Interactive Snippet" help="Kích hoạt mô hình 3D Digital Twin tương tác thời gian thực trên màn hình đăng nhập">
+                        <field name="login_hero_show_3d"/>
+                        <div class="content-group" invisible="not login_hero_show_3d">
+                            <div class="row mt8">
+                                <label for="login_hero_3d_mode" class="col-lg-3 o_light_label" string="Chế độ 3D"/>
+                                <field name="login_hero_3d_mode" class="col-lg-9"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
             <xpath expr="//div[@id='about']" position="replace">
                 <div class="row o_dev_about_row" id="dev_about_row">
                     <div class="col-12 col-lg-6 o_dev_col">
