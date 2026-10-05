@@ -114,7 +114,7 @@ class IrUiView(models.Model):
         return super()._get_view_fields(view_type, models)
 
     def _get_view_info(self):
-        return {'gantt': {'icon': 'fa fa-tasks'}} | super()._get_view_info()
+        return {'gantt': {'icon': 'chart-bar-horizontal'}} | super()._get_view_info()
 
     def _is_qweb_based_view(self, view_type):
         return view_type == 'gantt' or super()._is_qweb_based_view(view_type)

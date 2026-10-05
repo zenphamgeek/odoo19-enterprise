@@ -13,4 +13,4 @@ class IrUiView(models.Model):
                 name_manager.has_field(node, fnames.split('.', 1)[0], node_info)
 
     def _get_view_info(self):
-        return {'cohort': {'icon': 'oi oi-view-cohort'}} | super()._get_view_info()
+        return {'cohort': {'icon': 'chart-polar'}} | super()._get_view_info()

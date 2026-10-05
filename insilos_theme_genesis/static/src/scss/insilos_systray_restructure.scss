@@ -384,27 +384,29 @@ header.o_navbar {
           box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
         }
 
-        /* Clean Insilos AI Copilot Brain Button */
+        /* Harmonized Insilos AI Copilot Brain Button */
         &.o_ai_systray_btn,
         &[title*="AI"],
         &[title*="Ask AI"] {
-          background: transparent !important;
-          border-color: transparent !important;
+          background: var(--insilos-bg-subtle, #f8fafc) !important;
+          border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
 
           .ai-systray-icon {
-            width: 18px !important;
-            height: 18px !important;
+            width: 16px !important;
+            height: 16px !important;
             object-fit: contain !important;
             display: block !important;
-            transition: transform 0.15s ease !important;
+            transition: transform 0.15s ease, filter 0.15s ease !important;
           }
 
           &:hover {
-            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-            border-color: transparent !important;
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #FF8000 !important;
 
             .ai-systray-icon {
-              transform: scale(1.08) !important;
+              transform: scale(1.1) !important;
+              filter: drop-shadow(0 0 4px rgba(255, 128, 0, 0.4)) !important;
             }
           }
         }
@@ -851,31 +853,32 @@ body.o_dark_mode,
           &.o_ai_systray_btn,
           &[title*="AI"],
           &[title*="Ask AI"] {
-            background: transparent !important;
-            border-color: transparent !important;
-            color: #00F0FF !important;
+            background: rgba(255, 255, 255, 0.04) !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
+            color: #FF8000 !important;
 
             .ai-systray-icon {
-              width: 18px !important;
-              height: 18px !important;
-              path[stroke="#0B2E64"] {
-                stroke: #00F0FF !important;
+              width: 16px !important;
+              height: 16px !important;
+              path[stroke="currentColor"] {
+                stroke: #FFFFFF !important;
               }
-              path[fill="#0B2E64"] {
-                fill: #00F0FF !important;
+              path[stroke="#FF8000"] {
+                stroke: #FF8000 !important;
               }
-              path[stroke="#00A3FF"] {
-                stroke: #00F0FF !important;
-              }
-              path[fill="#00A3FF"] {
-                fill: #00F0FF !important;
+              path[fill="#FF8000"] {
+                fill: #FF8000 !important;
               }
             }
 
             &:hover {
-              background: rgba(0, 240, 255, 0.12) !important;
-              border-color: transparent !important;
-              color: #00F0FF !important;
+              background: rgba(255, 128, 0, 0.15) !important;
+              border-color: #FF8000 !important;
+              color: #FF8000 !important;
+
+              .ai-systray-icon {
+                filter: drop-shadow(0 0 6px rgba(255, 128, 0, 0.6)) !important;
+              }
             }
           }
 

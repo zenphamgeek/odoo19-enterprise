@@ -10,4 +10,4 @@ class IrUiView(models.Model):
     type = fields.Selection(selection_add=[('map', "Map")])
 
     def _get_view_info(self):
-        return {'map': {'icon': 'fa fa-map-marker'}} | super()._get_view_info()
+        return {'map': {'icon': 'map-pin'}} | super()._get_view_info()
