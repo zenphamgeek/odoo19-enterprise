@@ -3,24 +3,42 @@
    Standardizing 7 Enterprise Hub Views (IBM Carbon 11 & SAP Fiori Horizon)
    ========================================================================== */
 
-.o_form_view.insilos_hub_form {
+.o_form_view.insilos_hub_form,
+.o_form_view.o_logistics_idp_onboarding_form {
   background: var(--insilos-bg-canvas, #f4f6f8) !important;
+  width: 100% !important;
+  max-width: 100% !important;
 
-  .o_form_sheet_bg {
-    background: transparent !important;
+  .o_form_sheet_bg,
+  .o_form_sheet_bg.insilos_hub_sheet {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
     padding: 0 !important;
+    background: transparent !important;
     border: none !important;
 
+    .o_form_sheet,
     .o_form_sheet.insilos_hub_sheet {
-      max-width: 1440px !important;
       width: 100% !important;
-      margin: 0 auto !important;
-      padding: 24px 32px 48px 32px !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 20px 28px 48px 28px !important;
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
     }
   }
+
+  .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+.o_form_view.insilos_hub_form {
 
   /* --------------------------------------------------------------------------
      1. HERO BANNER
@@ -75,7 +93,7 @@
       color: rgba(255, 255, 255, 0.78);
       line-height: 1.55;
       margin-bottom: 0;
-      max-width: 920px;
+      max-width: 100%;
     }
 
     /* Telemetry Glass Badge on the right */
