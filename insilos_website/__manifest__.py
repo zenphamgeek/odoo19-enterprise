@@ -28,6 +28,7 @@
         "views/sandbox.xml",
         "views/website_menu.xml",
         "views/innoria_homepage.xml",
+        "views/innoria_pages.xml",
     ],
     "assets": {
         "web.assets_frontend": [

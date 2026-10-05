@@ -1002,11 +1002,19 @@ class InsilosWebsite(http.Controller):
                 return request.render("insilos_website.innoria_homepage_template", self._base_values())
         return request.render("insilos_website.insilos_homepage", self._base_values())
 
-    @http.route("/platform", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/platform", "/artificial-intelligence-platform", "/vi/platform", "/vi/artificial-intelligence-platform"], type="http", auth="public", website=True, sitemap=True)
     def platform(self, **kwargs):
         return request.render("insilos_website.insilos_platform_page", self._base_values())
 
-    @http.route("/solutions", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/no-code-platform", "/vi/no-code-platform"], type="http", auth="public", website=True, sitemap=True)
+    def no_code_platform(self, **kwargs):
+        return request.render("insilos_website.innoria_digiforce_page", self._base_values())
+
+    @http.route(["/blockchain", "/vi/blockchain"], type="http", auth="public", website=True, sitemap=True)
+    def blockchain(self, **kwargs):
+        return request.render("insilos_website.innoria_blockchain_page", self._base_values())
+
+    @http.route(["/solutions", "/erp-combine-with-ai", "/vi/solutions", "/vi/erp-combine-with-ai"], type="http", auth="public", website=True, sitemap=True)
     def solutions(self, **kwargs):
         return request.render("insilos_website.insilos_solutions_page", self._base_values())
 
@@ -1051,7 +1059,7 @@ class InsilosWebsite(http.Controller):
             self._base_values(solution=solution_data, solution_key=solution, related_industries=related_industries),
         )
 
-    @http.route(["/industries", "/industry"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/industries", "/industry", "/ultra-ai-vision", "/vi/industries", "/vi/ultra-ai-vision"], type="http", auth="public", website=True, sitemap=True)
     def industries(self, **kwargs):
         return request.render("insilos_website.insilos_industries_page", self._base_values())
 
@@ -1254,9 +1262,18 @@ class InsilosWebsite(http.Controller):
     def pricing(self, **kwargs):
         return request.render("insilos_website.insilos_pricing_page", self._base_values())
 
-    @http.route("/about", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/about", "/company", "/vi/about", "/vi/company"], type="http", auth="public", website=True, sitemap=True)
     def about(self, **kwargs):
         return request.render("insilos_website.insilos_about_page", self._base_values())
+
+    @http.route(["/contactus", "/contactus-1", "/vi/contactus", "/vi/contactus-1"], type="http", auth="public", website=True, sitemap=True)
+    def contactus(self, **kwargs):
+        host = (request.httprequest.host or "").lower()
+        website_name = (request.website.name or "").lower() if getattr(request, "website", None) else ""
+        if "innoria" in host or "innoria" in website_name:
+            if request.env["ir.ui.view"].sudo().search([("key", "=", "insilos_website.innoria_contactus")], limit=1):
+                return request.render("insilos_website.innoria_contactus", self._base_values())
+        return request.render("website.contactus", self._base_values())
 
     @http.route("/media-credits", type="http", auth="public", website=True, sitemap=True)
     def media_credits(self, **kwargs):

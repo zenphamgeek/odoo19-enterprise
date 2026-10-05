@@ -4,54 +4,66 @@
     <!-- INNORIA ELEVATED HOMEPAGE TEMPLATE (Tailored Technology & 3D WebGL)    -->
     <!-- 100% Matching innoria.com branding, color theme, and visual assets     -->
     <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- REUSABLE INNORIA NAVBAR (Official Logo, Nav Links & Contact CTA)       -->
+    <!-- ===================================================================== -->
+    <template id="innoria_navbar" name="INNORIA Navbar">
+        <nav class="navbar navbar-expand-lg innoria-navbar" id="innoria_main_nav">
+            <div class="container d-flex align-items-center justify-content-between">
+                <!-- Brand Logo -->
+                <a class="navbar-brand py-0 d-flex align-items-center" href="/">
+                    <img src="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA" class="navbar-brand-logo" width="130" height="38"/>
+                </a>
+
+                <!-- Navbar Toggler for Mobile -->
+                <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#innoriaNavContent" aria-controls="innoriaNavContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <svg class="ph-duotone ph-list" style="width: 1.75rem; height: 1.75rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-list"/></svg>
+                </button>
+
+                <!-- Nav Links & Action -->
+                <div class="collapse navbar-collapse justify-content-end" id="innoriaNavContent">
+                    <ul class="navbar-nav align-items-lg-center gap-lg-2 me-lg-3 my-2 my-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/about">Company</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="innoriaPlatformDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Platform
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark border-0 shadow-lg" aria-labelledby="innoriaPlatformDropdown" style="background-color: #1F2937; border: 1px solid rgba(255,255,255,0.08) !important;">
+                                <li><a class="dropdown-item py-2 text-white" href="/platform"><strong style="color: #0ABBDB;">MOJO AI</strong> — AI Agent Platform</a></li>
+                                <li><a class="dropdown-item py-2 text-white" href="/no-code-platform"><strong style="color: #FF8000;">DIGIFORCE</strong> — No-Code Engine</a></li>
+                                <li><a class="dropdown-item py-2 text-white" href="/blockchain"><strong style="color: #8B5CF6;">MOJOVERSE</strong> — Enterprise Web3</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/solutions">Solutions (ERP)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/industries">Industries (Vision)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#innoria_topology_section">3D Topology</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="/contactus" class="btn btn-innoria-nav d-inline-flex align-items-center gap-2">
+                            <span>Tư Vấn 3 Giờ</span>
+                            <svg class="ph-duotone ph-arrow-right" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </template>
+
     <template id="innoria_homepage_template" name="Innoria — Tailored Technology">
         <t t-call="website.layout" no_header="True" no_footer="True">
             <t t-set="additional_title">INNORIA | Tailored Technology — AI, No-Code, Blockchain &amp; Cloud</t>
             <t t-set="meta_description">Innoria biến thách thức vận hành thành giải pháp số trong 30 ngày. Hợp nhất nền tảng Low-Code DIGIFORCE, mô hình trí tuệ nhân tạo MOJO AI, blockchain MOJOVERSE và lõi ERP thế hệ mới.</t>
 
-            <!-- ============================================================= -->
-            <!-- DEDICATED INNORIA STICKY NAVBAR (Official Logo & Branding)    -->
-            <!-- ============================================================= -->
-            <nav class="navbar navbar-expand-lg innoria-navbar" id="innoria_main_nav">
-                <div class="container d-flex align-items-center justify-content-between">
-                    <!-- Brand Logo -->
-                    <a class="navbar-brand py-0 d-flex align-items-center" href="/">
-                        <img src="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA" class="navbar-brand-logo" width="130" height="38"/>
-                    </a>
-
-                    <!-- Navbar Toggler for Mobile -->
-                    <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#innoriaNavContent" aria-controls="innoriaNavContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <svg class="ph-duotone ph-list" style="width: 1.75rem; height: 1.75rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-list"/></svg>
-                    </button>
-
-                    <!-- Nav Links & Action -->
-                    <div class="collapse navbar-collapse justify-content-end" id="innoriaNavContent">
-                        <ul class="navbar-nav align-items-lg-center gap-lg-2 me-lg-3 my-2 my-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#company">Company</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#platform">Platform</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#solutions">Solutions</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#services">Services</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#innoria_topology_section">3D Topology</a>
-                            </li>
-                        </ul>
-                        <div class="d-flex align-items-center gap-2">
-                            <a href="#innoria_contact_section" class="btn btn-innoria-nav d-inline-flex align-items-center gap-2">
-                                <span>Tư Vấn 3 Giờ</span>
-                                <svg class="ph-duotone ph-arrow-right" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+            <!-- Reusable Innoria Navbar -->
+            <t t-call="insilos_website.innoria_navbar"/>
 
             <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5" style="background-color: var(--innoria-dark-canvas);">
                 <div class="oe_structure oe_empty" id="oe_structure_innoria_home_top"/>
@@ -737,80 +749,85 @@
                 <div class="oe_structure oe_empty" id="oe_structure_innoria_home_bottom"/>
             </main>
 
-            <!-- ============================================================= -->
-            <!-- DEDICATED INNORIA FOOTER (Authentic Grayscale Logo & Info)    -->
-            <!-- ============================================================= -->
-            <footer class="innoria-footer py-5" id="company" style="background-color: #0B0F17 !important; color: #94A3B8 !important; border-top: 1px solid rgba(10, 187, 219, 0.25) !important;">
-                <style>
-                    .innoria-footer h6 { color: #FFFFFF !important; font-weight: 700 !important; font-size: 0.85rem !important; letter-spacing: 0.08em !important; text-transform: uppercase !important; margin-bottom: 1rem !important; }
-                    .innoria-footer-link { color: #94A3B8 !important; text-decoration: none !important; transition: color 0.2s ease !important; }
-                    .innoria-footer-link:hover { color: #0ABBDB !important; text-decoration: underline !important; }
-                </style>
-                <div class="container">
-                    <div class="row g-4 mb-4">
-                        <!-- Company Identity -->
-                        <div class="col-lg-4">
-                            <img src="/insilos_website/static/src/img/innoria/innoria_logo_grayscale.svg" alt="INNORIA Logo" class="footer-logo mb-3" width="160" height="48"/>
-                            <p class="small text-secondary mb-3">
-                                The future technology needs a new vision, new motivation and new people. Set core values for each product using uniformed data, automated and intelligence business processes. Along with governance, risk and compliance.
-                            </p>
-                            <div class="small text-secondary font-monospace">
-                                © 2026 INNORIA Solutions JSC. All rights reserved.
-                            </div>
-                        </div>
+            <!-- Reusable Innoria Footer -->
+            <t t-call="insilos_website.innoria_footer"/>
+        </t>
+    </template>
 
-                        <!-- Core Navigation -->
-                        <div class="col-6 col-lg-2">
-                            <h6 class="text-white fw-bold mb-3">PLATFORM</h6>
-                            <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
-                                <li><a href="#platform" class="innoria-footer-link">DIGIFORCE</a></li>
-                                <li><a href="#platform" class="innoria-footer-link">MOJO AI</a></li>
-                                <li><a href="#platform" class="innoria-footer-link">MOJOVERSE</a></li>
-                                <li><a href="#platform" class="innoria-footer-link">Intelligent ERP</a></li>
-                                <li><a href="#innoria_topology_section" class="innoria-footer-link">3D Topology</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- Solutions -->
-                        <div class="col-6 col-lg-3">
-                            <h6 class="text-white fw-bold mb-3">SOLUTIONS</h6>
-                            <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
-                                <li><a href="#solutions" class="innoria-footer-link">Permit to Work Điện Tử</a></li>
-                                <li><a href="#solutions" class="innoria-footer-link">Quản Trị Độ Tin Cậy Thiết Bị</a></li>
-                                <li><a href="#solutions" class="innoria-footer-link">Chứng Nhận Xuất Xứ Số (e-CO)</a></li>
-                                <li><a href="#solutions" class="innoria-footer-link">Ultra AI Vision Công Nghiệp</a></li>
-                                <li><a href="#solutions" class="innoria-footer-link">Quản Trị Tài Chính VAS 200</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- Contact & Legal -->
-                        <div class="col-lg-3">
-                            <h6 class="text-white fw-bold mb-3">CONNECT</h6>
-                            <div class="small text-secondary mb-2">
-                                <strong class="text-white">UNG DUNG SANG TAO LLC</strong><br/>
-                                Mã số DN (Tax ID): 0313683499
-                            </div>
-                            <div class="small text-secondary mb-2">
-                                <svg class="ph-duotone ph-map-pin text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-map-pin"/></svg>
-                                45 đường số 3, KDC Trung Sơn, Xã Bình Hưng, Huyện Bình Chánh, TP. Hồ Chí Minh
-                            </div>
-                            <div class="small text-secondary">
-                                <svg class="ph-duotone ph-envelope text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-envelope"/></svg>
-                                <a href="mailto:contact@innoria.com" class="text-innoria-cyan text-decoration-none">contact@innoria.com</a>
-                            </div>
+    <!-- ===================================================================== -->
+    <!-- REUSABLE INNORIA FOOTER (Authentic Grayscale Logo & Info)             -->
+    <!-- ===================================================================== -->
+    <template id="innoria_footer" name="INNORIA Footer">
+        <footer class="innoria-footer py-5" id="company" style="background-color: #0B0F17 !important; color: #94A3B8 !important; border-top: 1px solid rgba(10, 187, 219, 0.25) !important;">
+            <style>
+                .innoria-footer h6 { color: #FFFFFF !important; font-weight: 700 !important; font-size: 0.85rem !important; letter-spacing: 0.08em !important; text-transform: uppercase !important; margin-bottom: 1rem !important; }
+                .innoria-footer-link { color: #94A3B8 !important; text-decoration: none !important; transition: color 0.2s ease !important; }
+                .innoria-footer-link:hover { color: #0ABBDB !important; text-decoration: underline !important; }
+            </style>
+            <div class="container">
+                <div class="row g-4 mb-4">
+                    <!-- Company Identity -->
+                    <div class="col-lg-4">
+                        <img src="/insilos_website/static/src/img/innoria/innoria_logo_grayscale.svg" alt="INNORIA Logo" class="footer-logo mb-3" width="160" height="48"/>
+                        <p class="small text-secondary mb-3">
+                            The future technology needs a new vision, new motivation and new people. Set core values for each product using uniformed data, automated and intelligence business processes. Along with governance, risk and compliance.
+                        </p>
+                        <div class="small text-secondary font-monospace">
+                            © 2026 INNORIA Solutions JSC. All rights reserved.
                         </div>
                     </div>
 
-                    <!-- Bottom Bar -->
-                    <div class="border-top border-secondary border-opacity-20 pt-3 d-flex flex-column flex-md-row align-items-center justify-content-between small text-secondary">
-                        <div>Bản quyền thuộc về INNORIA | Tailored Technology Solutions</div>
-                        <div class="d-flex align-items-center gap-3 mt-2 mt-md-0">
-                            <span class="badge bg-secondary bg-opacity-25 text-white">ISO 27001 // SOC-2</span>
-                            <span class="badge bg-secondary bg-opacity-25 text-white">100% Air-Gapped Ready</span>
+                    <!-- Core Navigation -->
+                    <div class="col-6 col-lg-2">
+                        <h6 class="text-white fw-bold mb-3">PLATFORM</h6>
+                        <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
+                            <li><a href="/platform" class="innoria-footer-link">MOJO AI Platform</a></li>
+                            <li><a href="/no-code-platform" class="innoria-footer-link">DIGIFORCE No-Code</a></li>
+                            <li><a href="/blockchain" class="innoria-footer-link">MOJOVERSE Web3</a></li>
+                            <li><a href="/solutions" class="innoria-footer-link">Intelligent ERP</a></li>
+                            <li><a href="/#innoria_topology_section" class="innoria-footer-link">3D Topology Engine</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Solutions -->
+                    <div class="col-6 col-lg-3">
+                        <h6 class="text-white fw-bold mb-3">SOLUTIONS</h6>
+                        <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
+                            <li><a href="/industries" class="innoria-footer-link">Ultra AI Vision Công Nghiệp</a></li>
+                            <li><a href="/solutions" class="innoria-footer-link">Quản Trị ERP &amp; Hóa Đơn Tự Động</a></li>
+                            <li><a href="/no-code-platform" class="innoria-footer-link">Permit to Work &amp; EHS Số</a></li>
+                            <li><a href="/blockchain" class="innoria-footer-link">Chứng Nhận Xuất Xứ Số (e-CO)</a></li>
+                            <li><a href="/about" class="innoria-footer-link">Văn Hóa &amp; Di Sản 18 Năm</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact & Legal -->
+                    <div class="col-lg-3">
+                        <h6 class="text-white fw-bold mb-3">CONNECT</h6>
+                        <div class="small text-secondary mb-2">
+                            <strong class="text-white">UNG DUNG SANG TAO LLC</strong><br/>
+                            Mã số DN (Tax ID): 0313683499
+                        </div>
+                        <div class="small text-secondary mb-2">
+                            <svg class="ph-duotone ph-map-pin text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-map-pin"/></svg>
+                            45 đường số 3, KDC Trung Sơn, Xã Bình Hưng, Huyện Bình Chánh, TP. Hồ Chí Minh
+                        </div>
+                        <div class="small text-secondary">
+                            <svg class="ph-duotone ph-envelope text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-envelope"/></svg>
+                            <a href="mailto:contact@innoria.com" class="text-innoria-cyan text-decoration-none">contact@innoria.com</a>
                         </div>
                     </div>
                 </div>
-            </footer>
-        </t>
+
+                <!-- Bottom Bar -->
+                <div class="border-top border-secondary border-opacity-20 pt-3 d-flex flex-column flex-md-row align-items-center justify-content-between small text-secondary">
+                    <div>Bản quyền thuộc về INNORIA | Tailored Technology Solutions</div>
+                    <div class="d-flex align-items-center gap-3 mt-2 mt-md-0">
+                        <span class="badge bg-secondary bg-opacity-25 text-white">ISO 27001 // SOC-2</span>
+                        <span class="badge bg-secondary bg-opacity-25 text-white">100% Air-Gapped Ready</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </template>
 </odoo>
