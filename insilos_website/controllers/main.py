@@ -995,6 +995,11 @@ class InsilosWebsite(http.Controller):
 
     @http.route("/", type="http", auth="public", website=True, sitemap=True)
     def home(self, **kwargs):
+        host = (request.httprequest.host or "").lower()
+        website_name = (request.website.name or "").lower() if getattr(request, "website", None) else ""
+        if "innoria" in host or "innoria" in website_name:
+            if request.env["ir.ui.view"].sudo().search([("key", "=", "insilos_website.innoria_homepage_template")], limit=1):
+                return request.render("insilos_website.innoria_homepage_template", self._base_values())
         return request.render("insilos_website.insilos_homepage", self._base_values())
 
     @http.route("/platform", type="http", auth="public", website=True, sitemap=True)

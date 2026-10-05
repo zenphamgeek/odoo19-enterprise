@@ -1,0 +1,322 @@
+/* ==========================================================================
+   INNORIA SOVEREIGN THEME & 3D TOPOLOGY SCSS
+   Tailored Technology // Multi-Agent AI & Cloud Infrastructure
+   100% odoo-web-design-premium compliant (o_cc5, Bootstrap 5, WCAG AAA)
+   ========================================================================== */
+
+// -----------------------------------------------------------------------------
+// 1. Brand Tokens & Variables
+// -----------------------------------------------------------------------------
+:root {
+    --innoria-sapphire: #2F80ED;
+    --innoria-sapphire-rgb: 47, 128, 237;
+    --innoria-sapphire-glow: rgba(47, 128, 237, 0.45);
+
+    --innoria-mint: #B2FFDA;
+    --innoria-mint-rgb: 178, 255, 218;
+
+    --innoria-cyan: #0ABBDB;
+    --innoria-cyan-rgb: 10, 187, 219;
+
+    --innoria-amber: #FF9C00;
+    --innoria-amber-rgb: 255, 156, 0;
+    --innoria-amber-accent: #FE8B20;
+
+    --innoria-dark-canvas: #05101E;
+    --innoria-dark-surface: #0A192F;
+    --innoria-dark-card: rgba(10, 25, 47, 0.85);
+    --innoria-border-subtle: rgba(47, 128, 237, 0.25);
+    --innoria-border-hover: rgba(178, 255, 218, 0.55);
+}
+
+// -----------------------------------------------------------------------------
+// 2. High-Contrast Typography & Brand Badges (WCAG AAA)
+// -----------------------------------------------------------------------------
+.text-innoria-sapphire {
+    color: var(--innoria-sapphire) !important;
+}
+
+.text-innoria-mint {
+    color: var(--innoria-mint) !important;
+}
+
+.text-innoria-cyan {
+    color: var(--innoria-cyan) !important;
+}
+
+.text-innoria-amber {
+    color: var(--innoria-amber) !important;
+}
+
+.text-innoria-gradient {
+    background: linear-gradient(135deg, #FFFFFF 0%, #B2FFDA 50%, #2F80ED 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-innoria-gradient-alt {
+    background: linear-gradient(135deg, #B2FFDA 0%, #0ABBDB 50%, #2F80ED 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.badge-innoria-sapphire {
+    background: rgba(var(--innoria-sapphire-rgb), 0.18);
+    color: #FFFFFF !important;
+    border: 1px solid rgba(var(--innoria-sapphire-rgb), 0.45);
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.badge-innoria-mint {
+    background: rgba(var(--innoria-mint-rgb), 0.18);
+    color: var(--innoria-mint) !important;
+    border: 1px solid rgba(var(--innoria-mint-rgb), 0.45);
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.badge-innoria-amber {
+    background: rgba(var(--innoria-amber-rgb), 0.18);
+    color: #FFB340 !important;
+    border: 1px solid rgba(var(--innoria-amber-rgb), 0.45);
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+// -----------------------------------------------------------------------------
+// 3. Innoria 3D Viewport & HUD Styling
+// -----------------------------------------------------------------------------
+.innoria-3d-viewport {
+    position: relative;
+    width: 100%;
+    min-height: 520px;
+    height: 600px;
+    background: radial-gradient(circle at 50% 50%, rgba(10, 25, 47, 0.95) 0%, rgba(5, 16, 30, 0.98) 100%);
+    border: 1px solid var(--innoria-border-subtle);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.8), 0 0 35px rgba(47, 128, 237, 0.15);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        border-color: rgba(47, 128, 237, 0.5);
+        box-shadow: 0 28px 70px -12px rgba(0, 0, 0, 0.85), 0 0 45px rgba(47, 128, 237, 0.25);
+    }
+
+    @media (max-width: 768px) {
+        min-height: 420px;
+        height: 460px;
+    }
+}
+
+.innoria-3d-grid-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(47, 128, 237, 0.1) 0%, transparent 70%),
+        linear-gradient(rgba(178, 255, 218, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(178, 255, 218, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 36px 36px, 36px 36px;
+    background-position: center center;
+    opacity: 0.9;
+}
+
+.innoria-hud-control-bar {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.65rem;
+    background: rgba(5, 16, 30, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(47, 128, 237, 0.35);
+    border-radius: 9999px;
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    max-width: calc(100% - 2rem);
+    overflow-x: auto;
+
+    @media (max-width: 576px) {
+        bottom: 1rem;
+        padding: 0.35rem 0.5rem;
+    }
+}
+
+.innoria-hud-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #CBD5E1;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(47, 128, 237, 0.2);
+        color: #FFFFFF;
+        border-color: rgba(47, 128, 237, 0.4);
+    }
+
+    &.active {
+        background: var(--innoria-sapphire);
+        color: #FFFFFF;
+        box-shadow: 0 0 16px var(--innoria-sapphire-glow);
+        border-color: var(--innoria-sapphire);
+    }
+
+    &.btn-reset {
+        border-color: rgba(255, 255, 255, 0.15);
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 4. 4-Stage Execution Cadence Cards (3h -> 3d -> 3w -> 3m)
+// -----------------------------------------------------------------------------
+.innoria-cadence-card {
+    background: var(--innoria-dark-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--innoria-border-subtle);
+    border-radius: 1rem;
+    padding: 1.75rem 1.5rem;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--innoria-sapphire), transparent);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+        border-color: var(--innoria-border-hover);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(47, 128, 237, 0.18);
+
+        &::before {
+            opacity: 1;
+        }
+    }
+}
+
+.innoria-cadence-badge {
+    font-size: 1.85rem;
+    font-weight: 800;
+    line-height: 1;
+    font-family: monospace, system-ui;
+    display: inline-block;
+}
+
+// -----------------------------------------------------------------------------
+// 5. Ecosystem & Solutions Bento Cards
+// -----------------------------------------------------------------------------
+.innoria-card-ecosystem {
+    background: var(--innoria-dark-card);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--innoria-border-subtle);
+    border-radius: 1.25rem;
+    padding: 2.25rem 2rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        border-color: rgba(47, 128, 237, 0.6);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 28px rgba(47, 128, 237, 0.22);
+        transform: translateY(-4px);
+    }
+}
+
+.innoria-icon-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.innoria-icon-sapphire {
+    background: rgba(var(--innoria-sapphire-rgb), 0.15);
+    color: var(--innoria-sapphire);
+    border-color: rgba(var(--innoria-sapphire-rgb), 0.35);
+}
+
+.innoria-icon-mint {
+    background: rgba(var(--innoria-mint-rgb), 0.15);
+    color: var(--innoria-mint);
+    border-color: rgba(var(--innoria-mint-rgb), 0.35);
+}
+
+.innoria-icon-cyan {
+    background: rgba(var(--innoria-cyan-rgb), 0.15);
+    color: var(--innoria-cyan);
+    border-color: rgba(var(--innoria-cyan-rgb), 0.35);
+}
+
+.innoria-icon-amber {
+    background: rgba(var(--innoria-amber-rgb), 0.15);
+    color: var(--innoria-amber);
+    border-color: rgba(var(--innoria-amber-rgb), 0.35);
+}
+
+// -----------------------------------------------------------------------------
+// 6. Enterprise Partners & Trust Marquee
+// -----------------------------------------------------------------------------
+.innoria-trust-logo {
+    opacity: 0.65;
+    filter: grayscale(100%) brightness(1.2);
+    transition: opacity 0.25s ease, filter 0.25s ease;
+
+    &:hover {
+        opacity: 1;
+        filter: grayscale(0%) brightness(1);
+    }
+}

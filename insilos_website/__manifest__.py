@@ -27,6 +27,7 @@
         "views/trust_compliance.xml",
         "views/sandbox.xml",
         "views/website_menu.xml",
+        "views/innoria_homepage.xml",
     ],
     "assets": {
         "web.assets_frontend": [
@@ -35,11 +36,13 @@
             "insilos_website/static/src/scss/insilos_3d.scss",
             "insilos_website/static/src/scss/insilos_cctv.scss",
             "insilos_website/static/src/scss/insilos_public_auth.scss",
+            "insilos_website/static/src/scss/innoria_theme.scss",
             "insilos_website/static/src/lib/three/three.min.js",
             "insilos_website/static/src/js/reveal.js",
             "insilos_website/static/src/js/c3ai_interactive.js",
             "insilos_website/static/src/js/insilos_megamenu.js",
             "insilos_website/static/src/js/insilos_3d_suite.js",
+            "insilos_website/static/src/js/innoria_topology_3d.js",
             "insilos_website/static/src/js/insilos_video_telemetry.js",
             "insilos_website/static/src/js/insilos_cctv_player.js",
             "insilos_website/static/src/js/insilos_sop_vault.js",
