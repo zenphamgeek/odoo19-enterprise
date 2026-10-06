@@ -3,23 +3,27 @@
  * File: innoria_deck_3d.js
  * Host Target: innoria.insilos.com (Insilos Sovereign Web Platform)
  * 
- * Features:
- * - 4-Layer Isometric 3D Stack:
- *   L0: No-Code Platform (App Studio, Workflow Designer, Automation)
- *   L1: Platform Services (Architecture | Security | Admin | Deployment)
- *   L2: Artificial Intelligent (Generative AI, Explainable AI, Human-Machine Understanding)
- *   L3: Data Lake & Core ERP (ERP, GRC, IIoT, Sovereign DB)
- * - 60 FPS RequestAnimationFrame Physics Engine (Spring LERP + Friction Momentum)
- * - True 6-Face Airtight 3D Box Geometry (Zero hollow clipping)
- * - Relative Z-Layer Extraction Vector (Preserves vertical hierarchy on pull-out)
- * - Buttery Smooth Mouse Orbit Drag & Passive Parallax
- * - Exploded Deck Mode (Phân rã trục Z)
- * - Auto Demo Tour Mode (3.4s pacing)
- * - Non-ghost Volumetric Dimming (All layers maintain physical presence)
+ * Upgraded via Claude Opus 5.5 & Sonnet 5.5 Physics Architecture:
+ * - 60/120 FPS Frame-rate Independent 2nd-Order Spring Dynamics (dt-scaled harmonic oscillator)
+ * - Pure Isometric Drawer Extraction Vector (+Y forward along isometric axis, +Z elevation)
+ * - Decoupled Pointer Drag Momentum with Exponential Decay Inertia
+ * - Drag-Hover Conflict Lock (Slab hover locked during active orbit drag)
+ * - Unified Pointer Events API with setPointerCapture (Full Mobile/Touch/Desktop parity)
+ * - 4-Layer Stack Synchronized HUD, Deep Architecture Panels, Exploded Deck, and Auto-Tour
  */
 
 (function () {
     'use strict';
+
+    var DRAG_THRESHOLD = 5;
+    var SPRING_STIFFNESS = 190;
+    var SPRING_DAMPING = 22;
+    var ORBIT_FRICTION = 2.8; // Exponential velocity decay rate
+    var MAX_DT = 0.0333; // 30 FPS floor for numerical stability
+
+    function clamp(val, min, max) {
+        return Math.max(min, Math.min(max, val));
+    }
 
     function initInnoria3DDeck(container) {
         if (!container || container.__innoria_deck_initialized) return;
@@ -50,70 +54,137 @@
             container.querySelector("#deep-panel-3")
         ];
 
+        var slabs = [
+            container.querySelector("#slab-0"),
+            container.querySelector("#slab-1"),
+            container.querySelector("#slab-2"),
+            container.querySelector("#slab-3")
+        ];
+
         var activeIndex = null;
         var isExploded = false;
         var autoTourActive = false;
         var tourInterval = null;
 
         // ---------------------------------------------------------------------
-        // 60 FPS Spring & Inertia Physics Engine
+        // 2nd-Order Spring Dynamics State (Slab Pull-Out)
         // ---------------------------------------------------------------------
-        var orbitRotX = 58;
-        var orbitRotZ = -38;
+        var slabSprings = [
+            { value: 0, velocity: 0 },
+            { value: 0, velocity: 0 },
+            { value: 0, velocity: 0 },
+            { value: 0, velocity: 0 }
+        ];
+
+        // ---------------------------------------------------------------------
+        // Orbit Rotation & Inertia State
+        // ---------------------------------------------------------------------
+        var DEFAULT_ROT_X = 58;
+        var DEFAULT_ROT_Z = -38;
+
+        var orbitRotX = DEFAULT_ROT_X;
+        var orbitRotZ = DEFAULT_ROT_Z;
+        var targetRotX = DEFAULT_ROT_X;
+        var targetRotZ = DEFAULT_ROT_Z;
+        var currentRotX = DEFAULT_ROT_X;
+        var currentRotZ = DEFAULT_ROT_Z;
+
         var parallaxTiltX = 0;
         var parallaxTiltZ = 0;
         var currentParallaxX = 0;
         var currentParallaxZ = 0;
-        var targetRotX = 58;
-        var targetRotZ = -38;
-        var currentRotX = 58;
-        var currentRotZ = -38;
+
         var velX = 0;
         var velZ = 0;
-        var isDragging = false;
-        var lastMouseX = 0;
-        var lastMouseY = 0;
-        var springTension = 0.085;
-        var friction = 0.88;
-        var mouseSens = 0.35;
-        var rafId = null;
 
-        function physicsTick() {
+        var isDragging = false;
+        var pointerId = null;
+        var downX = 0;
+        var downY = 0;
+        var lastX = 0;
+        var lastY = 0;
+        var lastTime = performance.now();
+
+        // ---------------------------------------------------------------------
+        // 60/120 FPS Frame-rate Independent Physics Engine Loop
+        // ---------------------------------------------------------------------
+        var previousTickTime = performance.now();
+
+        function physicsTick(now) {
+            var rawDt = (now - previousTickTime) / 1000;
+            var dt = Math.min(rawDt > 0 ? rawDt : 0.016, MAX_DT);
+            previousTickTime = now;
+
+            // 1. Orbit Inertia & Momentum Physics
             if (!isDragging) {
-                // Apply inertia momentum friction to persistent orbit rotation
-                if (Math.abs(velX) > 0.005 || Math.abs(velZ) > 0.005) {
-                    velX *= friction;
-                    velZ *= friction;
-                    orbitRotX -= velX;
-                    orbitRotZ += velZ;
-                    orbitRotX = Math.max(18, Math.min(85, orbitRotX));
+                if (Math.abs(velX) > 0.05 || Math.abs(velZ) > 0.05) {
+                    var damping = Math.exp(-ORBIT_FRICTION * dt);
+                    velX *= damping;
+                    velZ *= damping;
+                    orbitRotX += velX * dt;
+                    orbitRotZ += velZ * dt;
+                    orbitRotX = clamp(orbitRotX, 18, 85);
                 } else {
                     velX = 0;
                     velZ = 0;
                 }
             }
 
-            // Smooth parallax micro-tilt transition
-            currentParallaxX += (parallaxTiltX - currentParallaxX) * 0.12;
-            currentParallaxZ += (parallaxTiltZ - currentParallaxZ) * 0.12;
+            // 2. Smooth Parallax Micro-tilt Transition
+            currentParallaxX += (parallaxTiltX - currentParallaxX) * (1 - Math.exp(-10 * dt));
+            currentParallaxZ += (parallaxTiltZ - currentParallaxZ) * (1 - Math.exp(-10 * dt));
 
-            // Combine persistent orbit orientation with gentle passive parallax
-            targetRotX = Math.max(18, Math.min(85, orbitRotX + currentParallaxX));
+            targetRotX = clamp(orbitRotX + currentParallaxX, 18, 85);
             targetRotZ = orbitRotZ + currentParallaxZ;
 
-            // Spring LERP interpolation for buttery smooth 60 FPS rotation
-            currentRotX += (targetRotX - currentRotX) * springTension;
-            currentRotZ += (targetRotZ - currentRotZ) * springTension;
+            // 3. Fast-Tracking during Drag vs Smooth Damping on Release
+            var rotFollowRate = isDragging ? (1 - Math.exp(-32 * dt)) : (1 - Math.exp(-12 * dt));
+            currentRotX += (targetRotX - currentRotX) * rotFollowRate;
+            currentRotZ += (targetRotZ - currentRotZ) * rotFollowRate;
 
             if (deckContainer) {
                 deckContainer.style.transform = "rotateX(" + currentRotX.toFixed(2) + "deg) rotateZ(" + currentRotZ.toFixed(2) + "deg) translateY(-15px)";
             }
 
-            rafId = requestAnimationFrame(physicsTick);
+            // 4. 2nd-Order Critically-Damped Spring Dynamics for Slabs
+            for (var i = 0; i < 4; i++) {
+                var slab = slabs[i];
+                if (!slab) continue;
+
+                var spring = slabSprings[i];
+                var target = (i === activeIndex) ? 1.0 : 0.0;
+
+                // F = -k*x - c*v
+                var accel = (target - spring.value) * SPRING_STIFFNESS - spring.velocity * SPRING_DAMPING;
+                spring.velocity += accel * dt;
+                spring.value += spring.velocity * dt;
+
+                // Clean resting snap
+                if (Math.abs(target - spring.value) < 0.001 && Math.abs(spring.velocity) < 0.001) {
+                    spring.value = target;
+                    spring.velocity = 0;
+                }
+
+                // Apply true isometric drawer extraction vector
+                // +Y (68px) pulls cleanly forward along isometric axis
+                // +Z (22px) elevates slab above the stack
+                // +X (10px) balances visual perspective convergence
+                var pullY = spring.value * 68.0;
+                var pullZ = spring.value * 22.0;
+                var pullX = spring.value * 10.0;
+                var scale = 1.0 + spring.value * 0.035;
+
+                slab.style.setProperty("--pull-y", pullY.toFixed(2) + "px");
+                slab.style.setProperty("--pull-z", pullZ.toFixed(2) + "px");
+                slab.style.setProperty("--pull-x", pullX.toFixed(2) + "px");
+                slab.style.setProperty("--scale", scale.toFixed(3));
+            }
+
+            requestAnimationFrame(physicsTick);
         }
 
         // Ignite the physics loop
-        physicsTick();
+        requestAnimationFrame(physicsTick);
 
         // ---------------------------------------------------------------------
         // Layer Activation & State Synchronization
@@ -121,9 +192,9 @@
         function setActiveLayer(idx) {
             activeIndex = idx;
 
-            // 1. Update 3D Slabs
+            // 1. Update 3D Slabs Visual State
             layers.forEach(function (l, i) {
-                var slab = container.querySelector("#slab-" + i);
+                var slab = slabs[i];
                 var card = container.querySelector("#card-" + i);
 
                 if (slab) {
@@ -155,7 +226,7 @@
                     badgeLayerName.textContent = layers[idx].name.toUpperCase();
                     layerBadge.style.color = layers[idx].color;
                     layerBadge.style.borderColor = layers[idx].color;
-                    layerBadge.style.boxShadow = "0 0 12px " + layers[idx].color + "40";
+                    layerBadge.style.boxShadow = "0 0 14px " + layers[idx].color + "50";
                 } else {
                     badgeLayerName.textContent = "ALL LAYERS";
                     layerBadge.style.color = "#0ABBDB";
@@ -198,13 +269,16 @@
             }
         }
 
-        // Attach Hover, Click & Touch Listeners to Slabs and Summary Cards
+        // ---------------------------------------------------------------------
+        // Attach Listeners to Slabs and Summary Cards (with Drag Conflict Lock)
+        // ---------------------------------------------------------------------
         layers.forEach(function (l, i) {
-            var slab = container.querySelector("#slab-" + i);
+            var slab = slabs[i];
             var card = container.querySelector("#card-" + i);
 
             if (slab) {
                 slab.addEventListener("mouseenter", function () {
+                    if (isDragging) return; // Ignore hover while user is dragging orbit
                     stopAutoTour();
                     setActiveLayer(i);
                 });
@@ -213,15 +287,11 @@
                     stopAutoTour();
                     setActiveLayer(i);
                 });
-                slab.addEventListener("touchstart", function (e) {
-                    e.stopPropagation();
-                    stopAutoTour();
-                    setActiveLayer(i);
-                }, { passive: true });
             }
 
             if (card) {
                 card.addEventListener("mouseenter", function () {
+                    if (isDragging) return;
                     stopAutoTour();
                     setActiveLayer(i);
                 });
@@ -229,10 +299,6 @@
                     stopAutoTour();
                     setActiveLayer(i);
                 });
-                card.addEventListener("touchstart", function () {
-                    stopAutoTour();
-                    setActiveLayer(i);
-                }, { passive: true });
             }
         });
 
@@ -247,99 +313,112 @@
         });
 
         // ---------------------------------------------------------------------
-        // Mouse & Touch Drag Orbit & Passive Parallax Handlers
+        // Unified Pointer Drag Orbit & Inertia Physics Handlers
         // ---------------------------------------------------------------------
         if (stageCard) {
-            stageCard.addEventListener("mousedown", function (e) {
+            stageCard.addEventListener("pointerdown", function (e) {
+                if (e.button !== undefined && e.button !== 0) return;
                 stopAutoTour();
-                isDragging = true;
-                lastMouseX = e.clientX;
-                lastMouseY = e.clientY;
+
+                pointerId = e.pointerId;
+                downX = e.clientX;
+                downY = e.clientY;
+                lastX = e.clientX;
+                lastY = e.clientY;
+                lastTime = performance.now();
+
                 velX = 0;
                 velZ = 0;
-                if (stageCard.style) stageCard.style.cursor = "grabbing";
+                isDragging = false;
+
+                if (stageCard.setPointerCapture) {
+                    try { stageCard.setPointerCapture(e.pointerId); } catch (err) {}
+                }
             });
 
-            window.addEventListener("mouseup", function () {
-                if (isDragging) {
+            stageCard.addEventListener("pointermove", function (e) {
+                if (pointerId !== null && e.pointerId === pointerId) {
+                    var now = performance.now();
+                    var dt = Math.max((now - lastTime) / 1000, 0.001);
+
+                    var dx = e.clientX - lastX;
+                    var dy = e.clientY - lastY;
+                    var totalX = e.clientX - downX;
+                    var totalY = e.clientY - downY;
+
+                    if (!isDragging && Math.hypot(totalX, totalY) >= DRAG_THRESHOLD) {
+                        isDragging = true;
+                        stageCard.classList.add("is-dragging");
+                    }
+
+                    if (isDragging) {
+                        var sens = (e.pointerType === "touch") ? 0.42 : 0.32;
+
+                        // Immediate direct angular update (zero lag)
+                        orbitRotZ += dx * sens;
+                        orbitRotX -= dy * sens;
+                        orbitRotX = clamp(orbitRotX, 18, 85);
+
+                        // Track instantaneous velocity for smooth release momentum
+                        velZ = (dx * sens) / dt;
+                        velX = (-dy * sens) / dt;
+
+                        lastX = e.clientX;
+                        lastY = e.clientY;
+                        lastTime = now;
+                    }
+                    return;
+                }
+
+                // Passive gentle parallax when hovering over stage
+                if (!isDragging) {
+                    var rect = stageCard.getBoundingClientRect();
+                    var cx = rect.left + rect.width / 2;
+                    var cy = rect.top + rect.height / 2;
+                    var tiltX = (e.clientY - cy) / (rect.height / 2);
+                    var tiltY = (e.clientX - cx) / (rect.width / 2);
+                    parallaxTiltX = -tiltX * 4.5;
+                    parallaxTiltZ = tiltY * 5.5;
+                }
+            });
+
+            function endPointer(e) {
+                if (pointerId !== null && e.pointerId === pointerId) {
+                    // Tap detection: if not dragged beyond threshold, check if clicked on a slab
+                    if (!isDragging) {
+                        var targetSlab = e.target.closest ? e.target.closest(".slab-layer") : null;
+                        if (targetSlab) {
+                            var idxAttr = targetSlab.getAttribute("data-layer-idx");
+                            if (idxAttr !== null) {
+                                setActiveLayer(parseInt(idxAttr, 10));
+                            }
+                        }
+                    }
+
                     isDragging = false;
-                    if (stageCard && stageCard.style) stageCard.style.cursor = "";
-                }
-            });
+                    pointerId = null;
+                    stageCard.classList.remove("is-dragging");
 
-            window.addEventListener("mousemove", function (e) {
-                if (isDragging) {
-                    var dx = e.clientX - lastMouseX;
-                    var dy = e.clientY - lastMouseY;
-                    velZ = dx * mouseSens;
-                    velX = dy * mouseSens;
-                    orbitRotZ += velZ;
-                    orbitRotX -= velX;
-                    orbitRotX = Math.max(18, Math.min(85, orbitRotX));
-                    lastMouseX = e.clientX;
-                    lastMouseY = e.clientY;
+                    if (stageCard.releasePointerCapture) {
+                        try { stageCard.releasePointerCapture(e.pointerId); } catch (err) {}
+                    }
                 }
-            });
+            }
 
-            // Touch Drag Orbit for Mobile / Tablet
-            stageCard.addEventListener("touchstart", function (e) {
-                if (e.touches && e.touches.length === 1) {
-                    stopAutoTour();
-                    isDragging = true;
-                    lastMouseX = e.touches[0].clientX;
-                    lastMouseY = e.touches[0].clientY;
-                    velX = 0;
-                    velZ = 0;
+            stageCard.addEventListener("pointerup", endPointer);
+            stageCard.addEventListener("pointercancel", endPointer);
+
+            stageCard.addEventListener("pointerleave", function (e) {
+                if (!isDragging) {
                     parallaxTiltX = 0;
                     parallaxTiltZ = 0;
                 }
-            }, { passive: true });
-
-            window.addEventListener("touchmove", function (e) {
-                if (isDragging && e.touches && e.touches.length === 1) {
-                    var dx = e.touches[0].clientX - lastMouseX;
-                    var dy = e.touches[0].clientY - lastMouseY;
-                    velZ = dx * mouseSens;
-                    velX = dy * mouseSens;
-                    orbitRotZ += velZ;
-                    orbitRotX -= velX;
-                    orbitRotX = Math.max(18, Math.min(85, orbitRotX));
-                    lastMouseX = e.touches[0].clientX;
-                    lastMouseY = e.touches[0].clientY;
-                }
-            }, { passive: true });
-
-            window.addEventListener("touchend", function () {
-                if (isDragging) {
-                    isDragging = false;
-                }
-            }, { passive: true });
-
-            window.addEventListener("touchcancel", function () {
-                if (isDragging) {
-                    isDragging = false;
-                }
-            }, { passive: true });
-
-            // Passive gentle parallax when hovering over stage
-            stageCard.addEventListener("mousemove", function (e) {
-                if (isDragging) return;
-                var rect = stageCard.getBoundingClientRect();
-                var cx = rect.left + rect.width / 2;
-                var cy = rect.top + rect.height / 2;
-                var tiltX = (e.clientY - cy) / (rect.height / 2);
-                var tiltY = (e.clientX - cx) / (rect.width / 2);
-                parallaxTiltX = -tiltX * 5.5;
-                parallaxTiltZ = tiltY * 6.5;
-            });
-
-            stageCard.addEventListener("mouseleave", function () {
-                parallaxTiltX = 0;
-                parallaxTiltZ = 0;
             });
         }
 
-        // Explode Button
+        // ---------------------------------------------------------------------
+        // Action Controls (Explode, Reset, Auto Tour)
+        // ---------------------------------------------------------------------
         if (btnExplode && deckContainer) {
             btnExplode.addEventListener("click", function () {
                 stopAutoTour();
@@ -356,12 +435,11 @@
             });
         }
 
-        // Reset View Button (Smooth spring LERP back to default 58deg / -38deg)
         if (btnResetView && deckContainer) {
             btnResetView.addEventListener("click", function () {
                 stopAutoTour();
-                orbitRotX = 58;
-                orbitRotZ = -38;
+                orbitRotX = DEFAULT_ROT_X;
+                orbitRotZ = DEFAULT_ROT_Z;
                 parallaxTiltX = 0;
                 parallaxTiltZ = 0;
                 currentParallaxX = 0;
@@ -372,7 +450,6 @@
             });
         }
 
-        // Auto Demo Tour (3.4s cycle, auto-interrupt on user interaction)
         function startAutoTour() {
             autoTourActive = true;
             if (btnAutoTourText) btnAutoTourText.textContent = "Auto Demo: ON";
@@ -410,7 +487,7 @@
             });
         }
 
-        // Initialize Auto Tour (defaults to OFF so user has uninterrupted inspection)
+        // Initialize Auto Tour to OFF so user has uninterrupted inspection
         stopAutoTour();
     }
 
@@ -423,16 +500,28 @@
             if (card.__pillars_3d_initialized) return;
             card.__pillars_3d_initialized = true;
 
+            var rafPending = false;
+            var rotX = 0;
+            var rotY = 0;
+
+            function updateCardTilt() {
+                card.style.transform = 'perspective(1000px) rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg) translateZ(10px)';
+                rafPending = false;
+            }
+
             card.addEventListener('mousemove', function (e) {
                 var rect = card.getBoundingClientRect();
                 var x = e.clientX - rect.left;
                 var y = e.clientY - rect.top;
                 var centerX = rect.width / 2;
                 var centerY = rect.height / 2;
-                var rotX = ((y - centerY) / centerY) * -9;
-                var rotY = ((x - centerX) / centerX) * 9;
+                rotX = ((y - centerY) / centerY) * -9;
+                rotY = ((x - centerX) / centerX) * 9;
 
-                card.style.transform = 'perspective(1000px) rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg) translateZ(10px)';
+                if (!rafPending) {
+                    rafPending = true;
+                    requestAnimationFrame(updateCardTilt);
+                }
             });
 
             card.addEventListener('mouseleave', function () {

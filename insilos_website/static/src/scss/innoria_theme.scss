@@ -1061,9 +1061,16 @@ body:has(#innoria_main_nav) {
         justify-content: center;
         overflow: hidden;
         user-select: none;
+        -webkit-user-select: none;
+        touch-action: none;
+        cursor: grab;
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
+
+        &.is-dragging {
+            cursor: grabbing;
+        }
 
         @media (max-width: 576px) {
             min-height: 440px;
@@ -1146,10 +1153,9 @@ body:has(#innoria_main_nav) {
         --pull-y: 0px;
         --pull-z: 0px;
         --scale: 1;
-        transform: translate3d(var(--pull-x), var(--pull-y), calc(var(--base-z) + var(--pull-z))) scale3d(var(--scale), var(--scale), var(--scale));
-        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1.15),
-                    filter 0.35s ease,
-                    opacity 0.35s ease;
+        transform: translate3d(var(--pull-x, 0px), var(--pull-y, 0px), calc(var(--base-z) + var(--pull-z, 0px))) scale3d(var(--scale, 1), var(--scale, 1), var(--scale, 1));
+        will-change: transform;
+        transition: filter 0.25s ease, opacity 0.25s ease;
     }
 
     #slab-0 { --base-z: 96px; }
@@ -1164,13 +1170,12 @@ body:has(#innoria_main_nav) {
 
     /* Pulled out (Active Layer) */
     .slab-layer.pulled-out {
-        --pull-x: 75px;
-        --pull-y: 70px;
-        --pull-z: 28px;
-        --scale: 1.03;
+        --pull-x: 10px;
+        --pull-y: 68px;
+        --pull-z: 22px;
+        --scale: 1.035;
         opacity: 1 !important;
         filter: none !important;
-        z-index: 50 !important;
     }
 
     .slab-layer.pulled-out .top,
@@ -1185,7 +1190,6 @@ body:has(#innoria_main_nav) {
     .slab-layer.dimmed {
         opacity: 0.88 !important;
         filter: none !important;
-        z-index: auto !important;
     }
 
     .slab-layer.dimmed .top,
@@ -1210,36 +1214,35 @@ body:has(#innoria_main_nav) {
 
     .slab-layer .top {
         position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
-        top: 0;
-        left: 0;
         transform: translateZ(var(--slab-t));
         box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.25);
-        transition: all 0.35s ease;
         backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
     .slab-layer .bottom {
         position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
-        top: 0;
-        left: 0;
-        transform: rotateX(180deg) translateZ(0);
+        transform: rotateX(180deg);
         background: #040814;
         border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8);
         backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
     .slab-layer .front-right {
         position: absolute;
-        width: 100%;
-        height: var(--slab-t);
-        bottom: 0;
         left: 0;
-        transform-origin: bottom center;
+        bottom: 0;
+        width: var(--slab-w);
+        height: var(--slab-t);
+        transform-origin: 50% 100%;
         transform: rotateX(-90deg);
         display: flex;
         flex-direction: column;
@@ -1248,44 +1251,44 @@ body:has(#innoria_main_nav) {
         padding-right: 14px;
         color: #FFFFFF;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
-        transition: all 0.35s ease;
         backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
     .slab-layer .front-left {
         position: absolute;
-        width: var(--slab-t);
-        height: 100%;
         top: 0;
         left: 0;
-        transform-origin: left center;
+        width: var(--slab-t);
+        height: var(--slab-h);
+        transform-origin: 0 50%;
         transform: rotateY(-90deg);
-        transition: all 0.35s ease;
         backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
     .slab-layer .back-right {
         position: absolute;
-        width: var(--slab-t);
-        height: 100%;
         top: 0;
         right: 0;
-        transform-origin: right center;
+        width: var(--slab-t);
+        height: var(--slab-h);
+        transform-origin: 100% 50%;
         transform: rotateY(90deg);
-        transition: all 0.35s ease;
         backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
     .slab-layer .back-left {
         position: absolute;
-        width: 100%;
-        height: var(--slab-t);
         top: 0;
         left: 0;
-        transform-origin: top center;
+        width: var(--slab-w);
+        height: var(--slab-t);
+        transform-origin: 50% 0;
         transform: rotateX(90deg);
-        transition: all 0.35s ease;
         backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
     .slab-layer .title-text {
