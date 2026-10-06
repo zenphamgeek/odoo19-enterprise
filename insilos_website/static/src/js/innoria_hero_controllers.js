@@ -159,199 +159,859 @@
 
     // =========================================================================
     // 1. SOVEREIGN CORE CONTROLLER (Route: '/', sceneId: 'sovereign_core')
+    // Centerpiece: Authentic 3D Innoria Logo Kinetic Sculpture & Service Architecture
     // =========================================================================
+
+    function createInnoriaLogoHelixCurve() {
+        var points = [];
+        var segments = 128;
+        for (var i = 0; i <= segments; i++) {
+            var u = (i / segments) * Math.PI * 2;
+            var x = 2.3 * Math.sin(u) + 0.65 * Math.sin(2 * u);
+            var y = 1.7 * Math.cos(u) + 0.4 * Math.sin(3 * u);
+            var z = 1.15 * Math.sin(2 * u) * Math.cos(u);
+            points.push(new THREE.Vector3(x, y, z));
+        }
+        var CurveClass = THREE.CatmullRomCurve3 || THREE.CatmullRomCurve3D;
+        return new CurveClass(points, true);
+    }
+
+    var SOVEREIGN_NODES_DATA = [
+        {
+            id: 'node_digiforce',
+            key: 'DIGIFORCE',
+            name: 'DIGIFORCE Sovereign Platform',
+            category: 'No-Code / Low-Code Hyper-App Engine',
+            color: 0x0ABBDB, // Mint Cyan
+            accentColor: 0x0284C7,
+            orbitAngle: 0.15,
+            radius: 6.8,
+            stackPos: new THREE.Vector3(-3.8, 2.2, 0),
+            tagline: 'Kiến tạo ứng dụng doanh nghiệp siêu tốc theo chuẩn 3h -> 3d -> 3w -> 3m',
+            metrics: [
+                { label: 'Rapid Prototype (BƯỚC 1)', value: '3 Giờ', badge: 'Sprint' },
+                { label: 'Pilot MVP (BƯỚC 2)', value: '3 Ngày', badge: 'Validated' },
+                { label: 'Enterprise Rollout (BƯỚC 3)', value: '3 Tuần', badge: 'Production' },
+                { label: 'Multi-Site Maturity (BƯỚC 4)', value: '3 Tháng', badge: 'Sovereign' }
+            ],
+            architecture: {
+                engine: 'Visual Workflow & Logic Synthesizer',
+                governance: 'Multi-Tenant Sandbox Isolation',
+                integration: 'OpenAPI 3.1 & Insilos Data Mesh Connector'
+            },
+            deepLink: '/no-code-platform'
+        },
+        {
+            id: 'node_mojo_ai',
+            key: 'MOJO_AI',
+            name: 'MOJO AI Multi-Agent Swarm',
+            category: 'Autonomous Multi-Modal Agent Mesh',
+            color: 0x00F2FE, // Tech Cyan
+            accentColor: 0x38BDF8,
+            orbitAngle: Math.PI * 0.55,
+            radius: 6.8,
+            stackPos: new THREE.Vector3(3.8, 2.2, 0),
+            tagline: 'VLM Perception & Dual-Loop Cognitive Autonomous Execution',
+            metrics: [
+                { label: 'Vòng Nhận Thức (VLM)', value: 'See-Detect-Analyze-Adapt', badge: 'VLM Active' },
+                { label: 'Vòng Thực Thi (Swarm)', value: 'Reason-Solve-Plan-Execute', badge: 'Clef DAG' },
+                { label: 'Quy Mô Agent Hoạt Động', value: '16 Sovereign Nodes', badge: 'Healthy' },
+                { label: 'Độ Trễ Suy Luận (p95)', value: '184 ms', badge: 'Optimal' }
+            ],
+            architecture: {
+                engine: 'Clef DAG Scheduler & Hybrid Reasoning Core',
+                guardrails: 'Zero-Evasion Verification & Anti-Hallucination Gate',
+                telemetry: 'Passive Quota Ledger & Autonomous Token Saver'
+            },
+            deepLink: '/ai-solutions'
+        },
+        {
+            id: 'node_mojoverse',
+            key: 'MOJOVERSE',
+            name: 'MOJOVERSE Enterprise Web3',
+            category: 'Decentralized Trust & Supply Chain Ledger',
+            color: 0xFF8000, // Warm Amber
+            accentColor: 0xF59E0B,
+            orbitAngle: Math.PI * 1.15,
+            radius: 6.8,
+            stackPos: new THREE.Vector3(-3.8, -1.8, 0),
+            tagline: 'Enterprise Blockchain, Digital Product Passports & Sovereign ID',
+            metrics: [
+                { label: 'Cơ Chế Đồng Thuận', value: 'PoA Sovereign Consortium', badge: 'Finalized' },
+                { label: 'Hộ Chiếu Sản Phẩm Số', value: '142,800+ Minted', badge: 'Tamper-Proof' },
+                { label: 'Thời Gian Khối / Finality', value: '1.2s Instant Finality', badge: 'Zero-Gas' },
+                { label: 'Kiểm Toán Hợp Đồng', value: 'Formal Verification PASS', badge: 'SOC-2 / ISO' }
+            ],
+            architecture: {
+                ledger: 'EVM-Compatible Sovereign State Machine',
+                identity: 'W3C Verifiable Credentials & DID Hub',
+                security: 'Threshold Signature Scheme (TSS) & MPC Key Vault'
+            },
+            deepLink: '/blockchain'
+        },
+        {
+            id: 'node_intelligent_erp',
+            key: 'INTELLIGENT_ERP',
+            name: 'Intelligent Enterprise ERP',
+            category: 'Next-Gen Autonomous ERP Core',
+            color: 0x0284C7, // Electric Sapphire
+            accentColor: 0x10B981,
+            orbitAngle: Math.PI * 1.65,
+            radius: 6.8,
+            stackPos: new THREE.Vector3(3.8, -1.8, 0),
+            tagline: 'Lõi Quản Trị Vận Hành Doanh Nghiệp Hợp Nhất Trí Tuệ Nhân Tạo',
+            metrics: [
+                { label: 'Quy Trình Nghiệp Vụ SAP', value: 'MM, SD, FI/CO, PP, MES', badge: 'Unified' },
+                { label: 'Bản Địa Hóa Việt Nam', value: 'TT78 HĐĐT & TT200 VAS', badge: 'Certified' },
+                { label: 'Hiệu Suất Nhà Máy (OEE)', value: '>= 92% Khả Dụng', badge: 'Live MES' },
+                { label: 'Đội Xe Drayage & Depot', value: 'Giảm -88% Phí DET/DEM', badge: 'Telematics' }
+            ],
+            architecture: {
+                core: 'Modern QWeb & Owl 20 Enterprise Web Client',
+                compliance: 'Circular 78/2021/TT-BTC & Decree 123/2020/ND-CP',
+                integration: 'Direct SAP RFC / EDI / REST Microservices Gateway'
+            },
+            deepLink: '/solutions'
+        }
+    ];
+
     function SovereignCoreController(manager) {
         BaseHeroSceneController.call(this, manager, 'sovereign_core', 'The Sovereign Core');
-        this.satellites = [];
-        this.laserLines = null;
-        this.coreMesh = null;
-        this.pulseShell = null;
-        this.photonCloud = null;
+        this.currentMode = 'topology';
+        this.defaultCameraPos = new THREE.Vector3(0, 2.2, 14.2);
+        this.stackCameraPos = new THREE.Vector3(0, 3.8, 15.6);
+        this.controlsTarget = new THREE.Vector3(0, 0, 0);
+
+        this.logoGroup = null;
+        this.logoCurve = null;
+        this.logoComets = [];
+        this.nucleusMesh = null;
+        this.cometLight = null;
+
+        this.satelliteNodes = [];
+        this.conduitBuses = [];
+        this.packetParticles = [];
+        this.stackPlatesGroup = null;
+        this.orbitalPlaneMesh = null;
+        this.cosmicDust = null;
+
+        this._cameraLerping = false;
+        this._camLerpAlpha = 0.0;
+        this._camLerpStart = new THREE.Vector3();
+        this._camLerpEnd = new THREE.Vector3();
+        this._targetLerpStart = new THREE.Vector3();
+        this._targetLerpEnd = new THREE.Vector3();
+        this._selectedNode = null;
+        this._boundButtons = [];
     }
     SovereignCoreController.prototype = Object.create(BaseHeroSceneController.prototype);
     SovereignCoreController.prototype.constructor = SovereignCoreController;
 
     SovereignCoreController.prototype.buildScene = function () {
-        // Lights
-        var ambLight = new THREE.AmbientLight(0xF0F9FF, 1.3);
-        var keyLight = new THREE.DirectionalLight(PALETTE.bluePrimary, 2.2);
-        keyLight.position.set(5, 8, 7);
-        var rimLight = new THREE.DirectionalLight(PALETTE.cyan, 1.8);
-        rimLight.position.set(-6, -3, -5);
-        this.scene.add(ambLight, keyLight, rimLight);
+        var self = this;
 
-        // Core Nucleus (Inner Icosahedron + Outer Quantum Shell)
-        var coreGeo = this.trackDisposable(new THREE.IcosahedronGeometry(1.4, 3));
-        var coreMat = this.trackDisposable(new THREE.MeshStandardMaterial({
-            color: PALETTE.bluePrimary,
-            emissive: PALETTE.cyan,
-            emissiveIntensity: 0.55,
-            roughness: 0.25,
-            metalness: 0.8
+        // Camera setup
+        this.camera.position.copy(this.defaultCameraPos);
+        this.targetLookAt = this.controlsTarget.clone();
+        this.camera.lookAt(this.targetLookAt);
+        this.cameraInitialPos = this.camera.position.clone();
+
+        // 1. Lighting Rig
+        var ambLight = new THREE.AmbientLight(0x0F1E36, 2.2);
+        var coreCyanLight = new THREE.PointLight(0x0ABBDB, 4.8, 28);
+        coreCyanLight.position.set(0, 0, 1.2);
+        var coreAmberLight = new THREE.PointLight(0xFF8000, 3.2, 22);
+        coreAmberLight.position.set(0, 0.8, -1.5);
+        var rim1 = new THREE.DirectionalLight(0x00F2FE, 2.0);
+        rim1.position.set(10, 14, 12);
+        var rim2 = new THREE.DirectionalLight(0xF59E0B, 1.4);
+        rim2.position.set(-12, -6, -10);
+
+        this.scene.add(ambLight, coreCyanLight, coreAmberLight, rim1, rim2);
+
+        // 2. Cybernetic Coordinate Grid
+        var grid = new THREE.GridHelper(34, 48, 0x0ABBDB, 0x0F294A);
+        grid.position.y = -3.8;
+        grid.material.opacity = 0.55;
+        grid.material.transparent = true;
+        this.trackDisposable(grid.geometry);
+        this.trackDisposable(grid.material);
+        this.rootGroup.add(grid);
+
+        // 3. Orbital Boundary Ring (15 deg inclination)
+        var outerRingGeo = this.trackDisposable(new THREE.RingGeometry(6.75, 6.85, 96));
+        var outerRingMat = this.trackDisposable(new THREE.MeshBasicMaterial({
+            color: 0x0ABBDB,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.28
         }));
-        this.coreMesh = new THREE.Mesh(coreGeo, coreMat);
-        this.rootGroup.add(this.coreMesh);
+        this.orbitalPlaneMesh = new THREE.Mesh(outerRingGeo, outerRingMat);
+        this.orbitalPlaneMesh.rotation.x = Math.PI / 2 + 0.22;
+        this.rootGroup.add(this.orbitalPlaneMesh);
 
-        var shellGeo = this.trackDisposable(new THREE.IcosahedronGeometry(1.7, 2));
-        var shellMat = this.trackDisposable(new THREE.MeshBasicMaterial({
-            color: PALETTE.cyan,
+        // 4. THE AUTHENTIC 3D INNORIA LOGO SCULPTURE (Centerpiece)
+        this.logoGroup = new THREE.Group();
+        this.logoGroup.name = 'Innoria_3D_Logo_Sculpture';
+        this.logoCurve = createInnoriaLogoHelixCurve();
+
+        // 4.1 Primary Glass-Metallic Ribbon in Electric Cyan
+        var mainTubeGeo = this.trackDisposable(new THREE.TubeGeometry(this.logoCurve, 128, 0.17, 16, true));
+        var logoMainMat = this.trackDisposable(new THREE.MeshStandardMaterial({
+            color: 0x0ABBDB,
+            emissive: 0x0284C7,
+            emissiveIntensity: 0.85,
+            metalness: 0.92,
+            roughness: 0.12
+        }));
+        var logoMainMesh = new THREE.Mesh(mainTubeGeo, logoMainMat);
+        this.logoGroup.add(logoMainMesh);
+
+        // 4.2 High-Luminescence Inner Laser Core
+        var laserTubeGeo = this.trackDisposable(new THREE.TubeGeometry(this.logoCurve, 128, 0.05, 8, true));
+        var laserMat = this.trackDisposable(new THREE.MeshBasicMaterial({
+            color: 0x00F2FE,
+            transparent: true,
+            opacity: 0.95
+        }));
+        var logoLaserMesh = new THREE.Mesh(laserTubeGeo, laserMat);
+        this.logoGroup.add(logoLaserMesh);
+
+        // 4.3 Cybernetic Holographic Wireframe Envelope
+        var wireTubeGeo = this.trackDisposable(new THREE.TubeGeometry(this.logoCurve, 64, 0.30, 6, true));
+        var wireMat = this.trackDisposable(new THREE.MeshBasicMaterial({
+            color: 0x0ABBDB,
             wireframe: true,
             transparent: true,
-            opacity: 0.35
+            opacity: 0.28
         }));
-        this.pulseShell = new THREE.Mesh(shellGeo, shellMat);
-        this.rootGroup.add(this.pulseShell);
+        var logoWireMesh = new THREE.Mesh(wireTubeGeo, wireMat);
+        this.logoGroup.add(logoWireMesh);
 
-        // 4 Satellites Data
-        var satData = [
-            { id: 'sat_erp', name: 'AI-Enhanced ERP', radius: 4.4, speed: 0.22, color: PALETTE.bluePrimary, size: 0.42, desc: 'Hệ thống ERP lõi chuẩn VAS 200/133 kết nối chuỗi cung ứng.' },
-            { id: 'sat_mojo', name: 'MOJO AI Swarm', radius: 5.6, speed: 0.16, color: PALETTE.cyan, size: 0.50, desc: 'Mạng lưới đa tác tử tự trị suy luận đa tầng < 280ms.' },
-            { id: 'sat_digiforce', name: 'DIGIFORCE No-Code', radius: 6.8, speed: 0.12, color: PALETTE.orange, size: 0.44, desc: 'Nền tảng đóng gói ứng dụng siêu tốc 3h -> 3d -> 3w -> 3m.' },
-            { id: 'sat_mojoverse', name: 'MOJOVERSE Blockchain', radius: 8.0, speed: 0.09, color: PALETTE.purple, size: 0.38, desc: 'Sổ cái bất biến xác thực e-CO và chống giả mạo chuỗi cung ứng.' }
-        ];
+        // 4.4 Central Quantum Energy Nucleus (Octahedron Prism)
+        var nucleusGeo = this.trackDisposable(new THREE.OctahedronGeometry(0.72, 1));
+        var nucleusMat = this.trackDisposable(new THREE.MeshStandardMaterial({
+            color: 0x00F2FE,
+            emissive: 0x0ABBDB,
+            emissiveIntensity: 0.9,
+            metalness: 0.85,
+            roughness: 0.15
+        }));
+        this.nucleusMesh = new THREE.Mesh(nucleusGeo, nucleusMat);
+        this.logoGroup.add(this.nucleusMesh);
 
-        var self = this;
-        satData.forEach(function (data, idx) {
-            // Orbit Ring (Thin circular trail)
-            var ringGeo = self.trackDisposable(new THREE.BufferGeometry());
-            var points = [];
-            var segments = 64;
-            for (var i = 0; i <= segments; i++) {
-                var theta = (i / segments) * Math.PI * 2;
-                points.push(new THREE.Vector3(Math.cos(theta) * data.radius, 0, Math.sin(theta) * data.radius));
-            }
-            ringGeo.setFromPoints(points);
-            var ringMat = self.trackDisposable(new THREE.LineBasicMaterial({
-                color: data.color,
-                transparent: true,
-                opacity: 0.28
-            }));
-            var orbitLine = new THREE.Line(ringGeo, ringMat);
-            orbitLine.rotation.x = 0.25 * (idx % 2 === 0 ? 1 : -1);
-            self.rootGroup.add(orbitLine);
+        // 4.5 The 3 Signature Orbiting Orange Logo Comets (#FF8000)
+        this.logoComets = [];
+        var cMat = this.trackDisposable(new THREE.MeshStandardMaterial({
+            color: 0xFF8000,
+            emissive: 0xFF8000,
+            emissiveIntensity: 1.0,
+            roughness: 0.1
+        }));
 
-            // Satellite Mesh
-            var satGeo = self.trackDisposable(new THREE.SphereGeometry(data.size, 16, 16));
-            var satMat = self.trackDisposable(new THREE.MeshStandardMaterial({
-                color: data.color,
+        // Comet 1: Spline Glider (travels directly along the Möbius spline)
+        var c1Geo = this.trackDisposable(new THREE.SphereGeometry(0.24, 16, 16));
+        var comet1 = new THREE.Mesh(c1Geo, cMat);
+        this.logoGroup.add(comet1);
+        this.logoComets.push({ mesh: comet1, type: 'spline', progress: 0.0, speed: 0.18 });
+
+        // Comet 2: Apex Halo
+        var c2Geo = this.trackDisposable(new THREE.SphereGeometry(0.19, 16, 16));
+        var comet2 = new THREE.Mesh(c2Geo, cMat);
+        this.logoGroup.add(comet2);
+        this.logoComets.push({ mesh: comet2, type: 'orbit_apex', angle: 0.0, radius: 2.7, height: 1.2, speed: 0.32 });
+
+        // Comet 3: Base Vortex
+        var c3Geo = this.trackDisposable(new THREE.SphereGeometry(0.16, 16, 16));
+        var comet3 = new THREE.Mesh(c3Geo, cMat);
+        this.logoGroup.add(comet3);
+        this.logoComets.push({ mesh: comet3, type: 'orbit_base', angle: Math.PI, radius: 3.2, height: -0.8, speed: 0.24 });
+
+        this.cometLight = new THREE.PointLight(0xFF8000, 2.5, 8);
+        this.logoGroup.add(this.cometLight);
+        this.rootGroup.add(this.logoGroup);
+
+        // 5. THE 4 SERVICE ARCHITECTURE PODS (KIẾN TRÚC DỊCH VỤ)
+        this.satelliteNodes = [];
+        SOVEREIGN_NODES_DATA.forEach(function (data, index) {
+            var podGroup = new THREE.Group();
+            podGroup.name = data.id;
+            podGroup.userData = {
+                nodeData: data,
+                isPod: true,
+                index: index,
+                orbitAngle: data.orbitAngle,
+                radius: data.radius,
+                stackPos: data.stackPos
+            };
+
+            // Hexagonal Pedestal Base
+            var pedestalGeo = self.trackDisposable(new THREE.CylinderGeometry(1.25, 1.45, 0.18, 6));
+            var pedestalMat = self.trackDisposable(new THREE.MeshStandardMaterial({
+                color: 0x0A1424,
                 emissive: data.color,
-                emissiveIntensity: 0.4,
-                roughness: 0.3,
-                metalness: 0.7
+                emissiveIntensity: 0.32,
+                metalness: 0.85,
+                roughness: 0.25
             }));
-            var satMesh = new THREE.Mesh(satGeo, satMat);
-            satMesh.userData = data;
-            satMesh.userData.angle = (idx * Math.PI) / 2;
-            satMesh.userData.orbitTilt = orbitLine.rotation.x;
-            self.rootGroup.add(satMesh);
-            self.satellites.push(satMesh);
-            self.interactiveObjects.push(satMesh);
+            var pedestal = new THREE.Mesh(pedestalGeo, pedestalMat);
+            pedestal.position.y = -0.55;
+            podGroup.add(pedestal);
+
+            // Neon Edge Bevel on Pedestal
+            var edgeGeo = self.trackDisposable(new THREE.RingGeometry(1.26, 1.34, 6));
+            var edgeMat = self.trackDisposable(new THREE.MeshBasicMaterial({
+                color: data.color,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.75
+            }));
+            var edge = new THREE.Mesh(edgeGeo, edgeMat);
+            edge.rotation.x = Math.PI / 2;
+            edge.position.y = -0.45;
+            podGroup.add(edge);
+
+            // Semantic Architecture Micro-Core
+            var archCore = new THREE.Group();
+
+            if (data.key === 'DIGIFORCE') {
+                // 4 Cascading Stepped Glass Slabs (3h -> 3d -> 3w -> 3m)
+                for (var s = 0; s < 4; s++) {
+                    var w = 1.1 - (s * 0.15);
+                    var slabGeo = self.trackDisposable(new THREE.BoxGeometry(w, 0.10, w));
+                    var slabMat = self.trackDisposable(new THREE.MeshStandardMaterial({
+                        color: (s % 2 === 0) ? data.color : 0x0284C7,
+                        emissive: data.color,
+                        emissiveIntensity: 0.45 + (s * 0.12),
+                        metalness: 0.8,
+                        roughness: 0.2,
+                        transparent: true,
+                        opacity: 0.88
+                    }));
+                    var slab = new THREE.Mesh(slabGeo, slabMat);
+                    slab.position.y = -0.3 + (s * 0.22);
+                    slab.rotation.y = s * (Math.PI / 8);
+                    archCore.add(slab);
+                }
+                var glyphGeo = self.trackDisposable(new THREE.OctahedronGeometry(0.28, 0));
+                var glyphMat = self.trackDisposable(new THREE.MeshBasicMaterial({ color: 0x00F2FE }));
+                var topGlyph = new THREE.Mesh(glyphGeo, glyphMat);
+                topGlyph.position.y = 0.75;
+                archCore.add(topGlyph);
+            } else if (data.key === 'MOJO_AI') {
+                // Neural Swarm Core + 6 Orbiting Micro-Agents
+                var brainGeo = self.trackDisposable(new THREE.IcosahedronGeometry(0.72, 1));
+                var brainMat = self.trackDisposable(new THREE.MeshStandardMaterial({
+                    color: data.color,
+                    emissive: 0x0284C7,
+                    emissiveIntensity: 0.65,
+                    metalness: 0.9,
+                    roughness: 0.15
+                }));
+                archCore.add(new THREE.Mesh(brainGeo, brainMat));
+
+                podGroup.userData.swarmAgents = [];
+                for (var a = 0; a < 6; a++) {
+                    var agGeo = self.trackDisposable(new THREE.SphereGeometry(0.09, 8, 8));
+                    var agMat = self.trackDisposable(new THREE.MeshBasicMaterial({ color: 0x00F2FE }));
+                    var agMesh = new THREE.Mesh(agGeo, agMat);
+                    archCore.add(agMesh);
+                    podGroup.userData.swarmAgents.push({
+                        mesh: agMesh,
+                        radius: 1.15,
+                        angleOffset: a * (Math.PI / 3),
+                        speed: 0.8 + (a * 0.15)
+                    });
+                }
+            } else if (data.key === 'MOJOVERSE') {
+                // Interlocking Cryptographic Hash-Chain Blocks & Consensus Torus Ring
+                for (var b = 0; b < 3; b++) {
+                    var bGeo = self.trackDisposable(new THREE.BoxGeometry(0.55, 0.55, 0.55));
+                    var bMat = self.trackDisposable(new THREE.MeshStandardMaterial({
+                        color: 0xFF8000,
+                        emissive: 0xF59E0B,
+                        emissiveIntensity: 0.6,
+                        metalness: 0.85,
+                        roughness: 0.2
+                    }));
+                    var block = new THREE.Mesh(bGeo, bMat);
+                    block.position.set((b - 1) * 0.42, (b - 1) * 0.32, (b - 1) * 0.2);
+                    block.rotation.set(b * 0.2, b * 0.3, b * 0.1);
+                    archCore.add(block);
+                }
+                var cRingGeo = self.trackDisposable(new THREE.TorusGeometry(1.05, 0.022, 16, 48));
+                var cRingMat = self.trackDisposable(new THREE.MeshBasicMaterial({
+                    color: 0xF59E0B,
+                    transparent: true,
+                    opacity: 0.85
+                }));
+                var consensusRing = new THREE.Mesh(cRingGeo, cRingMat);
+                consensusRing.rotation.x = Math.PI / 2.5;
+                archCore.add(consensusRing);
+                podGroup.userData.consensusRing = consensusRing;
+            } else if (data.key === 'INTELLIGENT_ERP') {
+                // 4 Enterprise Architecture Pillars + Central Unified Data Core
+                for (var p = 0; p < 4; p++) {
+                    var ang = p * (Math.PI / 2);
+                    var pGeo = self.trackDisposable(new THREE.CylinderGeometry(0.08, 0.08, 0.85, 8));
+                    var pMat = self.trackDisposable(new THREE.MeshStandardMaterial({
+                        color: 0x0A1424,
+                        emissive: 0x10B981,
+                        emissiveIntensity: 0.4,
+                        metalness: 0.9,
+                        roughness: 0.2
+                    }));
+                    var pillar = new THREE.Mesh(pGeo, pMat);
+                    pillar.position.set(Math.cos(ang) * 0.65, 0, Math.sin(ang) * 0.65);
+                    archCore.add(pillar);
+                }
+                var erpGeo = self.trackDisposable(new THREE.SphereGeometry(0.48, 16, 16));
+                var erpMat = self.trackDisposable(new THREE.MeshStandardMaterial({
+                    color: 0x0284C7,
+                    emissive: 0x10B981,
+                    emissiveIntensity: 0.7,
+                    metalness: 0.8,
+                    roughness: 0.2
+                }));
+                archCore.add(new THREE.Mesh(erpGeo, erpMat));
+
+                var teleGeo = self.trackDisposable(new THREE.RingGeometry(0.68, 0.72, 32));
+                var teleMat = self.trackDisposable(new THREE.MeshBasicMaterial({
+                    color: 0x10B981,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.75
+                }));
+                var teleRing = new THREE.Mesh(teleGeo, teleMat);
+                teleRing.rotation.x = Math.PI / 2;
+                archCore.add(teleRing);
+            }
+
+            podGroup.add(archCore);
+            podGroup.userData.architectureCore = archCore;
+
+            // Invisible Hit Sphere for Precision Raycasting
+            var hitGeo = self.trackDisposable(new THREE.SphereGeometry(1.6, 8, 8));
+            var hitMat = self.trackDisposable(new THREE.MeshBasicMaterial({ visible: false }));
+            var hitSphere = new THREE.Mesh(hitGeo, hitMat);
+            hitSphere.userData = { parentPod: podGroup, nodeData: data };
+            podGroup.add(hitSphere);
+
+            // Initial Position
+            var initialPos = self._calcOrbitPos(data.orbitAngle, data.radius, 0);
+            podGroup.position.copy(initialPos);
+
+            self.rootGroup.add(podGroup);
+            self.satelliteNodes.push(podGroup);
+            self.interactiveObjects.push(hitSphere);
         });
 
-        // Dynamic Optical Laser Beams (LineSegments connecting core to 4 satellites)
-        var laserGeo = this.trackDisposable(new THREE.BufferGeometry());
-        var laserPositions = new Float32Array(4 * 2 * 3); // 4 lines * 2 vertices * 3 coords
-        laserGeo.setAttribute('position', new THREE.BufferAttribute(laserPositions, 3));
-        var laserMat = this.trackDisposable(new THREE.LineBasicMaterial({
-            color: PALETTE.cyan,
+        // 6. Data Conduits & Flowing Packet Particles
+        this.conduitBuses = [];
+        this.packetParticles = [];
+        var conduitMat = this.trackDisposable(new THREE.LineDashedMaterial({
+            color: 0x0ABBDB,
+            dashSize: 0.35,
+            gapSize: 0.15,
             transparent: true,
-            opacity: 0.65
+            opacity: 0.42
         }));
-        this.laserLines = new THREE.LineSegments(laserGeo, laserMat);
-        this.rootGroup.add(this.laserLines);
 
-        // Instanced Photon Particles (240 flowing points)
-        var photonCount = 240;
-        var photonGeo = this.trackDisposable(new THREE.BufferGeometry());
-        var photonPositions = new Float32Array(photonCount * 3);
-        this.photonAngles = new Float32Array(photonCount);
-        this.photonRadii = new Float32Array(photonCount);
-        this.photonSpeeds = new Float32Array(photonCount);
+        for (var c = 0; c < 4; c++) {
+            var cGeo = this.trackDisposable(new THREE.BufferGeometry());
+            var cLine = new THREE.Line(cGeo, conduitMat);
+            this.rootGroup.add(cLine);
+            this.conduitBuses.push({ line: cLine, curveIndex: c });
 
-        for (var p = 0; p < photonCount; p++) {
-            this.photonAngles[p] = Math.random() * Math.PI * 2;
-            this.photonRadii[p] = 2.0 + Math.random() * 6.5;
-            this.photonSpeeds[p] = 0.1 + Math.random() * 0.25;
-            photonPositions[p * 3] = Math.cos(this.photonAngles[p]) * this.photonRadii[p];
-            photonPositions[p * 3 + 1] = (Math.random() - 0.5) * 1.5;
-            photonPositions[p * 3 + 2] = Math.sin(this.photonAngles[p]) * this.photonRadii[p];
+            for (var pkt = 0; pkt < 4; pkt++) {
+                var pktGeo = this.trackDisposable(new THREE.SphereGeometry(0.08, 8, 8));
+                var pktMat = this.trackDisposable(new THREE.MeshBasicMaterial({ color: 0x00F2FE }));
+                var pktMesh = new THREE.Mesh(pktGeo, pktMat);
+                this.rootGroup.add(pktMesh);
+                this.packetParticles.push({
+                    mesh: pktMesh,
+                    curveIndex: c,
+                    progress: (pkt * 0.25),
+                    speed: 0.45 + (pkt * 0.08)
+                });
+            }
         }
-        photonGeo.setAttribute('position', new THREE.BufferAttribute(photonPositions, 3));
-        var photonMat = this.trackDisposable(new THREE.PointsMaterial({
-            color: PALETTE.cyan,
-            size: 0.08,
+
+        // 7. Ambient Cosmic Dust
+        var dustCount = 380;
+        var dustGeo = this.trackDisposable(new THREE.BufferGeometry());
+        var dustPos = new Float32Array(dustCount * 3);
+        for (var d = 0; d < dustCount; d++) {
+            dustPos[d * 3] = (Math.random() - 0.5) * 32;
+            dustPos[d * 3 + 1] = (Math.random() - 0.5) * 16;
+            dustPos[d * 3 + 2] = (Math.random() - 0.5) * 28;
+        }
+        dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+        var dustMat = this.trackDisposable(new THREE.PointsMaterial({
+            color: 0x38BDF8,
+            size: 0.06,
             transparent: true,
-            opacity: 0.75
+            opacity: 0.55
         }));
-        this.photonCloud = new THREE.Points(photonGeo, photonMat);
-        this.rootGroup.add(this.photonCloud);
+        this.cosmicDust = new THREE.Points(dustGeo, dustMat);
+        this.rootGroup.add(this.cosmicDust);
+
+        // 8. Architecture Stack Plates (for 'stack' mode)
+        this.stackPlatesGroup = new THREE.Group();
+        this.stackPlatesGroup.visible = false;
+        var tiers = [
+            { y: 2.2, label: 'Lớp 1: Synthesis & Agents', color: 0x0ABBDB },
+            { y: -1.8, label: 'Lớp 2: Ledger & ERP Core', color: 0x0284C7 }
+        ];
+        tiers.forEach(function (tier) {
+            var plateGeo = self.trackDisposable(new THREE.BoxGeometry(11.5, 0.08, 4.8));
+            var plateMat = self.trackDisposable(new THREE.MeshStandardMaterial({
+                color: 0x0A1424,
+                emissive: tier.color,
+                emissiveIntensity: 0.2,
+                metalness: 0.9,
+                roughness: 0.2,
+                transparent: true,
+                opacity: 0.65
+            }));
+            var plate = new THREE.Mesh(plateGeo, plateMat);
+            plate.position.set(0, tier.y - 0.7, 0);
+            self.stackPlatesGroup.add(plate);
+        });
+        this.rootGroup.add(this.stackPlatesGroup);
+
+        // Bind DOM HUD & Buttons
+        this._bindHUDControls();
 
         return Promise.resolve();
     };
 
+    SovereignCoreController.prototype._calcOrbitPos = function (angle, radius, elapsed) {
+        var inclination = 0.22;
+        var curAngle = angle + (elapsed * 0.08);
+        return new THREE.Vector3(
+            Math.cos(curAngle) * radius,
+            Math.sin(curAngle) * radius * Math.sin(inclination) + Math.sin(elapsed * 1.5) * 0.2,
+            Math.sin(curAngle) * radius * Math.cos(inclination)
+        );
+    };
+
     SovereignCoreController.prototype.update = function (delta, elapsed) {
-        // Rotate Core Nucleus
-        if (this.coreMesh) {
-            this.coreMesh.rotation.y += delta * 0.35;
-            this.coreMesh.rotation.x += delta * 0.2;
-        }
-        if (this.pulseShell) {
-            this.pulseShell.rotation.y -= delta * 0.25;
-            var scale = 1.0 + Math.sin(elapsed * 2.5) * 0.06;
-            this.pulseShell.scale.set(scale, scale, scale);
-        }
-
-        // Update Satellites along Orbits
-        var laserPos = this.laserLines.geometry.attributes.position.array;
         var self = this;
-        this.satellites.forEach(function (sat, i) {
-            var data = sat.userData;
-            data.angle += data.speed * delta;
-            var x = Math.cos(data.angle) * data.radius;
-            var z = Math.sin(data.angle) * data.radius;
-            var y = Math.sin(data.angle * 2) * 0.35;
 
-            // Apply tilt
-            var tilt = data.orbitTilt;
-            sat.position.set(x, y * Math.cos(tilt) - z * Math.sin(tilt), y * Math.sin(tilt) + z * Math.cos(tilt));
+        // 1. Central Innoria Logo Dynamics
+        if (this.logoGroup) {
+            this.logoGroup.rotation.y = elapsed * 0.18;
+            this.logoGroup.rotation.z = Math.sin(elapsed * 0.4) * 0.08;
 
-            // Laser beam endpoints: from core (0,0,0) to sat
-            var baseIdx = i * 6;
-            laserPos[baseIdx] = 0;
-            laserPos[baseIdx + 1] = 0;
-            laserPos[baseIdx + 2] = 0;
-            laserPos[baseIdx + 3] = sat.position.x;
-            laserPos[baseIdx + 4] = sat.position.y;
-            laserPos[baseIdx + 5] = sat.position.z;
-        });
-        this.laserLines.geometry.attributes.position.needsUpdate = true;
-
-        // Flow Photon Particles
-        if (this.photonCloud) {
-            var pPos = this.photonCloud.geometry.attributes.position.array;
-            for (var p = 0; p < this.photonAngles.length; p++) {
-                this.photonAngles[p] += this.photonSpeeds[p] * delta;
-                pPos[p * 3] = Math.cos(this.photonAngles[p]) * this.photonRadii[p];
-                pPos[p * 3 + 2] = Math.sin(this.photonAngles[p]) * this.photonRadii[p];
+            if (this.nucleusMesh) {
+                var scalePulse = 1.0 + 0.08 * Math.sin(elapsed * 2.8);
+                this.nucleusMesh.scale.set(scalePulse, scalePulse, scalePulse);
+                this.nucleusMesh.rotation.y = elapsed * 0.45;
             }
-            this.photonCloud.geometry.attributes.position.needsUpdate = true;
+
+            // 3 Signature Orange Comets Orbiting along authentic logo trajectories
+            if (this.logoComets && this.logoCurve) {
+                this.logoComets.forEach(function (c) {
+                    if (c.type === 'spline') {
+                        c.progress = (c.progress + delta * c.speed) % 1.0;
+                        var pt = self.logoCurve.getPointAt(c.progress);
+                        c.mesh.position.copy(pt);
+                        if (self.cometLight) self.cometLight.position.copy(pt);
+                    } else if (c.type === 'orbit_apex') {
+                        c.angle += delta * c.speed;
+                        c.mesh.position.set(
+                            Math.cos(c.angle) * c.radius,
+                            c.height + Math.sin(c.angle * 2) * 0.3,
+                            Math.sin(c.angle) * c.radius
+                        );
+                    } else if (c.type === 'orbit_base') {
+                        c.angle -= delta * c.speed;
+                        c.mesh.position.set(
+                            Math.cos(c.angle) * c.radius,
+                            c.height + Math.cos(c.angle * 2) * 0.25,
+                            Math.sin(c.angle) * c.radius
+                        );
+                    }
+                });
+            }
         }
 
-        // Hover Raycast
-        this.raycaster.setFromCamera(this.mouseNDC, this.camera);
-        var intersects = this.raycaster.intersectObjects(this.interactiveObjects);
-        if (intersects.length > 0) {
-            var hit = intersects[0].object;
-            this.highlightNode(hit.userData);
+        // 2. Service Architecture Pod Motions
+        this.satelliteNodes.forEach(function (podGroup) {
+            var data = podGroup.userData.nodeData;
+            var targetPos;
+
+            if (self.currentMode === 'stack') {
+                targetPos = data.stackPos;
+            } else {
+                targetPos = self._calcOrbitPos(data.orbitAngle, data.radius, elapsed);
+            }
+
+            podGroup.position.lerp(targetPos, 0.06);
+
+            var archCore = podGroup.userData.architectureCore;
+            if (archCore) {
+                archCore.rotation.y = elapsed * 0.35;
+            }
+
+            // Swarm Agents Dynamics
+            if (podGroup.userData.swarmAgents) {
+                podGroup.userData.swarmAgents.forEach(function (ag) {
+                    var agAngle = (elapsed * ag.speed) + ag.angleOffset;
+                    ag.mesh.position.set(
+                        Math.cos(agAngle) * ag.radius,
+                        Math.sin(agAngle * 2) * 0.35,
+                        Math.sin(agAngle) * ag.radius
+                    );
+                });
+            }
+
+            // Consensus Ring Rotation
+            if (podGroup.userData.consensusRing) {
+                podGroup.userData.consensusRing.rotation.z = elapsed * 0.75;
+            }
+        });
+
+        // 3. Cybernetic Data Conduit Pulses
+        if (this.packetParticles && this.conduitBuses) {
+            this.packetParticles.forEach(function (pkt) {
+                pkt.progress = (pkt.progress + delta * pkt.speed) % 1.0;
+                var targetNode = self.satelliteNodes[pkt.curveIndex];
+                if (targetNode) {
+                    var start = new THREE.Vector3(0, 0, 0);
+                    var end = targetNode.position;
+                    var mid = new THREE.Vector3(end.x * 0.5, end.y * 0.5 + 1.2, end.z * 0.5);
+                    var curve = new THREE.QuadraticBezierCurve3(start, mid, end);
+                    var pt = curve.getPointAt(pkt.progress);
+                    pkt.mesh.position.copy(pt);
+                }
+            });
+        }
+
+        // 4. Ambient Cosmic Dust
+        if (this.cosmicDust) {
+            this.cosmicDust.rotation.y = elapsed * 0.02;
+        }
+
+        // 5. Smooth Camera Lerp on Selection / Mode Change
+        if (this._cameraLerping) {
+            this._camLerpAlpha += delta * 1.8;
+            var alpha = Math.min(this._camLerpAlpha, 1.0);
+            var smoothAlpha = 0.5 - 0.5 * Math.cos(alpha * Math.PI); // Sine ease
+
+            this.camera.position.lerpVectors(this._camLerpStart, this._camLerpEnd, smoothAlpha);
+            this.targetLookAt.lerpVectors(this._targetLerpStart, this._targetLerpEnd, smoothAlpha);
+            this.camera.lookAt(this.targetLookAt);
+
+            if (alpha >= 1.0) {
+                this._cameraLerping = false;
+            }
         }
     };
 
-    SovereignCoreController.prototype.highlightNode = function (nodeData) {
-        if (!nodeData || !nodeData.name) return;
-        var titleEl = document.getElementById('innoria_active_node_title');
-        var descEl = document.getElementById('innoria_active_node_desc');
-        if (titleEl) titleEl.textContent = nodeData.name;
-        if (descEl) descEl.textContent = nodeData.desc;
+    SovereignCoreController.prototype.onPointerMove = function (normX, normY) {
+        BaseHeroSceneController.prototype.onPointerMove.call(this, normX, normY);
+
+        if (!this.camera || !this.interactiveObjects.length) return;
+        this.raycaster.setFromCamera(this.mouseNDC, this.camera);
+        var intersects = this.raycaster.intersectObjects(this.interactiveObjects);
+
+        if (intersects.length > 0) {
+            var hit = intersects[0].object;
+            var podGroup = hit.userData.parentPod;
+            if (podGroup && podGroup !== this._selectedNode) {
+                podGroup.scale.set(1.08, 1.08, 1.08);
+            }
+            if (this.canvas) this.canvas.style.cursor = 'pointer';
+        } else {
+            this.satelliteNodes.forEach(function (pod) {
+                if (pod !== this._selectedNode) {
+                    pod.scale.set(1.0, 1.0, 1.0);
+                }
+            }.bind(this));
+            if (this.canvas) this.canvas.style.cursor = 'default';
+        }
+    };
+
+    SovereignCoreController.prototype.onInteract = function (event) {
+        if (!this.camera || !this.interactiveObjects.length) return;
+        this.raycaster.setFromCamera(this.mouseNDC, this.camera);
+        var intersects = this.raycaster.intersectObjects(this.interactiveObjects);
+
+        if (intersects.length > 0) {
+            var hit = intersects[0].object;
+            var podGroup = hit.userData.parentPod;
+            var nodeData = hit.userData.nodeData;
+            if (podGroup && nodeData) {
+                this.selectNode(podGroup, nodeData);
+            }
+        }
+    };
+
+    SovereignCoreController.prototype.selectNode = function (podGroup, nodeData) {
+        this._selectedNode = podGroup;
+
+        var worldPos = new THREE.Vector3();
+        podGroup.getWorldPosition(worldPos);
+
+        var offset = worldPos.clone().normalize().multiplyScalar(4.5).add(new THREE.Vector3(0, 1.6, 0));
+        var targetCamPos = worldPos.clone().add(offset);
+
+        this._startCameraLerp(targetCamPos, worldPos);
+        this.showHUD(nodeData);
+
+        // Update active state in HUD buttons
+        var buttons = document.querySelectorAll('.innoria-hud-btn');
+        buttons.forEach(function (b) {
+            b.classList.toggle('active', b.getAttribute('data-node-key') === nodeData.key);
+        });
+    };
+
+    SovereignCoreController.prototype.resetView = function () {
+        this._selectedNode = null;
+        var targetCamPos = (this.currentMode === 'stack') ? this.stackCameraPos : this.defaultCameraPos;
+        this._startCameraLerp(targetCamPos, this.controlsTarget);
+        this.hideHUD();
+
+        var buttons = document.querySelectorAll('.innoria-hud-btn');
+        buttons.forEach(function (b) { b.classList.remove('active'); });
+    };
+
+    SovereignCoreController.prototype.setMode = function (mode) {
+        this.currentMode = (mode === 'stack') ? 'stack' : 'topology';
+
+        if (this.currentMode === 'stack') {
+            if (this.stackPlatesGroup) this.stackPlatesGroup.visible = true;
+            if (this.orbitalPlaneMesh) this.orbitalPlaneMesh.visible = false;
+            if (this.logoGroup) this.logoGroup.position.set(0, 0, -2.5);
+            this._startCameraLerp(this.stackCameraPos, this.controlsTarget);
+        } else {
+            if (this.stackPlatesGroup) this.stackPlatesGroup.visible = false;
+            if (this.orbitalPlaneMesh) this.orbitalPlaneMesh.visible = true;
+            if (this.logoGroup) this.logoGroup.position.set(0, 0, 0);
+            this._startCameraLerp(this.defaultCameraPos, this.controlsTarget);
+        }
+
+        var toggleBtn = document.getElementById('innoriaModeToggleBtn') || document.querySelector('[data-action="toggle-mode"]');
+        if (toggleBtn) {
+            toggleBtn.innerHTML = (this.currentMode === 'stack') ? '<span>🌌 Quỹ Đạo Logo</span>' : '<span>🏛️ Kiến Trúc Dịch Vụ</span>';
+        }
+    };
+
+    SovereignCoreController.prototype.toggleArchitectureMode = function () {
+        this.setMode(this.currentMode === 'topology' ? 'stack' : 'topology');
+    };
+
+    SovereignCoreController.prototype._startCameraLerp = function (endPos, endTarget) {
+        this._cameraLerping = true;
+        this._camLerpAlpha = 0.0;
+        this._camLerpStart = this.camera.position.clone();
+        this._camLerpEnd = endPos.clone();
+        this._targetLerpStart = this.targetLookAt.clone();
+        this._targetLerpEnd = endTarget.clone();
+    };
+
+    SovereignCoreController.prototype._bindHUDControls = function () {
+        var self = this;
+        var hudBar = document.querySelector('.innoria-hud-control-bar');
+        if (!hudBar) return;
+
+        // Check if toggle mode button already exists, if not add it
+        var toggleBtn = hudBar.querySelector('[data-action="toggle-mode"]');
+        if (!toggleBtn) {
+            toggleBtn = document.createElement('button');
+            toggleBtn.type = 'button';
+            toggleBtn.className = 'innoria-hud-btn';
+            toggleBtn.id = 'innoriaModeToggleBtn';
+            toggleBtn.setAttribute('data-action', 'toggle-mode');
+            toggleBtn.innerHTML = '<span>🏛️ Kiến Trúc Dịch Vụ</span>';
+            var resetBtn = hudBar.querySelector('[data-action="reset-view"]');
+            if (resetBtn) {
+                hudBar.insertBefore(toggleBtn, resetBtn);
+            } else {
+                hudBar.appendChild(toggleBtn);
+            }
+        }
+
+        // Bind all HUD buttons
+        var buttons = hudBar.querySelectorAll('.innoria-hud-btn');
+        buttons.forEach(function (btn) {
+            var action = btn.getAttribute('data-action');
+            var nodeKey = btn.getAttribute('data-node-key');
+
+            var handler = function (e) {
+                e.preventDefault();
+                if (action === 'focus-node' && nodeKey) {
+                    var targetPod = self.satelliteNodes.find(function (p) {
+                        return p.userData && p.userData.nodeData && p.userData.nodeData.key === nodeKey;
+                    });
+                    if (targetPod) {
+                        self.selectNode(targetPod, targetPod.userData.nodeData);
+                    }
+                } else if (action === 'reset-view') {
+                    self.resetView();
+                } else if (action === 'toggle-mode') {
+                    self.toggleArchitectureMode();
+                }
+            };
+            btn.addEventListener('click', handler);
+            self._boundButtons.push({ el: btn, handler: handler });
+        });
+    };
+
+    SovereignCoreController.prototype.showHUD = function (nodeData) {
+        var container = this.canvas ? this.canvas.parentElement : document.getElementById('innoriaTopologyViewport');
+        if (!container) return;
+
+        var hud = document.getElementById('innoriaTopologyHUD');
+        if (!hud) {
+            hud = document.createElement('aside');
+            hud.id = 'innoriaTopologyHUD';
+            hud.className = 'innoria-topology-hud card position-absolute p-4 shadow-lg';
+            hud.style.cssText = 'display:none;top:1.5rem;right:1.5rem;max-width:440px;width:calc(100% - 3rem);background:rgba(7,11,20,0.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(10,187,219,0.35);border-radius:14px;color:#FFFFFF;z-index:1000;box-shadow:0 16px 40px rgba(0,0,0,0.75),0 0 24px rgba(10,187,219,0.25);font-family:system-ui,-apple-system,sans-serif;';
+            container.style.position = 'relative';
+            container.appendChild(hud);
+        }
+
+        var hexColor = '#' + nodeData.color.toString(16).padStart(6, '0');
+        var metricsHtml = (nodeData.metrics || []).map(function (m) {
+            return '<div class="d-flex justify-content-between align-items-center py-2 border-bottom" style="border-color: rgba(255,255,255,0.08) !important;">' +
+                   '<span style="font-size:0.85rem;color:#CBD5E1;">' + m.label + '</span>' +
+                   '<span class="badge" style="background:rgba(10,187,219,0.18);border:1px solid ' + hexColor + ';color:#FFFFFF;font-weight:600;font-size:0.82rem;padding:0.25rem 0.65rem;border-radius:6px;">' +
+                   m.value + '</span></div>';
+        }).join('');
+
+        hud.innerHTML =
+            '<div class="d-flex justify-content-between align-items-start mb-2">' +
+                '<div>' +
+                    '<div class="text-uppercase" style="font-size:0.72rem;letter-spacing:0.08em;color:' + hexColor + ';font-weight:700;">' + nodeData.category + '</div>' +
+                    '<h3 class="m-0 mt-1" style="font-size:1.35rem;font-weight:800;color:#FFFFFF;">' + nodeData.name + '</h3>' +
+                '</div>' +
+                '<button type="button" class="btn-close btn-close-white" aria-label="Close telemetry view" style="opacity:0.85;"></button>' +
+            '</div>' +
+            '<p style="font-size:0.88rem;line-height:1.45;color:#E2E8F0;margin-bottom:1.2rem;">' + nodeData.tagline + '</p>' +
+            '<div class="metrics-grid mb-3">' + metricsHtml + '</div>' +
+            '<div class="d-flex gap-2 mt-3 pt-2">' +
+                '<a href="' + nodeData.deepLink + '" class="btn w-100 py-2 text-center text-decoration-none fw-bold" style="background:' + hexColor + ';color:#070B14;border-radius:8px;font-size:0.9rem;transition:opacity 0.2s ease;">' +
+                    'Khám Phá Chi Tiết &rarr;' +
+                '</a>' +
+            '</div>';
+
+        var self = this;
+        var closeBtn = hud.querySelector('.btn-close');
+        if (closeBtn) {
+            closeBtn.onclick = function (e) {
+                e.stopPropagation();
+                self.resetView();
+            };
+        }
+        hud.style.display = 'block';
+    };
+
+    SovereignCoreController.prototype.hideHUD = function () {
+        var hud = document.getElementById('innoriaTopologyHUD');
+        if (hud) hud.style.display = 'none';
     };
 
     // =========================================================================

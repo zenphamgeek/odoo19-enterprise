@@ -1,18 +1,26 @@
 /**
- * Innoria Multi-Agent AI & Cloud Topology 3D Engine
+ * Innoria Sovereign Multi-Agent AI & Cloud Topology 3D Engine
  * File: innoria_topology_3d.js
  * Host Target: innoria.insilos.com (Insilos Sovereign Three.js Suite)
  * 
- * Core Topology:
- * - Central Core: Innoria Sovereign AI Kernel & Cloud Hub
- * - 4 Orbital Satellite Nodes:
- *   1. DIGIFORCE (No-Code/Low-Code, 4-step deployment: 3h -> 3d -> 3w -> 3m)
- *   2. MOJO AI (Multi-Agent Swarm, VLM See-Detect-Analyze-Adapt, Reason-Solve-Plan-Execute)
- *   3. MOJOVERSE (Enterprise Blockchain & Web3, Supply Chain Trust & Digital ID)
- *   4. Enterprise Intelligent ERP (AI-Powered GRC, EHS, RCM, e-CO)
- *
- * Performance Budget: 60 FPS | Instanced Cosmic Dust | Shader Glow Bloom Simulation
- * WCAG AAA Contrast Overlays | Full GPU Resource Disposal
+ * Architectural Concept:
+ * 1. Centerpiece: Authentic 3D Kinetic Sculpture of the Innoria Logo
+ *    - Continuous Parametric Möbius Ribbon / Helix Vortex in Electric Cyan (#0ABBDB / #00F2FE)
+ *    - 3 Signature Orbiting Orange Comets (#FF8000) tracing genuine logo orbital paths
+ *    - Central Quantum Luminescence Core
+ * 
+ * 2. 4 Sovereign Service Architecture Pods (Kiến Trúc Dịch Vụ):
+ *    - DIGIFORCE: No-Code/Low-Code Hyper-App Matrix (4 Cascading Stepped Tiers: 3h -> 3d -> 3w -> 3m)
+ *    - MOJO AI: Autonomous Neural Swarm Core (VLM See-Detect-Analyze-Adapt with 6 synapsing agent nodes)
+ *    - MOJOVERSE: Enterprise Blockchain Trust Monolith (Interlocking Hash-Chain Blocks & Consensus Rings)
+ *    - INTELLIGENT ERP: Enterprise Cloud Hub (4 Architecture Pillars, Unified Data Sphere & Supply Chain Conduits)
+ * 
+ * 3. Dual-Mode Architecture View:
+ *    - Mode 'topology': Orbital Logo Sculpture & Swarm Constellation
+ *    - Mode 'stack': Isometric 3D Multi-Tier Service Architecture Stack (Cloud Infra -> Core Engines -> Enterprise Apps)
+ * 
+ * Performance: 60 FPS, WebGL 2.0 / 1.0 Fallback, Garbage-Collection Free Render Loop
+ * Accessibility: WCAG AAA High Contrast Overlays, Keyboard & Pointer Safe, Responsive Viewports
  */
 
 (function (root, factory) {
@@ -32,17 +40,21 @@
     }
 
     // =========================================================================
-    // 1. BRAND PALETTE & TELEMETRY CONTRACTS
+    // 1. BRAND PALETTE & ARCHITECTURAL CONTRACTS
     // =========================================================================
 
     const BRAND_PALETTE = {
         electricSapphire: 0x0284C7, // Corporate ocean blue (#0284C7)
-        mintCyan: 0x0ABBDB,         // Innoria cyan (#0ABBDB)
-        techCyan: 0x0ABBDB,         // Vivid tech cyan (#0ABBDB)
-        warmAmber: 0xFF8000,        // Brand orange (#FF8000)
-        warmAmberAccent: 0xEA580C,  // Deep orange (#EA580C)
-        darkBase: 0x070B14,         // Cyber Dark base (#070B14)
-        gridLines: 0x0C2340,        // Deep blue grid lines (#0C2340)
+        mintCyan: 0x0ABBDB,         // Official Innoria Cyan (#0ABBDB)
+        techCyan: 0x00F2FE,         // High-intensity neon cyan (#00F2FE)
+        vividAzure: 0x38BDF8,       // Light sky cyan (#38BDF8)
+        warmAmber: 0xFF8000,        // Official Innoria Logo Orange (#FF8000)
+        warmAmberGlow: 0xF59E0B,    // Radiant golden amber (#F59E0B)
+        emeraldGreen: 0x10B981,     // Industrial telemetry emerald (#10B981)
+        darkObsidian: 0x070B14,     // Cyber Dark base canvas (#070B14)
+        deepSlate: 0x0F1E36,        // Deep card background (#0F1E36)
+        pedestalBase: 0x0A1424,     // Architecture pedestal surface (#0A1424)
+        gridLines: 0x0F294A,        // Deep blue coordinate grid (#0F294A)
         whiteHighContrast: 0xFFFFFF // Crisp white (#FFFFFF)
     };
 
@@ -54,23 +66,22 @@
             category: 'No-Code / Low-Code Hyper-App Engine',
             color: BRAND_PALETTE.mintCyan,
             accentColor: BRAND_PALETTE.electricSapphire,
-            orbitAngle: 0, // 0 rad (0 deg)
-            radius: 6.2,
-            orbitSpeed: 0.12,
-            scale: 1.15,
-            tagline: 'Rapid Enterprise Application Deployment (3h -> 3d -> 3w -> 3m)',
+            orbitAngle: 0.15, // Approx 9 deg
+            radius: 6.8,
+            stackPos: new THREE.Vector3(-3.8, 2.2, 0), // Upper left in architecture stack
+            tagline: 'Kiến tạo ứng dụng doanh nghiệp siêu tốc theo chuẩn 3h -> 3d -> 3w -> 3m',
             metrics: [
-                { label: 'Rapid Prototype (Step 1)', value: '3 Hours', badge: 'Sprint' },
-                { label: 'Pilot MVP (Step 2)', value: '3 Days', badge: 'Validated' },
-                { label: 'Enterprise Rollout (Step 3)', value: '3 Weeks', badge: 'Production' },
-                { label: 'Multi-Site Maturity (Step 4)', value: '3 Months', badge: 'Sovereign' }
+                { label: 'Rapid Prototype (BƯỚC 1)', value: '3 Giờ', badge: 'Sprint' },
+                { label: 'Pilot MVP (BƯỚC 2)', value: '3 Ngày', badge: 'Validated' },
+                { label: 'Enterprise Rollout (BƯỚC 3)', value: '3 Tuần', badge: 'Production' },
+                { label: 'Multi-Site Maturity (BƯỚC 4)', value: '3 Tháng', badge: 'Sovereign' }
             ],
             architecture: {
                 engine: 'Visual Workflow & Logic Synthesizer',
                 governance: 'Multi-Tenant Sandbox Isolation',
                 integration: 'OpenAPI 3.1 & Insilos Data Mesh Connector'
             },
-            deepLink: '/platform/digiforce'
+            deepLink: '/no-code-platform'
         },
         {
             id: 'node_mojo_ai',
@@ -78,24 +89,23 @@
             name: 'MOJO AI Multi-Agent Swarm',
             category: 'Autonomous Multi-Modal Agent Mesh',
             color: BRAND_PALETTE.techCyan,
-            accentColor: BRAND_PALETTE.electricSapphire,
-            orbitAngle: Math.PI * 0.5, // 90 deg
-            radius: 6.2,
-            orbitSpeed: 0.15,
-            scale: 1.25,
+            accentColor: BRAND_PALETTE.vividAzure,
+            orbitAngle: Math.PI * 0.55, // Approx 99 deg
+            radius: 6.8,
+            stackPos: new THREE.Vector3(3.8, 2.2, 0), // Upper right in architecture stack
             tagline: 'VLM Perception & Dual-Loop Cognitive Autonomous Execution',
             metrics: [
-                { label: 'Perception Loop', value: 'See-Detect-Analyze-Adapt', badge: 'VLM Active' },
-                { label: 'Execution Loop', value: 'Reason-Solve-Plan-Execute', badge: 'Swarm CPM' },
-                { label: 'Active Agent Nodes', value: '16 Sovereign Nodes', badge: 'Healthy' },
-                { label: 'Inference Latency', value: '184 ms (p95)', badge: 'Optimal' }
+                { label: 'Vòng Nhận Thức (VLM)', value: 'See-Detect-Analyze-Adapt', badge: 'VLM Active' },
+                { label: 'Vòng Thực Thi (Swarm)', value: 'Reason-Solve-Plan-Execute', badge: 'Clef DAG' },
+                { label: 'Quy Mô Agent Hoạt Động', value: '16 Sovereign Nodes', badge: 'Healthy' },
+                { label: 'Độ Trễ Suy Luận (p95)', value: '184 ms', badge: 'Optimal' }
             ],
             architecture: {
                 engine: 'Clef DAG Scheduler & Hybrid Reasoning Core',
                 guardrails: 'Zero-Evasion Verification & Anti-Hallucination Gate',
                 telemetry: 'Passive Quota Ledger & Autonomous Token Saver'
             },
-            deepLink: '/platform/mojo-ai'
+            deepLink: '/ai-solutions'
         },
         {
             id: 'node_mojoverse',
@@ -103,151 +113,127 @@
             name: 'MOJOVERSE Enterprise Web3',
             category: 'Decentralized Trust & Supply Chain Ledger',
             color: BRAND_PALETTE.warmAmber,
-            accentColor: BRAND_PALETTE.warmAmberAccent,
-            orbitAngle: Math.PI, // 180 deg
-            radius: 6.2,
-            orbitSpeed: 0.10,
-            scale: 1.18,
+            accentColor: BRAND_PALETTE.warmAmberGlow,
+            orbitAngle: Math.PI * 1.15, // Approx 207 deg
+            radius: 6.8,
+            stackPos: new THREE.Vector3(-3.8, -1.8, 0), // Lower left in architecture stack
             tagline: 'Enterprise Blockchain, Digital Product Passports & Sovereign ID',
             metrics: [
-                { label: 'Consensus Proof', value: 'PoA Sovereign Consortium', badge: 'Finalized' },
-                { label: 'Supply Chain Passports', value: '142,800+ Minted', badge: 'Tamper-Proof' },
-                { label: 'Block Time / Finality', value: '1.2s Instant Finality', badge: 'Zero-Gas' },
-                { label: 'Smart Contract Audit', value: 'Formal Verification PASS', badge: 'SOC-2 / ISO' }
+                { label: 'Cơ Chế Đồng Thuận', value: 'PoA Sovereign Consortium', badge: 'Finalized' },
+                { label: 'Hộ Chiếu Sản Phẩm Số', value: '142,800+ Minted', badge: 'Tamper-Proof' },
+                { label: 'Thời Gian Khối / Finality', value: '1.2s Instant Finality', badge: 'Zero-Gas' },
+                { label: 'Kiểm Toán Hợp Đồng', value: 'Formal Verification PASS', badge: 'SOC-2 / ISO' }
             ],
             architecture: {
                 ledger: 'EVM-Compatible Sovereign State Machine',
                 identity: 'W3C Verifiable Credentials & DID Hub',
-                interop: 'Cross-Border Customs & e-CO Gateway'
+                security: 'Threshold Signature Scheme (TSS) & MPC Key Vault'
             },
-            deepLink: '/platform/mojoverse'
+            deepLink: '/blockchain'
         },
         {
-            id: 'node_erp_intelligent',
+            id: 'node_intelligent_erp',
             key: 'INTELLIGENT_ERP',
-            name: 'Enterprise Intelligent ERP',
-            category: 'Autonomous Corporate Operational Backbone',
+            name: 'Intelligent Enterprise ERP',
+            category: 'Next-Gen Autonomous ERP Core',
             color: BRAND_PALETTE.electricSapphire,
-            accentColor: BRAND_PALETTE.mintCyan,
-            orbitAngle: Math.PI * 1.5, // 270 deg
-            radius: 6.2,
-            orbitSpeed: 0.11,
-            scale: 1.20,
-            tagline: 'AI-Native Governance, Risk, Compliance & Asset Health',
+            accentColor: BRAND_PALETTE.emeraldGreen,
+            orbitAngle: Math.PI * 1.65, // Approx 297 deg
+            radius: 6.8,
+            stackPos: new THREE.Vector3(3.8, -1.8, 0), // Lower right in architecture stack
+            tagline: 'Lõi Quản Trị Vận Hành Doanh Nghiệp Hợp Nhất Trí Tuệ Nhân Tạo',
             metrics: [
-                { label: 'GRC Engine', value: 'Autonomous Regulatory Audit', badge: '100% PASS' },
-                { label: 'EHS & Safety', value: 'Zero-Harm IoT & CCTV AI', badge: 'Active' },
-                { label: 'RCM Asset Health', value: 'Predictive Vibration FFT', badge: '99.98% OEE' },
-                { label: 'e-CO Certificate', value: 'Real-time Digital Origin Proof', badge: 'FTAs Ready' }
+                { label: 'Quy Trình Nghiệp Vụ SAP', value: 'MM, SD, FI/CO, PP, MES', badge: 'Unified' },
+                { label: 'Bản Địa Hóa Việt Nam', value: 'TT78 HĐĐT & TT200 VAS', badge: 'Certified' },
+                { label: 'Hiệu Suất Nhà Máy (OEE)', value: '>= 92% Khả Dụng', badge: 'Live MES' },
+                { label: 'Đội Xe Drayage & Depot', value: 'Giảm -88% Phí DET/DEM', badge: 'Telematics' }
             ],
             architecture: {
-                foundation: 'Odoo 20 Enterprise Hardened Core',
-                database: 'Distributed PostgreSQL + In-Memory Vector Store',
-                compliance: 'IFRS, US GAAP, ESG Scope 1-3 Embedded'
+                core: 'Modern QWeb & Owl 20 Enterprise Web Client',
+                compliance: 'Circular 78/2021/TT-BTC & Decree 123/2020/ND-CP',
+                integration: 'Direct SAP RFC / EDI / REST Microservices Gateway'
             },
-            deepLink: '/platform/intelligent-erp'
+            deepLink: '/solutions'
         }
     ];
 
     // =========================================================================
-    // 2. SHADER BLOOM SIMULATOR (LIGHTWEIGHT 60 FPS GLOW)
+    // 2. PROCEDURAL INNORIA LOGO MÖBIUS CURVE
     // =========================================================================
 
-    const GlowShaderMaterial = {
-        vertexShader: `
-            varying vec3 vNormal;
-            varying vec3 vPositionWorld;
-            void main() {
-                vNormal = normalize(normalMatrix * normal);
-                vec4 worldPos = modelMatrix * vec4(position, 1.0);
-                vPositionWorld = worldPos.xyz;
-                gl_Position = projectionMatrix * viewMatrix * worldPos;
-            }
-        `,
-        fragmentShader: `
-            uniform vec3 glowColor;
-            uniform float coefficient;
-            uniform float power;
-            uniform float time;
-            varying vec3 vNormal;
-            varying vec3 vPositionWorld;
-            void main() {
-                vec3 viewDirection = normalize(cameraPosition - vPositionWorld);
-                float intensity = clamp(dot(viewDirection, vNormal), 0.0, 1.0);
-                float fresnel = pow(1.0 - intensity, power) * coefficient;
-                float pulse = 0.85 + 0.15 * sin(time * 2.8);
-                gl_FragColor = vec4(glowColor * pulse, fresnel * pulse);
-            }
-        `
-    };
+    function createInnoriaLogoHelixCurve() {
+        const points = [];
+        const segments = 128;
+        // Asymmetric 3D Möbius / Infinity vortex representing the Innoria 'i' loop
+        for (let i = 0; i <= segments; i++) {
+            const u = (i / segments) * Math.PI * 2;
+            const x = 2.3 * Math.sin(u) + 0.65 * Math.sin(2 * u);
+            const y = 1.7 * Math.cos(u) + 0.4 * Math.sin(3 * u);
+            const z = 1.15 * Math.sin(2 * u) * Math.cos(u);
+            points.push(new THREE.Vector3(x, y, z));
+        }
+        const CurveClass = THREE.CatmullRomCurve3 || THREE.CatmullRomCurve3D;
+        return new CurveClass(points, true);
+    }
 
     // =========================================================================
-    // 3. TOPOLOGY ENGINE MAIN CLASS
+    // 3. MAIN TOPOLOGY ENGINE CLASS
     // =========================================================================
 
     class InnoriaTopologyEngine {
         constructor(container, options = {}) {
-            this.container = typeof container === 'string' ? document.querySelector(container) : container;
-            if (!this.container) {
-                throw new Error('[InnoriaTopologyEngine] Container element not found: ' + container);
+            if (!container) {
+                throw new Error('[InnoriaTopology3D] Target container element is null or undefined.');
             }
 
+            this.container = container;
             this.options = Object.assign({
                 autoRotate: true,
-                autoRotateSpeed: 0.45,
-                enableControls: true,
-                hudElementId: 'innoria-topology-hud',
+                autoRotateSpeed: 0.5,
                 particleCount: 500,
-                pulsePacketCount: 16
+                pulsePacketCount: 16,
+                hudElementId: 'innoriaTopologyHUD',
+                architectureMode: false // 'topology' (orbital) vs 'stack' (layered)
             }, options);
 
-            this._listeners = new Map();
+            this.currentMode = this.options.architectureMode ? 'stack' : 'topology';
             this._animFrameId = null;
             this._clock = new THREE.Clock();
-            this._selectedNode = null;
-            this._hoveredNode = null;
-            this._orbitAngleOffset = 0;
-            this._isInteracting = false;
-            this._pointerDownPos = new THREE.Vector2();
+            this._listeners = {};
 
-            // Camera focus animation state
-            this._cameraLerp = {
-                active: false,
-                startTime: 0,
-                duration: 1.2,
-                fromPos: new THREE.Vector3(),
-                toPos: new THREE.Vector3(),
-                fromTarget: new THREE.Vector3(),
-                toTarget: new THREE.Vector3()
-            };
+            this._hoveredNode = null;
+            this._selectedNode = null;
+            this._pointerDownPos = new THREE.Vector2();
 
             this._initRenderer();
             this._initScene();
             this._initCameraAndControls();
             this._initLights();
-            this._buildCentralCore();
-            this._buildOrbitalSatellites();
-            this._buildParticleBridges();
+
+            // Construct 3D Visual Architecture
+            this._buildCentralLogoSculpture();
+            this._buildArchitecturalServicePods();
+            this._buildDataConduits();
             this._buildCosmicDust();
+            this._buildArchitectureStackPlates();
+
             this._initRaycasting();
             this._bindDOMHUD();
-            this._setupResizeHandler();
-            this._setupVisibilityObserver();
-            // Display initial telemetry HUD on startup
-            if (TOPOLOGY_NODES_DATA && TOPOLOGY_NODES_DATA.length > 0) {
-                this.updateHUD(TOPOLOGY_NODES_DATA[0]);
-            }
+            this._bindControlButtons();
+
+            this._onResize = this._handleResize.bind(this);
+            window.addEventListener('resize', this._onResize, { passive: true });
 
             this.start();
         }
 
         // ---------------------------------------------------------------------
-        // RENDERER & SCENE SETUP
+        // INITIALIZATION: RENDERER, SCENE, CAMERA, LIGHTS
         // ---------------------------------------------------------------------
 
         _initRenderer() {
             const width = this.container.clientWidth || 800;
-            const height = this.container.clientHeight || 500;
+            const height = this.container.clientHeight || 520;
 
             this.renderer = new THREE.WebGLRenderer({
                 antialias: (window.devicePixelRatio || 1) < 2,
@@ -259,46 +245,47 @@
             this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.0));
             this.renderer.setSize(width, height);
             this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            this.renderer.toneMappingExposure = 1.25;
+            this.renderer.toneMappingExposure = 1.35;
 
             this.domElement = this.renderer.domElement;
             this.domElement.className = 'innoria-topology-canvas w-100 h-100 position-relative';
             this.domElement.setAttribute('role', 'img');
-            this.domElement.setAttribute('aria-label', 'Innoria Sovereign Multi-Agent AI and Cloud Topology 3D interactive viewport');
+            this.domElement.setAttribute('aria-label', 'Innoria 3D Sovereign Logo Sculpture & Service Architecture Topology');
             this.container.appendChild(this.domElement);
         }
 
         _initScene() {
             this.scene = new THREE.Scene();
-            this.scene.fog = new THREE.FogExp2(0x070B14, 0.018);
+            this.scene.fog = new THREE.FogExp2(BRAND_PALETTE.darkObsidian, 0.016);
 
-            // Sovereign Grid Plane (XZ Plane)
-            const grid = new THREE.GridHelper(30, 48, BRAND_PALETTE.mintCyan, BRAND_PALETTE.gridLines);
-            grid.position.y = -3.2;
-            grid.material.opacity = 0.65;
+            // Ground Coordinate Grid (XZ Plane)
+            const grid = new THREE.GridHelper(34, 48, BRAND_PALETTE.mintCyan, BRAND_PALETTE.gridLines);
+            grid.position.y = -3.8;
+            grid.material.opacity = 0.55;
             grid.material.transparent = true;
             this.scene.add(grid);
 
-            // Orbital boundary coordinate rings
-            const outerRingGeo = new THREE.RingGeometry(6.15, 6.25, 96);
+            // Orbital boundary coordinate ring (15 degree inclination)
+            const outerRingGeo = new THREE.RingGeometry(6.75, 6.85, 96);
             const outerRingMat = new THREE.MeshBasicMaterial({
                 color: BRAND_PALETTE.mintCyan,
                 side: THREE.DoubleSide,
                 transparent: true,
-                opacity: 0.32
+                opacity: 0.28
             });
             this.orbitalPlaneMesh = new THREE.Mesh(outerRingGeo, outerRingMat);
-            this.orbitalPlaneMesh.rotation.x = Math.PI / 2 + 0.2618; // 15 degree inclination
+            this.orbitalPlaneMesh.rotation.x = Math.PI / 2 + 0.22;
             this.scene.add(this.orbitalPlaneMesh);
         }
 
         _initCameraAndControls() {
             const width = this.container.clientWidth || 800;
-            const height = this.container.clientHeight || 500;
+            const height = this.container.clientHeight || 520;
             const aspect = width / height;
 
             this.camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100);
-            this.defaultCameraPos = new THREE.Vector3(0, 2.2, 13.8);
+            this.defaultCameraPos = new THREE.Vector3(0, 2.2, 14.2);
+            this.stackCameraPos = new THREE.Vector3(0, 3.8, 15.6);
             this.camera.position.copy(this.defaultCameraPos);
 
             this.controlsTarget = new THREE.Vector3(0, 0, 0);
@@ -307,9 +294,9 @@
                 this.controls = new THREE.OrbitControls(this.camera, this.domElement);
                 this.controls.enableDamping = true;
                 this.controls.dampingFactor = 0.05;
-                this.controls.minDistance = 4.0;
+                this.controls.minDistance = 4.5;
                 this.controls.maxDistance = 28.0;
-                this.controls.maxPolarAngle = Math.PI / 2 + 0.15; // Don't go too far under grid
+                this.controls.maxPolarAngle = Math.PI / 2 + 0.12;
                 this.controls.autoRotate = this.options.autoRotate;
                 this.controls.autoRotateSpeed = this.options.autoRotateSpeed;
                 this.controls.target.copy(this.controlsTarget);
@@ -317,228 +304,346 @@
         }
 
         _initLights() {
-            // Ambient base
-            const ambient = new THREE.AmbientLight(0x1E293B, 2.0);
+            const ambient = new THREE.AmbientLight(0x0F1E36, 2.2);
             this.scene.add(ambient);
 
-            // Sovereign Core Key Light
-            const coreLight = new THREE.PointLight(BRAND_PALETTE.mintCyan, 4.5, 25);
-            coreLight.position.set(0, 0, 0);
-            this.scene.add(coreLight);
+            // Core Point Lights (Dual Tone Cyan & Warm Amber)
+            const coreCyanLight = new THREE.PointLight(BRAND_PALETTE.mintCyan, 4.8, 28);
+            coreCyanLight.position.set(0, 0, 1.2);
+            this.scene.add(coreCyanLight);
 
-            // Directional Rim Lights
-            const rimLight1 = new THREE.DirectionalLight(BRAND_PALETTE.mintCyan, 1.8);
-            rimLight1.position.set(8, 12, 10);
-            this.scene.add(rimLight1);
+            const coreAmberLight = new THREE.PointLight(BRAND_PALETTE.warmAmber, 3.2, 22);
+            coreAmberLight.position.set(0, 0.8, -1.5);
+            this.scene.add(coreAmberLight);
 
-            const rimLight2 = new THREE.DirectionalLight(BRAND_PALETTE.warmAmber, 1.2);
-            rimLight2.position.set(-10, -5, -8);
-            this.scene.add(rimLight2);
+            // Directional Rim Lights for Sculptural Lustre
+            const rim1 = new THREE.DirectionalLight(BRAND_PALETTE.techCyan, 2.0);
+            rim1.position.set(10, 14, 12);
+            this.scene.add(rim1);
+
+            const rim2 = new THREE.DirectionalLight(BRAND_PALETTE.warmAmberGlow, 1.4);
+            rim2.position.set(-12, -6, -10);
+            this.scene.add(rim2);
         }
 
         // ---------------------------------------------------------------------
-        // 4. TOPOLOGY OBJECT GENERATION
+        // 4. THE INNORIA LOGO 3D KINETIC SCULPTURE (CENTERPIECE)
         // ---------------------------------------------------------------------
 
-        _buildCentralCore() {
-            this.coreGroup = new THREE.Group();
-            this.coreGroup.name = 'Innoria_Sovereign_AI_Kernel';
+        _buildCentralLogoSculpture() {
+            this.logoGroup = new THREE.Group();
+            this.logoGroup.name = 'Innoria_3D_Logo_Sculpture';
 
-            // 1. Inner pulsating energy plasma
-            const plasmaGeo = new THREE.SphereGeometry(1.2, 32, 32);
-            this.plasmaMat = new THREE.MeshStandardMaterial({
-                color: BRAND_PALETTE.electricSapphire,
+            const logoCurve = createInnoriaLogoHelixCurve();
+            this.logoCurve = logoCurve;
+
+            // 1. Primary Glass-Metallic Ribbon
+            const mainTubeGeo = new THREE.TubeGeometry(logoCurve, 128, 0.17, 16, true);
+            this.logoMainMat = new THREE.MeshStandardMaterial({
+                color: BRAND_PALETTE.mintCyan,
                 emissive: BRAND_PALETTE.electricSapphire,
                 emissiveIntensity: 0.85,
-                roughness: 0.15,
-                metalness: 0.9
+                metalness: 0.92,
+                roughness: 0.12
             });
-            this.plasmaMesh = new THREE.Mesh(plasmaGeo, this.plasmaMat);
-            this.coreGroup.add(this.plasmaMesh);
+            this.logoMainMesh = new THREE.Mesh(mainTubeGeo, this.logoMainMat);
+            this.logoGroup.add(this.logoMainMesh);
 
-            // 2. Geodesic wireframe containment lattice
-            const latticeGeo = new THREE.IcosahedronGeometry(1.65, 2);
-            const latticeMat = new THREE.MeshBasicMaterial({
+            // 2. High-Luminescence Inner Laser Filament
+            const laserTubeGeo = new THREE.TubeGeometry(logoCurve, 128, 0.05, 8, true);
+            const laserMat = new THREE.MeshBasicMaterial({
+                color: BRAND_PALETTE.techCyan,
+                transparent: true,
+                opacity: 0.95
+            });
+            this.logoLaserMesh = new THREE.Mesh(laserTubeGeo, laserMat);
+            this.logoGroup.add(this.logoLaserMesh);
+
+            // 3. Cybernetic Holographic Wireframe Envelope
+            const wireTubeGeo = new THREE.TubeGeometry(logoCurve, 64, 0.30, 6, true);
+            const wireMat = new THREE.MeshBasicMaterial({
                 color: BRAND_PALETTE.mintCyan,
                 wireframe: true,
                 transparent: true,
-                opacity: 0.45
+                opacity: 0.28
             });
-            this.latticeMesh = new THREE.Mesh(latticeGeo, latticeMat);
-            this.coreGroup.add(this.latticeMesh);
+            this.logoWireMesh = new THREE.Mesh(wireTubeGeo, wireMat);
+            this.logoGroup.add(this.logoWireMesh);
 
-            // 3. Counter-rotating equatorial quantum rings
-            const ringGeo1 = new THREE.TorusGeometry(2.1, 0.025, 16, 100);
-            const ringMat1 = new THREE.MeshBasicMaterial({
+            // 4. Central Quantum Energy Nucleus (Prism at center of loop)
+            const nucleusGeo = new THREE.OctahedronGeometry(0.72, 1);
+            const nucleusMat = new THREE.MeshStandardMaterial({
                 color: BRAND_PALETTE.techCyan,
-                transparent: true,
-                opacity: 0.75
+                emissive: BRAND_PALETTE.mintCyan,
+                emissiveIntensity: 0.9,
+                metalness: 0.85,
+                roughness: 0.15
             });
-            this.ringMesh1 = new THREE.Mesh(ringGeo1, ringMat1);
-            this.ringMesh1.rotation.x = Math.PI * 0.35;
-            this.coreGroup.add(this.ringMesh1);
+            this.nucleusMesh = new THREE.Mesh(nucleusGeo, nucleusMat);
+            this.logoGroup.add(this.nucleusMesh);
 
-            const ringGeo2 = new THREE.TorusGeometry(2.35, 0.02, 16, 100);
-            const ringMat2 = new THREE.MeshBasicMaterial({
-                color: BRAND_PALETTE.mintCyan,
-                transparent: true,
-                opacity: 0.55
+            // 5. The 3 Signature Orbiting Orange Logo Comets (#FF8000)
+            this.logoComets = [];
+
+            // Comet 1: Inner Curve Glider (travels directly on the Möbius spline)
+            const c1Geo = new THREE.SphereGeometry(0.24, 16, 16);
+            const c1Mat = new THREE.MeshStandardMaterial({
+                color: BRAND_PALETTE.warmAmber,
+                emissive: BRAND_PALETTE.warmAmber,
+                emissiveIntensity: 1.0,
+                roughness: 0.1
             });
-            this.ringMesh2 = new THREE.Mesh(ringGeo2, ringMat2);
-            this.ringMesh2.rotation.y = Math.PI * 0.45;
-            this.coreGroup.add(this.ringMesh2);
+            const comet1 = new THREE.Mesh(c1Geo, c1Mat);
+            this.logoGroup.add(comet1);
+            this.logoComets.push({ mesh: comet1, type: 'spline', progress: 0.0, speed: 0.18 });
 
-            // 4. Core Fresnel Shader Glow Aura
-            this.coreGlowUniforms = {
-                glowColor: { value: new THREE.Color(BRAND_PALETTE.electricSapphire) },
-                coefficient: { value: 1.0 },
-                power: { value: 2.2 },
-                time: { value: 0.0 }
-            };
-            const coreGlowMat = new THREE.ShaderMaterial({
-                vertexShader: GlowShaderMaterial.vertexShader,
-                fragmentShader: GlowShaderMaterial.fragmentShader,
-                uniforms: this.coreGlowUniforms,
-                side: THREE.BackSide,
-                blending: THREE.AdditiveBlending,
-                transparent: true
-            });
-            const coreGlowGeo = new THREE.SphereGeometry(2.0, 32, 32);
-            this.coreGlowMesh = new THREE.Mesh(coreGlowGeo, coreGlowMat);
-            this.coreGroup.add(this.coreGlowMesh);
+            // Comet 2: Apex Orbital Halo (orbits at top apex)
+            const c2Geo = new THREE.SphereGeometry(0.19, 16, 16);
+            const comet2 = new THREE.Mesh(c2Geo, c1Mat.clone());
+            this.logoGroup.add(comet2);
+            this.logoComets.push({ mesh: comet2, type: 'orbit_apex', angle: 0.0, radius: 2.7, height: 1.2, speed: 0.32 });
 
-            this.scene.add(this.coreGroup);
+            // Comet 3: Sweeping Equatorial Spark (sweeps around base vortex)
+            const c3Geo = new THREE.SphereGeometry(0.16, 16, 16);
+            const comet3 = new THREE.Mesh(c3Geo, c1Mat.clone());
+            this.logoGroup.add(comet3);
+            this.logoComets.push({ mesh: comet3, type: 'orbit_base', angle: Math.PI, radius: 3.2, height: -0.8, speed: 0.24 });
+
+            // Light Halos for the comets
+            this.cometLight = new THREE.PointLight(BRAND_PALETTE.warmAmber, 2.5, 8);
+            this.logoGroup.add(this.cometLight);
+
+            this.scene.add(this.logoGroup);
         }
 
-        _buildOrbitalSatellites() {
+        // ---------------------------------------------------------------------
+        // 5. THE 4 SERVICE ARCHITECTURE PODS (KIẾN TRÚC DỊCH VỤ)
+        // ---------------------------------------------------------------------
+
+        _buildArchitecturalServicePods() {
             this.satelliteNodes = [];
             this.interactiveObjects = [];
 
             TOPOLOGY_NODES_DATA.forEach((data, index) => {
-                const group = new THREE.Group();
-                group.name = data.id;
-                group.userData = { nodeData: data, isSatellite: true, index: index };
+                const podGroup = new THREE.Group();
+                podGroup.name = data.id;
+                podGroup.userData = {
+                    nodeData: data,
+                    isPod: true,
+                    index: index,
+                    orbitAngle: data.orbitAngle,
+                    radius: data.radius,
+                    stackPos: data.stackPos
+                };
 
-                let geometry, material;
+                // 1. High-Tech Hexagonal Glass Pedestal Base
+                const pedestalGeo = new THREE.CylinderGeometry(1.25, 1.45, 0.18, 6);
+                const pedestalMat = new THREE.MeshStandardMaterial({
+                    color: BRAND_PALETTE.pedestalBase,
+                    emissive: data.color,
+                    emissiveIntensity: 0.32,
+                    metalness: 0.85,
+                    roughness: 0.25
+                });
+                const pedestal = new THREE.Mesh(pedestalGeo, pedestalMat);
+                pedestal.position.y = -0.55;
+                podGroup.add(pedestal);
 
-                // Specialized Visual Geometries representing each platform capability
+                // Neon Edge Bevel on Pedestal
+                const pedestalEdgeGeo = new THREE.RingGeometry(1.26, 1.34, 6);
+                const pedestalEdgeMat = new THREE.MeshBasicMaterial({
+                    color: data.color,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.75
+                });
+                const pedestalEdge = new THREE.Mesh(pedestalEdgeGeo, pedestalEdgeMat);
+                pedestalEdge.rotation.x = Math.PI / 2;
+                pedestalEdge.position.y = -0.45;
+                podGroup.add(pedestalEdge);
+
+                // 2. Specialized Semantic Micro-Architecture
+                const architectureCore = new THREE.Group();
+
                 switch (data.key) {
-                    case 'DIGIFORCE':
-                        // Truncated Octahedron with 4 step rings (3h -> 3d -> 3w -> 3m)
-                        geometry = new THREE.OctahedronGeometry(0.85, 1);
-                        material = new THREE.MeshStandardMaterial({
+                    case 'DIGIFORCE': {
+                        // 4 Stepped Cascading Glass Slabs (3h -> 3d -> 3w -> 3m)
+                        for (let s = 0; s < 4; s++) {
+                            const slabWidth = 1.1 - (s * 0.15);
+                            const slabGeo = new THREE.BoxGeometry(slabWidth, 0.10, slabWidth);
+                            const slabMat = new THREE.MeshStandardMaterial({
+                                color: (s % 2 === 0) ? data.color : BRAND_PALETTE.electricSapphire,
+                                emissive: data.color,
+                                emissiveIntensity: 0.45 + (s * 0.12),
+                                metalness: 0.8,
+                                roughness: 0.2,
+                                transparent: true,
+                                opacity: 0.88
+                            });
+                            const slab = new THREE.Mesh(slabGeo, slabMat);
+                            slab.position.y = -0.3 + (s * 0.22);
+                            slab.rotation.y = s * (Math.PI / 8);
+                            architectureCore.add(slab);
+                        }
+                        // Top Lightning / Rapid Synth Node
+                        const topGlyphGeo = new THREE.OctahedronGeometry(0.28, 0);
+                        const topGlyphMat = new THREE.MeshBasicMaterial({ color: BRAND_PALETTE.techCyan });
+                        const topGlyph = new THREE.Mesh(topGlyphGeo, topGlyphMat);
+                        topGlyph.position.y = 0.75;
+                        architectureCore.add(topGlyph);
+                        break;
+                    }
+
+                    case 'MOJO_AI': {
+                        // Neural Multi-Agent Swarm Core & VLM Vision Sensor
+                        const brainGeo = new THREE.IcosahedronGeometry(0.72, 1);
+                        const brainMat = new THREE.MeshStandardMaterial({
                             color: data.color,
-                            emissive: data.accentColor,
-                            emissiveIntensity: 0.45,
+                            emissive: BRAND_PALETTE.electricSapphire,
+                            emissiveIntensity: 0.65,
+                            metalness: 0.9,
+                            roughness: 0.15
+                        });
+                        const brain = new THREE.Mesh(brainGeo, brainMat);
+                        architectureCore.add(brain);
+
+                        // 6 Orbiting Swarm Micro-Agents
+                        podGroup.userData.swarmAgents = [];
+                        for (let a = 0; a < 6; a++) {
+                            const agentGeo = new THREE.SphereGeometry(0.09, 8, 8);
+                            const agentMat = new THREE.MeshBasicMaterial({ color: BRAND_PALETTE.techCyan });
+                            const agentMesh = new THREE.Mesh(agentGeo, agentMat);
+                            architectureCore.add(agentMesh);
+                            podGroup.userData.swarmAgents.push({
+                                mesh: agentMesh,
+                                radius: 1.15,
+                                angleOffset: a * (Math.PI / 3),
+                                speed: 0.8 + (a * 0.15)
+                            });
+                        }
+                        break;
+                    }
+
+                    case 'MOJOVERSE': {
+                        // Interlocking Cryptographic Hash-Chain Blocks & Consensus Rings
+                        for (let b = 0; b < 3; b++) {
+                            const bGeo = new THREE.BoxGeometry(0.55, 0.55, 0.55);
+                            const bMat = new THREE.MeshStandardMaterial({
+                                color: BRAND_PALETTE.warmAmber,
+                                emissive: BRAND_PALETTE.warmAmberGlow,
+                                emissiveIntensity: 0.6,
+                                metalness: 0.85,
+                                roughness: 0.2
+                            });
+                            const block = new THREE.Mesh(bGeo, bMat);
+                            block.position.set((b - 1) * 0.42, (b - 1) * 0.32, (b - 1) * 0.2);
+                            block.rotation.set(b * 0.2, b * 0.3, b * 0.1);
+                            architectureCore.add(block);
+                        }
+
+                        // Rotating Consensus Torus Ring
+                        const consensusGeo = new THREE.TorusGeometry(1.05, 0.022, 16, 48);
+                        const consensusMat = new THREE.MeshBasicMaterial({
+                            color: BRAND_PALETTE.warmAmberGlow,
+                            transparent: true,
+                            opacity: 0.85
+                        });
+                        const consensusRing = new THREE.Mesh(consensusGeo, consensusMat);
+                        consensusRing.rotation.x = Math.PI / 2.5;
+                        architectureCore.add(consensusRing);
+                        podGroup.userData.consensusRing = consensusRing;
+                        break;
+                    }
+
+                    case 'INTELLIGENT_ERP': {
+                        // 4 Enterprise Architecture Pillars supporting Unified Data Core
+                        for (let p = 0; p < 4; p++) {
+                            const angle = p * (Math.PI / 2);
+                            const pillarGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.85, 8);
+                            const pillarMat = new THREE.MeshStandardMaterial({
+                                color: BRAND_PALETTE.pedestalBase,
+                                emissive: BRAND_PALETTE.emeraldGreen,
+                                emissiveIntensity: 0.4,
+                                metalness: 0.9,
+                                roughness: 0.2
+                            });
+                            const pillar = new THREE.Mesh(pillarGeo, pillarMat);
+                            pillar.position.set(Math.cos(angle) * 0.65, 0, Math.sin(angle) * 0.65);
+                            architectureCore.add(pillar);
+                        }
+
+                        // Floating Central Sovereign Data Sphere (Single Source of Truth)
+                        const erpCoreGeo = new THREE.SphereGeometry(0.48, 16, 16);
+                        const erpCoreMat = new THREE.MeshStandardMaterial({
+                            color: BRAND_PALETTE.electricSapphire,
+                            emissive: BRAND_PALETTE.emeraldGreen,
+                            emissiveIntensity: 0.7,
                             metalness: 0.8,
                             roughness: 0.2
                         });
-                        break;
+                        const erpCore = new THREE.Mesh(erpCoreGeo, erpCoreMat);
+                        architectureCore.add(erpCore);
 
-                    case 'MOJO_AI':
-                        // Dual nested Icosahedron with neural gyroscopic sensors
-                        geometry = new THREE.IcosahedronGeometry(0.9, 1);
-                        material = new THREE.MeshStandardMaterial({
-                            color: data.color,
-                            emissive: data.accentColor,
-                            emissiveIntensity: 0.55,
-                            metalness: 0.85,
-                            roughness: 0.15
+                        // Latitudinal telemetry ring
+                        const teleRingGeo = new THREE.RingGeometry(0.68, 0.72, 32);
+                        const teleRingMat = new THREE.MeshBasicMaterial({
+                            color: BRAND_PALETTE.emeraldGreen,
+                            side: THREE.DoubleSide,
+                            transparent: true,
+                            opacity: 0.75
                         });
+                        const teleRing = new THREE.Mesh(teleRingGeo, teleRingMat);
+                        teleRing.rotation.x = Math.PI / 2;
+                        architectureCore.add(teleRing);
                         break;
-
-                    case 'MOJOVERSE':
-                        // Interlocking Hexagonal Prism Lattice (Enterprise Blockchain & Web3)
-                        geometry = new THREE.CylinderGeometry(0.7, 0.7, 1.1, 6);
-                        material = new THREE.MeshStandardMaterial({
-                            color: data.color,
-                            emissive: data.accentColor,
-                            emissiveIntensity: 0.6,
-                            metalness: 0.9,
-                            roughness: 0.25
-                        });
-                        break;
-
-                    case 'INTELLIGENT_ERP':
-                        // Quad-pillar Monolith (GRC, EHS, RCM, e-CO)
-                        geometry = new THREE.DodecahedronGeometry(0.88, 0);
-                        material = new THREE.MeshStandardMaterial({
-                            color: data.color,
-                            emissive: data.accentColor,
-                            emissiveIntensity: 0.5,
-                            metalness: 0.75,
-                            roughness: 0.3
-                        });
-                        break;
-
-                    default:
-                        geometry = new THREE.SphereGeometry(0.8, 24, 24);
-                        material = new THREE.MeshStandardMaterial({ color: data.color });
+                    }
                 }
 
-                const mesh = new THREE.Mesh(geometry, material);
-                mesh.castShadow = true;
-                group.add(mesh);
+                podGroup.add(architectureCore);
+                podGroup.userData.architectureCore = architectureCore;
 
-                // Wireframe protective boundary
-                const wireGeo = geometry.clone();
-                const wireMat = new THREE.MeshBasicMaterial({
-                    color: data.color,
-                    wireframe: true,
-                    transparent: true,
-                    opacity: 0.35
-                });
-                const wireMesh = new THREE.Mesh(wireGeo, wireMat);
-                wireMesh.scale.set(1.22, 1.22, 1.22);
-                group.add(wireMesh);
-
-                // Halo status beacon ring
-                const beaconGeo = new THREE.RingGeometry(1.25, 1.32, 32);
+                // 3. Status Beacon Ring
+                const beaconGeo = new THREE.RingGeometry(1.4, 1.48, 32);
                 const beaconMat = new THREE.MeshBasicMaterial({
                     color: data.color,
                     side: THREE.DoubleSide,
                     transparent: true,
-                    opacity: 0.65
+                    opacity: 0.55
                 });
                 const beacon = new THREE.Mesh(beaconGeo, beaconMat);
                 beacon.rotation.x = Math.PI / 2;
-                group.add(beacon);
+                beacon.position.y = -0.52;
+                podGroup.add(beacon);
 
-                // Invisible expanded bounding sphere for easy raycaster picking on mobile/desktop
-                const hitSphereGeo = new THREE.SphereGeometry(1.6, 16, 16);
+                // 4. Invisible Expanded Raycaster Hit Sphere (Smooth interaction on Mobile & Desktop)
+                const hitSphereGeo = new THREE.SphereGeometry(1.8, 16, 16);
                 const hitSphereMat = new THREE.MeshBasicMaterial({ visible: false });
                 const hitSphere = new THREE.Mesh(hitSphereGeo, hitSphereMat);
-                hitSphere.userData = { parentGroup: group, nodeData: data };
-                group.add(hitSphere);
+                hitSphere.userData = { parentGroup: podGroup, nodeData: data };
+                podGroup.add(hitSphere);
 
-                this.scene.add(group);
-                this.satelliteNodes.push(group);
+                this.scene.add(podGroup);
+                this.satelliteNodes.push(podGroup);
                 this.interactiveObjects.push(hitSphere);
             });
         }
 
-        _buildParticleBridges() {
-            this.bridgeCurves = [];
+        // ---------------------------------------------------------------------
+        // 6. DUAL DATA CONDUITS (CYBERNETIC BUSES)
+        // ---------------------------------------------------------------------
+
+        _buildDataConduits() {
+            this.conduitBuses = [];
             this.packetParticles = [];
 
-            const inclination = 0.2618; // 15 degrees tilt
-
             TOPOLOGY_NODES_DATA.forEach((data, index) => {
-                const angle = data.orbitAngle;
-                const r = data.radius;
-                
-                // Nominal 3D endpoint on inclined orbital plane
-                const targetPos = new THREE.Vector3(
-                    Math.cos(angle) * r,
-                    Math.sin(angle) * r * Math.sin(inclination) + Math.sin(index * 1.5) * 0.4,
-                    Math.sin(angle) * r * Math.cos(inclination)
-                );
+                const targetPos = this._calculateOrbitalPosition(data.orbitAngle, data.radius, 0);
 
-                // Curve with arch factor h = 1.6
+                // Quadratic Bezier Conduit from Logo Core to Pod
                 const midPoint = new THREE.Vector3(
-                    targetPos.x * 0.5,
-                    targetPos.y * 0.5 + 1.6,
-                    targetPos.z * 0.5
+                    targetPos.x * 0.45,
+                    targetPos.y * 0.45 + 1.4,
+                    targetPos.z * 0.45
                 );
 
                 const curve = new THREE.QuadraticBezierCurve3(
@@ -547,28 +652,28 @@
                     targetPos
                 );
 
-                // Translucent energy spline tube
-                const tubeGeo = new THREE.TubeGeometry(curve, 40, 0.028, 8, false);
+                // Translucent Glass Conduit Tube
+                const tubeGeo = new THREE.TubeGeometry(curve, 36, 0.032, 8, false);
                 const tubeMat = new THREE.MeshBasicMaterial({
                     color: data.color,
                     transparent: true,
-                    opacity: 0.28
+                    opacity: 0.32
                 });
                 const tubeMesh = new THREE.Mesh(tubeGeo, tubeMat);
                 this.scene.add(tubeMesh);
 
-                this.bridgeCurves.push({
+                this.conduitBuses.push({
                     curve: curve,
                     tubeMesh: tubeMesh,
                     nodeIndex: index,
                     targetPos: targetPos
                 });
 
-                // Discrete flowing energy packets along spline
+                // Discrete Glowing Data Packets
                 for (let p = 0; p < this.options.pulsePacketCount; p++) {
-                    const packetGeo = new THREE.SphereGeometry(0.065, 8, 8);
+                    const packetGeo = new THREE.SphereGeometry(0.075, 8, 8);
                     const packetMat = new THREE.MeshBasicMaterial({
-                        color: (p % 2 === 0) ? BRAND_PALETTE.mintCyan : data.color,
+                        color: (p % 2 === 0) ? BRAND_PALETTE.techCyan : data.color,
                         transparent: true,
                         opacity: 0.95
                     });
@@ -579,14 +684,57 @@
                         mesh: packetMesh,
                         curveIndex: index,
                         progress: p / this.options.pulsePacketCount,
-                        speed: 0.08 + (index * 0.015)
+                        speed: 0.09 + (index * 0.015)
                     });
                 }
             });
         }
 
+        // ---------------------------------------------------------------------
+        // 7. ARCHITECTURE STACK PLATES (ISOMETRIC MULTI-TIER MODE)
+        // ---------------------------------------------------------------------
+
+        _buildArchitectureStackPlates() {
+            this.stackPlatesGroup = new THREE.Group();
+            this.stackPlatesGroup.name = 'Innoria_Architecture_Stack_Plates';
+            this.stackPlatesGroup.visible = false;
+
+            const tiers = [
+                { y: 3.2, label: 'TẦNG 3: GIẢI PHÁP VẬN HÀNH & AI AGENTS', color: BRAND_PALETTE.mintCyan },
+                { y: 0.0, label: 'TẦNG 2: 4 ĐỘNG CƠ CÔNG NGHỆ LÕI (CORE ENGINES)', color: BRAND_PALETTE.electricSapphire },
+                { y: -3.2, label: 'TẦNG 1: NỀN TẢNG CLOUD, K8S & AIR-GAPPED DB', color: BRAND_PALETTE.gridLines }
+            ];
+
+            tiers.forEach((t) => {
+                const plateGeo = new THREE.PlaneGeometry(16, 7);
+                const plateMat = new THREE.MeshBasicMaterial({
+                    color: t.color,
+                    transparent: true,
+                    opacity: 0.08,
+                    side: THREE.DoubleSide
+                });
+                const plateMesh = new THREE.Mesh(plateGeo, plateMat);
+                plateMesh.rotation.x = Math.PI / 2;
+                plateMesh.position.y = t.y;
+                this.stackPlatesGroup.add(plateMesh);
+
+                // Wireframe perimeter
+                const borderGeo = new THREE.EdgesGeometry(plateGeo);
+                const borderMat = new THREE.LineBasicMaterial({
+                    color: t.color,
+                    transparent: true,
+                    opacity: 0.4
+                });
+                const border = new THREE.LineSegments(borderGeo, borderMat);
+                border.rotation.x = Math.PI / 2;
+                border.position.y = t.y;
+                this.stackPlatesGroup.add(border);
+            });
+
+            this.scene.add(this.stackPlatesGroup);
+        }
+
         _buildCosmicDust() {
-            // Instanced point cloud for 60fps ambient atmospheric depth (<1 draw call)
             const count = this.options.particleCount;
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(count * 3);
@@ -597,17 +745,15 @@
             const cAmber = new THREE.Color(BRAND_PALETTE.warmAmber);
 
             for (let i = 0; i < count; i++) {
-                // Fibonacci sphere volume distribution (Radius 22.0)
                 const phi = Math.acos(-1 + (2 * i) / count);
                 const theta = Math.sqrt(count * Math.PI) * phi;
-                const r = 4.0 + Math.random() * 18.0;
+                const r = 4.5 + Math.random() * 18.0;
 
                 positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-                positions[i * 3 + 1] = (Math.random() - 0.5) * 12.0;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 14.0;
                 positions[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
 
-                // Mix palette colors
-                let col = (i % 3 === 0) ? cSapphire : ((i % 3 === 1) ? cMint : cAmber);
+                const col = (i % 3 === 0) ? cSapphire : ((i % 3 === 1) ? cMint : cAmber);
                 colors[i * 3] = col.r;
                 colors[i * 3 + 1] = col.g;
                 colors[i * 3 + 2] = col.b;
@@ -617,10 +763,10 @@
             geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
             const material = new THREE.PointsMaterial({
-                size: 0.12,
+                size: 0.11,
                 vertexColors: true,
                 transparent: true,
-                opacity: 0.65,
+                opacity: 0.60,
                 blending: THREE.AdditiveBlending
             });
 
@@ -629,7 +775,7 @@
         }
 
         // ---------------------------------------------------------------------
-        // 5. RAYCASTER & EVENT BUS INTERACTION
+        // 8. INTERACTIVE RAYCASTING & EVENTS
         // ---------------------------------------------------------------------
 
         _initRaycasting() {
@@ -668,9 +814,8 @@
             };
 
             const onPointerUp = (e) => {
-                // Ensure drag threshold (<4px) to distinguish drag from deliberate click
                 const dist = Math.hypot(e.clientX - this._pointerDownPos.x, e.clientY - this._pointerDownPos.y);
-                if (dist > 4.0) return;
+                if (dist > 5.0) return; // Disregard drags
 
                 const rect = this.domElement.getBoundingClientRect();
                 this.pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -703,19 +848,18 @@
             this._hoveredNode = isHovered ? nodeGroup : null;
             if (!nodeGroup) return;
 
-            const targetScale = isHovered ? 1.25 : 1.0;
+            const targetScale = isHovered ? 1.22 : 1.0;
             nodeGroup.scale.set(targetScale, targetScale, targetScale);
         }
 
         selectNode(nodeGroup, nodeData) {
             this._selectedNode = nodeGroup;
 
-            // Compute camera destination: offset position oriented outward from center
             const nodeWorldPos = new THREE.Vector3();
             nodeGroup.getWorldPosition(nodeWorldPos);
 
             const offsetDir = nodeWorldPos.clone().normalize();
-            const targetCamPos = nodeWorldPos.clone().add(offsetDir.multiplyScalar(4.2)).add(new THREE.Vector3(0, 1.8, 0));
+            const targetCamPos = nodeWorldPos.clone().add(offsetDir.multiplyScalar(4.5)).add(new THREE.Vector3(0, 1.6, 0));
 
             this._startCameraLerp(targetCamPos, nodeWorldPos);
 
@@ -729,10 +873,11 @@
 
         resetView() {
             this._selectedNode = null;
-            this._startCameraLerp(this.defaultCameraPos, this.controlsTarget);
+            const targetCamPos = (this.currentMode === 'stack') ? this.stackCameraPos : this.defaultCameraPos;
+            this._startCameraLerp(targetCamPos, this.controlsTarget);
 
             if (this.controls) {
-                this.controls.autoRotate = this.options.autoRotate;
+                this.controls.autoRotate = (this.currentMode === 'topology') ? this.options.autoRotate : false;
             }
 
             this.emit('node_deselect', {});
@@ -750,52 +895,45 @@
             }
         }
 
-        _startCameraLerp(toPos, toTarget) {
-            this._cameraLerp.active = true;
-            this._cameraLerp.startTime = this._clock.getElapsedTime();
-            this._cameraLerp.fromPos.copy(this.camera.position);
-            this._cameraLerp.toPos.copy(toPos);
-            this._cameraLerp.fromTarget.copy(this.controls ? this.controls.target : this.controlsTarget);
-            this._cameraLerp.toTarget.copy(toTarget);
-        }
-
-        // Cubic ease-in-out easing for cinematic camera movement
-        _easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
-
-        // ---------------------------------------------------------------------
-        // 6. EVENT BUS ARCHITECTURE (PUB/SUB)
-        // ---------------------------------------------------------------------
-
-        on(event, handler) {
-            if (!this._listeners.has(event)) {
-                this._listeners.set(event, []);
+        toggleArchitectureMode() {
+            if (this.currentMode === 'topology') {
+                this.setMode('stack');
+            } else {
+                this.setMode('topology');
             }
-            this._listeners.get(event).push(handler);
-            return this;
         }
 
-        off(event, handler) {
-            if (!this._listeners.has(event)) return this;
-            const list = this._listeners.get(event).filter(cb => cb !== handler);
-            this._listeners.set(event, list);
-            return this;
-        }
+        setMode(mode) {
+            this.currentMode = (mode === 'stack') ? 'stack' : 'topology';
 
-        emit(event, payload) {
-            if (!this._listeners.has(event)) return;
-            this._listeners.get(event).forEach(cb => {
-                try {
-                    cb(payload);
-                } catch (err) {
-                    console.error('[InnoriaTopology3D] Event handler error (' + event + '):', err);
-                }
-            });
+            if (this.currentMode === 'stack') {
+                // Show architectural tiers, hide orbital ring
+                if (this.stackPlatesGroup) this.stackPlatesGroup.visible = true;
+                if (this.orbitalPlaneMesh) this.orbitalPlaneMesh.visible = false;
+                if (this.logoGroup) this.logoGroup.position.set(0, 0, -2.5); // Center behind stack
+
+                if (this.controls) this.controls.autoRotate = false;
+                this._startCameraLerp(this.stackCameraPos, this.controlsTarget);
+            } else {
+                // Topology view: orbital ring visible, stack plates hidden
+                if (this.stackPlatesGroup) this.stackPlatesGroup.visible = false;
+                if (this.orbitalPlaneMesh) this.orbitalPlaneMesh.visible = true;
+                if (this.logoGroup) this.logoGroup.position.set(0, 0, 0);
+
+                if (this.controls) this.controls.autoRotate = this.options.autoRotate;
+                this._startCameraLerp(this.defaultCameraPos, this.controlsTarget);
+            }
+
+            const toggleBtn = document.getElementById('innoriaModeToggleBtn') || document.querySelector('[data-action="toggle-mode"]');
+            if (toggleBtn) {
+                toggleBtn.innerHTML = (this.currentMode === 'stack') ? '<span>🌌 Quỹ Đạo Logo</span>' : '<span>🏛️ Kiến Trúc Dịch Vụ</span>';
+            }
+
+            this.emit('mode_change', { mode: this.currentMode });
         }
 
         // ---------------------------------------------------------------------
-        // 7. HUD DOM BINDINGS (WCAG AAA COMPLIANT)
+        // 9. HUD TELEMETRY PANEL
         // ---------------------------------------------------------------------
 
         _bindDOMHUD() {
@@ -810,14 +948,14 @@
                     right: 2rem;
                     max-width: 440px;
                     width: calc(100% - 4rem);
-                    background: rgba(5, 16, 30, 0.94);
-                    backdrop-filter: blur(16px);
-                    -webkit-backdrop-filter: blur(16px);
-                    border: 1px solid rgba(47, 128, 237, 0.35);
-                    border-radius: 12px;
+                    background: rgba(7, 11, 20, 0.94);
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    border: 1px solid rgba(10, 187, 219, 0.35);
+                    border-radius: 14px;
                     color: #FFFFFF;
                     z-index: 1000;
-                    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), 0 0 20px rgba(47, 128, 237, 0.2);
+                    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 24px rgba(10, 187, 219, 0.25);
                     font-family: system-ui, -apple-system, sans-serif;
                 `;
                 this.container.style.position = 'relative';
@@ -834,7 +972,7 @@
             const metricsHtml = nodeData.metrics.map(m => `
                 <div class="d-flex justify-content-between align-items-center py-2 border-bottom" style="border-color: rgba(255,255,255,0.08) !important;">
                     <span style="font-size: 0.85rem; color: #CBD5E1;">${m.label}</span>
-                    <span class="badge" style="background: rgba(47,128,237,0.18); border: 1px solid ${hexColor}; color: #FFFFFF; font-weight: 600; font-size: 0.82rem; padding: 0.25rem 0.65rem; border-radius: 6px;">
+                    <span class="badge" style="background: rgba(10,187,219,0.18); border: 1px solid ${hexColor}; color: #FFFFFF; font-weight: 600; font-size: 0.82rem; padding: 0.25rem 0.65rem; border-radius: 6px;">
                         ${m.value}
                     </span>
                 </div>
@@ -850,10 +988,10 @@
                             ${nodeData.name}
                         </h3>
                     </div>
-                    <button type="button" class="btn-close btn-close-white" aria-label="Close telemetry view" style="opacity: 0.8;"></button>
+                    <button type="button" class="btn-close btn-close-white" aria-label="Close telemetry view" style="opacity: 0.85;"></button>
                 </div>
                 
-                <p style="font-size: 0.88rem; line-height: 1.4; color: #E2E8F0; margin-bottom: 1.2rem;">
+                <p style="font-size: 0.88rem; line-height: 1.45; color: #E2E8F0; margin-bottom: 1.2rem;">
                     ${nodeData.tagline}
                 </p>
 
@@ -862,8 +1000,8 @@
                 </div>
 
                 <div class="d-flex gap-2 mt-3 pt-2">
-                    <a href="${nodeData.deepLink}" class="btn w-100 py-2 text-center text-decoration-none fw-bold" style="background: ${hexColor}; color: #05101E; border-radius: 8px; font-size: 0.9rem; transition: opacity 0.2s ease;">
-                        Inspect Architecture &rarr;
+                    <a href="${nodeData.deepLink}" class="btn w-100 py-2 text-center text-decoration-none fw-bold" style="background: ${hexColor}; color: #070B14; border-radius: 8px; font-size: 0.9rem; transition: opacity 0.2s ease;">
+                        Khám Phá Chi Tiết &rarr;
                     </a>
                 </div>
             `;
@@ -877,16 +1015,64 @@
             }
 
             this.hudElement.style.display = 'block';
+            document.querySelectorAll('.innoria-hud-btn').forEach(btn => {
+                const k = btn.getAttribute('data-node-key');
+                btn.classList.toggle('active', k === nodeData.key || k === nodeData.id);
+            });
         }
 
         hideHUD() {
             if (this.hudElement) {
                 this.hudElement.style.display = 'none';
             }
+            document.querySelectorAll('.innoria-hud-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+        }
+
+        _bindControlButtons() {
+            const hudBars = document.querySelectorAll('.innoria-hud-control-bar');
+            hudBars.forEach(hudBar => {
+                let toggleBtn = hudBar.querySelector('[data-action="toggle-mode"]');
+                if (!toggleBtn) {
+                    toggleBtn = document.createElement('button');
+                    toggleBtn.type = 'button';
+                    toggleBtn.className = 'innoria-hud-btn';
+                    toggleBtn.id = 'innoriaModeToggleBtn';
+                    toggleBtn.setAttribute('data-action', 'toggle-mode');
+                    toggleBtn.innerHTML = '<span>🏛️ Kiến Trúc Dịch Vụ</span>';
+                    const resetBtn = hudBar.querySelector('[data-action="reset-view"]');
+                    if (resetBtn) {
+                        hudBar.insertBefore(toggleBtn, resetBtn);
+                    } else {
+                        hudBar.appendChild(toggleBtn);
+                    }
+                }
+
+                const buttons = hudBar.querySelectorAll('.innoria-hud-btn');
+                buttons.forEach(btn => {
+                    if (btn.__innoriaBound) return;
+                    btn.__innoriaBound = true;
+
+                    const action = btn.getAttribute('data-action');
+                    const nodeKey = btn.getAttribute('data-node-key');
+
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (action === 'focus-node' && nodeKey) {
+                            this.focusNodeByKey(nodeKey);
+                        } else if (action === 'reset-view') {
+                            this.resetView();
+                        } else if (action === 'toggle-mode') {
+                            this.toggleArchitectureMode();
+                        }
+                    });
+                });
+            });
         }
 
         // ---------------------------------------------------------------------
-        // 8. ANIMATION & 60 FPS RENDER LOOP
+        // 10. RENDER LOOP (60 FPS) & DYNAMIC ANIMATIONS
         // ---------------------------------------------------------------------
 
         start() {
@@ -909,231 +1095,230 @@
             this._clock.stop();
         }
 
+        _calculateOrbitalPosition(angle, radius, elapsed) {
+            const inclination = 0.22;
+            const currentAngle = angle + (elapsed * 0.08);
+            return new THREE.Vector3(
+                Math.cos(currentAngle) * radius,
+                Math.sin(currentAngle) * radius * Math.sin(inclination) + Math.sin(elapsed * 1.5) * 0.2,
+                Math.sin(currentAngle) * radius * Math.cos(inclination)
+            );
+        }
+
         _render() {
             const delta = this._clock.getDelta();
             const elapsed = this._clock.getElapsedTime();
 
-            // 1. Central Core Dynamics
-            if (this.coreGroup) {
-                this.coreGroup.rotation.y = elapsed * 0.22;
-                this.latticeMesh.rotation.x = elapsed * -0.15;
-                this.latticeMesh.rotation.z = elapsed * 0.12;
+            // 1. Central Innoria Logo Dynamics
+            if (this.logoGroup) {
+                this.logoGroup.rotation.y = elapsed * 0.18;
+                this.logoGroup.rotation.z = Math.sin(elapsed * 0.4) * 0.08;
 
-                this.ringMesh1.rotation.z = elapsed * 0.45;
-                this.ringMesh2.rotation.z = -elapsed * 0.35;
+                // Pulsing nucleus
+                const scalePulse = 1.0 + 0.08 * Math.sin(elapsed * 2.8);
+                if (this.nucleusMesh) {
+                    this.nucleusMesh.scale.set(scalePulse, scalePulse, scalePulse);
+                    this.nucleusMesh.rotation.y = elapsed * 0.45;
+                }
 
-                // Pulsate plasma
-                const scalePulse = 1.0 + 0.06 * Math.sin(elapsed * 2.5);
-                this.plasmaMesh.scale.set(scalePulse, scalePulse, scalePulse);
-
-                // Update glow shader uniform
-                if (this.coreGlowUniforms) {
-                    this.coreGlowUniforms.time.value = elapsed;
+                // Animate the 3 Signature Orange Comets along their Logo Trajectories
+                if (this.logoComets && this.logoCurve) {
+                    this.logoComets.forEach((c) => {
+                        if (c.type === 'spline') {
+                            c.progress = (c.progress + delta * c.speed) % 1.0;
+                            const pt = this.logoCurve.getPointAt(c.progress);
+                            c.mesh.position.copy(pt);
+                            if (this.cometLight) this.cometLight.position.copy(pt);
+                        } else if (c.type === 'orbit_apex') {
+                            c.angle += delta * c.speed;
+                            c.mesh.position.set(
+                                Math.cos(c.angle) * c.radius,
+                                c.height + Math.sin(c.angle * 2) * 0.3,
+                                Math.sin(c.angle) * c.radius
+                            );
+                        } else if (c.type === 'orbit_base') {
+                            c.angle -= delta * c.speed;
+                            c.mesh.position.set(
+                                Math.cos(c.angle) * c.radius,
+                                c.height + Math.cos(c.angle * 2) * 0.25,
+                                Math.sin(c.angle) * c.radius
+                            );
+                        }
+                    });
                 }
             }
 
-            // 2. Orbital Satellite Motions
-            const inclination = 0.2618;
-            this.satelliteNodes.forEach((nodeGroup, i) => {
-                const data = nodeGroup.userData.nodeData;
-                
-                // Steady orbital drift
-                const currentAngle = data.orbitAngle + (elapsed * data.orbitSpeed * 0.35);
-                const r = data.radius;
+            // 2. Service Architecture Pod Motions & Transitions
+            this.satelliteNodes.forEach((podGroup) => {
+                const data = podGroup.userData.nodeData;
+                let targetPos;
 
-                const posX = Math.cos(currentAngle) * r;
-                const posY = Math.sin(currentAngle) * r * Math.sin(inclination) + Math.sin(elapsed * 1.8 + i) * 0.22;
-                const posZ = Math.sin(currentAngle) * r * Math.cos(inclination);
+                if (this.currentMode === 'stack') {
+                    // Isometric Layered Architecture Stack
+                    targetPos = data.stackPos;
+                } else {
+                    // Orbital Logo Constellation Mode
+                    targetPos = this._calculateOrbitalPosition(data.orbitAngle, data.radius, elapsed);
+                }
 
-                nodeGroup.position.set(posX, posY, posZ);
+                // Smooth position lerp
+                podGroup.position.lerp(targetPos, 0.06);
 
-                // Self rotation
-                nodeGroup.children[0].rotation.y = elapsed * 0.6;
-                nodeGroup.children[0].rotation.x = elapsed * 0.3;
+                // Self rotation & micro-architecture dynamics
+                const archCore = podGroup.userData.architectureCore;
+                if (archCore) {
+                    archCore.rotation.y = elapsed * 0.35;
+                }
 
-                // Update spline endpoint
-                if (this.bridgeCurves[i]) {
-                    this.bridgeCurves[i].targetPos.set(posX, posY, posZ);
+                // MOJO AI Micro-Agent Swarm Dynamics
+                if (podGroup.userData.swarmAgents) {
+                    podGroup.userData.swarmAgents.forEach((ag) => {
+                        const agAngle = (elapsed * ag.speed) + ag.angleOffset;
+                        ag.mesh.position.set(
+                            Math.cos(agAngle) * ag.radius,
+                            Math.sin(agAngle * 2) * 0.35,
+                            Math.sin(agAngle) * ag.radius
+                        );
+                    });
+                }
+
+                // MOJOVERSE Consensus Ring Rotation
+                if (podGroup.userData.consensusRing) {
+                    podGroup.userData.consensusRing.rotation.z = elapsed * 0.75;
                 }
             });
 
-            // 3. Flowing Energy Packets Along Splines
-            this.packetParticles.forEach(p => {
-                p.progress += delta * p.speed;
-                if (p.progress > 1.0) p.progress = 0.0;
+            // 3. Cybernetic Data Conduit Pulses
+            if (this.packetParticles && this.conduitBuses) {
+                this.packetParticles.forEach((pkt) => {
+                    const conduit = this.conduitBuses[pkt.curveIndex];
+                    if (!conduit) return;
 
-                const bridge = this.bridgeCurves[p.curveIndex];
-                if (bridge) {
-                    const pos = bridge.curve.getPointAt(p.progress);
-                    p.mesh.position.copy(pos);
-                }
-            });
+                    pkt.progress = (pkt.progress + delta * pkt.speed) % 1.0;
+                    
+                    // When in stack mode, packet moves toward stack position; otherwise orbital
+                    const targetNode = this.satelliteNodes[pkt.curveIndex];
+                    if (targetNode) {
+                        const start = new THREE.Vector3(0, 0, 0);
+                        const end = targetNode.position;
+                        const mid = new THREE.Vector3(end.x * 0.5, end.y * 0.5 + 1.2, end.z * 0.5);
+                        const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
+                        const pt = curve.getPointAt(pkt.progress);
+                        pkt.mesh.position.copy(pt);
+                    }
+                });
+            }
 
-            // 4. Cosmic Dust Gyroscopic Rotation
+            // 4. Ambient Cosmic Dust Drift
             if (this.cosmicDust) {
                 this.cosmicDust.rotation.y = elapsed * 0.02;
-                this.cosmicDust.rotation.x = elapsed * 0.01;
             }
 
-            // 5. Camera Interpolation
-            if (this._cameraLerp.active) {
-                const progress = (elapsed - this._cameraLerp.startTime) / this._cameraLerp.duration;
-                if (progress >= 1.0) {
-                    this._cameraLerp.active = false;
-                    this.camera.position.copy(this._cameraLerp.toPos);
-                    if (this.controls) this.controls.target.copy(this._cameraLerp.toTarget);
-                } else {
-                    const t = this._easeInOutCubic(progress);
-                    this.camera.position.lerpVectors(this._cameraLerp.fromPos, this._cameraLerp.toPos, t);
-                    if (this.controls) {
-                        this.controls.target.lerpVectors(this._cameraLerp.fromTarget, this._cameraLerp.toTarget, t);
-                    }
+            // 5. Smooth Camera Lerp on Target Selection
+            if (this._cameraLerping) {
+                this._camLerpAlpha += delta * 1.8;
+                const alpha = Math.min(this._camLerpAlpha, 1.0);
+                const smoothAlpha = 0.5 - 0.5 * Math.cos(alpha * Math.PI); // Ease in-out sine
+
+                this.camera.position.lerpVectors(this._camLerpStart, this._camLerpEnd, smoothAlpha);
+                if (this.controls) {
+                    this.controls.target.lerpVectors(this._targetLerpStart, this._targetLerpEnd, smoothAlpha);
+                    this.controls.update();
                 }
-            }
 
-            // 6. OrbitControls Update
-            if (this.controls && !this._cameraLerp.active) {
+                if (alpha >= 1.0) {
+                    this._cameraLerping = false;
+                }
+            } else if (this.controls) {
                 this.controls.update();
             }
 
             this.renderer.render(this.scene, this.camera);
         }
 
+        _startCameraLerp(endPos, endTarget) {
+            this._cameraLerping = true;
+            this._camLerpAlpha = 0.0;
+            this._camLerpStart = this.camera.position.clone();
+            this._camLerpEnd = endPos.clone();
+            this._targetLerpStart = this.controls ? this.controls.target.clone() : new THREE.Vector3(0, 0, 0);
+            this._targetLerpEnd = endTarget.clone();
+        }
+
+        _handleResize() {
+            if (!this.container || !this.renderer || !this.camera) return;
+            const width = this.container.clientWidth || 800;
+            const height = this.container.clientHeight || 520;
+
+            this.camera.aspect = width / height;
+            this.camera.updateProjectionMatrix();
+            this.renderer.setSize(width, height);
+            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.0));
+        }
+
         // ---------------------------------------------------------------------
-        // 9. RESIZE & INTERSECTION OBSERVER (AUTO-PAUSE FOR BATTERY / 60 FPS)
+        // 11. EVENT EMITTER INTERFACE
         // ---------------------------------------------------------------------
 
-        _setupResizeHandler() {
-            this._resizeObserver = new ResizeObserver(entries => {
-                for (let entry of entries) {
-                    const width = entry.contentRect.width;
-                    const height = entry.contentRect.height;
-                    if (width > 0 && height > 0) {
-                        this.camera.aspect = width / height;
-                        this.camera.updateProjectionMatrix();
-                        this.renderer.setSize(width, height);
-                    }
-                }
+        on(event, handler) {
+            if (!this._listeners[event]) this._listeners[event] = [];
+            this._listeners[event].push(handler);
+            return this;
+        }
+
+        off(event, handler) {
+            if (!this._listeners[event]) return this;
+            this._listeners[event] = this._listeners[event].filter(h => h !== handler);
+            return this;
+        }
+
+        emit(event, data) {
+            if (!this._listeners[event]) return;
+            this._listeners[event].forEach(handler => {
+                try { handler(data); } catch (e) { console.error('[InnoriaTopology3D] Listener error:', e); }
             });
-            this._resizeObserver.observe(this.container);
         }
 
-        _setupVisibilityObserver() {
-            if ('IntersectionObserver' in window) {
-                this._intersectionObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            this.start();
-                        } else {
-                            this.stop();
-                        }
-                    });
-                }, { threshold: 0.05 });
-                this._intersectionObserver.observe(this.container);
-            }
-        }
-
-        // ---------------------------------------------------------------------
-        // 10. CLEANUP & MEMORY DISPOSAL
-        // ---------------------------------------------------------------------
-
-        dispose() {
+        destroy() {
             this.stop();
-
-            if (this._resizeObserver) this._resizeObserver.disconnect();
-            if (this._intersectionObserver) this._intersectionObserver.disconnect();
+            window.removeEventListener('resize', this._onResize);
             if (this._unbindEvents) this._unbindEvents();
-            if (this.controls) this.controls.dispose();
 
-            // Recursive GPU buffer and material cleanup
-            this.scene.traverse(object => {
-                if (object.geometry) {
-                    object.geometry.dispose();
-                }
-                if (object.material) {
-                    if (Array.isArray(object.material)) {
-                        object.material.forEach(mat => mat.dispose());
-                    } else {
-                        object.material.dispose();
-                    }
-                }
-            });
-
-            this.renderer.dispose();
-            if (this.domElement && this.domElement.parentNode) {
-                this.domElement.parentNode.removeChild(this.domElement);
+            if (this.renderer && this.renderer.domElement && this.renderer.domElement.parentNode) {
+                this.renderer.domElement.parentNode.removeChild(this.renderer.domElement);
             }
-
+            if (this.controls && this.controls.dispose) {
+                this.controls.dispose();
+            }
             if (this.hudElement && this.hudElement.parentNode) {
                 this.hudElement.parentNode.removeChild(this.hudElement);
             }
-
-            this._listeners.clear();
-            console.log('[InnoriaTopology3D] Disposed successfully with zero memory leak.');
+            this.scene = null;
+            this.camera = null;
+            this.renderer = null;
         }
     }
 
-    // Auto-initialization for Odoo Website / DOM
-    function autoInit() {
-        if (typeof document === 'undefined') return;
-        const viewports = document.querySelectorAll('#innoriaTopologyViewport, [data-innoria-3d="topology"], .innoria-topology-container');
-        viewports.forEach(vp => {
-            if (!vp.__innoriaEngine) {
-                try {
-                    const engine = new InnoriaTopologyEngine(vp);
-                    vp.__innoriaEngine = engine;
-                    if (typeof window !== 'undefined') {
-                        window.__innoriaTopology = engine;
+    // Auto-init fallback for standalone topology viewports
+    if (typeof document !== 'undefined') {
+        const autoInitTopology = () => {
+            const viewports = document.querySelectorAll('[data-innoria-3d="topology"], #innoriaTopologyViewport');
+            viewports.forEach(vp => {
+                if (!vp.querySelector('canvas') && !vp.__innoriaTopologyEngine && !vp.__innoriaHeroManager) {
+                    try {
+                        vp.__innoriaTopologyEngine = new InnoriaTopologyEngine(vp);
+                    } catch (e) {
+                        console.warn('[InnoriaTopology3D] Auto-init skipped or deferred:', e);
                     }
-
-                    // Wire up external or internal data-action buttons
-                    const bindButtons = (rootEl) => {
-                        const btns = rootEl.querySelectorAll('[data-action="focus-node"], [data-action="reset-view"]');
-                        btns.forEach(btn => {
-                            btn.addEventListener('click', (e) => {
-                                e.preventDefault();
-                                const action = btn.getAttribute('data-action');
-                                if (action === 'focus-node') {
-                                    const key = btn.getAttribute('data-node-key');
-                                    engine.focusNodeByKey(key);
-                                    btns.forEach(b => b.classList.remove('active'));
-                                    btn.classList.add('active');
-                                } else if (action === 'reset-view') {
-                                    engine.resetView();
-                                    btns.forEach(b => b.classList.remove('active'));
-                                }
-                            });
-                        });
-                    };
-
-                    bindButtons(vp);
-                    const section = vp.closest('section');
-                    if (section) bindButtons(section);
-                } catch (err) {
-                    console.error('[InnoriaTopology3D] AutoInit error:', err);
                 }
-            }
-        });
-    }
-
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', autoInit);
-        } else {
-            autoInit();
-        }
-        window.InnoriaTopologyEngine = InnoriaTopologyEngine;
-        window.InnoriaTopology3D = {
-            InnoriaTopologyEngine,
-            autoInit,
-            BRAND_PALETTE,
-            TOPOLOGY_NODES_DATA
+            });
         };
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', autoInitTopology);
+        } else {
+            setTimeout(autoInitTopology, 50);
+        }
     }
-
-    InnoriaTopologyEngine.autoInit = autoInit;
-    InnoriaTopologyEngine.BRAND_PALETTE = BRAND_PALETTE;
-    InnoriaTopologyEngine.TOPOLOGY_NODES_DATA = TOPOLOGY_NODES_DATA;
 
     return InnoriaTopologyEngine;
 }));
