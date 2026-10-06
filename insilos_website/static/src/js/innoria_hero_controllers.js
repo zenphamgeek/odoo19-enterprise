@@ -1859,3 +1859,253 @@
 
     return ControllersBundle;
 }));
+
+// =========================================================================
+// INNORIA HERO VIDEO SLIDER AUTO-INITIALIZER (BUNDLE SAFEGUARD)
+// =========================================================================
+(function () {
+    if (typeof window === 'undefined') return;
+
+    var THEMES = [
+        { index: 0, name: 'DIGIFORCE', accent: '#00F0FF', glow: 'rgba(0, 240, 255, 0.4)' },
+        { index: 1, name: 'MOJO AI', accent: '#FF8000', glow: 'rgba(255, 128, 0, 0.4)' },
+        { index: 2, name: 'MOJOVERSE', accent: '#10B981', glow: 'rgba(16, 185, 129, 0.4)' },
+        { index: 3, name: 'INTELLIGENT ERP', accent: '#3B82F6', glow: 'rgba(59, 130, 246, 0.4)' }
+    ];
+
+    function InnoriaHeroVideoSlider(container) {
+        if (!container || container.__innoria_hero_slider_initialized) return;
+        container.__innoria_hero_slider_initialized = true;
+
+        this.container = container;
+        this.videoLayers = Array.prototype.slice.call(container.querySelectorAll('.video-slide-layer'));
+        this.slideItems = Array.prototype.slice.call(container.querySelectorAll('.hero-slide-item'));
+        this.tabBtns = Array.prototype.slice.call(container.querySelectorAll('.hero-product-tab-btn'));
+        this.progressFills = Array.prototype.slice.call(container.querySelectorAll('.tab-progress-fill'));
+        this.ambientGlow = container.querySelector('#heroAmbientGlow');
+        this.hudCounter = container.querySelector('#heroSlideCounter');
+        this.prevBtn = container.querySelector('#heroPrevBtn');
+        this.nextBtn = container.querySelector('#heroNextBtn');
+        this.playPauseBtn = container.querySelector('#heroPlayPauseBtn');
+        this.playPauseIcon = container.querySelector('#heroPlayPauseIcon');
+        this.muteBtn = container.querySelector('#heroMuteBtn');
+        this.muteIcon = container.querySelector('#heroMuteIcon');
+        this.contentStage = container.querySelector('.hero-content-stage');
+
+        this.totalSlides = Math.max(this.slideItems.length, this.videoLayers.length, 4);
+        this.currentIndex = 0;
+        this.slideDuration = 6500;
+        this.isPlaying = true;
+        this.isMuted = true;
+        this.isHoverPaused = false;
+        this.startTime = null;
+        this.pausedProgress = 0;
+        this.rafId = null;
+
+        this._bindEvents();
+        this._initVideos();
+        this.goToSlide(0, true);
+        this._startCycle();
+    }
+
+    InnoriaHeroVideoSlider.prototype._initVideos = function () {
+        var self = this;
+        this.videoLayers.forEach(function (video) {
+            video.muted = self.isMuted;
+            video.playsInline = true;
+            video.loop = true;
+            video.preload = 'auto';
+            var p = video.play();
+            if (p !== undefined) p.catch(function () {});
+        });
+    };
+
+    InnoriaHeroVideoSlider.prototype.goToSlide = function (targetIdx, immediate) {
+        var self = this;
+        if (targetIdx < 0) targetIdx = this.totalSlides - 1;
+        if (targetIdx >= this.totalSlides) targetIdx = 0;
+
+        this.currentIndex = targetIdx;
+        var theme = THEMES[targetIdx] || THEMES[0];
+
+        this.videoLayers.forEach(function (vid, idx) {
+            if (idx === targetIdx) {
+                vid.classList.add('active');
+                if (vid.paused && self.isPlaying) {
+                    try { vid.play().catch(function () {}); } catch (e) {}
+                }
+            } else {
+                vid.classList.remove('active');
+            }
+        });
+
+        this.slideItems.forEach(function (slide, idx) {
+            if (idx === targetIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+
+        if (this.ambientGlow) {
+            this.ambientGlow.style.background = 'radial-gradient(circle, ' + theme.glow + ' 0%, transparent 70%)';
+        }
+
+        this.tabBtns.forEach(function (tab, idx) {
+            if (idx === targetIdx) {
+                tab.classList.add('active');
+            } else {
+                tab.classList.remove('active');
+            }
+        });
+
+        this.progressFills.forEach(function (fill) {
+            fill.style.width = '0%';
+        });
+
+        if (this.hudCounter) {
+            var currStr = (targetIdx + 1) < 10 ? '0' + (targetIdx + 1) : (targetIdx + 1);
+            var totalStr = this.totalSlides < 10 ? '0' + this.totalSlides : this.totalSlides;
+            this.hudCounter.textContent = currStr + ' / ' + totalStr;
+        }
+
+        this.pausedProgress = 0;
+        this.startTime = performance.now();
+    };
+
+    InnoriaHeroVideoSlider.prototype._startCycle = function () {
+        var self = this;
+        if (this.rafId) cancelAnimationFrame(this.rafId);
+
+        function tick(now) {
+            if (!self.startTime) self.startTime = now;
+
+            if (self.isPlaying && !self.isHoverPaused) {
+                var elapsed = now - self.startTime + (self.pausedProgress * self.slideDuration);
+                var progress = Math.min(elapsed / self.slideDuration, 1.0);
+
+                var activeFill = self.container.querySelector('#tabProgress' + self.currentIndex);
+                if (activeFill) {
+                    activeFill.style.width = (progress * 100) + '%';
+                }
+
+                if (progress >= 1.0) {
+                    self.nextSlide();
+                    return;
+                }
+            }
+
+            self.rafId = requestAnimationFrame(tick);
+        }
+
+        this.rafId = requestAnimationFrame(tick);
+    };
+
+    InnoriaHeroVideoSlider.prototype.nextSlide = function () {
+        this.goToSlide((this.currentIndex + 1) % this.totalSlides);
+    };
+
+    InnoriaHeroVideoSlider.prototype.prevSlide = function () {
+        this.goToSlide((this.currentIndex - 1 + this.totalSlides) % this.totalSlides);
+    };
+
+    InnoriaHeroVideoSlider.prototype.togglePlayPause = function () {
+        this.isPlaying = !this.isPlaying;
+        if (this.isPlaying) {
+            this.startTime = performance.now();
+            if (this.playPauseIcon) {
+                this.playPauseIcon.innerHTML = '<use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-pause"/>';
+            }
+            if (this.playPauseBtn) this.playPauseBtn.title = 'Tạm dừng';
+            var activeVideo = this.videoLayers[this.currentIndex];
+            if (activeVideo && activeVideo.paused) activeVideo.play().catch(function () {});
+            this._startCycle();
+        } else {
+            if (this.playPauseIcon) {
+                this.playPauseIcon.innerHTML = '<use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/>';
+            }
+            if (this.playPauseBtn) this.playPauseBtn.title = 'Tiếp tục phát';
+            var currVideo = this.videoLayers[this.currentIndex];
+            if (currVideo && !currVideo.paused) currVideo.pause();
+        }
+    };
+
+    InnoriaHeroVideoSlider.prototype.toggleMute = function () {
+        this.isMuted = !this.isMuted;
+        var self = this;
+        this.videoLayers.forEach(function (video) {
+            video.muted = self.isMuted;
+        });
+
+        if (this.muteIcon) {
+            if (this.isMuted) {
+                this.muteIcon.innerHTML = '<use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-speaker-slash"/>';
+                if (this.muteBtn) this.muteBtn.title = 'Bật âm thanh';
+            } else {
+                this.muteIcon.innerHTML = '<use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-speaker-high"/>';
+                if (this.muteBtn) this.muteBtn.title = 'Tắt âm thanh';
+            }
+        }
+    };
+
+    InnoriaHeroVideoSlider.prototype._bindEvents = function () {
+        var self = this;
+        this.tabBtns.forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                var targetIdx = parseInt(btn.getAttribute('data-tab-target'), 10);
+                if (!isNaN(targetIdx)) self.goToSlide(targetIdx);
+            });
+        });
+
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                self.prevSlide();
+            });
+        }
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                self.nextSlide();
+            });
+        }
+        if (this.playPauseBtn) {
+            this.playPauseBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                self.togglePlayPause();
+            });
+        }
+        if (this.muteBtn) {
+            this.muteBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                self.toggleMute();
+            });
+        }
+        if (this.contentStage) {
+            this.contentStage.addEventListener('mouseenter', function () {
+                self.isHoverPaused = true;
+            });
+            this.contentStage.addEventListener('mouseleave', function () {
+                self.isHoverPaused = false;
+                self.startTime = performance.now();
+            });
+        }
+    };
+
+    function autoMount() {
+        var heroEl = document.querySelector('#innoria_hero_cover, .innoria-hero-slider-section');
+        if (heroEl && !heroEl.__innoria_hero_slider_initialized) {
+            window.innoriaHeroSlider = new InnoriaHeroVideoSlider(heroEl);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', autoMount);
+    } else {
+        autoMount();
+    }
+
+    window.InnoriaHeroVideoSlider = InnoriaHeroVideoSlider;
+})();
+

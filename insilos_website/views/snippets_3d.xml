@@ -754,7 +754,7 @@
                  data-snippet="s_innoria_3d_architecture_deck"
                  data-name="Innoria 3D Architecture Deck"
                  id="architecture_deck"
-                 style="background: #FFFFFF;">
+                 style="background: #070B14 !important;">
             <div class="container py-4">
                 <div class="deck-app-container">
 
@@ -796,9 +796,9 @@
                                 <span>Đặt Lại Góc</span>
                             </button>
 
-                            <button id="btnAutoTour" type="button" class="btn-action" title="Bật/Tắt chế độ tự động trình diễn">
+                            <button id="btnAutoTour" type="button" class="btn-action opacity-50" title="Bật/Tắt chế độ tự động trình diễn">
                                 <span class="status-dot"></span>
-                                <span id="btnAutoTourText">Auto Demo: ON</span>
+                                <span id="btnAutoTourText">Auto Demo: OFF</span>
                             </button>
                         </div>
                     </div>
@@ -815,7 +815,7 @@
                                     <span class="status-dot"></span>
                                     <span>HARDWARE 3D // 60 FPS</span>
                                 </div>
-                                <div id="layerBadge" class="badge-hud" style="color: #0052ff; border-color: rgba(0,82,255,0.3);">
+                                <div id="layerBadge" class="badge-hud" style="color: #0ABBDB; border-color: rgba(10, 187, 219, 0.4);">
                                     <span>INSPECT: <strong id="badgeLayerName">ALL LAYERS</strong></span>
                                 </div>
                             </div>
@@ -823,53 +823,63 @@
                             <!-- 3D Scene Viewport -->
                             <div class="scene-viewport">
                                 <div id="deckContainer" class="deck-container-3d isometric-angle">
+                                    <!-- Ambient Floor Shadow -->
+                                    <div class="deck-floor-shadow"></div>
 
                                     <!-- LAYER 0 (TOP): No-Code Platform -->
-                                    <div id="slab-0" class="slab-layer" data-layer-idx="0" style="--active-accent: #0284c7; --active-glow: rgba(2, 132, 199, 0.45);">
+                                    <div id="slab-0" class="slab-layer" data-layer-idx="0" style="--active-accent: #00F0FF; --active-glow: rgba(0, 240, 255, 0.6);">
                                         <div class="slab-shadow"></div>
                                         <div class="top"></div>
+                                        <div class="bottom"></div>
                                         <div class="front-right">
                                             <div class="title-text">No-Code Platform</div>
                                             <div class="sub-text">App Studio, Workflow Designer, Automation</div>
                                         </div>
                                         <div class="front-left"></div>
                                         <div class="back-right"></div>
+                                        <div class="back-left"></div>
                                     </div>
 
                                     <!-- LAYER 1: Platform Services -->
-                                    <div id="slab-1" class="slab-layer" data-layer-idx="1" style="--active-accent: #1d4ed8; --active-glow: rgba(29, 78, 216, 0.45);">
+                                    <div id="slab-1" class="slab-layer" data-layer-idx="1" style="--active-accent: #3B82F6; --active-glow: rgba(59, 130, 246, 0.6);">
                                         <div class="slab-shadow"></div>
                                         <div class="top"></div>
+                                        <div class="bottom"></div>
                                         <div class="front-right">
                                             <div class="title-text">Platform Services</div>
                                             <div class="sub-text">Architecture | Security | Administration | Deployment</div>
                                         </div>
                                         <div class="front-left"></div>
                                         <div class="back-right"></div>
+                                        <div class="back-left"></div>
                                     </div>
 
                                     <!-- LAYER 2: Artificial Intelligence -->
-                                    <div id="slab-2" class="slab-layer" data-layer-idx="2" style="--active-accent: #7c3aed; --active-glow: rgba(124, 58, 237, 0.45);">
+                                    <div id="slab-2" class="slab-layer" data-layer-idx="2" style="--active-accent: #F59E0B; --active-glow: rgba(245, 158, 11, 0.6);">
                                         <div class="slab-shadow"></div>
                                         <div class="top"></div>
+                                        <div class="bottom"></div>
                                         <div class="front-right">
-                                            <div class="title-text">Artificial Intelligent</div>
+                                            <div class="title-text">Artificial Intelligence</div>
                                             <div class="sub-text">Generative AI, Explainable AI, Human-Machine Understanding</div>
                                         </div>
                                         <div class="front-left"></div>
                                         <div class="back-right"></div>
+                                        <div class="back-left"></div>
                                     </div>
 
-                                    <!-- LAYER 3 (BOTTOM): Data Lake &amp; Core ERP -->
-                                    <div id="slab-3" class="slab-layer" data-layer-idx="3" style="--active-accent: #d97706; --active-glow: rgba(217, 119, 6, 0.45);">
+                                    <!-- LAYER 3 (BOTTOM): Data Lake & Core ERP -->
+                                    <div id="slab-3" class="slab-layer" data-layer-idx="3" style="--active-accent: #10B981; --active-glow: rgba(16, 185, 129, 0.6);">
                                         <div class="slab-shadow"></div>
                                         <div class="top"></div>
+                                        <div class="bottom"></div>
                                         <div class="front-right">
-                                            <div class="title-text">Data</div>
+                                            <div class="title-text">Data Lake &amp; Core ERP</div>
                                             <div class="sub-text">ERP, Governance Risk &amp; Compliance, IIoT, ext. Datasource</div>
                                         </div>
                                         <div class="front-left"></div>
                                         <div class="back-right"></div>
+                                        <div class="back-left"></div>
                                     </div>
 
                                 </div>
@@ -893,8 +903,8 @@
                             <div id="summaryCardsContainer" style="display: flex; flex-direction: column; gap: 14px;">
 
                                 <!-- Card 0: No-code Platform -->
-                                <div id="card-0" class="summary-card" data-layer-idx="0" style="--card-color: #0284c7; --card-tint: #e0f2fe; --card-glow: rgba(2, 132, 199, 0.4);">
-                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #0284c7, #0ea5e9);">
+                                <div id="card-0" class="summary-card" data-layer-idx="0" style="--card-color: #00F0FF; --card-tint: rgba(0, 240, 255, 0.15); --card-glow: rgba(0, 240, 255, 0.45);">
+                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #0284c7, #00f0ff);">
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                             <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                                             <polyline points="2 17 12 22 22 17"></polyline>
@@ -913,8 +923,8 @@
                                 </div>
 
                                 <!-- Card 1: Platform Services -->
-                                <div id="card-1" class="summary-card" data-layer-idx="1" style="--card-color: #1d4ed8; --card-tint: #dbeafe; --card-glow: rgba(29, 78, 216, 0.4);">
-                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #1d4ed8, #2563eb);">
+                                <div id="card-1" class="summary-card" data-layer-idx="1" style="--card-color: #3B82F6; --card-tint: rgba(59, 130, 246, 0.15); --card-glow: rgba(59, 130, 246, 0.45);">
+                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #1d4ed8, #3b82f6);">
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                             <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
                                             <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
@@ -934,8 +944,8 @@
                                 </div>
 
                                 <!-- Card 2: Artificial Intelligence -->
-                                <div id="card-2" class="summary-card" data-layer-idx="2" style="--card-color: #7c3aed; --card-tint: #ede9fe; --card-glow: rgba(124, 58, 237, 0.4);">
-                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
+                                <div id="card-2" class="summary-card" data-layer-idx="2" style="--card-color: #F59E0B; --card-tint: rgba(245, 158, 11, 0.15); --card-glow: rgba(245, 158, 11, 0.45);">
+                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #b45309, #f59e0b);">
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                             <rect x="4" y="4" width="16" height="16" rx="2"></rect>
                                             <rect x="9" y="9" width="6" height="6"></rect>
@@ -961,8 +971,8 @@
                                 </div>
 
                                 <!-- Card 3: Data Lake &amp; Core ERP -->
-                                <div id="card-3" class="summary-card" data-layer-idx="3" style="--card-color: #d97706; --card-tint: #fef3c7; --card-glow: rgba(217, 119, 6, 0.4);">
-                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+                                <div id="card-3" class="summary-card" data-layer-idx="3" style="--card-color: #10B981; --card-tint: rgba(16, 185, 129, 0.15); --card-glow: rgba(16, 185, 129, 0.45);">
+                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #059669, #10b981);">
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                             <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
                                             <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
@@ -985,9 +995,9 @@
                             <!-- MODE 2: FULL COLUMN DETAILED ARCHITECTURE PANELS -->
                             
                             <!-- Deep Panel 0: No-Code Platform -->
-                            <div id="deep-panel-0" class="deep-column-panel" style="--panel-color: #0369a1; --panel-glow: rgba(2, 132, 199, 0.2);">
+                            <div id="deep-panel-0" class="deep-column-panel" style="--panel-color: #00F0FF; --panel-glow: rgba(0, 240, 255, 0.35);">
                                 <div class="deep-header">
-                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #0284c7, #0ea5e9);">
+                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #0284c7, #00f0ff); box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                             <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                                             <polyline points="2 17 12 22 22 17"></polyline>
@@ -995,7 +1005,7 @@
                                         </svg>
                                     </div>
                                     <div class="deep-title-group">
-                                        <p style="color: #0369a1 !important; font-weight: 700;">LỚP 01 // APPLICATION DEVELOPMENT</p>
+                                        <p style="color: #00F0FF !important; font-weight: 700;">LỚP 01 // APPLICATION DEVELOPMENT</p>
                                         <h3 class="mb-0">No-Code Platform &amp; App Studio</h3>
                                     </div>
                                 </div>
@@ -1007,25 +1017,25 @@
                                 <div class="deep-feature-grid">
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #0284c7;">&#8226;</span> App Studio Kéo Thả
+                                            <span style="color: #00F0FF;">&#8226;</span> App Studio Kéo Thả
                                         </div>
                                         <div class="feature-pill-desc">Tạo giao diện Web &amp; Mobile Responsive, custom views không cần code lại.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #0284c7;">&#8226;</span> Workflow Designer
+                                            <span style="color: #00F0FF;">&#8226;</span> Workflow Designer
                                         </div>
                                         <div class="feature-pill-desc">Chuẩn hóa luồng BPMN 2.0, tự động hoá phê duyệt và kích hoạt Webhook.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #0284c7;">&#8226;</span> Auto API Engine
+                                            <span style="color: #00F0FF;">&#8226;</span> Auto API Engine
                                         </div>
                                         <div class="feature-pill-desc">Tự sinh OpenAPI / Swagger 3.0, bảo mật token JWT phân quyền chi tiết.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #0284c7;">&#8226;</span> Omnichannel Deploy
+                                            <span style="color: #00F0FF;">&#8226;</span> Omnichannel Deploy
                                         </div>
                                         <div class="feature-pill-desc">Xuất bản 1 chạm trên Web Browser, iOS, Android và Tablet công nghiệp.</div>
                                     </div>
@@ -1047,17 +1057,17 @@
                                 </div>
 
                                 <div class="layer-selector-tabs">
-                                    <div class="tab-item active" data-tab-layer="0" style="--tab-color: #0284c7; --tab-bg: #e0f2fe;">Lớp 1: No-Code</div>
-                                    <div class="tab-item" data-tab-layer="1" style="--tab-color: #1d4ed8; --tab-bg: #dbeafe;">Lớp 2: Services</div>
-                                    <div class="tab-item" data-tab-layer="2" style="--tab-color: #7c3aed; --tab-bg: #ede9fe;">Lớp 3: AI</div>
-                                    <div class="tab-item" data-tab-layer="3" style="--tab-color: #d97706; --tab-bg: #fef3c7;">Lớp 4: Data ERP</div>
+                                    <div class="tab-item active" data-tab-layer="0" style="--tab-color: #00F0FF;">Lớp 1: No-Code</div>
+                                    <div class="tab-item" data-tab-layer="1" style="--tab-color: #3B82F6;">Lớp 2: Services</div>
+                                    <div class="tab-item" data-tab-layer="2" style="--tab-color: #F59E0B;">Lớp 3: AI</div>
+                                    <div class="tab-item" data-tab-layer="3" style="--tab-color: #10B981;">Lớp 4: Data ERP</div>
                                 </div>
                             </div>
 
                             <!-- Deep Panel 1: Platform Services -->
-                            <div id="deep-panel-1" class="deep-column-panel" style="--panel-color: #1d4ed8; --panel-glow: rgba(29, 78, 216, 0.2);">
+                            <div id="deep-panel-1" class="deep-column-panel" style="--panel-color: #3B82F6; --panel-glow: rgba(59, 130, 246, 0.35);">
                                 <div class="deep-header">
-                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #1d4ed8, #2563eb);">
+                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #1d4ed8, #3b82f6); box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                             <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
                                             <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
@@ -1066,7 +1076,7 @@
                                         </svg>
                                     </div>
                                     <div class="deep-title-group">
-                                        <p>LỚP 02 // INFRASTRUCTURE &amp; SECURITY</p>
+                                        <p style="color: #3B82F6 !important; font-weight: 700;">LỚP 02 // INFRASTRUCTURE &amp; SECURITY</p>
                                         <h3 class="mb-0">Platform Services &amp; Zero-Trust</h3>
                                     </div>
                                 </div>
@@ -1078,25 +1088,25 @@
                                 <div class="deep-feature-grid">
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #1d4ed8;">&#8226;</span> Zero-Trust Security
+                                            <span style="color: #3B82F6;">&#8226;</span> Zero-Trust Security
                                         </div>
                                         <div class="feature-pill-desc">Mã hóa TLS 1.3 và mTLS giữa mọi microservices, kiểm tra quyền từng request.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #1d4ed8;">&#8226;</span> Multi-Tenant Isolation
+                                            <span style="color: #3B82F6;">&#8226;</span> Multi-Tenant Isolation
                                         </div>
                                         <div class="feature-pill-desc">Cô lập dữ liệu tuyệt đối giữa các tenant ở tầng database và runtime.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #1d4ed8;">&#8226;</span> Kubernetes Auto-Scale
+                                            <span style="color: #3B82F6;">&#8226;</span> Kubernetes Auto-Scale
                                         </div>
                                         <div class="feature-pill-desc">Tự động mở rộng pod theo phụ tải CPU/RAM trong vòng 15 giây.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #1d4ed8;">&#8226;</span> Telemetry &amp; Tracing
+                                            <span style="color: #3B82F6;">&#8226;</span> Telemetry &amp; Tracing
                                         </div>
                                         <div class="feature-pill-desc">Thu thập chỉ số APM, OpenTelemetry, và giám sát lỗi tập trung thời gian thực.</div>
                                     </div>
@@ -1118,17 +1128,17 @@
                                 </div>
 
                                 <div class="layer-selector-tabs">
-                                    <div class="tab-item" data-tab-layer="0" style="--tab-color: #0284c7; --tab-bg: #e0f2fe;">Lớp 1: No-Code</div>
-                                    <div class="tab-item active" data-tab-layer="1" style="--tab-color: #1d4ed8; --tab-bg: #dbeafe;">Lớp 2: Services</div>
-                                    <div class="tab-item" data-tab-layer="2" style="--tab-color: #7c3aed; --tab-bg: #ede9fe;">Lớp 3: AI</div>
-                                    <div class="tab-item" data-tab-layer="3" style="--tab-color: #d97706; --tab-bg: #fef3c7;">Lớp 4: Data ERP</div>
+                                    <div class="tab-item" data-tab-layer="0" style="--tab-color: #00F0FF;">Lớp 1: No-Code</div>
+                                    <div class="tab-item active" data-tab-layer="1" style="--tab-color: #3B82F6;">Lớp 2: Services</div>
+                                    <div class="tab-item" data-tab-layer="2" style="--tab-color: #F59E0B;">Lớp 3: AI</div>
+                                    <div class="tab-item" data-tab-layer="3" style="--tab-color: #10B981;">Lớp 4: Data ERP</div>
                                 </div>
                             </div>
 
                             <!-- Deep Panel 2: Artificial Intelligence -->
-                            <div id="deep-panel-2" class="deep-column-panel" style="--panel-color: #7c3aed; --panel-glow: rgba(124, 58, 237, 0.2);">
+                            <div id="deep-panel-2" class="deep-column-panel" style="--panel-color: #F59E0B; --panel-glow: rgba(245, 158, 11, 0.35);">
                                 <div class="deep-header">
-                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
+                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #b45309, #f59e0b); box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                             <rect x="4" y="4" width="16" height="16" rx="2"></rect>
                                             <rect x="9" y="9" width="6" height="6"></rect>
@@ -1143,7 +1153,7 @@
                                         </svg>
                                     </div>
                                     <div class="deep-title-group">
-                                        <p>LỚP 03 // INTELLIGENCE &amp; AGENT SWARMS</p>
+                                        <p style="color: #F59E0B !important; font-weight: 700;">LỚP 03 // INTELLIGENCE &amp; AGENT SWARMS</p>
                                         <h3 class="mb-0">Artificial Intelligence &amp; Mojo AI</h3>
                                     </div>
                                 </div>
@@ -1155,25 +1165,25 @@
                                 <div class="deep-feature-grid">
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #7c3aed;">&#8226;</span> Autonomous Agent Swarms
+                                            <span style="color: #F59E0B;">&#8226;</span> Autonomous Agent Swarms
                                         </div>
                                         <div class="feature-pill-desc">Điều phối các Agent tự hành kiểm tra chứng từ, đối soát tài chính và mua sắm.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #7c3aed;">&#8226;</span> Explainable AI (XAI)
+                                            <span style="color: #F59E0B;">&#8226;</span> Explainable AI (XAI)
                                         </div>
                                         <div class="feature-pill-desc">Giải thích minh bạch mọi đề xuất giá bán, cảnh báo rủi ro tín dụng đối tác.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #7c3aed;">&#8226;</span> VLM Vision Inspection
+                                            <span style="color: #F59E0B;">&#8226;</span> VLM Vision Inspection
                                         </div>
                                         <div class="feature-pill-desc">Thị giác AI nhận diện tem mác, quét lỗi phôi SS400 trên trạm cắt Laser CNC.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #7c3aed;">&#8226;</span> Enterprise Vector RAG
+                                            <span style="color: #F59E0B;">&#8226;</span> Enterprise Vector RAG
                                         </div>
                                         <div class="feature-pill-desc">Truy vấn tri thức nội bộ từ hàng triệu trang tài liệu quy trình, tiêu chuẩn ISO.</div>
                                     </div>
@@ -1195,17 +1205,17 @@
                                 </div>
 
                                 <div class="layer-selector-tabs">
-                                    <div class="tab-item" data-tab-layer="0" style="--tab-color: #0284c7; --tab-bg: #e0f2fe;">Lớp 1: No-Code</div>
-                                    <div class="tab-item" data-tab-layer="1" style="--tab-color: #1d4ed8; --tab-bg: #dbeafe;">Lớp 2: Services</div>
-                                    <div class="tab-item active" data-tab-layer="2" style="--tab-color: #7c3aed; --tab-bg: #ede9fe;">Lớp 3: AI</div>
-                                    <div class="tab-item" data-tab-layer="3" style="--tab-color: #d97706; --tab-bg: #fef3c7;">Lớp 4: Data ERP</div>
+                                    <div class="tab-item" data-tab-layer="0" style="--tab-color: #00F0FF;">Lớp 1: No-Code</div>
+                                    <div class="tab-item" data-tab-layer="1" style="--tab-color: #3B82F6;">Lớp 2: Services</div>
+                                    <div class="tab-item active" data-tab-layer="2" style="--tab-color: #F59E0B;">Lớp 3: AI</div>
+                                    <div class="tab-item" data-tab-layer="3" style="--tab-color: #10B981;">Lớp 4: Data ERP</div>
                                 </div>
                             </div>
 
                             <!-- Deep Panel 3: Data Lake &amp; Core ERP -->
-                            <div id="deep-panel-3" class="deep-column-panel" style="--panel-color: #d97706; --panel-glow: rgba(217, 119, 6, 0.2);">
+                            <div id="deep-panel-3" class="deep-column-panel" style="--panel-color: #10B981; --panel-glow: rgba(16, 185, 129, 0.35);">
                                 <div class="deep-header">
-                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                             <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
                                             <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
@@ -1213,7 +1223,7 @@
                                         </svg>
                                     </div>
                                     <div class="deep-title-group">
-                                        <p style="color: #b45309 !important; font-weight: 700;">LỚP 04 // CORE ENGINE &amp; LEDGER</p>
+                                        <p style="color: #10B981 !important; font-weight: 700;">LỚP 04 // CORE ENGINE &amp; LEDGER</p>
                                         <h3 class="mb-0">Data Lake &amp; Core ERP (Sovereign DB)</h3>
                                     </div>
                                 </div>
@@ -1225,25 +1235,25 @@
                                 <div class="deep-feature-grid">
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #d97706;">&#8226;</span> Enterprise Core ERP
+                                            <span style="color: #10B981;">&#8226;</span> Enterprise Core ERP
                                         </div>
                                         <div class="feature-pill-desc">Quy trình liên kết xuyên suốt SD-MM-PP-FI/CO, chuẩn hóa SAP Lexicon.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #d97706;">&#8226;</span> IIoT Telemetry Stream
+                                            <span style="color: #10B981;">&#8226;</span> IIoT Telemetry Stream
                                         </div>
                                         <div class="feature-pill-desc">Kết nối máy cắt Laser CNC, Robot hàn và cảm biến qua MQTT / OPC-UA.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #d97706;">&#8226;</span> GRC Governance
+                                            <span style="color: #10B981;">&#8226;</span> GRC Governance
                                         </div>
                                         <div class="feature-pill-desc">Kiểm soát rủi ro gian lận, truy vết Audit Trail chuẩn mực ngân hàng.</div>
                                     </div>
                                     <div class="feature-pill">
                                         <div class="feature-pill-title">
-                                            <span style="color: #d97706;">&#8226;</span> Sovereign Data Storage
+                                            <span style="color: #10B981;">&#8226;</span> Sovereign Data Storage
                                         </div>
                                         <div class="feature-pill-desc">Cơ sở dữ liệu PostgreSQL Enterprise tự chủ, bất biến và sao lưu đa vùng.</div>
                                     </div>
@@ -1265,10 +1275,10 @@
                                 </div>
 
                                 <div class="layer-selector-tabs">
-                                    <div class="tab-item" data-tab-layer="0" style="--tab-color: #0284c7; --tab-bg: #e0f2fe;">Lớp 1: No-Code</div>
-                                    <div class="tab-item" data-tab-layer="1" style="--tab-color: #1d4ed8; --tab-bg: #dbeafe;">Lớp 2: Services</div>
-                                    <div class="tab-item" data-tab-layer="2" style="--tab-color: #7c3aed; --tab-bg: #ede9fe;">Lớp 3: AI</div>
-                                    <div class="tab-item active" data-tab-layer="3" style="--tab-color: #d97706; --tab-bg: #fef3c7;">Lớp 4: Data ERP</div>
+                                    <div class="tab-item" data-tab-layer="0" style="--tab-color: #00F0FF;">Lớp 1: No-Code</div>
+                                    <div class="tab-item" data-tab-layer="1" style="--tab-color: #3B82F6;">Lớp 2: Services</div>
+                                    <div class="tab-item" data-tab-layer="2" style="--tab-color: #F59E0B;">Lớp 3: AI</div>
+                                    <div class="tab-item active" data-tab-layer="3" style="--tab-color: #10B981;">Lớp 4: Data ERP</div>
                                 </div>
                             </div>
 

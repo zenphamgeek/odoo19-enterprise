@@ -45,6 +45,7 @@
             "insilos_website/static/src/js/insilos_3d_suite.js",
             "insilos_website/static/src/js/innoria_hero_3d_manager.js",
             "insilos_website/static/src/js/innoria_hero_controllers.js",
+            "insilos_website/static/src/js/innoria_hero_slider.js",
             "insilos_website/static/src/js/innoria_topology_3d.js",
             "insilos_website/static/src/js/innoria_deck_3d.js",
             "insilos_website/static/src/js/insilos_video_telemetry.js",
