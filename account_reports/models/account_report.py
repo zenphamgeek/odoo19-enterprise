@@ -1125,7 +1125,7 @@ class AccountReport(models.Model):
 
     def _init_options_hierarchy(self, options, previous_options):
         company_ids = self.get_report_company_ids(options)
-        if self.filter_hierarchy != 'never' and self.env['account.group'].search_count(self.env['account.group']._check_company_domain(company_ids), limit=1):
+        if self.filter_hierarchy != 'never' and 'account.group' in self.env and self.env['account.group'].search_count(self.env['account.group']._check_company_domain(company_ids), limit=1):
             options['display_hierarchy_filter'] = True
             if 'hierarchy' in previous_options:
                 options['hierarchy'] = previous_options['hierarchy']
