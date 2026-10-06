@@ -744,7 +744,554 @@
     </template>
 
     <!-- ================================================================= -->
-    <!-- 6. INSILOS ERP WEBSITE SNIPPETS PALETTE EXTENSION (PRIORITY 30)   -->
+    <!-- 6. INNORIA 3D INTERACTIVE ARCHITECTURE DECK SNIPPET               -->
+    <!-- ================================================================= -->
+    <template id="s_innoria_3d_architecture_deck" name="Innoria 3D Architecture Deck">
+        <section class="s_innoria_3d_architecture_deck o_colored_level py-5 position-relative overflow-hidden"
+                 data-snippet="s_innoria_3d_architecture_deck"
+                 data-name="Innoria 3D Architecture Deck"
+                 id="architecture_deck"
+                 style="background: #FFFFFF;">
+            <div class="container py-4">
+                <div class="deck-app-container">
+
+                    <!-- Header Navigation &amp; Action Controls -->
+                    <div class="header-bar">
+                        <div>
+                            <div class="brand-tag">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                    <polyline points="2 17 12 22 22 17"></polyline>
+                                    <polyline points="2 12 12 17 22 12"></polyline>
+                                </svg>
+                                <span>Innoria Sovereign Tech Stack</span>
+                            </div>
+                            <h2 class="main-title">
+                                Kiến Trúc Đa Tầng <span class="accent">Enterprise Cloud &amp; AI</span>
+                            </h2>
+                            <p class="sub-title">
+                                Rê chuột vào từng khối 3D để trích xuất lớp kiến trúc ra khỏi Deck hoặc chọn thẻ tương ứng bên phải.
+                            </p>
+                        </div>
+
+                        <div class="action-controls">
+                            <button id="btnExplode" type="button" class="btn-action" title="Phân rã các lớp theo trục Z">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <polyline points="9 21 3 21 3 15"></polyline>
+                                    <line x1="21" y1="3" x2="14" y2="10"></line>
+                                    <line x1="3" y1="21" x2="10" y2="14"></line>
+                                </svg>
+                                <span id="btnExplodeText">Phân Rã Deck</span>
+                            </button>
+
+                            <button id="btnResetView" type="button" class="btn-action" title="Đặt lại góc chiếu chuẩn">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                                    <path d="M3 3v5h5"></path>
+                                </svg>
+                                <span>Đặt Lại Góc</span>
+                            </button>
+
+                            <button id="btnAutoTour" type="button" class="btn-action" title="Bật/Tắt chế độ tự động trình diễn">
+                                <span class="status-dot"></span>
+                                <span id="btnAutoTourText">Auto Demo: ON</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Grid: 3D Stage (Left) &amp; Description Column (Right) -->
+                    <div class="deck-grid">
+
+                        <!-- LEFT: 3D Isometric Interactive Deck -->
+                        <div id="stageCard" class="stage-card">
+
+                            <!-- Top HUD Indicators -->
+                            <div class="stage-hud-top">
+                                <div class="badge-hud">
+                                    <span class="status-dot"></span>
+                                    <span>HARDWARE 3D // 60 FPS</span>
+                                </div>
+                                <div id="layerBadge" class="badge-hud" style="color: #0052ff; border-color: rgba(0,82,255,0.3);">
+                                    <span>INSPECT: <strong id="badgeLayerName">ALL LAYERS</strong></span>
+                                </div>
+                            </div>
+
+                            <!-- 3D Scene Viewport -->
+                            <div class="scene-viewport">
+                                <div id="deckContainer" class="deck-container-3d isometric-angle">
+
+                                    <!-- LAYER 0 (TOP): No-Code Platform -->
+                                    <div id="slab-0" class="slab-layer" data-layer-idx="0" style="--active-accent: #0284c7; --active-glow: rgba(2, 132, 199, 0.45);">
+                                        <div class="slab-shadow"></div>
+                                        <div class="top"></div>
+                                        <div class="front-right">
+                                            <div class="title-text">No-Code Platform</div>
+                                            <div class="sub-text">App Studio, Workflow Designer, Automation</div>
+                                        </div>
+                                        <div class="front-left"></div>
+                                        <div class="back-right"></div>
+                                    </div>
+
+                                    <!-- LAYER 1: Platform Services -->
+                                    <div id="slab-1" class="slab-layer" data-layer-idx="1" style="--active-accent: #1d4ed8; --active-glow: rgba(29, 78, 216, 0.45);">
+                                        <div class="slab-shadow"></div>
+                                        <div class="top"></div>
+                                        <div class="front-right">
+                                            <div class="title-text">Platform Services</div>
+                                            <div class="sub-text">Architecture | Security | Administration | Deployment</div>
+                                        </div>
+                                        <div class="front-left"></div>
+                                        <div class="back-right"></div>
+                                    </div>
+
+                                    <!-- LAYER 2: Artificial Intelligence -->
+                                    <div id="slab-2" class="slab-layer" data-layer-idx="2" style="--active-accent: #7c3aed; --active-glow: rgba(124, 58, 237, 0.45);">
+                                        <div class="slab-shadow"></div>
+                                        <div class="top"></div>
+                                        <div class="front-right">
+                                            <div class="title-text">Artificial Intelligent</div>
+                                            <div class="sub-text">Generative AI, Explainable AI, Human-Machine Understanding</div>
+                                        </div>
+                                        <div class="front-left"></div>
+                                        <div class="back-right"></div>
+                                    </div>
+
+                                    <!-- LAYER 3 (BOTTOM): Data Lake &amp; Core ERP -->
+                                    <div id="slab-3" class="slab-layer" data-layer-idx="3" style="--active-accent: #d97706; --active-glow: rgba(217, 119, 6, 0.45);">
+                                        <div class="slab-shadow"></div>
+                                        <div class="top"></div>
+                                        <div class="front-right">
+                                            <div class="title-text">Data</div>
+                                            <div class="sub-text">ERP, Governance Risk &amp; Compliance, IIoT, ext. Datasource</div>
+                                        </div>
+                                        <div class="front-left"></div>
+                                        <div class="back-right"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Bottom Guidance -->
+                            <div class="stage-instruction">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                <span>Hover khối để kéo ra khỏi Deck &#8226; Kéo chuột để xoay phối cảnh 3D</span>
+                            </div>
+
+                        </div>
+
+                        <!-- RIGHT: DYNAMIC DESCRIPTION SYSTEM -->
+                        <div class="description-column">
+
+                            <!-- MODE 1: 4 SUMMARY CARDS (Default State matching user reference image) -->
+                            <div id="summaryCardsContainer" style="display: flex; flex-direction: column; gap: 14px;">
+
+                                <!-- Card 0: No-code Platform -->
+                                <div id="card-0" class="summary-card" data-layer-idx="0" style="--card-color: #0284c7; --card-tint: #e0f2fe; --card-glow: rgba(2, 132, 199, 0.4);">
+                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #0284c7, #0ea5e9);">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                            <polyline points="2 17 12 22 22 17"></polyline>
+                                            <polyline points="2 12 12 17 22 12"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="card-info">
+                                        <div class="card-header-line">
+                                            <div class="card-title">No-code Platform</div>
+                                            <span class="card-layer-chip">LỚP 1</span>
+                                        </div>
+                                        <p class="card-desc">
+                                            Xây dựng ứng dụng doanh nghiệp tốc độ cao qua giao diện kéo thả trực quan, tự sinh API REST/GraphQL chuẩn mực.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Card 1: Platform Services -->
+                                <div id="card-1" class="summary-card" data-layer-idx="1" style="--card-color: #1d4ed8; --card-tint: #dbeafe; --card-glow: rgba(29, 78, 216, 0.4);">
+                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #1d4ed8, #2563eb);">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                            <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                                            <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="card-info">
+                                        <div class="card-header-line">
+                                            <div class="card-title">Platform Services</div>
+                                            <span class="card-layer-chip">LỚP 2</span>
+                                        </div>
+                                        <p class="card-desc">
+                                            Kiến trúc Microservices độc lập, Quản trị bảo mật Zero-Trust, phân quyền RBAC/ABAC đa cấp và CI/CD tự động hoá.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2: Artificial Intelligence -->
+                                <div id="card-2" class="summary-card" data-layer-idx="2" style="--card-color: #7c3aed; --card-tint: #ede9fe; --card-glow: rgba(124, 58, 237, 0.4);">
+                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                            <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                                            <rect x="9" y="9" width="6" height="6"></rect>
+                                            <line x1="9" y1="1" x2="9" y2="4"></line>
+                                            <line x1="15" y1="1" x2="15" y2="4"></line>
+                                            <line x1="9" y1="20" x2="9" y2="23"></line>
+                                            <line x1="15" y1="20" x2="15" y2="23"></line>
+                                            <line x1="20" y1="9" x2="23" y2="9"></line>
+                                            <line x1="20" y1="14" x2="23" y2="14"></line>
+                                            <line x1="1" y1="9" x2="4" y2="9"></line>
+                                            <line x1="1" y1="14" x2="4" y2="14"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="card-info">
+                                        <div class="card-header-line">
+                                            <div class="card-title">Artificial Intelligence</div>
+                                            <span class="card-layer-chip">LỚP 3</span>
+                                        </div>
+                                        <p class="card-desc">
+                                            Generative AI, Explainable AI và Human-Machine Understanding hỗ trợ ra quyết định thời gian thực và tự động hoá.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Card 3: Data Lake &amp; Core ERP -->
+                                <div id="card-3" class="summary-card" data-layer-idx="3" style="--card-color: #d97706; --card-tint: #fef3c7; --card-glow: rgba(217, 119, 6, 0.4);">
+                                    <div class="card-icon-box" style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="card-info">
+                                        <div class="card-header-line">
+                                            <div class="card-title">Data Lake &amp; Core ERP</div>
+                                            <span class="card-layer-chip">LỚP 4</span>
+                                        </div>
+                                        <p class="card-desc">
+                                            Đồng bộ hoá nguồn dữ liệu đa dạng: ERP, GRC (Quản trị rủi ro), IIoT cảm biến và sổ cái phi tập trung hợp nhất.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- MODE 2: FULL COLUMN DETAILED ARCHITECTURE PANELS -->
+                            
+                            <!-- Deep Panel 0: No-Code Platform -->
+                            <div id="deep-panel-0" class="deep-column-panel" style="--panel-color: #0284c7; --panel-glow: rgba(2, 132, 199, 0.2);">
+                                <div class="deep-header">
+                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #0284c7, #0ea5e9);">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                            <polyline points="2 17 12 22 22 17"></polyline>
+                                            <polyline points="2 12 12 17 22 12"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="deep-title-group">
+                                        <p>LỚP 01 // APPLICATION DEVELOPMENT</p>
+                                        <h3 class="mb-0">No-Code Platform &amp; App Studio</h3>
+                                    </div>
+                                </div>
+
+                                <p class="deep-narrative">
+                                    Trao quyền cho các nhóm nghiệp vụ và kỹ sư phát triển phần mềm kiến tạo ứng dụng chuẩn doanh nghiệp với tốc độ gấp 10 lần. Nền tảng hỗ trợ kéo thả thiết kế biểu mẫu, mô hình dữ liệu động, quy trình phê duyệt đa cấp và tự động tạo REST / GraphQL APIs.
+                                </p>
+
+                                <div class="deep-feature-grid">
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #0284c7;">&#8226;</span> App Studio Kéo Thả
+                                        </div>
+                                        <div class="feature-pill-desc">Tạo giao diện Web &amp; Mobile Responsive, custom views không cần code lại.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #0284c7;">&#8226;</span> Workflow Designer
+                                        </div>
+                                        <div class="feature-pill-desc">Chuẩn hóa luồng BPMN 2.0, tự động hoá phê duyệt và kích hoạt Webhook.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #0284c7;">&#8226;</span> Auto API Engine
+                                        </div>
+                                        <div class="feature-pill-desc">Tự sinh OpenAPI / Swagger 3.0, bảo mật token JWT phân quyền chi tiết.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #0284c7;">&#8226;</span> Omnichannel Deploy
+                                        </div>
+                                        <div class="feature-pill-desc">Xuất bản 1 chạm trên Web Browser, iOS, Android và Tablet công nghiệp.</div>
+                                    </div>
+                                </div>
+
+                                <div class="tech-metrics-strip">
+                                    <div class="metric-item">
+                                        <span class="metric-label">TỐC ĐỘ DEV</span>
+                                        <span class="metric-value">Nhanh gấp 10x</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">CHUẨN TƯƠNG THÍCH</span>
+                                        <span class="metric-value">REST &amp; GraphQL</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">CODE EXPORT</span>
+                                        <span class="metric-value">100% Sạch Sẽ</span>
+                                    </div>
+                                </div>
+
+                                <div class="layer-selector-tabs">
+                                    <div class="tab-item active" data-tab-layer="0" style="--tab-color: #0284c7; --tab-bg: #e0f2fe;">Lớp 1: No-Code</div>
+                                    <div class="tab-item" data-tab-layer="1" style="--tab-color: #1d4ed8; --tab-bg: #dbeafe;">Lớp 2: Services</div>
+                                    <div class="tab-item" data-tab-layer="2" style="--tab-color: #7c3aed; --tab-bg: #ede9fe;">Lớp 3: AI</div>
+                                    <div class="tab-item" data-tab-layer="3" style="--tab-color: #d97706; --tab-bg: #fef3c7;">Lớp 4: Data ERP</div>
+                                </div>
+                            </div>
+
+                            <!-- Deep Panel 1: Platform Services -->
+                            <div id="deep-panel-1" class="deep-column-panel" style="--panel-color: #1d4ed8; --panel-glow: rgba(29, 78, 216, 0.2);">
+                                <div class="deep-header">
+                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #1d4ed8, #2563eb);">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                            <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                                            <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="deep-title-group">
+                                        <p>LỚP 02 // INFRASTRUCTURE &amp; SECURITY</p>
+                                        <h3 class="mb-0">Platform Services &amp; Zero-Trust</h3>
+                                    </div>
+                                </div>
+
+                                <p class="deep-narrative">
+                                    Tầng dịch vụ nền tảng cung cấp hạ tầng Microservices chịu tải cao, cơ chế bảo mật Zero-Trust toàn diện, quản lý định danh IAM/SSO, và quy trình CI/CD GitOps tự động hoá giúp hệ thống hoạt động liên tục 24/7 với 99.99% Enterprise Uptime.
+                                </p>
+
+                                <div class="deep-feature-grid">
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #1d4ed8;">&#8226;</span> Zero-Trust Security
+                                        </div>
+                                        <div class="feature-pill-desc">Mã hóa TLS 1.3 và mTLS giữa mọi microservices, kiểm tra quyền từng request.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #1d4ed8;">&#8226;</span> Multi-Tenant Isolation
+                                        </div>
+                                        <div class="feature-pill-desc">Cô lập dữ liệu tuyệt đối giữa các tenant ở tầng database và runtime.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #1d4ed8;">&#8226;</span> Kubernetes Auto-Scale
+                                        </div>
+                                        <div class="feature-pill-desc">Tự động mở rộng pod theo phụ tải CPU/RAM trong vòng 15 giây.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #1d4ed8;">&#8226;</span> Telemetry &amp; Tracing
+                                        </div>
+                                        <div class="feature-pill-desc">Thu thập chỉ số APM, OpenTelemetry, và giám sát lỗi tập trung thời gian thực.</div>
+                                    </div>
+                                </div>
+
+                                <div class="tech-metrics-strip">
+                                    <div class="metric-item">
+                                        <span class="metric-label">UPTIME SLA</span>
+                                        <span class="metric-value">99.99%</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">BẢO MẬT</span>
+                                        <span class="metric-value">Zero-Trust RBAC</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">ĐỘ TRỄ NỘI BỘ</span>
+                                        <span class="metric-value">&lt; 1.2ms</span>
+                                    </div>
+                                </div>
+
+                                <div class="layer-selector-tabs">
+                                    <div class="tab-item" data-tab-layer="0" style="--tab-color: #0284c7; --tab-bg: #e0f2fe;">Lớp 1: No-Code</div>
+                                    <div class="tab-item active" data-tab-layer="1" style="--tab-color: #1d4ed8; --tab-bg: #dbeafe;">Lớp 2: Services</div>
+                                    <div class="tab-item" data-tab-layer="2" style="--tab-color: #7c3aed; --tab-bg: #ede9fe;">Lớp 3: AI</div>
+                                    <div class="tab-item" data-tab-layer="3" style="--tab-color: #d97706; --tab-bg: #fef3c7;">Lớp 4: Data ERP</div>
+                                </div>
+                            </div>
+
+                            <!-- Deep Panel 2: Artificial Intelligence -->
+                            <div id="deep-panel-2" class="deep-column-panel" style="--panel-color: #7c3aed; --panel-glow: rgba(124, 58, 237, 0.2);">
+                                <div class="deep-header">
+                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                            <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                                            <rect x="9" y="9" width="6" height="6"></rect>
+                                            <line x1="9" y1="1" x2="9" y2="4"></line>
+                                            <line x1="15" y1="1" x2="15" y2="4"></line>
+                                            <line x1="9" y1="20" x2="9" y2="23"></line>
+                                            <line x1="15" y1="20" x2="15" y2="23"></line>
+                                            <line x1="20" y1="9" x2="23" y2="9"></line>
+                                            <line x1="20" y1="14" x2="23" y2="14"></line>
+                                            <line x1="1" y1="9" x2="4" y2="9"></line>
+                                            <line x1="1" y1="14" x2="4" y2="14"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="deep-title-group">
+                                        <p>LỚP 03 // INTELLIGENCE &amp; AGENT SWARMS</p>
+                                        <h3 class="mb-0">Artificial Intelligence &amp; Mojo AI</h3>
+                                    </div>
+                                </div>
+
+                                <p class="deep-narrative">
+                                    Tích hợp trí tuệ nhân tạo chuyên sâu vào từng mắt xích vận hành doanh nghiệp. Kết hợp Generative AI, Explainable AI (XAI), thị giác máy tính VLM và bầy đàn đặc vụ tự hành (Agent Swarms) giúp tối ưu hóa chuỗi cung ứng, dự báo tồn kho và ra quyết định chính xác.
+                                </p>
+
+                                <div class="deep-feature-grid">
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #7c3aed;">&#8226;</span> Autonomous Agent Swarms
+                                        </div>
+                                        <div class="feature-pill-desc">Điều phối các Agent tự hành kiểm tra chứng từ, đối soát tài chính và mua sắm.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #7c3aed;">&#8226;</span> Explainable AI (XAI)
+                                        </div>
+                                        <div class="feature-pill-desc">Giải thích minh bạch mọi đề xuất giá bán, cảnh báo rủi ro tín dụng đối tác.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #7c3aed;">&#8226;</span> VLM Vision Inspection
+                                        </div>
+                                        <div class="feature-pill-desc">Thị giác AI nhận diện tem mác, quét lỗi phôi SS400 trên trạm cắt Laser CNC.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #7c3aed;">&#8226;</span> Enterprise Vector RAG
+                                        </div>
+                                        <div class="feature-pill-desc">Truy vấn tri thức nội bộ từ hàng triệu trang tài liệu quy trình, tiêu chuẩn ISO.</div>
+                                    </div>
+                                </div>
+
+                                <div class="tech-metrics-strip">
+                                    <div class="metric-item">
+                                        <span class="metric-label">ĐỘ CHÍNH XÁC</span>
+                                        <span class="metric-value">99.8%</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">MÔ HÌNH HỖ TRỢ</span>
+                                        <span class="metric-value">LLM, VLM &amp; SLM</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">THỜI GIAN PHẢN HỒI</span>
+                                        <span class="metric-value">&lt; 350ms</span>
+                                    </div>
+                                </div>
+
+                                <div class="layer-selector-tabs">
+                                    <div class="tab-item" data-tab-layer="0" style="--tab-color: #0284c7; --tab-bg: #e0f2fe;">Lớp 1: No-Code</div>
+                                    <div class="tab-item" data-tab-layer="1" style="--tab-color: #1d4ed8; --tab-bg: #dbeafe;">Lớp 2: Services</div>
+                                    <div class="tab-item active" data-tab-layer="2" style="--tab-color: #7c3aed; --tab-bg: #ede9fe;">Lớp 3: AI</div>
+                                    <div class="tab-item" data-tab-layer="3" style="--tab-color: #d97706; --tab-bg: #fef3c7;">Lớp 4: Data ERP</div>
+                                </div>
+                            </div>
+
+                            <!-- Deep Panel 3: Data Lake &amp; Core ERP -->
+                            <div id="deep-panel-3" class="deep-column-panel" style="--panel-color: #d97706; --panel-glow: rgba(217, 119, 6, 0.2);">
+                                <div class="deep-header">
+                                    <div class="deep-icon-large" style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="deep-title-group">
+                                        <p>LỚP 04 // CORE ENGINE &amp; LEDGER</p>
+                                        <h3 class="mb-0">Data Lake &amp; Core ERP (Sovereign DB)</h3>
+                                    </div>
+                                </div>
+
+                                <p class="deep-narrative">
+                                    Tầng gốc rễ hội tụ toàn bộ nguồn lực doanh nghiệp: Hệ thống ERP toàn diện (Bán hàng, Mua hàng, Kho vận, Sản xuất, Kế toán Thông tư 200/78), Data Lake hồ dữ liệu lớn, luồng cảm biến IIoT từ nhà máy và bộ máy quản trị rủi ro &amp; tuân thủ (GRC).
+                                </p>
+
+                                <div class="deep-feature-grid">
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #d97706;">&#8226;</span> Enterprise Core ERP
+                                        </div>
+                                        <div class="feature-pill-desc">Quy trình liên kết xuyên suốt SD-MM-PP-FI/CO, chuẩn hóa SAP Lexicon.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #d97706;">&#8226;</span> IIoT Telemetry Stream
+                                        </div>
+                                        <div class="feature-pill-desc">Kết nối máy cắt Laser CNC, Robot hàn và cảm biến qua MQTT / OPC-UA.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #d97706;">&#8226;</span> GRC Governance
+                                        </div>
+                                        <div class="feature-pill-desc">Kiểm soát rủi ro gian lận, truy vết Audit Trail chuẩn mực ngân hàng.</div>
+                                    </div>
+                                    <div class="feature-pill">
+                                        <div class="feature-pill-title">
+                                            <span style="color: #d97706;">&#8226;</span> Sovereign Data Storage
+                                        </div>
+                                        <div class="feature-pill-desc">Cơ sở dữ liệu PostgreSQL Enterprise tự chủ, bất biến và sao lưu đa vùng.</div>
+                                    </div>
+                                </div>
+
+                                <div class="tech-metrics-strip">
+                                    <div class="metric-item">
+                                        <span class="metric-label">DỮ LIỆU BẤT BIẾN</span>
+                                        <span class="metric-value">100% Invariance</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">XỬ LÝ IIOT</span>
+                                        <span class="metric-value">&gt; 50,000 msg/s</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">TUÂN THỦ PHÁP LÝ</span>
+                                        <span class="metric-value">TT 200 &amp; NĐ 123</span>
+                                    </div>
+                                </div>
+
+                                <div class="layer-selector-tabs">
+                                    <div class="tab-item" data-tab-layer="0" style="--tab-color: #0284c7; --tab-bg: #e0f2fe;">Lớp 1: No-Code</div>
+                                    <div class="tab-item" data-tab-layer="1" style="--tab-color: #1d4ed8; --tab-bg: #dbeafe;">Lớp 2: Services</div>
+                                    <div class="tab-item" data-tab-layer="2" style="--tab-color: #7c3aed; --tab-bg: #ede9fe;">Lớp 3: AI</div>
+                                    <div class="tab-item active" data-tab-layer="3" style="--tab-color: #d97706; --tab-bg: #fef3c7;">Lớp 4: Data ERP</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom Telemetry Strip -->
+                    <div class="deck-footer">
+                        <div class="footer-left">
+                            <span>ARCHITECTURAL SLABS: 4/4 MOUNTED</span>
+                            <span>LATENCY: 0.12ms</span>
+                            <span class="footer-highlight">INNORIA SOVEREIGN STACK CERTIFIED</span>
+                        </div>
+                        <div>
+                            <span>Innoria Enterprise Platform v20.0 &#8226; 60 FPS CSS 3D Engine</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- 7. INSILOS ERP WEBSITE SNIPPETS PALETTE EXTENSION (PRIORITY 30)   -->
     <!-- ================================================================= -->
     <template id="insilos_3d_snippets_palette" inherit_id="website.snippets" priority="30">
         <xpath expr="//snippets[@id='snippet_structure']" position="inside">
@@ -762,6 +1309,9 @@
             </t>
             <t t-snippet="insilos_website.s_innoria_3d_topology" string="Innoria 3D Sovereign AI Topology" group="content" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_innoria_3d_topology.svg">
                 <keywords>innoria, 3d, topology, webgl, digiforce, mojo ai, mojoverse, threejs</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_innoria_3d_architecture_deck" string="Innoria 3D Architecture Deck" group="content" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_innoria_3d_topology.svg">
+                <keywords>innoria, 3d, architecture, deck, isometric, layers, nocode, ai, data lake, erp</keywords>
             </t>
         </xpath>
     </template>

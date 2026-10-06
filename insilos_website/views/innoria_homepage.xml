@@ -270,69 +270,9 @@
                 </section>
 
                 <!-- ========================================================= -->
-                <!-- 3. AUTHENTIC INNORIA ARCHITECTURE DIAGRAM SECTION         -->
+                <!-- 3. AUTHENTIC INNORIA 3D ARCHITECTURE DECK SECTION         -->
                 <!-- ========================================================= -->
-                <section class="s_image_text o_colored_level py-5 position-relative overflow-hidden"
-                         data-snippet="s_image_text"
-                         data-name="Innoria Platform Architecture"
-                         id="platform"
-                         style="background: #FFFFFF;">
-                    <div class="container py-4">
-                        <div class="row mb-5 text-center">
-                            <div class="col-lg-9 mx-auto">
-                                <span class="badge badge-innoria-cyan mb-2">KIẾN TRÚC ĐỘC QUYỀN // ARCHITECTURE</span>
-                                <h2 class="display-5 fw-bold text-dark mb-3">
-                                    Từ Bài Toán Đến Giải Pháp <span class="text-innoria-gradient">Trong 30 Ngày</span>
-                                </h2>
-                                <p class="lead fs-5 col-lg-10 mx-auto" style="color: #334155 !important;">
-                                    Kiến trúc Innoria Platform tích hợp liền mạch giữa No-Code Platform, Dịch Vụ Nền Tảng, Trí Tuệ Nhân Tạo và Hạ Tầng Hồ Dữ Liệu Doanh Nghiệp (Data Lake).
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Architecture Diagram SVG Display -->
-                        <div class="row align-items-center g-4 g-lg-5">
-                            <div class="col-lg-7 text-center">
-                                <div class="p-3 rounded-4 bg-white border shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 10px 30px rgba(10, 187, 219, 0.08);">
-                                    <img src="/insilos_website/static/src/img/innoria/architecture_innoria_platform_grey.svg" alt="Innoria Platform Architecture Diagram" class="img-fluid rounded-3" loading="eager" style="max-height: 480px; width: 100%; object-fit: contain; filter: drop-shadow(0 0 20px rgba(10, 187, 219, 0.2));"/>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="d-flex flex-column gap-4">
-                                    <div class="p-3 rounded-3 bg-white border shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);">
-                                        <div class="d-flex align-items-center gap-3 mb-2">
-                                            <div class="p-2 rounded bg-info bg-opacity-20 text-innoria-cyan">
-                                                <svg class="ph-duotone ph-stack" style="width: 1.4rem; height: 1.4rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-stack"/></svg>
-                                            </div>
-                                            <h4 class="text-dark mb-0 fs-5">No-code Platform</h4>
-                                        </div>
-                                        <p class="small mb-0" style="color: #475569 !important;">Xây dựng ứng dụng doanh nghiệp tốc độ cao qua giao diện kéo thả trực quan, tự sinh API REST/GraphQL chuẩn mực.</p>
-                                    </div>
-
-                                    <div class="p-3 rounded-3 bg-white border shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);">
-                                        <div class="d-flex align-items-center gap-3 mb-2">
-                                            <div class="p-2 rounded bg-primary bg-opacity-20 text-innoria-mint">
-                                                <svg class="ph-duotone ph-cpu" style="width: 1.4rem; height: 1.4rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
-                                            </div>
-                                            <h4 class="text-dark mb-0 fs-5">Artificial Intelligence</h4>
-                                        </div>
-                                        <p class="small mb-0" style="color: #475569 !important;">Generative AI, Explainable AI và Human-Machine Understanding hỗ trợ ra quyết định thời gian thực.</p>
-                                    </div>
-
-                                    <div class="p-3 rounded-3 bg-white border shadow-sm" style="border: 1px solid #E2E8F0; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);">
-                                        <div class="d-flex align-items-center gap-3 mb-2">
-                                            <div class="p-2 rounded bg-warning bg-opacity-20 text-innoria-amber">
-                                                <svg class="ph-duotone ph-database" style="width: 1.4rem; height: 1.4rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-database"/></svg>
-                                            </div>
-                                            <h4 class="text-dark mb-0 fs-5">Data Lake &amp; Core ERP</h4>
-                                        </div>
-                                        <p class="small mb-0" style="color: #475569 !important;">Đồng bộ hoá nguồn dữ liệu đa dạng: ERP, GRC (Quản trị rủi ro), IIoT cảm biến và sổ cái phi tập trung.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <t t-call="insilos_website.s_innoria_3d_architecture_deck"/>
 
                 <!-- ========================================================= -->
                 <!-- 4. THE 4-STAGE CADENCE (3H -> 3D -> 3W -> 3M)             -->
@@ -425,96 +365,210 @@
                 <!-- ========================================================= -->
                 <!-- 5. CORE PLATFORM ECOSYSTEM WITH AUTHENTIC LOGOS           -->
                 <!-- ========================================================= -->
-                <section class="s_three_columns o_colored_level py-5 position-relative"
+                <!-- ========================================================= -->
+                <!-- 5. CORE PLATFORM ECOSYSTEM WITH AUTHENTIC LOGOS (DARK 3D) -->
+                <!-- ========================================================= -->
+                <section class="s_three_columns o_colored_level py-5 position-relative innoria-ecosystem-dark-section"
                          data-snippet="s_three_columns"
-                         data-name="Innoria Core Platforms"
-                         style="background: #FFFFFF;">
+                         data-name="Innoria Core Platforms">
                     <div class="container py-4">
                         <div class="row mb-5 text-center">
                             <div class="col-lg-8 mx-auto">
-                                <span class="badge badge-innoria-cyan mb-2">HỆ SINH THÁI CÔNG NGHỆ // ECOSYSTEM</span>
-                                <h2 class="display-5 fw-bold text-dark mb-3">
+                                <span class="badge badge-innoria-cyan mb-2 font-mono">HỆ SINH THÁI CÔNG NGHỆ // CORE PLATFORMS</span>
+                                <h2 class="display-5 fw-bold text-white mb-3">
                                     4 Trụ Cột Công Nghệ Độc Lập
                                 </h2>
-                                <p class="lead fs-5 col-lg-10 mx-auto" style="color: #334155 !important;">
-                                    Các giải pháp của Innoria được xây dựng trên nền tảng module hoá cao cấp, sẵn sàng tích hợp hoặc vận hành độc lập theo nhu cầu doanh nghiệp.
+                                <p class="lead fs-5 col-lg-10 mx-auto" style="color: #94A3B8 !important;">
+                                    Các giải pháp của Innoria được xây dựng trên kiến trúc module hoá cao cấp, đồng nhất chuẩn giao tiếp, sẵn sàng tích hợp hoặc vận hành độc lập theo quy mô doanh nghiệp.
                                 </p>
                             </div>
                         </div>
 
-                        <div class="row g-4">
+                        <div class="row g-4" id="innoriaPillarsGrid">
                             <!-- Pillar 1: DIGIFORCE -->
                             <div class="col-md-6 col-lg-3">
-                                <div class="innoria-card-ecosystem">
-                                    <div class="eco-icon-wrapper">
-                                        <img src="/insilos_website/static/src/img/innoria/group_52424.webp" alt="DIGIFORCE" class="img-fluid" loading="eager"/>
-                                    </div>
-                                    <span class="badge bg-light text-primary border small mb-2 font-monospace">LOW-CODE / NO-CODE</span>
-                                    <h3 class="text-dark fs-4 fw-bold mb-2">DIGIFORCE</h3>
-                                    <p class="small mb-3" style="color: #475569 !important;">Nền tảng phát triển ứng dụng siêu tốc. Cho phép đội ngũ nghiệp vụ và chuyên gia CNTT cùng hợp tác xây dựng phần mềm doanh nghiệp thông qua giao diện trực quan kéo thả.</p>
-                                    <div class="border-top border-secondary border-opacity-20 pt-3 mt-auto">
-                                        <div class="small text-dark fw-semibold mb-1">Điểm nổi bật:</div>
-                                        <ul class="list-unstyled small text-secondary mb-0">
-                                            <li>• Rút ngắn 70% thời gian code</li>
-                                            <li>• Tự động sinh REST/GraphQL API</li>
+                                <div class="pillar-card-wrap">
+                                    <div class="pillar-card card-digiforce" data-tilt="">
+                                        <div class="pillar-logo-stage">
+                                            <div class="stage-pedestal"></div>
+                                            <img src="/insilos_website/static/src/img/innoria/logo_innoria_digiforce_mascot.webp" alt="DIGIFORCE Mascot" class="stage-logo" loading="eager"/>
+                                        </div>
+                                        <div class="pillar-badge-row">
+                                            <span class="pillar-badge badge-digiforce font-mono">
+                                                <svg class="ph-bold ph-lightning" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-lightning"/></svg>
+                                                LOW-CODE / NO-CODE
+                                            </span>
+                                        </div>
+                                        <div class="pillar-title-row">
+                                            <h3 class="pillar-title">
+                                                <span style="color: #0ABBDB;">digi</span><span style="color: #FF8000;">force</span>
+                                            </h3>
+                                        </div>
+                                        <div class="pillar-desc">
+                                            Nền tảng phát triển ứng dụng siêu tốc. Cho phép đội ngũ nghiệp vụ và chuyên gia CNTT cùng hợp tác xây dựng phần mềm doanh nghiệp thông qua giao diện trực quan kéo thả.
+                                        </div>
+                                        <hr class="pillar-divider"/>
+                                        <div class="pillar-highlights-label font-mono">
+                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-sparkle"/></svg>
+                                            Điểm nổi bật
+                                        </div>
+                                        <ul class="pillar-highlights-list">
+                                            <li>
+                                                <svg class="ph-duotone ph-check-circle highlight-icon-digiforce"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Rút ngắn 70% thời gian code</span>
+                                            </li>
+                                            <li>
+                                                <svg class="ph-duotone ph-check-circle highlight-icon-digiforce"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Tự động sinh REST/GraphQL API</span>
+                                            </li>
                                         </ul>
+                                        <div class="pillar-action-row">
+                                            <a href="/low-code" class="pillar-cta-btn">
+                                                <span>Khám Phá DIGIFORCE</span>
+                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-arrow-right"/></svg>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Pillar 2: MOJO AI -->
                             <div class="col-md-6 col-lg-3">
-                                <div class="innoria-card-ecosystem">
-                                    <div class="eco-icon-wrapper">
-                                        <img src="/insilos_website/static/src/img/innoria/logo_innoria_eco_2.webp" alt="MOJO AI" class="img-fluid" loading="eager"/>
-                                    </div>
-                                    <span class="badge bg-light text-primary border small mb-2 font-monospace">AGENTIC AI SWARM</span>
-                                    <h3 class="text-dark fs-4 fw-bold mb-2">MOJO AI</h3>
-                                    <p class="small mb-3" style="color: #475569 !important;">Bộ công cụ xây dựng tác nhân AI tự hành. Tích hợp thị giác máy tính VLM (See-Detect-Analyze-Adapt) và mạng lưới suy luận độc lập (Reason-Solve-Plan-Execute).</p>
-                                    <div class="border-top border-secondary border-opacity-20 pt-3 mt-auto">
-                                        <div class="small text-dark fw-semibold mb-1">Điểm nổi bật:</div>
-                                        <ul class="list-unstyled small text-secondary mb-0">
-                                            <li>• Độ trễ suy luận &lt; 200ms</li>
-                                            <li>• Chống ảo giác dữ liệu 100%</li>
+                                <div class="pillar-card-wrap">
+                                    <div class="pillar-card card-mojoai" data-tilt="">
+                                        <div class="pillar-logo-stage">
+                                            <div class="stage-pedestal"></div>
+                                            <img src="/insilos_website/static/src/img/innoria/logo_innoria_eco_2.webp" alt="MOJO AI Shards" class="stage-logo" loading="eager"/>
+                                        </div>
+                                        <div class="pillar-badge-row">
+                                            <span class="pillar-badge badge-mojoai font-mono">
+                                                <svg class="ph-bold ph-cpu" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-cpu"/></svg>
+                                                AGENTIC AI SWARM
+                                            </span>
+                                        </div>
+                                        <div class="pillar-title-row">
+                                            <h3 class="pillar-title">
+                                                <span style="color: #00F0FF;">MOJO</span> <span style="color: #A78BFA;">AI</span>
+                                            </h3>
+                                        </div>
+                                        <div class="pillar-desc">
+                                            Bộ công cụ xây dựng tác nhân AI tự hành. Tích hợp thị giác máy tính VLM (See-Detect-Analyze-Adapt) và mạng lưới suy luận độc lập (Reason-Solve-Plan-Execute).
+                                        </div>
+                                        <hr class="pillar-divider"/>
+                                        <div class="pillar-highlights-label font-mono">
+                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-sparkle"/></svg>
+                                            Điểm nổi bật
+                                        </div>
+                                        <ul class="pillar-highlights-list">
+                                            <li>
+                                                <svg class="ph-duotone ph-check-circle highlight-icon-mojoai"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Độ trễ suy luận &lt; 200ms</span>
+                                            </li>
+                                            <li>
+                                                <svg class="ph-duotone ph-check-circle highlight-icon-mojoai"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Chống ảo giác dữ liệu 100%</span>
+                                            </li>
                                         </ul>
+                                        <div class="pillar-action-row">
+                                            <a href="/ai-solutions" class="pillar-cta-btn">
+                                                <span>Khám Phá MOJO AI</span>
+                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-arrow-right"/></svg>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Pillar 3: MOJOVERSE -->
                             <div class="col-md-6 col-lg-3">
-                                <div class="innoria-card-ecosystem">
-                                    <div class="eco-icon-wrapper">
-                                        <img src="/insilos_website/static/src/img/innoria/logo_innoria_eco_1.webp" alt="MOJOVERSE" class="img-fluid" loading="eager"/>
-                                    </div>
-                                    <span class="badge bg-light text-primary border small mb-2 font-monospace">ENTERPRISE WEB3</span>
-                                    <h3 class="text-dark fs-4 fw-bold mb-2">MOJOVERSE</h3>
-                                    <p class="small mb-3" style="color: #475569 !important;">Hạ tầng chuỗi khối doanh nghiệp phục vụ minh bạch hoá chuỗi cung ứng. Cung cấp hộ chiếu sản phẩm số (DPP), định danh phi tập trung và truy vết nguồn gốc hàng hóa.</p>
-                                    <div class="border-top border-secondary border-opacity-20 pt-3 mt-auto">
-                                        <div class="small text-dark fw-semibold mb-1">Điểm nổi bật:</div>
-                                        <ul class="list-unstyled small text-secondary mb-0">
-                                            <li>• Xác thực tức thì không phí Gas</li>
-                                            <li>• Chống làm giả hồ sơ xuất khẩu</li>
+                                <div class="pillar-card-wrap">
+                                    <div class="pillar-card card-mojoverse" data-tilt="">
+                                        <div class="pillar-logo-stage">
+                                            <div class="stage-pedestal"></div>
+                                            <img src="/insilos_website/static/src/img/innoria/logo_innoria_eco_1.webp" alt="MOJOVERSE Holographic Badge" class="stage-logo" loading="eager"/>
+                                        </div>
+                                        <div class="pillar-badge-row">
+                                            <span class="pillar-badge badge-mojoverse font-mono">
+                                                <svg class="ph-bold ph-link-simple-horizontal" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-link-simple-horizontal"/></svg>
+                                                ENTERPRISE WEB3
+                                            </span>
+                                        </div>
+                                        <div class="pillar-title-row">
+                                            <h3 class="pillar-title">
+                                                <span style="color: #2DD4BF;">MOJO</span><span style="color: #38BDF8;">VERSE</span>
+                                            </h3>
+                                        </div>
+                                        <div class="pillar-desc">
+                                            Hạ tầng chuỗi khối doanh nghiệp phục vụ minh bạch hoá chuỗi cung ứng. Cung cấp hộ chiếu sản phẩm số (DPP), định danh phi tập trung và truy vết nguồn gốc hàng hóa.
+                                        </div>
+                                        <hr class="pillar-divider"/>
+                                        <div class="pillar-highlights-label font-mono">
+                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-sparkle"/></svg>
+                                            Điểm nổi bật
+                                        </div>
+                                        <ul class="pillar-highlights-list">
+                                            <li>
+                                                <svg class="ph-duotone ph-check-circle highlight-icon-mojoverse"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Xác thực tức thì không phí Gas</span>
+                                            </li>
+                                            <li>
+                                                <svg class="ph-duotone ph-check-circle highlight-icon-mojoverse"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Chống làm giả hồ sơ xuất khẩu</span>
+                                            </li>
                                         </ul>
+                                        <div class="pillar-action-row">
+                                            <a href="/blockchain" class="pillar-cta-btn">
+                                                <span>Khám Phá MOJOVERSE</span>
+                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-arrow-right"/></svg>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Pillar 4: Intelligent ERP -->
                             <div class="col-md-6 col-lg-3">
-                                <div class="innoria-card-ecosystem">
-                                    <div class="eco-icon-wrapper">
-                                        <svg class="ph-duotone ph-buildings text-innoria-cyan" style="width: 30px; height: 30px;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-buildings"/></svg>
-                                    </div>
-                                    <span class="badge bg-light text-primary border small mb-2 font-monospace">AUTONOMOUS OPERATIONS</span>
-                                    <h3 class="text-dark fs-4 fw-bold mb-2">Intelligent ERP</h3>
-                                    <p class="small mb-3" style="color: #475569 !important;">Hệ thống quản trị doanh nghiệp hợp nhất. Tích hợp sẵn chuẩn mực kế toán Việt Nam (Thông tư 200, Hóa đơn điện tử Thông tư 78), đối soát tự động và giám sát tài chính thời gian thực.</p>
-                                    <div class="border-top border-secondary border-opacity-20 pt-3 mt-auto">
-                                        <div class="small text-dark fw-semibold mb-1">Điểm nổi bật:</div>
-                                        <ul class="list-unstyled small text-secondary mb-0">
-                                            <li>• Tự động đối soát công nợ</li>
-                                            <li>• Giảm 85% thao tác thủ công</li>
+                                <div class="pillar-card-wrap">
+                                    <div class="pillar-card card-erp" data-tilt="">
+                                        <div class="pillar-logo-stage">
+                                            <div class="stage-pedestal"></div>
+                                            <img src="/insilos_website/static/src/img/innoria/logo_innoria_intelligent_erp.svg" alt="Intelligent ERP Sovereign Core" class="stage-logo" loading="eager"/>
+                                        </div>
+                                        <div class="pillar-badge-row">
+                                            <span class="pillar-badge badge-erp font-mono">
+                                                <svg class="ph-bold ph-buildings" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-buildings"/></svg>
+                                                AUTONOMOUS OPERATIONS
+                                            </span>
+                                        </div>
+                                        <div class="pillar-title-row">
+                                            <h3 class="pillar-title">
+                                                <span style="color: #FFFFFF;">Intelligent</span> <span style="color: #FF9C00;">ERP</span>
+                                            </h3>
+                                        </div>
+                                        <div class="pillar-desc">
+                                            Hệ thống quản trị doanh nghiệp hợp nhất. Tích hợp sẵn chuẩn mực kế toán Việt Nam (Thông tư 200, Hóa đơn điện tử Thông tư 78), đối soát tự động và giám sát tài chính thời gian thực.
+                                        </div>
+                                        <hr class="pillar-divider"/>
+                                        <div class="pillar-highlights-label font-mono">
+                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-sparkle"/></svg>
+                                            Điểm nổi bật
+                                        </div>
+                                        <ul class="pillar-highlights-list">
+                                            <li>
+                                                <svg class="ph-duotone ph-check-circle highlight-icon-erp"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Tự động đối soát công nợ</span>
+                                            </li>
+                                            <li>
+                                                <svg class="ph-duotone ph-check-circle highlight-icon-erp"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
+                                                <span>Giảm 85% thao tác thủ công</span>
+                                            </li>
                                         </ul>
+                                        <div class="pillar-action-row">
+                                            <a href="/erp-solutions" class="pillar-cta-btn">
+                                                <span>Khám Phá Intelligent ERP</span>
+                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-arrow-right"/></svg>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <!-- Background Pedestal Gradient -->
+    <radialGradient id="erpGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0ABBDB" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#FF9C00" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#070B14" stop-opacity="0"/>
+    </radialGradient>
+    
+    <!-- Outer Shield Gradient -->
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F0FF"/>
+      <stop offset="50%" stop-color="#0F3D78"/>
+      <stop offset="100%" stop-color="#FF9C00"/>
+    </linearGradient>
+
+    <!-- Metallic Edge Gradient -->
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+
+    <!-- Core Golden Pulse -->
+    <radialGradient id="goldCore" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="35%" stop-color="#FBBF24"/>
+      <stop offset="75%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#78350F"/>
+    </radialGradient>
+
+    <!-- Holographic Blue Plates -->
+    <linearGradient id="plateBlue" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0.75"/>
+    </linearGradient>
+    
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    
+    <filter id="intenseGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12" result="blur2"/>
+      <feComposite in="SourceGraphic" in2="blur2" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient Backdrop -->
+  <circle cx="120" cy="120" r="100" fill="url(#erpGlow)"/>
+
+  <!-- Orbiting Cybernetic Ring -->
+  <g transform="rotate(-25 120 120)">
+    <ellipse cx="120" cy="120" rx="94" ry="46" fill="none" stroke="url(#shieldGrad)" stroke-width="2.5" stroke-dasharray="14 10 4 8" opacity="0.75" filter="url(#softGlow)"/>
+    <circle cx="214" cy="120" r="4.5" fill="#00F0FF" filter="url(#intenseGlow)"/>
+    <circle cx="26" cy="120" r="3.5" fill="#FF9C00" filter="url(#intenseGlow)"/>
+  </g>
+
+  <!-- Hexagonal Sovereign Container (Isometric Enterprise Base) -->
+  <!-- Top Face -->
+  <polygon points="120,44 176,76 120,108 64,76" fill="#1E293B" stroke="url(#metalGrad)" stroke-width="2.5"/>
+  <!-- Left Face -->
+  <polygon points="64,76 120,108 120,172 64,140" fill="#0F172A" stroke="url(#metalGrad)" stroke-width="2.5"/>
+  <!-- Right Face -->
+  <polygon points="120,108 176,76 176,140 120,172" fill="#0284C7" stroke="url(#metalGrad)" stroke-width="2.5" fill-opacity="0.3"/>
+
+  <!-- Enterprise Modular Architectural Cubes (Inner Layer) -->
+  <!-- Central Glowing Energy Core (Autonomous Nucleus) -->
+  <g transform="translate(120, 118)">
+    <!-- Rotating Internal Gears / Neural Ring -->
+    <circle cx="0" cy="0" r="28" fill="none" stroke="#00F0FF" stroke-width="1.8" stroke-dasharray="8 6" opacity="0.8"/>
+    <!-- Sovereign Golden Core -->
+    <polygon points="0,-18 16,-9 16,9 0,18 -16,9 -16,-9" fill="url(#goldCore)" filter="url(#softGlow)" stroke="#FDE68A" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="7" fill="#FFFFFF" filter="url(#intenseGlow)"/>
+  </g>
+
+  <!-- 4 Data Transmission Nodes (ERP Hubs: SD, MM, FI, MO) -->
+  <!-- North Node: Finance / Ledger (Amber Gold) -->
+  <line x1="120" y1="100" x2="120" y2="66" stroke="#FF9C00" stroke-width="2" stroke-dasharray="3 3"/>
+  <circle cx="120" cy="64" r="6" fill="#FF9C00" stroke="#FFF" stroke-width="1.5" filter="url(#softGlow)"/>
+
+  <!-- East Node: Supply Chain / Logistics (Tech Cyan) -->
+  <line x1="138" y1="124" x2="162" y2="136" stroke="#00F0FF" stroke-width="2" stroke-dasharray="3 3"/>
+  <circle cx="164" cy="138" r="5.5" fill="#00F0FF" stroke="#FFF" stroke-width="1.5" filter="url(#softGlow)"/>
+
+  <!-- West Node: Manufacturing / Production (Deep Blue) -->
+  <line x1="102" y1="124" x2="78" y2="136" stroke="#38BDF8" stroke-width="2" stroke-dasharray="3 3"/>
+  <circle cx="76" cy="138" r="5.5" fill="#38BDF8" stroke="#FFF" stroke-width="1.5" filter="url(#softGlow)"/>
+
+  <!-- South Pillar Anchor: Data Lakehouse (Emerald/Cyan) -->
+  <line x1="120" y1="136" x2="120" y2="182" stroke="#10B981" stroke-width="2"/>
+  <circle cx="120" cy="184" r="5" fill="#10B981" stroke="#FFF" stroke-width="1.5" filter="url(#softGlow)"/>
+
+  <!-- High-Tech Circuit Accent Lines -->
+  <path d="M 64,76 L 40,64 L 28,64" fill="none" stroke="rgba(10,187,219,0.5)" stroke-width="1.5"/>
+  <circle cx="26" cy="64" r="2.5" fill="#00F0FF"/>
+
+  <path d="M 176,76 L 200,64 L 212,64" fill="none" stroke="rgba(255,156,0,0.5)" stroke-width="1.5"/>
+  <circle cx="214" cy="64" r="2.5" fill="#FF9C00"/>
+
+  <path d="M 120,172 L 120,198 L 140,208" fill="none" stroke="rgba(14,165,233,0.5)" stroke-width="1.5"/>
+  <circle cx="142" cy="209" r="2.5" fill="#38BDF8"/>
+</svg>
