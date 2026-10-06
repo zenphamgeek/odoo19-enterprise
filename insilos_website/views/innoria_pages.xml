@@ -3,9 +3,9 @@
     <template id="insilos_about_page" name="About Us | INNORIA">
         <t t-call="website.layout" no_header="True" no_footer="True">
             <t t-call="insilos_website.innoria_navbar"/>
-            <main id="wrap" class="oe_structure o_colored_level" style="--innoria-canvas:#FFFFFF;--innoria-card:#FFFFFF;--innoria-cyan:#0ABBDB;--innoria-orange:#FF8000;--innoria-blue:#0284C7;background-color:#FFFFFF;color:#0F172A;overflow:hidden;">
+            <main id="wrap" class="oe_structure o_colored_level" style="--innoria-canvas:#FFFFFF;--innoria-card:#FFFFFF;--innoria-cyan:#0284C7;--innoria-orange:#FF8000;--innoria-blue:#0284C7;background-color:#FFFFFF;color:#0F172A;overflow-x:clip;max-width:100%;">
                 <style>
-                    .inn-about{font-family:Inter,system-ui,sans-serif}.inn-about .eyebrow{color:#0284C7;letter-spacing:.16em;font-size:.75rem;font-weight:700;text-transform:uppercase}.inn-about .display{font-size:clamp(2.7rem,6vw,5.8rem);font-weight:800;letter-spacing:-.06em;line-height:.94;color:#0F172A}.inn-about .section-title{font-size:clamp(2rem,4vw,3.8rem);font-weight:800;letter-spacing:-.05em;line-height:1;color:#0F172A}.inn-about .glass{background:#FFFFFF;border:1px solid #E2E8F0;border-radius:1.25rem;box-shadow:0 4px 20px rgba(15,23,42,0.04)}.inn-about .accent-line{height:3px;width:64px;background:linear-gradient(90deg,#0284C7,#0ABBDB)}.inn-about .hover-card{transition:transform .25s ease,border-color .25s ease,background .25s ease,box-shadow .25s ease}.inn-about .hover-card:hover{transform:translateY(-8px);border-color:#0ABBDB;background:#F0F9FF;box-shadow:0 12px 28px rgba(10,187,219,.15)}.inn-about .timeline-line{position:absolute;left:15px;top:1rem;bottom:1rem;width:1px;background:#E2E8F0}.inn-about .timeline-dot{width:31px;height:31px;border-radius:50%;background:#FFFFFF;border:2px solid #0284C7;position:relative;z-index:1}.inn-about .number{color:#0284C7;font-size:3rem;font-weight:800;line-height:1}.inn-about .quote{border-left:3px solid #FF8000;color:#334155}.inn-about .logo-cell{height:96px;display:flex;align-items:center;justify-content:center;border:1px solid #E2E8F0;border-radius:.75rem;background:#FFFFFF}.inn-about .logo-cell img{max-height:42px;max-width:130px;filter:grayscale(1);opacity:.72}.inn-about .matrix-head{color:#0284C7;font-weight:700}.inn-about .btn-innoria{background:#0284C7;border-color:#0284C7;color:#FFFFFF;font-weight:800}.inn-about .btn-innoria:hover{background:#0ABBDB;border-color:#0ABBDB;color:#07151A}
+                    .inn-about{font-family:Inter,system-ui,sans-serif}.inn-about .eyebrow{color:#0284C7;letter-spacing:.16em;font-size:.75rem;font-weight:700;text-transform:uppercase}.inn-about .display{font-size:clamp(2.7rem,6vw,5.8rem);font-weight:800;letter-spacing:-.06em;line-height:.94;color:#0F172A}.inn-about .section-title{font-size:clamp(2rem,4vw,3.8rem);font-weight:800;letter-spacing:-.05em;line-height:1;color:#0F172A}.inn-about .glass{background:#FFFFFF;border:1px solid #E2E8F0;border-radius:1.25rem;box-shadow:0 4px 20px rgba(15,23,42,0.04)}.inn-about .accent-line{height:3px;width:64px;background:linear-gradient(90deg,#0284C7,#0ABBDB)}.inn-about .hover-card{transition:transform .25s ease,border-color .25s ease,background .25s ease,box-shadow .25s ease}.inn-about .hover-card:hover{transform:translateY(-8px);border-color:#0ABBDB;background:#F0F9FF;box-shadow:0 12px 28px rgba(10,187,219,.15)}.inn-about .timeline-line{position:absolute;left:15px;top:1rem;bottom:1rem;width:1px;background:#E2E8F0}.inn-about .timeline-dot{width:31px;height:31px;border-radius:50%;background:#FFFFFF;border:2px solid #0284C7;position:relative;z-index:1}.inn-about .number{color:#0284C7;font-size:3rem;font-weight:800;line-height:1}.inn-about .quote{border-left:3px solid #FF8000;color:#334155}.inn-about .logo-cell{height:96px;display:flex;align-items:center;justify-content:center;border:1px solid #E2E8F0;border-radius:.75rem;background:#FFFFFF}.inn-about .logo-cell img{max-height:42px;max-width:130px;filter:grayscale(1);opacity:.72}.inn-about .matrix-head{color:#0284C7;font-weight:700}.inn-about .btn-innoria{background:#0284C7;border-color:#0284C7;color:#FFFFFF;font-weight:800}.inn-about .btn-innoria:hover{background:#0284C7;border-color:#0284C7;color:#FFFFFF}
                 </style>
 
                 <section class="inn-about position-relative py-5" style="min-height:760px;background:radial-gradient(circle at 78% 25%,rgba(10,187,219,.15),transparent 35%),radial-gradient(circle at 15% 85%,rgba(255,128,0,.08),transparent 30%),#FFFFFF;">
@@ -13,11 +13,11 @@
                         <div class="row align-items-center g-5 py-lg-5">
                             <div class="col-lg-7">
                                 <div class="eyebrow mb-4">Established 2008 · Vietnam to the world</div>
-                                <h1 class="display mb-4">Advancing<br/><span style="color:var(--innoria-cyan);">People</span> &amp; Technology.</h1>
+                                <h1 class="display mb-4">Advancing<br/><span style="color:#0284C7;">People</span> &amp; Technology.</h1>
                                 <p class="lead text-muted col-lg-10 mb-5">From Mạng Sáng Tạo to INNORIA: 18+ years building technology that feels human, performs globally, and moves Vietnamese capability forward.</p>
                                 <div class="d-flex flex-wrap gap-3">
                                     <a href="#consultation" class="btn btn-innoria btn-lg px-4 py-3">Book architecture consultation</a>
-                                    <a href="#story" class="btn btn-outline-primary btn-lg px-4 py-3" style="border-color:#0284C7;color:#0284C7;background:#FFFFFF;">Our heritage</a>
+                                    <a href="#story" class="btn btn-outline-primary btn-lg px-4 py-3" style="border-color:#0369A1;color:#0369A1;background:#FFFFFF;font-weight:700;">Our heritage</a>
                                 </div>
                             </div>
                             <div class="col-lg-5">
@@ -88,7 +88,7 @@
                         <div class="row g-4">
                             <div class="col-lg-4">
                                 <article class="glass h-100 p-4 p-lg-5">
-                                    <div class="mb-4 fs-1" style="color:var(--innoria-cyan);">01</div>
+                                    <div class="mb-4 fs-1 fw-bold" style="color:#0284C7;">01</div>
                                     <h3 class="h3">Intrinsic development</h3>
                                     <p class="text-muted mb-0">Every member owns their growth. Better people create better decisions, stronger systems, and more durable outcomes.</p>
                                 </article>
@@ -206,25 +206,25 @@
                                 <div class="row g-4">
                                     <div class="col-md-6">
                                         <article class="glass h-100 p-4">
-                                            <h3 class="h5 mb-1">Thang Pham</h3><div class="small mb-3" style="color:var(--innoria-cyan);">Founder &amp; CEO</div>
+                                            <h3 class="h5 mb-1">Thang Pham</h3><div class="small mb-3" style="color:#0369A1;font-weight:700;">Founder &amp; CEO</div>
                                             <p class="quote ps-3 mb-0 text-muted">“Tradition and modernity, Eastern philosophy and Western technology... Yin and Yang.”</p>
                                         </article>
                                     </div>
                                     <div class="col-md-6">
                                         <article class="glass h-100 p-4">
-                                            <h3 class="h5 mb-1">Do Thinh</h3><div class="small mb-3" style="color:var(--innoria-cyan);">Chief Technology Officer</div>
+                                            <h3 class="h5 mb-1">Do Thinh</h3><div class="small mb-3" style="color:#0369A1;font-weight:700;">Chief Technology Officer</div>
                                             <p class="quote ps-3 mb-0 text-muted">“Organizations embracing blockchain are positioned to unlock efficiencies...”</p>
                                         </article>
                                     </div>
                                     <div class="col-md-6">
                                         <article class="glass h-100 p-4">
-                                            <h3 class="h5 mb-1">Hoang Le</h3><div class="small mb-3" style="color:var(--innoria-cyan);">Mojo AI Division Head</div>
+                                            <h3 class="h5 mb-1">Hoang Le</h3><div class="small mb-3" style="color:#0369A1;font-weight:700;">Mojo AI Division Head</div>
                                             <p class="quote ps-3 mb-0 text-muted">“The brain needs to be brought into the body to get things done...”</p>
                                         </article>
                                     </div>
                                     <div class="col-md-6">
                                         <article class="glass h-100 p-4">
-                                            <h3 class="h5 mb-1">Tham Mai</h3><div class="small mb-3" style="color:var(--innoria-cyan);">PMO &amp; Industrial Solutions Head</div>
+                                            <h3 class="h5 mb-1">Tham Mai</h3><div class="small mb-3" style="color:#0369A1;font-weight:700;">PMO &amp; Industrial Solutions Head</div>
                                             <p class="quote ps-3 mb-0 text-muted">“Streamlines inspection time and enhances accuracy...”</p>
                                         </article>
                                     </div>
@@ -283,7 +283,7 @@
         <!-- Reusable Sovereign INNORIA Navbar -->
         <t t-call="insilos_website.innoria_navbar"/>
 
-        <main id="wrap" class="oe_structure o_colored_level mojo-platform-root" style="background-color: #FFFFFF; color: #0F172A; overflow-x: hidden;">
+        <main id="wrap" class="oe_structure o_colored_level mojo-platform-root" style="background-color: #FFFFFF; color: #0F172A; overflow-x: clip; max-width: 100%;">
             <!-- Scoped Design System & Animations for MOJO AI -->
             <style>
             <![CDATA[
@@ -424,6 +424,8 @@
                 /* Executive Quote Feature */
                 .mojo-quote-container {
                     background: linear-gradient(135deg, rgba(31, 41, 55, 0.92) 0%, rgba(17, 24, 39, 0.95) 100%);
+                    background-color: #111827 !important;
+                    color: #F8FAFC !important;
                     border: 1px solid rgba(255, 128, 0, 0.35);
                     border-radius: 24px;
                     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 128, 0, 0.12);
@@ -671,7 +673,7 @@
                                             <span class="font-monospace text-uppercase small text-secondary" style="font-size: 0.72rem;">// Execution Pipeline Stages:</span>
                                             <span id="mojo-pipeline-status" class="font-monospace small" style="color: var(--mojo-mint); font-size: 0.72rem;">Idle / Standby</span>
                                         </div>
-                                        <div class="d-flex flex-wrap gap-2 small font-monospace" style="font-size: 0.75rem;">
+                                        <div class="d-flex flex-wrap gap-2 small font-monospace" style="font-size: 0.75rem; color: #F1F5F9 !important;">
                                             <span class="badge p-2" style="background: #1E293B !important; color: #F1F5F9 !important; border: 1px solid #334155;" id="mojo-step-1">1. Intent &amp; Policy</span>
                                             <span class="badge p-2" style="background: #1E293B !important; color: #F1F5F9 !important; border: 1px solid #334155;" id="mojo-step-2">2. Hybrid RAG</span>
                                             <span class="badge p-2" style="background: #1E293B !important; color: #F1F5F9 !important; border: 1px solid #334155;" id="mojo-step-3">3. Sensor Stream</span>
@@ -701,7 +703,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                 <div class="mojo-glow-orb mojo-glow-orange" style="width: 400px; height: 400px; top: 10%; left: 50%; transform: translateX(-50%);"/>
 
                 <div class="container position-relative py-3" style="z-index: 1;">
-                    <div class="mojo-quote-container p-4 p-md-5">
+                    <div class="mojo-quote-container p-4 p-md-5" style="background-color: #111827 !important; color: #F8FAFC !important;">
                         <div class="row align-items-center g-4">
                             <!-- Quote Icon Column -->
                             <div class="col-lg-auto d-none d-lg-block">
@@ -713,7 +715,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                             <!-- Main Quote Body -->
                             <div class="col-lg-8">
                                 <div class="d-inline-flex align-items-center gap-2 mb-3">
-                                    <span class="badge rounded-pill font-monospace" style="background: rgba(255, 128, 0, 0.2); color: #FF8000 !important; border: 1px solid rgba(255, 128, 0, 0.4); font-size: 0.75rem; font-weight: 700;">
+                                    <span class="badge rounded-pill font-monospace" style="background: rgba(255, 128, 0, 0.2); color: #F59E0B !important; border: 1px solid rgba(255, 128, 0, 0.4); font-size: 0.75rem; font-weight: 700;">
                                         EXECUTIVE VISION // MOJO AI DIVISION
                                     </span>
                                 </div>
@@ -722,20 +724,20 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                         “The brain needs to be brought into the body to get things done, we balance in the study of Intelligence and portability of digital transformation.”
                                     </p>
                                 </blockquote>
-                                <div class="d-flex flex-wrap align-items-center gap-2 small">
+                                <div class="d-flex flex-wrap align-items-center gap-2 small" style="color: #F8FAFC !important;">
                                     <strong class="text-white fs-6" style="color: #FFFFFF !important;">Hoang Le</strong>
-                                    <span style="color: rgba(255, 255, 255, 0.3);">//</span>
-                                    <span style="color: var(--mojo-cyan); font-weight: 600;">Mojo AI Division Head</span>
-                                    <span style="color: rgba(255, 255, 255, 0.3);">//</span>
-                                    <span style="color: var(--mojo-text-muted);">INNORIA Enterprise Architecture Group</span>
+                                    <span style="color: #94A3B8 !important;">//</span>
+                                    <span style="color: #00F0FF !important; font-weight: 600;">Mojo AI Division Head</span>
+                                    <span style="color: #94A3B8 !important;">//</span>
+                                    <span style="color: #CBD5E1 !important;">INNORIA Enterprise Architecture Group</span>
                                 </div>
                             </div>
 
                             <!-- Ecosystem Badge & Logo -->
                             <div class="col-lg-3 text-lg-end border-start-lg border-secondary border-opacity-25 ps-lg-4">
-                                <div class="text-secondary small font-monospace mb-2" style="font-size: 0.72rem;">ENTERPRISE ECOSYSTEM</div>
+                                <div class="small font-monospace mb-2" style="font-size: 0.72rem; color: #CBD5E1 !important;">ENTERPRISE ECOSYSTEM</div>
                                 <img src="/insilos_website/static/src/img/innoria/logo_innoria_eco_2.webp" alt="INNORIA Ecosystem" class="img-fluid mb-2" style="max-height: 52px; filter: drop-shadow(0 0 12px rgba(10, 187, 219, 0.3));"/>
-                                <div class="small text-muted" style="font-size: 0.75rem;">
+                                <div class="small" style="font-size: 0.75rem; color: #94A3B8 !important;">
                                     18+ Years of Sovereign Technology Heritage (2008 – 2026)
                                 </div>
                             </div>
@@ -776,7 +778,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                         <svg class="ph-duotone ph-cloud text-info" style="width: 1.75rem; height: 1.75rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cloud"/></svg>
                                     </div>
                                     <h3 class="h5 fw-bold text-dark mb-2">Mojo AI as a Service</h3>
-                                    <div class="small fw-semibold mb-3" style="color: var(--mojo-cyan);">Flexible Pay-As-You-Go &amp; Subscription</div>
+                                    <div class="small fw-semibold mb-3" style="color: #0369A1;">Flexible Pay-As-You-Go &amp; Subscription</div>
                                     <p class="small text-muted mb-4 lh-base">
                                         Dịch vụ AI linh hoạt theo mức sử dụng thực tế (pay-as-you-go) và các gói thuê bao định kỳ dành cho cá nhân, chuyên gia và các nhóm tăng trưởng nhanh.
                                     </p>
@@ -828,7 +830,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                         <svg class="ph-duotone ph-tree-structure" style="width: 1.75rem; height: 1.75rem; color: var(--mojo-orange);"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-tree-structure"/></svg>
                                     </div>
                                     <h3 class="h5 fw-bold text-dark mb-2">Mojo AI in Digital Transformation</h3>
-                                    <div class="small fw-semibold mb-3" style="color: var(--mojo-orange);">Enterprise Strategy &amp; Custom Agent Swarms</div>
+                                    <div class="small fw-semibold mb-3" style="color: #C2410C;">Enterprise Strategy &amp; Custom Agent Swarms</div>
                                     <p class="small text-muted mb-4 lh-base">
                                         Chiến lược AI chuẩn doanh nghiệp, may đo và tích hợp các Agent tự động hóa chuyên sâu vào hệ thống ERP, MES, SCADA để tối ưu hóa vận hành.
                                     </p>
@@ -880,7 +882,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                         <svg class="ph-duotone ph-handshake" style="width: 1.75rem; height: 1.75rem; color: var(--mojo-mint);"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-handshake"/></svg>
                                     </div>
                                     <h3 class="h5 fw-bold text-dark mb-2">Mojo AI as Partners</h3>
-                                    <div class="small fw-semibold mb-3" style="color: var(--mojo-mint);">OEM &amp; ISV White-Label AI Integration</div>
+                                    <div class="small fw-semibold mb-3" style="color: #0369A1;">OEM &amp; ISV White-Label AI Integration</div>
                                     <p class="small text-muted mb-4 lh-base">
                                         Mô hình OEM và ISV nhúng trực tiếp năng lực AI Agent vào phần mềm thương mại của các đối tác công nghệ và công ty tư vấn chuyển đổi số.
                                     </p>
@@ -932,7 +934,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                         <svg class="ph-duotone ph-cpu" style="width: 1.75rem; height: 1.75rem; color: #C084FC;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
                                     </div>
                                     <h3 class="h5 fw-bold text-dark mb-2">Mojo AI as a Platform</h3>
-                                    <div class="small fw-semibold mb-3" style="color: #C084FC;">Foundational Sovereign AI Infrastructure</div>
+                                    <div class="small fw-semibold mb-3" style="color: #7E22CE;">Foundational Sovereign AI Infrastructure</div>
                                     <p class="small text-muted mb-4 lh-base">
                                         Hạ tầng AI nền tảng chuẩn sovereign dành cho các tập đoàn lớn kiến tạo mô hình kinh doanh AI-native, độc lập hoàn toàn với bên thứ ba.
                                     </p>
@@ -1697,7 +1699,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
     <template id="innoria_digiforce_page" name="DIGIFORCE No-Code Platform | INNORIA">
         <t t-call="website.layout" no_header="True" no_footer="True">
             <t t-call="insilos_website.innoria_navbar"/>
-            <main id="wrap" class="oe_structure o_colored_level" style="background-color: #FFFFFF; color: #0F172A;">
+            <main id="wrap" class="oe_structure o_colored_level" style="background-color: #FFFFFF; color: #0F172A; overflow-x: clip; max-width: 100%;">
                 <style>
                     .df-page{--df-dark:#FFFFFF;--df-card:#FFFFFF;--df-cyan:#0ABBDB;--df-orange:#FF8000;--df-green:#0284C7;--df-muted:#64748B;font-family:inherit;overflow:hidden}
                     .df-page .df-section{padding:96px 0;background:#FFFFFF}.df-page .df-section:nth-of-type(even){background:#F8FAFC}.df-page .df-eyebrow{color:var(--df-green);font-size:.78rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.df-page .df-title{font-size:clamp(2rem,4vw,4rem);font-weight:800;line-height:1.06;color:#0F172A}.df-page .df-subtitle{color:#475569;font-size:1.1rem;line-height:1.7}.df-page .df-card{background:#FFFFFF;border:1px solid #E2E8F0;border-radius:20px;box-shadow:0 4px 20px rgba(15,23,42,0.04)}.df-page .df-glow{box-shadow:0 10px 35px rgba(2,132,199,.08)}
@@ -1863,7 +1865,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
     <template id="innoria_blockchain_page" name="MOJOVERSE Blockchain Platform | INNORIA">
         <t t-call="website.layout" no_header="True" no_footer="True">
             <t t-call="insilos_website.innoria_navbar"/>
-            <main id="wrap" class="oe_structure o_colored_level" style="--innoria-canvas:#FFFFFF;--innoria-card:#FFFFFF;--innoria-cyan:#0ABBDB;--innoria-orange:#FF8000;--innoria-blue:#0284C7;background-color:#FFFFFF;color:#0F172A;overflow:hidden;">
+            <main id="wrap" class="oe_structure o_colored_level" style="--innoria-canvas:#FFFFFF;--innoria-card:#FFFFFF;--innoria-cyan:#0284C7;--innoria-orange:#FF8000;--innoria-blue:#0284C7;background-color:#FFFFFF;color:#0F172A;overflow-x:clip;max-width:100%;">
                 <section class="py-5" style="background:radial-gradient(circle at 15% 20%,rgba(10,187,219,.15),transparent 35%),radial-gradient(circle at 85% 10%,rgba(2,132,199,.10),transparent 32%),#FFFFFF;">
                     <div class="container py-5">
                         <div class="row align-items-center g-5">
@@ -2090,110 +2092,94 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
     <template id="insilos_solutions_page" name="AI-Enhanced ERP | INNORIA">
         <t t-call="website.layout" no_header="True" no_footer="True">
             <t t-call="insilos_website.innoria_navbar"/>
-            <main id="wrap" class="oe_structure o_colored_level" style="--innoria-canvas:#FFFFFF;--innoria-card:#FFFFFF;--innoria-cyan:#0ABBDB;--innoria-orange:#FF8000;background-color:#FFFFFF;color:#0F172A;">
+            <main id="wrap" class="oe_structure o_colored_level" style="--innoria-canvas:#FFFFFF;--innoria-card:#FFFFFF;--innoria-cyan:#0284C7;--innoria-orange:#FF8000;background-color:#FFFFFF;color:#0F172A;overflow-x:clip;max-width:100%;">
                 <section class="py-5" style="background:radial-gradient(circle at 85% 10%,rgba(10,187,219,.15),transparent 35%),radial-gradient(circle at 10% 60%,rgba(255,128,0,.08),transparent 30%),#FFFFFF;">
                     <div class="container py-lg-5">
                         <div class="row align-items-center g-5">
                             <div class="col-lg-7">
-                                <span class="badge rounded-pill px-3 py-2 mb-4" style="background:#E0F2FE;color:#0369A1;border:1px solid #BAE6FD;">INNORIA AI-ENHANCED ERP</span>
-                                <h1 class="display-3 fw-bold mb-4">AI-Enhanced ERP:<br/><span style="color:#0ABBDB;">Work Feels Lighter</span></h1>
+                                <span class="badge rounded-pill px-3 py-2 mb-4" style="background:#E0F2FE;color:#0369A1;border:1px solid #BAE6FD;font-weight:700;">INNORIA AI-ENHANCED ERP</span>
+                                <h1 class="display-3 fw-bold mb-4">AI-Enhanced ERP:<br/><span style="color:#0284C7;">Work Feels Lighter</span></h1>
                                 <p class="lead mb-4 text-muted">Block the Noise. Build Freely. No more struggling with software — simply work with your AI assistant.</p>
                                 <div class="p-4 rounded-4 mb-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-left:4px solid #FF8000;box-shadow:0 10px 30px rgba(255,128,0,.08);color:#334155;">
                                     <p class="mb-2 fst-italic">“Essentially, AI augments ERP capabilities, transforming raw data into strategic intelligence and driving smarter, more agile business operations.”</p>
-                                    <small style="color:#F59E0B;">Hoang Le · Mojo AI Division Head</small>
+                                    <small style="color:#D97706;font-weight:700;">Hoang Le · Mojo AI Division Head</small>
                                 </div>
                                 <a href="#proof-of-concept" class="btn btn-lg px-4 py-3 me-2" style="background:#FF8000;color:#070B14 !important;font-weight:800;border:none;box-shadow:0 4px 14px rgba(255,128,0,.35);">Book Live 3-Hour Proof of Concept</a>
                                 <a href="#superpowers" class="btn btn-lg btn-outline-primary px-4 py-3" style="border-color:#0369A1;color:#0369A1 !important;background:#FFFFFF;font-weight:700;">Explore AI Capabilities</a>
                             </div>
-                            <div class="col-lg-5">
-                                <div class="rounded-4 shadow-lg overflow-hidden" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 20px 40px rgba(2,132,199,.08);">
-                                    <div class="d-flex justify-content-between align-items-center px-4 py-3" style="border-bottom:1px solid #E2E8F0;">
-                                        <span class="fw-bold" style="color:#0ABBDB;">INNORIA AI COPILOT</span>
-                                        <span class="badge rounded-pill" style="background:#0ABBDB;">Online</span>
-                                    </div>
-                                    <div class="p-4">
-                                        <div class="p-3 rounded-3 mb-3" style="background:#F1F5F9;color:#0F172A;">
-                                            <small class="text-muted">You</small>
-                                            <p class="mb-0">Show delayed purchase orders affecting next week's production schedule.</p>
-                                        </div>
-                                        <div class="p-3 rounded-3 mb-3" style="background:#F0F9FF;border:1px solid #BAE6FD;color:#0F172A;">
-                                            <small style="color:#0ABBDB;">Innoria AI</small>
-                                            <p class="mb-0">I found 3 delayed POs impacting 2 BOMs. I can draft vendor follow-ups, propose alternate stock, and update MRP now.</p>
-                                        </div>
-                                        <div class="p-3 rounded-3" style="background:#FFFFFF;border:1px solid #CBD5E1;color:#64748B;">Ask anything across your enterprise data...</div>
-                                    </div>
-                                </div>
+                            <div class="col-lg-5 d-flex align-items-center justify-content-center">
+                                <t t-call="insilos_website.s_innoria_3d_solutions_erp"/>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section id="superpowers" class="py-5">
+                <section id="superpowers" class="py-5" style="background:#FFFFFF;">
                     <div class="container py-lg-4">
                         <div class="text-center mb-5">
-                            <span style="color:#F59E0B;">AUTONOMOUS ENTERPRISE OPERATIONS</span>
-                            <h2 class="display-5 fw-bold mt-2">Five AI Superpowers</h2>
-                            <p class="text-muted mx-auto" style="max-width:700px;">One intelligence layer across finance, operations, sales, supply chain, and manufacturing.</p>
+                            <span class="fw-bold small text-uppercase" style="color:#C2410C;letter-spacing:0.12em;">AUTONOMOUS ENTERPRISE OPERATIONS</span>
+                            <h2 class="display-5 fw-bold mt-2 text-dark">Five AI Superpowers</h2>
+                            <p class="text-muted mx-auto" style="max-width:700px;font-size:1.1rem;">One intelligence layer across finance, operations, sales, supply chain, and manufacturing.</p>
                         </div>
-                        <div class="row g-4">
-                            <div class="col-md-6 col-lg">
-                                <div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #0ABBDB;">
-                                    <h4>Natural Language ERP</h4>
-                                    <p class="text-muted mb-0">Ask, approve, analyze, create records. Complex menus replaced by conversation.</p>
+                        <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
+                            <div class="col">
+                                <div class="h-100 p-4 rounded-4 d-flex flex-column" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #0284C7;box-shadow:0 4px 16px rgba(15,23,42,0.03);">
+                                    <h4 class="h5 fw-bold mb-2 text-dark">Natural Language ERP</h4>
+                                    <p class="text-muted mb-0 small" style="line-height:1.6;">Ask, approve, analyze, create records. Complex menus replaced by natural conversation.</p>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg">
-                                <div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #FF8000;">
-                                    <h4>Auto Ingestion</h4>
-                                    <p class="text-muted mb-0">Excel, paper invoices, PDFs, emails transformed into validated ledger records.</p>
+                            <div class="col">
+                                <div class="h-100 p-4 rounded-4 d-flex flex-column" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #FF8000;box-shadow:0 4px 16px rgba(15,23,42,0.03);">
+                                    <h4 class="h5 fw-bold mb-2 text-dark">Auto Ingestion</h4>
+                                    <p class="text-muted mb-0 small" style="line-height:1.6;">Excel, paper invoices, PDFs, emails transformed into validated ledger records.</p>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg">
-                                <div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #F59E0B;">
-                                    <h4>Cross-Silo Querying</h4>
-                                    <p class="text-muted mb-0">One question across CRM, Manufacturing, Inventory, Financials, projects.</p>
+                            <div class="col">
+                                <div class="h-100 p-4 rounded-4 d-flex flex-column" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #C2410C;box-shadow:0 4px 16px rgba(15,23,42,0.03);">
+                                    <h4 class="h5 fw-bold mb-2 text-dark">Cross-Silo Querying</h4>
+                                    <p class="text-muted mb-0 small" style="line-height:1.6;">One question across CRM, Manufacturing, Inventory, Financials, and projects.</p>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg">
-                                <div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #0ABBDB;">
-                                    <h4>Auto Purchasing</h4>
-                                    <p class="text-muted mb-0">Forecast demand, evaluate RFQs, draft purchase orders before shortages happen.</p>
+                            <div class="col">
+                                <div class="h-100 p-4 rounded-4 d-flex flex-column" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #0284C7;box-shadow:0 4px 16px rgba(15,23,42,0.03);">
+                                    <h4 class="h5 fw-bold mb-2 text-dark">Auto Purchasing</h4>
+                                    <p class="text-muted mb-0 small" style="line-height:1.6;">Forecast demand, evaluate RFQs, draft purchase orders before shortages happen.</p>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg">
-                                <div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #FF8000;">
-                                    <h4>Sales Bot</h4>
-                                    <p class="text-muted mb-0">Qualify leads, calculate pricing, respond instantly across every sales channel.</p>
+                            <div class="col">
+                                <div class="h-100 p-4 rounded-4 d-flex flex-column" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #FF8000;box-shadow:0 4px 16px rgba(15,23,42,0.03);">
+                                    <h4 class="h5 fw-bold mb-2 text-dark">Sales Bot</h4>
+                                    <p class="text-muted mb-0 small" style="line-height:1.6;">Qualify leads, calculate pricing, respond instantly across every sales channel.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section class="py-5 text-white" style="background:#0F172A;">
+                <section class="py-5" style="background:#F8FAFC;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;">
                     <div class="container py-lg-4">
                         <div class="row align-items-center g-5">
                             <div class="col-lg-5">
-                                <span style="color:#00F0FF; font-weight: 700;">THE ERP SHIFT</span>
-                                <h2 class="display-5 fw-bold mt-2 text-white" style="color: #FFFFFF !important;">Legacy ERP vs<br/>Innoria AI ERP</h2>
-                                <p class="mb-0" style="color: #CBD5E1 !important;">ERP should increase operational capacity, not create administrative friction.</p>
-                                <img src="/insilos_website/static/src/img/innoria/importance_of_ai_services.webp" class="img-fluid rounded-4 mt-3" alt="AI enterprise intelligence"/>
+                                <span class="fw-bold small text-uppercase" style="color:#0369A1;letter-spacing:0.12em;">THE ERP SHIFT</span>
+                                <h2 class="display-5 fw-bold mt-2 text-dark" style="color: #0F172A !important;">Legacy ERP vs<br/>Innoria AI ERP</h2>
+                                <p class="mb-0 text-muted" style="font-size:1.1rem;">ERP should increase operational capacity, not create administrative friction.</p>
+                                <img src="/insilos_website/static/src/img/innoria/importance_of_ai_services.webp" class="img-fluid rounded-4 mt-4 shadow-sm" style="border:1px solid #E2E8F0;" alt="AI enterprise intelligence"/>
                             </div>
                             <div class="col-lg-7">
-                                <div class="table-responsive rounded-4 overflow-hidden" style="border:1px solid #374151;">
-                                    <table class="table table-dark table-borderless mb-0 align-middle">
+                                <div class="table-responsive rounded-4 overflow-hidden" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 20px rgba(15,23,42,0.04);">
+                                    <table class="table mb-0 align-middle">
                                         <thead>
-                                            <tr style="background:#FFFFFF;border:1px solid #E2E8F0;">
-                                                <th class="p-4">Enterprise Metric</th>
-                                                <th class="p-4 text-muted">Legacy ERP</th>
-                                                <th class="p-4" style="color:#0ABBDB;">Innoria AI ERP</th>
+                                            <tr style="background:#F1F5F9;border-bottom:2px solid #E2E8F0;">
+                                                <th class="p-4" style="color:#0F172A;font-weight:700;">Enterprise Metric</th>
+                                                <th class="p-4 text-muted" style="font-weight:600;">Legacy ERP</th>
+                                                <th class="p-4" style="color:#0369A1;font-weight:800;">Innoria AI ERP</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr style="border-top:1px solid #374151;"><td class="p-4 fw-bold">Speed</td><td class="p-4 text-muted">Manual search, reporting, routing</td><td class="p-4">Real-time answers, automated actions</td></tr>
-                                            <tr style="border-top:1px solid #374151;"><td class="p-4 fw-bold">Learning Curve</td><td class="p-4 text-muted">Training-heavy navigation</td><td class="p-4">Natural conversation</td></tr>
-                                            <tr style="border-top:1px solid #374151;"><td class="p-4 fw-bold">Error Rate</td><td class="p-4 text-muted">Rekeying, fragmented records</td><td class="p-4">AI extraction, matching, validation</td></tr>
-                                            <tr style="border-top:1px solid #374151;"><td class="p-4 fw-bold">TCO</td><td class="p-4 text-muted">High support, slow adoption</td><td class="p-4">Higher throughput, lower operational drag</td></tr>
+                                            <tr style="border-top:1px solid #E2E8F0;"><td class="p-4 fw-bold text-dark">Speed</td><td class="p-4 text-muted">Manual search, reporting, routing</td><td class="p-4 fw-bold" style="color:#0369A1;">Real-time answers, automated actions</td></tr>
+                                            <tr style="border-top:1px solid #E2E8F0;"><td class="p-4 fw-bold text-dark">Learning Curve</td><td class="p-4 text-muted">Training-heavy navigation</td><td class="p-4 fw-bold" style="color:#0369A1;">Natural conversation</td></tr>
+                                            <tr style="border-top:1px solid #E2E8F0;"><td class="p-4 fw-bold text-dark">Error Rate</td><td class="p-4 text-muted">Rekeying, fragmented records</td><td class="p-4 fw-bold" style="color:#0369A1;">AI extraction, matching, validation</td></tr>
+                                            <tr style="border-top:1px solid #E2E8F0;"><td class="p-4 fw-bold text-dark">TCO</td><td class="p-4 text-muted">High support, slow adoption</td><td class="p-4 fw-bold" style="color:#0369A1;">Higher throughput, lower operational drag</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -2202,19 +2188,19 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     </div>
                 </section>
 
-                <section class="py-5">
+                <section class="py-5" style="background:#FFFFFF;">
                     <div class="container py-lg-4">
                         <div class="text-center mb-5">
-                            <span style="color:#FF8000;">PREDEFINED AI WORKFLOWS</span>
-                            <h2 class="display-5 fw-bold mt-2">Intelligence Built Into Every Flow</h2>
+                            <span class="fw-bold small text-uppercase" style="color:#C2410C;letter-spacing:0.12em;">PREDEFINED AI WORKFLOWS</span>
+                            <h2 class="display-5 fw-bold mt-2 text-dark">Intelligence Built Into Every Flow</h2>
                         </div>
                         <ul class="nav nav-pills justify-content-center gap-2 mb-4" role="tablist">
-                            <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#p2p" type="button">Procure-to-Pay</button></li>
-                            <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#o2c" type="button">Order-to-Cash</button></li>
-                            <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#p2p-production" type="button">Plan-to-Produce</button></li>
-                            <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#r2r" type="button">Record-to-Report</button></li>
+                            <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#p2p" type="button" style="background:#0284C7;color:#FFFFFF;font-weight:700;">Procure-to-Pay</button></li>
+                            <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#o2c" type="button" style="border:1px solid #CBD5E1;color:#0F172A;font-weight:600;">Order-to-Cash</button></li>
+                            <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#p2p-production" type="button" style="border:1px solid #CBD5E1;color:#0F172A;font-weight:600;">Plan-to-Produce</button></li>
+                            <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#r2r" type="button" style="border:1px solid #CBD5E1;color:#0F172A;font-weight:600;">Record-to-Report</button></li>
                         </ul>
-                        <div class="tab-content p-4 p-lg-5 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;">
+                        <div class="tab-content p-4 p-lg-5 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 20px rgba(15,23,42,0.03);">
                             <div class="tab-pane fade show active" id="p2p">
                                 <div class="row align-items-center g-4">
                                     <div class="col-lg-7"><h3 style="color: #0369A1 !important; font-weight: 700;">Procure-to-Pay, Zero Blind Spots</h3><p class="text-muted">AI forecasts demand, recommends replenishment, scores vendor RFQs, drafts POs, extracts invoices, executes 3-way matching.</p><div class="d-flex flex-wrap gap-2"><span class="badge p-2" style="background:#F1F5F9;color:#0F172A;">3-Way Invoice &amp; PO Matching</span><span class="badge p-2" style="background:#F1F5F9;color:#0F172A;">Circular 78 Integration</span><span class="badge p-2" style="background:#F1F5F9;color:#0F172A;">Decree 123 E-Invoices</span></div></div>
@@ -2228,46 +2214,46 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     </div>
                 </section>
 
-                <section class="py-5" style="background:#0F172A;">
+                <section class="py-5" style="background:#F8FAFC;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;">
                     <div class="container py-lg-4">
                         <div class="row align-items-center g-5">
                             <div class="col-lg-5">
-                                <span style="color:#F59E0B; font-weight: 700;">EXECUTIVE CONTROL TOWER</span>
-                                <h2 class="display-5 fw-bold mt-2 text-white" style="color: #FFFFFF !important;">See What Matters.<br/>Act Before It Escalates.</h2>
-                                <p class="mb-0" style="color: #CBD5E1 !important;">AI surfaces exceptions, explains drivers, recommends next actions. Leadership receives operating intelligence, not dashboard noise.</p>
-                                <img src="/insilos_website/static/src/img/innoria/architecture_innoria_platform_grey.svg" class="img-fluid p-3 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;" alt="Innoria platform architecture"/>
+                                <span class="fw-bold small text-uppercase" style="color:#C2410C;letter-spacing:0.12em;">EXECUTIVE CONTROL TOWER</span>
+                                <h2 class="display-5 fw-bold mt-2 text-dark" style="color: #0F172A !important;">See What Matters.<br/>Act Before It Escalates.</h2>
+                                <p class="mb-0 text-muted" style="font-size:1.1rem;">AI surfaces exceptions, explains drivers, recommends next actions. Leadership receives operating intelligence, not dashboard noise.</p>
+                                <img src="/insilos_website/static/src/img/innoria/architecture_innoria_platform_grey.svg" class="img-fluid p-3 rounded-4 mt-4" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 16px rgba(15,23,42,0.03);" alt="Innoria platform architecture"/>
                             </div>
                             <div class="col-lg-7">
                                 <div class="row g-4">
-                                    <div class="col-md-6"><div class="p-4 rounded-4 h-100" style="background:#FFFFFF;border:1px solid #E2E8F0;border:1px solid rgba(10,187,219,.35);"><small style="color: #64748B !important; font-weight: 700;">LIVE MANUFACTURING OEE</small><div class="display-4 fw-bold mt-2" style="color:#0284C7;">92%+</div><p class="mb-0" style="color: #475569 !important;">AI flags downtime risk before shift impact.</p></div></div>
-                                    <div class="col-md-6"><div class="p-4 rounded-4 h-100" style="background:#FFFFFF;border:1px solid #E2E8F0;border:1px solid rgba(255,128,0,.35);"><small style="color: #64748B !important; font-weight: 700;">ON-TIME IN-FULL</small><div class="display-4 fw-bold mt-2" style="color:#FF8000;">98.5%+</div><p class="mb-0" style="color: #475569 !important;">Supply risk and delivery exceptions prioritized.</p></div></div>
-                                    <div class="col-12"><div class="p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border:1px solid rgba(245,158,11,.35);"><div class="d-flex justify-content-between"><div><small style="color: #64748B !important; font-weight: 700;">CASH FLOW FORECAST</small><div class="display-5 fw-bold mt-2" style="color:#D97706;">AI-Projected Liquidity</div></div><span class="badge align-self-start p-2" style="background:rgba(245,158,11,.15);color:#D97706;font-weight:700;">Updated continuously</span></div><p class="mb-0" style="color: #475569 !important;">Receivables, payables, inventory commitments, and operating scenarios in one forecast.</p></div></div>
+                                    <div class="col-md-6"><div class="p-4 rounded-4 h-100" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 16px rgba(15,23,42,0.03);"><small style="color: #64748B !important; font-weight: 700; letter-spacing:0.05em;">LIVE MANUFACTURING OEE</small><div class="display-4 fw-bold mt-2" style="color:#0284C7;">92%+</div><p class="mb-0 text-muted">AI flags downtime risk before shift impact.</p></div></div>
+                                    <div class="col-md-6"><div class="p-4 rounded-4 h-100" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 16px rgba(15,23,42,0.03);"><small style="color: #64748B !important; font-weight: 700; letter-spacing:0.05em;">ON-TIME IN-FULL</small><div class="display-4 fw-bold mt-2" style="color:#FF8000;">98.5%+</div><p class="mb-0 text-muted">Supply risk and delivery exceptions prioritized.</p></div></div>
+                                    <div class="col-12"><div class="p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 16px rgba(15,23,42,0.03);"><div class="d-flex justify-content-between"><div><small style="color: #64748B !important; font-weight: 700; letter-spacing:0.05em;">CASH FLOW FORECAST</small><div class="display-5 fw-bold mt-2" style="color:#C2410C;">AI-Projected Liquidity</div></div><span class="badge rounded-pill align-self-start p-2" style="background:#FEF3C7;color:#92400E;border:1px solid #FDE68A;font-weight:700;">Updated continuously</span></div><p class="mb-0 text-muted mt-2">Receivables, payables, inventory commitments, and operating scenarios in one forecast.</p></div></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section class="py-5">
+                <section class="py-5" style="background:#FFFFFF;">
                     <div class="container py-lg-4">
                         <div class="text-center mb-5">
-                            <span style="color:#0ABBDB;">CLIENT SUCCESS</span>
-                            <h2 class="display-5 fw-bold mt-2">Built for Complex Operations</h2>
+                            <span class="fw-bold small text-uppercase" style="color:#0284C7;letter-spacing:0.12em;">CLIENT SUCCESS</span>
+                            <h2 class="display-5 fw-bold mt-2 text-dark">Built for Complex Operations</h2>
                         </div>
                         <div class="row g-4">
-                            <div class="col-lg-4"><div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;"><span class="badge mb-3" style="background:#0ABBDB;">LOGISTICS HUB</span><h4>Warehouse Intelligence</h4><p class="text-muted">Predictive stock reordering, storage balancing, shipment exception detection, faster fulfillment coordination.</p></div></div>
-                            <div class="col-lg-4"><div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;"><span class="badge mb-3" style="background:#FF8000;">MANUFACTURING PLANT</span><h4>Production Precision</h4><p class="text-muted">BOM-aware MRP, material risk alerts, capacity visibility, operational decisions grounded in live plant data.</p></div></div>
-                            <div class="col-lg-4"><div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;"><span class="badge mb-3" style="background:#F59E0B;">TRADING COMPANY</span><h4>Faster Commercial Cycles</h4><p class="text-muted">Automated document ingestion, intelligent pricing, lead prioritization, cash-flow clarity across channels.</p></div></div>
+                            <div class="col-lg-4"><div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 16px rgba(15,23,42,0.03);"><span class="badge rounded-pill mb-3" style="background:#E0F2FE;color:#0369A1;border:1px solid #BAE6FD;font-weight:700;">LOGISTICS HUB</span><h4>Warehouse Intelligence</h4><p class="text-muted">Predictive stock reordering, storage balancing, shipment exception detection, faster fulfillment coordination.</p></div></div>
+                            <div class="col-lg-4"><div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 16px rgba(15,23,42,0.03);"><span class="badge rounded-pill mb-3" style="background:#FFF7ED;color:#C2410C;border:1px solid #FFEDD5;font-weight:700;">MANUFACTURING PLANT</span><h4>Production Precision</h4><p class="text-muted">BOM-aware MRP, material risk alerts, capacity visibility, operational decisions grounded in live plant data.</p></div></div>
+                            <div class="col-lg-4"><div class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 16px rgba(15,23,42,0.03);"><span class="badge rounded-pill mb-3" style="background:#FEF3C7;color:#92400E;border:1px solid #FDE68A;font-weight:700;">TRADING COMPANY</span><h4>Faster Commercial Cycles</h4><p class="text-muted">Automated document ingestion, intelligent pricing, lead prioritization, cash-flow clarity across channels.</p></div></div>
                         </div>
                     </div>
                 </section>
 
                 <section id="proof-of-concept" class="py-5" style="background:linear-gradient(135deg,#071739 0%,#0B2E64 50%,#0369A1 100%);color:#FFFFFF;">
                     <div class="container py-lg-5 text-center">
-                        <span class="badge rounded-pill px-3 py-2 mb-3" style="background:rgba(0,240,255,0.15);color:#00F0FF !important;border:1px solid #00F0FF;font-weight:700;">LIVE ENTERPRISE VALIDATION</span>
+                        <span class="badge rounded-pill px-3 py-2 mb-3" style="background:rgba(0,240,255,0.15);color:#00F0FF !important;border:1px solid rgba(0,240,255,0.4);font-weight:700;">LIVE ENTERPRISE VALIDATION</span>
                         <h2 class="display-4 fw-bold text-white" style="color:#FFFFFF !important;">See Your ERP Think.</h2>
                         <p class="lead mx-auto mb-4" style="max-width:760px;color:#BAE6FD !important;">Book a live 3-hour AI ERP Proof of Concept. Bring real workflows. Leave with a clear automation roadmap.</p>
-                        <a href="/contactus" class="btn btn-lg px-5 py-3 fw-bold" style="background:#FF8000;color:#05101E !important;font-weight:800;border:none;box-shadow:0 8px 24px rgba(255,128,0,0.35);">Book Your Proof of Concept</a>
+                        <a href="/contactus" class="btn btn-hero-vip-poc btn-lg px-5 py-3 fw-bold">Book Your Proof of Concept</a>
                     </div>
                 </section>
             </main>
@@ -2278,20 +2264,20 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
     <template id="insilos_industries_page" name="Ultra AI Vision &amp; Industries | INNORIA">
         <t t-call="website.layout" no_header="True" no_footer="True">
             <t t-call="insilos_website.innoria_navbar"/>
-            <main id="wrap" class="oe_structure o_colored_level" style="background-color: #FFFFFF; color: #0F172A;">
+            <main id="wrap" class="oe_structure o_colored_level" style="background-color: #FFFFFF; color: #0F172A; overflow-x: clip; max-width: 100%;">
                 <section class="py-5 overflow-hidden" style="background: radial-gradient(circle at 80% 15%, rgba(10,187,219,.15), transparent 35%), radial-gradient(circle at 10% 85%, rgba(255,128,0,.08), transparent 30%), #FFFFFF;">
                     <div class="container py-5">
                         <div class="row align-items-center g-5">
                             <div class="col-lg-6">
-                                <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill mb-4" style="border: 1px solid #BAE6FD; background: #E0F2FE; color: #0369A1;">
-                                    <span style="width:8px;height:8px;border-radius:50%;background:#00F0FF;box-shadow:0 0 12px #00F0FF;"/>
+                                <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill mb-4" style="border: 1px solid #BAE6FD; background: #E0F2FE; color: #0369A1; font-weight: 700;">
+                                    <span style="width:8px;height:8px;border-radius:50%;background:#0284C7;box-shadow:0 0 12px rgba(2,132,199,0.5);"/>
                                     ULTRA AI VISION
                                 </div>
-                                <h1 class="display-3 fw-bold mb-4">Ultra AI Vision:<br/><span style="color:#0ABBDB;">Sub-Millimeter Inspection</span><br/>&amp; Automated Counting</h1>
+                                <h1 class="display-3 fw-bold mb-4">Ultra AI Vision:<br/><span style="color:#0284C7;">Sub-Millimeter Inspection</span><br/>&amp; Automated Counting</h1>
                                 <p class="lead text-muted mb-4">Superior Defect Detection, Item Classification, Optical Character Recognition.</p>
                                 <blockquote class="p-4 mb-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-left:4px solid #FF8000;box-shadow:0 10px 30px rgba(255,128,0,.08);color:#334155;">
                                     <p class="mb-2">“Streamlines inspection time and enhances accuracy, surpassing manual methods and older systems to help manufacturers consistently achieve top-quality standards.”</p>
-                                    <footer class="small" style="color:#FF8000;">Tham Mai — PMO Division Head</footer>
+                                    <footer class="small" style="color:#C2410C; font-weight:700;">Tham Mai — PMO Division Head</footer>
                                 </blockquote>
                                 <a href="#vision-pilot" class="btn btn-lg px-4 py-3 fw-bold" style="background:#FF8000;color:#070B14 !important;font-weight:800;border:none;box-shadow:0 4px 14px rgba(255,128,0,.35);">Request an On-Site Pilot</a>
                             </div>
@@ -2299,8 +2285,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 <div class="position-relative rounded-4 overflow-hidden p-3" style="min-height:460px;background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 20px 40px rgba(10,187,219,.1);">
                                     <img src="/insilos_website/static/src/img/innoria/coding_ai_nlp_data.jpg" alt="Ultra AI Vision inspection system" class="w-100 h-100 object-fit-cover rounded-3" style="min-height:430px;opacity:.65;"/>
                                     <div class="position-absolute top-0 start-0 m-4 px-3 py-2 small fw-bold" style="background:rgba(255,255,255,.95);border:1px solid #0369A1;color:#0369A1 !important;">CAM-01 / LIVE INFERENCE</div>
-                                    <div class="position-absolute" style="top:27%;left:20%;width:41%;height:42%;border:3px solid #00F0FF;box-shadow:0 0 15px rgba(0,240,255,.8);">
-                                        <span class="position-absolute top-0 start-0 translate-middle-y px-2 py-1 small fw-bold" style="background:#00F0FF;color:#070B14;border:1px solid #00F0FF;">DEFECT: SURFACE VOID</span>
+                                    <div class="position-absolute" style="top:27%;left:20%;width:41%;height:42%;border:3px solid #0369A1;box-shadow:0 0 15px rgba(3,105,161,.5);">
+                                        <span class="position-absolute top-0 start-0 translate-middle-y px-2 py-1 small fw-bold" style="background:#0369A1;color:#FFFFFF;border:1px solid #0369A1;">DEFECT: SURFACE VOID</span>
                                         <span class="position-absolute bottom-0 end-0 translate-y-50 px-2 py-1 small fw-bold" style="background:#FF8000;color:#05101E !important; font-weight: 800;">99.87%</span>
                                     </div>
                                     <div class="position-absolute bottom-0 start-0 end-0 m-4 p-3 d-flex justify-content-between small rounded-3" style="background:rgba(255,255,255,.95);border:1px solid #E2E8F0;color:#0F172A;">
@@ -2314,46 +2300,46 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     </div>
                 </section>
 
-                <section class="py-5" id="projects">
+                <section class="py-5" id="projects" style="background:#FFFFFF;">
                     <div class="container py-4">
                         <div class="row mb-5">
                             <div class="col-lg-8">
-                                <div class="small fw-bold mb-2" style="color:#0ABBDB;">PROVEN IN PRODUCTION</div>
-                                <h2 class="display-5 fw-bold">Real-world vision systems. Measurable outcomes.</h2>
+                                <div class="small fw-bold mb-2 text-uppercase" style="color:#0369A1;letter-spacing:0.12em;">PROVEN IN PRODUCTION</div>
+                                <h2 class="display-5 fw-bold text-dark">Real-world vision systems. Measurable outcomes.</h2>
                             </div>
                         </div>
                         <div class="row g-4">
                             <div class="col-md-6">
-                                <article class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #0ABBDB;">
-                                    <div class="small fw-bold mb-3" style="color:#0ABBDB;">01 / THỦY HẢI SẢN</div>
-                                    <h3>Shrimp Seed Counting</h3>
+                                <article class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #0284C7;box-shadow:0 4px 16px rgba(15,23,42,0.03);">
+                                    <div class="small fw-bold mb-3" style="color:#0369A1;">01 / THỦY HẢI SẢN</div>
+                                    <h3 class="h4 fw-bold text-dark">Shrimp Seed Counting</h3>
                                     <p class="text-muted">High-speed automated juvenile shrimp counting under turbulent water conditions. Vision tracking separates overlapping movement, reflections, bubbles, and motion blur.</p>
                                     <div class="row mt-4">
-                                        <div class="col-6"><div class="small text-muted">PRECISION</div><strong class="fs-3" style="color:#00F0FF;">99.4%</strong></div>
-                                        <div class="col-6"><div class="small text-muted">ENVIRONMENT</div><strong>Turbulent water</strong></div>
+                                        <div class="col-6"><div class="small text-muted">PRECISION</div><strong class="fs-3" style="color:#0284C7;">99.4%</strong></div>
+                                        <div class="col-6"><div class="small text-muted">ENVIRONMENT</div><strong class="text-dark">Turbulent water</strong></div>
                                     </div>
                                 </article>
                             </div>
                             <div class="col-md-6">
-                                <article class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #FF8000;">
-                                    <div class="small fw-bold mb-3" style="color:#FF8000;">02 / ĐỒNG HỒ CƠ KHÍ</div>
-                                    <h3>Analog Instrument &amp; Gauge Reading</h3>
+                                <article class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #FF8000;box-shadow:0 4px 16px rgba(15,23,42,0.03);">
+                                    <div class="small fw-bold mb-3" style="color:#C2410C;">02 / ĐỒNG HỒ CƠ KHÍ</div>
+                                    <h3 class="h4 fw-bold text-dark">Analog Instrument &amp; Gauge Reading</h3>
                                     <p class="text-muted">Digitize legacy analog dials, pressure gauges, meters, and panel instruments using existing standard CCTV cameras. OCR, needle-angle estimation, alert thresholds.</p>
                                     <div class="mt-4"><span class="badge me-2 p-2" style="background: #FFF7ED !important; color: #C2410C !important; border: 1px solid #FFEDD5 !important; font-weight: 700;">Existing CCTV</span><span class="badge p-2" style="background: #FFF7ED !important; color: #C2410C !important; border: 1px solid #FFEDD5 !important; font-weight: 700;">Legacy retrofit</span></div>
                                 </article>
                             </div>
                             <div class="col-md-6">
-                                <article class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #00F0FF;">
+                                <article class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #0284C7;box-shadow:0 4px 16px rgba(15,23,42,0.03);">
                                     <div class="small fw-bold mb-3" style="color: #0369A1 !important;">03 / MOBILITY</div>
-                                    <h3>Parking &amp; Vehicle Management</h3>
+                                    <h3 class="h4 fw-bold text-dark">Parking &amp; Vehicle Management</h3>
                                     <p class="text-muted">High-speed ANPR license plate recognition, multi-lane barrier control, vehicle event logging, real-time occupancy tracking, and operator dashboard integration.</p>
                                     <div class="mt-4"><span class="badge me-2 p-2" style="background: #E0F2FE !important; color: #0369A1 !important; border: 1px solid #BAE6FD !important; font-weight: 700;">ANPR</span><span class="badge p-2" style="background: #E0F2FE !important; color: #0369A1 !important; border: 1px solid #BAE6FD !important; font-weight: 700;">Multi-lane</span></div>
                                 </article>
                             </div>
                             <div class="col-md-6">
-                                <article class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #0ABBDB;">
+                                <article class="h-100 p-4 rounded-4" style="background:#FFFFFF;border:1px solid #E2E8F0;border-top:3px solid #0284C7;box-shadow:0 4px 16px rgba(15,23,42,0.03);">
                                     <div class="small fw-bold mb-3" style="color: #0369A1 !important;">04 / LOGISTICS</div>
-                                    <h3>High-Speed Object Counting</h3>
+                                    <h3 class="h4 fw-bold text-dark">High-Speed Object Counting</h3>
                                     <p class="text-muted">Precision quantity verification for high-throughput packaging, logistics sorting, conveyor handling, and container staging without slowing production flow.</p>
                                     <div class="mt-4"><span class="badge me-2 p-2" style="background: #E0F2FE !important; color: #0369A1 !important; border: 1px solid #BAE6FD !important; font-weight: 700;">Conveyor vision</span><span class="badge p-2" style="background: #E0F2FE !important; color: #0369A1 !important; border: 1px solid #BAE6FD !important; font-weight: 700;">Count verification</span></div>
                                 </article>
@@ -2394,12 +2380,12 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     </div>
                 </section>
 
-                <section class="py-5">
+                <section class="py-5" style="background:#FFFFFF;">
                     <div class="container py-4">
                         <div class="row align-items-end mb-4">
                             <div class="col-lg-7">
-                                <div class="small fw-bold mb-2" style="color:#0ABBDB;">VERTICAL SOLUTIONS MATRIX</div>
-                                <h2 class="display-5 fw-bold">Inspection intelligence tuned for your production reality.</h2>
+                                <div class="small fw-bold mb-2 text-uppercase" style="color:#0369A1;letter-spacing:0.12em;">VERTICAL SOLUTIONS MATRIX</div>
+                                <h2 class="display-5 fw-bold text-dark">Inspection intelligence tuned for your production reality.</h2>
                             </div>
                         </div>
                         <ul class="nav nav-pills gap-2 mb-4" role="tablist">
@@ -2408,18 +2394,18 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                             <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#electronics" type="button" style="color:#0B2E64;background:#FFFFFF;border:1px solid #CBD5E1;font-weight:600;">Electronics</button></li>
                             <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#energy" type="button" style="color:#0B2E64;background:#FFFFFF;border:1px solid #CBD5E1;font-weight:600;">Energy / EHS</button></li>
                         </ul>
-                        <div class="tab-content rounded-4 p-4 p-lg-5" style="background:#FFFFFF;border:1px solid #E2E8F0;">
+                        <div class="tab-content rounded-4 p-4 p-lg-5" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 16px rgba(15,23,42,0.03);">
                             <div class="tab-pane fade show active" id="manufacturing">
-                                <div class="row align-items-center g-4"><div class="col-lg-7"><h3>Manufacturing Quality Assurance</h3><p class="text-muted">Continuous automated inspection at line speed. Detect deviations before defective output reaches packing or shipment.</p><div class="row g-3"><div class="col-sm-6">✓ Defect detection</div><div class="col-sm-6">✓ Assembly verification</div><div class="col-sm-6">✓ Dimensional measurement</div><div class="col-sm-6">✓ Barcode / label verification</div></div></div><div class="col-lg-5"><div class="p-4 rounded-3" style="background:#F8FAFC;border:1px solid rgba(0,240,255,.35);color:#00F0FF;">LINE STATUS<br/><strong class="display-6">99.87%</strong><br/><span class="text-muted">Inspection confidence</span></div></div></div>
+                                <div class="row align-items-center g-4"><div class="col-lg-7"><h3 class="h4 fw-bold text-dark">Manufacturing Quality Assurance</h3><p class="text-muted">Continuous automated inspection at line speed. Detect deviations before defective output reaches packing or shipment.</p><div class="row g-3"><div class="col-sm-6">✓ Defect detection</div><div class="col-sm-6">✓ Assembly verification</div><div class="col-sm-6">✓ Dimensional measurement</div><div class="col-sm-6">✓ Barcode / label verification</div></div></div><div class="col-lg-5"><div class="p-4 rounded-3" style="background:#F0F9FF;border:1px solid #BAE6FD;color:#0F172A;"><div class="small fw-semibold text-muted">LINE STATUS</div><strong class="display-6 fw-bold" style="color:#0284C7;">99.87%</strong><br/><span class="text-muted small">Inspection confidence</span></div></div></div>
                             </div>
                             <div class="tab-pane fade" id="textiles">
-                                <h3>Textiles &amp; Garments</h3><p class="text-muted">Roll-to-roll inspection finds fabric flaws, color drift, pattern mismatch, seam errors, and stitch inconsistencies before final QA.</p><div class="row g-3"><div class="col-sm-6">✓ Fabric flaw inspection</div><div class="col-sm-6">✓ Pattern matching</div><div class="col-sm-6">✓ Color consistency monitoring</div><div class="col-sm-6">✓ Seam / stitch inspection</div></div>
+                                <h3 class="h4 fw-bold text-dark">Textiles &amp; Garments</h3><p class="text-muted">Roll-to-roll inspection finds fabric flaws, color drift, pattern mismatch, seam errors, and stitch inconsistencies before final QA.</p><div class="row g-3"><div class="col-sm-6">✓ Fabric flaw inspection</div><div class="col-sm-6">✓ Pattern matching</div><div class="col-sm-6">✓ Color consistency monitoring</div><div class="col-sm-6">✓ Seam / stitch inspection</div></div>
                             </div>
                             <div class="tab-pane fade" id="electronics">
-                                <h3>Electronics</h3><p class="text-muted">High-precision visual inspection for PCB production, component placement, orientation, missing parts, and solder joint quality.</p><div class="row g-3"><div class="col-sm-6">✓ PCB inspection</div><div class="col-sm-6">✓ Component placement</div><div class="col-sm-6">✓ Solder joint analysis</div><div class="col-sm-6">✓ OCR / traceability</div></div>
+                                <h3 class="h4 fw-bold text-dark">Electronics</h3><p class="text-muted">High-precision visual inspection for PCB production, component placement, orientation, missing parts, and solder joint quality.</p><div class="row g-3"><div class="col-sm-6">✓ PCB inspection</div><div class="col-sm-6">✓ Component placement</div><div class="col-sm-6">✓ Solder joint analysis</div><div class="col-sm-6">✓ OCR / traceability</div></div>
                             </div>
                             <div class="tab-pane fade" id="energy">
-                                <h3>Energy, Construction &amp; EHS</h3><p class="text-muted">Always-on safety intelligence for operational sites. Detect compliance gaps, unsafe entry, and dangerous-zone intrusion in real time.</p><div class="row g-3"><div class="col-sm-6">✓ Helmet detection</div><div class="col-sm-6">✓ High-vis vest detection</div><div class="col-sm-6">✓ Eyewear compliance</div><div class="col-sm-6">✓ Restricted zone intrusion</div></div>
+                                <h3 class="h4 fw-bold text-dark">Energy, Construction &amp; EHS</h3><p class="text-muted">Always-on safety intelligence for operational sites. Detect compliance gaps, unsafe entry, and dangerous-zone intrusion in real time.</p><div class="row g-3"><div class="col-sm-6">✓ Helmet detection</div><div class="col-sm-6">✓ High-vis vest detection</div><div class="col-sm-6">✓ Eyewear compliance</div><div class="col-sm-6">✓ Restricted zone intrusion</div></div>
                             </div>
                         </div>
                     </div>
@@ -2445,21 +2431,21 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     </div>
                 </section>
 
-                <section class="py-5">
+                <section class="py-5" style="background:#FFFFFF;">
                     <div class="container py-4">
                         <div class="row g-5 align-items-center">
                             <div class="col-lg-5">
-                                <div class="small fw-bold mb-2" style="color:#0ABBDB;">EDGE AI ARCHITECTURE</div>
-                                <h2 class="display-5 fw-bold">Production-grade deployment. Local decisions.</h2>
+                                <div class="small fw-bold mb-2 text-uppercase" style="color:#0284C7;letter-spacing:0.12em;">EDGE AI ARCHITECTURE</div>
+                                <h2 class="display-5 fw-bold text-dark">Production-grade deployment. Local decisions.</h2>
                                 <p class="text-muted">Deploy beside the line. Keep inference local. Integrate results directly with cameras, PLCs, SCADA, MES, alarms, and data systems.</p>
                             </div>
                             <div class="col-lg-7">
                                 <div class="row g-3 text-center">
-                                    <div class="col-4"><div class="p-3 rounded-3 h-100" style="background:#FFFFFF;border:1px solid #E2E8F0;border:1px solid rgba(10,187,219,.35);"><strong style="color:#0ABBDB;">IP CAMERA</strong><br/><small class="text-muted">GigE / RTSP<br/>Industrial optics</small></div></div>
-                                    <div class="col-4"><div class="p-3 rounded-3 h-100" style="background:#FFFFFF;border:1px solid #E2E8F0;border:1px solid rgba(0,240,255,.35);"><strong style="color:#00F0FF;">EDGE GATEWAY</strong><br/><small class="text-muted">NPU / GPU<br/>Local inference</small></div></div>
-                                    <div class="col-4"><div class="p-3 rounded-3 h-100" style="background:#FFFFFF;border:1px solid #E2E8F0;border:1px solid rgba(255,128,0,.35);"><strong style="color:#FF8000;">PLC / MES</strong><br/><small class="text-muted">Modbus / TCP-IP<br/>Action control</small></div></div>
+                                    <div class="col-4"><div class="p-3 rounded-3 h-100" style="background:#FFFFFF;border:1px solid #E2E8F0;border:1px solid rgba(10,187,219,.35);box-shadow:0 4px 12px rgba(15,23,42,0.03);"><strong style="color:#0284C7;">IP CAMERA</strong><br/><small class="text-muted">GigE / RTSP<br/>Industrial optics</small></div></div>
+                                    <div class="col-4"><div class="p-3 rounded-3 h-100" style="background:#FFFFFF;border:1px solid #E2E8F0;border:1px solid rgba(0,240,255,.35);box-shadow:0 4px 12px rgba(15,23,42,0.03);"><strong style="color:#0284C7;">EDGE GATEWAY</strong><br/><small class="text-muted">NPU / GPU<br/>Local inference</small></div></div>
+                                    <div class="col-4"><div class="p-3 rounded-3 h-100" style="background:#FFFFFF;border:1px solid #E2E8F0;border:1px solid rgba(255,128,0,.35);box-shadow:0 4px 12px rgba(15,23,42,0.03);"><strong style="color:#EA580C;">PLC / MES</strong><br/><small class="text-muted">Modbus / TCP-IP<br/>Action control</small></div></div>
                                 </div>
-                                <div class="mt-3 p-3 rounded-3 text-center small" style="background:rgba(10,187,219,.1);color:#00F0FF;">ZERO-LATENCY LOCAL INFERENCE · NO CLOUD DEPENDENCY FOR LINE DECISIONS</div>
+                                <div class="mt-3 p-3 rounded-3 text-center small" style="background:#E0F2FE;border:1px solid #BAE6FD;color:#0369A1;font-weight:700;">ZERO-LATENCY LOCAL INFERENCE · NO CLOUD DEPENDENCY FOR LINE DECISIONS</div>
                             </div>
                         </div>
                     </div>
@@ -2482,15 +2468,15 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
     <t t-call="website.layout" no_header="True" no_footer="True">
         <t t-call="insilos_website.innoria_navbar"/>
 
-        <main id="wrap" class="oe_structure o_colored_level" style="--innoria-canvas: #FFFFFF; --innoria-card: #FFFFFF; --innoria-cyan: #0ABBDB; --innoria-orange: #FF8000; background-color: #FFFFFF; color: #0F172A; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; overflow-x: hidden;">
+        <main id="wrap" class="oe_structure o_colored_level" style="--innoria-canvas: #FFFFFF; --innoria-card: #FFFFFF; --innoria-cyan: #0284C7; --innoria-orange: #FF8000; background-color: #FFFFFF; color: #0F172A; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; overflow-x: clip; max-width: 100%;">
             <div class="oe_structure oe_empty" id="oe_structure_innoria_contactus_top"/>
             <style>
                 :root {
                     --inn-canvas: #FFFFFF;
                     --inn-card: #FFFFFF;
                     --inn-card-hover: #F0F9FF;
-                    --inn-cyan: #0ABBDB;
-                    --inn-cyan-glow: rgba(10, 187, 219, 0.15);
+                    --inn-cyan: #0284C7;
+                    --inn-cyan-glow: rgba(2, 132, 199, 0.15);
                     --inn-orange: #FF8000;
                     --inn-orange-glow: rgba(255, 128, 0, 0.15);
                     --inn-mint: #0284C7;
@@ -2512,8 +2498,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
                 }
                 .inn-glass-card:hover {
-                    border-color: #0ABBDB;
-                    box-shadow: 0 16px 40px rgba(10, 187, 219, 0.15);
+                    border-color: #0284C7;
+                    box-shadow: 0 16px 40px rgba(2, 132, 199, 0.15);
                 }
                 .inn-blueprint-card {
                     background: #FFFFFF;
@@ -2526,8 +2512,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                 }
                 .inn-blueprint-card:hover {
                     transform: translateY(-6px);
-                    border-color: #0ABBDB;
-                    box-shadow: 0 16px 40px rgba(10, 187, 219, 0.15);
+                    border-color: #0284C7;
+                    box-shadow: 0 16px 40px rgba(2, 132, 199, 0.15);
                 }
                 .inn-blueprint-card::before {
                     content: '';
@@ -2537,7 +2523,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     right: 0;
                     height: 3px;
                 }
-                .inn-border-cyan::before { background: linear-gradient(90deg, #0ABBDB, transparent); }
+                .inn-border-cyan::before { background: linear-gradient(90deg, #0284C7, transparent); }
                 .inn-border-orange::before { background: linear-gradient(90deg, #FF8000, transparent); }
                 .inn-border-mint::before { background: linear-gradient(90deg, #0284C7, transparent); }
                 
@@ -2578,43 +2564,47 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     width: 8px;
                     height: 8px;
                     border-radius: 50%;
-                    background-color: #B2FFDA;
-                    box-shadow: 0 0 0 0 rgba(178, 255, 218, 0.7);
+                    background-color: #0284C7;
+                    box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7);
                     animation: innPulse 2s infinite;
                 }
                 @keyframes innPulse {
-                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(178, 255, 218, 0.7); }
-                    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(178, 255, 218, 0); }
-                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(178, 255, 218, 0); }
+                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7); }
+                    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(2, 132, 199, 0); }
+                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
                 }
                 .inn-location-card {
-                    background: #FFFFFF; border: 1px solid #E2E8F0;
-                    border: 1px solid var(--inn-border);
+                    background: #FFFFFF !important;
+                    border: 1px solid #E2E8F0 !important;
                     border-radius: 1.25rem;
                     transition: all 0.25s ease;
                 }
                 .inn-location-card:hover {
-                    border-color: rgba(10, 187, 219, 0.5);
+                    border-color: #0284C7 !important;
                     transform: translateY(-4px);
-                    background: #243042;
+                    background: #F0F9FF !important;
+                    box-shadow: 0 12px 28px rgba(2, 132, 199, 0.12) !important;
                 }
                 .inn-faq-button {
-                    background-color: #FFFFFF !important; border: 1px solid #E2E8F0 !important;
-                    color: #F9FAFB !important;
+                    background-color: #FFFFFF !important;
+                    border: 1px solid #E2E8F0 !important;
+                    color: #0F172A !important;
                     font-weight: 700 !important;
                     padding: 1.25rem 1.5rem !important;
-                    border: none !important;
+                    border-radius: 0.5rem !important;
                     box-shadow: none !important;
                 }
                 .inn-faq-button:not(.collapsed) {
-                    color: var(--inn-cyan) !important;
-                    background-color: #243042 !important;
+                    color: #0369A1 !important;
+                    background-color: #F0F9FF !important;
+                    border-color: #BAE6FD !important;
                 }
                 .inn-faq-button::after {
-                    filter: invert(1) brightness(200%);
+                    filter: none !important;
                 }
                 .inn-btn-primary {
                     background: linear-gradient(135deg, #0284C7 0%, #0B2E64 100%);
+                    background-color: #0B2E64 !important;
                     color: #FFFFFF !important;
                     font-weight: 800;
                     letter-spacing: -0.01em;
@@ -2636,6 +2626,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                 }
                 .inn-btn-orange {
                     background: linear-gradient(135deg, #FF8000 0%, #F59E0B 100%);
+                    background-color: #F59E0B !important;
                     color: #070B14 !important;
                     font-weight: 800;
                     border: none;
@@ -2716,15 +2707,15 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                             <!-- Trust Badges Under Buttons -->
                             <div class="d-flex flex-wrap align-items-center gap-4 mt-4 pt-3" style="border-top: 1px solid #E2E8F0;">
                                 <div class="d-flex align-items-center gap-2">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ABBDB" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                                     <span class="small fw-semibold" style="color: var(--inn-text-muted);">2-Hour SLA Response</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-2">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF8000" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                                     <span class="small fw-semibold" style="color: var(--inn-text-muted);">Strict Enterprise NDA</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-2">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B2FFDA" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                                     <span class="small fw-semibold" style="color: var(--inn-text-muted);">100% IP &amp; Data Ownership</span>
                                 </div>
                             </div>
@@ -2732,10 +2723,10 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
 
                         <!-- Right Column: Executive Engagement Brief Card -->
                         <div class="col-lg-5">
-                            <div class="inn-glass-card p-4 p-md-5" style="border-color: rgba(10, 187, 219, 0.35); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);">
+                            <div class="inn-glass-card p-4 p-md-5" style="border-color: #BAE6FD; box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);">
                                 <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom" style="border-color: #E2E8F0 !important;">
                                     <img src="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA" style="height: 34px; width: auto;"/>
-                                    <span class="badge rounded-pill px-3 py-2 small" style="background: rgba(10, 187, 219, 0.15); color: #0ABBDB; border: 1px solid rgba(10, 187, 219, 0.3);">
+                                    <span class="badge rounded-pill px-3 py-2 small" style="background: #E0F2FE; color: #0369A1; border: 1px solid #BAE6FD; font-weight: 700;">
                                         DIRECT ENGAGEMENT
                                     </span>
                                 </div>
@@ -2743,7 +2734,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 <h2 class="h4 fw-bold text-dark mb-4">Enterprise Architecture Desk</h2>
                                 
                                 <div class="d-flex gap-3 mb-4">
-                                    <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; min-width: 44px; background: rgba(10, 187, 219, 0.15); color: #0ABBDB;">
+                                    <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; min-width: 44px; background: #E0F2FE; color: #0284C7;">
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                                     </div>
                                     <div>
@@ -2753,7 +2744,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 </div>
 
                                 <div class="d-flex gap-3 mb-4">
-                                    <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; min-width: 44px; background: rgba(255, 128, 0, 0.15); color: #FF8000;">
+                                    <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; min-width: 44px; background: #FFEDD5; color: #C2410C;">
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                                     </div>
                                     <div>
@@ -2763,7 +2754,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 </div>
 
                                 <div class="d-flex gap-3 mb-4">
-                                    <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; min-width: 44px; background: rgba(178, 255, 218, 0.15); color: #B2FFDA;">
+                                    <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; min-width: 44px; background: #E0F2FE; color: #0284C7;">
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                                     </div>
                                     <div>
@@ -2775,7 +2766,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 <div class="pt-3 border-top" style="border-color: #E2E8F0 !important;">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <span class="small" style="color: var(--inn-text-muted);">Corporate Direct Desk:</span>
-                                        <a href="mailto:contact@innoria.com" class="fw-bold text-decoration-none" style="color: #0284C7;">contact@innoria.com</a>
+                                        <a href="mailto:contact@innoria.com" class="fw-bold text-decoration-none" style="color: #0369A1;">contact@innoria.com</a>
                                     </div>
                                 </div>
                             </div>
@@ -2791,14 +2782,14 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                 <div class="container py-lg-5">
                     <div class="row justify-content-between align-items-end mb-5">
                         <div class="col-lg-8">
-                            <span class="text-uppercase fw-bold small" style="color: var(--inn-cyan); letter-spacing: 0.15em;">The Architecture Blueprint</span>
+                            <span class="text-uppercase fw-bold small" style="color: #0369A1; letter-spacing: 0.15em;">The Architecture Blueprint</span>
                             <h2 class="display-5 fw-bold text-dark mt-2 mb-3">Three Hours. One Clear Architecture Decision Path.</h2>
                             <p class="lead mb-0" style="color: var(--inn-text-muted); font-size: 1.15rem;">
                                 A focused, high-cadence strategic workshop engineered specifically for CIOs, CTOs, Chief Digital Officers, and Enterprise Innovation Boards.
                             </p>
                         </div>
                         <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
-                            <span class="badge rounded-pill px-3 py-2 fw-semibold" style="background: rgba(255, 255, 255, 0.06); border: 1px solid #E2E8F0; color: #B2FFDA;">
+                            <span class="badge rounded-pill px-3 py-2 fw-semibold" style="background: #E0F2FE; border: 1px solid #BAE6FD; color: #0369A1;">
                                 180 Minutes Comprehensive Sprint
                             </span>
                         </div>
@@ -2809,8 +2800,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                         <div class="col-md-6 col-lg-3">
                             <article class="inn-blueprint-card inn-border-cyan h-100 p-4 p-xl-5 d-flex flex-column">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="fw-bolder" style="color: var(--inn-cyan); font-size: 1.1rem;">01 / 45 MIN</span>
-                                    <span class="badge rounded-pill" style="background: rgba(10, 187, 219, 0.12); color: #0ABBDB;">DIAGNOSTIC</span>
+                                    <span class="fw-bolder" style="color: #0369A1; font-size: 1.1rem;">01 / 45 MIN</span>
+                                    <span class="badge rounded-pill" style="background: #E0F2FE; color: #0369A1; border: 1px solid #BAE6FD;">DIAGNOSTIC</span>
                                 </div>
                                 <h3 class="h4 fw-bold text-dark mb-3">Problem Definition &amp; Mandate Alignment</h3>
                                 <p class="small flex-grow-1" style="color: var(--inn-text-muted); line-height: 1.6;">
@@ -2818,7 +2809,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 </p>
                                 <div class="pt-3 border-top" style="border-color: #E2E8F0 !important;">
                                     <div class="small fw-semibold text-dark mb-1">Stage Deliverable:</div>
-                                    <div class="small" style="color: #0ABBDB;">• Strategic Friction Matrix &amp; Value Thesis</div>
+                                    <div class="small" style="color: #0369A1; font-weight: 700;">• Strategic Friction Matrix &amp; Value Thesis</div>
                                 </div>
                             </article>
                         </div>
@@ -2827,8 +2818,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                         <div class="col-md-6 col-lg-3">
                             <article class="inn-blueprint-card inn-border-orange h-100 p-4 p-xl-5 d-flex flex-column">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="fw-bolder" style="color: var(--inn-orange); font-size: 1.1rem;">02 / 45 MIN</span>
-                                    <span class="badge rounded-pill" style="background: rgba(255, 128, 0, 0.12); color: #FF8000;">FEASIBILITY</span>
+                                    <span class="fw-bolder" style="color: #C2410C; font-size: 1.1rem;">02 / 45 MIN</span>
+                                    <span class="badge rounded-pill" style="background: #FFEDD5; color: #C2410C; border: 1px solid #FDBA74;">FEASIBILITY</span>
                                 </div>
                                 <h3 class="h4 fw-bold text-dark mb-3">Technical Feasibility &amp; Systems Audit</h3>
                                 <p class="small flex-grow-1" style="color: var(--inn-text-muted); line-height: 1.6;">
@@ -2836,7 +2827,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 </p>
                                 <div class="pt-3 border-top" style="border-color: #E2E8F0 !important;">
                                     <div class="small fw-semibold text-dark mb-1">Stage Deliverable:</div>
-                                    <div class="small" style="color: #FF8000;">• Integration &amp; Security Gap Scorecard</div>
+                                    <div class="small" style="color: #C2410C; font-weight: 700;">• Integration &amp; Security Gap Scorecard</div>
                                 </div>
                             </article>
                         </div>
@@ -2845,8 +2836,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                         <div class="col-md-6 col-lg-3">
                             <article class="inn-blueprint-card inn-border-mint h-100 p-4 p-xl-5 d-flex flex-column">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="fw-bolder" style="color: var(--inn-mint); font-size: 1.1rem;">03 / 45 MIN</span>
-                                    <span class="badge rounded-pill" style="background: rgba(178, 255, 218, 0.12); color: #B2FFDA;">ARCHITECTURE</span>
+                                    <span class="fw-bolder" style="color: #0369A1; font-size: 1.1rem;">03 / 45 MIN</span>
+                                    <span class="badge rounded-pill" style="background: #E0F2FE; color: #0369A1; border: 1px solid #BAE6FD;">ARCHITECTURE</span>
                                 </div>
                                 <h3 class="h4 fw-bold text-dark mb-3">Architecture Roadmap &amp; Target Horizons</h3>
                                 <p class="small flex-grow-1" style="color: var(--inn-text-muted); line-height: 1.6;">
@@ -2854,7 +2845,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 </p>
                                 <div class="pt-3 border-top" style="border-color: #E2E8F0 !important;">
                                     <div class="small fw-semibold text-dark mb-1">Stage Deliverable:</div>
-                                    <div class="small" style="color: #B2FFDA;">• High-Level Architecture Topology</div>
+                                    <div class="small" style="color: #0369A1; font-weight: 700;">• High-Level Architecture Topology</div>
                                 </div>
                             </article>
                         </div>
@@ -2863,8 +2854,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                         <div class="col-md-6 col-lg-3">
                             <article class="inn-blueprint-card inn-border-cyan h-100 p-4 p-xl-5 d-flex flex-column">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="fw-bolder" style="color: var(--inn-cyan); font-size: 1.1rem;">04 / 45 MIN</span>
-                                    <span class="badge rounded-pill" style="background: rgba(10, 187, 219, 0.12); color: #0ABBDB;">EXECUTION</span>
+                                    <span class="fw-bolder" style="color: #0369A1; font-size: 1.1rem;">04 / 45 MIN</span>
+                                    <span class="badge rounded-pill" style="background: #E0F2FE; color: #0369A1; border: 1px solid #BAE6FD;">EXECUTION</span>
                                 </div>
                                 <h3 class="h4 fw-bold text-dark mb-3">Pilot Scope &amp; Decision Gate Charter</h3>
                                 <p class="small flex-grow-1" style="color: var(--inn-text-muted); line-height: 1.6;">
@@ -2872,7 +2863,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 </p>
                                 <div class="pt-3 border-top" style="border-color: #E2E8F0 !important;">
                                     <div class="small fw-semibold text-dark mb-1">Stage Deliverable:</div>
-                                    <div class="small" style="color: #0ABBDB;">• De-risked PoC Blueprint &amp; Sprint Plan</div>
+                                    <div class="small" style="color: #0369A1; font-weight: 700;">• De-risked PoC Blueprint &amp; Sprint Plan</div>
                                 </div>
                             </article>
                         </div>
@@ -2889,42 +2880,42 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                         <!-- Left Briefing Info -->
                         <div class="col-lg-5">
                             <div class="pe-lg-3">
-                                <span class="text-uppercase fw-bold small" style="color: var(--inn-orange); letter-spacing: 0.15em;">Direct Enterprise Onboarding</span>
+                                <span class="text-uppercase fw-bold small" style="color: #C2410C; letter-spacing: 0.15em;">Direct Enterprise Onboarding</span>
                                 <h2 class="display-5 fw-bold text-dark mt-2 mb-4">Book Your Free 3-Hour Architecture Session.</h2>
                                 
                                 <p class="lead mb-4" style="color: var(--inn-text-light); font-size: 1.15rem; line-height: 1.6;">
                                     Submit your strategic parameters below. Our solutions engineering committee matches your inquiry with the appropriate domain architect prior to convening.
                                 </p>
 
-                                <div class="p-4 rounded-4 mb-4" style="background: #FFFFFF; border: 1px solid #E2E8F0; border: 1px solid #E2E8F0;">
-                                    <h4 class="h6 fw-bold text-dark mb-3 text-uppercase" style="letter-spacing: 0.08em; color: var(--inn-mint) !important;">What Happens Next:</h4>
+                                <div class="p-4 rounded-4 mb-4" style="background: #FFFFFF; border: 1px solid #E2E8F0;">
+                                    <h4 class="h6 fw-bold mb-3 text-uppercase" style="letter-spacing: 0.08em; color: #0369A1 !important;">What Happens Next:</h4>
                                     
                                     <div class="d-flex align-items-start gap-3 mb-3">
-                                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold small" style="width: 24px; height: 24px; min-width: 24px; background: rgba(10, 187, 219, 0.2); color: #0ABBDB;">1</div>
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold small" style="width: 24px; height: 24px; min-width: 24px; background: #E0F2FE; color: #0369A1;">1</div>
                                         <div class="small" style="color: var(--inn-text-light);">
                                             <strong>Immediate Triage:</strong> Acknowledgment and bilateral NDA execution within 2 business hours.
                                         </div>
                                     </div>
 
                                     <div class="d-flex align-items-start gap-3 mb-3">
-                                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold small" style="width: 24px; height: 24px; min-width: 24px; background: rgba(255, 128, 0, 0.2); color: #FF8000;">2</div>
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold small" style="width: 24px; height: 24px; min-width: 24px; background: #FFEDD5; color: #C2410C;">2</div>
                                         <div class="small" style="color: var(--inn-text-light);">
                                             <strong>Pre-Flight Discovery:</strong> Optional 15-minute alignment call with Lead Architect to calibrate workshop scope.
                                         </div>
                                     </div>
 
                                     <div class="d-flex align-items-start gap-3">
-                                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold small" style="width: 24px; height: 24px; min-width: 24px; background: rgba(178, 255, 218, 0.2); color: #B2FFDA;">3</div>
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold small" style="width: 24px; height: 24px; min-width: 24px; background: #E0F2FE; color: #0369A1;">3</div>
                                         <div class="small" style="color: var(--inn-text-light);">
                                             <strong>Convene &amp; Deliver:</strong> 3-Hour deep dive session hosted in-person (HCMC / Hanoi / Tokyo / Singapore) or via secure virtual war room.
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: rgba(10, 187, 219, 0.08); border: 1px solid rgba(10, 187, 219, 0.2);">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0ABBDB" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #F0F9FF; border: 1px solid #BAE6FD;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                                     <div class="small" style="color: var(--inn-text-light);">
-                                        Prefer direct bilateral email? Write directly to our executive council at <a href="mailto:contact@innoria.com" class="fw-bold text-decoration-none" style="color: #0284C7;">contact@innoria.com</a>.
+                                        Prefer direct bilateral email? Write directly to our executive council at <a href="mailto:contact@innoria.com" class="fw-bold text-decoration-none" style="color: #0369A1;">contact@innoria.com</a>.
                                     </div>
                                 </div>
                             </div>
@@ -2932,13 +2923,13 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
 
                         <!-- Right Booking Form -->
                         <div class="col-lg-7">
-                            <div class="p-4 p-md-5 rounded-4 shadow-lg position-relative" style="background: #FFFFFF; border: 1px solid #E2E8F0; border: 1px solid #E2E8F0;">
+                            <div class="p-4 p-md-5 rounded-4 shadow-lg position-relative" style="background: #FFFFFF; border: 1px solid #E2E8F0;">
                                 <div class="d-flex align-items-center justify-content-between mb-4 pb-2 border-bottom" style="border-color: #E2E8F0 !important;">
                                     <div>
                                         <h3 class="h4 fw-bold text-dark mb-1">Executive Consultation Intake</h3>
                                         <p class="small mb-0" style="color: var(--inn-text-muted);">Confidential enterprise intake handled under strict NDA protocols.</p>
                                     </div>
-                                    <img src="/insilos_website/static/src/img/innoria/innoria_logo_grayscale.svg" alt="INNORIA" style="height: 28px; width: auto; opacity: 0.6; filter: brightness(0) invert(1);"/>
+                                    <img src="/insilos_website/static/src/img/innoria/innoria_logo_grayscale.svg" alt="INNORIA" style="height: 28px; width: auto; opacity: 0.8;"/>
                                 </div>
 
                                 <form action="/website/form/" method="post" enctype="multipart/form-data" class="s_website_form">
@@ -3039,14 +3030,14 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                 <div class="container py-lg-5">
                     <div class="row align-items-end justify-content-between mb-5">
                         <div class="col-lg-8">
-                            <span class="text-uppercase fw-bold small" style="color: var(--inn-cyan); letter-spacing: 0.15em;">Global Coordinates &amp; Operations</span>
+                            <span class="text-uppercase fw-bold small" style="color: #0369A1; letter-spacing: 0.15em;">Global Coordinates &amp; Operations</span>
                             <h2 class="display-5 fw-bold text-dark mt-2 mb-3">Authentic Regional Presence. Global Delivery.</h2>
                             <p class="lead mb-0" style="color: var(--inn-text-muted);">
                                 Rooted in Vietnam's high-velocity engineering ecosystem with specialized cross-border hubs across Asia-Pacific.
                             </p>
                         </div>
                         <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
-                            <a href="mailto:contact@innoria.com" class="fw-bold fs-5 text-decoration-none d-inline-flex align-items-center gap-2" style="color: #0284C7;">
+                            <a href="mailto:contact@innoria.com" class="fw-bold fs-5 text-decoration-none d-inline-flex align-items-center gap-2" style="color: #0369A1;">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                                 <span>contact@innoria.com</span>
                             </a>
@@ -3160,7 +3151,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     <!-- Verified Corporate Coordinates Banner -->
                     <div class="mt-4 p-4 rounded-4 d-flex flex-wrap align-items-center justify-content-between gap-3" style="background: rgba(255, 255, 255, 0.03); border: 1px solid #E2E8F0;">
                         <div class="d-flex align-items-center gap-3">
-                            <img src="/insilos_website/static/src/img/innoria/innoria_logo_grayscale.svg" alt="INNORIA" style="height: 24px; filter: brightness(0) invert(1); opacity: 0.8;"/>
+                            <img src="/insilos_website/static/src/img/innoria/innoria_logo_grayscale.svg" alt="INNORIA" style="height: 24px; opacity: 0.8;"/>
                             <div class="small" style="color: var(--inn-text-light);">
                                 <span class="fw-bold text-dark">Legal Registered Entity:</span> UNG DUNG SANG TAO LLC (Công Ty TNHH Ứng Dụng Sáng Tạo)
                             </div>
@@ -3190,8 +3181,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     <div class="row g-4">
                         <!-- Guarantee 1: ISO 27001 -->
                         <div class="col-md-6 col-lg-3">
-                            <div class="h-100 p-4 rounded-4 text-center d-flex flex-column align-items-center" style="background: #FFFFFF; border: 1px solid #E2E8F0; border: 1px solid #E2E8F0;">
-                                <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px; background: rgba(10, 187, 219, 0.12); color: #0ABBDB;">
+                            <div class="h-100 p-4 rounded-4 text-center d-flex flex-column align-items-center" style="background: #FFFFFF; border: 1px solid #E2E8F0;">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px; background: #E0F2FE; color: #0284C7;">
                                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                                 </div>
                                 <h3 class="h5 fw-bold text-dark mb-2">ISO 27001 Aligned</h3>
@@ -3203,8 +3194,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
 
                         <!-- Guarantee 2: SOC 2 Readiness -->
                         <div class="col-md-6 col-lg-3">
-                            <div class="h-100 p-4 rounded-4 text-center d-flex flex-column align-items-center" style="background: #FFFFFF; border: 1px solid #E2E8F0; border: 1px solid #E2E8F0;">
-                                <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px; background: rgba(255, 128, 0, 0.12); color: #FF8000;">
+                            <div class="h-100 p-4 rounded-4 text-center d-flex flex-column align-items-center" style="background: #FFFFFF; border: 1px solid #E2E8F0;">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px; background: #FFEDD5; color: #C2410C;">
                                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
                                 </div>
                                 <h3 class="h5 fw-bold text-dark mb-2">SOC 2 Type II Controls</h3>
@@ -3216,8 +3207,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
 
                         <!-- Guarantee 3: Enterprise NDA -->
                         <div class="col-md-6 col-lg-3">
-                            <div class="h-100 p-4 rounded-4 text-center d-flex flex-column align-items-center" style="background: #FFFFFF; border: 1px solid #E2E8F0; border: 1px solid #E2E8F0;">
-                                <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px; background: rgba(178, 255, 218, 0.12); color: #B2FFDA;">
+                            <div class="h-100 p-4 rounded-4 text-center d-flex flex-column align-items-center" style="background: #FFFFFF; border: 1px solid #E2E8F0;">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px; background: #E0F2FE; color: #0284C7;">
                                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                                 </div>
                                 <h3 class="h5 fw-bold text-dark mb-2">Bilateral Enterprise NDA</h3>
@@ -3229,8 +3220,8 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
 
                         <!-- Guarantee 4: 2-Hour Response SLA -->
                         <div class="col-md-6 col-lg-3">
-                            <div class="h-100 p-4 rounded-4 text-center d-flex flex-column align-items-center" style="background: #FFFFFF; border: 1px solid #E2E8F0; border: 1px solid #E2E8F0;">
-                                <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px; background: rgba(10, 187, 219, 0.12); color: #0ABBDB;">
+                            <div class="h-100 p-4 rounded-4 text-center d-flex flex-column align-items-center" style="background: #FFFFFF; border: 1px solid #E2E8F0;">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px; background: #E0F2FE; color: #0284C7;">
                                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                                 </div>
                                 <h3 class="h5 fw-bold text-dark mb-2">Guaranteed 2-Hour SLA</h3>
@@ -3258,27 +3249,27 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                     You don't need a polished 50-page RFQ. To extract maximum ROI from the 3-hour workshop, having clarity on these 5 dimensions accelerates technical alignment:
                                 </p>
 
-                                <div class="inn-glass-card p-4 mt-4" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid var(--inn-mint);">
-                                    <h3 class="h5 fw-bold text-dark mb-3" style="color: var(--inn-mint) !important;">What to Bring to the Session:</h3>
+                                <div class="inn-glass-card p-4 mt-4" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid #0284C7;">
+                                    <h3 class="h5 fw-bold mb-3" style="color: #0369A1 !important;">What to Bring to the Session:</h3>
                                     <ul class="list-unstyled mb-0 d-flex flex-column gap-3">
                                         <li class="d-flex align-items-start gap-2">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B2FFDA" stroke-width="2.5" class="mt-1 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2.5" class="mt-1 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                                             <span class="small" style="color: var(--inn-text-light);"><strong>Primary Business Mandate:</strong> Top 1-2 operational pain points or revenue objectives driving this initiative.</span>
                                         </li>
                                         <li class="d-flex align-items-start gap-2">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B2FFDA" stroke-width="2.5" class="mt-1 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2.5" class="mt-1 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                                             <span class="small" style="color: var(--inn-text-light);"><strong>Current Systems Topology:</strong> Overview of existing core systems (SAP, Odoo, custom microservices, cloud providers).</span>
                                         </li>
                                         <li class="d-flex align-items-start gap-2">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B2FFDA" stroke-width="2.5" class="mt-1 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2.5" class="mt-1 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                                             <span class="small" style="color: var(--inn-text-light);"><strong>Governance &amp; Data Residency:</strong> Specific compliance criteria (State Bank of Vietnam regulations, Decree 13, GDPR, HIPAA).</span>
                                         </li>
                                         <li class="d-flex align-items-start gap-2">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B2FFDA" stroke-width="2.5" class="mt-1 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2.5" class="mt-1 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                                             <span class="small" style="color: var(--inn-text-light);"><strong>Target Horizon &amp; Budget Tier:</strong> Desired Go-Live milestone for MVP pilot and expected production scaling window.</span>
                                         </li>
                                         <li class="d-flex align-items-start gap-2">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B2FFDA" stroke-width="2.5" class="mt-1 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2.5" class="mt-1 flex-shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                                             <span class="small" style="color: var(--inn-text-light);"><strong>Decision Sponsors:</strong> Presence of technical leader (CTO/VP Eng) and executive sponsor (CIO/CEO/COO).</span>
                                         </li>
                                     </ul>
@@ -3288,12 +3279,12 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
 
                         <!-- Right Column: 4 Essential CIO/CTO FAQs -->
                         <div class="col-lg-7">
-                            <span class="text-uppercase fw-bold small" style="color: var(--inn-cyan); letter-spacing: 0.15em;">Executive Q&amp;A</span>
+                            <span class="text-uppercase fw-bold small" style="color: #0369A1; letter-spacing: 0.15em;">Executive Q&amp;A</span>
                             <h2 class="display-6 fw-bold text-dark mt-2 mb-4">Frequently Asked Questions</h2>
 
                             <div class="accordion d-flex flex-column gap-3" id="innoriaContactFaq">
                                 <!-- FAQ 1 -->
-                                <div class="accordion-item rounded-3 overflow-hidden" style="background: #FFFFFF; border: 1px solid #E2E8F0; border: 1px solid #E2E8F0;">
+                                <div class="accordion-item rounded-3 overflow-hidden" style="background: #FFFFFF; border: 1px solid #E2E8F0;">
                                     <h3 class="accordion-header" id="headingOne">
                                         <button class="accordion-button inn-faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                             1. Is the 3-Hour Strategic Architecture Workshop genuinely free of charge or obligations?
@@ -3307,7 +3298,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 </div>
 
                                 <!-- FAQ 2 -->
-                                <div class="accordion-item rounded-3 overflow-hidden" style="background: #FFFFFF; border: 1px solid #E2E8F0; border: 1px solid #E2E8F0;">
+                                <div class="accordion-item rounded-3 overflow-hidden" style="background: #FFFFFF; border: 1px solid #E2E8F0;">
                                     <h3 class="accordion-header" id="headingTwo">
                                         <button class="accordion-button collapsed inn-faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                             2. How and when is the Enterprise Non-Disclosure Agreement (NDA) executed?
@@ -3321,7 +3312,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 </div>
 
                                 <!-- FAQ 3 -->
-                                <div class="accordion-item rounded-3 overflow-hidden" style="background: #FFFFFF; border: 1px solid #E2E8F0; border: 1px solid #E2E8F0;">
+                                <div class="accordion-item rounded-3 overflow-hidden" style="background: #FFFFFF; border: 1px solid #E2E8F0;">
                                     <h3 class="accordion-header" id="headingThree">
                                         <button class="accordion-button collapsed inn-faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                             3. How does INNORIA guarantee zero proprietary vendor lock-in?
@@ -3335,7 +3326,7 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                 </div>
 
                                 <!-- FAQ 4 -->
-                                <div class="accordion-item rounded-3 overflow-hidden" style="background: #FFFFFF; border: 1px solid #E2E8F0; border: 1px solid #E2E8F0;">
+                                <div class="accordion-item rounded-3 overflow-hidden" style="background: #FFFFFF; border: 1px solid #E2E8F0;">
                                     <h3 class="accordion-header" id="headingFour">
                                         <button class="accordion-button collapsed inn-faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                                             4. What concrete deliverables do we receive at the conclusion of the workshop?
@@ -3355,12 +3346,12 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                             </div>
 
                             <!-- Bottom CTA Card -->
-                            <div class="mt-4 p-4 rounded-4 d-flex flex-wrap align-items-center justify-content-between gap-3" style="background: linear-gradient(135deg, rgba(10, 187, 219, 0.1), rgba(178, 255, 218, 0.05)); border: 1px solid rgba(10, 187, 219, 0.25);">
+                            <div class="mt-4 p-4 rounded-4 d-flex flex-wrap align-items-center justify-content-between gap-3" style="background: #F0F9FF; border: 1px solid #BAE6FD;">
                                 <div>
                                     <h4 class="h6 fw-bold text-dark mb-1">Have an immediate procurement deadline?</h4>
                                     <p class="small mb-0" style="color: #334155 !important; font-weight: 500;">Request expedited 60-minute executive briefing with our Chief Architect.</p>
                                 </div>
-                                <a href="#executive-booking-form" class="btn btn-sm inn-btn-cyan-sm fw-bold px-3 py-2 rounded-3 text-nowrap">
+                                <a href="#executive-booking-form" class="btn btn-sm fw-bold px-3 py-2 rounded-3 text-nowrap" style="background: #0284C7; color: #FFFFFF !important; border: 1px solid #0284C7;">
                                     Fast-Track Booking
                                 </a>
                             </div>

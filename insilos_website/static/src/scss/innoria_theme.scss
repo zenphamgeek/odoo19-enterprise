@@ -1744,9 +1744,22 @@ body:has(#innoria_main_nav) {
 }
 
 /* ==========================================================================
-   INNORIA HERO VIDEO SLIDER WITH CINEMATIC TRANSITIONS & 4 PRODUCT THEMES
+   KINETIC HALO EFFECT & INNORIA HERO BREAKTHROUGH STAGE
    ========================================================================== */
-.innoria-hero-slider-section {
+@keyframes haloPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(10, 187, 219, 0.7), 0 0 20px 0 rgba(0, 240, 255, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 16px rgba(10, 187, 219, 0), 0 0 38px 8px rgba(0, 240, 255, 0.65);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(10, 187, 219, 0), 0 0 20px 0 rgba(0, 240, 255, 0.4);
+    }
+}
+
+.innoria-hero-slider-section,
+.innoria-hero-interactive-stage {
     position: relative;
     background: #070B14;
     min-height: 820px;
@@ -1924,9 +1937,61 @@ body:has(#innoria_main_nav) {
         }
     }
 
-    /* CTA Buttons */
+    /* CTA Buttons & VIP POC Halo Effect */
+    .btn-hero-vip-poc {
+        position: relative;
+        background: var(--hero-gradient, linear-gradient(135deg, #0ABBDB 0%, #0284C7 100%));
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #070B14 !important;
+        font-weight: 800;
+        padding: 14px 34px;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        animation: haloPulse 2.8s infinite ease-in-out;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 2;
+        cursor: pointer;
+
+        .btn-text,
+        .poc-text {
+            color: #070B14 !important;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+        }
+
+        svg {
+            fill: #070B14 !important;
+            transition: transform 0.25s ease;
+        }
+
+        .poc-halo-pulse {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #070B14;
+            box-shadow: 0 0 8px #070B14;
+            animation: haloPulse 1.4s infinite ease-in-out;
+        }
+
+        &:hover {
+            transform: translateY(-2px) scale(1.02);
+            animation: none;
+            box-shadow: 0 0 42px 10px rgba(0, 240, 255, 0.8), 0 12px 28px rgba(0, 0, 0, 0.4);
+            color: #070B14 !important;
+
+            svg {
+                transform: translate(2px, 2px);
+            }
+        }
+    }
+
     .hero-cta-btn-primary {
         background: var(--hero-gradient, linear-gradient(135deg, #0ABBDB 0%, #0284C7 100%));
+        background-color: #00F0FF !important;
         border: none;
         color: #070B14 !important;
         font-weight: 800;
@@ -2010,14 +2075,16 @@ body:has(#innoria_main_nav) {
         }
     }
 
-    /* Bottom 4-Product Segmented Navigation Bar */
-    .hero-product-nav-bar {
+    /* Bottom 4-Product / Scene Switcher Segmented Navigation Bar */
+    .hero-product-nav-bar,
+    .hero-scene-switcher-nav {
         position: relative;
         z-index: 10;
         margin-top: 40px;
     }
 
-    .hero-product-tabs-wrapper {
+    .hero-product-tabs-wrapper,
+    .hero-scene-nav-wrapper {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 12px;
@@ -2030,7 +2097,8 @@ body:has(#innoria_main_nav) {
         }
     }
 
-    .hero-product-tab-btn {
+    .hero-product-tab-btn,
+    .hero-scene-nav-item {
         background: rgba(11, 19, 36, 0.75);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 14px;
@@ -2291,4 +2359,437 @@ a[href*="Workshop"].btn {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
+/* ==========================================================================
+   s_innoria_3d_solutions_erp: Clean Light Minimalist 3D Autonomous ERP Core
+   ========================================================================== */
+.s_innoria_3d_solutions_erp,
+.innoria-solutions-3d-stage {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: relative;
+    width: 100%;
 
+    .erp-3d-scene-viewport {
+        width: 100%;
+        max-width: 440px;
+        height: 440px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 1200px;
+        perspective-origin: 50% 36%;
+        cursor: grab;
+        touch-action: none;
+        user-select: none;
+        -webkit-user-select: none;
+
+        &.is-dragging {
+            cursor: grabbing;
+        }
+
+        @media (max-width: 768px) {
+            height: 380px;
+            transform: scale(0.88);
+            transform-origin: center center;
+        }
+
+        @media (max-width: 480px) {
+            height: 320px;
+            transform: scale(0.75);
+            transform-origin: center center;
+        }
+    }
+
+    .erp-solutions-deck {
+        --slab-w: 240px;
+        --slab-h: 240px;
+        --slab-t: 34px;
+        width: var(--slab-w);
+        height: var(--slab-h);
+        position: relative;
+        transform-style: preserve-3d;
+        will-change: transform;
+
+        .deck-floor-shadow-light {
+            position: absolute;
+            width: var(--slab-w);
+            height: var(--slab-h);
+            left: 0;
+            top: 0;
+            background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.16) 0%, rgba(15, 23, 42, 0.04) 50%, transparent 72%);
+            transform: translateZ(-140px);
+            filter: blur(18px);
+            pointer-events: none;
+            border-radius: 24px;
+        }
+
+        .slab-layer {
+            position: absolute;
+            width: var(--slab-w);
+            height: var(--slab-h);
+            left: 0;
+            top: 0;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            --pull-x: 0px;
+            --pull-y: 0px;
+            --pull-z: 0px;
+            --scale: 1;
+            transform: translate3d(var(--pull-x, 0px), var(--pull-y, 0px), calc(var(--base-z) + var(--pull-z, 0px))) scale3d(var(--scale, 1), var(--scale, 1), var(--scale, 1));
+            will-change: transform;
+            transition: filter 0.25s ease, opacity 0.25s ease;
+
+            /* Face styling for Clean Light Minimalist canvas */
+            .top {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                transform: translateZ(var(--slab-t));
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.90) 100%);
+                border: 1.5px solid var(--active-accent);
+                box-shadow: inset 0 0 16px var(--active-glow);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            .bottom {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                transform: rotateX(180deg);
+                background: #E2E8F0;
+                border: 1px solid var(--active-accent);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            .front-right {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: var(--slab-w);
+                height: var(--slab-t);
+                transform-origin: 50% 100%;
+                transform: rotateX(-90deg);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-end;
+                padding-right: 14px;
+                background: linear-gradient(to right, #FFFFFF 0%, #F8FAFC 60%, #F1F5F9 100%);
+                border: 1px solid var(--active-accent);
+                border-top: none;
+                color: #0F172A !important;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+
+                .title-text {
+                    font-size: 11.5px;
+                    font-weight: 800;
+                    line-height: 1.2;
+                    letter-spacing: -0.01em;
+                    color: #0F172A !important;
+                }
+
+                .sub-text {
+                    font-size: 8px;
+                    font-weight: 600;
+                    line-height: 1.2;
+                    letter-spacing: -0.01em;
+                    color: #475569 !important;
+                }
+            }
+
+            .front-left {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: var(--slab-t);
+                height: var(--slab-h);
+                transform-origin: 0 50%;
+                transform: rotateY(-90deg);
+                background: linear-gradient(to bottom, #FFFFFF 0%, #F1F5F9 100%);
+                border: 1px solid var(--active-accent);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            .back-right {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: var(--slab-t);
+                height: var(--slab-h);
+                transform-origin: 100% 50%;
+                transform: rotateY(90deg);
+                background: #F8FAFC;
+                border: 1px solid var(--active-accent);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            .back-left {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: var(--slab-w);
+                height: var(--slab-t);
+                transform-origin: 50% 0;
+                transform: rotateX(90deg);
+                background: #F1F5F9;
+                border: 1px solid var(--active-accent);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            /* Pulled Out State */
+            &.pulled-out {
+                --scale: 1.03;
+                opacity: 1 !important;
+                filter: none !important;
+
+                .top {
+                    box-shadow: inset 0 0 22px var(--active-glow), 0 0 14px var(--active-glow);
+                }
+            }
+
+            /* Dimmed State */
+            &.dimmed {
+                opacity: 0.88;
+
+                .front-right .title-text {
+                    color: #334155 !important;
+                }
+                .front-right .sub-text {
+                    color: #64748B !important;
+                }
+            }
+        }
+
+        #erp-slab-0 { --base-z: 135px; }
+        #erp-slab-1 { --base-z: 90px; }
+        #erp-slab-2 { --base-z: 45px; }
+        #erp-slab-3 { --base-z: 0px; }
+    }
+
+    /* Minimalist HUD Chips */
+    .erp-pillars-hud {
+        position: relative;
+        z-index: 10;
+
+        .erp-pillar-chip {
+            background: #FFFFFF;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 9999px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            outline: none;
+
+            .chip-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--chip-accent);
+                transition: transform 0.2s ease;
+            }
+
+            &:hover {
+                border-color: var(--chip-accent);
+                color: #0F172A;
+                transform: translateY(-1px);
+            }
+
+            &.active {
+                background: #FFFFFF;
+                border-color: var(--chip-accent);
+                color: #0F172A;
+                font-weight: 700;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 0 0 2px rgba(10, 187, 219, 0.1);
+
+                .chip-dot {
+                    transform: scale(1.25);
+                    box-shadow: 0 0 8px var(--chip-accent);
+                }
+            }
+        }
+    }
+}
+
+/* ==========================================================================
+   TRANSPARENT 3D CONTAINER STYLING (Milestone 1 & 3 Contract)
+   Pure transparent canvas integration on Clean Light surfaces
+   ========================================================================== */
+.innoria-solutions-3d-stage,
+.s_innoria_3d_solutions_erp,
+.s_innoria_3d_solutions_erp .solutions-3d-canvas-wrap,
+.s_innoria_3d_solutions_erp .solutions-3d-viewport,
+.s_innoria_3d_solutions_erp .erp-3d-scene-viewport,
+.innoria-3d-transparent-container,
+.transparent-3d-stage,
+.innoria-deck-viewport-transparent {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* ==========================================================================
+   VIP PROOF OF CONCEPT CTA WITH KINETIC HALO (Milestone 2 & 3 Contract)
+   @keyframes haloPulse kinetic aura & luminous hover lift
+   ========================================================================== */
+@keyframes haloPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7), 0 0 16px rgba(10, 187, 219, 0.45);
+    }
+    50% {
+        box-shadow: 0 0 0 14px rgba(2, 132, 199, 0), 0 0 32px rgba(10, 187, 219, 0.85);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(2, 132, 199, 0), 0 0 16px rgba(10, 187, 219, 0.45);
+    }
+}
+
+.btn-hero-vip-poc {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.95rem 2.25rem;
+    background: linear-gradient(135deg, #0284C7 0%, #0369A1 50%, #075985 100%) !important;
+    color: #FFFFFF !important;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    border: 1.5px solid rgba(0, 240, 255, 0.55) !important;
+    border-radius: 9999px;
+    text-decoration: none;
+    animation: haloPulse 2.8s infinite ease-in-out;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.25s ease;
+    z-index: 10;
+
+    &:hover,
+    &:focus-visible {
+        transform: translateY(-3px) scale(1.02);
+        filter: brightness(1.12);
+        box-shadow: 0 0 0 4px rgba(10, 187, 219, 0.4), 0 14px 34px rgba(2, 132, 199, 0.65) !important;
+        color: #FFFFFF !important;
+    }
+
+    &:active {
+        transform: translateY(-1px) scale(0.99);
+    }
+
+    svg, i {
+        transition: transform 0.2s ease;
+    }
+
+    &:hover svg,
+    &:hover i {
+        transform: translateX(4px);
+    }
+}
+
+/* ==========================================================================
+   MULTI-ROUTE ZERO-HORIZONTAL-OVERFLOW SAFEGUARDS (Milestone 3)
+   Guarantees 100% scrollWidth === clientWidth across 375px, 768px, 1440px
+   ========================================================================== */
+html, body, #wrapwrap {
+    max-width: 100% !important;
+    overflow-x: clip !important;
+}
+
+main#wrap {
+    max-width: 100% !important;
+    overflow-x: clip !important;
+}
+
+.oe_structure,
+.o_colored_level {
+    overflow-x: clip;
+}
+
+/* ==========================================================================
+   WCAG AA/AAA CONTRAST STANDARDIZATION & REMEDIATION (Milestone 3)
+   Normal text >= 4.5:1, Headings on dark >= 7:1
+   ========================================================================== */
+
+/* Critical FAQ Accordion contrast defect fix on /contactus (White text on white bg -> dark #0F172A) */
+.inn-faq-button {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    border: 1px solid #E2E8F0 !important;
+    font-weight: 700 !important;
+
+    &:not(.collapsed) {
+        color: #0369A1 !important;
+        background-color: #F0F9FF !important;
+        border-color: #BAE6FD !important;
+    }
+
+    &::after {
+        filter: none !important;
+    }
+}
+
+/* Location Card hover inversion defect fix on /contactus (Preserves dark text legibility) */
+.inn-location-card {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    color: #0F172A !important;
+    transition: all 0.25s ease;
+
+    &:hover {
+        background: #F0F9FF !important;
+        border-color: #0284C7 !important;
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(2, 132, 199, 0.12) !important;
+        color: #0F172A !important;
+
+        .text-dark, h2, h3, h4, h5, p, span, div {
+            color: #0F172A !important;
+        }
+
+        .lead {
+            color: #0284C7 !important;
+        }
+    }
+}
+
+/* High-contrast job titles & executive cards on /about */
+.inn-about {
+    .job-title,
+    .small.mb-3[style*="--innoria-cyan"],
+    .small.mb-3[style*="#0ABBDB"] {
+        color: #0369A1 !important;
+        font-weight: 700 !important;
+    }
+}
+
+/* High-contrast comparison table headers & cells on /solutions */
+.table thead th[style*="#0ABBDB"],
+.table th[style*="#0ABBDB"],
+.comparison-innoria-ai-header {
+    color: #0284C7 !important;
+    font-weight: 800 !important;
+}
+
+/* Light canvas cyan text mapped to WCAG AA/AAA compliant ocean blue */
+main#wrap[style*="background-color:#FFFFFF"],
+main#wrap[style*="background-color: #FFFFFF"] {
+    .text-cyan:not(.badge):not(.btn),
+    .text-info:not(.badge):not(.btn) {
+        color: #0284C7 !important;
+    }
+}

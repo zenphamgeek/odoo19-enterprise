@@ -664,27 +664,21 @@
                     <div class="col-lg-10 mx-auto">
                         <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-15 border border-primary border-opacity-30 text-white small mb-3 font-monospace">
                             <span class="d-inline-block rounded-circle bg-success" style="width: 8px; height: 8px; box-shadow: 0 0 8px #B2FFDA;"/>
-                            <span>INNORIA SOVEREIGN TOPOLOGY // 360° INTERACTIVE WEBGL</span>
+                            <span>INNORIA SOVEREIGN TOPOLOGY</span>
                         </div>
                         <h2 class="display-5 fw-bold text-white mb-3">
                             Kiến Trúc Đa Tác Nhân <span class="text-innoria-gradient">AI &amp; Cloud Độc Lập</span>
                         </h2>
                         <p class="lead text-secondary fs-5 col-lg-9 mx-auto">
-                            Khám phá mạng lưới liên kết giữa Lõi Điều Hành Doanh Nghiệp và 4 Trục Công Nghệ Đột Phá: DIGIFORCE, MOJO AI, MOJOVERSE và Intelligent ERP. Tương tác 3D đa chiều với dữ liệu đo kiểm thời gian thực.
+                            Khám phá mạng lưới liên kết giữa Lõi Điều Hành Doanh Nghiệp và 4 Trục Công Nghệ Đột Phá: DIGIFORCE, MOJO AI, MOJOVERSE và Intelligent ERP.
                         </p>
                     </div>
                 </div>
 
-                <!-- 3D WebGL Viewport Container -->
+                <!-- 3D WebGL Viewport Container (Direct Transparent Layout) -->
                 <div class="row g-4 mb-4">
                     <div class="col-12">
                         <div class="innoria-3d-viewport position-relative" id="innoriaTopologyViewport" data-innoria-3d="topology">
-                            <!-- Cybernetic Grid Backdrop -->
-                            <div class="innoria-3d-grid-bg"/>
-                            <div class="ins-neon-corner ins-corner-tl" style="border-color: rgba(47, 128, 237, 0.7);"/>
-                            <div class="ins-neon-corner ins-corner-tr" style="border-color: rgba(47, 128, 237, 0.7);"/>
-                            <div class="ins-neon-corner ins-corner-bl" style="border-color: rgba(47, 128, 237, 0.7);"/>
-                            <div class="ins-neon-corner ins-corner-br" style="border-color: rgba(47, 128, 237, 0.7);"/>
 
                             <!-- Floating HUD Control Bar -->
                             <div class="innoria-hud-control-bar">
@@ -772,9 +766,6 @@
                             <h2 class="main-title">
                                 Kiến Trúc Đa Tầng <span class="accent">Enterprise Cloud &amp; AI</span>
                             </h2>
-                            <p class="sub-title">
-                                Rê chuột vào từng khối 3D để trích xuất lớp kiến trúc ra khỏi Deck hoặc chọn thẻ tương ứng bên phải.
-                            </p>
                         </div>
 
                         <div class="action-controls">
@@ -806,19 +797,8 @@
                     <!-- Main Grid: 3D Stage (Left) &amp; Description Column (Right) -->
                     <div class="deck-grid">
 
-                        <!-- LEFT: 3D Isometric Interactive Deck -->
+                        <!-- LEFT: 3D Isometric Interactive Deck (Direct Transparent Layout) -->
                         <div id="stageCard" class="stage-card">
-
-                            <!-- Top HUD Indicators -->
-                            <div class="stage-hud-top">
-                                <div class="badge-hud">
-                                    <span class="status-dot"></span>
-                                    <span>HARDWARE 3D // 60 FPS</span>
-                                </div>
-                                <div id="layerBadge" class="badge-hud" style="color: #0ABBDB; border-color: rgba(10, 187, 219, 0.4);">
-                                    <span>INSPECT: <strong id="badgeLayerName">ALL LAYERS</strong></span>
-                                </div>
-                            </div>
 
                             <!-- 3D Scene Viewport -->
                             <div class="scene-viewport">
@@ -883,15 +863,6 @@
                                     </div>
 
                                 </div>
-                            </div>
-
-                            <!-- Bottom Guidance -->
-                            <div class="stage-instruction">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                                <span>Hover khối để kéo ra khỏi Deck &#8226; Kéo chuột để xoay phối cảnh 3D</span>
                             </div>
 
                         </div>
@@ -1304,6 +1275,105 @@
     </template>
 
     <!-- ================================================================= -->
+    <!-- 8. INNORIA 3D AUTONOMOUS ERP CORE (CLEAN LIGHT MINIMALIST)        -->
+    <!-- ================================================================= -->
+    <template id="s_innoria_3d_solutions_erp" name="Innoria 3D Autonomous ERP Core">
+        <div class="s_innoria_3d_solutions_erp innoria-solutions-3d-stage position-relative w-100"
+             data-snippet="s_innoria_3d_solutions_erp"
+             data-name="Innoria 3D Autonomous ERP Core"
+             id="solutions_erp_core_3d"
+             style="background: transparent !important; border: none !important; box-shadow: none !important;">
+            <!-- 3D Isometric Viewport (100% Transparent, No Card Wrapper, Zero Borders, Zero Box Shadows) -->
+            <div class="erp-3d-scene-viewport position-relative mx-auto" id="solutionsSceneViewport">
+                <div id="solutionsDeckContainer" class="deck-container-3d isometric-angle erp-solutions-deck">
+                    <!-- Diffused Floor Contact Shadow for Light Canvas -->
+                    <div class="deck-floor-shadow-light"/>
+
+                    <!-- Pillar 0: Autonomous Procurement &amp; Demand Sensing (Tech Cyan #0ABBDB) -->
+                    <div id="erp-slab-0" class="slab-layer" data-layer-idx="0" data-pillar="procurement"
+                         style="--active-accent: #0ABBDB; --active-glow: rgba(10, 187, 219, 0.45); --base-z: 135px;">
+                        <div class="slab-shadow"/>
+                        <div class="top"/>
+                        <div class="bottom"/>
+                        <div class="front-right">
+                            <div class="title-text">Autonomous Procurement</div>
+                            <div class="sub-text">Demand Sensing · Smart RFQ · Supplier Matrix</div>
+                        </div>
+                        <div class="front-left"/>
+                        <div class="back-right"/>
+                        <div class="back-left"/>
+                    </div>
+
+                    <!-- Pillar 1: Smart MES &amp; Shop Floor Synchronization (Electric Blue #2563EB) -->
+                    <div id="erp-slab-1" class="slab-layer" data-layer-idx="1" data-pillar="mes"
+                         style="--active-accent: #2563EB; --active-glow: rgba(37, 99, 235, 0.45); --base-z: 90px;">
+                        <div class="slab-shadow"/>
+                        <div class="top"/>
+                        <div class="bottom"/>
+                        <div class="front-right">
+                            <div class="title-text">Smart MES &amp; Shop Floor</div>
+                            <div class="sub-text">Trumpf Laser CNC · Yaskawa Robot · OEE 92.5%</div>
+                        </div>
+                        <div class="front-left"/>
+                        <div class="back-right"/>
+                        <div class="back-left"/>
+                    </div>
+
+                    <!-- Pillar 2: Continuous Financial Audit &amp; Triple-Entry Ledger (Vivid Emerald #10B981) -->
+                    <div id="erp-slab-2" class="slab-layer" data-layer-idx="2" data-pillar="ledger"
+                         style="--active-accent: #10B981; --active-glow: rgba(16, 185, 129, 0.45); --base-z: 45px;">
+                        <div class="slab-shadow"/>
+                        <div class="top"/>
+                        <div class="bottom"/>
+                        <div class="front-right">
+                            <div class="title-text">Continuous Financial Audit</div>
+                            <div class="sub-text">Triple-Entry Ledger · Decree 123 · Zero Variance</div>
+                        </div>
+                        <div class="front-left"/>
+                        <div class="back-right"/>
+                        <div class="back-left"/>
+                    </div>
+
+                    <!-- Pillar 3: Mojo AI Swarm Copilot (Deep Amber #D97706) -->
+                    <div id="erp-slab-3" class="slab-layer" data-layer-idx="3" data-pillar="swarm"
+                         style="--active-accent: #D97706; --active-glow: rgba(217, 119, 6, 0.45); --base-z: 0px;">
+                        <div class="slab-shadow"/>
+                        <div class="top"/>
+                        <div class="bottom"/>
+                        <div class="front-right">
+                            <div class="title-text">Mojo AI Swarm Copilot</div>
+                            <div class="sub-text">16 Sovereign Nodes · VLM Reasoning · Cross-Silo</div>
+                        </div>
+                        <div class="front-left"/>
+                        <div class="back-right"/>
+                        <div class="back-left"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillar Telemetry &amp; State Badges (Clean Minimalist Chips, Zero Instructional Text) -->
+            <div class="erp-pillars-hud d-flex justify-content-center gap-2 mt-3 flex-wrap">
+                <button type="button" class="erp-pillar-chip active" data-pillar-target="0" style="--chip-accent: #0ABBDB;">
+                    <span class="chip-dot"/>
+                    <span class="chip-label">Autonomous Procurement</span>
+                </button>
+                <button type="button" class="erp-pillar-chip" data-pillar-target="1" style="--chip-accent: #2563EB;">
+                    <span class="chip-dot"/>
+                    <span class="chip-label">Smart MES</span>
+                </button>
+                <button type="button" class="erp-pillar-chip" data-pillar-target="2" style="--chip-accent: #10B981;">
+                    <span class="chip-dot"/>
+                    <span class="chip-label">Financial Audit</span>
+                </button>
+                <button type="button" class="erp-pillar-chip" data-pillar-target="3" style="--chip-accent: #D97706;">
+                    <span class="chip-dot"/>
+                    <span class="chip-label">Mojo AI Swarm</span>
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <!-- ================================================================= -->
     <!-- 7. INSILOS ERP WEBSITE SNIPPETS PALETTE EXTENSION (PRIORITY 30)   -->
     <!-- ================================================================= -->
     <template id="insilos_3d_snippets_palette" inherit_id="website.snippets" priority="30">
@@ -1325,6 +1395,9 @@
             </t>
             <t t-snippet="insilos_website.s_innoria_3d_architecture_deck" string="Innoria 3D Architecture Deck" group="content" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_innoria_3d_topology.svg">
                 <keywords>innoria, 3d, architecture, deck, isometric, layers, nocode, ai, data lake, erp</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_innoria_3d_solutions_erp" string="Innoria 3D Autonomous ERP Core" group="content" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_innoria_3d_topology.svg">
+                <keywords>innoria, 3d, erp, solutions, autonomous, procurement, mes, ledger, swarm</keywords>
             </t>
         </xpath>
     </template>

@@ -622,28 +622,40 @@
                 <!-- ========================================================= -->
                 <!-- 1. HERO VIDEO SLIDE WITH 4 PRODUCT THEMES & TRANSITIONS   -->
                 <!-- ========================================================= -->
-                <section class="innoria-hero-slider-section position-relative o_colored_level overflow-hidden"
+                <section class="innoria-hero-slider-section innoria-hero-interactive-stage position-relative o_colored_level overflow-hidden"
                          data-snippet="s_cover"
-                         data-name="Innoria Hero Video Slider"
+                         data-name="Innoria Hero Interactive Stage"
                          id="innoria_hero_cover">
 
-                    <!-- Background Video Stage with Smooth Crossfade Layers -->
+                    <!-- Background Video & 3D Interactive Stage with Smooth Crossfade Layers -->
                     <div class="hero-video-stage" id="heroVideoStage">
-                        <!-- Slide 0 Video: DIGIFORCE (Platform & Low-Code) -->
-                        <video class="video-slide-layer active" data-video-slide="0" autoplay="autoplay" muted="muted" loop="loop" playsinline="playsinline" preload="auto">
+                        <!-- Interactive 3D WebGL Sovereign Stage Canvas Viewport -->
+                        <div class="innoria-hero-3d-viewport position-absolute inset-0 w-100 h-100"
+                             id="heroInteractive3DStage"
+                             data-3d-scene="sovereign_core"
+                             data-theme="midnight_space"
+                             data-dpr-clamp="2.0"
+                             data-fps-budget="60"
+                             style="z-index: 1; pointer-events: none; opacity: 0.95;">
+                            <canvas class="innoria-webgl-canvas w-100 h-100" id="heroInteractiveCanvas" style="display: block; width: 100%; height: 100%;"/>
+                        </div>
+
+                        <!-- Video Backdrop Layers (Fallback & Cinematic Blend) -->
+                        <!-- Mode 0: [Cloud & Data Fabric] -->
+                        <video class="video-slide-layer active" data-video-slide="0" data-scene-id="cloud-fabric" autoplay="autoplay" muted="muted" loop="loop" playsinline="playsinline" preload="auto">
                             <source src="/insilos_website/static/src/video/hero_platform_opt.mp4" type="video/mp4"/>
                         </video>
-                        <!-- Slide 1 Video: MOJO AI (VLM Vision & AI Swarms) -->
-                        <video class="video-slide-layer" data-video-slide="1" muted="muted" loop="loop" playsinline="playsinline" preload="auto">
+                        <!-- Mode 1: [Autonomous AI Swarm] -->
+                        <video class="video-slide-layer" data-video-slide="1" data-scene-id="ai-swarm" muted="muted" loop="loop" playsinline="playsinline" preload="auto">
                             <source src="/insilos_website/static/src/video/gold_masters/INSILOS_HSE_AI_VISION_75S_GOLD_MASTER.mp4" type="video/mp4"/>
                         </video>
-                        <!-- Slide 2 Video: MOJOVERSE (Web3 & Decentralized Mesh) -->
-                        <video class="video-slide-layer" data-video-slide="2" muted="muted" loop="loop" playsinline="playsinline" preload="auto">
-                            <source src="/insilos_website/static/src/video/hero_act3_datacenter.mp4" type="video/mp4"/>
-                        </video>
-                        <!-- Slide 3 Video: INTELLIGENT ERP (Global Enterprise Core) -->
-                        <video class="video-slide-layer" data-video-slide="3" muted="muted" loop="loop" playsinline="playsinline" preload="auto">
+                        <!-- Mode 2: [Intelligent ERP] -->
+                        <video class="video-slide-layer" data-video-slide="2" data-scene-id="smart-erp" muted="muted" loop="loop" playsinline="playsinline" preload="auto">
                             <source src="/insilos_website/static/src/video/hero_solutions_opt.mp4" type="video/mp4"/>
+                        </video>
+                        <!-- Mode 3: [Enterprise Trust & Security] -->
+                        <video class="video-slide-layer" data-video-slide="3" data-scene-id="trust-security" muted="muted" loop="loop" playsinline="playsinline" preload="auto">
+                            <source src="/insilos_website/static/src/video/hero_act3_datacenter.mp4" type="video/mp4"/>
                         </video>
 
                         <!-- Cinematic Masks & Overlays -->
@@ -663,57 +675,58 @@
                         <div class="row align-items-center">
                             <div class="col-lg-11 mx-auto text-center">
 
-                                <!-- SLIDE 0: DIGIFORCE -->
-                                <div class="hero-slide-item active" data-slide-index="0"
+                                <!-- SLIDE 0: [Cloud & Data Fabric] -->
+                                <div class="hero-slide-item active" data-slide-index="0" data-scene-id="cloud-fabric"
                                      style="--hero-accent: #00F0FF; --hero-accent-glow: rgba(0, 240, 255, 0.4); --hero-gradient: linear-gradient(135deg, #0ABBDB 0%, #00F0FF 100%);">
                                     <div class="d-inline-flex align-items-center gap-2 hero-badge-pill mb-3">
                                         <span class="d-inline-block rounded-circle" style="width: 8px; height: 8px; background: #00F0FF; box-shadow: 0 0 10px #00F0FF;"/>
-                                        <span>RAPID APPLICATION STUDIO // DIGIFORCE LOW-CODE</span>
+                                        <span>SOVEREIGN ARCHITECTURE // CLOUD &amp; DATA FABRIC</span>
                                     </div>
                                     <h1 class="hero-main-title mb-3">
-                                        Kiến Tạo Ứng Dụng Doanh Nghiệp Tốc Độ Cao Với
-                                        <span class="hero-gradient-text ms-2">DIGIFORCE Low-Code</span>
+                                        Tailored Technology for Sovereign Enterprise
+                                        <span class="hero-gradient-text d-block mt-2">Cloud &amp; Data Fabric</span>
                                     </h1>
                                     <p class="hero-lead-desc mb-3">
-                                        Tăng tốc phát triển ứng dụng gấp 10 lần với công nghệ kéo thả biểu mẫu, thiết kế quy trình BPMN 2.0 trực quan, tự sinh API REST/GraphQL chuẩn mực và triển khai kiến trúc Microservices độc lập chịu tải cao.
+                                        Chuyển dịch từ phần mềm thụ động sang Trí tuệ Vận hành Tự động (Autonomous Enterprise Operations): Hợp nhất mạng lưới dữ liệu phân tán, kết nối đa nền tảng theo thời gian thực và vận hành độc lập Air-Gapped theo chuẩn mực quốc tế.
                                     </p>
                                     
                                     <!-- Interactive Feature Chips -->
                                     <div class="hero-feature-chips-deck">
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
-                                            <span>BPMN 2.0 Visual Workflow</span>
+                                            <span>Multi-Cloud Fabric Mesh</span>
                                         </div>
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
-                                            <span>Auto-Generated REST &amp; GraphQL</span>
+                                            <span>OpenAPI 3.1 &amp; Data Fabric</span>
                                         </div>
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
-                                            <span>Zero-Trust Multi-Tenancy</span>
+                                            <span>Zero-Trust Sandbox Isolation</span>
                                         </div>
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
-                                            <span>Omnichannel Mobile &amp; Tablet</span>
+                                            <span>10x Development Speed</span>
                                         </div>
                                     </div>
 
-                                    <!-- Dual CTA Action Buttons -->
+                                    <!-- Dual CTA Action Buttons with Kinetic Halo VIP CTA -->
                                     <div class="d-flex flex-wrap align-items-center justify-content-center gap-3">
-                                        <a href="/no-code-platform" class="hero-cta-btn-primary" style="color: #070B14 !important; font-weight: 800;">
-                                            <span style="color: #070B14 !important;">Khám Phá DIGIFORCE Studio</span>
-                                            <svg class="ph-duotone ph-arrow-right" style="width: 1.15rem; height: 1.15rem; fill: #070B14;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        <a href="#innoria_contact_section" class="btn-hero-vip-poc hero-cta-btn-primary" data-poc-mode="cloud-fabric" style="background-color: #00F0FF !important; color: #070B14 !important;">
+                                            <span class="poc-halo-pulse"/>
+                                            <span class="btn-text">Trải Nghiệm Live Proof-of-Concept 3 Giờ</span>
+                                            <svg class="ph-duotone ph-arrow-down-right" style="width: 1.15rem; height: 1.15rem; fill: #070B14;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-down-right"/></svg>
                                         </a>
-                                        <a href="/contactus" class="hero-cta-btn-secondary">
-                                            <span>Xem Kịch Bản Mẫu 3h &#8594; 3d</span>
-                                            <svg class="ph-duotone ph-play-circle" style="width: 1.15rem; height: 1.15rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play-circle"/></svg>
+                                        <a href="/no-code-platform" class="hero-cta-btn-secondary">
+                                            <span>Khám Phá Data Fabric Studio</span>
+                                            <svg class="ph-duotone ph-arrow-right" style="width: 1.15rem; height: 1.15rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                         </a>
                                     </div>
 
                                     <!-- Live Metrics Deck -->
                                     <div class="hero-metrics-deck">
                                         <div class="hero-metric-tile">
-                                            <div class="metric-title">TỐC ĐỘ PHÁT TRIỂN</div>
+                                            <div class="metric-title">TỐC ĐỘ TRIỂN KHAI</div>
                                             <div class="metric-stat" style="color: #00F0FF;">Nhanh Gấp 10x</div>
                                         </div>
                                         <div class="hero-metric-tile">
@@ -721,8 +734,8 @@
                                             <div class="metric-stat" style="color: #38BDF8;">Zero Tech Debt</div>
                                         </div>
                                         <div class="hero-metric-tile">
-                                            <div class="metric-title">CHUẨN TƯƠNG THÍCH</div>
-                                            <div class="metric-stat" style="color: #0ABBDB;">OpenAPI 3.0</div>
+                                            <div class="metric-title">CHUẨN KẾT NỐI</div>
+                                            <div class="metric-stat" style="color: #0ABBDB;">OpenAPI 3.1</div>
                                         </div>
                                         <div class="hero-metric-tile">
                                             <div class="metric-title">UPTIME CAM KẾT</div>
@@ -731,49 +744,50 @@
                                     </div>
                                 </div>
 
-                                <!-- SLIDE 1: MOJO AI -->
-                                <div class="hero-slide-item" data-slide-index="1"
+                                <!-- SLIDE 1: [Autonomous AI Swarm] -->
+                                <div class="hero-slide-item" data-slide-index="1" data-scene-id="ai-swarm"
                                      style="--hero-accent: #FF8000; --hero-accent-glow: rgba(255, 128, 0, 0.4); --hero-gradient: linear-gradient(135deg, #FF8000 0%, #F59E0B 100%);">
                                     <div class="d-inline-flex align-items-center gap-2 hero-badge-pill mb-3">
                                         <span class="d-inline-block rounded-circle" style="width: 8px; height: 8px; background: #FF8000; box-shadow: 0 0 10px #FF8000;"/>
-                                        <span>COGNITIVE INTELLIGENCE // MOJO AI AGENT SWARMS</span>
+                                        <span>COGNITIVE ENGINE // AUTONOMOUS AI SWARM</span>
                                     </div>
                                     <h1 class="hero-main-title mb-3">
-                                        Bầy Đàn Đa Tác Nhân Tự Hành &amp; Thị Giác Máy Tính
-                                        <span class="hero-gradient-text ms-2">MOJO AI VLM</span>
+                                        Tailored Technology for Sovereign Enterprise
+                                        <span class="hero-gradient-text d-block mt-2">Autonomous AI Swarm</span>
                                     </h1>
                                     <p class="hero-lead-desc mb-3">
-                                        Tích hợp Generative AI, Explainable AI (XAI) và mạng lưới 16 Sovereign Agents tự động đối soát tài chính, kiểm tra chứng từ mua sắm và nhận diện lỗi phôi cơ khí thời gian thực với độ trễ dưới 180ms.
+                                        Chuyển dịch từ phần mềm thụ động sang Trí tuệ Vận hành Tự động (Autonomous Enterprise Operations): Mạng lưới 16 tác nhân AI nhận thức Clef DAG kết hợp thị giác máy tính VLM See-Detect-Analyze-Adapt với độ trễ suy luận dưới 180ms.
                                     </p>
                                     
                                     <!-- Interactive Feature Chips -->
                                     <div class="hero-feature-chips-deck">
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
+                                            <span>16 Autonomous Agents</span>
+                                        </div>
+                                        <div class="hero-feature-chip">
+                                            <span class="chip-dot"/>
                                             <span>VLM Real-Time Vision Inspection</span>
                                         </div>
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
-                                            <span>Autonomous Cognitive Swarm</span>
+                                            <span>Clef DAG Cognitive Loop</span>
                                         </div>
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
-                                            <span>Explainable AI (XAI) Audit Trail</span>
-                                        </div>
-                                        <div class="hero-feature-chip">
-                                            <span class="chip-dot"/>
-                                            <span>Air-Gapped Sovereign Inference</span>
+                                            <span>Anti-Hallucination Gate</span>
                                         </div>
                                     </div>
 
-                                    <!-- Dual CTA Action Buttons -->
+                                    <!-- Dual CTA Action Buttons with Kinetic Halo VIP CTA -->
                                     <div class="d-flex flex-wrap align-items-center justify-content-center gap-3">
-                                        <a href="/solutions" class="hero-cta-btn-primary" style="color: #070B14 !important; font-weight: 800;">
-                                            <span style="color: #070B14 !important;">Trải Nghiệm MOJO AI Suite</span>
-                                            <svg class="ph-duotone ph-arrow-right" style="width: 1.15rem; height: 1.15rem; fill: #070B14;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        <a href="#innoria_contact_section" class="btn-hero-vip-poc hero-cta-btn-primary" data-poc-mode="ai-swarm" style="background-color: #00F0FF !important; color: #070B14 !important;">
+                                            <span class="poc-halo-pulse"/>
+                                            <span class="btn-text">Trải Nghiệm Live Proof-of-Concept 3 Giờ</span>
+                                            <svg class="ph-duotone ph-arrow-down-right" style="width: 1.15rem; height: 1.15rem; fill: #070B14;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-down-right"/></svg>
                                         </a>
-                                        <a href="/contactus" class="hero-cta-btn-secondary">
-                                            <span>Xem Live Demo Thị Giác VLM</span>
+                                        <a href="/solutions" class="hero-cta-btn-secondary">
+                                            <span>Xem Live Demo AI Swarm</span>
                                             <svg class="ph-duotone ph-eye" style="width: 1.15rem; height: 1.15rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-eye"/></svg>
                                         </a>
                                     </div>
@@ -793,36 +807,101 @@
                                             <div class="metric-stat" style="color: #FBBF24;">16 Sovereign Nodes</div>
                                         </div>
                                         <div class="hero-metric-tile">
-                                            <div class="metric-title">MÔ HÌNH HỖ TRỢ</div>
-                                            <div class="metric-stat" style="color: #FF8000;">LLM, VLM &amp; SLM</div>
+                                            <div class="metric-title">BẢO MẬT HẠ TẦNG</div>
+                                            <div class="metric-stat" style="color: #FF8000;">Air-Gapped Local AI</div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- SLIDE 2: MOJOVERSE -->
-                                <div class="hero-slide-item" data-slide-index="2"
-                                     style="--hero-accent: #10B981; --hero-accent-glow: rgba(16, 185, 129, 0.4); --hero-gradient: linear-gradient(135deg, #10B981 0%, #00F5A0 100%);">
+                                <!-- SLIDE 2: [Intelligent ERP] -->
+                                <div class="hero-slide-item" data-slide-index="2" data-scene-id="smart-erp"
+                                     style="--hero-accent: #3B82F6; --hero-accent-glow: rgba(59, 130, 246, 0.4); --hero-gradient: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);">
                                     <div class="d-inline-flex align-items-center gap-2 hero-badge-pill mb-3">
-                                        <span class="d-inline-block rounded-circle" style="width: 8px; height: 8px; background: #10B981; box-shadow: 0 0 10px #10B981;"/>
-                                        <span>DECENTRALIZED VALUE MESH // MOJOVERSE NETWORK</span>
+                                        <span class="d-inline-block rounded-circle" style="width: 8px; height: 8px; background: #3B82F6; box-shadow: 0 0 10px #3B82F6;"/>
+                                        <span>ENTERPRISE SOVEREIGN CORE // INTELLIGENT ERP</span>
                                     </div>
                                     <h1 class="hero-main-title mb-3">
-                                        Mạng Lưới Chuỗi Giá Trị Phi Tập Trung &amp;
-                                        <span class="hero-gradient-text ms-2">Minh Bạch Toàn Cầu</span>
+                                        Tailored Technology for Sovereign Enterprise
+                                        <span class="hero-gradient-text d-block mt-2">Intelligent ERP Core</span>
                                     </h1>
                                     <p class="hero-lead-desc mb-3">
-                                        Nền tảng hợp nhất Web3, hợp đồng thông minh Smart Contracts doanh nghiệp, định danh số phân tán DID và sổ cái bất biến giúp truy xuất nguồn gốc chuỗi cung ứng tuyệt đối tin cậy.
+                                        Chuyển dịch từ phần mềm thụ động sang Trí tuệ Vận hành Tự động (Autonomous Enterprise Operations): Lõi ERP hợp nhất chuỗi cung ứng SD-MM-PP-FI/CO, tối ưu chi phí sở hữu -50% TCO, tự động hóa khớp chứng từ 3 chiều chuẩn Thông tư 200 và Nghị định 123.
                                     </p>
                                     
                                     <!-- Interactive Feature Chips -->
                                     <div class="hero-feature-chips-deck">
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
-                                            <span>Enterprise Smart Contracts</span>
+                                            <span>Full-Chain SD - MM - PP - FI/CO</span>
                                         </div>
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
-                                            <span>End-to-End Traceability Ledger</span>
+                                            <span>Autonomous 3-Way Matching</span>
+                                        </div>
+                                        <div class="hero-feature-chip">
+                                            <span class="chip-dot"/>
+                                            <span>MES Shop Floor CNC &amp; Multi-BOM</span>
+                                        </div>
+                                        <div class="hero-feature-chip">
+                                            <span class="chip-dot"/>
+                                            <span>Chuẩn Hóa TT 78 &amp; VAS 200</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Dual CTA Action Buttons with Kinetic Halo VIP CTA -->
+                                    <div class="d-flex flex-wrap align-items-center justify-content-center gap-3">
+                                        <a href="#innoria_contact_section" class="btn-hero-vip-poc hero-cta-btn-primary" data-poc-mode="smart-erp" style="background-color: #00F0FF !important; color: #070B14 !important;">
+                                            <span class="poc-halo-pulse"/>
+                                            <span class="btn-text">Trải Nghiệm Live Proof-of-Concept 3 Giờ</span>
+                                            <svg class="ph-duotone ph-arrow-down-right" style="width: 1.15rem; height: 1.15rem; fill: #070B14;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-down-right"/></svg>
+                                        </a>
+                                        <a href="/solutions" class="hero-cta-btn-secondary">
+                                            <span>Khám Phá Lõi Intelligent ERP</span>
+                                            <svg class="ph-duotone ph-arrow-right" style="width: 1.15rem; height: 1.15rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        </a>
+                                    </div>
+
+                                    <!-- Live Metrics Deck -->
+                                    <div class="hero-metrics-deck">
+                                        <div class="hero-metric-tile">
+                                            <div class="metric-title">THỜI GIAN TRIỂN KHAI</div>
+                                            <div class="metric-stat" style="color: #3B82F6;">30 Ngày Go-Live</div>
+                                        </div>
+                                        <div class="hero-metric-tile">
+                                            <div class="metric-title">CHI PHÍ SỞ HỮU TCO</div>
+                                            <div class="metric-stat" style="color: #60A5FA;">-50% So Với Cũ</div>
+                                        </div>
+                                        <div class="hero-metric-tile">
+                                            <div class="metric-title">TUÂN THỦ PHÁP LÝ</div>
+                                            <div class="metric-stat" style="color: #93C5FD;">TT 200 &amp; NĐ 123</div>
+                                        </div>
+                                        <div class="hero-metric-tile">
+                                            <div class="metric-title">CƠ SỞ DỮ LIỆU</div>
+                                            <div class="metric-stat" style="color: #3B82F6;">PostgreSQL Sovereign</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- SLIDE 3: [Enterprise Trust & Security] -->
+                                <div class="hero-slide-item" data-slide-index="3" data-scene-id="trust-security"
+                                     style="--hero-accent: #10B981; --hero-accent-glow: rgba(16, 185, 129, 0.4); --hero-gradient: linear-gradient(135deg, #10B981 0%, #00F5A0 100%);">
+                                    <div class="d-inline-flex align-items-center gap-2 hero-badge-pill mb-3">
+                                        <span class="d-inline-block rounded-circle" style="width: 8px; height: 8px; background: #10B981; box-shadow: 0 0 10px #10B981;"/>
+                                        <span>SOVEREIGN TRUST &amp; DEFENSE // ENTERPRISE SECURITY</span>
+                                    </div>
+                                    <h1 class="hero-main-title mb-3">
+                                        Tailored Technology for Sovereign Enterprise
+                                        <span class="hero-gradient-text d-block mt-2">Enterprise Trust &amp; Security</span>
+                                    </h1>
+                                    <p class="hero-lead-desc mb-3">
+                                        Chuyển dịch từ phần mềm thụ động sang Trí tuệ Vận hành Tự động (Autonomous Enterprise Operations): Mạng lưới chuỗi giá trị phi tập trung, định danh số DID, sổ cái bất biến chống giả mạo và chứng minh không tiết lộ tri thức (Zero-Knowledge Proofs).
+                                    </p>
+                                    
+                                    <!-- Interactive Feature Chips -->
+                                    <div class="hero-feature-chips-deck">
+                                        <div class="hero-feature-chip">
+                                            <span class="chip-dot"/>
+                                            <span>Air-Gapped Sovereign Core</span>
                                         </div>
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
@@ -830,18 +909,23 @@
                                         </div>
                                         <div class="hero-feature-chip">
                                             <span class="chip-dot"/>
-                                            <span>Zero-Knowledge Proofs (ZKP)</span>
+                                            <span>End-to-End Traceability Ledger</span>
+                                        </div>
+                                        <div class="hero-feature-chip">
+                                            <span class="chip-dot"/>
+                                            <span>ISO/IEC 27001 Certified</span>
                                         </div>
                                     </div>
 
-                                    <!-- Dual CTA Action Buttons -->
+                                    <!-- Dual CTA Action Buttons with Kinetic Halo VIP CTA -->
                                     <div class="d-flex flex-wrap align-items-center justify-content-center gap-3">
-                                        <a href="/solutions" class="hero-cta-btn-primary" style="color: #070B14 !important; font-weight: 800;">
-                                            <span style="color: #070B14 !important;">Tìm Hiểu MOJOVERSE</span>
-                                            <svg class="ph-duotone ph-arrow-right" style="width: 1.15rem; height: 1.15rem; fill: #070B14;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                        <a href="#innoria_contact_section" class="btn-hero-vip-poc hero-cta-btn-primary" data-poc-mode="trust-security" style="background-color: #00F0FF !important; color: #070B14 !important;">
+                                            <span class="poc-halo-pulse"/>
+                                            <span class="btn-text">Trải Nghiệm Live Proof-of-Concept 3 Giờ</span>
+                                            <svg class="ph-duotone ph-arrow-down-right" style="width: 1.15rem; height: 1.15rem; fill: #070B14;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-down-right"/></svg>
                                         </a>
-                                        <a href="/contactus" class="hero-cta-btn-secondary">
-                                            <span>Tư Vấn Kiến Trúc Web3</span>
+                                        <a href="/blockchain" class="hero-cta-btn-secondary">
+                                            <span>Kiểm Tra Tiêu Chuẩn Bảo Mật</span>
                                             <svg class="ph-duotone ph-shield-check" style="width: 1.15rem; height: 1.15rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
                                         </a>
                                     </div>
@@ -867,128 +951,68 @@
                                     </div>
                                 </div>
 
-                                <!-- SLIDE 3: INTELLIGENT ERP -->
-                                <div class="hero-slide-item" data-slide-index="3"
-                                     style="--hero-accent: #3B82F6; --hero-accent-glow: rgba(59, 130, 246, 0.4); --hero-gradient: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);">
-                                    <div class="d-inline-flex align-items-center gap-2 hero-badge-pill mb-3">
-                                        <span class="d-inline-block rounded-circle" style="width: 8px; height: 8px; background: #3B82F6; box-shadow: 0 0 10px #3B82F6;"/>
-                                        <span>ENTERPRISE SOVEREIGN CORE // INTELLIGENT ERP</span>
-                                    </div>
-                                    <h1 class="hero-main-title mb-3">
-                                        Lõi Quản Trị ERP Chuẩn Doanh Nghiệp Toàn Cầu,
-                                        <span class="hero-gradient-text ms-2">Tiết Kiệm 50% TCO</span>
-                                    </h1>
-                                    <p class="hero-lead-desc mb-3">
-                                        Hợp nhất liên chuỗi Bán hàng (SD), Mua sắm (MM), Quản lý Kho (LE), Sản xuất MES (PP) và Tài chính kế toán (FI/CO) chuẩn SAP Lexicon, tuân thủ 100% Thông tư 200/78 trong 30 ngày Go-Live.
-                                    </p>
-                                    
-                                    <!-- Interactive Feature Chips -->
-                                    <div class="hero-feature-chips-deck">
-                                        <div class="hero-feature-chip">
-                                            <span class="chip-dot"/>
-                                            <span>Full-Chain SD - MM - PP - FI/CO</span>
-                                        </div>
-                                        <div class="hero-feature-chip">
-                                            <span class="chip-dot"/>
-                                            <span>Hóa Đơn Điện Tử TT 78 &amp; NĐ 123</span>
-                                        </div>
-                                        <div class="hero-feature-chip">
-                                            <span class="chip-dot"/>
-                                            <span>MES Shop Floor CNC &amp; Multi-BOM</span>
-                                        </div>
-                                        <div class="hero-feature-chip">
-                                            <span class="chip-dot"/>
-                                            <span>Báo Cáo B01/B02 Real-Time</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Dual CTA Action Buttons -->
-                                    <div class="d-flex flex-wrap align-items-center justify-content-center gap-3">
-                                        <a href="/solutions" class="hero-cta-btn-primary" style="color: #070B14 !important; font-weight: 800;">
-                                            <span style="color: #070B14 !important;">Khám Phá Lõi ERP</span>
-                                            <svg class="ph-duotone ph-arrow-right" style="width: 1.15rem; height: 1.15rem; fill: #070B14;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
-                                        </a>
-                                        <a href="/contactus" class="hero-cta-btn-secondary">
-                                            <span>Đặt Lịch Tư Vấn 3 Giờ</span>
-                                            <svg class="ph-duotone ph-calendar-check" style="width: 1.15rem; height: 1.15rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-calendar-check"/></svg>
-                                        </a>
-                                    </div>
-
-                                    <!-- Live Metrics Deck -->
-                                    <div class="hero-metrics-deck">
-                                        <div class="hero-metric-tile">
-                                            <div class="metric-title">THỜI GIAN TRIỂN KHAI</div>
-                                            <div class="metric-stat" style="color: #3B82F6;">30 Ngày Go-Live</div>
-                                        </div>
-                                        <div class="hero-metric-tile">
-                                            <div class="metric-title">CHI PHÍ SỞ HỮU TCO</div>
-                                            <div class="metric-stat" style="color: #60A5FA;">-50% So Với Cũ</div>
-                                        </div>
-                                        <div class="hero-metric-tile">
-                                            <div class="metric-title">TUÂN THỦ PHÁP LÝ</div>
-                                            <div class="metric-stat" style="color: #93C5FD;">TT 200 &amp; NĐ 123</div>
-                                        </div>
-                                        <div class="hero-metric-tile">
-                                            <div class="metric-title">CƠ SỞ DỮ LIỆU</div>
-                                            <div class="metric-stat" style="color: #3B82F6;">PostgreSQL Sovereign</div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
 
-                        <!-- 4-Product Interactive Segmented Navigation Bar -->
-                        <div class="hero-product-nav-bar mt-5">
-                            <div class="hero-product-tabs-wrapper" id="heroProductTabs">
+                        <!-- 4 Dynamic Interactive Modes / Scene Switcher Navigation Bar -->
+                        <div class="hero-product-nav-bar hero-scene-switcher-nav mt-5">
+                            <div class="hero-product-tabs-wrapper hero-scene-nav-wrapper" id="heroProductTabs">
                                 
-                                <!-- Tab 0: DIGIFORCE -->
-                                <button type="button" class="hero-product-tab-btn active" data-tab-target="0"
+                                <!-- Mode 0: [Cloud & Data Fabric] -->
+                                <button type="button" class="hero-product-tab-btn hero-scene-nav-item active"
+                                        data-tab-target="0"
+                                        data-scene-id="cloud-fabric"
                                         style="--tab-color: #00F0FF; --tab-glow: rgba(0, 240, 255, 0.4);">
                                     <div class="tab-top-row">
-                                        <span class="tab-index-tag">01 // PLATFORM</span>
-                                        <span class="tab-category-label">Low-Code Studio</span>
+                                        <span class="tab-index-tag">MODE 01 // FABRIC</span>
+                                        <span class="tab-category-label">Data Architecture</span>
                                     </div>
-                                    <div class="tab-product-name">DIGIFORCE</div>
+                                    <div class="tab-product-name">[Cloud &amp; Data Fabric]</div>
                                     <div class="tab-progress-track">
                                         <div class="tab-progress-fill" id="tabProgress0"/>
                                     </div>
                                 </button>
 
-                                <!-- Tab 1: MOJO AI -->
-                                <button type="button" class="hero-product-tab-btn" data-tab-target="1"
+                                <!-- Mode 1: [Autonomous AI Swarm] -->
+                                <button type="button" class="hero-product-tab-btn hero-scene-nav-item"
+                                        data-tab-target="1"
+                                        data-scene-id="ai-swarm"
                                         style="--tab-color: #FF8000; --tab-glow: rgba(255, 128, 0, 0.4);">
                                     <div class="tab-top-row">
-                                        <span class="tab-index-tag">02 // COGNITIVE</span>
-                                        <span class="tab-category-label">VLM &amp; Swarms</span>
+                                        <span class="tab-index-tag">MODE 02 // COGNITIVE</span>
+                                        <span class="tab-category-label">VLM &amp; 16 Agents</span>
                                     </div>
-                                    <div class="tab-product-name">MOJO AI</div>
+                                    <div class="tab-product-name">[Autonomous AI Swarm]</div>
                                     <div class="tab-progress-track">
                                         <div class="tab-progress-fill" id="tabProgress1"/>
                                     </div>
                                 </button>
 
-                                <!-- Tab 2: MOJOVERSE -->
-                                <button type="button" class="hero-product-tab-btn" data-tab-target="2"
-                                        style="--tab-color: #10B981; --tab-glow: rgba(16, 185, 129, 0.4);">
+                                <!-- Mode 2: [Intelligent ERP] -->
+                                <button type="button" class="hero-product-tab-btn hero-scene-nav-item"
+                                        data-tab-target="2"
+                                        data-scene-id="smart-erp"
+                                        style="--tab-color: #3B82F6; --tab-glow: rgba(59, 130, 246, 0.4);">
                                     <div class="tab-top-row">
-                                        <span class="tab-index-tag">03 // DECENTRALIZED</span>
-                                        <span class="tab-category-label">Web3 &amp; Ledger</span>
+                                        <span class="tab-index-tag">MODE 03 // CORE ENGINE</span>
+                                        <span class="tab-category-label">SAP-Grade Core</span>
                                     </div>
-                                    <div class="tab-product-name">MOJOVERSE</div>
+                                    <div class="tab-product-name">[Intelligent ERP]</div>
                                     <div class="tab-progress-track">
                                         <div class="tab-progress-fill" id="tabProgress2"/>
                                     </div>
                                 </button>
 
-                                <!-- Tab 3: INTELLIGENT ERP -->
-                                <button type="button" class="hero-product-tab-btn" data-tab-target="3"
-                                        style="--tab-color: #3B82F6; --tab-glow: rgba(59, 130, 246, 0.4);">
+                                <!-- Mode 3: [Enterprise Trust & Security] -->
+                                <button type="button" class="hero-product-tab-btn hero-scene-nav-item"
+                                        data-tab-target="3"
+                                        data-scene-id="trust-security"
+                                        style="--tab-color: #10B981; --tab-glow: rgba(16, 185, 129, 0.4);">
                                     <div class="tab-top-row">
-                                        <span class="tab-index-tag">04 // CORE ENGINE</span>
-                                        <span class="tab-category-label">Global ERP Core</span>
+                                        <span class="tab-index-tag">MODE 04 // TRUST</span>
+                                        <span class="tab-category-label">Zero-Trust &amp; DID</span>
                                     </div>
-                                    <div class="tab-product-name">INTELLIGENT ERP</div>
+                                    <div class="tab-product-name">[Enterprise Trust &amp; Security]</div>
                                     <div class="tab-progress-track">
                                         <div class="tab-progress-fill" id="tabProgress3"/>
                                     </div>
@@ -999,13 +1023,13 @@
                             <!-- Playback HUD Controls -->
                             <div class="hero-slider-hud">
                                 <span class="hero-hud-counter" id="heroSlideCounter">01 / 04</span>
-                                <button type="button" class="hero-hud-btn" id="heroPrevBtn" title="Slide trước">
+                                <button type="button" class="hero-hud-btn" id="heroPrevBtn" title="Mode trước">
                                     <svg class="ph-duotone ph-caret-left" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-left"/></svg>
                                 </button>
                                 <button type="button" class="hero-hud-btn" id="heroPlayPauseBtn" title="Tạm dừng / Tiếp tục">
                                     <svg class="ph-duotone ph-pause" id="heroPlayPauseIcon" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-pause"/></svg>
                                 </button>
-                                <button type="button" class="hero-hud-btn" id="heroNextBtn" title="Slide tiếp theo">
+                                <button type="button" class="hero-hud-btn" id="heroNextBtn" title="Mode tiếp theo">
                                     <svg class="ph-duotone ph-caret-right" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-right"/></svg>
                                 </button>
                                 <button type="button" class="hero-hud-btn ms-2" id="heroMuteBtn" title="Bật / Tắt âm thanh">
@@ -1025,7 +1049,7 @@
                          data-name="Innoria Internationally Trusts"
                          style="background: #070B14; border-top: 1px solid rgba(255, 255, 255, 0.06); border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
                     <div class="container text-center">
-                        <div class="d-inline-flex align-items-center gap-2 mb-3 font-monospace small" style="color: #64748B; letter-spacing: 0.08em;">
+                        <div class="d-inline-flex align-items-center gap-2 mb-3 font-monospace small" style="color: #94A3B8; letter-spacing: 0.08em;">
                             <span>INTERNATIONALLY TRUSTS // WHERE WORK BECOMES LIGHT AND FREE</span>
                         </div>
                         <div class="row align-items-center justify-content-center g-4">
@@ -1081,7 +1105,7 @@
                                     </div>
                                     <h4 class="text-dark fs-5 fw-bold mb-2">Executive Briefing</h4>
                                     <p class="small mb-3" style="color: #475569 !important;">Khảo sát chuyên sâu cùng ban lãnh đạo, định vị điểm nghẽn vận hành và xác lập khung giải pháp khả thi ngay trong buổi làm việc đầu tiên.</p>
-                                    <ul class="list-unstyled small text-secondary mb-0">
+                                     <ul class="list-unstyled small mb-0" style="color: #334155 !important;">
                                         <li class="mb-1"><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Phân tích Scope &amp; Bottleneck</li>
                                         <li><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Phác thảo User Journey</li>
                                     </ul>
@@ -1097,7 +1121,7 @@
                                     </div>
                                     <h4 class="text-dark fs-5 fw-bold mb-2">Tech Assessment &amp; POC</h4>
                                     <p class="small mb-3" style="color: #475569 !important;">Đánh giá hạ tầng kỹ thuật, dựng mô hình tương tác mẫu (POC) và kiểm chứng mức độ tương thích dữ liệu thực tế của doanh nghiệp.</p>
-                                    <ul class="list-unstyled small text-secondary mb-0">
+                                    <ul class="list-unstyled small mb-0" style="color: #334155 !important;">
                                         <li class="mb-1"><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Wireframe &amp; Prototype</li>
                                         <li><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Kiểm chứng kiến trúc bảo mật</li>
                                     </ul>
@@ -1113,7 +1137,7 @@
                                     </div>
                                     <h4 class="text-dark fs-5 fw-bold mb-2">High-Fidelity Pilot (MVP)</h4>
                                     <p class="small mb-3" style="color: #475569 !important;">Hoàn thiện phiên bản MVP với đầy đủ luồng nghiệp vụ cốt lõi, chạy thử nghiệm trên môi trường sandbox độc lập cùng người dùng thực tế.</p>
-                                    <ul class="list-unstyled small text-secondary mb-0">
+                                    <ul class="list-unstyled small mb-0" style="color: #334155 !important;">
                                         <li class="mb-1"><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Pilot Sandbox có dữ liệu thật</li>
                                         <li><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Đo lường phản hồi vận hành</li>
                                     </ul>
@@ -1129,7 +1153,7 @@
                                     </div>
                                     <h4 class="text-dark fs-5 fw-bold mb-2">Enterprise Production</h4>
                                     <p class="small mb-3" style="color: #475569 !important;">Mở rộng quy mô giải pháp trên toàn bộ phòng ban hoặc nhà máy, chuyển giao mã nguồn và kích hoạt hệ thống bảo mật Sovereign Cloud.</p>
-                                    <ul class="list-unstyled small text-secondary mb-0">
+                                    <ul class="list-unstyled small mb-0" style="color: #334155 !important;">
                                         <li class="mb-1"><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>Vận hành chính thức (Go-Live)</li>
                                         <li><svg class="ph-duotone ph-check text-innoria-cyan me-1" style="width: 1rem; height: 1rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check"/></svg>SLA Hỗ trợ kỹ thuật 24/7</li>
                                     </ul>
@@ -1172,7 +1196,7 @@
                                         </div>
                                         <div class="pillar-badge-row">
                                             <span class="pillar-badge badge-digiforce font-mono">
-                                                <svg class="ph-bold ph-lightning" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-lightning"/></svg>
+                                                <svg class="ph-bold ph-lightning" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lightning"/></svg>
                                                 LOW-CODE / NO-CODE
                                             </span>
                                         </div>
@@ -1186,7 +1210,7 @@
                                         </div>
                                         <hr class="pillar-divider"/>
                                         <div class="pillar-highlights-label font-mono">
-                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-sparkle"/></svg>
+                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-sparkle"/></svg>
                                             Điểm nổi bật
                                         </div>
                                         <ul class="pillar-highlights-list">
@@ -1202,7 +1226,7 @@
                                         <div class="pillar-action-row">
                                             <a href="/low-code" class="pillar-cta-btn">
                                                 <span>Khám Phá DIGIFORCE</span>
-                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-arrow-right"/></svg>
+                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                             </a>
                                         </div>
                                     </div>
@@ -1219,7 +1243,7 @@
                                         </div>
                                         <div class="pillar-badge-row">
                                             <span class="pillar-badge badge-mojoai font-mono">
-                                                <svg class="ph-bold ph-cpu" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-cpu"/></svg>
+                                                <svg class="ph-bold ph-cpu" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
                                                 AGENTIC AI SWARM
                                             </span>
                                         </div>
@@ -1233,7 +1257,7 @@
                                         </div>
                                         <hr class="pillar-divider"/>
                                         <div class="pillar-highlights-label font-mono">
-                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-sparkle"/></svg>
+                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-sparkle"/></svg>
                                             Điểm nổi bật
                                         </div>
                                         <ul class="pillar-highlights-list">
@@ -1249,7 +1273,7 @@
                                         <div class="pillar-action-row">
                                             <a href="/ai-solutions" class="pillar-cta-btn">
                                                 <span>Khám Phá MOJO AI</span>
-                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-arrow-right"/></svg>
+                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                             </a>
                                         </div>
                                     </div>
@@ -1266,7 +1290,7 @@
                                         </div>
                                         <div class="pillar-badge-row">
                                             <span class="pillar-badge badge-mojoverse font-mono">
-                                                <svg class="ph-bold ph-link-simple-horizontal" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-link-simple-horizontal"/></svg>
+                                                <svg class="ph-bold ph-link-simple-horizontal" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-link-simple-horizontal"/></svg>
                                                 ENTERPRISE WEB3
                                             </span>
                                         </div>
@@ -1280,7 +1304,7 @@
                                         </div>
                                         <hr class="pillar-divider"/>
                                         <div class="pillar-highlights-label font-mono">
-                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-sparkle"/></svg>
+                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-sparkle"/></svg>
                                             Điểm nổi bật
                                         </div>
                                         <ul class="pillar-highlights-list">
@@ -1296,7 +1320,7 @@
                                         <div class="pillar-action-row">
                                             <a href="/blockchain" class="pillar-cta-btn">
                                                 <span>Khám Phá MOJOVERSE</span>
-                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-arrow-right"/></svg>
+                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                             </a>
                                         </div>
                                     </div>
@@ -1313,7 +1337,7 @@
                                         </div>
                                         <div class="pillar-badge-row">
                                             <span class="pillar-badge badge-erp font-mono">
-                                                <svg class="ph-bold ph-buildings" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-buildings"/></svg>
+                                                <svg class="ph-bold ph-buildings" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-buildings"/></svg>
                                                 AUTONOMOUS OPERATIONS
                                             </span>
                                         </div>
@@ -1327,7 +1351,7 @@
                                         </div>
                                         <hr class="pillar-divider"/>
                                         <div class="pillar-highlights-label font-mono">
-                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-sparkle"/></svg>
+                                            <svg class="ph-bold ph-sparkle" style="width: 13px; height: 13px;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-sparkle"/></svg>
                                             Điểm nổi bật
                                         </div>
                                         <ul class="pillar-highlights-list">
@@ -1343,7 +1367,7 @@
                                         <div class="pillar-action-row">
                                             <a href="/erp-solutions" class="pillar-cta-btn">
                                                 <span>Khám Phá Intelligent ERP</span>
-                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-bold.svg#ph-arrow-right"/></svg>
+                                                <svg class="ph-bold ph-arrow-right"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                             </a>
                                         </div>
                                     </div>
