@@ -1002,7 +1002,7 @@ class InsilosWebsite(http.Controller):
                 return request.render("insilos_website.innoria_homepage_template", self._base_values())
         return request.render("insilos_website.insilos_homepage", self._base_values())
 
-    @http.route(["/platform", "/artificial-intelligence-platform", "/vi/platform", "/vi/artificial-intelligence-platform"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/platform", "/artificial-intelligence-platform", "/ai-solutions", "/vi/platform", "/vi/artificial-intelligence-platform", "/vi/ai-solutions"], type="http", auth="public", website=True, sitemap=True)
     def platform(self, **kwargs):
         return request.render("insilos_website.insilos_platform_page", self._base_values())
 

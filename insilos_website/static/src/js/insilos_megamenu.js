@@ -298,6 +298,8 @@
 
         setupPreviewCards('.ins-megamenu-solutions', 'ins_sol_preview_card', 'ins-sol');
         setupPreviewCards('.ins-megamenu-industries', 'ins_ind_preview_card', 'ins-ind');
+        setupPreviewCards('.innoria-megamenu-platform', 'innoria_platform_preview_card', 'inn-plat');
+        setupPreviewCards('.innoria-megamenu-solutions', 'innoria_solutions_preview_card', 'inn-sol');
 
         // -----------------------------------------------------------------
         // 4. Cursor Tracking & Mouse Spotlight Radial Gradient (Cached Geometry for 60 FPS)

@@ -41,9 +41,9 @@
         techCyan: 0x0ABBDB,         // Vivid tech cyan (#0ABBDB)
         warmAmber: 0xFF8000,        // Brand orange (#FF8000)
         warmAmberAccent: 0xEA580C,  // Deep orange (#EA580C)
-        darkBase: 0xF0F9FF,         // Light ice blue base (#F0F9FF)
-        gridLines: 0xBAE6FD,        // Soft blue grid lines (#BAE6FD)
-        whiteHighContrast: 0x0F172A // Dark slate (#0F172A)
+        darkBase: 0x070B14,         // Cyber Dark base (#070B14)
+        gridLines: 0x0C2340,        // Deep blue grid lines (#0C2340)
+        whiteHighContrast: 0xFFFFFF // Crisp white (#FFFFFF)
     };
 
     const TOPOLOGY_NODES_DATA = [
@@ -233,6 +233,10 @@
             this._bindDOMHUD();
             this._setupResizeHandler();
             this._setupVisibilityObserver();
+            // Display initial telemetry HUD on startup
+            if (TOPOLOGY_NODES_DATA && TOPOLOGY_NODES_DATA.length > 0) {
+                this.updateHUD(TOPOLOGY_NODES_DATA[0]);
+            }
 
             this.start();
         }
@@ -266,22 +270,22 @@
 
         _initScene() {
             this.scene = new THREE.Scene();
-            this.scene.fog = new THREE.FogExp2(0xF0F9FF, 0.015);
+            this.scene.fog = new THREE.FogExp2(0x070B14, 0.018);
 
             // Sovereign Grid Plane (XZ Plane)
-            const grid = new THREE.GridHelper(24, 48, BRAND_PALETTE.electricSapphire, BRAND_PALETTE.gridLines);
-            grid.position.y = -2.8;
-            grid.material.opacity = 0.55;
+            const grid = new THREE.GridHelper(30, 48, BRAND_PALETTE.mintCyan, BRAND_PALETTE.gridLines);
+            grid.position.y = -3.2;
+            grid.material.opacity = 0.65;
             grid.material.transparent = true;
             this.scene.add(grid);
 
             // Orbital boundary coordinate rings
             const outerRingGeo = new THREE.RingGeometry(6.15, 6.25, 96);
             const outerRingMat = new THREE.MeshBasicMaterial({
-                color: BRAND_PALETTE.electricSapphire,
+                color: BRAND_PALETTE.mintCyan,
                 side: THREE.DoubleSide,
                 transparent: true,
-                opacity: 0.18
+                opacity: 0.32
             });
             this.orbitalPlaneMesh = new THREE.Mesh(outerRingGeo, outerRingMat);
             this.orbitalPlaneMesh.rotation.x = Math.PI / 2 + 0.2618; // 15 degree inclination
@@ -294,7 +298,7 @@
             const aspect = width / height;
 
             this.camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100);
-            this.defaultCameraPos = new THREE.Vector3(0, 7.5, 15.0);
+            this.defaultCameraPos = new THREE.Vector3(0, 2.2, 13.8);
             this.camera.position.copy(this.defaultCameraPos);
 
             this.controlsTarget = new THREE.Vector3(0, 0, 0);
@@ -314,20 +318,20 @@
 
         _initLights() {
             // Ambient base
-            const ambient = new THREE.AmbientLight(0xFFFFFF, 2.2);
+            const ambient = new THREE.AmbientLight(0x1E293B, 2.0);
             this.scene.add(ambient);
 
             // Sovereign Core Key Light
-            const coreLight = new THREE.PointLight(BRAND_PALETTE.electricSapphire, 3.5, 20);
+            const coreLight = new THREE.PointLight(BRAND_PALETTE.mintCyan, 4.5, 25);
             coreLight.position.set(0, 0, 0);
             this.scene.add(coreLight);
 
             // Directional Rim Lights
-            const rimLight1 = new THREE.DirectionalLight(BRAND_PALETTE.mintCyan, 1.4);
+            const rimLight1 = new THREE.DirectionalLight(BRAND_PALETTE.mintCyan, 1.8);
             rimLight1.position.set(8, 12, 10);
             this.scene.add(rimLight1);
 
-            const rimLight2 = new THREE.DirectionalLight(BRAND_PALETTE.warmAmber, 0.9);
+            const rimLight2 = new THREE.DirectionalLight(BRAND_PALETTE.warmAmber, 1.2);
             rimLight2.position.set(-10, -5, -8);
             this.scene.add(rimLight2);
         }

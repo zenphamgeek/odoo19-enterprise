@@ -144,19 +144,19 @@ body:has(#innoria_main_nav) {
 }
 
 // -----------------------------------------------------------------------------
-// 3. Dedicated Innoria Navbar & Footer (White & Blue Mode)
+// 3. Dedicated Innoria Navbar & Mega-Menu (Executive Glassmorphism Dark Mode)
 // -----------------------------------------------------------------------------
 .innoria-navbar {
     position: sticky;
     top: 0;
     z-index: 1050;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid #E2E8F0;
-    box-shadow: 0 4px 20px -2px rgba(2, 132, 199, 0.08);
-    padding: 0.75rem 0;
-    transition: all 0.3s ease;
+    background: rgba(7, 11, 20, 0.94) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 30px rgba(10, 187, 219, 0.06) !important;
+    padding: 0.65rem 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
     .navbar-brand-logo {
         height: 38px;
@@ -165,40 +165,42 @@ body:has(#innoria_main_nav) {
     }
 
     .nav-link {
-        color: #1E293B !important;
+        color: #F8FAFC !important;
         font-weight: 600;
-        font-size: 0.85rem;
-        letter-spacing: 0.04em;
-        padding: 0.5rem 1rem !important;
+        font-size: 0.88rem;
+        letter-spacing: 0.02em;
+        padding: 0.5rem 0.95rem !important;
         transition: color 0.2s ease;
 
-        &:hover {
-            color: var(--innoria-blue-primary) !important;
+        &:hover,
+        &.active {
+            color: #0ABBDB !important;
         }
     }
 
-    .dropdown-menu {
-        background-color: #FFFFFF !important;
-        border: 1px solid #E2E8F0 !important;
-        border-radius: 0.75rem;
-        box-shadow: 0 12px 30px rgba(2, 132, 199, 0.12) !important;
-        padding: 0.5rem;
-
-        .dropdown-item {
-            color: #0F172A !important;
-            font-size: 0.85rem;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease;
-
-            &:hover {
-                background-color: #F0F9FF !important;
-                color: var(--innoria-blue-primary) !important;
-            }
-        }
+    // Dynamic Sliding Indicator Sheen
+    .ins-nav-indicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-radius: 9999px;
+        background: rgba(10, 187, 219, 0.12);
+        border: 1px solid rgba(10, 187, 219, 0.45);
+        box-shadow: 0 0 16px rgba(10, 187, 219, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        pointer-events: none;
+        opacity: 0;
+        z-index: 1;
+        transition: left 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                    top 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                    width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                    height 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                    opacity 0.2s ease;
     }
 
     .btn-innoria-nav {
-        background: linear-gradient(135deg, #0ABBDB 0%, #0284C7 100%);
+        background: linear-gradient(135deg, #0ABBDB 0%, #0284C7 100%) !important;
         color: #FFFFFF !important;
         font-weight: 700;
         font-size: 0.85rem;
@@ -206,80 +208,78 @@ body:has(#innoria_main_nav) {
         border-radius: 9999px;
         padding: 0.45rem 1.25rem;
         border: none;
-        box-shadow: 0 4px 14px rgba(10, 187, 219, 0.35);
+        box-shadow: 0 4px 16px rgba(10, 187, 219, 0.35);
         transition: all 0.25s ease;
 
         &:hover {
-            background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
-            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+            background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%) !important;
+            box-shadow: 0 6px 22px rgba(2, 132, 199, 0.55);
             transform: translateY(-1px);
         }
     }
 }
 
-.innoria-footer {
-    background: #F8FAFC !important;
-    border-top: 1px solid #E2E8F0 !important;
-    color: #475569 !important;
-    font-size: 0.9rem;
-    line-height: 1.6;
+// Full-Width Executive Mega-Menu Panels for Innoria
+.innoria-megamenu-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: rgba(7, 11, 20, 0.96) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(10, 187, 219, 0.35) !important;
+    box-shadow: 0 28px 64px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 40px rgba(10, 187, 219, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+    pointer-events: none;
+    z-index: 1025;
 
-    .footer-logo {
-        height: 48px;
-        width: auto;
-        opacity: 0.95;
-    }
-
-    h6 {
-        color: #0F172A !important;
-        font-weight: 700;
-        font-size: 0.85rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 1rem;
-    }
-
-    a {
-        color: #475569 !important;
-        text-decoration: none;
-        transition: color 0.2s ease;
-
-        &:hover {
-            color: var(--innoria-blue-primary) !important;
-            text-decoration: underline;
-        }
-    }
-
-    .badge {
-        background: #E0F2FE !important;
-        color: #0369A1 !important;
-        border: 1px solid #BAE6FD !important;
+    &.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
     }
 }
 
 // -----------------------------------------------------------------------------
-// 4. Innoria 3D Viewport & HUD Styling (Clean Light Canvas)
+// 4. Innoria Hero Section & 3D Topology Viewport (Executive Cyber-Tech Dark Mode)
 // -----------------------------------------------------------------------------
+.innoria-hero-section {
+    background: radial-gradient(circle at 50% 20%, #0F1E36 0%, #070B14 70%, #03060C 100%) !important;
+    color: #F8FAFC !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+    .lead {
+        color: #94A3B8 !important;
+    }
+}
+
 .innoria-3d-viewport {
     position: relative;
     width: 100%;
-    min-height: 520px;
-    height: 600px;
-    background: radial-gradient(circle at 50% 50%, #F0F9FF 0%, #E0F2FE 55%, #F8FAFC 100%);
-    border: 1px solid #BAE6FD;
-    border-radius: 1.25rem;
+    min-height: 580px;
+    height: 620px;
+    background: radial-gradient(circle at 50% 50%, #0B172B 0%, #070B14 80%) !important;
+    border: 1px solid rgba(10, 187, 219, 0.35);
+    border-radius: 1.5rem;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(2, 132, 199, 0.1), 0 4px 12px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(10, 187, 219, 0.15);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
-        border-color: #0284C7;
-        box-shadow: 0 24px 60px rgba(2, 132, 199, 0.16), 0 6px 16px rgba(0, 0, 0, 0.06);
+        border-color: #0ABBDB;
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.75), 0 0 50px rgba(10, 187, 219, 0.25);
     }
 
     @media (max-width: 768px) {
-        min-height: 420px;
-        height: 460px;
+        min-height: 480px;
+        height: 500px;
     }
 }
 
@@ -288,12 +288,12 @@ body:has(#innoria_main_nav) {
     inset: 0;
     pointer-events: none;
     background-image: 
-        radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.1) 0%, transparent 70%),
-        linear-gradient(rgba(2, 132, 199, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(2, 132, 199, 0.08) 1px, transparent 1px);
+        radial-gradient(circle at 50% 50%, rgba(10, 187, 219, 0.15) 0%, transparent 70%),
+        linear-gradient(rgba(10, 187, 219, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10, 187, 219, 0.1) 1px, transparent 1px);
     background-size: 100% 100%, 36px 36px, 36px 36px;
     background-position: center center;
-    opacity: 0.85;
+    opacity: 0.9;
 }
 
 .innoria-hud-control-bar {
@@ -304,13 +304,13 @@ body:has(#innoria_main_nav) {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    padding: 0.4rem 0.65rem;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid #BAE6FD;
+    padding: 0.45rem 0.75rem;
+    background: rgba(11, 19, 36, 0.92) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(10, 187, 219, 0.35);
     border-radius: 9999px;
-    box-shadow: 0 10px 25px rgba(2, 132, 199, 0.14);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(10, 187, 219, 0.15);
     z-index: 20;
     max-width: 95%;
     overflow-x: auto;
@@ -336,7 +336,7 @@ body:has(#innoria_main_nav) {
 .innoria-hud-btn {
     background: transparent;
     border: 1px solid transparent;
-    color: #334155;
+    color: #CBD5E1;
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -346,28 +346,28 @@ body:has(#innoria_main_nav) {
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 
     &:hover {
-        background: #E0F2FE;
-        color: #0284C7;
-        border-color: #BAE6FD;
+        background: rgba(10, 187, 219, 0.15);
+        color: #0ABBDB;
+        border-color: rgba(10, 187, 219, 0.4);
     }
 
     &.active {
         background: #0284C7;
         color: #FFFFFF;
         font-weight: 700;
-        border-color: #0284C7;
-        box-shadow: 0 0 12px rgba(2, 132, 199, 0.35);
+        border-color: #0ABBDB;
+        box-shadow: 0 0 16px rgba(10, 187, 219, 0.5);
     }
 
     &.btn-reset {
-        border-left: 1px solid #CBD5E1;
+        border-left: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 0 9999px 9999px 0;
         margin-left: 0.25rem;
         padding-left: 0.75rem;
 
         &:hover {
-            color: #EA580C;
-            background: #FFF7ED;
+            color: #FF8000;
+            background: rgba(255, 128, 0, 0.15);
         }
     }
 }
@@ -376,22 +376,22 @@ body:has(#innoria_main_nav) {
     position: absolute;
     top: 1.25rem;
     right: 1.25rem;
-    width: 320px;
+    width: 340px;
     max-width: calc(100% - 2.5rem);
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid #BAE6FD;
+    background: rgba(7, 14, 27, 0.94) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(10, 187, 219, 0.35);
     border-radius: 0.85rem;
     padding: 1.15rem;
-    box-shadow: 0 16px 36px rgba(2, 132, 199, 0.15), 0 2px 6px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(10, 187, 219, 0.15);
     z-index: 25;
     animation: innoriaHudFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
     .hud-title {
         font-size: 0.95rem;
         font-weight: 700;
-        color: #0F172A;
+        color: #FFFFFF;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -399,7 +399,7 @@ body:has(#innoria_main_nav) {
 
     .hud-subtitle {
         font-size: 0.75rem;
-        color: #0284C7;
+        color: #0ABBDB;
         font-family: monospace;
         letter-spacing: 0.04em;
         margin-bottom: 0.65rem;
@@ -407,7 +407,7 @@ body:has(#innoria_main_nav) {
 
     .hud-desc {
         font-size: 0.8rem;
-        color: #475569;
+        color: #94A3B8;
         line-height: 1.45;
         margin-bottom: 0.75rem;
     }
@@ -417,7 +417,7 @@ body:has(#innoria_main_nav) {
         align-items: center;
         justify-content: space-between;
         padding: 0.3rem 0;
-        border-top: 1px solid #E2E8F0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
         font-size: 0.75rem;
 
         .stat-label {
@@ -426,35 +426,36 @@ body:has(#innoria_main_nav) {
 
         .stat-val {
             font-weight: 600;
-            color: #0F172A;
+            color: #0ABBDB;
             font-family: monospace;
         }
     }
 }
 
 // -----------------------------------------------------------------------------
-// 5. Authentic Client Logos Strip (White & Blue Mode)
+// 5. Authentic Client Logos Strip (Transitional Dark Slate Mode)
 // -----------------------------------------------------------------------------
 .innoria-client-strip {
-    background: #FFFFFF;
-    border-top: 1px solid #E2E8F0;
-    border-bottom: 1px solid #E2E8F0;
+    background: #090E1A !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
     padding: 2.5rem 0;
 
     .client-logo-img {
         max-height: 48px;
         width: auto;
         opacity: 0.75;
-        filter: grayscale(100%);
+        filter: grayscale(100%) brightness(1.6);
         transition: all 0.3s ease;
 
         &:hover {
             opacity: 1;
-            filter: grayscale(0%);
+            filter: grayscale(0%) brightness(1.1);
             transform: scale(1.05);
         }
     }
 }
+
 
 // -----------------------------------------------------------------------------
 // 6. Cadence Cards & Ecosystem Pillars (White Surfaces)
@@ -1416,8 +1417,8 @@ body:has(#innoria_main_nav) {
 
     .deep-title-group p {
         font-size: 12px;
-        font-weight: 600;
-        color: var(--panel-color);
+        font-weight: 700;
+        color: #0369A1;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
