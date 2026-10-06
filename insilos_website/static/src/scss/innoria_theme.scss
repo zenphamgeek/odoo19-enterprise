@@ -1170,9 +1170,9 @@ body:has(#innoria_main_nav) {
 
     /* Pulled out (Active Layer) */
     .slab-layer.pulled-out {
-        --pull-x: 10px;
-        --pull-y: 68px;
-        --pull-z: 22px;
+        --pull-x: 75px;
+        --pull-y: 70px;
+        --pull-z: 28px;
         --scale: 1.035;
         opacity: 1 !important;
         filter: none !important;
@@ -1188,7 +1188,8 @@ body:has(#innoria_main_nav) {
 
     /* Inactive Dimmed Layer - Volumetric presence preserved, never hollow wireframes */
     .slab-layer.dimmed {
-        opacity: 0.88 !important;
+        opacity: 1 !important;
+        transform-style: preserve-3d !important;
         filter: none !important;
     }
 
@@ -1198,7 +1199,8 @@ body:has(#innoria_main_nav) {
     .slab-layer.dimmed .front-left,
     .slab-layer.dimmed .back-right,
     .slab-layer.dimmed .back-left {
-        filter: brightness(0.68) saturate(0.85);
+        opacity: 0.88 !important;
+        filter: brightness(0.68) saturate(0.85) !important;
     }
 
     .slab-layer.dimmed .title-text {
@@ -1210,6 +1212,15 @@ body:has(#innoria_main_nav) {
     .slab-layer.dimmed .sub-text {
         color: #CBD5E1 !important;
         opacity: 0.85;
+    }
+
+    .slab-layer .top,
+    .slab-layer .bottom,
+    .slab-layer .front-right,
+    .slab-layer .front-left,
+    .slab-layer .back-right,
+    .slab-layer .back-left {
+        transition: filter 0.25s ease, opacity 0.25s ease;
     }
 
     .slab-layer .top {

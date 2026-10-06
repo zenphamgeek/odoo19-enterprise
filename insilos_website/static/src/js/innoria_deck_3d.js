@@ -165,13 +165,13 @@
                     spring.velocity = 0;
                 }
 
-                // Apply true isometric drawer extraction vector
-                // +Y (68px) pulls cleanly forward along isometric axis
-                // +Z (22px) elevates slab above the stack
-                // +X (10px) balances visual perspective convergence
-                var pullY = spring.value * 68.0;
-                var pullZ = spring.value * 22.0;
-                var pullX = spring.value * 10.0;
+                // Apply true isometric drawer extraction vector strictly matching R1 specification:
+                // +Y (70px) pulls forward along isometric axis
+                // +Z (28px) elevates slab above the stack
+                // +X (75px) balances visual perspective convergence
+                var pullY = spring.value * 70.0;
+                var pullZ = spring.value * 28.0;
+                var pullX = spring.value * 75.0;
                 var scale = 1.0 + spring.value * 0.035;
 
                 slab.style.setProperty("--pull-y", pullY.toFixed(2) + "px");
@@ -320,6 +320,8 @@
                 if (e.button !== undefined && e.button !== 0) return;
                 stopAutoTour();
 
+                touchActive = false;
+                touchId = null;
                 pointerId = e.pointerId;
                 downX = e.clientX;
                 downY = e.clientY;
@@ -414,6 +416,108 @@
                     parallaxTiltZ = 0;
                 }
             });
+
+            // -----------------------------------------------------------------
+            // Explicit Mobile Touch Handlers (Guaranteed Cross-Browser Support)
+            // -----------------------------------------------------------------
+            var touchActive = false;
+            var touchId = null;
+
+            function onTouchStart(e) {
+                if (e.touches.length !== 1) return;
+                stopAutoTour();
+                if (pointerId !== null) return;
+
+                var touch = e.touches[0];
+                touchActive = true;
+                touchId = touch.identifier;
+                downX = touch.clientX;
+                downY = touch.clientY;
+                lastX = touch.clientX;
+                lastY = touch.clientY;
+                lastTime = performance.now();
+
+                velX = 0;
+                velZ = 0;
+                isDragging = false;
+            }
+
+            function onTouchMove(e) {
+                if (!touchActive || pointerId !== null) return;
+                if (e._touchHandled) return;
+                e._touchHandled = true;
+
+                for (var i = 0; i < e.changedTouches.length; i++) {
+                    var touch = e.changedTouches[i];
+                    if (touch.identifier === touchId) {
+                        var now = performance.now();
+                        var dt = Math.max((now - lastTime) / 1000, 0.001);
+
+                        var dx = touch.clientX - lastX;
+                        var dy = touch.clientY - lastY;
+                        var totalX = touch.clientX - downX;
+                        var totalY = touch.clientY - downY;
+
+                        if (!isDragging && Math.hypot(totalX, totalY) >= DRAG_THRESHOLD) {
+                            isDragging = true;
+                            stageCard.classList.add("is-dragging");
+                        }
+
+                        if (isDragging) {
+                            var sens = 0.42;
+
+                            orbitRotZ += dx * sens;
+                            orbitRotX -= dy * sens;
+                            orbitRotX = clamp(orbitRotX, 18, 85);
+
+                            velZ = (dx * sens) / dt;
+                            velX = (-dy * sens) / dt;
+
+                            lastX = touch.clientX;
+                            lastY = touch.clientY;
+                            lastTime = now;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            function onTouchEnd(e) {
+                if (!touchActive) return;
+                if (e._touchEndHandled) return;
+                e._touchEndHandled = true;
+
+                for (var i = 0; i < e.changedTouches.length; i++) {
+                    var touch = e.changedTouches[i];
+                    if (touch.identifier === touchId) {
+                        if (!isDragging) {
+                            var targetElem = document.elementFromPoint(touch.clientX, touch.clientY);
+                            var targetSlab = targetElem && targetElem.closest ? targetElem.closest(".slab-layer") : null;
+                            if (targetSlab) {
+                                var idxAttr = targetSlab.getAttribute("data-layer-idx");
+                                if (idxAttr !== null) {
+                                    setActiveLayer(parseInt(idxAttr, 10));
+                                }
+                            }
+                        }
+
+                        isDragging = false;
+                        touchActive = false;
+                        touchId = null;
+                        stageCard.classList.remove("is-dragging");
+                        break;
+                    }
+                }
+            }
+
+            stageCard.addEventListener("touchstart", onTouchStart, { passive: true });
+            stageCard.addEventListener("touchmove", onTouchMove, { passive: true });
+            stageCard.addEventListener("touchend", onTouchEnd, { passive: true });
+            stageCard.addEventListener("touchcancel", onTouchEnd, { passive: true });
+
+            window.addEventListener("touchmove", onTouchMove, { passive: true });
+            window.addEventListener("touchend", onTouchEnd, { passive: true });
+            window.addEventListener("touchcancel", onTouchEnd, { passive: true });
         }
 
         // ---------------------------------------------------------------------
