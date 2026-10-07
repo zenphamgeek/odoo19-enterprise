@@ -210,11 +210,13 @@
 
         // Mode switch buttons
         modeBtns.forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
+            function triggerMode(e) {
+                if (e) e.preventDefault();
                 var mode = btn.getAttribute('data-shift-mode');
                 if (mode) setShiftMode(mode);
-            });
+            }
+            btn.addEventListener('click', triggerMode);
+            btn.addEventListener('pointerup', triggerMode);
         });
 
         // Comparison Table Rows Click & Hover bindings
@@ -222,15 +224,14 @@
             var m = row.getAttribute('data-metric');
             if (!m) return;
 
-            row.addEventListener('click', function () {
+            function trigger(e) {
                 setActiveMetric(m);
-            });
+            }
 
-            row.addEventListener('pointerenter', function () {
-                clearTimeout(hoverDebounceTimer);
-                hoverDebounceTimer = setTimeout(function () {
-                    setActiveMetric(m);
-                }, 100);
+            row.addEventListener('click', trigger);
+            row.addEventListener('mouseenter', trigger);
+            row.querySelectorAll('td').forEach(function (cell) {
+                cell.addEventListener('click', trigger);
             });
         });
 
