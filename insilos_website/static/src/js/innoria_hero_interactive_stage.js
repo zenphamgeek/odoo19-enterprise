@@ -54,26 +54,26 @@
         {
             index: 2,
             id: 'smart-erp',
-            name: '[Intelligent ERP]',
-            nodeKey: 'INTELLIGENT_ERP',
-            accent: '#3B82F6',
-            glow: 'rgba(59, 130, 246, 0.4)',
-            gradient: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
+            name: '[INSILOS ERP]',
+            nodeKey: 'INSILOS',
+            accent: '#00F0FF',
+            glow: 'rgba(0, 240, 255, 0.4)',
+            gradient: 'linear-gradient(135deg, #0284C7 0%, #00F0FF 100%)',
             camPos: { x: 0.0, y: 4.6, z: 14.8 },
             lookAt: { x: 0.0, y: -0.2, z: 0.0 },
-            particleColor: 0x3B82F6
+            particleColor: 0x00F0FF
         },
         {
             index: 3,
             id: 'trust-security',
-            name: '[Enterprise Trust & Security]',
-            nodeKey: 'MOJOVERSE',
-            accent: '#10B981',
-            glow: 'rgba(16, 185, 129, 0.4)',
-            gradient: 'linear-gradient(135deg, #10B981 0%, #00F5A0 100%)',
+            name: '[ZENCODE-ENT Sovereign OS]',
+            nodeKey: 'ZENCODE_ENT',
+            accent: '#42E6C3',
+            glow: 'rgba(66, 230, 195, 0.4)',
+            gradient: 'linear-gradient(135deg, #10B981 0%, #42E6C3 100%)',
             camPos: { x: -3.2, y: -1.8, z: 13.0 },
             lookAt: { x: -0.8, y: -0.6, z: 0.0 },
-            particleColor: 0x10B981
+            particleColor: 0x42E6C3
         }
     ];
 

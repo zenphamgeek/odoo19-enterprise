@@ -1010,11 +1010,11 @@ class InsilosWebsite(http.Controller):
     def no_code_platform(self, **kwargs):
         return request.render("insilos_website.innoria_digiforce_page", self._base_values())
 
-    @http.route(["/blockchain", "/vi/blockchain"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/blockchain", "/vi/blockchain", "/zencode", "/vi/zencode", "/zencode-ent", "/vi/zencode-ent"], type="http", auth="public", website=True, sitemap=True)
     def blockchain(self, **kwargs):
         return request.render("insilos_website.innoria_blockchain_page", self._base_values())
 
-    @http.route(["/solutions", "/erp-combine-with-ai", "/vi/solutions", "/vi/erp-combine-with-ai"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/solutions", "/erp-combine-with-ai", "/vi/solutions", "/vi/erp-combine-with-ai", "/insilos", "/vi/insilos", "/insilos-erp", "/vi/insilos-erp"], type="http", auth="public", website=True, sitemap=True)
     def solutions(self, **kwargs):
         return request.render("insilos_website.insilos_solutions_page", self._base_values())
 

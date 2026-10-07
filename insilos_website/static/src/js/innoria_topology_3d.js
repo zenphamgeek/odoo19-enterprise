@@ -108,35 +108,37 @@
             deepLink: '/ai-solutions'
         },
         {
-            id: 'node_mojoverse',
-            key: 'MOJOVERSE',
-            name: 'MOJOVERSE Enterprise Web3',
-            category: 'Decentralized Trust & Supply Chain Ledger',
-            color: BRAND_PALETTE.warmAmber,
-            accentColor: BRAND_PALETTE.warmAmberGlow,
+            id: 'node_zencode',
+            key: 'ZENCODE_ENT',
+            aliases: ['MOJOVERSE', 'node_mojoverse', 'ZENCODE'],
+            name: 'ZENCODE-ENT Autonomous OS',
+            category: 'Sovereign Autonomous Engineering OS',
+            color: '#42E6C3',
+            accentColor: '#00F0FF',
             orbitAngle: Math.PI * 1.15, // Approx 207 deg
             radius: 6.8,
             stackPos: new THREE.Vector3(-3.8, -1.8, 0), // Lower left in architecture stack
-            tagline: 'Enterprise Blockchain, Digital Product Passports & Sovereign ID',
+            tagline: 'Hệ Điều Hành Kỹ Nghệ Tự Trị Cho Ngân Hàng & Doanh Nghiệp Chủ Quyền',
             metrics: [
-                { label: 'Cơ Chế Đồng Thuận', value: 'PoA Sovereign Consortium', badge: 'Finalized' },
-                { label: 'Hộ Chiếu Sản Phẩm Số', value: '142,800+ Minted', badge: 'Tamper-Proof' },
-                { label: 'Thời Gian Khối / Finality', value: '1.2s Instant Finality', badge: 'Zero-Gas' },
-                { label: 'Kiểm Toán Hợp Đồng', value: 'Formal Verification PASS', badge: 'SOC-2 / ISO' }
+                { label: 'Mô Hình Swarm PDCA', value: '5 Vai Trò Tự Trị', badge: 'Active Swarm' },
+                { label: 'Quyền Phủ Quyết Nhị Phân', value: 'Binary Veto = 0', badge: 'Forensic Gate' },
+                { label: 'Chủ Quyền Dữ Liệu', value: 'Zero Outbound Telemetry', badge: 'Air-Gapped' },
+                { label: 'Hiện Đại Hóa Monolith', value: 'Strangler-Fig Pattern', badge: 'Zero Downtime' }
             ],
             architecture: {
-                ledger: 'EVM-Compatible Sovereign State Machine',
-                identity: 'W3C Verifiable Credentials & DID Hub',
-                security: 'Threshold Signature Scheme (TSS) & MPC Key Vault'
+                engine: 'Clef ONNX DAG Inference & Deterministic Latency',
+                isolation: 'Per-Node Egress Proxy & Passive Quota Ledger',
+                compliance: 'SBV Banking Regulations & Financial Invariants'
             },
-            deepLink: '/blockchain'
+            deepLink: '/zencode'
         },
         {
-            id: 'node_intelligent_erp',
-            key: 'INTELLIGENT_ERP',
-            name: 'Intelligent Enterprise ERP',
-            category: 'Next-Gen Autonomous ERP Core',
-            color: BRAND_PALETTE.electricSapphire,
+            id: 'node_insilos',
+            key: 'INSILOS',
+            aliases: ['INTELLIGENT_ERP', 'node_intelligent_erp', 'smart-erp'],
+            name: 'INSILOS Enterprise Platform',
+            category: 'Autonomous Enterprise Operations & VAS Core',
+            color: BRAND_PALETTE.electricCyan,
             accentColor: BRAND_PALETTE.emeraldGreen,
             orbitAngle: Math.PI * 1.65, // Approx 297 deg
             radius: 6.8,
@@ -145,7 +147,7 @@
             metrics: [
                 { label: 'Quy Trình Nghiệp Vụ SAP', value: 'MM, SD, FI/CO, PP, MES', badge: 'Unified' },
                 { label: 'Bản Địa Hóa Việt Nam', value: 'TT78 HĐĐT & TT200 VAS', badge: 'Certified' },
-                { label: 'Hiệu Suất Nhà Máy (OEE)', value: '>= 92% Khả Dụng', badge: 'Live MES' },
+                { label: 'Hiệu Suất Nhà Máy (OEE)', value: '>= 95% Khả Dụng', badge: 'Live MES' },
                 { label: 'Đội Xe Drayage & Depot', value: 'Giảm -88% Phí DET/DEM', badge: 'Telematics' }
             ],
             architecture: {
@@ -153,7 +155,7 @@
                 compliance: 'Circular 78/2021/TT-BTC & Decree 123/2020/ND-CP',
                 integration: 'Direct SAP RFC / EDI / REST Microservices Gateway'
             },
-            deepLink: '/solutions'
+            deepLink: '/insilos'
         }
     ];
 
@@ -524,13 +526,14 @@
                         break;
                     }
 
+                    case 'ZENCODE_ENT':
                     case 'MOJOVERSE': {
                         // Interlocking Cryptographic Hash-Chain Blocks & Consensus Rings
                         for (let b = 0; b < 3; b++) {
                             const bGeo = new THREE.BoxGeometry(0.55, 0.55, 0.55);
                             const bMat = new THREE.MeshStandardMaterial({
-                                color: BRAND_PALETTE.warmAmber,
-                                emissive: BRAND_PALETTE.warmAmberGlow,
+                                color: '#42E6C3',
+                                emissive: '#00F0FF',
                                 emissiveIntensity: 0.6,
                                 metalness: 0.85,
                                 roughness: 0.2
@@ -544,7 +547,7 @@
                         // Rotating Consensus Torus Ring
                         const consensusGeo = new THREE.TorusGeometry(1.05, 0.022, 16, 48);
                         const consensusMat = new THREE.MeshBasicMaterial({
-                            color: BRAND_PALETTE.warmAmberGlow,
+                            color: '#42E6C3',
                             transparent: true,
                             opacity: 0.85
                         });
@@ -555,6 +558,7 @@
                         break;
                     }
 
+                    case 'INSILOS':
                     case 'INTELLIGENT_ERP': {
                         // 4 Enterprise Architecture Pillars supporting Unified Data Core
                         for (let p = 0; p < 4; p++) {
@@ -888,7 +892,7 @@
             if (!this.satelliteNodes || !this.satelliteNodes.length) return;
             const targetGroup = this.satelliteNodes.find(g => {
                 const nd = g.userData && g.userData.nodeData;
-                return nd && (nd.key === nodeKey || nd.id === nodeKey || (nd.key && nd.key.toLowerCase() === (nodeKey || '').toLowerCase()));
+                return nd && (nd.key === nodeKey || nd.id === nodeKey || (nd.aliases && nd.aliases.includes(nodeKey)) || (nd.key && nd.key.toLowerCase() === (nodeKey || '').toLowerCase()));
             });
             if (targetGroup) {
                 this.selectNode(targetGroup, targetGroup.userData.nodeData);

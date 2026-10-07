@@ -39,17 +39,17 @@
         },
         {
             index: 2,
-            name: 'MOJOVERSE',
-            accent: '#10B981',
-            glow: 'rgba(16, 185, 129, 0.4)',
-            gradient: 'linear-gradient(135deg, #10B981 0%, #00F5A0 100%)'
+            name: 'ZENCODE-ENT',
+            accent: '#42E6C3',
+            glow: 'rgba(66, 230, 195, 0.4)',
+            gradient: 'linear-gradient(135deg, #10B981 0%, #42E6C3 100%)'
         },
         {
             index: 3,
-            name: 'INTELLIGENT ERP',
-            accent: '#3B82F6',
-            glow: 'rgba(59, 130, 246, 0.4)',
-            gradient: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)'
+            name: 'INSILOS ERP',
+            accent: '#00F0FF',
+            glow: 'rgba(0, 240, 255, 0.4)',
+            gradient: 'linear-gradient(135deg, #0284C7 0%, #00F0FF 100%)'
         }
     ];
 

@@ -226,35 +226,37 @@
             deepLink: '/ai-solutions'
         },
         {
-            id: 'node_mojoverse',
-            key: 'MOJOVERSE',
-            name: 'MOJOVERSE Enterprise Web3',
-            category: 'Decentralized Trust & Supply Chain Ledger',
-            color: 0xFF8000, // Warm Amber
-            accentColor: 0xF59E0B,
+            id: 'node_zencode',
+            key: 'ZENCODE_ENT',
+            aliases: ['MOJOVERSE', 'node_mojoverse', 'ZENCODE'],
+            name: 'ZENCODE-ENT Autonomous OS',
+            category: 'Sovereign Autonomous Engineering OS',
+            color: 0x42E6C3, // Mint
+            accentColor: 0x00F0FF,
             orbitAngle: Math.PI * 1.15,
             radius: 6.8,
             stackPos: new THREE.Vector3(-3.8, -1.8, 0),
-            tagline: 'Enterprise Blockchain, Digital Product Passports & Sovereign ID',
+            tagline: 'Hệ Điều Hành Kỹ Nghệ Tự Trị Cho Ngân Hàng & Doanh Nghiệp Chủ Quyền',
             metrics: [
-                { label: 'Cơ Chế Đồng Thuận', value: 'PoA Sovereign Consortium', badge: 'Finalized' },
-                { label: 'Hộ Chiếu Sản Phẩm Số', value: '142,800+ Minted', badge: 'Tamper-Proof' },
-                { label: 'Thời Gian Khối / Finality', value: '1.2s Instant Finality', badge: 'Zero-Gas' },
-                { label: 'Kiểm Toán Hợp Đồng', value: 'Formal Verification PASS', badge: 'SOC-2 / ISO' }
+                { label: 'Mô Hình Swarm PDCA', value: '5 Vai Trò Tự Trị', badge: 'Active Swarm' },
+                { label: 'Quyền Phủ Quyết Nhị Phân', value: 'Binary Veto = 0', badge: 'Forensic Gate' },
+                { label: 'Chủ Quyền Dữ Liệu', value: 'Zero Outbound Telemetry', badge: 'Air-Gapped' },
+                { label: 'Hiện Đại Hóa Monolith', value: 'Strangler-Fig Pattern', badge: 'Zero Downtime' }
             ],
             architecture: {
-                ledger: 'EVM-Compatible Sovereign State Machine',
-                identity: 'W3C Verifiable Credentials & DID Hub',
-                security: 'Threshold Signature Scheme (TSS) & MPC Key Vault'
+                engine: 'Clef ONNX DAG Inference & Deterministic Latency',
+                isolation: 'Per-Node Egress Proxy & Passive Quota Ledger',
+                compliance: 'SBV Banking Regulations & Financial Invariants'
             },
-            deepLink: '/blockchain'
+            deepLink: '/zencode'
         },
         {
-            id: 'node_intelligent_erp',
-            key: 'INTELLIGENT_ERP',
-            name: 'Intelligent Enterprise ERP',
-            category: 'Next-Gen Autonomous ERP Core',
-            color: 0x0284C7, // Electric Sapphire
+            id: 'node_insilos',
+            key: 'INSILOS',
+            aliases: ['INTELLIGENT_ERP', 'node_intelligent_erp', 'smart-erp'],
+            name: 'INSILOS Enterprise Platform',
+            category: 'Autonomous Enterprise Operations & VAS Core',
+            color: 0x00F0FF, // Tech Cyan
             accentColor: 0x10B981,
             orbitAngle: Math.PI * 1.65,
             radius: 6.8,
@@ -263,7 +265,7 @@
             metrics: [
                 { label: 'Quy Trình Nghiệp Vụ SAP', value: 'MM, SD, FI/CO, PP, MES', badge: 'Unified' },
                 { label: 'Bản Địa Hóa Việt Nam', value: 'TT78 HĐĐT & TT200 VAS', badge: 'Certified' },
-                { label: 'Hiệu Suất Nhà Máy (OEE)', value: '>= 92% Khả Dụng', badge: 'Live MES' },
+                { label: 'Hiệu Suất Nhà Máy (OEE)', value: '>= 95% Khả Dụng', badge: 'Live MES' },
                 { label: 'Đội Xe Drayage & Depot', value: 'Giảm -88% Phí DET/DEM', badge: 'Telematics' }
             ],
             architecture: {
@@ -271,7 +273,7 @@
                 compliance: 'Circular 78/2021/TT-BTC & Decree 123/2020/ND-CP',
                 integration: 'Direct SAP RFC / EDI / REST Microservices Gateway'
             },
-            deepLink: '/solutions'
+            deepLink: '/insilos'
         }
     ];
 
@@ -523,13 +525,13 @@
                         speed: 0.8 + (a * 0.15)
                     });
                 }
-            } else if (data.key === 'MOJOVERSE') {
+            } else if (data.key === 'ZENCODE_ENT' || data.key === 'MOJOVERSE') {
                 // Interlocking Cryptographic Hash-Chain Blocks & Consensus Torus Ring
                 for (var b = 0; b < 3; b++) {
                     var bGeo = self.trackDisposable(new THREE.BoxGeometry(0.55, 0.55, 0.55));
                     var bMat = self.trackDisposable(new THREE.MeshStandardMaterial({
-                        color: 0xFF8000,
-                        emissive: 0xF59E0B,
+                        color: 0x42E6C3,
+                        emissive: 0x00F0FF,
                         emissiveIntensity: 0.6,
                         metalness: 0.85,
                         roughness: 0.2
@@ -541,7 +543,7 @@
                 }
                 var cRingGeo = self.trackDisposable(new THREE.TorusGeometry(1.05, 0.022, 16, 48));
                 var cRingMat = self.trackDisposable(new THREE.MeshBasicMaterial({
-                    color: 0xF59E0B,
+                    color: 0x42E6C3,
                     transparent: true,
                     opacity: 0.85
                 }));
@@ -549,7 +551,7 @@
                 consensusRing.rotation.x = Math.PI / 2.5;
                 archCore.add(consensusRing);
                 podGroup.userData.consensusRing = consensusRing;
-            } else if (data.key === 'INTELLIGENT_ERP') {
+            } else if (data.key === 'INSILOS' || data.key === 'INTELLIGENT_ERP') {
                 // 4 Enterprise Architecture Pillars + Central Unified Data Core
                 for (var p = 0; p < 4; p++) {
                     var ang = p * (Math.PI / 2);
@@ -1869,8 +1871,8 @@
     var THEMES = [
         { index: 0, name: 'DIGIFORCE', accent: '#00F0FF', glow: 'rgba(0, 240, 255, 0.4)' },
         { index: 1, name: 'MOJO AI', accent: '#FF8000', glow: 'rgba(255, 128, 0, 0.4)' },
-        { index: 2, name: 'MOJOVERSE', accent: '#10B981', glow: 'rgba(16, 185, 129, 0.4)' },
-        { index: 3, name: 'INTELLIGENT ERP', accent: '#3B82F6', glow: 'rgba(59, 130, 246, 0.4)' }
+        { index: 2, name: 'ZENCODE-ENT', accent: '#42E6C3', glow: 'rgba(66, 230, 195, 0.4)' },
+        { index: 3, name: 'INSILOS ERP', accent: '#00F0FF', glow: 'rgba(0, 240, 255, 0.4)' }
     ];
 
     function InnoriaHeroVideoSlider(container) {
