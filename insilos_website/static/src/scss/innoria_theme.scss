@@ -440,19 +440,19 @@ body:has(#innoria_main_nav) {
     background: #090E1A !important;
     border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-    padding: 2.5rem 0;
+    padding: 2.75rem 0;
 
     .client-logo-img {
-        max-height: 48px;
+        max-height: 58px;
         width: auto;
-        opacity: 0.75;
-        filter: grayscale(100%) brightness(1.6);
-        transition: all 0.3s ease;
+        opacity: 0.8;
+        filter: brightness(0) invert(0.85);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
         &:hover {
             opacity: 1;
-            filter: grayscale(0%) brightness(1.1);
-            transform: scale(1.05);
+            filter: brightness(0) invert(1);
+            transform: scale(1.04);
         }
     }
 }
