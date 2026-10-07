@@ -1131,15 +1131,15 @@ body:has(#innoria_main_nav) {
         transition: filter 0.25s ease, opacity 0.25s ease;
     }
 
-    #slab-0 { --base-z: 96px; }
-    #slab-1 { --base-z: 32px; }
-    #slab-2 { --base-z: -32px; }
-    #slab-3 { --base-z: -96px; }
+    #slab-0 { --base-z: 96px; z-index: 4; }
+    #slab-1 { --base-z: 32px; z-index: 3; }
+    #slab-2 { --base-z: -32px; z-index: 2; }
+    #slab-3 { --base-z: -96px; z-index: 1; }
 
-    .deck-exploded #slab-0 { --base-z: 165px; }
-    .deck-exploded #slab-1 { --base-z: 55px; }
-    .deck-exploded #slab-2 { --base-z: -55px; }
-    .deck-exploded #slab-3 { --base-z: -165px; }
+    .deck-exploded #slab-0 { --base-z: 165px; z-index: 4; }
+    .deck-exploded #slab-1 { --base-z: 55px; z-index: 3; }
+    .deck-exploded #slab-2 { --base-z: -55px; z-index: 2; }
+    .deck-exploded #slab-3 { --base-z: -165px; z-index: 1; }
 
     /* Pulled out (Active Layer) */
     .slab-layer.pulled-out {
@@ -1149,6 +1149,12 @@ body:has(#innoria_main_nav) {
         --scale: 1.035;
         opacity: 1 !important;
         filter: none !important;
+        z-index: 10 !important;
+    }
+
+    /* Subtle Hover feedback without destructive selection */
+    .slab-layer.slab-hovered:not(.pulled-out) {
+        filter: brightness(1.2) drop-shadow(0 0 12px var(--active-accent, #00F0FF));
     }
 
     .slab-layer.pulled-out .top,
@@ -1540,21 +1546,45 @@ body:has(#innoria_main_nav) {
         margin-bottom: 0;
     }
 
-    /* Full Detailed Deep Panels */
+    /* Full Detailed Deep Panels - Direct Transparent Layout (No Card Wrap, No Border) */
     .deep-column-panel {
-        background: rgba(11, 19, 36, 0.96);
-        border: 1.5px solid var(--panel-color, #00F0FF);
-        border-radius: 22px;
-        padding: 28px;
-        box-shadow: 0 20px 48px -8px var(--panel-glow, rgba(0, 240, 255, 0.35));
+        background: transparent !important;
+        border: none !important;
+        border-left: 2px solid var(--panel-color, #00F0FF) !important;
+        border-radius: 4px;
+        padding: 6px 0 6px 18px;
+        box-shadow: none !important;
         animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         display: none;
         flex-direction: column;
-        gap: 20px;
-        backdrop-filter: blur(16px);
+        gap: 16px;
+        backdrop-filter: none !important;
 
         &.visible {
             display: flex;
+        }
+    }
+
+    .btn-close-deep {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #94A3B8;
+        border-radius: 20px;
+        padding: 5px 12px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-left: auto;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #FFFFFF;
+            border-color: rgba(255, 255, 255, 0.35);
+            transform: scale(1.02);
         }
     }
 
@@ -1563,7 +1593,7 @@ body:has(#innoria_main_nav) {
         align-items: center;
         gap: 16px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding-bottom: 18px;
+        padding-bottom: 14px;
     }
 
     .deep-icon-large {

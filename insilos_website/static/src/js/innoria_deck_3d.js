@@ -189,6 +189,14 @@
         // ---------------------------------------------------------------------
         // Layer Activation & State Synchronization
         // ---------------------------------------------------------------------
+        function toggleLayer(idx) {
+            if (activeIndex === idx) {
+                setActiveLayer(null);
+            } else {
+                setActiveLayer(idx);
+            }
+        }
+
         function setActiveLayer(idx) {
             activeIndex = idx;
 
@@ -198,6 +206,7 @@
                 var card = container.querySelector("#card-" + i);
 
                 if (slab) {
+                    slab.classList.remove("slab-hovered");
                     if (idx === null) {
                         slab.classList.remove("pulled-out", "dimmed");
                     } else if (i === idx) {
@@ -210,6 +219,7 @@
                 }
 
                 if (card) {
+                    card.classList.remove("card-hovered");
                     if (idx === null) {
                         card.classList.remove("active-summary");
                     } else if (i === idx) {
@@ -257,16 +267,14 @@
             }
 
             // 4. Synchronize all tab selectors
-            if (idx !== null) {
-                container.querySelectorAll(".tab-item").forEach(function (tab) {
-                    var tabLayer = parseInt(tab.getAttribute("data-tab-layer"), 10);
-                    if (tabLayer === idx) {
-                        tab.classList.add("active");
-                    } else {
-                        tab.classList.remove("active");
-                    }
-                });
-            }
+            container.querySelectorAll(".tab-item").forEach(function (tab) {
+                var tabLayer = parseInt(tab.getAttribute("data-tab-layer"), 10);
+                if (idx !== null && tabLayer === idx) {
+                    tab.classList.add("active");
+                } else {
+                    tab.classList.remove("active");
+                }
+            });
         }
 
         // ---------------------------------------------------------------------
@@ -278,26 +286,39 @@
 
             if (slab) {
                 slab.addEventListener("mouseenter", function () {
-                    if (isDragging) return; // Ignore hover while user is dragging orbit
-                    stopAutoTour();
-                    setActiveLayer(i);
+                    if (isDragging) return;
+                    if (activeIndex === null) {
+                        slab.classList.add("slab-hovered");
+                        if (card) card.classList.add("card-hovered");
+                    }
+                });
+                slab.addEventListener("mouseleave", function () {
+                    slab.classList.remove("slab-hovered");
+                    if (card) card.classList.remove("card-hovered");
                 });
                 slab.addEventListener("click", function (e) {
                     e.stopPropagation();
                     stopAutoTour();
-                    setActiveLayer(i);
+                    toggleLayer(i);
                 });
             }
 
             if (card) {
                 card.addEventListener("mouseenter", function () {
                     if (isDragging) return;
-                    stopAutoTour();
-                    setActiveLayer(i);
+                    if (activeIndex === null) {
+                        card.classList.add("card-hovered");
+                        if (slab) slab.classList.add("slab-hovered");
+                    }
                 });
-                card.addEventListener("click", function () {
+                card.addEventListener("mouseleave", function () {
+                    card.classList.remove("card-hovered");
+                    if (slab) slab.classList.remove("slab-hovered");
+                });
+                card.addEventListener("click", function (e) {
+                    e.stopPropagation();
                     stopAutoTour();
-                    setActiveLayer(i);
+                    toggleLayer(i);
                 });
             }
         });
@@ -309,6 +330,15 @@
                 stopAutoTour();
                 var targetLayer = parseInt(tab.getAttribute("data-tab-layer"), 10);
                 setActiveLayer(targetLayer);
+            });
+        });
+
+        // Close / Back to Overview Buttons in Deep Panels
+        container.querySelectorAll("[data-action=\"close-deep\"], .btn-close-deep").forEach(function (btn) {
+            btn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                stopAutoTour();
+                setActiveLayer(null);
             });
         });
 
@@ -386,29 +416,41 @@
 
             function endPointer(e) {
                 if (pointerId !== null && e.pointerId === pointerId) {
+                    if (stageCard.releasePointerCapture) {
+                        try { stageCard.releasePointerCapture(e.pointerId); } catch (err) {}
+                    }
+
                     // Tap detection: if not dragged beyond threshold, check if clicked on a slab
                     if (!isDragging) {
-                        var targetSlab = e.target.closest ? e.target.closest(".slab-layer") : null;
+                        var elem = document.elementFromPoint(e.clientX, e.clientY);
+                        var targetSlab = elem ? elem.closest(".slab-layer") : null;
                         if (targetSlab) {
                             var idxAttr = targetSlab.getAttribute("data-layer-idx");
                             if (idxAttr !== null) {
-                                setActiveLayer(parseInt(idxAttr, 10));
+                                toggleLayer(parseInt(idxAttr, 10));
                             }
+                        } else if (elem && (elem === stageCard || elem.closest(".stage-card") || elem.id === "deckContainer" || (elem.classList && (elem.classList.contains("scene-viewport") || elem.classList.contains("deck-floor-shadow"))))) {
+                            setActiveLayer(null);
                         }
                     }
 
                     isDragging = false;
                     pointerId = null;
                     stageCard.classList.remove("is-dragging");
-
-                    if (stageCard.releasePointerCapture) {
-                        try { stageCard.releasePointerCapture(e.pointerId); } catch (err) {}
-                    }
                 }
             }
 
             stageCard.addEventListener("pointerup", endPointer);
             stageCard.addEventListener("pointercancel", endPointer);
+
+            stageCard.addEventListener("click", function (e) {
+                if (isDragging) return;
+                var elem = document.elementFromPoint(e.clientX, e.clientY);
+                var targetSlab = elem ? elem.closest(".slab-layer") : null;
+                if (!targetSlab) {
+                    setActiveLayer(null);
+                }
+            });
 
             stageCard.addEventListener("pointerleave", function (e) {
                 if (!isDragging) {
@@ -496,8 +538,10 @@
                             if (targetSlab) {
                                 var idxAttr = targetSlab.getAttribute("data-layer-idx");
                                 if (idxAttr !== null) {
-                                    setActiveLayer(parseInt(idxAttr, 10));
+                                    toggleLayer(parseInt(idxAttr, 10));
                                 }
+                            } else if (targetElem && (targetElem === stageCard || targetElem.closest(".stage-card") || targetElem.id === "deckContainer" || (targetElem.classList && (targetElem.classList.contains("scene-viewport") || targetElem.classList.contains("deck-floor-shadow"))))) {
+                                setActiveLayer(null);
                             }
                         }
 
@@ -634,20 +678,35 @@
         });
     }
 
-    // Auto-mount on DOM ready or Odoo Website loading
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.deck-app-container').forEach(initInnoria3DDeck);
-            initInnoriaPillars3D();
+    // Auto-mount on DOM ready, window load, or Odoo Website loading
+    function mountAllDecks() {
+        document.querySelectorAll('.deck-app-container').forEach(function (c) {
+            if (!c.__innoria_deck_initialized) {
+                initInnoria3DDeck(c);
+            }
         });
-    } else {
-        document.querySelectorAll('.deck-app-container').forEach(initInnoria3DDeck);
         initInnoriaPillars3D();
     }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', mountAllDecks);
+    } else {
+        mountAllDecks();
+    }
+    window.addEventListener('load', mountAllDecks);
+
+    // Periodic check to ensure dynamic loads or SPA mounts catch it immediately
+    var pollCount = 0;
+    var pollInterval = setInterval(function () {
+        mountAllDecks();
+        pollCount++;
+        if (pollCount > 8) clearInterval(pollInterval);
+    }, 400);
 
     // Expose to window
     if (typeof window !== 'undefined') {
         window.initInnoria3DDeck = initInnoria3DDeck;
         window.initInnoriaPillars3D = initInnoriaPillars3D;
+        window.mountAllDecks = mountAllDecks;
     }
 })();
