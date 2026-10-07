@@ -3437,3 +3437,422 @@ main#wrap[style*="background-color: #FFFFFF"] {
         }
     }
 }
+
+/* ========================================================================== */
+/* INNORIA REAL-TIME YOLO DEFECT INSPECTION SIMULATOR (MILESTONE M4)          */
+/* Conformance: Pure transparent layout, zero card container, high-tech HUD   */
+/* ========================================================================== */
+
+@keyframes yoloLaserScan {
+    0% {
+        top: 2%;
+        opacity: 0.95;
+    }
+    50% {
+        top: 96%;
+        opacity: 0.95;
+    }
+    100% {
+        top: 2%;
+        opacity: 0.95;
+    }
+}
+
+@keyframes yoloLaserFastScan {
+    0% {
+        top: 0%;
+        opacity: 1;
+    }
+    100% {
+        top: 100%;
+        opacity: 0.2;
+    }
+}
+
+@keyframes yoloDefectPulse {
+    0% {
+        border-color: #ef4444;
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.6), inset 0 0 8px rgba(239, 68, 68, 0.25);
+    }
+    100% {
+        border-color: #ff2222;
+        box-shadow: 0 0 35px rgba(255, 34, 34, 0.95), inset 0 0 18px rgba(255, 34, 34, 0.55);
+    }
+}
+
+@keyframes yoloRecBlink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.85); }
+}
+
+.s_innoria_yolo_inspection {
+    position: relative;
+    background: transparent;
+    user-select: none;
+
+    /* Viewport Container - 16/10 aspect ratio */
+    .ins-yolo-viewport {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        min-height: 440px;
+        background-color: #040812;
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid rgba(0, 240, 255, 0.28);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 240, 255, 0.08);
+
+        @media (max-width: 767.98px) {
+            min-height: 320px;
+            aspect-ratio: 4 / 3;
+        }
+
+        /* SVG Target Canvas Container */
+        .ins-yolo-canvas-container {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            svg {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+        }
+
+        /* Scanline Overlay Grid */
+        .ins-yolo-scanlines {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.28) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(0, 240, 255, 0.02),
+                rgba(0, 255, 128, 0.01),
+                rgba(0, 240, 255, 0.02)
+            );
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0.65;
+        }
+
+        /* Tactical Corner Reticles */
+        .ins-yolo-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 6;
+
+            &.corner-tl {
+                top: 14px;
+                left: 14px;
+                border-top: 2px solid #00F0FF;
+                border-left: 2px solid #00F0FF;
+            }
+            &.corner-tr {
+                top: 14px;
+                right: 14px;
+                border-top: 2px solid #00F0FF;
+                border-right: 2px solid #00F0FF;
+            }
+            &.corner-bl {
+                bottom: 14px;
+                left: 14px;
+                border-bottom: 2px solid #00F0FF;
+                border-left: 2px solid #00F0FF;
+            }
+            &.corner-br {
+                bottom: 14px;
+                right: 14px;
+                border-bottom: 2px solid #00F0FF;
+                border-right: 2px solid #00F0FF;
+            }
+        }
+
+        /* Central Reticle */
+        .ins-yolo-reticle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 54px;
+            height: 54px;
+            border: 1px dashed rgba(0, 240, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 4;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+
+            &.is-pulse {
+                border-color: #00F0FF;
+                transform: translate(-50%, -50%) scale(1.25);
+            }
+
+            &::before, &::after {
+                content: '';
+                position: absolute;
+                background-color: rgba(0, 240, 255, 0.45);
+            }
+            &::before {
+                top: 50%;
+                left: -10px;
+                right: -10px;
+                height: 1px;
+                transform: translateY(-50%);
+            }
+            &::after {
+                left: 50%;
+                top: -10px;
+                bottom: -10px;
+                width: 1px;
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Active Sweeping Laser Beam */
+        .ins-yolo-laser-beam {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #00F0FF 20%, #FFFFFF 50%, #00F0FF 80%, transparent 100%);
+            box-shadow: 0 0 16px #00F0FF, 0 0 28px rgba(0, 240, 255, 0.85);
+            pointer-events: none;
+            z-index: 5;
+            animation: yoloLaserScan 4s ease-in-out infinite;
+
+            &.is-scanning {
+                animation: yoloLaserFastScan 0.45s ease-out 1;
+            }
+        }
+
+        /* Top HUD Bar */
+        .ins-yolo-topbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 18px;
+            background: linear-gradient(180deg, rgba(4, 8, 18, 0.92) 0%, rgba(4, 8, 18, 0) 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 7;
+            font-family: var(--bs-font-monospace);
+            font-size: 0.78rem;
+            color: #94a3b8;
+            pointer-events: none;
+
+            .ins-yolo-rec {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                color: #ef4444;
+                font-weight: 700;
+
+                .ins-rec-dot {
+                    width: 9px;
+                    height: 9px;
+                    background-color: #ef4444;
+                    border-radius: 50%;
+                    box-shadow: 0 0 8px #ef4444;
+                    animation: yoloRecBlink 1.2s infinite ease-in-out;
+                }
+            }
+
+            .ins-yolo-title {
+                color: #f8fafc;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+            }
+
+            .ins-yolo-status-pill {
+                font-weight: 700;
+                font-size: 0.72rem;
+                letter-spacing: 0.05em;
+                transition: all 0.3s ease;
+
+                &.is-defect {
+                    background-color: rgba(239, 68, 68, 0.25);
+                    border: 1px solid rgba(239, 68, 68, 0.65);
+                    color: #f87171;
+                    box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+                }
+
+                &.is-pass {
+                    background-color: rgba(16, 185, 129, 0.22);
+                    border: 1px solid rgba(16, 185, 129, 0.55);
+                    color: #34d399;
+                    box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+                }
+
+                .ins-yolo-status-dot {
+                    width: 7px;
+                    height: 7px;
+                    border-radius: 50%;
+                    &.is-defect {
+                        background-color: #ef4444;
+                        box-shadow: 0 0 6px #ef4444;
+                    }
+                    &.is-pass {
+                        background-color: #10b981;
+                        box-shadow: 0 0 6px #10b981;
+                    }
+                }
+            }
+        }
+
+        /* Overlay Bounding Box Layer */
+        .ins-yolo-overlay-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            pointer-events: none;
+
+            .ins-yolo-box {
+                position: absolute;
+                border-radius: 3px;
+                box-sizing: border-box;
+                pointer-events: none;
+                transition: opacity 0.25s ease, transform 0.2s ease, border-color 0.2s ease;
+                opacity: 1;
+
+                &.is-below-threshold {
+                    opacity: 0.12 !important;
+                }
+
+                &.is-defect {
+                    border: 2px solid #ef4444;
+                    background-color: rgba(239, 68, 68, 0.22);
+                    animation: yoloDefectPulse 0.7s infinite alternate;
+
+                    .ins-yolo-box-tag {
+                        background-color: #ef4444;
+                        color: #ffffff;
+                    }
+                    .yolo-box-corner {
+                        border-color: #ffffff;
+                    }
+                }
+
+                &.is-pass {
+                    border: 1.5px solid #10b981;
+                    background-color: rgba(16, 185, 129, 0.12);
+
+                    .ins-yolo-box-tag {
+                        background-color: #10b981;
+                        color: #022c22;
+                    }
+                    .yolo-box-corner {
+                        border-color: #34d399;
+                    }
+                }
+
+                .ins-yolo-box-tag {
+                    position: absolute;
+                    top: -24px;
+                    left: -2px;
+                    font-family: var(--bs-font-monospace);
+                    font-size: 0.66rem;
+                    font-weight: 700;
+                    padding: 2px 7px;
+                    border-radius: 3px;
+                    white-space: nowrap;
+                    text-transform: uppercase;
+                    letter-spacing: 0.04em;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+                }
+
+                /* Corner brackets inside bbox */
+                .yolo-box-corner {
+                    position: absolute;
+                    width: 6px;
+                    height: 6px;
+                    pointer-events: none;
+
+                    &.corner-tl { top: -2px; left: -2px; border-top: 2px solid; border-left: 2px solid; }
+                    &.corner-tr { top: -2px; right: -2px; border-top: 2px solid; border-right: 2px solid; }
+                    &.corner-bl { bottom: -2px; left: -2px; border-bottom: 2px solid; border-left: 2px solid; }
+                    &.corner-br { bottom: -2px; right: -2px; border-bottom: 2px solid; border-right: 2px solid; }
+                }
+            }
+        }
+
+        /* Bottom Live RT Telemetry HUD Stream */
+        .ins-yolo-rt-stream {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            right: 12px;
+            padding: 8px 14px;
+            background: rgba(4, 8, 18, 0.88);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            z-index: 6;
+            font-family: var(--bs-font-monospace);
+            font-size: 0.72rem;
+            color: #94a3b8;
+            pointer-events: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            transition: all 0.3s ease;
+
+            @media (max-width: 767.98px) {
+                font-size: 0.65rem;
+                padding: 6px 10px;
+                bottom: 8px;
+                left: 8px;
+                right: 8px;
+            }
+        }
+    }
+
+    /* Left Side Interactive Scenario Switcher Buttons */
+    .ins-yolo-scenario-btn {
+        background: rgba(15, 23, 42, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: #cbd5e1;
+        font-family: var(--bs-font-monospace);
+        font-size: 0.82rem;
+        font-weight: 600;
+        border-radius: 20px;
+        padding: 8px 16px;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        &:hover {
+            color: #ffffff;
+            border-color: #00F0FF;
+            background: rgba(0, 240, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
+        &.is-active {
+            color: #070B14;
+            background: #FF8000;
+            border-color: #FF8000;
+            font-weight: 700;
+            box-shadow: 0 0 16px rgba(255, 128, 0, 0.45);
+        }
+    }
+
+    /* Range Slider Styling */
+    .ins-yolo-range {
+        accent-color: #FF8000;
+        height: 6px;
+        border-radius: 3px;
+        background: #1e293b;
+        cursor: pointer;
+    }
+}
+
