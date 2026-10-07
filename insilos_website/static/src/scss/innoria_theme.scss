@@ -462,30 +462,35 @@ body:has(#innoria_main_nav) {
 // 6. Cadence Cards & Ecosystem Pillars (White Surfaces)
 // -----------------------------------------------------------------------------
 .innoria-cadence-card {
-    background: transparent;
-    border: none;
-    border-top: 2px solid #E2E8F0;
-    border-radius: 0;
-    padding: 1.5rem 0.5rem;
+    background: var(--ins-spatial-layer-1) !important;
+    backdrop-filter: blur(var(--ins-spatial-layer-blur)) saturate(var(--ins-spatial-layer-saturate)) !important;
+    -webkit-backdrop-filter: blur(var(--ins-spatial-layer-blur)) saturate(var(--ins-spatial-layer-saturate)) !important;
+    border: 1px solid var(--ins-spatial-border-glow) !important;
+    border-radius: 1.25rem !important;
+    padding: 1.75rem 1.5rem !important;
     height: 100%;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s ease !important;
     position: relative;
-    box-shadow: none;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
 
     &::before {
         display: none;
     }
 
     &:hover {
-        border-top-color: #0284C7;
-        transform: translateY(-3px);
-        box-shadow: none;
+        border-color: rgba(66, 230, 195, 0.25) !important;
+        transform: translateY(-4px) !important;
+        box-shadow: var(--ins-glow-aurora) !important;
     }
 
     .cadence-badge {
         font-size: 1.35rem;
         font-weight: 800;
-        color: #0284C7;
+        background: var(--ins-aurora-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         font-family: monospace;
     }
 }
