@@ -1402,6 +1402,116 @@
     </template>
 
     <!-- ================================================================= -->
+    <!-- 9. INNORIA 3D ERP SHIFT COMPARISON ENGINE (DUAL-CORE ISOMETRIC)   -->
+    <!-- ================================================================= -->
+    <template id="s_innoria_3d_erp_shift" name="Innoria 3D ERP Shift Comparison">
+        <div class="s_innoria_3d_erp_shift innoria-shift-3d-stage position-relative w-100"
+             data-snippet="s_innoria_3d_erp_shift"
+             data-name="Innoria 3D ERP Shift Comparison"
+             id="erp_shift_3d_component"
+             style="background: transparent !important; border: none !important; box-shadow: none !important;">
+            <!-- 3D Dual-Core Viewport (100% Transparent, No Card Wrapper, Zero Borders) -->
+            <div class="erp-shift-viewport position-relative mx-auto" id="erpShiftViewport">
+                <div class="erp-shift-deck" id="erpShiftDeck" data-active-mode="dual">
+                    <!-- Floor Ambient Contact Shadow -->
+                    <div class="shift-floor-shadow-light"/>
+
+                    <!-- Left: Legacy Monolith Silo Core -->
+                    <div class="shift-core-monolith" id="shift-core-legacy" data-core-type="legacy">
+                        <div class="monolith-face top">
+                            <span class="core-tag">Legacy Monolith</span>
+                            <span class="core-metric">48h Batch Queue</span>
+                        </div>
+                        <div class="monolith-face bottom"/>
+                        <div class="monolith-face front-right">
+                            <div class="title-text">Legacy Silo ERP</div>
+                            <div class="sub-text">450+ T-Codes · Rigid Schemas</div>
+                        </div>
+                        <div class="monolith-face front-left"/>
+                        <div class="monolith-face back-right"/>
+                        <div class="monolith-face back-left"/>
+                    </div>
+
+                    <!-- Center: Dynamic Glowing Conduits / Bridge -->
+                    <div class="shift-bridge-conduits" id="shiftBridgeConduits">
+                        <div class="conduit-stream stream-speed active"><div class="conduit-pulse"/></div>
+                        <div class="conduit-stream stream-learning"><div class="conduit-pulse"/></div>
+                        <div class="conduit-stream stream-error"><div class="conduit-pulse"/></div>
+                        <div class="conduit-stream stream-tco"><div class="conduit-pulse"/></div>
+                    </div>
+
+                    <!-- Right: Innoria Autonomous AI Fabric Core (4-tier Stack) -->
+                    <div class="shift-core-fabric" id="shift-core-ai" data-core-type="ai">
+                        <!-- Tier 0: Speed & Real-time Event Bus -->
+                        <div class="shift-tier-layer pulled-out" id="shift-tier-speed" data-metric="speed"
+                             style="--tier-base-z: 75px; --tier-accent: #0284C7; --tier-glow: rgba(2, 132, 199, 0.45);">
+                            <div class="tier-face top">
+                                <span class="tier-badge">SPEED &amp; EVENT BUS</span>
+                                <span class="tier-val">&lt; 1.2s Real-Time</span>
+                            </div>
+                            <div class="tier-face front-right">
+                                <div class="tier-title">Real-Time Event Stream</div>
+                                <div class="tier-desc">Zero Batch Wait · Instant Routing</div>
+                            </div>
+                            <div class="tier-face front-left"/>
+                        </div>
+
+                        <!-- Tier 1: Learning Curve & Conversational Intent -->
+                        <div class="shift-tier-layer dimmed" id="shift-tier-learning" data-metric="learning"
+                             style="--tier-base-z: 50px; --tier-accent: #2563EB; --tier-glow: rgba(37, 99, 235, 0.45);">
+                            <div class="tier-face top">
+                                <span class="tier-badge">NATURAL COPILOT</span>
+                                <span class="tier-val">Zero Training Curve</span>
+                            </div>
+                            <div class="tier-face front-right">
+                                <div class="tier-title">Conversational Intent</div>
+                                <div class="tier-desc">Natural Language ERP · Self-Guiding</div>
+                            </div>
+                            <div class="tier-face front-left"/>
+                        </div>
+
+                        <!-- Tier 2: Error Rate & Autonomous Validation -->
+                        <div class="shift-tier-layer dimmed" id="shift-tier-error" data-metric="error"
+                             style="--tier-base-z: 25px; --tier-accent: #10B981; --tier-glow: rgba(16, 185, 129, 0.45);">
+                            <div class="tier-face top">
+                                <span class="tier-badge">AUTONOMOUS INTEGRITY</span>
+                                <span class="tier-val">99.98% 3-Way Match</span>
+                            </div>
+                            <div class="tier-face front-right">
+                                <div class="tier-title">Zero Rekeying Error</div>
+                                <div class="tier-desc">AI Automated Reconciliation</div>
+                            </div>
+                            <div class="tier-face front-left"/>
+                        </div>
+
+                        <!-- Tier 3: TCO & Sovereign Economics -->
+                        <div class="shift-tier-layer dimmed" id="shift-tier-tco" data-metric="tco"
+                             style="--tier-base-z: 0px; --tier-accent: #D97706; --tier-glow: rgba(217, 119, 6, 0.45);">
+                            <div class="tier-face top">
+                                <span class="tier-badge">SOVEREIGN TCO</span>
+                                <span class="tier-val">-65% Operating Drag</span>
+                            </div>
+                            <div class="tier-face front-right">
+                                <div class="tier-title">Autonomous Efficiency</div>
+                                <div class="tier-desc">Lower Drag · Pure Independence</div>
+                            </div>
+                            <div class="tier-face front-left"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Telemetry Chip (Clean Minimalist Badge, Zero Instructional Text) -->
+            <div class="d-flex justify-content-center mt-2">
+                <div class="shift-telemetry-chip d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill" id="shiftTelemetryChip" style="border-color: #0284C7; box-shadow: 0 0 16px rgba(2, 132, 199, 0.25);">
+                    <span class="telemetry-ping"/>
+                    <span class="small fw-semibold telemetry-text" id="shiftTelemetryText">TỐC ĐỘ: 48h Batch Queue ➔ Real-Time Event Bus (&lt; 1.2s)</span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ================================================================= -->
     <!-- 7. INSILOS ERP WEBSITE SNIPPETS PALETTE EXTENSION (PRIORITY 30)   -->
     <!-- ================================================================= -->
     <template id="insilos_3d_snippets_palette" inherit_id="website.snippets" priority="30">
@@ -1426,6 +1536,9 @@
             </t>
             <t t-snippet="insilos_website.s_innoria_3d_solutions_erp" string="Innoria 3D Autonomous ERP Core" group="content" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_innoria_3d_topology.svg">
                 <keywords>innoria, 3d, erp, solutions, autonomous, procurement, mes, ledger, swarm</keywords>
+            </t>
+            <t t-snippet="insilos_website.s_innoria_3d_erp_shift" string="Innoria 3D ERP Shift Comparison" group="content" t-thumbnail="/insilos_website/static/src/img/snippets_thumbs/s_innoria_3d_topology.svg">
+                <keywords>innoria, 3d, erp, shift, comparison, legacy, autonomous, ai, table</keywords>
             </t>
         </xpath>
     </template>

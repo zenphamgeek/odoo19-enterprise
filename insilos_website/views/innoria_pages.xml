@@ -2156,14 +2156,24 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                     </div>
                 </section>
 
-                <section class="py-5" style="background:#F8FAFC;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;">
+                <section class="py-5 s_innoria_erp_shift_section" style="background:#F8FAFC;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;">
                     <div class="container py-lg-4">
                         <div class="row align-items-center g-5">
                             <div class="col-lg-5">
-                                <span class="fw-bold small text-uppercase" style="color:#0369A1;letter-spacing:0.12em;">THE ERP SHIFT</span>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="fw-bold small text-uppercase" style="color:#0369A1;letter-spacing:0.12em;">THE ERP SHIFT</span>
+                                    <!-- Mode Switcher: Dual Orbit / Legacy Silo / AI Fabric -->
+                                    <div class="erp-shift-mode-switch btn-group btn-group-sm p-1 rounded-pill" style="background:#E2E8F0;">
+                                        <button type="button" class="btn btn-sm rounded-pill shift-mode-btn active px-3" data-shift-mode="dual">Dual Orbit</button>
+                                        <button type="button" class="btn btn-sm rounded-pill shift-mode-btn px-2" data-shift-mode="legacy">Legacy Silo</button>
+                                        <button type="button" class="btn btn-sm rounded-pill shift-mode-btn px-2" data-shift-mode="ai">AI Fabric</button>
+                                    </div>
+                                </div>
                                 <h2 class="display-5 fw-bold mt-2 text-dark" style="color: #0F172A !important;">Legacy ERP vs<br/>Innoria AI ERP</h2>
-                                <p class="mb-0 text-muted" style="font-size:1.1rem;">ERP should increase operational capacity, not create administrative friction.</p>
-                                <img src="/insilos_website/static/src/img/innoria/importance_of_ai_services.webp" class="img-fluid rounded-4 mt-4 shadow-sm" style="border:1px solid #E2E8F0;" alt="AI enterprise intelligence"/>
+                                <p class="mb-2 text-muted" style="font-size:1.05rem;">ERP should increase operational capacity, not create administrative friction.</p>
+
+                                <!-- 3D Interactive Comparison Stage (100% Transparent, Zero Borders, Zero Card Wrappers) -->
+                                <t t-call="insilos_website.s_innoria_3d_erp_shift"/>
                             </div>
                             <div class="col-lg-7">
                                 <div class="table-responsive rounded-4 overflow-hidden" style="background:#FFFFFF;border:1px solid #E2E8F0;box-shadow:0 4px 20px rgba(15,23,42,0.04);">
@@ -2171,15 +2181,31 @@ Ready. Awaiting enterprise signal trigger... Click "RUN AGENT SWARM" or select a
                                         <thead>
                                             <tr style="background:#F1F5F9;border-bottom:2px solid #E2E8F0;">
                                                 <th class="p-4" style="color:#0F172A;font-weight:700;">Enterprise Metric</th>
-                                                <th class="p-4 text-muted" style="font-weight:600;">Legacy ERP</th>
-                                                <th class="p-4" style="color:#0369A1;font-weight:800;">Innoria AI ERP</th>
+                                                <th class="p-4 text-muted col-legacy-cell" style="font-weight:600;">Legacy ERP</th>
+                                                <th class="p-4 col-ai-cell" style="color:#0369A1;font-weight:800;">Innoria AI ERP</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr style="border-top:1px solid #E2E8F0;"><td class="p-4 fw-bold text-dark">Speed</td><td class="p-4 text-muted">Manual search, reporting, routing</td><td class="p-4 fw-bold" style="color:#0369A1;">Real-time answers, automated actions</td></tr>
-                                            <tr style="border-top:1px solid #E2E8F0;"><td class="p-4 fw-bold text-dark">Learning Curve</td><td class="p-4 text-muted">Training-heavy navigation</td><td class="p-4 fw-bold" style="color:#0369A1;">Natural conversation</td></tr>
-                                            <tr style="border-top:1px solid #E2E8F0;"><td class="p-4 fw-bold text-dark">Error Rate</td><td class="p-4 text-muted">Rekeying, fragmented records</td><td class="p-4 fw-bold" style="color:#0369A1;">AI extraction, matching, validation</td></tr>
-                                            <tr style="border-top:1px solid #E2E8F0;"><td class="p-4 fw-bold text-dark">TCO</td><td class="p-4 text-muted">High support, slow adoption</td><td class="p-4 fw-bold" style="color:#0369A1;">Higher throughput, lower operational drag</td></tr>
+                                            <tr class="shift-table-row table-row-active" data-metric="speed" style="border-top:1px solid #E2E8F0;">
+                                                <td class="p-4 fw-bold text-dark metric-name">Speed</td>
+                                                <td class="p-4 text-muted col-legacy-cell">Manual search, reporting, routing (48h queue)</td>
+                                                <td class="p-4 fw-bold metric-ai col-ai-cell" style="color:#0369A1;">Real-time answers, automated actions (&lt; 1.2s)</td>
+                                            </tr>
+                                            <tr class="shift-table-row" data-metric="learning" style="border-top:1px solid #E2E8F0;">
+                                                <td class="p-4 fw-bold text-dark metric-name">Learning Curve</td>
+                                                <td class="p-4 text-muted col-legacy-cell">Training-heavy navigation (450+ T-codes)</td>
+                                                <td class="p-4 fw-bold metric-ai col-ai-cell" style="color:#0369A1;">Natural conversation (Zero training curve)</td>
+                                            </tr>
+                                            <tr class="shift-table-row" data-metric="error" style="border-top:1px solid #E2E8F0;">
+                                                <td class="p-4 fw-bold text-dark metric-name">Error Rate</td>
+                                                <td class="p-4 text-muted col-legacy-cell">Rekeying, fragmented records (4.2% error)</td>
+                                                <td class="p-4 fw-bold metric-ai col-ai-cell" style="color:#0369A1;">AI extraction, matching, validation (99.98% match)</td>
+                                            </tr>
+                                            <tr class="shift-table-row" data-metric="tco" style="border-top:1px solid #E2E8F0;">
+                                                <td class="p-4 fw-bold text-dark metric-name">TCO</td>
+                                                <td class="p-4 text-muted col-legacy-cell">High support, slow adoption, heavy consulting</td>
+                                                <td class="p-4 fw-bold metric-ai col-ai-cell" style="color:#0369A1;">Higher throughput, -65% operational drag</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

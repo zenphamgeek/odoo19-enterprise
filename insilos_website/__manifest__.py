@@ -50,6 +50,7 @@
             "insilos_website/static/src/js/innoria_topology_3d.js",
             "insilos_website/static/src/js/innoria_deck_3d.js",
             "insilos_website/static/src/js/innoria_solutions_3d.js",
+            "insilos_website/static/src/js/innoria_shift_3d.js",
             "insilos_website/static/src/js/insilos_video_telemetry.js",
             "insilos_website/static/src/js/insilos_cctv_player.js",
             "insilos_website/static/src/js/insilos_sop_vault.js",

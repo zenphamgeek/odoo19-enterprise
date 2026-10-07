@@ -2855,3 +2855,470 @@ main#wrap[style*="background-color: #FFFFFF"] {
         color: #0284C7 !important;
     }
 }
+
+/* ==========================================================================
+   s_innoria_3d_erp_shift: 3D Legacy vs AI Shift Comparison Matrix
+   Hardware-accelerated CSS 3D Dual-Core Visualizer & Interactive Table
+   ========================================================================== */
+.s_innoria_erp_shift_section {
+    position: relative;
+
+    /* Mode button styling */
+    .erp-shift-mode-switch {
+        .shift-mode-btn {
+            color: #64748B;
+            border: none;
+            background: transparent;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+            &:hover {
+                color: #0F172A;
+            }
+
+            &.active {
+                background: #0284C7 !important;
+                color: #FFFFFF !important;
+                box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
+
+                span {
+                    color: #FFFFFF !important;
+                }
+            }
+        }
+    }
+
+    /* Interactive Table Rows */
+    .shift-table-row {
+        cursor: pointer;
+        transition: all 0.25s ease;
+        position: relative;
+
+        &:hover {
+            background: rgba(2, 132, 199, 0.04) !important;
+        }
+
+        &.table-row-active {
+            background: rgba(2, 132, 199, 0.08) !important;
+            box-shadow: inset 4px 0 0 #0284C7;
+
+            td {
+                color: #0F172A !important;
+            }
+
+            .metric-name {
+                color: #0284C7 !important;
+                font-weight: 800;
+            }
+
+            .metric-ai {
+                color: #0284C7 !important;
+                font-weight: 800;
+            }
+        }
+    }
+
+    /* Mode focus classes on section */
+    &.mode-focus-legacy {
+        .col-legacy-cell {
+            background: rgba(226, 232, 240, 0.35);
+            font-weight: 700;
+        }
+        .col-ai-cell {
+            opacity: 0.65;
+        }
+    }
+
+    &.mode-focus-ai {
+        .col-ai-cell {
+            background: rgba(2, 132, 199, 0.08);
+            font-weight: 800;
+        }
+        .col-legacy-cell {
+            opacity: 0.55;
+        }
+    }
+}
+
+.s_innoria_3d_erp_shift,
+.innoria-shift-3d-stage {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: relative;
+    width: 100%;
+
+    .erp-shift-viewport {
+        width: 100%;
+        max-width: 440px;
+        height: 380px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 1200px;
+        perspective-origin: 50% 40%;
+        cursor: grab;
+        touch-action: none;
+        user-select: none;
+        -webkit-user-select: none;
+
+        &.is-dragging {
+            cursor: grabbing;
+        }
+
+        @media (max-width: 768px) {
+            height: 330px;
+            transform: scale(0.88);
+            transform-origin: center center;
+        }
+    }
+
+    .erp-shift-deck {
+        --deck-w: 360px;
+        --deck-h: 220px;
+        width: var(--deck-w);
+        height: var(--deck-h);
+        position: relative;
+        transform-style: preserve-3d;
+        will-change: transform;
+
+        .shift-floor-shadow-light {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.16) 0%, rgba(15, 23, 42, 0.04) 50%, transparent 72%);
+            transform: translateZ(-90px);
+            filter: blur(16px);
+            pointer-events: none;
+            border-radius: 20px;
+        }
+
+        /* 1. Left Core: Legacy Monolith Silo */
+        .shift-core-monolith {
+            --mono-w: 120px;
+            --mono-h: 120px;
+            --mono-t: 80px;
+            position: absolute;
+            left: 20px;
+            top: 50px;
+            width: var(--mono-w);
+            height: var(--mono-h);
+            transform-style: preserve-3d !important;
+            opacity: 1 !important;
+            filter: none !important;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+            .monolith-face {
+                position: absolute;
+                inset: 0;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            .monolith-face.top {
+                transform: translateZ(var(--mono-t));
+                background: linear-gradient(135deg, #475569 0%, #334155 100%);
+                border: 1.5px solid #64748B;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .core-tag {
+                    font-size: 8px;
+                    font-weight: 800;
+                    letter-spacing: 0.08em;
+                    color: #94A3B8;
+                    text-transform: uppercase;
+                }
+
+                .core-metric {
+                    font-size: 9.5px;
+                    font-weight: 700;
+                    color: #F87171;
+                    background: rgba(239, 68, 68, 0.15);
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    border: 1px solid rgba(239, 68, 68, 0.35);
+                    align-self: flex-start;
+                }
+            }
+
+            .monolith-face.bottom {
+                transform: rotateX(180deg);
+                background: #1E293B;
+            }
+
+            .monolith-face.front-right {
+                left: 0;
+                bottom: 0;
+                width: var(--mono-w);
+                height: var(--mono-t);
+                transform-origin: 50% 100%;
+                transform: rotateX(-90deg);
+                background: linear-gradient(to right, #334155 0%, #1E293B 100%);
+                border: 1.5px solid #475569;
+                border-top: none;
+                padding: 8px 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+
+                .title-text {
+                    font-size: 11px;
+                    font-weight: 800;
+                    color: #F1F5F9;
+                }
+                .sub-text {
+                    font-size: 7.5px;
+                    color: #94A3B8;
+                    line-height: 1.2;
+                }
+            }
+
+            .monolith-face.front-left {
+                top: 0;
+                left: 0;
+                width: var(--mono-t);
+                height: var(--mono-h);
+                transform-origin: 0 50%;
+                transform: rotateY(-90deg);
+                background: linear-gradient(to bottom, #475569 0%, #1E293B 100%);
+                border: 1.5px solid #475569;
+                border-top: none;
+            }
+
+            .monolith-face.back-right {
+                top: 0;
+                right: 0;
+                width: var(--mono-t);
+                height: var(--mono-h);
+                transform-origin: 100% 50%;
+                transform: rotateY(90deg);
+                background: #1E293B;
+            }
+
+            .monolith-face.back-left {
+                top: 0;
+                left: 0;
+                width: var(--mono-w);
+                height: var(--mono-t);
+                transform-origin: 50% 0;
+                transform: rotateX(90deg);
+                background: #1E293B;
+            }
+
+            &:hover,
+            &.focus-core {
+                transform: translateZ(10px) scale(1.03);
+            }
+        }
+
+        /* 2. Center: Dynamic Glowing Conduits / Bridge */
+        .shift-bridge-conduits {
+            position: absolute;
+            left: 145px;
+            top: 95px;
+            width: 60px;
+            height: 40px;
+            transform-style: preserve-3d;
+            pointer-events: none;
+
+            .conduit-stream {
+                position: absolute;
+                width: 100%;
+                height: 3px;
+                border-radius: 9999px;
+                background: rgba(2, 132, 199, 0.2);
+                transform-style: preserve-3d;
+                transition: all 0.3s ease;
+
+                &.stream-speed { top: 0px; transform: translateZ(60px); }
+                &.stream-learning { top: 10px; transform: translateZ(40px); }
+                &.stream-error { top: 20px; transform: translateZ(20px); }
+                &.stream-tco { top: 30px; transform: translateZ(0px); }
+
+                .conduit-pulse {
+                    position: absolute;
+                    width: 14px;
+                    height: 100%;
+                    border-radius: 9999px;
+                    background: #00F0FF;
+                    box-shadow: 0 0 8px #00F0FF;
+                    animation: conduitPulse 1.8s infinite linear;
+                }
+
+                &.active {
+                    background: rgba(2, 132, 199, 0.6);
+                    height: 4px;
+                    box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+                }
+            }
+        }
+
+        @keyframes conduitPulse {
+            0% { left: 0%; opacity: 0; }
+            30% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        /* 3. Right Core: Innoria Autonomous AI Fabric (4-tier Stack) */
+        .shift-core-fabric {
+            --fabric-w: 130px;
+            --fabric-h: 130px;
+            --tier-t: 22px;
+            position: absolute;
+            right: 20px;
+            top: 45px;
+            width: var(--fabric-w);
+            height: var(--fabric-h);
+            transform-style: preserve-3d;
+
+            .shift-tier-layer {
+                position: absolute;
+                width: var(--fabric-w);
+                height: var(--fabric-h);
+                left: 0;
+                top: 0;
+                transform-style: preserve-3d !important;
+                opacity: 1 !important;
+                filter: none !important;
+                cursor: pointer;
+                --pull-x: 0px;
+                --pull-y: 0px;
+                --pull-z: 0px;
+                transform: translate3d(var(--pull-x, 0px), var(--pull-y, 0px), calc(var(--tier-base-z) + var(--pull-z, 0px)));
+                will-change: transform;
+
+                .tier-face {
+                    position: absolute;
+                    inset: 0;
+                    backface-visibility: hidden;
+                    -webkit-backface-visibility: hidden;
+                    transition: filter 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+                }
+
+                .tier-face.top {
+                    transform: translateZ(var(--tier-t));
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.94) 100%);
+                    border: 1.5px solid var(--tier-accent);
+                    box-shadow: inset 0 0 12px var(--tier-glow);
+                    padding: 8px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+
+                    .tier-badge {
+                        font-size: 7.5px;
+                        font-weight: 800;
+                        color: #475569;
+                        letter-spacing: 0.05em;
+                    }
+
+                    .tier-val {
+                        font-size: 9px;
+                        font-weight: 800;
+                        color: #0284C7;
+                    }
+                }
+
+                .tier-face.front-right {
+                    left: 0;
+                    bottom: 0;
+                    width: var(--fabric-w);
+                    height: var(--tier-t);
+                    transform-origin: 50% 100%;
+                    transform: rotateX(-90deg);
+                    background: linear-gradient(to right, #FFFFFF 0%, #F8FAFC 60%, #F1F5F9 100%);
+                    border: 1.5px solid var(--tier-accent);
+                    border-top: none;
+                    padding: 2px 8px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-end;
+
+                    .tier-title {
+                        font-size: 9px;
+                        font-weight: 800;
+                        color: #0F172A;
+                    }
+                    .tier-desc {
+                        font-size: 6.5px;
+                        color: #64748B;
+                    }
+                }
+
+                .tier-face.front-left {
+                    top: 0;
+                    left: 0;
+                    width: var(--tier-t);
+                    height: var(--fabric-h);
+                    transform-origin: 0 50%;
+                    transform: rotateY(-90deg);
+                    background: linear-gradient(to bottom, #FFFFFF 0%, #F1F5F9 100%);
+                    border: 1.5px solid var(--tier-accent);
+                    border-top: none;
+                }
+
+                /* Z-index hierarchy */
+                &#shift-tier-speed { z-index: 4; }
+                &#shift-tier-learning { z-index: 3; }
+                &#shift-tier-error { z-index: 2; }
+                &#shift-tier-tco { z-index: 1; }
+
+                /* Pulled Out Active */
+                &.pulled-out {
+                    z-index: 10 !important;
+
+                    .tier-face.top {
+                        box-shadow: inset 0 0 18px var(--tier-glow), 0 0 12px var(--tier-glow);
+                    }
+                }
+
+                /* Dimmed State - 3D preserved */
+                &.dimmed {
+                    opacity: 1 !important;
+                    transform-style: preserve-3d !important;
+                    filter: none !important;
+
+                    .tier-face {
+                        opacity: 0.88 !important;
+                        filter: brightness(0.95) saturate(0.85) !important;
+                    }
+                }
+
+                /* Hover */
+                &.tier-hovered:not(.pulled-out) {
+                    .tier-face.top {
+                        box-shadow: inset 0 0 16px var(--tier-glow);
+                    }
+                }
+            }
+        }
+    }
+
+    /* Telemetry Badge */
+    .shift-telemetry-chip {
+        background: #FFFFFF;
+        border: 1.5px solid #0284C7;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        color: #0F172A;
+        transition: all 0.25s ease;
+
+        .telemetry-ping {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10B981;
+            box-shadow: 0 0 8px #10B981;
+        }
+
+        .telemetry-text {
+            color: #0F172A;
+        }
+    }
+}
