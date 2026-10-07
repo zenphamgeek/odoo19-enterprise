@@ -98,11 +98,209 @@
     }
 
     /**
-     * Detailed Industrial Inspection Scenarios Registry
+     * Detailed Industrial Inspection Scenarios Registry (Dual-Mode Architecture)
+     * Mode A: Real Industrial CCTV Video Feed (Welding robot cell, Crane heavy lift, PPE Gate)
+     * Mode B: Micro-Metrology Synthetic Inspection (PCB SMT, Auto Stamping, Solar Wafer, Weld Seam)
      */
     const INSPECTION_SCENARIOS = {
+        'cctv_welding': {
+            id: 'cctv_welding',
+            mode: 'video',
+            name: 'Hàn Robot SS400 (CAM-02)',
+            targetCode: 'INSP-WELD-ROBOT-CAM02',
+            modelName: 'YOLOv11x-WELD-VISION',
+            resolution: '1920x1080 @ 60 FPS // 4K OPTICAL',
+            videoSrc: '/insilos_website/static/src/video/cctv_ppe/cctv_cam02_welding_ss400.mp4',
+            posterSrc: '/insilos_website/static/src/video/cctv_ppe/cctv_cam02_welding_poster.webp',
+            duration: 16.28,
+            defectClass: 'THERMAL_ARC_RADIATION_CLASS_4',
+            defectConfidence: 0.9942,
+            defectDescription: 'Bức xạ nhiệt hồ quang vượt ngưỡng hoặc mỏ hàn lệch tâm quỹ đạo SS400.',
+            passDescription: 'Quỹ đạo hàn TCP danh định. Độ thấu ngấu 100%. Không phát hiện rỗ khí.',
+            defectAction: 'PLC INTERLOCK ENGAGED · CLUSTER FLAG #02',
+            passAction: 'ROBOT CELL CLEAR · CONTINUOUS BEAD PASS',
+            stats: {
+                latency: '11.2ms',
+                precision: '99.42%',
+                fps: '60.0',
+                resolution: '0.015mm'
+            },
+            boxes: [
+                {
+                    id: 'weld_v_defect',
+                    label: 'DEFECT 99.42%: THERMAL_ARC_RADIATION',
+                    conf: 0.9942,
+                    isDefect: true,
+                    x: 44.0, y: 45.0, w: 38.0, h: 28.0,
+                    coordsText: '[X: 0.440, Y: 0.450, W: 0.380, H: 0.280]',
+                    keyframes: [
+                        { t: 0.0, x: 0.44, y: 0.45, w: 0.38, h: 0.28, conf: 0.994 },
+                        { t: 5.0, x: 0.46, y: 0.45, w: 0.39, h: 0.29, conf: 0.995 },
+                        { t: 11.0, x: 0.46, y: 0.45, w: 0.39, h: 0.29, conf: 0.994 },
+                        { t: 16.28, x: 0.44, y: 0.45, w: 0.38, h: 0.28, conf: 0.994 }
+                    ]
+                },
+                {
+                    id: 'weld_v_torch',
+                    label: 'PASS: TCP_TORCH_ACTIVE // 99.8%',
+                    conf: 0.998,
+                    isDefect: false,
+                    x: 44.0, y: 5.0, w: 20.0, h: 44.0,
+                    coordsText: '[X: 0.440, Y: 0.050, W: 0.200, H: 0.440]',
+                    keyframes: [
+                        { t: 0.0, x: 0.44, y: 0.05, w: 0.20, h: 0.44, conf: 0.997 },
+                        { t: 5.0, x: 0.46, y: 0.05, w: 0.20, h: 0.44, conf: 0.998 },
+                        { t: 11.0, x: 0.46, y: 0.05, w: 0.20, h: 0.44, conf: 0.997 },
+                        { t: 16.28, x: 0.44, y: 0.05, w: 0.20, h: 0.44, conf: 0.998 }
+                    ]
+                },
+                {
+                    id: 'weld_v_seam',
+                    label: 'PASS: SS400_PRESSURE_SEAM_QA',
+                    conf: 0.995,
+                    isDefect: false,
+                    x: 2.0, y: 42.0, w: 88.0, h: 55.0,
+                    coordsText: '[X: 0.020, Y: 0.420, W: 0.880, H: 0.550]',
+                    keyframes: [
+                        { t: 0.0, x: 0.02, y: 0.42, w: 0.88, h: 0.55, conf: 0.995 },
+                        { t: 16.28, x: 0.02, y: 0.42, w: 0.88, h: 0.55, conf: 0.995 }
+                    ]
+                }
+            ]
+        },
+
+        'cctv_crane': {
+            id: 'cctv_crane',
+            mode: 'video',
+            name: 'Tháp Cẩu & Giàn Giáo (CAM-01)',
+            targetCode: 'INSP-CRANE-LIFT-CAM02',
+            modelName: 'YOLOv11x-SITE-SAFETY',
+            resolution: '1920x1080 @ 60 FPS // PTZ OPTICAL',
+            videoSrc: '/insilos_website/static/src/video/cctv_ppe/cctv_cam02_site_communication.mp4',
+            posterSrc: '/insilos_website/static/src/video/cctv_ppe/cctv_cam02_poster.webp',
+            duration: 7.88,
+            defectClass: 'NO HELMET / RESTRICTED_ZONE_INTRUSION',
+            defectConfidence: 0.9942,
+            defectDescription: 'Phát hiện nhân sự bước vào bán kính quay cẩu tải nặng khi chưa có tín hiệu an toàn.',
+            passDescription: 'Mũ bảo hộ & áo phản quang đầy đủ. Bán kính nâng tải cẩu thông thoáng an toàn.',
+            defectAction: 'CÒI HÚ HIỆN TRƯỜNG KÍCH HOẠT · E-STOP ARMED',
+            passAction: 'GIẤY PHÉP LÀM VIỆC e-PTW HỢP LỆ · VẬN HÀNH TIẾP',
+            stats: {
+                latency: '11.2ms',
+                precision: '99.42%',
+                fps: '60.0',
+                resolution: '0.015mm'
+            },
+            boxes: [
+                {
+                    id: 'crane_v_helmet',
+                    label: 'NO HELMET // DEFECT 99.42%',
+                    conf: 0.9942,
+                    isDefect: true,
+                    x: 60.0, y: 6.0, w: 21.0, h: 24.0,
+                    coordsText: '[X: 0.600, Y: 0.060, W: 0.210, H: 0.240]',
+                    keyframes: [
+                        { t: 0.0, x: 0.60, y: 0.06, w: 0.21, h: 0.24, conf: 0.994 },
+                        { t: 3.0, x: 0.62, y: 0.07, w: 0.21, h: 0.24, conf: 0.995 },
+                        { t: 5.0, x: 0.62, y: 0.09, w: 0.21, h: 0.24, conf: 0.994 },
+                        { t: 7.88, x: 0.60, y: 0.06, w: 0.21, h: 0.24, conf: 0.994 }
+                    ]
+                },
+                {
+                    id: 'crane_v_supervisor',
+                    label: 'PASS: GIÁM SÁT VIÊN #01',
+                    conf: 0.994,
+                    isDefect: false,
+                    x: 36.0, y: 6.0, w: 56.0, h: 94.0,
+                    coordsText: '[X: 0.360, Y: 0.060, W: 0.560, H: 0.940]',
+                    keyframes: [
+                        { t: 0.0, x: 0.36, y: 0.06, w: 0.56, h: 0.94, conf: 0.994 },
+                        { t: 3.0, x: 0.36, y: 0.06, w: 0.56, h: 0.94, conf: 0.994 },
+                        { t: 5.0, x: 0.36, y: 0.08, w: 0.57, h: 0.92, conf: 0.995 },
+                        { t: 7.88, x: 0.36, y: 0.06, w: 0.56, h: 0.94, conf: 0.994 }
+                    ]
+                },
+                {
+                    id: 'crane_v_danger',
+                    label: 'PASS: BÁN KÍNH TẢI CẨU AN TOÀN',
+                    conf: 1.0,
+                    isDefect: false,
+                    x: 2.0, y: 5.0, w: 52.0, h: 92.0,
+                    coordsText: '[X: 0.020, Y: 0.050, W: 0.520, H: 0.920]',
+                    keyframes: [
+                        { t: 0.0, x: 0.02, y: 0.05, w: 0.52, h: 0.92, conf: 1.0 },
+                        { t: 7.88, x: 0.02, y: 0.05, w: 0.52, h: 0.92, conf: 1.0 }
+                    ]
+                }
+            ]
+        },
+
+        'cctv_ppe_gate': {
+            id: 'cctv_ppe_gate',
+            mode: 'video',
+            name: 'Cổng Kiểm Soát PPE Gate (CAM-03)',
+            targetCode: 'INSP-PPE-GATE-CAM03',
+            modelName: 'YOLOv11x-PPE-GATE',
+            resolution: '1920x1080 @ 60 FPS // FACIAL AI',
+            videoSrc: '/insilos_website/static/src/video/cctv_ppe/cctv_cam03_builder_supervision.mp4',
+            posterSrc: '/insilos_website/static/src/video/cctv_ppe/cctv_cam03_poster.webp',
+            duration: 5.76,
+            defectClass: 'NO HELMET // PPE GATE NON-COMPLIANCE',
+            defectConfidence: 0.9942,
+            defectDescription: 'Kỹ thuật viên chưa đội hoặc chưa cài quai Mũ bảo hộ khi bước qua cổng quét.',
+            passDescription: '100% trang bị BHLĐ (Mũ, Chụp tai, Găng tay) đầy đủ. Cửa từ mở tự động.',
+            defectAction: 'KHÓA CỬA TỪ TỰ ĐỘNG · ĐẨY BIÊN BẢN GRC',
+            passAction: 'MỞ CỬA TỪ · ĐIỂM DANH CA LÀM VIỆC ERP',
+            stats: {
+                latency: '11.2ms',
+                precision: '99.42%',
+                fps: '60.0',
+                resolution: '0.015mm'
+            },
+            boxes: [
+                {
+                    id: 'gate_v_helmet',
+                    label: 'NO HELMET // DEFECT 99.42%',
+                    conf: 0.9942,
+                    isDefect: true,
+                    x: 32.0, y: 1.0, w: 38.0, h: 32.0,
+                    coordsText: '[X: 0.320, Y: 0.010, W: 0.380, H: 0.320]',
+                    keyframes: [
+                        { t: 0.0, x: 0.32, y: 0.01, w: 0.38, h: 0.32, conf: 0.994 },
+                        { t: 2.0, x: 0.31, y: 0.00, w: 0.39, h: 0.33, conf: 0.995 },
+                        { t: 5.76, x: 0.32, y: 0.01, w: 0.38, h: 0.32, conf: 0.994 }
+                    ]
+                },
+                {
+                    id: 'gate_v_person',
+                    label: 'PASS: KỸ THUẬT VIÊN #03',
+                    conf: 0.996,
+                    isDefect: false,
+                    x: 18.0, y: 1.0, w: 65.0, h: 99.0,
+                    coordsText: '[X: 0.180, Y: 0.010, W: 0.650, H: 0.990]',
+                    keyframes: [
+                        { t: 0.0, x: 0.18, y: 0.01, w: 0.65, h: 0.99, conf: 0.996 },
+                        { t: 5.76, x: 0.18, y: 0.01, w: 0.65, h: 0.99, conf: 0.996 }
+                    ]
+                },
+                {
+                    id: 'gate_v_gloves',
+                    label: 'PASS: GĂNG TAY CHỐNG CẮT',
+                    conf: 0.988,
+                    isDefect: false,
+                    x: 6.0, y: 9.0, w: 88.0, h: 58.0,
+                    coordsText: '[X: 0.060, Y: 0.090, W: 0.880, H: 0.580]',
+                    keyframes: [
+                        { t: 0.0, x: 0.06, y: 0.09, w: 0.88, h: 0.58, conf: 0.988 },
+                        { t: 5.76, x: 0.06, y: 0.09, w: 0.88, h: 0.58, conf: 0.988 }
+                    ]
+                }
+            ]
+        },
+
         'pcb': {
             id: 'pcb',
+            mode: 'synthetic',
             name: 'PCB SMT Electronics',
             targetCode: 'INSP-PCB-SMT-A82',
             modelName: 'YOLOv11x-SMT-QC',
@@ -114,7 +312,7 @@
             defectAction: 'REJECT GATEWAY · PLC PIN 04 ACTIVATED',
             passAction: 'BUFFER CONVEYOR #02 · BATCH ACCEPTED',
             stats: {
-                latency: '11.4ms',
+                latency: '11.2ms',
                 precision: '99.42%',
                 fps: '60.0',
                 resolution: '0.015mm'
@@ -305,6 +503,7 @@
 
         'auto_stamping': {
             id: 'auto_stamping',
+            mode: 'synthetic',
             name: 'Automotive Stamping',
             targetCode: 'INSP-AUTO-STAMP-C14',
             modelName: 'YOLOv11x-METROLOGY',
@@ -429,6 +628,7 @@
 
         'solar_wafer': {
             id: 'solar_wafer',
+            mode: 'synthetic',
             name: 'Solar Silicon Wafer',
             targetCode: 'INSP-PV-WAFER-M10',
             modelName: 'YOLOv11x-PHOTOVOLTAIC',
@@ -546,6 +746,7 @@
 
         'weld_seam': {
             id: 'weld_seam',
+            mode: 'synthetic',
             name: 'Weld Seam SS400',
             targetCode: 'INSP-WELD-SS400-J08',
             modelName: 'YOLOv11x-WELD-AUDIT',
@@ -687,19 +888,25 @@
 
     /**
      * Main Controller for YOLO Inspection Simulator
+     * Dual-Mode Viewport: Mode A (Real Industrial CCTV Video) & Mode B (Micro-Metrology)
      */
     class InnoriaYoloInspectionSimulator {
         constructor(rootEl) {
             this.root = rootEl;
-            this.activeScenarioKey = 'pcb';
+            this.activeScenarioKey = 'cctv_welding';
+            this.currentMode = 'video';
             this.defectInjected = true;
             this.confidenceThreshold = 85; // %
             this.audio = new YoloInspectionAudio();
             this.rafId = null;
+            this.startTime = performance.now();
+            this.renderedBoxes = [];
 
             this.cacheDomElements();
+            this.ensureHudVisualOverlays();
+            this.setupModeSwitcher();
             this.bindEvents();
-            this.initClock();
+            this.startTelemetryStreamLoop();
             this.applyScenario(this.activeScenarioKey);
         }
 
@@ -732,6 +939,190 @@
             this.defectDetailText = this.root.querySelector('.ins-defect-detail-text');
             this.modelBadge = this.root.querySelector('.ins-yolo-model-badge');
             this.sensorBadge = this.root.querySelector('.ins-yolo-sensor-badge');
+
+            // 4-Metric Real-Time Telemetry Stat Bar Elements
+            const statBlocks = this.root.querySelectorAll('.col-6.col-sm-3');
+            statBlocks.forEach(block => {
+                const label = block.querySelector('span');
+                const val = block.querySelector('strong');
+                if (label && val) {
+                    const text = label.textContent.trim().toUpperCase();
+                    if (text.includes('INFERENCE')) this.statLatencyEl = val;
+                    else if (text.includes('PRECISION')) this.statPrecisionEl = val;
+                    else if (text.includes('STREAM')) this.statFpsEl = val;
+                    else if (text.includes('OPTICS')) {
+                        this.statOpticsEl = val;
+                        val.style.color = '#42E6C3';
+                    }
+                }
+            });
+        }
+
+        ensureHudVisualOverlays() {
+            if (!this.viewport) return;
+
+            // Viewport styling: Deep Obsidian & Liquid Aurora
+            this.viewport.style.backgroundColor = '#050811';
+            this.viewport.style.border = '1px solid rgba(66, 230, 195, 0.28)';
+            this.viewport.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 242, 254, 0.12), inset 0 0 30px rgba(5, 8, 17, 0.8)';
+
+            // Ensure Video Element for Mode A
+            this.videoEl = this.viewport.querySelector('.ins-yolo-video');
+            if (!this.videoEl) {
+                this.videoEl = document.createElement('video');
+                this.videoEl.className = 'ins-yolo-video';
+                this.videoEl.setAttribute('playsinline', 'playsinline');
+                this.videoEl.setAttribute('webkit-playsinline', 'webkit-playsinline');
+                this.videoEl.muted = true;
+                this.videoEl.defaultMuted = true;
+                this.videoEl.loop = true;
+                this.videoEl.autoplay = true;
+                this.videoEl.preload = 'auto';
+                this.videoEl.style.cssText = 'position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; display: none; background: #050811;';
+                if (this.canvasContainer) {
+                    this.viewport.insertBefore(this.videoEl, this.canvasContainer.nextSibling);
+                } else {
+                    this.viewport.appendChild(this.videoEl);
+                }
+            }
+
+            // Ensure Optical Calibration Grid Overlay
+            this.calibrationGrid = this.viewport.querySelector('.ins-yolo-calibration-grid');
+            if (!this.calibrationGrid) {
+                this.calibrationGrid = document.createElement('div');
+                this.calibrationGrid.className = 'ins-yolo-calibration-grid';
+                this.calibrationGrid.style.cssText = 'position: absolute; inset: 0; pointer-events: none; z-index: 3; background-image: radial-gradient(rgba(66, 230, 195, 0.12) 1px, transparent 1px), linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px); background-size: 20px 20px, 40px 40px, 40px 40px; opacity: 0.75;';
+                this.viewport.appendChild(this.calibrationGrid);
+            }
+
+            // Ensure Laser Beam has glowing cyan/mint beam with trailing gradient
+            if (this.laserBeam) {
+                this.laserBeam.style.background = 'linear-gradient(90deg, transparent 0%, rgba(66, 230, 195, 0.75) 20%, #FFFFFF 50%, rgba(0, 242, 254, 0.85) 80%, transparent 100%)';
+                this.laserBeam.style.boxShadow = '0 0 16px rgba(0, 242, 254, 0.95), 0 0 30px rgba(66, 230, 195, 0.85)';
+            }
+
+            // Ensure Optical calibration readout in bottom telemetry stream
+            const rtStream = this.viewport.querySelector('.ins-yolo-rt-stream');
+            if (rtStream) {
+                this.rtOpticsEl = rtStream.querySelector('.ins-telemetry-optics');
+                if (!this.rtOpticsEl) {
+                    const secondRow = rtStream.children[1] || rtStream;
+                    const opticsSpan = document.createElement('span');
+                    opticsSpan.className = 'd-none d-lg-inline text-secondary';
+                    opticsSpan.innerHTML = '<span class="text-secondary">OPTICS: </span><strong class="ins-telemetry-optics" style="color: #42E6C3;">0.015 mm/px</strong>';
+                    secondRow.insertBefore(opticsSpan, secondRow.firstChild);
+                    this.rtOpticsEl = opticsSpan.querySelector('.ins-telemetry-optics');
+                }
+            }
+        }
+
+        setupModeSwitcher() {
+            const scenarioBtnContainer = this.root.querySelector('.d-flex.flex-wrap.gap-2');
+            if (!scenarioBtnContainer) return;
+
+            // Check if mode tabs already exist
+            let modeTabs = this.root.querySelector('.ins-yolo-mode-tabs');
+            if (!modeTabs) {
+                modeTabs = document.createElement('div');
+                modeTabs.className = 'ins-yolo-mode-tabs d-flex gap-2 mb-3';
+                modeTabs.innerHTML = `
+                    <button type="button" class="btn btn-sm font-monospace rounded-pill ins-mode-tab-btn" data-mode="video" style="padding: 6px 14px; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.03em; transition: all 0.25s ease;">
+                        <span>📹 Chế Độ A: CCTV Hiện Trường</span>
+                    </button>
+                    <button type="button" class="btn btn-sm font-monospace rounded-pill ins-mode-tab-btn" data-mode="synthetic" style="padding: 6px 14px; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.03em; transition: all 0.25s ease;">
+                        <span>🔬 Chế Độ B: Vi Đo Lường SMT</span>
+                    </button>
+                `;
+                scenarioBtnContainer.parentNode.insertBefore(modeTabs, scenarioBtnContainer);
+            }
+
+            // Ensure Mode A buttons exist in scenarioBtnContainer
+            const existingButtons = Array.from(scenarioBtnContainer.querySelectorAll('[data-inspection-target]'));
+            const existingKeys = existingButtons.map(b => b.getAttribute('data-inspection-target'));
+
+            const modeAScenarios = [
+                { key: 'cctv_welding', label: 'Hàn Áp Lực SS400 (CAM-02)' },
+                { key: 'cctv_crane', label: 'Tháp Cẩu & Giàn Giáo (CAM-01)' },
+                { key: 'cctv_ppe_gate', label: 'Cổng Quét PPE Gate (CAM-03)' }
+            ];
+
+            modeAScenarios.forEach(sc => {
+                if (!existingKeys.includes(sc.key)) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'btn ins-yolo-scenario-btn';
+                    btn.setAttribute('data-inspection-target', sc.key);
+                    btn.setAttribute('data-scenario-mode', 'video');
+                    btn.innerHTML = `<span>${sc.label}</span>`;
+                    scenarioBtnContainer.appendChild(btn);
+                }
+            });
+
+            // Tag existing synthetic buttons with data-scenario-mode="synthetic"
+            existingButtons.forEach(btn => {
+                const k = btn.getAttribute('data-inspection-target');
+                const sc = INSPECTION_SCENARIOS[k];
+                if (sc && sc.mode) {
+                    btn.setAttribute('data-scenario-mode', sc.mode);
+                } else {
+                    btn.setAttribute('data-scenario-mode', 'synthetic');
+                }
+            });
+
+            // Re-cache scenario buttons
+            this.scenarioButtons = this.root.querySelectorAll('[data-inspection-target]');
+
+            // Bind mode tab clicks
+            const tabBtns = modeTabs.querySelectorAll('.ins-mode-tab-btn');
+            tabBtns.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const mode = tab.getAttribute('data-mode');
+                    this.setModeTab(mode, true);
+                });
+            });
+
+            // Initialize mode tab based on activeScenarioKey
+            const currentScenario = INSPECTION_SCENARIOS[this.activeScenarioKey];
+            const initialMode = (currentScenario && currentScenario.mode) || 'video';
+            this.setModeTab(initialMode, false);
+        }
+
+        setModeTab(mode, autoSelectFirst = true) {
+            this.currentMode = mode;
+            const modeTabs = this.root.querySelectorAll('.ins-mode-tab-btn');
+            modeTabs.forEach(tab => {
+                const isSelected = tab.getAttribute('data-mode') === mode;
+                if (isSelected) {
+                    tab.style.background = 'linear-gradient(135deg, rgba(66, 230, 195, 0.25), rgba(0, 242, 254, 0.25))';
+                    tab.style.borderColor = 'rgba(66, 230, 195, 0.6)';
+                    tab.style.color = '#FFFFFF';
+                    tab.style.boxShadow = '0 0 14px rgba(66, 230, 195, 0.35)';
+                } else {
+                    tab.style.background = 'rgba(15, 23, 42, 0.6)';
+                    tab.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+                    tab.style.color = '#94A3B8';
+                    tab.style.boxShadow = 'none';
+                }
+            });
+
+            // Show/hide scenario buttons matching mode
+            let firstScenarioInMode = null;
+            this.scenarioButtons.forEach(btn => {
+                const btnMode = btn.getAttribute('data-scenario-mode') || 'synthetic';
+                if (btnMode === mode) {
+                    btn.style.display = '';
+                    if (!firstScenarioInMode) {
+                        firstScenarioInMode = btn.getAttribute('data-inspection-target');
+                    }
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+
+            if (autoSelectFirst && firstScenarioInMode) {
+                this.switchScenario(firstScenarioInMode);
+            }
         }
 
         bindEvents() {
@@ -781,19 +1172,141 @@
             }
         }
 
-        initClock() {
-            let startTime = performance.now();
+        interpolateKeyframes(keyframes, currentTime) {
+            if (!keyframes || keyframes.length === 0) return null;
+            if (keyframes.length === 1) {
+                return {
+                    x: keyframes[0].x * 100,
+                    y: keyframes[0].y * 100,
+                    w: keyframes[0].w * 100,
+                    h: keyframes[0].h * 100,
+                    conf: keyframes[0].conf || 0.99
+                };
+            }
+
+            const t = currentTime;
+            if (t <= keyframes[0].t) {
+                return {
+                    x: keyframes[0].x * 100,
+                    y: keyframes[0].y * 100,
+                    w: keyframes[0].w * 100,
+                    h: keyframes[0].h * 100,
+                    conf: keyframes[0].conf || 0.99
+                };
+            }
+            const last = keyframes[keyframes.length - 1];
+            if (t >= last.t) {
+                return {
+                    x: last.x * 100,
+                    y: last.y * 100,
+                    w: last.w * 100,
+                    h: last.h * 100,
+                    conf: last.conf || 0.99
+                };
+            }
+
+            let k0 = keyframes[0];
+            let k1 = keyframes[1];
+            for (let i = 0; i < keyframes.length - 1; i++) {
+                if (t >= keyframes[i].t && t <= keyframes[i + 1].t) {
+                    k0 = keyframes[i];
+                    k1 = keyframes[i + 1];
+                    break;
+                }
+            }
+
+            const dt = k1.t - k0.t;
+            if (dt <= 0.0001) {
+                return {
+                    x: k0.x * 100,
+                    y: k0.y * 100,
+                    w: k0.w * 100,
+                    h: k0.h * 100,
+                    conf: k0.conf || 0.99
+                };
+            }
+
+            const alpha = Math.max(0, Math.min(1, (t - k0.t) / dt));
+            const smoothAlpha = alpha * alpha * (3 - 2 * alpha);
+
+            // Natural micro-jitter simulating sensor sub-pixel bounding box tracking
+            const jitterX = Math.sin(t * 12.0) * 0.0005;
+            const jitterY = Math.cos(t * 14.5) * 0.0005;
+
+            return {
+                x: (k0.x + (k1.x - k0.x) * smoothAlpha + jitterX) * 100,
+                y: (k0.y + (k1.y - k0.y) * smoothAlpha + jitterY) * 100,
+                w: (k0.w + (k1.w - k0.w) * smoothAlpha) * 100,
+                h: (k0.h + (k1.h - k0.h) * smoothAlpha) * 100,
+                conf: (k0.conf || 0.99) + ((k1.conf || 0.99) - (k0.conf || 0.99)) * smoothAlpha
+            };
+        }
+
+        startTelemetryStreamLoop() {
             const tick = () => {
-                const elapsed = (performance.now() - startTime) / 1000;
+                const now = performance.now();
+                const elapsed = (now - this.startTime) / 1000;
                 const m = Math.floor(elapsed / 60);
                 const s = Math.floor(elapsed % 60);
                 const ms = Math.floor((elapsed % 1) * 1000);
+
+                // High-precision clock ticker
                 if (this.clockEl) {
                     this.clockEl.textContent = 
                         String(m).padStart(2, '0') + ':' + 
                         String(s).padStart(2, '0') + '.' + 
                         String(ms).padStart(3, '0');
                 }
+
+                // Dynamic video keyframe tracking
+                const scenario = INSPECTION_SCENARIOS[this.activeScenarioKey];
+                if (scenario && scenario.mode === 'video' && this.videoEl && !this.videoEl.paused) {
+                    const curTime = this.videoEl.currentTime || 0;
+                    if (this.renderedBoxes && this.renderedBoxes.length > 0) {
+                        this.renderedBoxes.forEach(item => {
+                            if (item.box && item.box.keyframes) {
+                                const interp = this.interpolateKeyframes(item.box.keyframes, curTime);
+                                if (interp) {
+                                    item.el.style.left = interp.x.toFixed(2) + '%';
+                                    item.el.style.top = interp.y.toFixed(2) + '%';
+                                    item.el.style.width = interp.w.toFixed(2) + '%';
+                                    item.el.style.height = interp.h.toFixed(2) + '%';
+                                    const cText = '[X: ' + (interp.x / 100).toFixed(3) + ', Y: ' + (interp.y / 100).toFixed(3) + ', W: ' + (interp.w / 100).toFixed(3) + ', H: ' + (interp.h / 100).toFixed(3) + ']';
+                                    item.el.setAttribute('data-coords', cText);
+                                    if (item.box.isDefect && this.defectInjected) {
+                                        if (this.bboxEl) this.bboxEl.textContent = cText;
+                                        if (this.confEl) this.confEl.textContent = (interp.conf * 100).toFixed(2) + '%';
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+
+                // Natural live telemetry stream fluctuations at 60 FPS
+                const tSec = elapsed;
+                // Latency: 11.2 +- 0.4 ms
+                const latencyVal = 11.2 + Math.sin(tSec * 4.2) * 0.3 + (Math.sin(tSec * 11.5) * 0.1);
+                const latencyStr = latencyVal.toFixed(1) + 'ms';
+                if (this.latencyEl) this.latencyEl.textContent = latencyStr;
+                if (this.statLatencyEl) this.statLatencyEl.textContent = latencyStr;
+
+                // Stream FPS: 60.0 +- 0.5 FPS
+                const fpsVal = 60.0 + Math.sin(tSec * 2.8) * 0.35 + (Math.sin(tSec * 9.1) * 0.15);
+                if (this.fpsEl) this.fpsEl.textContent = fpsVal.toFixed(1);
+                if (this.statFpsEl) this.statFpsEl.textContent = fpsVal.toFixed(1) + ' FPS';
+
+                // Precision: 99.42 +- 0.15 %
+                const precVal = 99.42 + Math.sin(tSec * 1.5) * 0.1 + (Math.sin(tSec * 5.7) * 0.05);
+                if (this.statPrecisionEl) this.statPrecisionEl.textContent = precVal.toFixed(2) + '%';
+                if (this.confEl && !this.defectInjected) {
+                    this.confEl.textContent = precVal.toFixed(2) + '%';
+                }
+
+                // Optical resolution: 0.015 mm/px
+                if (this.statOpticsEl) this.statOpticsEl.textContent = '0.015mm';
+                if (this.rtOpticsEl) this.rtOpticsEl.textContent = '0.015 mm/px';
+
                 this.rafId = requestAnimationFrame(tick);
             };
             this.rafId = requestAnimationFrame(tick);
@@ -803,13 +1316,26 @@
             if (this.activeScenarioKey === scenarioKey) return;
             this.activeScenarioKey = scenarioKey;
 
+            const scenario = INSPECTION_SCENARIOS[scenarioKey];
+            if (scenario && scenario.mode && scenario.mode !== this.currentMode) {
+                this.setModeTab(scenario.mode, false);
+            }
+
             // Update active button state
             this.scenarioButtons.forEach(btn => {
                 const k = btn.getAttribute('data-inspection-target');
                 if (k === scenarioKey) {
                     btn.classList.add('is-active');
+                    btn.style.background = 'linear-gradient(135deg, rgba(66, 230, 195, 0.25), rgba(0, 242, 254, 0.25))';
+                    btn.style.borderColor = 'rgba(66, 230, 195, 0.6)';
+                    btn.style.color = '#FFFFFF';
+                    btn.style.boxShadow = '0 0 12px rgba(66, 230, 195, 0.3)';
                 } else {
                     btn.classList.remove('is-active');
+                    btn.style.background = 'rgba(15, 23, 42, 0.6)';
+                    btn.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+                    btn.style.color = '#94A3B8';
+                    btn.style.boxShadow = 'none';
                 }
             });
 
@@ -821,9 +1347,43 @@
             const scenario = INSPECTION_SCENARIOS[scenarioKey];
             if (!scenario) return;
 
-            // Render SVG Target graphic
-            if (this.canvasContainer) {
-                this.canvasContainer.innerHTML = scenario.svgGraphic;
+            // Handle Dual Mode (Mode A: Real Industrial CCTV Video vs Mode B: Micro-Metrology)
+            if (scenario.mode === 'video') {
+                if (this.canvasContainer) {
+                    this.canvasContainer.style.display = 'none';
+                }
+                if (this.videoEl) {
+                    this.videoEl.style.display = 'block';
+                    if (this.videoEl.getAttribute('data-active-src') !== scenario.videoSrc) {
+                        this.videoEl.setAttribute('data-active-src', scenario.videoSrc);
+                        this.videoEl.src = scenario.videoSrc;
+                        if (scenario.posterSrc) {
+                            this.videoEl.poster = scenario.posterSrc;
+                        }
+                        this.videoEl.muted = true;
+                        this.videoEl.defaultMuted = true;
+                        this.videoEl.playsInline = true;
+                        this.videoEl.loop = true;
+                        this.videoEl.load();
+                        const playPromise = this.videoEl.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(err => {
+                                console.warn('[YOLO Simulator] Autoplay prevented:', err);
+                            });
+                        }
+                    }
+                }
+            } else {
+                // Mode B: Synthetic micro-metrology
+                if (this.videoEl) {
+                    this.videoEl.pause();
+                    this.videoEl.style.display = 'none';
+                    this.videoEl.removeAttribute('data-active-src');
+                }
+                if (this.canvasContainer) {
+                    this.canvasContainer.style.display = 'block';
+                    this.canvasContainer.innerHTML = scenario.svgGraphic || '';
+                }
             }
 
             // Update model and sensor metadata badges
@@ -844,8 +1404,9 @@
         renderBoundingBoxes(boxes) {
             if (!this.overlayLayer) return;
             this.overlayLayer.innerHTML = '';
+            this.renderedBoxes = [];
 
-            boxes.forEach(box => {
+            (boxes || []).forEach(box => {
                 const boxEl = document.createElement('div');
                 boxEl.className = 'ins-yolo-box';
                 boxEl.id = box.id;
@@ -882,6 +1443,7 @@
                 boxEl.appendChild(cBR);
 
                 this.overlayLayer.appendChild(boxEl);
+                this.renderedBoxes.push({ box, el: boxEl });
             });
 
             this.filterBoundingBoxes();
@@ -913,7 +1475,7 @@
                     this.statusDot.className = 'ins-yolo-status-dot is-defect';
                 }
                 if (this.statusText) {
-                    this.statusText.textContent = 'DEFECT DETECTED · REJECT GATE ACTIVATED';
+                    this.statusText.textContent = scenario.mode === 'video' ? 'CẢNH BÁO AN TOÀN · E-STOP KÍCH HOẠT' : 'DEFECT DETECTED · REJECT GATE ACTIVATED';
                 }
 
                 // Telemetry
@@ -950,7 +1512,7 @@
                     this.statusDot.className = 'ins-yolo-status-dot is-pass';
                 }
                 if (this.statusText) {
-                    this.statusText.textContent = 'NOMINAL INSPECTION · BATCH ACCEPTED';
+                    this.statusText.textContent = scenario.mode === 'video' ? 'GIÁM SÁT AN TOÀN · VẬN HÀNH TIẾP' : 'NOMINAL INSPECTION · BATCH ACCEPTED';
                 }
 
                 // Telemetry
@@ -998,7 +1560,7 @@
 
             // Simulate micro-jitter on latency
             if (this.latencyEl) {
-                const base = parseFloat(INSPECTION_SCENARIOS[this.activeScenarioKey].stats.latency) || 11.4;
+                const base = parseFloat((INSPECTION_SCENARIOS[this.activeScenarioKey] && INSPECTION_SCENARIOS[this.activeScenarioKey].stats && INSPECTION_SCENARIOS[this.activeScenarioKey].stats.latency) || 11.2);
                 const jitter = (base + (Math.random() * 0.8 - 0.4)).toFixed(1);
                 this.latencyEl.textContent = jitter + 'ms';
             }
@@ -1015,6 +1577,10 @@
             if (this.rafId) {
                 cancelAnimationFrame(this.rafId);
                 this.rafId = null;
+            }
+            if (this.videoEl) {
+                this.videoEl.pause();
+                this.videoEl.src = '';
             }
         }
     }

@@ -33,6 +33,7 @@
     "assets": {
         "web.assets_frontend": [
             "insilos_website/static/src/scss/insilos.scss",
+            "insilos_website/static/src/scss/insilos_liquid_spatial.scss",
             "insilos_website/static/src/scss/insilos_megamenu.scss",
             "insilos_website/static/src/scss/insilos_3d.scss",
             "insilos_website/static/src/scss/insilos_cctv.scss",

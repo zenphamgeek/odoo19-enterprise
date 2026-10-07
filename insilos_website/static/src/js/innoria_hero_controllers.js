@@ -280,7 +280,7 @@
     function SovereignCoreController(manager) {
         BaseHeroSceneController.call(this, manager, 'sovereign_core', 'The Sovereign Core');
         this.currentMode = 'topology';
-        this.defaultCameraPos = new THREE.Vector3(0, 2.2, 14.2);
+        this.defaultCameraPos = new THREE.Vector3(0, 3.5, 15.0);
         this.stackCameraPos = new THREE.Vector3(0, 3.8, 15.6);
         this.controlsTarget = new THREE.Vector3(0, 0, 0);
 
@@ -296,6 +296,53 @@
         this.stackPlatesGroup = null;
         this.orbitalPlaneMesh = null;
         this.cosmicDust = null;
+
+        // Feature #7 & #8: Mathematical Particle Wave Engine & 4-State Morphing
+        this.waveParticles = null;
+        this.waveParticleGeo = null;
+        this.waveParticleMat = null;
+        this.activeParticleCount = 3600;
+        this.state0Base = null;
+        this.state1Base = null;
+        this.state2Base = null;
+        this.state3Base = null;
+
+        // Feature #9: 4-Chapter Storytelling State Machine
+        this.currentChapter = 0;
+        this.targetChapter = 0;
+        this.morphProgress = 1.0;
+        this.fromMorphState = 0;
+        this.toMorphState = 0;
+        this.targetFov = 55;
+
+        // Feature #10: Exploded View
+        this.explodedGroup = null;
+        this.explodedLayers = [];
+        this.explodedDataPackets = [];
+        this.explodedProgress = 0.0;
+
+        // Feature #11: Blueprint Wireframe to Photorealistic PBR Mesh Morphing
+        this.shieldGroup = null;
+        this.blueprintWireMat = null;
+        this.pbrMetallicMat = null;
+        this.perimeterRing = null;
+        this.wireframeMorphProgress = 0.0;
+
+        // Feature #12: 360° Kinetic Orbit with Inertia Damping & Pitch Clamp
+        this.orbitState = {
+            isDragging: false,
+            prevX: 0,
+            prevY: 0,
+            yaw: 0.0,
+            pitch: 0.65,
+            velYaw: 0.0,
+            velPitch: 0.0,
+            lambda: 3.2,
+            pitchMin: 15.0 * Math.PI / 180.0,
+            pitchMax: 85.0 * Math.PI / 180.0
+        };
+        this.activeRipples = [];
+        this.mouseWorldPos = { x: 0.0, z: 0.0 };
 
         this._cameraLerping = false;
         this._camLerpAlpha = 0.0;
@@ -682,6 +729,162 @@
         });
         this.rootGroup.add(this.stackPlatesGroup);
 
+        // 9. Mathematical Particle Wave & 4-State Morphing Sphere (Features #7 & #8)
+        var MAX_P = 3600;
+        var COLS = 60;
+        var ROWS = 60;
+        this.state0Base = new Float32Array(MAX_P * 3);
+        this.state1Base = new Float32Array(MAX_P * 3);
+        this.state2Base = new Float32Array(MAX_P * 3);
+        this.state3Base = new Float32Array(MAX_P * 3);
+
+        var pPos = new Float32Array(MAX_P * 3);
+        var pCol = new Float32Array(MAX_P * 3);
+
+        var gAngle = Math.PI * (3 - Math.sqrt(5));
+        var sRad = 4.2;
+        var tMaj = 4.6;
+        var tMin = 1.6;
+        var hSpace = 0.72;
+
+        for (var p = 0; p < MAX_P; p++) {
+            var c = p % COLS;
+            var r = Math.floor(p / COLS);
+
+            // State 0: Wave Surface base grid
+            var px0 = (c / (COLS - 1) - 0.5) * 28.0;
+            var pz0 = (r / (ROWS - 1) - 0.5) * 28.0;
+            this.state0Base[p * 3] = px0;
+            this.state0Base[p * 3 + 1] = 0.0;
+            this.state0Base[p * 3 + 2] = pz0;
+
+            // State 1: Fibonacci Sphere
+            var yn = 1.0 - (p / (MAX_P - 1)) * 2.0;
+            var ry = Math.sqrt(Math.max(0.0, 1.0 - yn * yn)) * sRad;
+            var th = p * gAngle;
+            this.state1Base[p * 3] = Math.cos(th) * ry;
+            this.state1Base[p * 3 + 1] = yn * sRad;
+            this.state1Base[p * 3 + 2] = Math.sin(th) * ry;
+
+            // State 2: Toroidal Core Swarm Ring
+            var ut = (p / MAX_P) * Math.PI * 6.0;
+            var vt = ((p * 0.6180339887) % 1.0) * Math.PI * 2.0;
+            this.state2Base[p * 3] = (tMaj + tMin * Math.cos(vt)) * Math.cos(ut);
+            this.state2Base[p * 3 + 1] = tMin * Math.sin(vt);
+            this.state2Base[p * 3 + 2] = (tMaj + tMin * Math.cos(vt)) * Math.sin(ut);
+
+            // State 3: Quantum Hex Matrix
+            var lIdx = (p % 4) - 1.5;
+            var qH = (p % 30) - 15;
+            var rH = (Math.floor(p / 30) % 30) - 15;
+            this.state3Base[p * 3] = hSpace * Math.sqrt(3.0) * (qH + rH / 2.0);
+            this.state3Base[p * 3 + 1] = lIdx * 1.35;
+            this.state3Base[p * 3 + 2] = hSpace * 1.5 * rH;
+
+            pPos[p * 3] = px0;
+            pPos[p * 3 + 1] = 0.0;
+            pPos[p * 3 + 2] = pz0;
+
+            // Liquid Aurora Palette: Mint (#42E6C3) to Cyan (#00F2FE)
+            var tc = (px0 + 14.0) / 28.0;
+            pCol[p * 3] = 0.259 * (1.0 - tc) + 0.000 * tc;
+            pCol[p * 3 + 1] = 0.902 * (1.0 - tc) + 0.949 * tc;
+            pCol[p * 3 + 2] = 0.765 * (1.0 - tc) + 0.996 * tc;
+        }
+
+        this.waveParticleGeo = this.trackDisposable(new THREE.BufferGeometry());
+        this.waveParticleGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        this.waveParticleGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
+
+        var winW = window.innerWidth || 1440;
+        this.activeParticleCount = winW < 768 ? 1600 : (winW < 992 ? 2500 : 3600);
+        this.waveParticleGeo.setDrawRange(0, this.activeParticleCount);
+
+        this.waveParticleMat = this.trackDisposable(new THREE.PointsMaterial({
+            size: 0.08,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.88,
+            blending: THREE.AdditiveBlending
+        }));
+        this.waveParticles = new THREE.Points(this.waveParticleGeo, this.waveParticleMat);
+        this.rootGroup.add(this.waveParticles);
+
+        // 10. Exploded View (Chapter 2)
+        this.explodedGroup = new THREE.Group();
+        this.explodedLayers = [];
+        var eColors = [0x0ABBDB, 0xFF8000, 0x0284C7, 0x42E6C3];
+        for (var l = 0; l < 4; l++) {
+            var sGeo = self.trackDisposable(new THREE.BoxGeometry(3.2, 0.16, 3.2));
+            var sMat = self.trackDisposable(new THREE.MeshStandardMaterial({
+                color: eColors[l],
+                emissive: eColors[l],
+                emissiveIntensity: 0.45,
+                metalness: 0.85,
+                roughness: 0.2,
+                transparent: true,
+                opacity: 0.88
+            }));
+            var sMesh = new THREE.Mesh(sGeo, sMat);
+            sMesh.position.y = (l - 1.5) * 0.35;
+            this.explodedGroup.add(sMesh);
+            this.explodedLayers.push({
+                mesh: sMesh,
+                baseY: (l - 1.5) * 0.35,
+                expandedY: (l - 1.5) * 1.85,
+                expandedX: (l - 1.5) * 0.45,
+                expandedZ: -(l - 1.5) * 0.35
+            });
+        }
+        this.explodedDataPackets = [];
+        var ePacketMat = self.trackDisposable(new THREE.MeshBasicMaterial({ color: 0x00F2FE }));
+        var cOffsets = [[-1.5, -1.5], [1.5, -1.5], [1.5, 1.5], [-1.5, 1.5]];
+        for (var ep = 0; ep < 8; ep++) {
+            var epMesh = new THREE.Mesh(self.trackDisposable(new THREE.SphereGeometry(0.08, 8, 8)), ePacketMat);
+            this.explodedGroup.add(epMesh);
+            this.explodedDataPackets.push({
+                mesh: epMesh,
+                progress: ep * 0.125,
+                speed: 0.65,
+                cornerIndex: ep % 4
+            });
+        }
+        this.explodedGroup.visible = false;
+        this.rootGroup.add(this.explodedGroup);
+
+        // 11. Blueprint Wireframe to PBR Mesh Morphing (Chapter 3)
+        this.shieldGroup = new THREE.Group();
+        var shieldG = self.trackDisposable(new THREE.IcosahedronGeometry(2.2, 1));
+        this.blueprintWireMat = self.trackDisposable(new THREE.MeshBasicMaterial({
+            color: 0x00F2FE,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.85
+        }));
+        this.pbrMetallicMat = self.trackDisposable(new THREE.MeshStandardMaterial({
+            color: 0x0ABBDB,
+            emissive: 0x0284C7,
+            emissiveIntensity: 0.6,
+            metalness: 0.92,
+            roughness: 0.15,
+            transparent: true,
+            opacity: 0.0
+        }));
+        this.shieldGroup.add(new THREE.Mesh(shieldG, this.blueprintWireMat));
+        this.shieldGroup.add(new THREE.Mesh(shieldG, this.pbrMetallicMat));
+
+        var ringG = self.trackDisposable(new THREE.TorusGeometry(3.2, 0.035, 16, 64));
+        var ringM = self.trackDisposable(new THREE.MeshBasicMaterial({ color: 0x42E6C3, transparent: true, opacity: 0.85 }));
+        this.perimeterRing = new THREE.Mesh(ringG, ringM);
+        this.perimeterRing.rotation.x = Math.PI / 2.3;
+        this.shieldGroup.add(this.perimeterRing);
+        this.shieldGroup.visible = false;
+        this.rootGroup.add(this.shieldGroup);
+
+        // Set initial camera FOV to 55 deg
+        this.camera.fov = 55;
+        this.camera.updateProjectionMatrix();
+
         // Bind DOM HUD & Buttons
         this._bindHUDControls();
 
@@ -796,7 +999,150 @@
             this.cosmicDust.rotation.y = elapsed * 0.02;
         }
 
-        // 5. Smooth Camera Lerp on Selection / Mode Change
+        // 5. Kinetic 360° Orbit with Inertia Damping (Feature #12)
+        if (!this.orbitState.isDragging) {
+            var decay = Math.exp(-this.orbitState.lambda * delta);
+            this.orbitState.velYaw *= decay;
+            this.orbitState.velPitch *= decay;
+            this.orbitState.yaw += this.orbitState.velYaw;
+            this.orbitState.pitch = Math.max(this.orbitState.pitchMin, Math.min(this.orbitState.pitchMax, this.orbitState.pitch + this.orbitState.velPitch));
+        }
+        this.rootGroup.rotation.y = this.orbitState.yaw + elapsed * 0.12;
+        this.rootGroup.rotation.x = this.orbitState.pitch - 0.65;
+
+        // 6. Cinematic Camera Focal Length Zoom (Feature #13)
+        if (this.camera && Math.abs(this.camera.fov - this.targetFov) > 0.05) {
+            this.camera.fov += (this.targetFov - this.camera.fov) * Math.min(delta * 3.5, 0.15);
+            this.camera.updateProjectionMatrix();
+        }
+
+        // 7. Mathematical Particle Wave & 4-State Morphing Sphere (Features #7 & #8)
+        if (this.waveParticleGeo && this.state0Base) {
+            if (this.morphProgress < 1.0) {
+                this.morphProgress = Math.min(1.0, this.morphProgress + delta * 1.4);
+            }
+            var alpha = this.morphProgress;
+            var sHermite = 3.0 * alpha * alpha - 2.0 * alpha * alpha * alpha; // s = 3a^2 - 2a^3
+
+            var fromBase = this.fromMorphState === 1 ? this.state1Base :
+                           (this.fromMorphState === 2 ? this.state2Base :
+                           (this.fromMorphState === 3 ? this.state3Base : this.state0Base));
+            var toBase = this.toMorphState === 1 ? this.state1Base :
+                         (this.toMorphState === 2 ? this.state2Base :
+                         (this.toMorphState === 3 ? this.state3Base : this.state0Base));
+
+            var positions = this.waveParticleGeo.attributes.position.array;
+            var waveWeight = (1.0 - sHermite) * (this.fromMorphState === 0 ? 1.0 : 0.0) +
+                             sHermite * (this.toMorphState === 0 ? 1.0 : 0.0);
+
+            // Filter expired ripples
+            this.activeRipples = this.activeRipples.filter(function (rp) {
+                return (elapsed - rp.startTime) < 3.5;
+            });
+
+            for (var p = 0; p < this.activeParticleCount; p++) {
+                var idx3 = p * 3;
+                var fx = fromBase[idx3];
+                var fy = fromBase[idx3 + 1];
+                var fz = fromBase[idx3 + 2];
+
+                var tx = toBase[idx3];
+                var ty = toBase[idx3 + 1];
+                var tz = toBase[idx3 + 2];
+
+                var px = (1.0 - sHermite) * fx + sHermite * tx;
+                var py = (1.0 - sHermite) * fy + sHermite * ty;
+                var pz = (1.0 - sHermite) * fz + sHermite * tz;
+
+                if (waveWeight > 0.01) {
+                    var rxz = Math.sqrt(px * px + pz * pz);
+                    var waveY = 0.65 * Math.sin(0.4 * px + 1.2 * elapsed) * Math.cos(0.4 * pz + 0.9 * elapsed) +
+                                0.45 * Math.sin(0.8 * rxz - 1.8 * elapsed);
+
+                    var dPtrX = px - this.mouseWorldPos.x;
+                    var dPtrZ = pz - this.mouseWorldPos.z;
+                    var distSq = dPtrX * dPtrX + dPtrZ * dPtrZ;
+                    var repY = 1.6 * Math.exp(-distSq / (2.0 * 3.2 * 3.2));
+
+                    var rippleY = 0.0;
+                    for (var rIdx = 0; rIdx < this.activeRipples.length; rIdx++) {
+                        var rip = this.activeRipples[rIdx];
+                        var dt = elapsed - rip.startTime;
+                        if (dt > 0.0 && dt < 3.5) {
+                            var distToRip = Math.sqrt((px - rip.x) * (px - rip.x) + (pz - rip.z) * (pz - rip.z));
+                            var waveFront = distToRip - 6.5 * dt;
+                            rippleY += rip.amplitude * Math.exp(-1.4 * dt) * Math.exp(-waveFront * waveFront / 4.5) *
+                                       Math.sin(1.3 * distToRip - 4.2 * dt);
+                        }
+                    }
+
+                    py += (waveY + repY + rippleY) * waveWeight;
+                }
+
+                positions[idx3] = px;
+                positions[idx3 + 1] = py;
+                positions[idx3 + 2] = pz;
+            }
+            this.waveParticleGeo.attributes.position.needsUpdate = true;
+        }
+
+        // 8. Exploded View (Chapter 2 / Feature #10)
+        if (this.explodedGroup) {
+            if (this.targetChapter === 2) {
+                this.explodedProgress = Math.min(1.0, this.explodedProgress + delta * 2.0);
+            } else {
+                this.explodedProgress = Math.max(0.0, this.explodedProgress - delta * 2.5);
+            }
+
+            if (this.explodedProgress > 0.01) {
+                this.explodedGroup.visible = true;
+                var expP = this.explodedProgress;
+                var sExp = 3.0 * expP * expP - 2.0 * expP * expP * expP;
+
+                this.explodedLayers.forEach(function (el) {
+                    el.mesh.position.y = (1.0 - sExp) * el.baseY + sExp * el.expandedY;
+                    el.mesh.position.x = sExp * el.expandedX;
+                    el.mesh.position.z = sExp * el.expandedZ;
+                });
+
+                var cOffsets = [[-1.5, -1.5], [1.5, -1.5], [1.5, 1.5], [-1.5, 1.5]];
+                this.explodedDataPackets.forEach(function (dp) {
+                    dp.progress = (dp.progress + delta * dp.speed) % 1.0;
+                    var cnr = cOffsets[dp.cornerIndex];
+                    dp.mesh.position.set(
+                        cnr[0] * 0.85,
+                        -2.5 + dp.progress * 5.0,
+                        cnr[1] * 0.85
+                    );
+                });
+            } else if (this.targetChapter !== 2) {
+                this.explodedGroup.visible = false;
+            }
+        }
+
+        // 9. Blueprint Wireframe to Photorealistic PBR Mesh Morphing (Chapter 3 / Feature #11)
+        if (this.shieldGroup) {
+            if (this.targetChapter === 3) {
+                this.wireframeMorphProgress = Math.min(1.0, this.wireframeMorphProgress + delta * 0.85);
+                this.shieldGroup.visible = true;
+                var wProg = this.wireframeMorphProgress;
+                var sPbr = 3.0 * wProg * wProg - 2.0 * wProg * wProg * wProg;
+
+                if (this.blueprintWireMat) this.blueprintWireMat.opacity = Math.max(0.05, 0.85 * (1.0 - sPbr));
+                if (this.pbrMetallicMat) {
+                    this.pbrMetallicMat.opacity = Math.min(1.0, sPbr * 1.0);
+                    this.pbrMetallicMat.roughness = 0.45 * (1.0 - sPbr) + 0.15 * sPbr;
+                    this.pbrMetallicMat.metalness = 0.50 * (1.0 - sPbr) + 0.92 * sPbr;
+                }
+                if (this.perimeterRing) {
+                    this.perimeterRing.rotation.z += delta * 0.85;
+                }
+            } else {
+                this.shieldGroup.visible = false;
+            }
+        }
+
+        // 10. Smooth Camera Lerp on Selection / Mode Change
         if (this._cameraLerping) {
             this._camLerpAlpha += delta * 1.8;
             var alpha = Math.min(this._camLerpAlpha, 1.0);
@@ -814,6 +1160,22 @@
 
     SovereignCoreController.prototype.onPointerMove = function (normX, normY) {
         BaseHeroSceneController.prototype.onPointerMove.call(this, normX, normY);
+
+        this.mouseWorldPos.x = normX * 14.0;
+        this.mouseWorldPos.z = -normY * 14.0;
+
+        if (this.orbitState && this.orbitState.isDragging) {
+            var clientX = (normX + 1.0) * 0.5 * (this.canvas ? this.canvas.clientWidth : window.innerWidth);
+            var clientY = (-normY + 1.0) * 0.5 * (this.canvas ? this.canvas.clientHeight : window.innerHeight);
+            var dx = clientX - this.orbitState.prevX;
+            var dy = clientY - this.orbitState.prevY;
+            this.orbitState.prevX = clientX;
+            this.orbitState.prevY = clientY;
+            this.orbitState.velYaw = dx * 0.005;
+            this.orbitState.velPitch = dy * 0.005;
+            this.orbitState.yaw += this.orbitState.velYaw;
+            this.orbitState.pitch = Math.max(this.orbitState.pitchMin, Math.min(this.orbitState.pitchMax, this.orbitState.pitch + this.orbitState.velPitch));
+        }
 
         if (!this.camera || !this.interactiveObjects.length) return;
         this.raycaster.setFromCamera(this.mouseNDC, this.camera);
@@ -837,6 +1199,26 @@
     };
 
     SovereignCoreController.prototype.onInteract = function (event) {
+        if (!event) return;
+        if (event.type === 'pointer_down') {
+            this.orbitState.isDragging = true;
+            this.orbitState.prevX = event.clientX || 0;
+            this.orbitState.prevY = event.clientY || 0;
+            this.orbitState.velYaw = 0;
+            this.orbitState.velPitch = 0;
+            this.activeRipples.push({
+                x: this.mouseWorldPos.x,
+                z: this.mouseWorldPos.z,
+                startTime: performance.now() / 1000.0,
+                amplitude: 1.8
+            });
+            if (this.activeRipples.length > 6) this.activeRipples.shift();
+            return;
+        }
+        if (event.type === 'click' || event.type === 'pointer_up') {
+            this.orbitState.isDragging = false;
+        }
+
         if (!this.camera || !this.interactiveObjects.length) return;
         this.raycaster.setFromCamera(this.mouseNDC, this.camera);
         var intersects = this.raycaster.intersectObjects(this.interactiveObjects);
@@ -850,6 +1232,59 @@
             }
         }
     };
+
+    SovereignCoreController.prototype.onResize = function (width, height, dpr) {
+        BaseHeroSceneController.prototype.onResize.call(this, width, height, dpr);
+        var winW = width || (window.innerWidth || 1440);
+        var count = winW < 768 ? 1600 : (winW < 992 ? 2500 : 3600);
+        if (this.waveParticleGeo) {
+            this.waveParticleGeo.setDrawRange(0, count);
+            this.activeParticleCount = count;
+        }
+    };
+
+    SovereignCoreController.prototype.selectChapter = function (chapterIdx) {
+        if (chapterIdx < 0 || chapterIdx > 3) return;
+        this.currentChapter = chapterIdx;
+        this.targetChapter = chapterIdx;
+        this.fromMorphState = this.toMorphState;
+        this.toMorphState = chapterIdx;
+        this.morphProgress = 0.0;
+
+        var fovs = [55, 40, 35, 45];
+        this.targetFov = fovs[chapterIdx] || 45;
+
+        var camPositions = [
+            new THREE.Vector3(0.0, 3.5, 15.0),
+            new THREE.Vector3(3.8, 2.0, 11.5),
+            new THREE.Vector3(0.0, 4.5, 14.0),
+            new THREE.Vector3(-3.0, -1.5, 12.0)
+        ];
+        var targets = [
+            new THREE.Vector3(0.0, 0.0, 0.0),
+            new THREE.Vector3(0.0, 0.2, 0.0),
+            new THREE.Vector3(0.0, 0.0, 0.0),
+            new THREE.Vector3(-0.5, -0.2, 0.0)
+        ];
+
+        this._startCameraLerp(camPositions[chapterIdx], targets[chapterIdx]);
+
+        if (this.explodedGroup) {
+            this.explodedGroup.visible = (chapterIdx === 2);
+        }
+        if (this.shieldGroup) {
+            this.shieldGroup.visible = (chapterIdx === 3);
+            if (chapterIdx === 3) this.wireframeMorphProgress = 0.0;
+        }
+
+        if (this.satelliteNodes && this.satelliteNodes.length > chapterIdx) {
+            var pod = this.satelliteNodes[chapterIdx];
+            if (pod && pod.userData && pod.userData.nodeData) {
+                this.showHUD(pod.userData.nodeData);
+            }
+        }
+    };
+    SovereignCoreController.prototype.setChapter = SovereignCoreController.prototype.selectChapter;
 
     SovereignCoreController.prototype.selectNode = function (podGroup, nodeData) {
         this._selectedNode = podGroup;
@@ -881,6 +1316,11 @@
     };
 
     SovereignCoreController.prototype.setMode = function (mode) {
+        if (typeof mode === 'number' || (!isNaN(parseInt(mode, 10)) && (mode === '0' || mode === '1' || mode === '2' || mode === '3'))) {
+            this.selectChapter(parseInt(mode, 10));
+            return;
+        }
+
         this.currentMode = (mode === 'stack') ? 'stack' : 'topology';
 
         if (this.currentMode === 'stack') {

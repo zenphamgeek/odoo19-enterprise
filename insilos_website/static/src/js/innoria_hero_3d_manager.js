@@ -212,6 +212,13 @@
         target.addEventListener('pointerup', this._onPointerUp, { passive: true });
         target.addEventListener('wheel', this._onWheel, { passive: true });
 
+        if (this.container && this.container !== target) {
+            this.container.addEventListener('pointermove', this._onPointerMove, { passive: true });
+            this.container.addEventListener('pointerdown', this._onPointerDown, { passive: true });
+            this.container.addEventListener('pointerup', this._onPointerUp, { passive: true });
+        }
+        window.addEventListener('pointerup', this._onPointerUp, { passive: true });
+
         window.addEventListener('resize', this._onWindowResize, { passive: true });
 
         // WebGL Context Guard Handlers
@@ -290,6 +297,18 @@
             .catch(function (err) {
                 console.error('[InnoriaHero3DManager] Failed to initialize scene "' + sceneId + '":', err);
             });
+    };
+
+    InnoriaHero3DManager.prototype.setChapter = function (chapterIndex) {
+        if (this.activeController && typeof this.activeController.setChapter === 'function') {
+            return this.activeController.setChapter(chapterIndex);
+        }
+    };
+
+    InnoriaHero3DManager.prototype.setMode = function (mode) {
+        if (this.activeController && typeof this.activeController.setMode === 'function') {
+            return this.activeController.setMode(mode);
+        }
     };
 
     // =========================================================================
@@ -407,8 +426,8 @@
     // 6. EVENT HANDLERS
     // =========================================================================
     InnoriaHero3DManager.prototype._onPointerMove = function (event) {
-        var rect = this.canvas.getBoundingClientRect();
-        if (rect.width === 0 || rect.height === 0) return;
+        var rect = this.canvas ? this.canvas.getBoundingClientRect() : (this.container ? this.container.getBoundingClientRect() : null);
+        if (!rect || rect.width === 0 || rect.height === 0) return;
 
         var clientX = event.clientX;
         var clientY = event.clientY;
@@ -419,6 +438,10 @@
 
         this.targetPointer.set(normX, normY);
         this.isPointerInside = true;
+
+        if (this.activeController && typeof this.activeController.onPointerMove === 'function') {
+            this.activeController.onPointerMove(normX, normY, event);
+        }
     };
 
     InnoriaHero3DManager.prototype._onPointerLeave = function () {
@@ -429,9 +452,14 @@
     InnoriaHero3DManager.prototype._onPointerDown = function (event) {
         if (!this.activeController) return;
 
-        var rect = this.canvas.getBoundingClientRect();
-        var normX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        var normY = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+        // Ignore interactive UI elements like buttons and nav items
+        if (event.target && event.target.closest && event.target.closest('button, a, input, select, textarea, .hero-product-tab-btn, .hero-scene-nav-item, .hero-control-btn, .btn')) {
+            return;
+        }
+
+        var rect = this.canvas ? this.canvas.getBoundingClientRect() : (this.container ? this.container.getBoundingClientRect() : { left: 0, top: 0, width: 1, height: 1 });
+        var normX = ((event.clientX - rect.left) / (rect.width || 1)) * 2 - 1;
+        var normY = -(((event.clientY - rect.top) / (rect.height || 1)) * 2 - 1);
 
         this.activeController.onInteract({
             type: 'pointer_down',
@@ -445,17 +473,28 @@
     InnoriaHero3DManager.prototype._onPointerUp = function (event) {
         if (!this.activeController) return;
 
-        var rect = this.canvas.getBoundingClientRect();
-        var normX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        var normY = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+        var rect = this.canvas ? this.canvas.getBoundingClientRect() : (this.container ? this.container.getBoundingClientRect() : { left: 0, top: 0, width: 1, height: 1 });
+        var normX = ((event.clientX - rect.left) / (rect.width || 1)) * 2 - 1;
+        var normY = -(((event.clientY - rect.top) / (rect.height || 1)) * 2 - 1);
 
         this.activeController.onInteract({
-            type: 'click',
+            type: 'pointer_up',
             clientX: event.clientX,
             clientY: event.clientY,
             normalizedX: normX,
             normalizedY: normY
         });
+
+        // Trigger click/ripple if not clicking on UI buttons
+        if (!event.target || !event.target.closest || !event.target.closest('button, a, input, select, textarea, .hero-product-tab-btn, .hero-scene-nav-item, .hero-control-btn, .btn')) {
+            this.activeController.onInteract({
+                type: 'click',
+                clientX: event.clientX,
+                clientY: event.clientY,
+                normalizedX: normX,
+                normalizedY: normY
+            });
+        }
     };
 
     InnoriaHero3DManager.prototype._onWheel = function (event) {
@@ -529,6 +568,12 @@
             this.canvas.removeEventListener('webglcontextrestored', this._onContextRestored);
         }
 
+        if (this.container && this.container !== this.canvas) {
+            this.container.removeEventListener('pointermove', this._onPointerMove);
+            this.container.removeEventListener('pointerdown', this._onPointerDown);
+            this.container.removeEventListener('pointerup', this._onPointerUp);
+        }
+        window.removeEventListener('pointerup', this._onPointerUp);
         window.removeEventListener('resize', this._onWindowResize);
 
         if (this.activeController) {
@@ -586,6 +631,10 @@
                 try {
                     var manager = new InnoriaHero3DManager(container);
                     container.__innoriaHeroManager = manager;
+                    rootEl.__innoriaHeroManager = manager;
+                    if (manager.viewportElement) {
+                        manager.viewportElement.__innoriaHeroManager = manager;
+                    }
                     InnoriaHero3DManager.instances.add(manager);
                 } catch (err) {
                     console.error('[InnoriaHero3DManager] Auto-initialization error on container:', container, err);

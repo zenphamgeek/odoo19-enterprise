@@ -16,12 +16,51 @@
                     width: 100% !important;
                     aspect-ratio: 16 / 9;
                     min-height: 440px;
-                    background-color: #030712 !important;
+                    background-color: #050811 !important;
                     border-radius: 1rem !important;
                     overflow: hidden !important;
-                    border: 1px solid rgba(255, 128, 0, 0.35) !important;
-                    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 128, 0, 0.15) !important;
+                    border: 1px solid rgba(66, 230, 195, 0.25) !important;
+                    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 242, 254, 0.12), inset 0 0 30px rgba(5, 8, 17, 0.8) !important;
                     user-select: none !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-cctv-laser-beam {
+                    position: absolute !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                    height: 3px !important;
+                    background: linear-gradient(90deg, transparent 0%, #42E6C3 15%, #00F2FE 50%, #FFFFFF 52%, #00F2FE 54%, #42E6C3 85%, transparent 100%) !important;
+                    box-shadow: 0 0 18px #00F2FE, 0 0 32px rgba(66, 230, 195, 0.85), 0 0 50px rgba(0, 242, 254, 0.5) !important;
+                    pointer-events: none !important;
+                    z-index: 6 !important;
+                    animation: cctvLaserScan 3.8s ease-in-out infinite !important;
+                }
+                .s_insilos_cctv_ai_camera .ins-cctv-laser-beam::after {
+                    content: '' !important;
+                    position: absolute !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                    top: -45px !important;
+                    height: 45px !important;
+                    background: linear-gradient(180deg, transparent 0%, rgba(0, 242, 254, 0.08) 60%, rgba(66, 230, 195, 0.22) 100%) !important;
+                    pointer-events: none !important;
+                }
+                @keyframes cctvLaserScan {
+                    0% { top: 0%; opacity: 0.9; }
+                    50% { top: 100%; opacity: 1; }
+                    100% { top: 0%; opacity: 0.9; }
+                }
+                .s_insilos_cctv_ai_camera .ins-cctv-calibration-grid {
+                    position: absolute !important;
+                    inset: 0 !important;
+                    pointer-events: none !important;
+                    z-index: 2 !important;
+                    background-image: 
+                        linear-gradient(rgba(0, 242, 254, 0.06) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0, 242, 254, 0.06) 1px, transparent 1px),
+                        linear-gradient(rgba(66, 230, 195, 0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(66, 230, 195, 0.02) 1px, transparent 1px) !important;
+                    background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px !important;
+                    opacity: 0.75 !important;
                 }
                 @media (max-width: 767.98px) {
                     .s_insilos_cctv_ai_camera .ins-cctv-viewport {
@@ -207,6 +246,12 @@
                             <!-- Central Aiming Reticle -->
                             <div class="ins-cctv-reticle"/>
 
+                            <!-- Dynamic 60 FPS Sweeping Laser Scanline (Glowing Cyan/Mint Beam) -->
+                            <div class="ins-cctv-laser-beam"/>
+
+                            <!-- Optical Calibration Grid Overlay (0.015 mm/px) -->
+                            <div class="ins-cctv-calibration-grid"/>
+
                             <!-- Live Top Status HUD Bar -->
                             <div class="ins-cctv-topbar">
                                 <div class="d-flex align-items-center gap-3">
@@ -226,7 +271,7 @@
                             </div>
 
                             <!-- Industrial HTML5 Video Player (Authentic Site Supervisor with Hard Hat & PPE) -->
-                            <video class="ins-cctv-video" loop="loop" muted="muted" playsinline="playsinline" preload="none" poster="/insilos_website/static/src/video/cctv_ppe/cctv_cam02_poster.webp">
+                            <video class="ins-cctv-video" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" preload="auto" poster="/insilos_website/static/src/video/cctv_ppe/cctv_cam02_poster.webp">
                                 <source class="ins-cctv-video-source" src="/insilos_website/static/src/video/cctv_ppe/cctv_cam02_site_communication.mp4" type="video/mp4"/>
                             </video>
 
@@ -242,8 +287,9 @@
                                 </div>
                                 <div class="d-flex align-items-center gap-3">
                                     <span class="text-warning"><span class="text-secondary">VECTOR: </span><strong class="ins-rt-vector">[dx: +0.000, dy: +0.000]</strong></span>
-                                    <span class="text-emerald"><span class="text-secondary">ĐỘ TRỄ: </span><strong class="ins-rt-latency">12.3ms</strong></span>
+                                    <span class="text-emerald"><span class="text-secondary">ĐỘ TRỄ: </span><strong class="ins-rt-latency">11.2ms</strong></span>
                                     <span class="text-cyan"><span class="text-secondary">FPS: </span><strong class="ins-rt-fps">60.0</strong></span>
+                                    <span class="text-white"><span class="text-secondary">OPTICS: </span><strong class="ins-rt-optics">0.015 mm/px</strong></span>
                                     <span class="text-white"><span class="text-secondary">TC: </span><strong class="ins-rt-timecode">00:00.000</strong></span>
                                 </div>
                             </div>

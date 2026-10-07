@@ -618,6 +618,7 @@
             this.rtVectorEl = this.root.querySelector('.ins-rt-vector');
             this.rtLatencyEl = this.root.querySelector('.ins-rt-latency');
             this.rtFpsEl = this.root.querySelector('.ins-rt-fps');
+            this.rtOpticsEl = this.root.querySelector('.ins-rt-optics');
             this.rtTimecodeEl = this.root.querySelector('.ins-rt-timecode');
 
             // Layer Checkboxes
@@ -634,10 +635,27 @@
         }
 
         init() {
+            this.ensureHudVisualOverlays();
             this.bindEvents();
             this.startLiveClock();
             this.renderCamera(this.activeCameraKey);
             this.startTrackingLoop();
+        }
+
+        ensureHudVisualOverlays() {
+            const viewport = this.root.querySelector('.ins-cctv-viewport');
+            if (viewport) {
+                if (!viewport.querySelector('.ins-cctv-laser-beam')) {
+                    const laser = document.createElement('div');
+                    laser.className = 'ins-cctv-laser-beam';
+                    viewport.appendChild(laser);
+                }
+                if (!viewport.querySelector('.ins-cctv-calibration-grid')) {
+                    const grid = document.createElement('div');
+                    grid.className = 'ins-cctv-calibration-grid';
+                    viewport.appendChild(grid);
+                }
+            }
         }
 
         bindEvents() {
@@ -850,7 +868,8 @@
                     this.rtBboxEl.textContent = '[X: ' + primaryPos.x.toFixed(3) + ', Y: ' + primaryPos.y.toFixed(3) + ', W: ' + primaryPos.w.toFixed(3) + ', H: ' + primaryPos.h.toFixed(3) + ']';
                 }
                 if (this.rtConfEl) {
-                    this.rtConfEl.textContent = (primaryPos.conf * 100).toFixed(1) + '%';
+                    const dynamicConf = 99.42 + Math.sin(currentTime * 1.5) * 0.1 + (Math.random() - 0.5) * 0.08;
+                    this.rtConfEl.textContent = dynamicConf.toFixed(2) + '%';
                 }
                 if (this.rtVectorEl) {
                     const dxStr = (dx >= 0 ? '+' : '') + dx.toFixed(3);
@@ -858,12 +877,15 @@
                     this.rtVectorEl.textContent = '[dx: ' + dxStr + ', dy: ' + dyStr + ']';
                 }
                 if (this.rtLatencyEl) {
-                    const dynamicLatency = 11.6 + Math.sin(currentTime * 11) * 1.2 + (Math.random() - 0.5) * 0.4;
+                    const dynamicLatency = 11.2 + Math.sin(currentTime * 4.2) * 0.3 + (Math.random() - 0.5) * 0.2;
                     this.rtLatencyEl.textContent = dynamicLatency.toFixed(1) + 'ms';
                 }
                 if (this.rtFpsEl) {
-                    const dynamicFps = 59.8 + (Math.random() - 0.5) * 0.4;
+                    const dynamicFps = 60.0 + Math.sin(currentTime * 2.8) * 0.35 + (Math.random() - 0.5) * 0.3;
                     this.rtFpsEl.textContent = dynamicFps.toFixed(1);
+                }
+                if (this.rtOpticsEl) {
+                    this.rtOpticsEl.textContent = '0.015 mm/px';
                 }
                 if (this.rtTimecodeEl) {
                     this.rtTimecodeEl.textContent = formatTimecodeMs(currentTime);
@@ -908,6 +930,12 @@
                         this.videoEl.src = cam.videoSrc;
                     }
                     this.videoEl.poster = cam.posterSrc;
+                    this.videoEl.muted = true;
+                    this.videoEl.defaultMuted = true;
+                    this.videoEl.playsInline = true;
+                    this.videoEl.setAttribute('muted', 'muted');
+                    this.videoEl.setAttribute('playsinline', 'playsinline');
+                    this.videoEl.setAttribute('loop', 'loop');
                     this.videoEl.load();
                     const playPromise = this.videoEl.play();
                     if (playPromise !== undefined) {
