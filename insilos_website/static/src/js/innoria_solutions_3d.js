@@ -14,16 +14,18 @@
  * - Isometric orbit inspection with pointer drag momentum and exponential decay damping
  * - Clean Light Minimalist design: 100% transparent container, zero card wrappers, zero borders
  * - Synchronized pillar telemetry chips and volumetric slab drawer states
+ * - 100% 3D cuboid preservation across active, resting, hovered, and dimmed states
+ * - Debounced hover intent (120ms) + instant click/tap activation to eliminate mouse jitter
  * - Exactly ZERO instructional text in DOM
  */
 
 (function () {
     'use strict';
 
-    var DRAG_THRESHOLD = 4;
+    var DRAG_THRESHOLD = 5;
     var SPRING_STIFFNESS = 180;
-    var SPRING_DAMPING = 20;
-    var ORBIT_FRICTION = 3.2;
+    var SPRING_DAMPING = 22;
+    var ORBIT_FRICTION = 3.6;
     var MAX_DT = 0.0333; // 30 FPS floor for numerical integration stability
 
     var DEFAULT_ROT_X = 58;
@@ -55,9 +57,11 @@
 
         var activeIndex = 0; // Default active on top pillar (Procurement)
         var isDragging = false;
+        var isHovering = false;
         var startPointerX = 0;
         var startPointerY = 0;
         var hasMoved = false;
+        var hoverDebounceTimer = null;
 
         // Spring dynamics for 4 volumetric slabs (pull-out drawer progress: 0.0 -> 1.0)
         var slabSprings = [
@@ -109,7 +113,8 @@
 
         // Pointer Events (Mobile Touch + Desktop Mouse unified)
         function onPointerDown(e) {
-            isDragging = true;
+            if (e.button !== undefined && e.button !== 0) return;
+            isDragging = false;
             hasMoved = false;
             startPointerX = e.clientX;
             startPointerY = e.clientY;
@@ -125,38 +130,37 @@
                     // Ignore capture errors on unsupported browsers
                 }
             }
-            viewport.classList.add('is-dragging');
         }
 
         function onPointerMove(e) {
-            if (!isDragging) return;
+            var totalDx = e.clientX - startPointerX;
+            var totalDy = e.clientY - startPointerY;
 
-            var dx = e.clientX - lastPointerX;
-            var dy = e.clientY - lastPointerY;
-            lastPointerX = e.clientX;
-            lastPointerY = e.clientY;
-
-            if (Math.abs(e.clientX - startPointerX) > DRAG_THRESHOLD || Math.abs(e.clientY - startPointerY) > DRAG_THRESHOLD) {
+            if (!isDragging && Math.hypot(totalDx, totalDy) >= DRAG_THRESHOLD) {
+                isDragging = true;
                 hasMoved = true;
+                viewport.classList.add('is-dragging');
             }
 
-            // Sensible rotation speed: horizontal drags orbit Z, vertical drags pitch X
-            var sensitivity = 0.35;
-            targetRotZ += dx * sensitivity;
-            targetRotX -= dy * sensitivity;
+            if (isDragging) {
+                var dx = e.clientX - lastPointerX;
+                var dy = e.clientY - lastPointerY;
+                lastPointerX = e.clientX;
+                lastPointerY = e.clientY;
 
-            targetRotX = clamp(targetRotX, MIN_ROT_X, MAX_ROT_X);
-            targetRotZ = clamp(targetRotZ, MIN_ROT_Z, MAX_ROT_Z);
+                var sensitivity = (e.pointerType === 'touch') ? 0.42 : 0.32;
+                targetRotZ += dx * sensitivity;
+                targetRotX -= dy * sensitivity;
 
-            velRotZ = dx * 12;
-            velRotX = -dy * 12;
+                targetRotX = clamp(targetRotX, MIN_ROT_X, MAX_ROT_X);
+                targetRotZ = clamp(targetRotZ, MIN_ROT_Z, MAX_ROT_Z);
+
+                velRotZ = dx * 12;
+                velRotX = -dy * 12;
+            }
         }
 
         function onPointerUp(e) {
-            if (!isDragging) return;
-            isDragging = false;
-            viewport.classList.remove('is-dragging');
-
             if (viewport.releasePointerCapture) {
                 try {
                     viewport.releasePointerCapture(e.pointerId);
@@ -164,6 +168,22 @@
                     // Ignore
                 }
             }
+
+            viewport.classList.remove('is-dragging');
+
+            // Tap / Click detection: if user tapped on a slab without dragging
+            if (!hasMoved) {
+                var elem = document.elementFromPoint(e.clientX, e.clientY);
+                var targetSlab = elem ? elem.closest('.slab-layer') : null;
+                if (targetSlab) {
+                    var idxAttr = targetSlab.getAttribute('data-layer-idx');
+                    if (idxAttr !== null) {
+                        setActivePillar(parseInt(idxAttr, 10));
+                    }
+                }
+            }
+
+            isDragging = false;
         }
 
         viewport.addEventListener('pointerdown', onPointerDown);
@@ -171,19 +191,44 @@
         viewport.addEventListener('pointerup', onPointerUp);
         viewport.addEventListener('pointercancel', onPointerUp);
 
-        // Slab hover and click bindings
+        // Hover tracking on viewport to freeze idle sway during interaction
+        viewport.addEventListener('pointerenter', function () {
+            isHovering = true;
+        });
+        viewport.addEventListener('pointerleave', function () {
+            isHovering = false;
+            clearTimeout(hoverDebounceTimer);
+            slabs.forEach(function (s) {
+                if (s) s.classList.remove('slab-hovered');
+            });
+        });
+
+        // Slab hover and click bindings with debounced intent
         slabs.forEach(function (slab, idx) {
             if (!slab) return;
 
             slab.addEventListener('pointerenter', function () {
+                slab.classList.add('slab-hovered');
                 if (!isDragging) {
-                    setActivePillar(idx);
+                    clearTimeout(hoverDebounceTimer);
+                    // 120ms deliberate dwell activates pillar smoothly without cursor jitter
+                    hoverDebounceTimer = setTimeout(function () {
+                        if (!isDragging && slab.classList.contains('slab-hovered')) {
+                            setActivePillar(idx);
+                        }
+                    }, 120);
                 }
+            });
+
+            slab.addEventListener('pointerleave', function () {
+                slab.classList.remove('slab-hovered');
+                clearTimeout(hoverDebounceTimer);
             });
 
             slab.addEventListener('click', function (e) {
                 if (!hasMoved) {
                     e.stopPropagation();
+                    clearTimeout(hoverDebounceTimer);
                     setActivePillar(idx);
                 }
             });
@@ -193,6 +238,8 @@
         chips.forEach(function (chip, idx) {
             chip.addEventListener('click', function (e) {
                 e.preventDefault();
+                e.stopPropagation();
+                clearTimeout(hoverDebounceTimer);
                 setActivePillar(idx);
             });
         });
@@ -203,7 +250,7 @@
         function physicsTick(now) {
             var dt = (now - lastTime) / 1000;
             lastTime = now;
-            dt = Math.min(dt, MAX_DT);
+            dt = Math.min(dt > 0 ? dt : 0.016, MAX_DT);
 
             // Orbit Inertia & Damping
             if (!isDragging) {
@@ -215,18 +262,18 @@
 
                     velRotX -= velRotX * ORBIT_FRICTION * dt;
                     velRotZ -= velRotZ * ORBIT_FRICTION * dt;
-                } else {
-                    // Gentle subtle idle sway
+                } else if (!isHovering) {
+                    // Gentle subtle idle sway ONLY when user is NOT hovering or interacting
                     idleClock += dt;
-                    var idleOffsetZ = Math.sin(idleClock * 0.8) * 1.8;
-                    var idleOffsetX = Math.cos(idleClock * 0.6) * 0.9;
+                    var idleOffsetZ = Math.sin(idleClock * 0.8) * 1.5;
+                    var idleOffsetX = Math.cos(idleClock * 0.6) * 0.8;
                     targetRotX = DEFAULT_ROT_X + idleOffsetX;
                     targetRotZ = DEFAULT_ROT_Z + idleOffsetZ;
                 }
             }
 
             // Smooth rotational LERP
-            var rotLerpRate = isDragging ? 18 : 6;
+            var rotLerpRate = isDragging ? 18 : 8;
             currentRotX += (targetRotX - currentRotX) * Math.min(rotLerpRate * dt, 1.0);
             currentRotZ += (targetRotZ - currentRotZ) * Math.min(rotLerpRate * dt, 1.0);
 
@@ -239,6 +286,12 @@
                 var force = -SPRING_STIFFNESS * (s.value - s.target) - SPRING_DAMPING * s.velocity;
                 s.velocity += force * dt;
                 s.value += s.velocity * dt;
+
+                // Resting snap
+                if (Math.abs(s.target - s.value) < 0.001 && Math.abs(s.velocity) < 0.001) {
+                    s.value = s.target;
+                    s.velocity = 0;
+                }
 
                 // Drawer vector: +X forward, +Y forward along isometric axis, +Z slight lift
                 var pullX = s.value * 68;
