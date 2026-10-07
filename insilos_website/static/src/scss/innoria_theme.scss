@@ -218,6 +218,13 @@ body:has(#innoria_main_nav) {
             transform: translateY(-1px);
         }
     }
+
+    .inn-plat-preview-btn,
+    .inn-sol-preview-btn {
+        background: linear-gradient(135deg, #0ABBDB 0%, #0284C7 100%) !important;
+        border: none !important;
+        font-weight: 700;
+    }
 }
 
 // Full-Width Executive Mega-Menu Panels for Innoria
@@ -2638,6 +2645,23 @@ body:has(#innoria_main_nav) {
             .tab-product-name {
                 color: #FFFFFF;
             }
+        }
+
+        &[data-scene-id="cloud-fabric"] {
+            --tab-color: #00F0FF;
+            --tab-glow: rgba(0, 240, 255, 0.4);
+        }
+        &[data-scene-id="ai-swarm"] {
+            --tab-color: #FF8000;
+            --tab-glow: rgba(255, 128, 0, 0.4);
+        }
+        &[data-scene-id="smart-erp"] {
+            --tab-color: #00F0FF;
+            --tab-glow: rgba(0, 240, 255, 0.4);
+        }
+        &[data-scene-id="trust-security"] {
+            --tab-color: #10B981;
+            --tab-glow: rgba(16, 185, 129, 0.4);
         }
 
         .tab-top-row {
