@@ -1053,11 +1053,11 @@ class Tier2BoundaryCornerCaseTests(unittest.TestCase):
 
     # --- B4: HTTP Routing & Boundary Endpoints (Live Server Assertions) ---
     def test_t2_b4_01_non_existent_page_404(self):
-        """B4.1: Non-existent page returns HTTP 404 Not Found (or 500 in dev exception mode)."""
+        """B4.1: Non-existent page returns HTTP 404 Not Found."""
         client = InnokafeLiveHttpClient(DEFAULT_BASE_URL)
         with self.assertRaises(urllib.error.HTTPError) as ctx:
             client.get("/non-existent-innokafe-page-xyz")
-        self.assertIn(ctx.exception.code, [404, 500])
+        self.assertEqual(ctx.exception.code, 404)
 
     def test_t2_b4_02_non_existent_product_slug(self):
         path = "/products/fake-sku-999"
@@ -1092,7 +1092,7 @@ class Tier2BoundaryCornerCaseTests(unittest.TestCase):
             with urllib.request.urlopen(req) as resp:
                 self.assertIn(resp.status, [200, 400, 404, 405])
         except urllib.error.HTTPError as e:
-            self.assertIn(e.code, [400, 403, 404, 405, 500])
+            self.assertIn(e.code, [400, 403, 404, 405])
 
     def test_t2_b4_09_get_to_post_only_route(self):
         """B4.9: Direct GET to POST-only submission endpoint returns 404 or 405."""
