@@ -187,6 +187,182 @@ INDUSTRIES = {
         "systems": ["MES", "LIMS", "QMS", "Historian", "DCS / SCADA", "EAM"],
         "pdf_filename": "INSILOS_SOLUTION_044_clinic.pdf",
     },
+    "petrochem": {
+        "name": "Petrochemical & Fertilizer Refining",
+        "short_name": "Hóa chất & Lọc hóa dầu",
+        "eyebrow": "PETROCHEMICAL PROCESS RESILIENCE",
+        "title": "Quản trị rủi ro quá trình PSM & Vận hành khép kín cụm tổng hợp Amoniac/Ure.",
+        "summary": (
+            "Kết nối kiểm định rào cản Bow-Tie, cấp phép làm việc nóng e-PTW với cảm biến khí "
+            "CH4/O2/H2S tự động và khóa liên động phân rã an toàn tại nhà máy Đạm Phú Mỹ."
+        ),
+        "image": "/insilos_website/static/src/img/resilience/petrochem_ammonia_plant.jpg",
+        "image_card": "/insilos_website/static/src/img/resilience/petrochem_ammonia_plant.jpg",
+        "image_width": 1920,
+        "image_height": 1080,
+        "image_alt": "Cụm tháp tổng hợp Amoniac và xưởng Urê nhà máy hóa chất Đạm Phú Mỹ",
+        "outcomes": [
+            ("Triệt tiêu rủi ro cháy nổ", "Khóa cứng cấp phép e-PTW nếu cảm biến khí vượt ngưỡng CH4 > 10% LEL."),
+            ("Bảo toàn BHI thời gian thực", "Liên thông chỉ số sức khỏe rào cản Bow-Tie trực tiếp tới sổ cái CRO."),
+            ("Tối ưu chu kỳ đại tu Turnaround", "Cắt giảm 35% thời gian chờ cấp phép làm việc của nhà thầu."),
+            ("Bảo vệ dữ liệu Nghị định 13", "Dynamic Data Masking bảo vệ 100% căn cước công dân và nhật ký kỹ sư."),
+        ],
+        "problems": [
+            ("Rào cản an toàn bị suy biến âm thầm", "Van xả khẩn cấp hoặc hệ thống SIS lỗi kiểm định không lên báo cáo rủi ro."),
+            ("Đo khí thủ công dễ gian lận", "Phiếu đo khí lập trước ca hoặc thiếu chữ ký đối soát hai bên."),
+            ("Chi phí dừng máy khổng lồ", "Dừng dây chuyền tổng hợp Amoniac gây thiệt hại 10-30 tỷ VNĐ mỗi ngày."),
+            ("Rủi ro pháp lý an toàn hóa chất", "Vi phạm OSHA 1910 PSM và Nghị định 113/2017/NĐ-CP về an toàn hóa chất."),
+        ],
+        "applications": [
+            "e-PTW Multi-Gas Interlock (CH4, O2, H2S)",
+            "CCPS / IEC 61511 Bow-Tie Barrier Monitor",
+            "Kellogg Syngas Loop 103-J Digital Sentinel",
+            "Decree 13 DDM Personal Data Firewall",
+            "Fail-Closed Emergency Isolation Matrix",
+            "Turnaround Contractor Safety Passport",
+        ],
+        "workflow": [
+            "Thu thập nồng độ khí tự động từ thiết bị đo hiện trường",
+            "Đối soát ma trận xung đột không gian - thời gian SIMOPS",
+            "Khóa liên động van cô lập LOTO và xác thực Maker-Checker",
+            "Phê duyệt e-PTW điện tử và kích hoạt giám sát rào cản Bow-Tie",
+            "Lưu vết bằng chứng mật mã SHA-256 phục vụ thanh tra an toàn",
+        ],
+        "systems": ["DCS Yokogawa", "SIS Triconex", "SCADA", "SAP PM / ERP", "Maximo EAM", "LIMS"],
+        "pdf_filename": "VR_Scenario_01_Petrochem_CSuite_Board_VI.pdf",
+    },
+    "gas-pipeline": {
+        "name": "Gas Midstream & Transmission Pipeline",
+        "short_name": "Khí đốt & Đường ống dẫn khí",
+        "eyebrow": "MIDSTREAM PIPELINE INTEGRITY",
+        "title": "Bảo vệ toàn vẹn tuyến ống dẫn khí cao áp và trạm phân phối khí Dinh Cố.",
+        "summary": (
+            "Giám sát áp suất 102 barg tuyến ống 26-inch, kiểm soát phóng thoi thông minh Pigging, "
+            "khóa liên động SCADA ESD-201 và bảo vệ hành lang an toàn đường ống khí Nam Côn Sơn."
+        ),
+        "image": "/insilos_website/static/src/img/resilience/gas_pipeline_terminal.jpg",
+        "image_card": "/insilos_website/static/src/img/resilience/gas_pipeline_terminal.jpg",
+        "image_width": 1920,
+        "image_height": 1080,
+        "image_alt": "Trạm tiếp bờ và phân phối khí Dinh Cố thuộc hệ thống đường ống Nam Côn Sơn",
+        "outcomes": [
+            ("Toàn vẹn tuyến ống 100%", "Giám sát ăn mòn catot và áp lực 102 barg liên tục không gián đoạn."),
+            ("Khóa liên động phóng thoi", "Ngăn chặn tuyệt đối mở bẫy thoi Pig Launcher khi chênh áp chưa triệt tiêu."),
+            ("SCADA ESD-201 Interlock", "Tự động khóa van phân đoạn khẩn cấp khi phát hiện rò rỉ khí âm học."),
+            ("Tuân thủ ASME B31.8", "Tự động hóa hồ sơ kiểm định kỹ thuật an toàn đường ống vận chuyển khí."),
+        ],
+        "problems": [
+            ("Áp lực cao tiềm ẩn nổ vỡ", "Áp suất vận hành 102 barg ngoài khơi đòi hỏi ngưỡng an toàn tuyệt đối."),
+            ("Xung đột thao tác tại bẫy thoi", "Rủi ro mở bẫy phóng/nhận thoi khi chưa xả hết khí áp suất dư."),
+            ("Xâm phạm hành lang an toàn", "Thi công trái phép gần tuyến ống khí ngầm đe dọa an ninh năng lượng."),
+            ("Dữ liệu telemetry SCADA phân mảnh", "Tín hiệu RTU dọc tuyến không liên thông với hệ thống quản trị rủi ro."),
+        ],
+        "applications": [
+            "ASME B31.8 Pipeline Integrity Management",
+            "Intelligent Pig Launcher Safety Interlock",
+            "SCADA ESD-201 Sectionalizing Valve Control",
+            "Cathodic Protection Telemetry Monitor",
+            "SIMOPS ROW Right-of-Way Encroachment Shield",
+            "Decree 13 DDM Operator Privacy Guard",
+        ],
+        "workflow": [
+            "Thu nhận telemetry áp suất, lưu lượng từ trạm van ngắt tuyến RTU",
+            "Kiểm định rào cản áp suất dư trước khi cấp phép mở bẫy thoi",
+            "Xác thực quy trình cô lập LOTO cơ khí và khí nén kép",
+            "Kích hoạt lệnh đóng van ESD-201 khi phát hiện sụt áp bất thường",
+            "Tổng hợp hồ sơ an toàn truyền dẫn khí số hóa thời gian thực",
+        ],
+        "systems": ["SCADA Emerson Ovation", "RTU", "GIS Pipeline Map", "SAP EAM", "Honeywell Experion"],
+        "pdf_filename": "VR_Scenario_11_GasPipeline_CSuite_Board_VI.pdf",
+    },
+    "metallurgy": {
+        "name": "Metallurgy & Steel Smelting Complex",
+        "short_name": "Luyện kim & Khai khoáng",
+        "eyebrow": "HEAVY METALLURGY RESILIENCE",
+        "title": "Quản trị rủi ro nhiệt độ cực hạn 1.450°C tại Khu liên hợp Gang thép Hòa Phát Dung Quất.",
+        "summary": (
+            "Giám sát an toàn 4 lò cao 1.080m³, quy trình rót gang lỏng 1.450°C, theo dõi xe bao Torpedo Ladle "
+            "và khóa liên động làm việc trên cao chống ngạt khí CO lò thổi BOF."
+        ),
+        "image": "/insilos_website/static/src/img/resilience/metallurgy_blast_furnace.jpg",
+        "image_card": "/insilos_website/static/src/img/resilience/metallurgy_blast_furnace.jpg",
+        "image_width": 1920,
+        "image_height": 1080,
+        "image_alt": "Toàn cảnh lò cao và luồng gang lỏng rực sáng tại Khu liên hợp Gang thép Hòa Phát Dung Quất",
+        "outcomes": [
+            ("Không sự cố tràn gang lỏng", "Kiểm soát chiều dày áo lò và nhiệt độ vỏ thép bằng cảm biến sợi quang."),
+            ("Phòng ngừa ngộ độc khí CO", "Hệ thống phát hiện rò rỉ khí than lò cao liên động với quạt thông gió."),
+            ("An toàn vận chuyển Torpedo", "Cân đối tải trọng và khóa liên động đường ray xe chở gang lỏng."),
+            ("Tối ưu OEE luyện thép", "Duy trì tỷ lệ vận hành liên tục lò cao >= 98.5% công suất thiết kế."),
+        ],
+        "problems": [
+            ("Kim loại nóng chảy cực kỳ nguy hiểm", "Nhiệt độ 1.450°C gặp nước gây nổ hơi áp lực phá hủy nhà xưởng."),
+            ("Khí độc CO không màu không mùi", "Khí lò cao rò rỉ đe dọa tính mạng công nhân bảo trì trên sàn thao tác."),
+            ("Lão hóa lớp gạch chịu lửa", "Mòn gạch lót thùng rót không phát hiện kịp thời dẫn đến thủng đáy lò."),
+            ("Môi trường khắc nghiệt hỏng cảm biến", "Nhiệt độ cao và bụi kim loại làm sai lệch thiết bị đo lường thông thường."),
+        ],
+        "applications": [
+            "Blast Furnace Thermal Shell Integrity",
+            "Molten Metal Tapping e-PTW Protocol",
+            "CO Gas Leak Spatial Dispersion Sentinel",
+            "Torpedo Ladle Thermal Camera Telemetry",
+            "BOF Converter Oxygen Lance Safety Lock",
+            "Continuous Casting Machine Water Interlock",
+        ],
+        "workflow": [
+            "Đo kiểm nhiệt độ vỏ lò cao qua mạng lưới cảm biến hồng ngoại",
+            "Kiểm tra nồng độ khí độc CO trước khi cấp phép lên sàn thao tác",
+            "Khóa van oxy và khí trơ N2/Ar quy trình luyện thép thứ cấp",
+            "Xác nhận hành lang an toàn tuyến đường sắt vận chuyển gang lỏng",
+            "Lập báo cáo tuân thủ tiêu chuẩn an toàn ngành luyện kim Việt Nam",
+        ],
+        "systems": ["Siemens PCS7", "Danieli Automation", "SCADA Lò Cao", "SAP PP/PM", "MES Luyện Kim"],
+        "pdf_filename": "VR_Scenario_16_Metallurgy_CSuite_Board_VI.pdf",
+    },
+    "thermal-power": {
+        "name": "Supercritical Thermal Power Generation",
+        "short_name": "Nhiệt điện & Trạm 500kV",
+        "eyebrow": "SUPERCRITICAL POWER RESILIENCE",
+        "title": "Quản trị rủi ro áp suất hơi siêu tới hạn 24.2 MPa và cô lập an toàn trạm biến áp 500kV AES Mông Dương.",
+        "summary": (
+            "Khóa an toàn LOTO 500kV kép Lockbox hai người quản lý theo chuẩn NFPA 70E, kiểm soát áp suất hơi 566°C "
+            "và giám sát phát thải CEMS đáp ứng cam kết hợp đồng PPA điện quốc gia."
+        ),
+        "image": "/insilos_website/static/src/img/resilience/thermal_power_substation.jpg",
+        "image_card": "/insilos_website/static/src/img/resilience/thermal_power_substation.jpg",
+        "image_width": 1920,
+        "image_height": 1080,
+        "image_alt": "Trạm biến áp 500kV và đường dây truyền tải điện nhà máy nhiệt điện Mông Dương",
+        "outcomes": [
+            ("0 tai nạn phóng điện cao áp", "Khóa liên động LOTO 500kV Dual-Custody bắt buộc dao tiếp địa đóng hoàn toàn."),
+            ("Đảm bảo độ khả dụng PPA", "Hạn chế tối đa sự cố nhảy lò turbine gây phạt hợp đồng mua bán điện EVN."),
+            ("Tuân thủ phát thải CEMS 100%", "Giám sát trực tuyến khí thải SO2, NOx, bụi mịn truyền về Sở TN&MT."),
+            ("Kiểm soát an toàn đại tu 45 ngày", "Quản lý 1.200 nhà thầu trong kỳ trung tu, đại tu tổ máy không tai nạn."),
+        ],
+        "problems": [
+            ("Phóng điện hồ quang 500kV chết người", "Thao tác nhầm dao cách ly khi máy cắt chưa mở gây hồ quang hủy diệt."),
+            ("Hơi nước siêu tới hạn 24.2 MPa / 566°C", "Rò rỉ vi mô ống sinh hơi lò CFB có thể cắt đứt kim loại như dao laser."),
+            ("Thiệt hại phạt PPA hàng triệu USD", "Mất điện do sự cố nhảy máy cắt chịu phạt hợp đồng nặng nề từ EVN."),
+            ("Quy trình bàn giao cô lập phân mảnh", "Bàn giao chìa khóa hộp LOTO giữa các ca vận hành ghi sổ giấy dễ nhầm lẫn."),
+        ],
+        "applications": [
+            "500kV Dual-Custody LOTO Lockbox (NFPA 70E)",
+            "Boiler Tube Leak Acoustic Early Warning",
+            "Supercritical Steam Steam-Line Safety Lock",
+            "CEMS Continuous Emission Compliance Sentinel",
+            "PPA Availability & KRI Risk Dashboard",
+            "Turnaround Outage Contractor Work Package",
+        ],
+        "workflow": [
+            "Xác nhận máy cắt 500kV đã kéo ra vị trí thí nghiệm (RACKED_OUT)",
+            "Xác nhận dao tiếp địa liên động đã đóng hoàn toàn (EARTH_CLOSED)",
+            "Khóa tối thiểu 2 ổ khóa vật lý vào hộp khóa trung tâm Lockbox",
+            "Thẩm định phiếu công tác điện e-PTW cấp điện áp siêu cao áp",
+            "Phát lệnh cho phép bắt đầu công tác sửa chữa kèm camera giám sát",
+        ],
+        "systems": ["ABB Symphony Plus DCS", "SCADA 500kV", "CEMS Online", "SAP EAM / PM", "PI Historian"],
+        "pdf_filename": "VR_Scenario_06_ThermalPower_CSuite_Board_VI.pdf",
+    },
 }
 
 INDUSTRY_CLUSTERS = [
@@ -894,6 +1070,8 @@ STATIC_PAGE_PATHS = {
     "/sandbox",
     "/showcase-3d",
     "/interactive-3d",
+    "/brochure",
+    "/dossiers",
 }
 DEDICATED_SOLUTION_SLUGS = {
     "trade-compliance",
@@ -901,7 +1079,162 @@ DEDICATED_SOLUTION_SLUGS = {
     "enterprise-knowledge-graph",
     "field-service-intelligence",
 }
-DEDICATED_INDUSTRY_SLUGS = {"logistics", "pharma", "energy", "fsm"}
+DEDICATED_INDUSTRY_SLUGS = {
+    "logistics",
+    "pharma",
+    "energy",
+    "fsm",
+    "petrochem",
+    "gas-pipeline",
+    "metallurgy",
+    "thermal-power",
+}
+
+INDUSTRY_DOSSIER_METADATA = {
+    "petrochem": {
+        "slug": "petrochem",
+        "name": "Petrochemical & Fertilizer Refining",
+        "short_name": "Hóa chất & Lọc hóa dầu",
+        "enterprise": "PVFCCo DPM Phu My (Đạm Phú Mỹ)",
+        "tagline": "Khép Kín Rào Cản Bow-Tie & Khóa An Toàn Đa Cảm Biến Khí Hiện Trường",
+        "primary_asset": "KBR Ammonia Synthesis Loop 103-J & Haldor Topsøe Reformer 101-B",
+        "image": "/insilos_website/static/src/img/resilience/petrochem_ammonia_plant.jpg",
+        "scenarios_count": 5,
+        "scenarios": [
+            {"num": 1, "code": "VR-PETRO-01", "role": "C-Suite & Hội Đồng Quản Trị", "title": "Bảo Toàn Chỉ Số Rào Cản Bow-Tie BHI & Dự Báo Dừng Máy Khẩn Cấp"},
+            {"num": 2, "code": "VR-PETRO-02", "role": "Giám Đốc Vận Hành & An Toàn HSE", "title": "Cấp Phép e-PTW Làm Việc Nóng & Khóa Cứng Đa Khí CH4/O2/H2S"},
+            {"num": 3, "code": "VR-PETRO-03", "role": "CISO, Pháp Chế & DPO Nghị Định 13", "title": "Dynamic Data Masking Bảo Vệ Căn Cước Kỹ Sư & Sổ Khám Sức Khỏe"},
+            {"num": 4, "code": "VR-PETRO-04", "role": "Kỹ Sư An Toàn Quá Trình PSM & SIS", "title": "Khóa Liên Động Ngăn Chặn Đường Dẫn Mất Phòng Vệ (Defenseless Path)"},
+            {"num": 5, "code": "VR-PETRO-05", "role": "Giám Đốc Chuyển Đổi Số & QA/PMO", "title": "Luồng Declarative Chuẩn Hóa & Bằng Chứng Mật Mã CEW 1080p"},
+        ],
+    },
+    "thermal-power": {
+        "slug": "thermal-power",
+        "name": "Supercritical Thermal Power Generation",
+        "short_name": "Nhiệt điện & Trạm 500kV",
+        "enterprise": "AES Mông Dương 2 (1.240 MW) & Trạm 500kV",
+        "tagline": "Cô Lập Kép LOTO 500kV & Giám Sát Phát Thải CEMS Trực Tuyến",
+        "primary_asset": "Supercritical CFB Boiler (24.2 MPa / 566°C) & 500kV GIS Substation",
+        "image": "/insilos_website/static/src/img/resilience/thermal_power_substation.jpg",
+        "scenarios_count": 5,
+        "scenarios": [
+            {"num": 6, "code": "VR-POWER-01", "role": "Ban Lãnh Đạo & Giám Đốc Rủi Ro CRO", "title": "Bảo Toàn Khả Dụng Hợp Đồng PPA & Giám Sát Phát Thải CEMS"},
+            {"num": 7, "code": "VR-POWER-02", "role": "Chỉ Huy Trưởng Điện lực & An Toàn", "title": "Quy Trình LOTO 500kV Dual-Custody Khóa Hộp Trung Tâm Lockbox"},
+            {"num": 8, "code": "VR-POWER-03", "role": "An Ninh Thông Tin Trạm Biến Áp & Legal", "title": "Tuân Thủ An Toàn Thông Tin Hạ Tầng Trọng Yếu & Nghị Định 13"},
+            {"num": 9, "code": "VR-POWER-04", "role": "Kỹ Sư Điều Khiển Tự Động DCS/I&C", "title": "Giám Sát Rung Độ Ổ Trục Turbine & Cảnh Báo Sớm Rò Ống Sinh Hơi"},
+            {"num": 10, "code": "VR-POWER-05", "role": "Trưởng Bộ Phận Đảm Bảo Chất Lượng QA", "title": "Khép Kín Chu Trình Deming PDCA Kỳ Đại Tu 45 Ngày 1.200 Nhà Thầu"},
+        ],
+    },
+    "gas-pipeline": {
+        "slug": "gas-pipeline",
+        "name": "Gas Midstream & Transmission Pipeline",
+        "short_name": "Khí đốt & Đường ống dẫn khí",
+        "enterprise": "Nam Côn Sơn Pipeline NCSP & Trạm Dinh Cố",
+        "tagline": "Toàn Vẹn Tuyến Ống Cao Áp 102 barg & Khóa Liên Động SCADA ESD-201",
+        "primary_asset": "26-inch 371km Trunkline & Intelligent Pig Launcher Trap",
+        "image": "/insilos_website/static/src/img/resilience/gas_pipeline_terminal.jpg",
+        "scenarios_count": 5,
+        "scenarios": [
+            {"num": 11, "code": "VR-PIPE-01", "role": "Ban Điều Hành & Phó TGĐ Vận Chuyển Khí", "title": "Quản Trị Rủi Ro Toàn Vẹn Tuyến Ống 102 barg Chuẩn ASME B31.8"},
+            {"num": 12, "code": "VR-PIPE-02", "role": "Trưởng Trạm Tiếp Bờ & An Toàn HSE", "title": "Khóa An Toàn Bẫy Phóng Thoi Thông Minh Pig Launcher"},
+            {"num": 13, "code": "VR-PIPE-03", "role": "Giám Đốc Pháp Chế & An Ninh Mạng CISO", "title": "Bảo Mật Tọa Độ Tuyến Ống & Giám Sát An Ninh Hành Lang Tuyến"},
+            {"num": 14, "code": "VR-PIPE-04", "role": "Kỹ Sư SCADA & Tự Động Hóa RTU Tuyến", "title": "Khóa Liên Động Van Phân Đoạn Khẩn Cấp SCADA ESD-201"},
+            {"num": 15, "code": "VR-PIPE-05", "role": "Trưởng Ban Chuyển Đổi Số & Quản Lý Dự Án", "title": "Số Hóa Bằng Chứng Giám Sát Ăn Mòn Catot & Nhật Ký Vận Hành Tuyến"},
+        ],
+    },
+    "metallurgy": {
+        "slug": "metallurgy",
+        "name": "Metallurgy & Steel Smelting Complex",
+        "short_name": "Luyện kim & Khai khoáng",
+        "enterprise": "Khu Liên Hợp Gang Thép Hòa Phát Dung Quất",
+        "tagline": "Kiểm Soát Nhiệt Độ Cực Hạn 1.450°C & Khóa An Toàn Khí Than CO",
+        "primary_asset": "4x 1.080m³ Blast Furnaces & Torpedo Ladle Car Fleet",
+        "image": "/insilos_website/static/src/img/resilience/metallurgy_blast_furnace.jpg",
+        "scenarios_count": 5,
+        "scenarios": [
+            {"num": 16, "code": "VR-STEEL-01", "role": "Hội Đồng Quản Trị & Ban Giám Đốc", "title": "Bảo Toàn OEE Lò Cao 98.5% & Loại Trừ Rủi Ro Tràn Gang Lỏng 1.450°C"},
+            {"num": 17, "code": "VR-STEEL-02", "role": "Giám Đốc Lò Cao & Trưởng Ban An Toàn", "title": "Quy Trình e-PTW Mở Lỗ Ra Gang & Khóa An Toàn Đường Ray Torpedo"},
+            {"num": 18, "code": "VR-STEEL-03", "role": "Trưởng Phòng Pháp Chế, Môi Trường & DPO", "title": "Tuân Thủ An Toàn Môi Trường Luyện Kim & Bảo Mật Dữ Liệu Nhân Sự"},
+            {"num": 19, "code": "VR-STEEL-04", "role": "Kỹ Sư An Toàn Quá Trình & Tự Động Lò Cao", "title": "Hệ Thống Cảnh Báo Khí CO Không Gian Hẹp & Khóa Oxy Lò Thổi BOF"},
+            {"num": 20, "code": "VR-STEEL-05", "role": "Trưởng Ban Cải Tiến Kaizen & Kiểm Định", "title": "Chứng Nhận Kiểm Định Bằng Bằng Chứng Mật Mã Merkle DAG Bất Biến"},
+        ],
+    },
+    "pharma": {
+        "slug": "pharma",
+        "name": "Pharmaceutical Manufacturing & Cleanrooms",
+        "short_name": "Dược phẩm GxP & Phòng sạch",
+        "enterprise": "Dược Hậu Giang (DHG Pharma) & Tiêu Chuẩn EU-GMP",
+        "tagline": "Kiểm Soát Lô Hoàng Kim Golden Batch & Toàn Vẹn Dữ Liệu 21 CFR Part 11",
+        "primary_asset": "Grade A/B/C/D Cleanroom Complex & Lyophilizer Freeze Dryers",
+        "image": "/insilos_website/static/src/img/resilience/pharma_gxp_cleanroom.jpg",
+        "scenarios_count": 5,
+        "scenarios": [
+            {"num": 21, "code": "VR-PHARMA-01", "role": "Ban Tổng Giám Đốc & Giám Đốc Chất Lượng CQA", "title": "Toàn Vẹn Dữ Liệu Lô Sản Xuất & Ngăn Ngừa Thu Hồi Thuốc Tiêu Chuẩn FDA"},
+            {"num": 22, "code": "VR-PHARMA-02", "role": "Giám Đốc Xưởng Sản Xuất & Đảm Bảo Vệ Sinh", "title": "Kiểm Soát Chênh Áp Phòng Sạch ΔP >= 15 Pa & e-PTW Khử Trùng VHP"},
+            {"num": 23, "code": "VR-PHARMA-03", "role": "CISO, Thanh Tra Pháp Chế & DPO Dược Phẩm", "title": "Kiểm Soát Audit Trail 21 CFR Part 11 & Dynamic Data Masking Thử Nghiệm Lâm Sàng"},
+            {"num": 24, "code": "VR-PHARMA-04", "role": "Kỹ Sư Tự Động Hóa SCADA/BMS Phòng Sạch", "title": "Giám Sát Chu Trình Đông Khô Lyophilization & Khóa An Toàn Van Nồi Hấp"},
+            {"num": 25, "code": "VR-PHARMA-05", "role": "Trưởng Phòng Thẩm Định Validation & PMO", "title": "Số Hóa Hồ Sơ Thẩm Định Thiết Bị DQ/IQ/OQ/PQ Bằng Chứng Số Hóa"},
+        ],
+    },
+}
+
+INDUSTRY_DOSSIER_SCENARIOS = {
+    "petrochem": {
+        1: "VR_Scenario_01_Petrochem_CSuite_Board_VI.pdf",
+        2: "VR_Scenario_02_Petrochem_Operations_HSE_VI.pdf",
+        3: "VR_Scenario_03_Petrochem_CISO_Legal_DPO_VI.pdf",
+        4: "VR_Scenario_04_Petrochem_ProcessSafety_SIS_VI.pdf",
+        5: "VR_Scenario_05_Petrochem_DigitalTrans_QA_VI.pdf",
+    },
+    "thermal-power": {
+        1: "VR_Scenario_06_ThermalPower_CSuite_Board_VI.pdf",
+        2: "VR_Scenario_07_ThermalPower_Operations_HSE_VI.pdf",
+        3: "VR_Scenario_08_ThermalPower_CISO_Legal_DPO_VI.pdf",
+        4: "VR_Scenario_09_ThermalPower_ProcessSafety_SIS_VI.pdf",
+        5: "VR_Scenario_10_ThermalPower_DigitalTrans_QA_VI.pdf",
+        6: "VR_Scenario_06_ThermalPower_CSuite_Board_VI.pdf",
+        7: "VR_Scenario_07_ThermalPower_Operations_HSE_VI.pdf",
+        8: "VR_Scenario_08_ThermalPower_CISO_Legal_DPO_VI.pdf",
+        9: "VR_Scenario_09_ThermalPower_ProcessSafety_SIS_VI.pdf",
+        10: "VR_Scenario_10_ThermalPower_DigitalTrans_QA_VI.pdf",
+    },
+    "gas-pipeline": {
+        1: "VR_Scenario_11_GasPipeline_CSuite_Board_VI.pdf",
+        2: "VR_Scenario_12_GasPipeline_Operations_HSE_VI.pdf",
+        3: "VR_Scenario_13_GasPipeline_CISO_Legal_DPO_VI.pdf",
+        4: "VR_Scenario_14_GasPipeline_ProcessSafety_SIS_VI.pdf",
+        5: "VR_Scenario_15_GasPipeline_DigitalTrans_QA_VI.pdf",
+        11: "VR_Scenario_11_GasPipeline_CSuite_Board_VI.pdf",
+        12: "VR_Scenario_12_GasPipeline_Operations_HSE_VI.pdf",
+        13: "VR_Scenario_13_GasPipeline_CISO_Legal_DPO_VI.pdf",
+        14: "VR_Scenario_14_GasPipeline_ProcessSafety_SIS_VI.pdf",
+        15: "VR_Scenario_15_GasPipeline_DigitalTrans_QA_VI.pdf",
+    },
+    "metallurgy": {
+        1: "VR_Scenario_16_Metallurgy_CSuite_Board_VI.pdf",
+        2: "VR_Scenario_17_Metallurgy_Operations_HSE_VI.pdf",
+        3: "VR_Scenario_18_Metallurgy_CISO_Legal_DPO_VI.pdf",
+        4: "VR_Scenario_19_Metallurgy_ProcessSafety_SIS_VI.pdf",
+        5: "VR_Scenario_20_Metallurgy_DigitalTrans_QA_VI.pdf",
+        16: "VR_Scenario_16_Metallurgy_CSuite_Board_VI.pdf",
+        17: "VR_Scenario_17_Metallurgy_Operations_HSE_VI.pdf",
+        18: "VR_Scenario_18_Metallurgy_CISO_Legal_DPO_VI.pdf",
+        19: "VR_Scenario_19_Metallurgy_ProcessSafety_SIS_VI.pdf",
+        20: "VR_Scenario_20_Metallurgy_DigitalTrans_QA_VI.pdf",
+    },
+    "pharma": {
+        1: "VR_Scenario_21_PharmaGxP_CSuite_Board_VI.pdf",
+        2: "VR_Scenario_22_PharmaGxP_Operations_HSE_VI.pdf",
+        3: "VR_Scenario_23_PharmaGxP_CISO_Legal_DPO_VI.pdf",
+        4: "VR_Scenario_24_PharmaGxP_ProcessSafety_SIS_VI.pdf",
+        5: "VR_Scenario_25_PharmaGxP_DigitalTrans_QA_VI.pdf",
+        21: "VR_Scenario_21_PharmaGxP_CSuite_Board_VI.pdf",
+        22: "VR_Scenario_22_PharmaGxP_Operations_HSE_VI.pdf",
+        23: "VR_Scenario_23_PharmaGxP_CISO_Legal_DPO_VI.pdf",
+        24: "VR_Scenario_24_PharmaGxP_ProcessSafety_SIS_VI.pdf",
+        25: "VR_Scenario_25_PharmaGxP_DigitalTrans_QA_VI.pdf",
+    },
+}
 
 
 def _is_valid_slug(slug: str) -> bool:
@@ -929,6 +1262,8 @@ STATIC_URLS = [
     "/sandbox",
     "/showcase-3d",
     "/interactive-3d",
+    "/brochure",
+    "/dossiers",
 ]
 
 
@@ -973,12 +1308,24 @@ class InsilosWebsite(http.Controller):
             "industry_clusters": INDUSTRY_CLUSTERS,
             "extended_industries": EXTENDED_INDUSTRIES,
             "industry_101_registry": INDUSTRY_101_REGISTRY,
+            "industry_dossiers": INDUSTRY_DOSSIER_METADATA,
         }
         # Website Designer chỉ gắn branding (data-oe-model) khi main_object là
         # website.page (xem website/models/is_qweb.py:50-55). Route Python tự
         # render thì main_object mặc định là chính view, nên block bị khoá.
-        # Only query website.page for registered top-level static pages to avoid redundant DB roundtrips
         current_path = request.httprequest.path
+        if current_path.startswith("/en"):
+            request.env.context = dict(request.env.context, lang="en_US")
+            values["lang"] = "en_US"
+            values["is_english"] = True
+        elif current_path.startswith("/vi"):
+            request.env.context = dict(request.env.context, lang="vi_VN")
+            values["lang"] = "vi_VN"
+            values["is_english"] = False
+        else:
+            values["lang"] = request.env.context.get("lang", "vi_VN")
+            values["is_english"] = values["lang"] == "en_US"
+
         if current_path in STATIC_PAGE_PATHS:
             page = request.env["website.page"].sudo().search(
                 [("url", "=", current_path)], limit=1
@@ -993,7 +1340,7 @@ class InsilosWebsite(http.Controller):
         values.update(extra)
         return values
 
-    @http.route("/", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/", "/en", "/vi"], type="http", auth="public", website=True, sitemap=True)
     def home(self, **kwargs):
         host = (request.httprequest.host or "").lower()
         website_name = (request.website.name or "").lower() if getattr(request, "website", None) else ""
@@ -1002,19 +1349,19 @@ class InsilosWebsite(http.Controller):
                 return request.render("insilos_website.innoria_homepage_template", self._base_values())
         return request.render("insilos_website.insilos_homepage", self._base_values())
 
-    @http.route(["/platform", "/artificial-intelligence-platform", "/ai-solutions", "/vi/platform", "/vi/artificial-intelligence-platform", "/vi/ai-solutions"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/platform", "/artificial-intelligence-platform", "/ai-solutions", "/vi/platform", "/vi/artificial-intelligence-platform", "/vi/ai-solutions", "/en/platform", "/en/artificial-intelligence-platform", "/en/ai-solutions"], type="http", auth="public", website=True, sitemap=True)
     def platform(self, **kwargs):
         return request.render("insilos_website.insilos_platform_page", self._base_values())
 
-    @http.route(["/no-code-platform", "/vi/no-code-platform"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/no-code-platform", "/vi/no-code-platform", "/en/no-code-platform"], type="http", auth="public", website=True, sitemap=True)
     def no_code_platform(self, **kwargs):
         return request.render("insilos_website.innoria_digiforce_page", self._base_values())
 
-    @http.route(["/blockchain", "/vi/blockchain", "/zencode", "/vi/zencode", "/zencode-ent", "/vi/zencode-ent"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/blockchain", "/vi/blockchain", "/zencode", "/vi/zencode", "/zencode-ent", "/vi/zencode-ent", "/en/blockchain", "/en/zencode", "/en/zencode-ent"], type="http", auth="public", website=True, sitemap=True)
     def blockchain(self, **kwargs):
         return request.render("insilos_website.innoria_blockchain_page", self._base_values())
 
-    @http.route(["/solutions", "/erp-combine-with-ai", "/vi/solutions", "/vi/erp-combine-with-ai", "/insilos", "/vi/insilos", "/insilos-erp", "/vi/insilos-erp"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/solutions", "/erp-combine-with-ai", "/vi/solutions", "/vi/erp-combine-with-ai", "/insilos", "/vi/insilos", "/insilos-erp", "/vi/insilos-erp", "/en/solutions", "/en/erp-combine-with-ai", "/en/insilos", "/en/insilos-erp"], type="http", auth="public", website=True, sitemap=True)
     def solutions(self, **kwargs):
         return request.render("insilos_website.insilos_solutions_page", self._base_values())
 
@@ -1059,7 +1406,7 @@ class InsilosWebsite(http.Controller):
             self._base_values(solution=solution_data, solution_key=solution, related_industries=related_industries),
         )
 
-    @http.route(["/industries", "/industry", "/ultra-ai-vision", "/vi/industries", "/vi/ultra-ai-vision"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/industries", "/industry", "/ultra-ai-vision", "/vi/industries", "/vi/ultra-ai-vision", "/en/industries", "/en/industry", "/en/ultra-ai-vision"], type="http", auth="public", website=True, sitemap=True)
     def industries(self, **kwargs):
         return request.render("insilos_website.insilos_industries_page", self._base_values())
 
@@ -1122,14 +1469,15 @@ class InsilosWebsite(http.Controller):
         ]
         if industry in DEDICATED_INDUSTRY_SLUGS:
             template_name = f"insilos_website.insilos_industry_{industry.replace('-', '_')}_page"
-            return request.render(
-                template_name,
-                self._base_values(
-                    industry=industry_data,
-                    industry_key=industry,
-                    related_solutions=related_solutions,
-                ),
-            )
+            if request.env.ref(template_name, raise_if_not_found=False):
+                return request.render(
+                    template_name,
+                    self._base_values(
+                        industry=industry_data,
+                        industry_key=industry,
+                        related_solutions=related_solutions,
+                    ),
+                )
         return request.render(
             "insilos_website.insilos_industry_page",
             self._base_values(
@@ -1169,7 +1517,10 @@ class InsilosWebsite(http.Controller):
             return request.not_found()
 
         # 1. Check local candidates
+        module_path = os.path.dirname(os.path.dirname(__file__))
         candidate_paths = [
+            os.path.join(module_path, "static", "src", "docs", "dossiers", pdf_filename),
+            os.path.join(module_path, "static", "src", "docs", pdf_filename),
             os.path.join("/home/zen/insilos_ee/pdf_standalone", pdf_filename),
             os.path.join("/app/pdf_standalone", pdf_filename),
             os.path.join("/home/insilos/.local/share/Insilos/pdf_standalone", pdf_filename),
@@ -1228,6 +1579,159 @@ class InsilosWebsite(http.Controller):
 
         return request.not_found()
 
+    @http.route(
+        ["/brochure", "/solutions/grc/brochure"],
+        type="http",
+        auth="public",
+        website=True,
+        sitemap=True,
+    )
+    def brochure(self, **kwargs):
+        values = self._base_values(
+            title="Insilos GRC Vertical Resilience™ — Enterprise Brochure",
+            brochure_pdf_url="/brochure/download",
+            dossiers_url="/dossiers",
+            **kwargs,
+        )
+        if request.env.ref("insilos_website.insilos_brochure_page", raise_if_not_found=False):
+            return request.render("insilos_website.insilos_brochure_page", values)
+        return request.render("insilos_website.insilos_solutions_page", values)
+
+    @http.route(
+        [
+            "/brochure/download",
+            "/solutions/grc/brochure/download",
+            "/brochure/pdf",
+        ],
+        type="http",
+        auth="public",
+        website=True,
+        sitemap=False,
+    )
+    def brochure_download(self, **kwargs):
+        module_path = os.path.dirname(os.path.dirname(__file__))
+        candidates = [
+            os.path.join(module_path, "static", "src", "docs", "insilos_vertical_resilience_brochure.pdf"),
+            "/home/zen/VerticalRisk/docs/sales/pdf/Insilos_GRC_Vertical_Resilience_Enterprise_Brochure.pdf",
+            os.path.join(os.getcwd(), "enterprise", "insilos_website", "static", "src", "docs", "insilos_vertical_resilience_brochure.pdf"),
+        ]
+        pdf_path = None
+        for c in candidates:
+            if os.path.exists(c):
+                pdf_path = c
+                break
+        if not pdf_path:
+            return request.not_found()
+        try:
+            with open(pdf_path, "rb") as f:
+                pdf_data = f.read()
+        except OSError:
+            return request.not_found()
+        filename = "Insilos_GRC_Vertical_Resilience_Enterprise_Brochure.pdf"
+        disposition = "attachment" if kwargs.get("dl") or kwargs.get("download") else "inline"
+        return request.make_response(
+            pdf_data,
+            headers=[
+                ("Content-Type", "application/pdf"),
+                ("Content-Disposition", f'{disposition}; filename="{filename}"'),
+                ("Content-Length", str(len(pdf_data))),
+                ("Cache-Control", "public, max-age=86400"),
+            ],
+        )
+
+    @http.route(
+        ["/dossiers", "/solutions/grc/dossiers"],
+        type="http",
+        auth="public",
+        website=True,
+        sitemap=True,
+    )
+    def dossiers_hub(self, **kwargs):
+        values = self._base_values(
+            title="Executive Industry Dossiers Hub — Vertical Resilience™",
+            industry_dossiers=INDUSTRY_DOSSIER_METADATA,
+            brochure_pdf_url="/brochure/download",
+            **kwargs,
+        )
+        if request.env.ref("insilos_website.insilos_dossiers_hub_page", raise_if_not_found=False):
+            return request.render("insilos_website.insilos_dossiers_hub_page", values)
+        if request.env.ref("insilos_website.insilos_resources_page", raise_if_not_found=False):
+            return request.render("insilos_website.insilos_resources_page", values)
+        return request.render("insilos_website.insilos_solutions_page", values)
+
+    @http.route(
+        ["/dossiers/<string:industry_slug>"],
+        type="http",
+        auth="public",
+        website=True,
+        sitemap=True,
+    )
+    def dossier_detail(self, industry_slug, **kwargs):
+        if not _is_valid_slug(industry_slug) or industry_slug not in INDUSTRY_DOSSIER_METADATA:
+            return request.not_found()
+        dossier_data = INDUSTRY_DOSSIER_METADATA[industry_slug]
+        industry_data = INDUSTRIES.get(industry_slug) or INDUSTRY_101_REGISTRY.get(industry_slug) or dossier_data
+        values = self._base_values(
+            dossier=dossier_data,
+            industry=industry_data,
+            industry_slug=industry_slug,
+            industry_key=industry_slug,
+            **kwargs,
+        )
+        template_name = f"insilos_website.insilos_industry_{industry_slug.replace('-', '_')}_page"
+        if request.env.ref(template_name, raise_if_not_found=False):
+            return request.render(template_name, values)
+        if request.env.ref("insilos_website.insilos_industry_page", raise_if_not_found=False):
+            return request.render("insilos_website.insilos_industry_page", values)
+        return request.render("insilos_website.insilos_solutions_page", values)
+
+    @http.route(
+        [
+            "/dossiers/<string:industry_slug>/scenario/<int:scenario_num>/pdf",
+            "/dossier/<string:industry_slug>/scenario/<int:scenario_num>/pdf",
+        ],
+        type="http",
+        auth="public",
+        website=True,
+        sitemap=False,
+    )
+    def dossier_scenario_pdf(self, industry_slug, scenario_num, **kwargs):
+        if not _is_valid_slug(industry_slug) or industry_slug not in INDUSTRY_DOSSIER_SCENARIOS:
+            return request.not_found()
+        scenarios = INDUSTRY_DOSSIER_SCENARIOS[industry_slug]
+        if scenario_num not in scenarios:
+            return request.not_found()
+        pdf_filename = scenarios[scenario_num]
+
+        module_path = os.path.dirname(os.path.dirname(__file__))
+        candidates = [
+            os.path.join(module_path, "static", "src", "docs", "dossiers", pdf_filename),
+            os.path.join("/home/zen/VerticalRisk/docs/sales/pdf_vi", pdf_filename),
+            os.path.join(os.getcwd(), "enterprise", "insilos_website", "static", "src", "docs", "dossiers", pdf_filename),
+        ]
+        pdf_path = None
+        for c in candidates:
+            if os.path.exists(c):
+                pdf_path = c
+                break
+        if not pdf_path:
+            return request.not_found()
+        try:
+            with open(pdf_path, "rb") as f:
+                pdf_data = f.read()
+        except OSError:
+            return request.not_found()
+        disposition = "attachment" if kwargs.get("dl") or kwargs.get("download") else "inline"
+        return request.make_response(
+            pdf_data,
+            headers=[
+                ("Content-Type", "application/pdf"),
+                ("Content-Disposition", f'{disposition}; filename="{pdf_filename}"'),
+                ("Content-Length", str(len(pdf_data))),
+                ("Cache-Control", "public, max-age=86400"),
+            ],
+        )
+
     @http.route("/resources", type="http", auth="public", website=True, sitemap=True)
     def resources(self, **kwargs):
         return request.render("insilos_website.insilos_resources_page", self._base_values())
@@ -1262,11 +1766,11 @@ class InsilosWebsite(http.Controller):
     def pricing(self, **kwargs):
         return request.render("insilos_website.insilos_pricing_page", self._base_values())
 
-    @http.route(["/about", "/company", "/vi/about", "/vi/company"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/about", "/company", "/vi/about", "/vi/company", "/en/about", "/en/company"], type="http", auth="public", website=True, sitemap=True)
     def about(self, **kwargs):
         return request.render("insilos_website.insilos_about_page", self._base_values())
 
-    @http.route(["/contactus", "/contactus-1", "/vi/contactus", "/vi/contactus-1"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/contactus", "/contactus-1", "/vi/contactus", "/vi/contactus-1", "/en/contactus", "/en/contactus-1"], type="http", auth="public", website=True, sitemap=True)
     def contactus(self, **kwargs):
         host = (request.httprequest.host or "").lower()
         website_name = (request.website.name or "").lower() if getattr(request, "website", None) else ""

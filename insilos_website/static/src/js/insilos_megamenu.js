@@ -337,17 +337,66 @@
                 closeAllMegaMenus();
             }
         });
+
+        initLanguageSwitcher();
+    }
+
+    function initLanguageSwitcher() {
+        const btnVi = document.getElementById('lang_toggle_vi');
+        const btnEn = document.getElementById('lang_toggle_en');
+        if (!btnVi || !btnEn) return;
+
+        const currentPath = window.location.pathname;
+        const isEn = currentPath.startsWith('/en');
+
+        if (isEn) {
+            btnEn.style.setProperty('background', '#0ABBDB', 'important');
+            btnEn.style.setProperty('color', '#05101E', 'important');
+            btnEn.style.setProperty('box-shadow', '0 0 10px rgba(10,187,219,0.35)', 'important');
+            btnVi.style.setProperty('background', 'transparent', 'important');
+            btnVi.style.setProperty('color', '#94A3B8', 'important');
+            btnVi.style.setProperty('box-shadow', 'none', 'important');
+
+            let vnPath = currentPath.replace(/^\/en(\/|$)/, '/');
+            if (!vnPath) vnPath = '/';
+            btnVi.setAttribute('href', vnPath);
+            btnEn.setAttribute('href', currentPath);
+
+            const ctaText = document.querySelector('.nav-cta-text');
+            if (ctaText) ctaText.textContent = "3-Hour Consultation";
+        } else {
+            btnVi.style.setProperty('background', '#0ABBDB', 'important');
+            btnVi.style.setProperty('color', '#05101E', 'important');
+            btnVi.style.setProperty('box-shadow', '0 0 10px rgba(10,187,219,0.35)', 'important');
+            btnEn.style.setProperty('background', 'transparent', 'important');
+            btnEn.style.setProperty('color', '#94A3B8', 'important');
+            btnEn.style.setProperty('box-shadow', 'none', 'important');
+
+            const enPath = '/en' + (currentPath === '/' ? '' : currentPath);
+            btnEn.setAttribute('href', enPath);
+            btnVi.setAttribute('href', currentPath);
+        }
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initMegaMenu);
+        document.addEventListener('DOMContentLoaded', () => {
+            initMegaMenu();
+            initLanguageSwitcher();
+        });
     } else {
         initMegaMenu();
+        initLanguageSwitcher();
     }
 
     // Re-init on Insilos ERP navigation / OWL events
-    window.addEventListener('load', initMegaMenu);
+    window.addEventListener('load', () => {
+        initMegaMenu();
+        initLanguageSwitcher();
+    });
     document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) initMegaMenu();
+        if (!document.hidden) {
+            initMegaMenu();
+            initLanguageSwitcher();
+        }
     });
 })();
