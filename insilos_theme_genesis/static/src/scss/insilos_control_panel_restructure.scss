@@ -303,7 +303,7 @@
   .o_cp_searchview {
     height: 34px !important;
     min-height: 34px !important;
-    border-radius: 20px !important;
+    border-radius: var(--insilos-radius-sm, 4px) !important;
     background-color: var(--insilos-bg-surface, #ffffff) !important;
     border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
     padding: 0 10px !important;
@@ -312,8 +312,8 @@
     transition: all var(--insilos-transition-fast);
 
     &:focus-within {
-      border-color: #2481cc !important;
-      box-shadow: 0 0 0 2px rgba(36, 129, 204, 0.18) !important;
+      border-color: var(--insilos-border-focus, #0f62fe) !important;
+      box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.18) !important;
     }
 
     input,
@@ -539,7 +539,7 @@
     height: 32px !important;
     background-color: rgba(0, 0, 0, 0.03) !important;
     border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-    border-radius: 20px !important;
+    border-radius: var(--insilos-radius-sm, 4px) !important;
     padding: 0 6px 0 10px !important;
 
     .o_pager_value {
@@ -639,7 +639,7 @@
     height: 32px !important;
     min-width: 32px !important;
     padding: 0 !important;
-    border-radius: 20px !important;
+    border-radius: var(--insilos-radius-sm, 4px) !important;
     border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
     background-color: rgba(36, 129, 204, 0.06) !important;
     color: var(--insilos-primary, #0b2e64) !important;
