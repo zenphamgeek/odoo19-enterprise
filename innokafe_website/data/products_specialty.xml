@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ===================================================================== -->
+    <!-- INNOKAFE SPECIALTY COFFEE ATTRIBUTES & ATTRIBUTE VALUES               -->
+    <!-- ===================================================================== -->
+
+    <!-- Pack Size Attribute (250g, 500g, 1kg, Hộp 10 gói) -->
+    <record id="innokafe_attribute_pack_size" model="product.attribute">
+        <field name="name">Quy cách đóng gói</field>
+        <field name="display_type">pills</field>
+        <field name="create_variant">always</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="innokafe_val_pack_250g" model="product.attribute.value">
+        <field name="name">250g</field>
+        <field name="attribute_id" ref="innokafe_attribute_pack_size"/>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="innokafe_val_pack_500g" model="product.attribute.value">
+        <field name="name">500g</field>
+        <field name="attribute_id" ref="innokafe_attribute_pack_size"/>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="innokafe_val_pack_1kg" model="product.attribute.value">
+        <field name="name">1kg</field>
+        <field name="attribute_id" ref="innokafe_attribute_pack_size"/>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="innokafe_val_pack_box10" model="product.attribute.value">
+        <field name="name">Hộp 10 gói</field>
+        <field name="attribute_id" ref="innokafe_attribute_pack_size"/>
+        <field name="sequence">4</field>
+    </record>
+
+    <!-- Grind Options Attribute (Nguyên hạt, Espresso, Phin, Pour-over) -->
+    <record id="innokafe_attribute_grind" model="product.attribute">
+        <field name="name">Mức độ xay</field>
+        <field name="display_type">select</field>
+        <field name="create_variant">no_variant</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="innokafe_val_grind_whole" model="product.attribute.value">
+        <field name="name">Nguyên hạt (Whole Bean)</field>
+        <field name="attribute_id" ref="innokafe_attribute_grind"/>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="innokafe_val_grind_espresso" model="product.attribute.value">
+        <field name="name">Xay mịn Espresso</field>
+        <field name="attribute_id" ref="innokafe_attribute_grind"/>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="innokafe_val_grind_phin" model="product.attribute.value">
+        <field name="name">Xay vừa Pha Phin</field>
+        <field name="attribute_id" ref="innokafe_attribute_grind"/>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="innokafe_val_grind_coarse" model="product.attribute.value">
+        <field name="name">Xay thô Cold Brew / Pour-over</field>
+        <field name="attribute_id" ref="innokafe_attribute_grind"/>
+        <field name="sequence">4</field>
+    </record>
+
+    <!-- ===================================================================== -->
+    <!-- 6 SIGNATURE SPECIALTY COFFEE SKUS                                    -->
+    <!-- ===================================================================== -->
+
+    <!-- SKU 1: Đắk Lắk Highland Fine Robusta Natural -->
+    <record id="product_sku_daklak_robusta" model="product.template">
+        <field name="name">Đắk Lắk Highland Fine Robusta Natural</field>
+        <field name="default_code">INNO-ROBUSTA-NAT-01</field>
+        <field name="list_price">125000.0</field>
+        <field name="type">consu</field>
+        <field name="sale_ok">True</field>
+        <field name="is_published">True</field>
+        <field name="website_id" ref="base.default_website"/>
+        <field name="innokafe_elevation">750 masl (Cư M'gar, Buôn Ma Thuột)</field>
+        <field name="innokafe_varietal">Robusta Sẻ thuần chủng</field>
+        <field name="innokafe_process">natural</field>
+        <field name="innokafe_cupping_score">84.50</field>
+        <field name="innokafe_roast_level">dark</field>
+        <field name="innokafe_tasting_notes">Sô-cô-la đen 85%, Hạt dẻ nướng, Mật mía, Gỗ sồi</field>
+        <field name="innokafe_sensory_vector">{"aroma": 8.5, "acidity": 3.5, "body": 9.5, "sweetness": 8.5, "cleancup": 8.0, "aftertaste": 9.0}</field>
+        <field name="description_sale">Bản sắc đại ngàn — Vị đậm đà ngút ngàn, ngọt sâu hậu vị. Thu hái quả chín 100% bằng tay tại Cư M'gar, Đắk Lắk, phơi giàn tự nhiên 28 ngày. Thích hợp pha Phin truyền thống, Cà phê sữa đá và Espresso đậm chất Việt.</field>
+    </record>
+
+    <record id="ptal_sku_daklak_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_daklak_robusta"/>
+        <field name="attribute_id" ref="innokafe_attribute_pack_size"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_pack_250g'),
+            ref('innokafe_val_pack_500g'),
+            ref('innokafe_val_pack_1kg'),
+        ])]"/>
+    </record>
+
+    <record id="ptal_sku_daklak_grind" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_daklak_robusta"/>
+        <field name="attribute_id" ref="innokafe_attribute_grind"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_grind_whole'),
+            ref('innokafe_val_grind_espresso'),
+            ref('innokafe_val_grind_phin'),
+            ref('innokafe_val_grind_coarse'),
+        ])]"/>
+    </record>
+
+    <!-- SKU 2: Cầu Đất Mountain Bourbon Washed -->
+    <record id="product_sku_caudat_bourbon" model="product.template">
+        <field name="name">Cầu Đất Mountain Bourbon Washed</field>
+        <field name="default_code">INNO-ARABICA-WASH-02</field>
+        <field name="list_price">185000.0</field>
+        <field name="type">consu</field>
+        <field name="sale_ok">True</field>
+        <field name="is_published">True</field>
+        <field name="website_id" ref="base.default_website"/>
+        <field name="innokafe_elevation">1.620 masl (Trạm Hành, Cầu Đất)</field>
+        <field name="innokafe_varietal">Arabica Bourbon &amp; Catimor</field>
+        <field name="innokafe_process">washed</field>
+        <field name="innokafe_cupping_score">86.75</field>
+        <field name="innokafe_roast_level">light</field>
+        <field name="innokafe_tasting_notes">Hoa nhài trắng, Cam Bergamot, Táo xanh, Trà Earl Grey</field>
+        <field name="innokafe_sensory_vector">{"aroma": 9.5, "acidity": 9.0, "body": 6.0, "sweetness": 8.0, "cleancup": 9.5, "aftertaste": 8.5}</field>
+        <field name="description_sale">Tinh hoa sương mù — Chua thanh hoa nhài, trong trẻo tao nhã. Canh tác tại độ cao 1.620m tại Cầu Đất, Lâm Đồng, lên men kiểm soát 32 giờ và phơi giàn nắng tự nhiên 14 ngày. Lý tưởng cho Pour-over V60, Cold Brew và Drip Bag.</field>
+    </record>
+
+    <record id="ptal_sku_caudat_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_caudat_bourbon"/>
+        <field name="attribute_id" ref="innokafe_attribute_pack_size"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_pack_250g'),
+            ref('innokafe_val_pack_500g'),
+            ref('innokafe_val_pack_1kg'),
+        ])]"/>
+    </record>
+
+    <record id="ptal_sku_caudat_grind" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_caudat_bourbon"/>
+        <field name="attribute_id" ref="innokafe_attribute_grind"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_grind_whole'),
+            ref('innokafe_val_grind_espresso'),
+            ref('innokafe_val_grind_phin'),
+            ref('innokafe_val_grind_coarse'),
+        ])]"/>
+    </record>
+
+    <!-- SKU 3: Innokafe Heritage Signature Red Honey -->
+    <record id="product_sku_signature_honey" model="product.template">
+        <field name="name">Innokafe Heritage Signature Red Honey</field>
+        <field name="default_code">INNO-SIGNATURE-HONEY-03</field>
+        <field name="list_price">155000.0</field>
+        <field name="type">consu</field>
+        <field name="sale_ok">True</field>
+        <field name="is_published">True</field>
+        <field name="website_id" ref="base.default_website"/>
+        <field name="innokafe_elevation">1.200 - 1.600 masl (Cầu Đất x Cư M'gar)</field>
+        <field name="innokafe_varietal">Catimor x Robusta Sẻ</field>
+        <field name="innokafe_process">honey</field>
+        <field name="innokafe_cupping_score">85.50</field>
+        <field name="innokafe_roast_level">medium</field>
+        <field name="innokafe_tasting_notes">Mật ong rừng, Caramel bơ, Táo đỏ, Hạnh nhân</field>
+        <field name="innokafe_sensory_vector">{"aroma": 9.0, "acidity": 6.8, "body": 8.0, "sweetness": 9.2, "cleancup": 8.8, "aftertaste": 8.8}</field>
+        <field name="description_sale">Khúc giao hòa đỉnh cao — Ngọt ngào mật ong rừng, kem bơ sánh quyện. Sự kết hợp hoàn mỹ giữa 70% Arabica Cầu Đất và 30% Fine Robusta Cư M'gar sơ chế Red Honey giữ 75% lớp nhầy đường. Hoàn hảo cho Espresso, Phin hiện đại và Americano.</field>
+    </record>
+
+    <record id="ptal_sku_honey_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_signature_honey"/>
+        <field name="attribute_id" ref="innokafe_attribute_pack_size"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_pack_250g'),
+            ref('innokafe_val_pack_500g'),
+            ref('innokafe_val_pack_1kg'),
+        ])]"/>
+    </record>
+
+    <record id="ptal_sku_honey_grind" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_signature_honey"/>
+        <field name="attribute_id" ref="innokafe_attribute_grind"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_grind_whole'),
+            ref('innokafe_val_grind_espresso'),
+            ref('innokafe_val_grind_phin'),
+            ref('innokafe_val_grind_coarse'),
+        ])]"/>
+    </record>
+
+    <!-- SKU 4: Innokafe Espresso Barista Master 80/20 -->
+    <record id="product_sku_barista_master" model="product.template">
+        <field name="name">Innokafe Espresso Barista Master 80/20</field>
+        <field name="default_code">INNO-HORECA-BARISTA-06</field>
+        <field name="list_price">115000.0</field>
+        <field name="type">consu</field>
+        <field name="sale_ok">True</field>
+        <field name="is_published">True</field>
+        <field name="website_id" ref="base.default_website"/>
+        <field name="innokafe_elevation">800 - 1.500 masl</field>
+        <field name="innokafe_varietal">Fine Robusta &amp; Catimor</field>
+        <field name="innokafe_process">honey</field>
+        <field name="innokafe_cupping_score">84.00</field>
+        <field name="innokafe_roast_level">dark</field>
+        <field name="innokafe_tasting_notes">Ca cao đắng 70%, Bơ đậu phộng, Caramel khói, Vỏ cam sấy</field>
+        <field name="innokafe_sensory_vector">{"aroma": 8.2, "acidity": 4.0, "body": 9.2, "sweetness": 8.0, "cleancup": 8.2, "aftertaste": 8.8}</field>
+        <field name="description_sale">Chuẩn mực quầy bar chuyên nghiệp — Crema dày mịn, ổn định chiết xuất. Công thức vàng 80% Fine Robusta và 20% Arabica Cầu Đất tối ưu hóa cho máy pha Espresso thương mại, quán cà phê và thức uống nền sữa (Latte, Cappuccino).</field>
+    </record>
+
+    <record id="ptal_sku_barista_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_barista_master"/>
+        <field name="attribute_id" ref="innokafe_attribute_pack_size"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_pack_250g'),
+            ref('innokafe_val_pack_500g'),
+            ref('innokafe_val_pack_1kg'),
+        ])]"/>
+    </record>
+
+    <record id="ptal_sku_barista_grind" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_barista_master"/>
+        <field name="attribute_id" ref="innokafe_attribute_grind"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_grind_whole'),
+            ref('innokafe_val_grind_espresso'),
+            ref('innokafe_val_grind_phin'),
+            ref('innokafe_val_grind_coarse'),
+        ])]"/>
+    </record>
+
+    <!-- SKU 5: Innokafe Cold Brew Blend Summer Citrus -->
+    <record id="product_sku_coldbrew_citrus" model="product.template">
+        <field name="name">Innokafe Cold Brew Blend Summer Citrus</field>
+        <field name="default_code">INNO-COLDBREW-CITRUS-05</field>
+        <field name="list_price">175000.0</field>
+        <field name="type">consu</field>
+        <field name="sale_ok">True</field>
+        <field name="is_published">True</field>
+        <field name="website_id" ref="base.default_website"/>
+        <field name="innokafe_elevation">1.550 masl (Cầu Đất, Lâm Đồng)</field>
+        <field name="innokafe_varietal">100% Arabica Catimor</field>
+        <field name="innokafe_process">washed</field>
+        <field name="innokafe_cupping_score">86.00</field>
+        <field name="innokafe_roast_level">light</field>
+        <field name="innokafe_tasting_notes">Cam vàng Valencia, Đào chín, Mật hoa dại, Hương chanh</field>
+        <field name="innokafe_sensory_vector">{"aroma": 9.2, "acidity": 8.5, "body": 5.5, "sweetness": 9.0, "cleancup": 9.2, "aftertaste": 8.0}</field>
+        <field name="description_sale">Sảng khoái mùa hè — Chua ngọt bùng nổ, ủ lạnh 24h ngọt ngào. Rang sáng (Light Roast) đánh thức các nốt hương trái cây nhiệt đới tươi mới. Tuyệt phẩm cho ủ lạnh Cold Brew giải nhiệt và Espresso Tonic.</field>
+    </record>
+
+    <record id="ptal_sku_coldbrew_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_coldbrew_citrus"/>
+        <field name="attribute_id" ref="innokafe_attribute_pack_size"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_pack_250g'),
+            ref('innokafe_val_pack_500g'),
+            ref('innokafe_val_pack_1kg'),
+        ])]"/>
+    </record>
+
+    <record id="ptal_sku_coldbrew_grind" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_coldbrew_citrus"/>
+        <field name="attribute_id" ref="innokafe_attribute_grind"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_grind_whole'),
+            ref('innokafe_val_grind_espresso'),
+            ref('innokafe_val_grind_phin'),
+            ref('innokafe_val_grind_coarse'),
+        ])]"/>
+    </record>
+
+    <!-- SKU 6: Hộp Drip Bag Khám Phá Nghệ Nhân -->
+    <record id="product_sku_drip_bag_box" model="product.template">
+        <field name="name">Hộp Drip Bag Khám Phá Nghệ Nhân</field>
+        <field name="default_code">INNO-DRIP-EXPLORER-04</field>
+        <field name="list_price">165000.0</field>
+        <field name="type">consu</field>
+        <field name="sale_ok">True</field>
+        <field name="is_published">True</field>
+        <field name="website_id" ref="base.default_website"/>
+        <field name="innokafe_elevation">750 - 1.620 masl (Đa vùng trồng)</field>
+        <field name="innokafe_varietal">Tuyển tập Arabica &amp; Fine Robusta</field>
+        <field name="innokafe_process">natural</field>
+        <field name="innokafe_cupping_score">85.00</field>
+        <field name="innokafe_roast_level">medium</field>
+        <field name="innokafe_tasting_notes">Caramel, Hạt dẻ, Quả mọng, Hương hoa</field>
+        <field name="innokafe_sensory_vector">{"aroma": 8.8, "acidity": 7.0, "body": 7.5, "sweetness": 8.2, "cleancup": 9.0, "aftertaste": 8.2}</field>
+        <field name="description_sale">Tiện lợi mọi lúc mọi nơi — Đẳng cấp cà phê phin giấy lọc Nhật Bản. Hộp 10 túi drip bag tiện lợi tuyển tập 4 dòng hương vị thượng hạng từ cao nguyên Đắk Lắk và Lâm Đồng. Chỉ cần 2 phút với nước sôi để thưởng thức tách cà phê mộc nguyên bản tại văn phòng.</field>
+    </record>
+
+    <record id="ptal_sku_drip_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="product_sku_drip_bag_box"/>
+        <field name="attribute_id" ref="innokafe_attribute_pack_size"/>
+        <field name="value_ids" eval="[Command.set([
+            ref('innokafe_val_pack_box10'),
+        ])]"/>
+    </record>
+
+    <!-- Configure Variant Price Extras for 500g and 1kg -->
+    <function model="product.template" name="_innokafe_setup_variant_prices"/>
+</odoo>

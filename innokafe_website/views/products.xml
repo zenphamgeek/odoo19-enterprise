@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="products_page" name="Danh Mục Cà Phê Đặc Sản &amp; Drip Bag Nghệ Nhân">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Danh Mục Hạt Cà Phê Đặc Sản SCA &amp; Drip Bag — InnoKafe</t>
+            <t t-set="meta_description">Khám phá 6 dòng hạt cà phê đặc sản Việt Nam nguyên bản từ Đắk Lắk và Cầu Đất. Điểm chấm SCA 84+, thông số thổ nhưỡng minh bạch, tùy chọn khối lượng 250g/500g/1kg và 4 cỡ xay linh hoạt.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5 inno-espresso-bg">
+                <div class="oe_structure oe_empty" id="oe_structure_products_top"/>
+
+                <!-- ============================================================= -->
+                <!-- 1. PAGE HEADER & FILTER NAVIGATION                            -->
+                <!-- ============================================================= -->
+                <section class="s_cover o_colored_level o_cc o_cc5 pt100 pb60 position-relative overflow-hidden" data-snippet="s_cover" data-name="Products Catalogue Header" style="background: linear-gradient(180deg, #1E120B 0%, #2C1810 100%);">
+                    <div class="container position-relative">
+                        <div class="row align-items-center g-4">
+                            <div class="col-lg-8">
+                                <div class="inno-pill-badge mb-3">
+                                    <span class="inno-live-pulse"/>
+                                    <span>SPECIALTY COFFEE CATALOGUE // SCA STANDARD 84+</span>
+                                </div>
+                                <h1 class="display-4 fw-bold text-white mb-3">
+                                    Danh Mục Hạt Cà Phê Đặc Sản &amp; <span class="inno-amber-text">Nghệ Nhân Rang Mộc</span>
+                                </h1>
+                                <p class="lead text-secondary mb-4 col-lg-11 p-0 lh-base">
+                                    Mỗi mẻ cà phê InnoKafe xuất xưởng là một tác phẩm được bảo chứng bằng điểm chấm cupping quốc tế, thông số nông học minh bạch và hồ sơ hương vị độc bản. 100% hạt rang mộc Hot-Air, đóng gói van một chiều Thụy Sĩ.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <a href="#sku_list" class="btn btn-sm btn-primary rounded-pill px-3 py-2">Tất Cả 6 Sản Phẩm</a>
+                                    <a href="#sensory_anchor" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">Biểu Đồ Hương Vị Sensory</a>
+                                    <a href="#grind_guide" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">Cẩm Nang Cỡ Xay &amp; Pha Chế</a>
+                                    <a href="/taste-profiler" class="btn btn-sm btn-outline-warning rounded-pill px-3 py-2">Chưa Rõ Gu? Làm Quiz Ngay</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 text-lg-end">
+                                <div class="p-4 rounded-4 bg-black bg-opacity-50 border border-secondary border-opacity-25 text-start">
+                                    <div class="text-warning small fw-bold text-uppercase mb-2">QUY CHUẨN XUẤT XƯỞNG</div>
+                                    <ul class="list-unstyled text-secondary small mb-0 d-flex flex-column gap-2">
+                                        <li class="d-flex align-items-center gap-2">
+                                            <i class="fa fa-check text-warning"/> <span>Rang mới định kỳ mỗi tuần</span>
+                                        </li>
+                                        <li class="d-flex align-items-center gap-2">
+                                            <i class="fa fa-check text-warning"/> <span>Van 1 chiều WICOVALVE Thụy Sĩ</span>
+                                        </li>
+                                        <li class="d-flex align-items-center gap-2">
+                                            <i class="fa fa-check text-warning"/> <span>Cam kết Cà Phê Mộc 4 Không</span>
+                                        </li>
+                                        <li class="d-flex align-items-center gap-2">
+                                            <i class="fa fa-check text-warning"/> <span>Miễn phí đổi trả trong 7 ngày</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- 2. SPECIALTY COFFEE 6 SKUs CATALOGUE                          -->
+                <!-- ============================================================= -->
+                <section id="sku_list" class="s_product_list o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_three_columns" data-name="6 Coffee SKUs Catalogue">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <div class="inno-pill-badge mb-3">
+                                <span>TUYỂN TẬP 6 SKU // SIGNATURE COFFEE SELECTION</span>
+                            </div>
+                            <h2 class="display-5 fw-bold text-white mb-2">
+                                Bộ Sưu Tập Hạt Cà Phê Đặc Sản InnoKafe
+                            </h2>
+                            <p class="text-secondary mx-auto col-lg-7">
+                                Chọn quy cách đóng gói (250g, 500g, 1kg) và mức độ xay tương thích với dụng cụ pha chế tại nhà hoặc văn phòng của bạn.
+                            </p>
+                        </div>
+
+                        <div class="row g-4">
+                            <!-- ================= SKU 1 ================= -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-ROBUSTA-NAT-01" data-price-250="125000" data-price-500="235000" data-price-1000="440000">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-danger bg-opacity-75 text-white font-monospace">FINE ROBUSTA</span>
+                                            <span class="badge bg-warning text-dark font-monospace fw-bold">84.50 SCA</span>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2">
+                                            Đắk Lắk Highland Fine Robusta Natural
+                                        </h3>
+                                        <div class="text-warning small mb-3">
+                                            Cư M'gar, Đắk Lắk · Độ cao 750m · Giống Robusta Sẻ
+                                        </div>
+                                        <p class="text-secondary small mb-3 lh-base">
+                                            Sơ chế Natural phơi chậm 28 ngày trên giàn lưới. Thể chất đầm dày (Heavy body), sô-cô-la đen 85%, hạt dẻ nướng, caramel khói và hậu vị ngọt sâu lắng kéo dài.
+                                        </p>
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                            <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Natural Khô Tự Nhiên (28 ngày)</div>
+                                            <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Medium-Dark (Agtron 48)</div>
+                                            <div class="text-secondary"><strong>Nốt hương:</strong> Dark Chocolate · Roasted Hazelnut · Molasses</div>
+                                        </div>
+
+                                        <!-- Selector controls -->
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Quy Cách Đóng Gói:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select">
+                                                <option value="250" selected="selected">Túi 250g (125.000 đ)</option>
+                                                <option value="500">Túi 500g (235.000 đ - Tiết kiệm 12%)</option>
+                                                <option value="1000">Gói 1kg (440.000 đ - Giá sỉ)</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select">
+                                                <option value="whole" selected="selected">Nguyên Hạt (Whole Bean)</option>
+                                                <option value="phin">Xay Vừa (Pha Phin Truyền Thống)</option>
+                                                <option value="espresso">Xay Mịn (Máy Espresso Gia Đình)</option>
+                                                <option value="coldbrew">Xay Thô (Cold Brew / French Press)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 mt-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-secondary small d-block">Giá thanh toán:</span>
+                                            <strong class="fs-4 text-warning inno-price-display">125.000 đ</strong>
+                                        </div>
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="1">
+                                            <span>Thêm Vào Giỏ</span>
+                                            <i class="fa fa-cart-plus"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ================= SKU 2 ================= -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-ARABICA-WASH-02" data-price-250="185000" data-price-500="350000" data-price-1000="660000">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-info bg-opacity-75 text-white font-monospace">SPECIALTY ARABICA</span>
+                                            <span class="badge bg-warning text-dark font-monospace fw-bold">86.75 SCA</span>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2">
+                                            Cầu Đất Mountain Bourbon Washed
+                                        </h3>
+                                        <div class="text-warning small mb-3">
+                                            Trạm Hành, Cầu Đất · Độ cao 1.620m · Giống Bourbon &amp; Catimor
+                                        </div>
+                                        <p class="text-secondary small mb-3 lh-base">
+                                            Sơ chế Fully Washed lên men kiểm soát 32 giờ. Hương hoa nhài trắng tỏa ngát, cam Bergamot thanh tao, táo xanh và trà Earl Grey. Tách cà phê trong trẻo tuyệt đối.
+                                        </p>
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                            <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Fully Washed (Lên men 32h, phơi 14d)</div>
+                                            <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Light-Medium (Agtron 72)</div>
+                                            <div class="text-secondary"><strong>Nốt hương:</strong> White Jasmine · Bergamot · Green Apple · Peach</div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Quy Cách Đóng Gói:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select">
+                                                <option value="250" selected="selected">Túi 250g (185.000 đ)</option>
+                                                <option value="500">Túi 500g (350.000 đ - Tiết kiệm 12%)</option>
+                                                <option value="1000">Gói 1kg (660.000 đ - Giá sỉ)</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select">
+                                                <option value="whole" selected="selected">Nguyên Hạt (Whole Bean)</option>
+                                                <option value="pourover">Xay Thô Vừa (Pour-over V60 / Drip)</option>
+                                                <option value="phin">Xay Vừa (Pha Phin)</option>
+                                                <option value="coldbrew">Xay Thô (Ủ Lạnh Cold Brew)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 mt-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-secondary small d-block">Giá thanh toán:</span>
+                                            <strong class="fs-4 text-warning inno-price-display">185.000 đ</strong>
+                                        </div>
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="2">
+                                            <span>Thêm Vào Giỏ</span>
+                                            <i class="fa fa-cart-plus"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ================= SKU 3 ================= -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-SIGNATURE-HONEY-03" data-price-250="155000" data-price-500="295000" data-price-1000="550000">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-warning text-dark font-monospace fw-bold">HERITAGE BLEND</span>
+                                            <span class="badge bg-warning text-dark font-monospace fw-bold">85.50 SCA</span>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2">
+                                            Innokafe Heritage Signature Red Honey
+                                        </h3>
+                                        <div class="text-warning small mb-3">
+                                            Blend 70% Arabica Cầu Đất x 30% Robusta Đắk Lắk
+                                        </div>
+                                        <p class="text-secondary small mb-3 lh-base">
+                                            Khúc giao hòa hoàn hảo giữa độ thơm nồng của Arabica và thể chất đầm của Robusta. Sơ chế Red Honey giữ 75% lớp nhầy đường cho vị ngọt ngào như kem bơ mật ong.
+                                        </p>
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                            <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Red Honey (Giữ 75% lớp nhầy đường)</div>
+                                            <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Medium Roast (Agtron 58)</div>
+                                            <div class="text-secondary"><strong>Nốt hương:</strong> Wild Honey · Butter Caramel · Red Apple · Almond</div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Quy Cách Đóng Gói:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select">
+                                                <option value="250" selected="selected">Túi 250g (155.000 đ)</option>
+                                                <option value="500">Túi 500g (295.000 đ - Tiết kiệm 12%)</option>
+                                                <option value="1000">Gói 1kg (550.000 đ - Giá sỉ)</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select">
+                                                <option value="whole" selected="selected">Nguyên Hạt (Whole Bean)</option>
+                                                <option value="espresso">Xay Mịn (Máy Espresso)</option>
+                                                <option value="phin">Xay Vừa (Phin Hiện Đại)</option>
+                                                <option value="coldbrew">Xay Thô (Cold Brew)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 mt-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-secondary small d-block">Giá thanh toán:</span>
+                                            <strong class="fs-4 text-warning inno-price-display">155.000 đ</strong>
+                                        </div>
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="3">
+                                            <span>Thêm Vào Giỏ</span>
+                                            <i class="fa fa-cart-plus"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ================= SKU 4 ================= -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-DRIP-EXPLORER-04" data-price-single="165000">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-success bg-opacity-75 text-white font-monospace">DRIP BAG BOX</span>
+                                            <span class="badge bg-warning text-dark font-monospace fw-bold">85.00 SCA</span>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2">
+                                            Hộp Drip Bag Khám Phá Nghệ Nhân (10 Gói)
+                                        </h3>
+                                        <div class="text-warning small mb-3">
+                                            Đa Vùng Trồng · Phin Giấy Túi Lọc Chuẩn Nhật Bản
+                                        </div>
+                                        <p class="text-secondary small mb-3 lh-base">
+                                            Thưởng thức cà phê đặc sản mọi lúc mọi nơi chỉ với một ấm nước sôi. Hộp 10 túi lọc gồm 5 loại hạt tuyển chọn được đóng gói khí trơ ni-tơ bảo toàn 100% hương thơm.
+                                        </p>
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                            <div class="text-secondary mb-1"><strong>Quy cách:</strong> Hộp 10 gói x 15g (Túi lọc màng dệt Nhật)</div>
+                                            <div class="text-secondary mb-1"><strong>Thành phần:</strong> 2 Robusta Dark, 2 Arabica Washed, 2 Red Honey, 2 Cold Brew, 2 Signature</div>
+                                            <div class="text-secondary"><strong>Cách pha:</strong> Châm 150ml nước sôi 92-95°C trong 2 phút</div>
+                                        </div>
+                                        <div class="p-2 rounded-2 bg-black bg-opacity-30 border border-secondary border-opacity-15 mb-3 text-center">
+                                            <span class="text-secondary small">Tuyệt vời cho: Bàn làm việc · Du lịch · Quà tặng sang trọng</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 mt-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-secondary small d-block">Hộp 10 túi lọc:</span>
+                                            <strong class="fs-4 text-warning">165.000 đ</strong>
+                                        </div>
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="4">
+                                            <span>Thêm Vào Giỏ</span>
+                                            <i class="fa fa-cart-plus"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ================= SKU 5 ================= -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-COLDBREW-CITRUS-05" data-price-250="175000" data-price-500="330000" data-price-1000="620000">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-primary bg-opacity-75 text-white font-monospace">COLD BREW BLEND</span>
+                                            <span class="badge bg-warning text-dark font-monospace fw-bold">86.00 SCA</span>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2">
+                                            Innokafe Cold Brew Blend Summer Citrus
+                                        </h3>
+                                        <div class="text-warning small mb-3">
+                                            Cầu Đất, Lâm Đồng (1.550m) · 100% Arabica Catimor
+                                        </div>
+                                        <p class="text-secondary small mb-3 lh-base">
+                                            Được phối trộn và rang sáng (Light Roast) chuyên biệt cho phương pháp ngâm lạnh. Tách cold brew giải phóng vị cam vàng Valencia bùng nổ, đào chín, mật hoa dại sảng khoái.
+                                        </p>
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                            <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Natural x Washed Blend</div>
+                                            <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Light Roast (Agtron 78)</div>
+                                            <div class="text-secondary"><strong>Nốt hương:</strong> Valencia Orange · Ripe Peach · Wild Blossom · Citrus</div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Quy Cách Đóng Gói:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select">
+                                                <option value="250" selected="selected">Túi 250g (175.000 đ)</option>
+                                                <option value="500">Túi 500g (330.000 đ - Tiết kiệm 12%)</option>
+                                                <option value="1000">Gói 1kg (620.000 đ - Giá sỉ)</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select">
+                                                <option value="coldbrew" selected="selected">Xay Thô Chuẩn Cold Brew (1.000 - 1.200 μm)</option>
+                                                <option value="whole">Nguyên Hạt (Tự xay tại nhà)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 mt-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-secondary small d-block">Giá thanh toán:</span>
+                                            <strong class="fs-4 text-warning inno-price-display">175.000 đ</strong>
+                                        </div>
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="5">
+                                            <span>Thêm Vào Giỏ</span>
+                                            <i class="fa fa-cart-plus"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ================= SKU 6 ================= -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-HORECA-BARISTA-06" data-price-single="380000">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-secondary bg-opacity-75 text-white font-monospace">HORECA BARISTA</span>
+                                            <span class="badge bg-warning text-dark font-monospace fw-bold">84.00 SCA</span>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2">
+                                            Innokafe Espresso Barista Master 80/20
+                                        </h3>
+                                        <div class="text-warning small mb-3">
+                                            80% Fine Robusta Đắk Lắk x 20% Arabica Cầu Đất
+                                        </div>
+                                        <p class="text-secondary small mb-3 lh-base">
+                                            Công thức vàng cho các quán cà phê chuyên nghiệp. Chiết xuất lớp crema vàng óng ánh cực dày, bền bỉ, hòa quyện xuất sắc cùng sữa đặc hoặc sữa tươi thanh trùng.
+                                        </p>
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                            <div class="text-secondary mb-1"><strong>Quy cách:</strong> Gói 1.000g (1kg) Horeca van 1 chiều</div>
+                                            <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Medium-Dark (Agtron 50)</div>
+                                            <div class="text-secondary"><strong>Nốt hương:</strong> Cocoa 70% · Peanut Butter · Smoke Caramel · Citrus Peel</div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select">
+                                                <option value="whole" selected="selected">Nguyên Hạt Cho Máy Xay Quán</option>
+                                                <option value="espresso">Xay Mịn Cho Máy Espresso 9 bar</option>
+                                                <option value="phin">Xay Vừa Cho Phin Lớn</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 mt-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-secondary small d-block">Gói 1kg Horeca:</span>
+                                            <strong class="fs-4 text-warning">380.000 đ</strong>
+                                        </div>
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="6">
+                                            <span>Thêm Vào Giỏ</span>
+                                            <i class="fa fa-cart-plus"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- 3. INTERACTIVE SENSORY WHEEL PREVIEW ANCHOR                   -->
+                <!-- ============================================================= -->
+                <section id="sensory_anchor" class="s_text_block o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_text_block" data-name="Sensory Wheel Visualizer" style="background: linear-gradient(135deg, #1E120B 0%, #2C1810 100%);">
+                    <div class="container">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-6">
+                                <div class="inno-pill-badge mb-3">
+                                    <span class="inno-live-pulse"/>
+                                    <span>CHUẨN MỰC CẢM QUAN // SENSORY RADAR</span>
+                                </div>
+                                <h2 class="display-5 fw-bold text-white mb-3">
+                                    Vòng Tròn Hương Vị Sensory Radar 6 Trục
+                                </h2>
+                                <p class="text-secondary mb-4 lh-base">
+                                    Mỗi dòng hạt tại InnoKafe đều được hội đồng Q Grader định lượng chính xác trên biểu đồ giác quan 6 trục chuẩn mực của Hiệp hội Cà phê Đặc sản Quốc tế (SCA):
+                                </p>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-6">
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                            <strong class="text-white small d-block mb-1">1. Aroma (Hương thơm)</strong>
+                                            <span class="text-secondary" style="font-size: 0.8rem;">Độ lan tỏa và độ phức hợp của khí thơm.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                            <strong class="text-white small d-block mb-1">2. Acidity (Độ chua thanh)</strong>
+                                            <span class="text-secondary" style="font-size: 0.8rem;">Độ sáng, độ tươi tao nhã của axit hữu cơ.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                            <strong class="text-white small d-block mb-1">3. Body (Thể chất)</strong>
+                                            <span class="text-secondary" style="font-size: 0.8rem;">Độ dày dặn, độ sánh mượt trên vòm miệng.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                            <strong class="text-white small d-block mb-1">4. Sweetness (Độ ngọt)</strong>
+                                            <span class="text-secondary" style="font-size: 0.8rem;">Vị ngọt tự nhiên của đường caramel chín.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                            <strong class="text-white small d-block mb-1">5. Clean Cup (Trong trẻo)</strong>
+                                            <span class="text-secondary" style="font-size: 0.8rem;">Độ sạch vị, không tạp chất hay ám mùi.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                            <strong class="text-white small d-block mb-1">6. Aftertaste (Hậu vị)</strong>
+                                            <span class="text-secondary" style="font-size: 0.8rem;">Độ sâu lắng, lưu hương sau khi nuốt.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="/taste-profiler" class="btn btn-outline-secondary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2">
+                                    <span>Trải Nghiệm Thử Thách Vị Giác (Profiler)</span>
+                                    <i class="fa fa-arrow-right"/>
+                                </a>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card bg-black bg-opacity-60 border border-warning border-opacity-30 rounded-4 p-4 text-center text-white">
+                                    <h5 class="fw-bold text-white mb-2">Biểu Đồ So Khớp Cảm Quan Mẫu</h5>
+                                    <div class="text-secondary small mb-4">Innokafe Heritage Signature Red Honey (85.50 SCA)</div>
+
+                                    <!-- SVG Radar Chart Preview -->
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <svg viewBox="0 0 300 300" width="280" height="280" class="overflow-visible">
+                                            <defs>
+                                                <radialGradient id="sensoryGradPreview" cx="50%" cy="50%" r="50%">
+                                                    <stop offset="0%" stop-color="#D48842" stop-opacity="0.6"/>
+                                                    <stop offset="100%" stop-color="#1E120B" stop-opacity="0.2"/>
+                                                </radialGradient>
+                                            </defs>
+                                            <!-- Concentric rings -->
+                                            <polygon points="150,110 184.6,130 184.6,170 150,190 115.4,170 115.4,130" fill="none" stroke="rgba(247,242,234,0.15)" stroke-width="1"/>
+                                            <polygon points="150,80 210.6,115 210.6,185 150,220 89.4,185 89.4,115" fill="none" stroke="rgba(247,242,234,0.15)" stroke-width="1"/>
+                                            <polygon points="150,50 236.6,100 236.6,200 150,250 63.4,200 63.4,100" fill="none" stroke="rgba(212,136,66,0.3)" stroke-width="1.5"/>
+                                            <!-- Spoke lines -->
+                                            <line x1="150" y1="150" x2="150" y2="50" stroke="rgba(247,242,234,0.2)" stroke-dasharray="2,2"/>
+                                            <line x1="150" y1="150" x2="236.6" y2="100" stroke="rgba(247,242,234,0.2)" stroke-dasharray="2,2"/>
+                                            <line x1="150" y1="150" x2="236.6" y2="200" stroke="rgba(247,242,234,0.2)" stroke-dasharray="2,2"/>
+                                            <line x1="150" y1="150" x2="150" y2="250" stroke="rgba(247,242,234,0.2)" stroke-dasharray="2,2"/>
+                                            <line x1="150" y1="150" x2="63.4" y2="200" stroke="rgba(247,242,234,0.2)" stroke-dasharray="2,2"/>
+                                            <line x1="150" y1="150" x2="63.4" y2="100" stroke="rgba(247,242,234,0.2)" stroke-dasharray="2,2"/>
+                                            <!-- Data Polygon for Red Honey -->
+                                            <polygon points="150.0,60.0 208.9,116.0 219.3,190.0 150.0,242.0 73.8,194.0 73.8,106.0" fill="url(#sensoryGradPreview)" stroke="#D48842" stroke-width="2.5"/>
+                                            <!-- Labels -->
+                                            <text x="150" y="38" text-anchor="middle" fill="#F7F2EA" font-size="11" font-weight="600">Aroma (9.0)</text>
+                                            <text x="246" y="96" text-anchor="start" fill="#F7F2EA" font-size="11" font-weight="600">Acidity (6.8)</text>
+                                            <text x="246" y="212" text-anchor="start" fill="#F7F2EA" font-size="11" font-weight="600">Body (8.0)</text>
+                                            <text x="150" y="268" text-anchor="middle" fill="#F7F2EA" font-size="11" font-weight="600">Sweetness (9.2)</text>
+                                            <text x="54" y="212" text-anchor="end" fill="#F7F2EA" font-size="11" font-weight="600">Clean Cup (8.8)</text>
+                                            <text x="54" y="96" text-anchor="end" fill="#F7F2EA" font-size="11" font-weight="600">Aftertaste (8.8)</text>
+                                        </svg>
+                                    </div>
+                                    <div class="small text-secondary">
+                                        Trải nghiệm tương tác toàn phần trên trang <a href="/taste-profiler" class="text-warning text-decoration-none">Tìm Gu Cà Phê</a>.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- 4. GRIND & BREW GUIDE MATRIX TABLE                            -->
+                <!-- ============================================================= -->
+                <section id="grind_guide" class="s_text_block o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_text_block" data-name="Grind &amp; Brew Guide">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <div class="inno-pill-badge mb-3">
+                                <span>KỸ THUẬT PHA CHẾ // BREWING RIGOR</span>
+                            </div>
+                            <h2 class="display-5 fw-bold text-white mb-2">
+                                Hướng Dẫn Cỡ Xay &amp; Phương Pháp Pha Chuẩn
+                            </h2>
+                            <p class="text-secondary mx-auto col-lg-7">
+                                Cỡ xay chuẩn xác là chìa khóa để khai thác tối ưu hương vị và độ ngọt tự nhiên của từng dòng hạt.
+                            </p>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-dark table-bordered border-secondary border-opacity-25 text-secondary align-middle">
+                                <thead class="table-black text-white text-uppercase small">
+                                    <tr>
+                                        <th style="min-width: 150px;">Cỡ Xay</th>
+                                        <th style="min-width: 130px;">Kích Thước</th>
+                                        <th style="min-width: 180px;">Dụng Cụ Phù Hợp</th>
+                                        <th style="min-width: 120px;">Tỷ Lệ Pha</th>
+                                        <th style="min-width: 120px;">Nhiệt Độ Nước</th>
+                                        <th style="min-width: 120px;">Thời Gian</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-white fw-bold">Nguyên Hạt (Whole Bean)</td>
+                                        <td>Nguyên vẹn</td>
+                                        <td>Bảo quản tối ưu, tự xay trước khi pha</td>
+                                        <td>Tùy dụng cụ</td>
+                                        <td>—</td>
+                                        <td>Dùng trong 60 ngày</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-white fw-bold">Xay Mịn (Fine Grind)</td>
+                                        <td>200 – 350 μm</td>
+                                        <td>Máy pha Espresso 9 bar, Staresso</td>
+                                        <td>1 : 2 hoặc 1 : 2.5</td>
+                                        <td>90°C – 93°C</td>
+                                        <td>25 – 30 giây</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-white fw-bold">Xay Vừa (Medium Grind)</td>
+                                        <td>600 – 800 μm</td>
+                                        <td>Phin nhôm truyền thống, Moka Pot</td>
+                                        <td>1 : 4 hoặc 1 : 4.5</td>
+                                        <td>92°C – 95°C</td>
+                                        <td>4 – 5 phút</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-white fw-bold">Xay Thô Vừa (Medium-Coarse)</td>
+                                        <td>800 – 1.000 μm</td>
+                                        <td>Pour-over V60, Chemex, Drip Bag</td>
+                                        <td>1 : 15 (15g : 225ml)</td>
+                                        <td>90°C – 92°C</td>
+                                        <td>2.5 – 3.5 phút</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-white fw-bold">Xay Thô (Coarse Grind)</td>
+                                        <td>1.000 – 1.300 μm</td>
+                                        <td>Ủ lạnh Cold Brew, French Press</td>
+                                        <td>1 : 10 hoặc 1 : 12</td>
+                                        <td>Nước lạnh / 4°C</td>
+                                        <td>Ủ 18 – 24 giờ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Client-side Price Update JavaScript Logic -->
+                <script type="text/javascript">
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Pack size price sync
+                        document.querySelectorAll('.inno-weight-select').forEach(function(select) {
+                            select.addEventListener('change', function(e) {
+                                var card = e.target.closest('.inno-product-card');
+                                if (!card) return;
+                                var weight = e.target.value;
+                                var price = card.getAttribute('data-price-' + weight);
+                                if (price) {
+                                    var display = card.querySelector('.inno-price-display');
+                                    if (display) {
+                                        var formatted = Number(price).toLocaleString('vi-VN') + ' đ';
+                                        display.textContent = formatted;
+                                    }
+                                }
+                            });
+                        });
+
+                        // Add to cart mock trigger / alert
+                        document.querySelectorAll('.inno-add-cart-btn').forEach(function(btn) {
+                            btn.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                var card = btn.closest('.inno-product-card');
+                                var title = card ? card.querySelector('h3').textContent.trim() : 'Sản phẩm';
+                                var weightSelect = card ? card.querySelector('.inno-weight-select') : null;
+                                var weight = weightSelect ? weightSelect.value + 'g' : '250g';
+                                var grindSelect = card ? card.querySelector('.inno-grind-select') : null;
+                                var grind = grindSelect ? grindSelect.options[grindSelect.selectedIndex].text : '';
+
+                                var originalText = btn.innerHTML;
+                                btn.innerHTML = '<i class="fa fa-check text-dark"></i> <span>Đã Thêm!</span>';
+                                btn.classList.remove('btn-primary');
+                                btn.classList.add('btn-success');
+                                setTimeout(function() {
+                                    btn.innerHTML = originalText;
+                                    btn.classList.remove('btn-success');
+                                    btn.classList.add('btn-primary');
+                                }, 2000);
+                            });
+                        });
+                    });
+                </script>
+
+                <!-- ============================================================= -->
+                <!-- 5. REUSABLE GLOBAL CALL TO ACTION                             -->
+                <!-- ============================================================= -->
+                <t t-call="innokafe_website.innokafe_global_cta"/>
+
+                <div class="oe_structure oe_empty" id="oe_structure_products_bottom"/>
+            </main>
+        </t>
+    </template>
+</odoo>

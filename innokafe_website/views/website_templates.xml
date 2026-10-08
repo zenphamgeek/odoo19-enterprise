@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================================================================= -->
+    <!-- INNOKAFE SPECIALTY COFFEE: BRAND HEAD & METADATA                  -->
+    <!-- ================================================================= -->
+    <template id="innokafe_head_metadata" inherit_id="website.layout" priority="20">
+        <xpath expr="//head/*[1]" position="before">
+            <t t-set="curr_path" t-value="request.httprequest.path if request and request.httprequest else '/'"/>
+            <t t-set="inno_meta_title" t-value="
+                'InnoKafe — Cà Phê Việt Nam Nguyên Bản | Từ Nông Trại Bazan Đến Tách Cà Phê Có Gu' if curr_path == '/' else
+                'Hành Trình Di Sản Nông Trại &amp; Cam Kết Cà Phê Mộc 4 Không — InnoKafe' if curr_path == '/story' else
+                'Danh Mục Hạt Cà Phê Đặc Sản SCA &amp; Drip Bag Nghệ Nhân — InnoKafe' if curr_path == '/products' else
+                'Tìm Gu Cà Phê Của Bạn Trong 60 Giây — Interactive Coffee Profiler' if curr_path == '/taste-profiler' else
+                'Giải Pháp Cà Phê B2B Horeca &amp; Tài Trợ Máy Pha 0đ — InnoKafe' if curr_path == '/solutions-b2b' else
+                'Liên Hệ &amp; Trải Nghiệm Tasting Bar InnoKafe' if curr_path == '/contactus' else
+                'InnoKafe Specialty Coffee &amp; Roastery'"/>
+            <t t-set="inno_meta_desc" t-value="
+                'InnoKafe tôn vinh hạt cà phê Việt Nam nguyên bản từ thủ phủ Robusta Đắk Lắk (Cư M\'gar) và thiên đường Arabica Cầu Đất (1.650m). Cam kết cà phê mộc 4 Không: Không hương liệu, Không chất bảo quản, Không phẩm màu, Không độn bắp/đậu nành/bơ.'"/>
+
+            <!-- High-Performance Typography Preconnect -->
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+            <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,900;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+
+            <!-- Inline Brand Typography & Layout Optimizations -->
+            <style>
+                :root {
+                    --inno-espresso-dark: #1E120B;
+                    --inno-espresso-roast: #2C1810;
+                    --inno-amber: #D48842;
+                    --inno-amber-light: #E5A93C;
+                    --inno-cream: #F7F2EA;
+                    --inno-forest: #2D4739;
+                    --inno-cherry: #A32A29;
+                }
+                body, p, .lead, .card-text, .text-muted {
+                    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                }
+                h1, h2, h3, h4, .h1, .h2, .h3, .h4, .display-1, .display-2, .display-3, .display-4, .display-5, .display-6, .inno-serif {
+                    font-family: 'Playfair Display', Georgia, serif;
+                    text-wrap: balance;
+                }
+                /* Force full visibility for all sections, disabling aggressive content-visibility containment */
+                #wrap > section, #wrap > div.oe_structure > section {
+                    content-visibility: visible !important;
+                    contain-intrinsic-size: none !important;
+                }
+                .navbar-brand {
+                    max-width: none !important;
+                    width: auto !important;
+                    white-space: nowrap !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                }
+                .navbar-brand span {
+                    white-space: nowrap !important;
+                }
+                .inno-amber-text {
+                    color: #D48842 !important;
+                }
+                .inno-cream-bg {
+                    background-color: #F7F2EA !important;
+                    color: #1E120B !important;
+                }
+                .inno-espresso-bg {
+                    background-color: #1E120B !important;
+                    color: #F7F2EA !important;
+                }
+                .inno-pill-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    padding: 0.35rem 0.85rem;
+                    border-radius: 50rem;
+                    font-size: 0.825rem;
+                    font-weight: 600;
+                    letter-spacing: 0.03em;
+                    background: rgba(212, 136, 66, 0.15);
+                    color: #D48842;
+                    border: 1px solid rgba(212, 136, 66, 0.3);
+                }
+                .btn-inno-primary, .btn-primary {
+                    background: linear-gradient(135deg, #E5A93C 0%, #D48842 50%, #B86B28 100%) !important;
+                    color: #1E120B !important;
+                    font-weight: 700 !important;
+                    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                    box-shadow: 0 4px 18px rgba(212, 136, 66, 0.32);
+                    transition: all 0.25s ease-in-out;
+                }
+                .btn-inno-primary:hover, .btn-primary:hover {
+                    background: linear-gradient(135deg, #F0BA55 0%, #E0964D 50%, #C97831 100%) !important;
+                    color: #1E120B !important;
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 26px rgba(212, 136, 66, 0.45);
+                }
+                .btn-inno-outline, .btn-outline-secondary {
+                    border: 1px solid rgba(247, 242, 234, 0.25) !important;
+                    color: #F7F2EA !important;
+                    background: transparent;
+                    transition: all 0.25s ease-in-out;
+                }
+                .btn-inno-outline:hover, .btn-outline-secondary:hover {
+                    border-color: #D48842 !important;
+                    background: rgba(212, 136, 66, 0.12) !important;
+                    color: #D48842 !important;
+                }
+                .inno-card-balanced {
+                    min-height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+                .inno-card-title-balance {
+                    min-height: 3.2rem;
+                    text-wrap: balance;
+                }
+                .inno-card-desc-balance {
+                    min-height: 4.5rem;
+                    text-wrap: pretty;
+                }
+                .inno-live-pulse {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background-color: #D48842;
+                    box-shadow: 0 0 0 0 rgba(212, 136, 66, 0.7);
+                    animation: innoPulse 1.8s infinite;
+                    display: inline-block;
+                }
+                @keyframes innoPulse {
+                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 136, 66, 0.7); }
+                    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(212, 136, 66, 0); }
+                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 136, 66, 0); }
+                }
+            </style>
+        </xpath>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- INNOKAFE BRAND HEADER ENHANCEMENT                                 -->
+    <!-- ================================================================= -->
+    <template id="innokafe_header_brand_bar" inherit_id="website.template_header_default" priority="20">
+        <xpath expr="//div[@id='o_main_nav']" position="attributes">
+            <attribute name="class" add="inno-header-glass border-bottom border-dark" separator=" "/>
+        </xpath>
+        <xpath expr="//t[@t-call='website.placeholder_header_brand']" position="replace">
+            <a href="/" class="navbar-brand d-inline-flex align-items-center gap-2 text-decoration-none py-1 me-4">
+                <span class="fs-3 fw-bold inno-serif text-white tracking-tight">
+                    Inno<span class="text-warning inno-amber-text">Kafe</span>
+                </span>
+                <span class="d-none d-md-inline-block border-start border-secondary ps-2 ms-1 text-uppercase text-muted" style="font-size: 0.68rem; letter-spacing: 0.12em; line-height: 1.1;">
+                    Specialty<br/>Roastery
+                </span>
+            </a>
+        </xpath>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- REUSABLE INNOKAFE GLOBAL CALL TO ACTION                           -->
+    <!-- ================================================================= -->
+    <template id="innokafe_global_cta" name="InnoKafe Global Call to Action">
+        <section class="s_call_to_action o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25 inno-espresso-bg position-relative overflow-hidden" data-snippet="s_call_to_action" data-name="InnoKafe Global CTA">
+            <div class="container position-relative">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-8">
+                        <div class="inno-pill-badge mb-3">
+                            <span class="inno-live-pulse"/>
+                            <span>CÀ PHÊ VIỆT NAM NGUYÊN BẢN // TỪ NÔNG TRẠI ĐẾN TÁCH</span>
+                        </div>
+                        <h2 class="display-4 fw-bold text-white mb-3">
+                            Sẵn Sàng Đánh Thức Vị Giác Với <span class="inno-amber-text">Cà Phê Có Gu?</span>
+                        </h2>
+                        <p class="lead text-secondary mb-0 col-lg-11 p-0">
+                            Khám phá hồ sơ hương vị độc bản của bạn qua bài trắc nghiệm thông minh 60 giây hoặc đặt ngay hộp thử mẫu Discovery Sample Box để trải nghiệm trọn vẹn 5 vùng hương vị đặc sản Việt Nam.
+                        </p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <div class="d-flex flex-column flex-sm-row justify-content-lg-end gap-3">
+                            <a href="/taste-profiler" class="btn btn-primary rounded-pill px-4 py-3 d-inline-flex align-items-center justify-content-center gap-2">
+                                <span>Tìm Gu Cà Phê Của Bạn</span>
+                                <i class="fa fa-arrow-right"/>
+                            </a>
+                            <a href="/products" class="btn btn-outline-secondary rounded-pill px-4 py-3 d-inline-flex align-items-center justify-content-center gap-2">
+                                <span>Xem Danh Mục Hạt</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- REUSABLE "4 KHÔNG" PLEDGE BANNER RIBBON                           -->
+    <!-- ================================================================= -->
+    <template id="innokafe_pledge_ribbon" name="InnoKafe 4-No Pledge Ribbon">
+        <section class="s_banner o_colored_level o_cc o_cc5 py-4 border-top border-bottom border-warning border-opacity-25" data-snippet="s_banner" data-name="Pledge 4-No Ribbon" style="background-color: #2C1810;">
+            <div class="container">
+                <div class="row text-center align-items-center g-3">
+                    <div class="col-6 col-md-3">
+                        <div class="d-flex align-items-center justify-content-center gap-2 text-white">
+                            <span class="badge rounded-circle bg-warning text-dark p-2 fw-bold" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">01</span>
+                            <span class="small fw-semibold">KHÔNG Hương Liệu Hóa Chất</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="d-flex align-items-center justify-content-center gap-2 text-white">
+                            <span class="badge rounded-circle bg-warning text-dark p-2 fw-bold" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">02</span>
+                            <span class="small fw-semibold">KHÔNG Chất Bảo Quản</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="d-flex align-items-center justify-content-center gap-2 text-white">
+                            <span class="badge rounded-circle bg-warning text-dark p-2 fw-bold" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">03</span>
+                            <span class="small fw-semibold">KHÔNG Phẩm Màu Công Nghiệp</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="d-flex align-items-center justify-content-center gap-2 text-white">
+                            <span class="badge rounded-circle bg-warning text-dark p-2 fw-bold" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">04</span>
+                            <span class="small fw-semibold">KHÔNG Độn Bắp, Đậu &amp; Bơ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- INNOKAFE SIGNATURE FOOTER ENHANCEMENT                             -->
+    <!-- ================================================================= -->
+    <template id="innokafe_footer_custom" inherit_id="website.footer_custom" priority="30">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <div id="footer" class="oe_structure oe_structure_solo inno-espresso-bg text-white" t-ignore="true" t-if="not no_footer">
+                <section class="s_text_block o_colored_level o_cc o_cc5 pt80 pb40 border-top border-secondary border-opacity-25" data-snippet="s_text_block" data-name="InnoKafe Institutional Footer">
+                    <div class="container">
+                        <div class="row g-5 mb-5">
+                            <!-- Col 1: Brand Philosophy & 4 Không -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="d-flex align-items-center gap-2 mb-3">
+                                    <span class="fs-2 fw-bold inno-serif text-white">
+                                        Inno<span class="inno-amber-text">Kafe</span>
+                                    </span>
+                                </div>
+                                <p class="text-secondary small mb-4 lh-base">
+                                    InnoKafe là thương hiệu Cà phê Đặc sản (Specialty Coffee) tiên phong tôn vinh thổ nhưỡng Đắk Lắk và Cầu Đất. Chúng tôi cam kết 100% hạt rang mộc nguyên bản theo triết lý "Cà Phê Mộc 4 Không", đồng hành cùng người nông dân nâng tầm giá trị cà phê Việt Nam trên bản đồ thế giới.
+                                </p>
+                                <div class="p-3 rounded-3 border border-warning border-opacity-25 mb-4" style="background: rgba(212, 136, 66, 0.08);">
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <i class="fa fa-shield text-warning"/>
+                                        <strong class="text-white small">CAM KẾT CÀ PHÊ MỘC 4 KHÔNG</strong>
+                                    </div>
+                                    <div class="text-secondary" style="font-size: 0.78rem;">
+                                        Không hương liệu · Không chất bảo quản · Không phẩm màu · Không độn bắp, đậu nành và bơ.
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle p-2 d-inline-flex align-items-center justify-content-center" aria-label="Facebook"><i class="fa fa-facebook"/></a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle p-2 d-inline-flex align-items-center justify-content-center" aria-label="Instagram"><i class="fa fa-instagram"/></a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle p-2 d-inline-flex align-items-center justify-content-center" aria-label="YouTube"><i class="fa fa-youtube-play"/></a>
+                                </div>
+                            </div>
+
+                            <!-- Col 2: Nông Trại Di Sản & Vùng Trồng -->
+                            <div class="col-lg-2 col-md-6 col-6">
+                                <h6 class="text-white text-uppercase fw-bold mb-3 tracking-wider" style="font-size: 0.85rem; letter-spacing: 0.08em;">
+                                    Di Sản Nông Trại
+                                </h6>
+                                <ul class="list-unstyled text-secondary small d-flex flex-column gap-2">
+                                    <li><a href="/story#daklak" class="text-secondary text-decoration-none hover-white">Robusta Đắk Lắk (Cư M'gar)</a></li>
+                                    <li><a href="/story#caudat" class="text-secondary text-decoration-none hover-white">Arabica Cầu Đất (1.650m)</a></li>
+                                    <li><a href="/story#natural" class="text-secondary text-decoration-none hover-white">Phương Pháp Natural</a></li>
+                                    <li><a href="/story#honey" class="text-secondary text-decoration-none hover-white">Phương Pháp Honey</a></li>
+                                    <li><a href="/story#washed" class="text-secondary text-decoration-none hover-white">Phương Pháp Washed</a></li>
+                                    <li><a href="/story#roasting" class="text-secondary text-decoration-none hover-white">Nghệ Thuật Rang Hot-Air</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Col 3: Dòng Sản Phẩm & Trải Nghiệm -->
+                            <div class="col-lg-2 col-md-6 col-6">
+                                <h6 class="text-white text-uppercase fw-bold mb-3 tracking-wider" style="font-size: 0.85rem; letter-spacing: 0.08em;">
+                                    Sản Phẩm &amp; Gu
+                                </h6>
+                                <ul class="list-unstyled text-secondary small d-flex flex-column gap-2">
+                                    <li><a href="/products" class="text-secondary text-decoration-none hover-white">Hạt Cà Phê Đặc Sản</a></li>
+                                    <li><a href="/products#dripbag" class="text-secondary text-decoration-none hover-white">Phin Giấy Drip Bag</a></li>
+                                    <li><a href="/products#coldbrew" class="text-secondary text-decoration-none hover-white">Cà Phê Ủ Lạnh Cold Brew</a></li>
+                                    <li><a href="/taste-profiler" class="text-warning text-decoration-none fw-semibold">Trắc Nghiệm Tìm Gu (Quiz)</a></li>
+                                    <li><a href="/solutions-b2b" class="text-secondary text-decoration-none hover-white">Giải Pháp B2B Horeca</a></li>
+                                    <li><a href="/solutions-b2b#equipment" class="text-secondary text-decoration-none hover-white">Tài Trợ Máy Pha 0đ</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Col 4: Liên Hệ & Showroom Trải Nghiệm -->
+                            <div class="col-lg-4 col-md-6">
+                                <h6 class="text-white text-uppercase fw-bold mb-3 tracking-wider" style="font-size: 0.85rem; letter-spacing: 0.08em;">
+                                    Showroom &amp; Xưởng Rang
+                                </h6>
+                                <ul class="list-unstyled text-secondary small d-flex flex-column gap-3 mb-4">
+                                    <li class="d-flex align-items-start gap-2">
+                                        <i class="fa fa-map-marker text-warning mt-1"/>
+                                        <span><strong>Flagship Tasting Bar:</strong> 128 Nguyễn Đình Chiểu, Phường Võ Thị Sáu, Quận 3, TP. Hồ Chí Minh</span>
+                                    </li>
+                                    <li class="d-flex align-items-start gap-2">
+                                        <i class="fa fa-fire text-warning mt-1"/>
+                                        <span><strong>Xưởng Rang Thủ Công:</strong> Km 7, Quốc Lộ 14, Xã Cư M'gar, Huyện Cư M'gar, Tỉnh Đắk Lắk</span>
+                                    </li>
+                                    <li class="d-flex align-items-center gap-2">
+                                        <i class="fa fa-phone text-warning"/>
+                                        <span><strong>Hotline Thử Mẫu &amp; B2B:</strong> <a href="tel:+842873006688" class="text-white text-decoration-none">+84 28 7300 6688</a></span>
+                                    </li>
+                                    <li class="d-flex align-items-center gap-2">
+                                        <i class="fa fa-envelope text-warning"/>
+                                        <span><strong>Email:</strong> <a href="mailto:hello@innokafe.insilos.com" class="text-white text-decoration-none">hello@innokafe.insilos.com</a></span>
+                                    </li>
+                                </ul>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="badge bg-secondary bg-opacity-25 text-warning border border-warning border-opacity-25 p-2 small">SCA STANDARD 84+</span>
+                                    <span class="badge bg-secondary bg-opacity-25 text-white border border-secondary border-opacity-25 p-2 small">100% MỘC NGUYÊN CHẤT</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Copyright & Compliance -->
+                        <div class="pt-4 border-top border-secondary border-opacity-25 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 small text-secondary">
+                            <div>
+                                © 2026 InnoKafe Specialty Coffee &amp; Roastery. Bản quyền thuộc về InnoKafe.
+                            </div>
+                            <div class="d-flex gap-3">
+                                <a href="/story" class="text-secondary text-decoration-none">Câu Chuyện Nông Trại</a>
+                                <span>·</span>
+                                <a href="/taste-profiler" class="text-secondary text-decoration-none">Tìm Gu Cà Phê</a>
+                                <span>·</span>
+                                <a href="/solutions-b2b" class="text-secondary text-decoration-none">Hợp Tác Doanh Nghiệp</a>
+                                <span>·</span>
+                                <a href="/contactus" class="text-secondary text-decoration-none">Liên Hệ</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </xpath>
+    </template>
+</odoo>

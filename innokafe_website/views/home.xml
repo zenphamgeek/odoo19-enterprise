@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="homepage" name="InnoKafe — Cà Phê Việt Nam Nguyên Bản">
+        <t t-call="website.layout">
+            <t t-set="additional_title">InnoKafe — Cà Phê Việt Nam Nguyên Bản | Nông Trại Bazan Đến Tách Cà Phê Có Gu</t>
+            <t t-set="meta_description">InnoKafe tôn vinh hạt cà phê Specialty Coffee Việt Nam từ thủ phủ Robusta Đắk Lắk (Cư M'gar) và thiên đường Arabica Cầu Đất (1.650m). Rang mộc Hot-Air, điểm chấm SCA 84+, cam kết Cà Phê Mộc 4 Không và trắc nghiệm tìm gu cá nhân hóa.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5 inno-espresso-bg">
+                <div class="oe_structure oe_empty" id="oe_structure_home_top"/>
+
+                <!-- ============================================================= -->
+                <!-- 1. HERO STORY COVER                                           -->
+                <!-- ============================================================= -->
+                <section class="s_cover o_colored_level o_cc o_cc5 pt100 pb80 position-relative overflow-hidden inno-cinema-hero-section" data-snippet="s_cover" data-name="Home Hero Cover" style="background: #1E120B;">
+                    <!-- InnoKafe Ambient Cinema Video Loop Background -->
+                    <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden" style="z-index: 0; pointer-events: none;">
+                        <video class="w-100 h-100 position-absolute top-0 start-0" style="object-fit: cover; opacity: 0.32; filter: brightness(0.68) contrast(1.15);" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" poster="/innokafe_website/static/src/video/posters/innokafe_cooling_tray_16x9_poster.webp">
+                            <source src="/innokafe_website/static/src/video/innokafe_cooling_tray_16x9_opt.mp4" type="video/mp4"/>
+                            <source src="/innokafe_website/static/src/video/innokafe_cooling_tray_16x9.webm" type="video/webm"/>
+                        </video>
+                        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: radial-gradient(circle at 80% 25%, rgba(212, 136, 66, 0.18) 0%, rgba(30, 18, 11, 0.88) 75%);"/>
+                    </div>
+                    <div class="container position-relative" style="z-index: 1;">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-7">
+                                <div class="inno-pill-badge mb-3">
+                                    <span class="inno-live-pulse"/>
+                                    <span>SPECIALTY COFFEE VIỆT NAM // THỔ NHƯỠNG NGUYÊN BẢN</span>
+                                </div>
+                                <h1 class="display-3 fw-bold text-white mb-4 lh-sm">
+                                    Cà Phê Việt Nam Nguyên Bản —<br/>
+                                    Từ Nông Trại Bazan Đến <span class="inno-amber-text">Tách Cà Phê Có Gu</span>
+                                </h1>
+                                <p class="lead text-secondary mb-4 col-lg-11 p-0 lh-lg" style="font-size: 1.15rem;">
+                                    Đánh thức vị giác bằng những hạt cà phê đặc sản được tuyển chọn khắt khe từ vùng đất đỏ bazan Cư M'gar (Đắk Lắk) và miền sương mù Cầu Đất (1.650m). Chúng tôi thu hái 100% quả chín, kiểm soát lên men tỉ mỉ và rang mộc bằng công nghệ Hot-Air chuẩn quốc tế.
+                                </p>
+                                <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 mb-5">
+                                    <a href="/products" class="btn btn-primary rounded-pill px-4 py-3 d-inline-flex align-items-center justify-content-center gap-2">
+                                        <span>Khám Phá Hạt Đặc Sản</span>
+                                        <i class="fa fa-shopping-bag"/>
+                                    </a>
+                                    <a href="/taste-profiler" class="btn btn-outline-secondary rounded-pill px-4 py-3 d-inline-flex align-items-center justify-content-center gap-2">
+                                        <span>Tìm Gu Cà Phê Của Bạn (60s)</span>
+                                        <i class="fa fa-compass"/>
+                                    </a>
+                                </div>
+                                <!-- Executive Metric Badges -->
+                                <div class="row g-3 pt-3 border-top border-secondary border-opacity-25 col-lg-11">
+                                    <div class="col-6 col-sm-3">
+                                        <div class="text-white fw-bold fs-4 inno-serif">1.650m</div>
+                                        <div class="text-secondary small">Độ cao Cầu Đất</div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="text-white fw-bold fs-4 inno-serif">84+ SCA</div>
+                                        <div class="text-secondary small">Điểm Cupping Quốc Tế</div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="text-white fw-bold fs-4 inno-serif">100%</div>
+                                        <div class="text-secondary small">Hái tay quả chín</div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="text-warning fw-bold fs-4 inno-serif">4 KHÔNG</div>
+                                        <div class="text-secondary small">Cam kết mộc tuyệt đối</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="card bg-black bg-opacity-60 border border-warning border-opacity-30 rounded-4 p-4 p-xl-5 text-white shadow-lg">
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <span class="badge bg-warning text-dark font-monospace fw-bold">SIGNATURE CUPPING</span>
+                                        <span class="text-secondary small font-monospace">ROASTED WEEKLY</span>
+                                    </div>
+                                    <h3 class="h3 fw-bold text-white mb-2">Đắk Lắk Highland Fine Robusta Natural</h3>
+                                    <div class="text-warning small mb-3">
+                                        <i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/>
+                                        <span class="text-white ms-1 fw-bold">84.50 SCA Cupping Score</span>
+                                    </div>
+                                    <p class="text-secondary small mb-4">
+                                        Giống Robusta Sẻ thuần chủng trên đất đỏ bazan Cư M'gar (750m). Sơ chế Natural phơi chậm 28 ngày trên giàn lưới, giải phóng thể chất đầm dày (Heavy body), sô-cô-la đen 85%, hạt dẻ nướng và hậu ngọt sâu thẳm.
+                                    </p>
+                                    <div class="p-3 rounded-3 bg-black bg-opacity-50 border border-secondary border-opacity-25 mb-4">
+                                        <div class="d-flex justify-content-between text-secondary small mb-1">
+                                            <span>Nốt hương:</span>
+                                            <strong class="text-white">Dark Chocolate · Hazelnut · Molasses</strong>
+                                        </div>
+                                        <div class="d-flex justify-content-between text-secondary small">
+                                            <span>Phương pháp pha:</span>
+                                            <strong class="text-white">Phin Truyền Thống · Espresso · Cà Phê Sữa Đá</strong>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="text-secondary small">Giá túi 250g:</div>
+                                            <div class="fs-4 fw-bold text-white">125.000 đ</div>
+                                        </div>
+                                        <a href="/products" class="btn btn-primary rounded-pill px-4 py-2">
+                                            <span>Mua Ngay</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- 2. "4 KHÔNG" PLEDGE RIBBON                                     -->
+                <!-- ============================================================= -->
+                <t t-call="innokafe_website.innokafe_pledge_ribbon"/>
+
+                <!-- ============================================================= -->
+                <!-- 3. BRAND VALUES BENTO GRID                                    -->
+                <!-- ============================================================= -->
+                <section class="s_features o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_features" data-name="Brand Core Values">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <div class="inno-pill-badge mb-3">
+                                <span>TRIẾT LÝ NGUYÊN BẢN // CORE VALUES</span>
+                            </div>
+                            <h2 class="display-5 fw-bold text-white mb-3">
+                                4 Trụ Cột Định Hình Đẳng Cấp Cà Phê InnoKafe
+                            </h2>
+                            <p class="lead text-secondary mx-auto col-lg-8">
+                                Chúng tôi tôn trọng sự thật trong từng tách cà phê. Không thỏa hiệp với chất lượng, không che giấu nguồn gốc và luôn trung thực với vị giác của bạn.
+                            </p>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced">
+                            <!-- Value 1 -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card h-100 bg-black bg-opacity-40 border border-secondary border-opacity-25 rounded-4 p-4 text-white d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="badge rounded-circle bg-warning text-dark fs-4 p-3 mb-3 fw-bold" style="width: 50px; height: 50px; display: inline-flex; align-items: center; justify-content: center;">
+                                            <i class="fa fa-map-marker"/>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-white mb-2 inno-card-title-balance">Thổ Nhưỡng Bản Địa (Terroir First)</h4>
+                                        <p class="text-secondary small mb-0 inno-card-desc-balance">
+                                            Khai phóng tiềm năng đất đỏ bazan Cư M'gar và miền sương mù Cầu Đất 1.650m, nơi tạo nên đặc trưng hương vị không thể sao chép.
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-15 mt-3">
+                                        <span class="text-warning small font-monospace">100% SINGLE ORIGIN</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Value 2 -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card h-100 bg-black bg-opacity-40 border border-secondary border-opacity-25 rounded-4 p-4 text-white d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="badge rounded-circle bg-warning text-dark fs-4 p-3 mb-3 fw-bold" style="width: 50px; height: 50px; display: inline-flex; align-items: center; justify-content: center;">
+                                            <i class="fa fa-sun-o"/>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-white mb-2 inno-card-title-balance">Sơ Chế Nghệ Nhân (Artisan Processing)</h4>
+                                        <p class="text-secondary small mb-0 inno-card-desc-balance">
+                                            3 phương pháp Natural, Honey và Washed thực hiện chuẩn hóa trên giàn phơi lưới đa tầng trong nhà màng, kiểm soát nhiệt độ nghiêm ngặt.
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-15 mt-3">
+                                        <span class="text-warning small font-monospace">SLOW DRY 28 DAYS</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Value 3 -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card h-100 bg-black bg-opacity-40 border border-secondary border-opacity-25 rounded-4 p-4 text-white d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="badge rounded-circle bg-warning text-dark fs-4 p-3 mb-3 fw-bold" style="width: 50px; height: 50px; display: inline-flex; align-items: center; justify-content: center;">
+                                            <i class="fa fa-fire"/>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-white mb-2 inno-card-title-balance">Rang Mộc Hot-Air (Precision Roasting)</h4>
+                                        <p class="text-secondary small mb-0 inno-card-desc-balance">
+                                            Công nghệ khí nóng đối lưu tuần hoàn Châu Âu giúp hạt chín đều từ tâm tế bào, đường caramel hóa trọn vẹn, 0% cháy xém bề mặt.
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-15 mt-3">
+                                        <span class="text-warning small font-monospace">AGTRON CONTROLLED</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Value 4 -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card h-100 bg-black bg-opacity-40 border border-secondary border-opacity-25 rounded-4 p-4 text-white d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="badge rounded-circle bg-warning text-dark fs-4 p-3 mb-3 fw-bold" style="width: 50px; height: 50px; display: inline-flex; align-items: center; justify-content: center;">
+                                            <i class="fa fa-shield"/>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-white mb-2 inno-card-title-balance">Cam Kết 4 Không (Pure Pledge)</h4>
+                                        <p class="text-secondary small mb-0 inno-card-desc-balance">
+                                            Nói không tuyệt đối với hương liệu hóa chất, chất bảo quản, phẩm màu và chất độn bắp, đậu nành, bơ công nghiệp.
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-15 mt-3">
+                                        <span class="text-warning small font-monospace">100% PURE BEANS</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- 4. DUAL TERROIR SHOWCASE (ĐẮK LẮK & CẦU ĐẤT)                 -->
+                <!-- ============================================================= -->
+                <section class="s_text_image o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_text_image" data-name="Dual Terroir Showcase">
+                    <div class="container">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-6">
+                                <div class="inno-pill-badge mb-3">
+                                    <span>HAI VÙNG TRỒNG DI SẢN // DUAL ORIGINS</span>
+                                </div>
+                                <h2 class="display-5 fw-bold text-white mb-4">
+                                    Cuộc Gặp Gỡ Của Hai Đỉnh Cao Thổ Nhưỡng
+                                </h2>
+                                <p class="text-secondary mb-4 lh-base">
+                                    Việt Nam may mắn sở hữu hai tiểu vùng khí hậu độc nhất vô nhị để nuôi dưỡng hai giống cà phê danh tiếng nhất thế giới:
+                                </p>
+                                <div class="d-flex flex-column gap-3 mb-4">
+                                    <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <strong class="text-white">Đắk Lắk (Cư M'gar &amp; Buôn Ma Thuột)</strong>
+                                            <span class="badge bg-warning text-dark font-monospace">ROBUSTA SẺ · 650M</span>
+                                        </div>
+                                        <div class="text-secondary small">
+                                            Tầng đất đỏ bazan núi lửa cổ sâu trên 70cm, khí hậu nắng gió cao nguyên tạo nên hạt Robusta Sẻ có thể chất dày dặn, sô-cô-la đen đậm đà và hậu vị ngọt sâu lắng kéo dài.
+                                        </div>
+                                    </div>
+                                    <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <strong class="text-white">Cầu Đất (Đà Lạt &amp; Trạm Hành)</strong>
+                                            <span class="badge bg-info text-white font-monospace">ARABICA BOURBON · 1.650M</span>
+                                        </div>
+                                        <div class="text-secondary small">
+                                            Độ cao 1.650m bao phủ sương mù quanh năm, nhiệt độ 14-22°C giúp hạt Arabica tích lũy dưỡng chất chậm 8-9 tháng, nở rộ hương hoa nhài, cam Bergamot và vị chua thanh sáng quý phái.
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="/story" class="btn btn-outline-secondary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2">
+                                    <span>Đọc Hành Trình Farm-to-Cup Đầy Đủ</span>
+                                    <i class="fa fa-arrow-right"/>
+                                </a>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 text-white">
+                                    <h4 class="fw-bold text-white mb-3 text-center">Bản Đồ Thổ Nhưỡng Cà Phê InnoKafe</h4>
+                                    <div class="p-4 rounded-3 border border-secondary border-opacity-20 text-center mb-3" style="background: rgba(212, 136, 66, 0.05);">
+                                        <div class="row g-4 text-start">
+                                            <div class="col-6 border-end border-secondary border-opacity-25">
+                                                <div class="text-warning small fw-bold text-uppercase mb-1">VÙNG 1: ĐẮK LẮK</div>
+                                                <div class="fs-5 fw-bold text-white mb-1">Buôn Ma Thuột</div>
+                                                <div class="text-secondary small mb-2">Độ cao: 500 - 800 masl</div>
+                                                <div class="text-secondary small mb-2">Đất đỏ bazan cổ 70cm</div>
+                                                <div class="badge bg-secondary bg-opacity-50 text-warning">Fine Robusta 84.5 SCA</div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="text-warning small fw-bold text-uppercase mb-1">VÙNG 2: LÂM ĐỒNG</div>
+                                                <div class="fs-5 fw-bold text-white mb-1">Cầu Đất - Trạm Hành</div>
+                                                <div class="text-secondary small mb-2">Độ cao: 1.500 - 1.650 masl</div>
+                                                <div class="text-secondary small mb-2">Sương mù cận ôn đới</div>
+                                                <div class="badge bg-secondary bg-opacity-50 text-info">Specialty Arabica 86.75 SCA</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center text-secondary small">
+                                        Cam kết 100% hạt cà phê có nguồn gốc nông trại rõ ràng và có thể truy xuất nguồn gốc từng mẻ thu hoạch.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- 5. INTERACTIVE TASTE PROFILER TEASER                          -->
+                <!-- ============================================================= -->
+                <section class="s_call_to_action o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_call_to_action" data-name="Taste Profiler Teaser" style="background: linear-gradient(135deg, #2C1810 0%, #1E120B 100%);">
+                    <div class="container">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-7">
+                                <div class="inno-pill-badge mb-3">
+                                    <span class="inno-live-pulse"/>
+                                    <span>CÁ NHÂN HÓA TRẢI NGHIỆM // TASTE PROFILER</span>
+                                </div>
+                                <h2 class="display-4 fw-bold text-white mb-3">
+                                    Tìm Gu Cà Phê Chân Ái Của Bạn Trong <span class="inno-amber-text">60 Giây</span>
+                                </h2>
+                                <p class="lead text-secondary mb-4 col-lg-11 p-0 lh-base">
+                                    Bạn thích vị đắng đậm sánh của phin truyền thống hay vị chua thanh hoa nhài tinh tế của Pour-over? Dụng cụ pha chế của bạn là phin nhôm, máy espresso gia đình hay phin giấy túi lọc?
+                                </p>
+                                <p class="text-secondary small mb-4 col-lg-10 p-0">
+                                    Thuật toán so khớp vector 7 chiều độc quyền của InnoKafe sẽ phân tích khẩu vị, thói quen và dụng cụ pha chế của bạn để gợi ý dòng hạt tối ưu nhất kèm độ tương thích (Match Score %).
+                                </p>
+                                <a href="/taste-profiler" class="btn btn-primary rounded-pill px-5 py-3 d-inline-flex align-items-center gap-2 fs-5">
+                                    <span>Khám Phá Gu Của Bạn Ngay</span>
+                                    <i class="fa fa-arrow-right"/>
+                                </a>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="card bg-black bg-opacity-60 border border-warning border-opacity-30 rounded-4 p-4 text-white">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <span class="small font-monospace text-secondary">QUIZ PREVIEW // 4 STEPS</span>
+                                        <span class="badge bg-warning text-dark font-monospace fw-bold">94% MATCH ACCURACY</span>
+                                    </div>
+                                    <div class="d-flex flex-column gap-3">
+                                        <div class="d-flex align-items-center gap-3 p-2 rounded-3 bg-black bg-opacity-40">
+                                            <span class="badge rounded-circle bg-secondary text-white p-2" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">1</span>
+                                            <span class="small text-white">Thói quen thưởng thức cà phê trong ngày</span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-3 p-2 rounded-3 bg-black bg-opacity-40">
+                                            <span class="badge rounded-circle bg-secondary text-white p-2" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">2</span>
+                                            <span class="small text-white">Dụng cụ pha chế tại nhà hoặc văn phòng</span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-3 p-2 rounded-3 bg-black bg-opacity-40">
+                                            <span class="badge rounded-circle bg-secondary text-white p-2" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">3</span>
+                                            <span class="small text-white">Nốt hương yêu thích (Trầm ấm vs Hoa quả)</span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-3 p-2 rounded-3 bg-black bg-opacity-40">
+                                            <span class="badge rounded-circle bg-secondary text-white p-2" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;">4</span>
+                                            <span class="small text-white">Mức độ tiếp nhận và độ nhạy caffeine</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-center">
+                                        <span class="text-warning small fw-semibold">Kết quả tức thì · Không cần đăng nhập · Zero spam</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- 6. CURATED SPECIALTY PRODUCTS PREVIEW                         -->
+                <!-- ============================================================= -->
+                <section class="s_three_columns o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_three_columns" data-name="Curated Specialty Products">
+                    <div class="container">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
+                            <div>
+                                <div class="inno-pill-badge mb-3">
+                                    <span>BỘ SƯU TẬP ĐẶC SẢN // SPECIALTY COFFEE</span>
+                                </div>
+                                <h2 class="display-5 fw-bold text-white mb-2">
+                                    Dòng Sản Phẩm Tiêu Biểu Tuyển Chọn
+                                </h2>
+                                <p class="lead text-secondary mb-0">
+                                    Minh bạch thông số nông học, chuẩn hóa thang điểm cupping và đóng gói van 1 chiều Thụy Sĩ.
+                                </p>
+                            </div>
+                            <div class="mt-3 mt-md-0">
+                                <a href="/products" class="btn btn-outline-secondary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2">
+                                    <span>Xem Tất Cả 6 Sản Phẩm</span>
+                                    <i class="fa fa-arrow-right"/>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced">
+                            <!-- Product 1 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 text-white d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-danger bg-opacity-75 text-white font-monospace">FINE ROBUSTA</span>
+                                            <span class="badge bg-warning text-dark fw-bold">84.50 SCA</span>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2 inno-card-title-balance">
+                                            Đắk Lắk Highland Fine Robusta Natural
+                                        </h3>
+                                        <div class="text-secondary small mb-3">Cư M'gar, Đắk Lắk · Độ cao 750m · Sơ chế Natural</div>
+                                        <p class="text-secondary small mb-3 inno-card-desc-balance">
+                                            Thể chất dày dặn, sô-cô-la đen 85%, hạt dẻ nướng, caramel khói và hậu vị ngọt sâu lắng kéo dài. Phù hợp cho phin truyền thống và espresso.
+                                        </p>
+                                        <div class="p-2 rounded-2 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small text-secondary">
+                                            <span>Nốt hương: </span><strong class="text-white">Dark Chocolate · Roasted Hazelnut · Molasses</strong>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-secondary small d-block">Túi 250g</span>
+                                            <strong class="fs-5 text-white">125.000 đ</strong>
+                                        </div>
+                                        <a href="/products" class="btn btn-primary rounded-pill px-3 py-2 small">Chọn Mua</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product 2 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 text-white d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-info bg-opacity-75 text-white font-monospace">SPECIALTY ARABICA</span>
+                                            <span class="badge bg-warning text-dark fw-bold">86.75 SCA</span>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2 inno-card-title-balance">
+                                            Cầu Đất Mountain Bourbon Washed
+                                        </h3>
+                                        <div class="text-secondary small mb-3">Trạm Hành, Cầu Đất · Độ cao 1.620m · Fully Washed</div>
+                                        <p class="text-secondary small mb-3 inno-card-desc-balance">
+                                            Hương hoa nhài trắng tỏa ngát, cam Bergamot, táo xanh và trà Earl Grey. Chua thanh rực rỡ và Clean Cup tuyệt đỉnh.
+                                        </p>
+                                        <div class="p-2 rounded-2 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small text-secondary">
+                                            <span>Nốt hương: </span><strong class="text-white">White Jasmine · Bergamot · Green Apple</strong>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-secondary small d-block">Túi 250g</span>
+                                            <strong class="fs-5 text-white">185.000 đ</strong>
+                                        </div>
+                                        <a href="/products" class="btn btn-primary rounded-pill px-3 py-2 small">Chọn Mua</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product 3 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 text-white d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-warning text-dark font-monospace fw-bold">HERITAGE BLEND</span>
+                                            <span class="badge bg-warning text-dark fw-bold">85.50 SCA</span>
+                                        </div>
+                                        <h3 class="h4 fw-bold text-white mb-2 inno-card-title-balance">
+                                            Innokafe Heritage Signature Red Honey
+                                        </h3>
+                                        <div class="text-secondary small mb-3">Blend 70% Arabica x 30% Robusta · Sơ chế Red Honey</div>
+                                        <p class="text-secondary small mb-3 inno-card-desc-balance">
+                                            Khúc giao hòa đỉnh cao giữa vị ngọt mật ong rừng, kem bơ béo ngậy, caramel và táo đỏ. Êm dịu và cân bằng hoàn hảo.
+                                        </p>
+                                        <div class="p-2 rounded-2 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small text-secondary">
+                                            <span>Nốt hương: </span><strong class="text-white">Wild Honey · Butter Caramel · Red Apple</strong>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-secondary small d-block">Túi 250g</span>
+                                            <strong class="fs-5 text-white">155.000 đ</strong>
+                                        </div>
+                                        <a href="/products" class="btn btn-primary rounded-pill px-3 py-2 small">Chọn Mua</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- 7. B2B HORECA & THIẾT BỊ MÁY PHA TEASER                        -->
+                <!-- ============================================================= -->
+                <section class="s_media_list o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_media_list" data-name="B2B Horeca Teaser">
+                    <div class="container">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-6">
+                                <div class="inno-pill-badge mb-3">
+                                    <span>DÀNH RIÊNG CHO DOANH NGHIỆP // B2B HORECA</span>
+                                </div>
+                                <h2 class="display-5 fw-bold text-white mb-4">
+                                    Giải Pháp Cà Phê Chuyên Nghiệp Cho Quán, Khách Sạn &amp; Văn Phòng
+                                </h2>
+                                <p class="text-secondary mb-4 lh-base">
+                                    InnoKafe cung cấp hệ sinh thái toàn diện giúp các đối tác F&amp;B và doanh nghiệp nâng tầm trải nghiệm cà phê của khách hàng và nhân sự:
+                                </p>
+                                <div class="d-flex flex-column gap-3 mb-4">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <i class="fa fa-coffee text-warning fs-5 mt-1"/>
+                                        <div>
+                                            <strong class="text-white d-block">Tài Trợ Máy Pha Cà Phê 0đ</strong>
+                                            <span class="text-secondary small">Cung cấp máy pha chuyên nghiệp 1-group và 2-groups nhập khẩu Châu Âu theo sản lượng hạt cam kết.</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-start gap-3">
+                                        <i class="fa fa-percent text-warning fs-5 mt-1"/>
+                                        <div>
+                                            <strong class="text-white d-block">Chính Sách Giá Sỉ Chiết Khấu Đến 38%</strong>
+                                            <span class="text-secondary small">Cung ứng hạt rang mới định kỳ số lượng lớn, đảm bảo chất lượng đồng nhất quanh năm.</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-start gap-3">
+                                        <i class="fa fa-wrench text-warning fs-5 mt-1"/>
+                                        <div>
+                                            <strong class="text-white d-block">Tư Vấn Setup Quầy Bar &amp; Đào Tạo Barista</strong>
+                                            <span class="text-secondary small">Chuyển giao quy trình pha chế chuẩn SCA, bảo trì định kỳ 30 ngày/lần.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="/solutions-b2b" class="btn btn-outline-secondary rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2">
+                                    <span>Khám Phá Cổng Giải Pháp B2B</span>
+                                    <i class="fa fa-arrow-right"/>
+                                </a>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card bg-black bg-opacity-60 border border-secondary border-opacity-25 rounded-4 p-4 text-white">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="fw-bold mb-0 text-white">Đăng Ký Nhận Mẫu Thử B2B</h5>
+                                        <span class="badge bg-warning text-dark fw-bold">MIỄN PHÍ</span>
+                                    </div>
+                                    <p class="text-secondary small mb-4">
+                                        Dành riêng cho chủ quán cà phê, quản lý nhà hàng/khách sạn và đại diện thu mua văn phòng.
+                                    </p>
+                                    <form action="/solutions-b2b" method="GET">
+                                        <div class="mb-3">
+                                            <label class="form-label text-secondary small">Tên Doanh Nghiệp / Quán Cà Phê</label>
+                                            <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="Ví dụ: The Workshop Cafe" required="required"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label text-secondary small">Số Điện Thoại Liên Hệ</label>
+                                            <input type="tel" class="form-control bg-dark text-white border-secondary" placeholder="090x xxx xxx" required="required"/>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label text-secondary small">Nhu Cầu Chính</label>
+                                            <select class="form-select bg-dark text-white border-secondary">
+                                                <option>Mua sỉ hạt cà phê nguyên chất</option>
+                                                <option>Thuê / Tài trợ máy pha cà phê 0đ</option>
+                                                <option>Setup quầy bar &amp; đào tạo barista</option>
+                                                <option>Cà phê văn phòng trọn gói</option>
+                                            </select>
+                                        </div>
+                                        <a href="/solutions-b2b#b2b_form" class="btn btn-primary rounded-pill w-100 py-2 d-inline-flex align-items-center justify-content-center gap-2">
+                                            <span>Xem Chi Tiết &amp; Đăng Ký Tư Vấn</span>
+                                            <i class="fa fa-arrow-right"/>
+                                        </a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- 8. REVIEWS & TESTIMONIALS                                     -->
+                <!-- ============================================================= -->
+                <section class="s_testimonials o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25" data-snippet="s_testimonials" data-name="Barista Reviews">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <div class="inno-pill-badge mb-3">
+                                <span>ĐÁNH GIÁ CHUYÊN MÔN // COMMUNITY VOICE</span>
+                            </div>
+                            <h2 class="display-5 fw-bold text-white mb-3">
+                                Lời Nhận Xét Từ Chuyên Gia &amp; Khách Hàng
+                            </h2>
+                            <p class="lead text-secondary mx-auto col-lg-8">
+                                Sự công nhận từ cộng đồng Q Grader, Barista và những người sành cà phê khó tính nhất.
+                            </p>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced">
+                            <div class="col-lg-4">
+                                <div class="card h-100 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 text-white d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="text-warning mb-3">
+                                            <i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/>
+                                        </div>
+                                        <p class="text-secondary small mb-4 fst-italic inno-card-desc-balance">
+                                            "Hạt Fine Robusta Cư M'gar của InnoKafe thực sự làm tôi thay đổi định kiến về Robusta Việt Nam. Thể chất cực kỳ dày dặn, vị đắng ngọt socola thanh sạch và hoàn toàn không có mùi hôi gắt của hạt tạp phẩm."
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex align-items-center gap-3">
+                                        <span class="badge rounded-circle bg-warning text-dark p-2 fw-bold" style="width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center;">NT</span>
+                                        <div>
+                                            <strong class="text-white d-block small">Nguyễn Tuấn Anh</strong>
+                                            <span class="text-secondary" style="font-size: 0.78rem;">SCA Certified Q Grader · TP.HCM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card h-100 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 text-white d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="text-warning mb-3">
+                                            <i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/>
+                                        </div>
+                                        <p class="text-secondary small mb-4 fst-italic inno-card-desc-balance">
+                                            "Arabica Cầu Đất sơ chế Washed có hương hoa nhài và độ chua thanh cam Bergamot sáng rực. Dùng để pha Pour-over V60 buổi sáng thì không thể tuyệt vời hơn. Rất tự hào về nông sản Việt!"
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex align-items-center gap-3">
+                                        <span class="badge rounded-circle bg-warning text-dark p-2 fw-bold" style="width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center;">LH</span>
+                                        <div>
+                                            <strong class="text-white d-block small">Lê Hoàng Nam</strong>
+                                            <span class="text-secondary" style="font-size: 0.78rem;">Head Barista, Artisan Cafe · Đà Nẵng</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card h-100 bg-black bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 text-white d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="text-warning mb-3">
+                                            <i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/><i class="fa fa-star"/>
+                                        </div>
+                                        <p class="text-secondary small mb-4 fst-italic inno-card-desc-balance">
+                                            "Bài trắc nghiệm Tìm Gu Cà Phê rất thông minh và chính xác. Mình được gợi ý dòng Heritage Red Honey, mua về pha phin tại nhà thì đúng gu ngọt ngào caramel mà cả hai vợ chồng đều thích."
+                                        </p>
+                                    </div>
+                                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex align-items-center gap-3">
+                                        <span class="badge rounded-circle bg-warning text-dark p-2 fw-bold" style="width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center;">PM</span>
+                                        <div>
+                                            <strong class="text-white d-block small">Phạm Minh Trang</strong>
+                                            <span class="text-secondary" style="font-size: 0.78rem;">Khách Hàng Thân Thiết · Hà Nội</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================= -->
+                <!-- 9. REUSABLE GLOBAL CALL TO ACTION                             -->
+                <!-- ============================================================= -->
+                <t t-call="innokafe_website.innokafe_global_cta"/>
+
+                <div class="oe_structure oe_empty" id="oe_structure_home_bottom"/>
+            </main>
+        </t>
+    </template>
+</odoo>

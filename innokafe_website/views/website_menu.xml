@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================================================================= -->
+    <!-- TOP NAVIGATION MENU ITEMS                                         -->
+    <!-- ================================================================= -->
+    <record id="menu_innokafe_home" model="website.menu">
+        <field name="name">Trang chủ</field>
+        <field name="url">/</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="menu_innokafe_story" model="website.menu">
+        <field name="name">Câu chuyện Nông trại</field>
+        <field name="url">/story</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="menu_innokafe_products" model="website.menu">
+        <field name="name">Sản phẩm Đặc sản</field>
+        <field name="url">/products</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="menu_innokafe_profiler" model="website.menu">
+        <field name="name">Tìm Gu Cà Phê</field>
+        <field name="url">/taste-profiler</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="menu_innokafe_solutions_b2b" model="website.menu">
+        <field name="name">Giải pháp B2B</field>
+        <field name="url">/solutions-b2b</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="menu_innokafe_contact" model="website.menu">
+        <field name="name">Liên hệ</field>
+        <field name="url">/contactus</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">60</field>
+    </record>
+
+    <!-- ================================================================= -->
+    <!-- WEBSITE.PAGE REGISTRATIONS (ENABLING WEBSITE BUILDER EDITABILITY) -->
+    <!-- ================================================================= -->
+    <record id="page_innokafe_home" model="website.page">
+        <field name="name">InnoKafe Homepage</field>
+        <field name="url">/</field>
+        <field name="view_id" ref="innokafe_website.homepage"/>
+        <field name="website_indexed" eval="True"/>
+        <field name="is_published">True</field>
+    </record>
+
+    <record id="page_innokafe_story" model="website.page">
+        <field name="name">Di Sản Nông Trại &amp; Farm to Cup</field>
+        <field name="url">/story</field>
+        <field name="view_id" ref="innokafe_website.story_page"/>
+        <field name="website_indexed" eval="True"/>
+        <field name="is_published">True</field>
+    </record>
+
+    <record id="page_innokafe_products" model="website.page">
+        <field name="name">Sản Phẩm Cà Phê Đặc Sản</field>
+        <field name="url">/products</field>
+        <field name="view_id" ref="innokafe_website.products_page"/>
+        <field name="website_indexed" eval="True"/>
+        <field name="is_published">True</field>
+    </record>
+
+    <record id="page_innokafe_taste_profiler" model="website.page">
+        <field name="name">Tìm Gu Cà Phê Của Bạn</field>
+        <field name="url">/taste-profiler</field>
+        <field name="view_id" ref="innokafe_website.taste_profiler_page"/>
+        <field name="website_indexed" eval="True"/>
+        <field name="is_published">True</field>
+    </record>
+
+    <record id="page_innokafe_solutions_b2b" model="website.page">
+        <field name="name">Giải Pháp Cà Phê B2B Horeca</field>
+        <field name="url">/solutions-b2b</field>
+        <field name="view_id" ref="innokafe_website.solutions_b2b_page"/>
+        <field name="website_indexed" eval="True"/>
+        <field name="is_published">True</field>
+    </record>
+
+    <record id="page_innokafe_contactus" model="website.page">
+        <field name="name">Liên Hệ InnoKafe</field>
+        <field name="url">/contactus</field>
+        <field name="view_id" ref="innokafe_website.contactus_page"/>
+        <field name="website_indexed" eval="True"/>
+        <field name="is_published">True</field>
+    </record>
+</odoo>

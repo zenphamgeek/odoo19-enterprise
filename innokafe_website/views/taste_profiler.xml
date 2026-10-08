@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="taste_profiler_page" name="Taste Profiler — Tìm Gu Cà Phê Của Bạn">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty"/>
+
+            <!-- =============================================================== -->
+            <!-- HERO BANNER                                                     -->
+            <!-- =============================================================== -->
+            <section class="s_innokafe_profiler_hero o_colored_level o_cc o_cc5 py-5 text-center text-light position-relative"
+                     data-snippet="s_innokafe_profiler_hero"
+                     data-name="Profiler Hero"
+                     style="background: linear-gradient(180deg, #120A06 0%, #1E120B 100%); border-bottom: 1px solid rgba(212, 136, 66, 0.2);">
+                <div class="container py-4">
+                    <span class="badge rounded-pill px-3 py-2 mb-3 text-uppercase fw-bold"
+                          style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; border: 1px solid rgba(212, 136, 66, 0.35); font-size: 0.8rem; letter-spacing: 0.08em;">
+                        Cá Nhân Hóa Trải Nghiệm Thưởng Thức
+                    </span>
+                    <h1 class="display-4 fw-bold mb-3 text-light" style="font-family: 'Playfair Display', serif; text-wrap: balance;">
+                        Tìm Gu Cà Phê Của Bạn
+                    </h1>
+                    <p class="lead mx-auto mb-0" style="max-width: 760px; color: #D1C5B4; line-height: 1.7; text-wrap: balance;">
+                        Mỗi người sở hữu một bản đồ vị giác độc nhất. Chỉ 60 giây với 4 câu hỏi trắc nghiệm giác quan,
+                        thuật toán ghép đôi 7D chuẩn SCA của Innokafe sẽ gợi ý chính xác dòng hạt sinh ra để dành cho bạn.
+                    </p>
+                </div>
+            </section>
+
+            <!-- =============================================================== -->
+            <!-- QUIZ CONTAINER & INTERACTIVE STATE MACHINE                      -->
+            <!-- =============================================================== -->
+            <section class="s_innokafe_profiler_interactive o_colored_level o_cc o_cc5 py-5"
+                     data-snippet="s_innokafe_profiler_interactive"
+                     data-name="Taste Profiler Interactive"
+                     style="background-color: #1E120B; min-height: 700px;">
+                <div class="container profiler-quiz-container">
+                    <!-- Embedded JSON Data for Client Engine -->
+                    <script id="innokafe-skus-data" type="application/json" t-out="skus_json"/>
+
+                    <div class="innokafe-profiler-root mx-auto" style="max-width: 920px;">
+                        <!-- Progress Header -->
+                        <div class="d-flex align-items-center justify-content-between mb-3 text-light">
+                            <span class="profiler-progress-text fw-bold text-uppercase" style="color: #D48842; font-size: 0.85rem; letter-spacing: 0.05em;">
+                                Bước 1 / 4
+                            </span>
+                            <span class="small" style="color: #D1C5B4;">
+                                Thuật toán 7D Matchmaking SCA
+                            </span>
+                        </div>
+                        <div class="progress mb-5" style="height: 6px; background-color: rgba(247, 242, 234, 0.12); border-radius: 999px;">
+                            <div class="progress-bar profiler-progress-bar"
+                                 role="progressbar"
+                                 style="width: 25%; background: linear-gradient(90deg, #E5A93C, #D48842); transition: width 0.4s ease; border-radius: 999px;"/>
+                        </div>
+
+                        <!-- =================================================== -->
+                        <!-- STEP 1: ROUTINE & VIBE                              -->
+                        <!-- =================================================== -->
+                        <div class="profiler-step-content" data-step-panel="1">
+                            <div class="text-center mb-4">
+                                <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
+                                    Khoảnh khắc cà phê lý tưởng trong ngày của bạn?
+                                </h2>
+                                <p style="color: #D1C5B4;">Chọn phong cách thưởng thức phản ánh đúng thói quen của bạn nhất.</p>
+                            </div>
+
+                            <div class="row g-3 ins-card-row-balanced">
+                                <div class="col-md-6">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="1" data-key="habit" data-value="phin_dam"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem;">
+                                                ☕
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Cú Hích Buổi Sáng — Đậm Đà Bừng Tỉnh</h4>
+                                                <p class="small mb-0" style="color: #D1C5B4;">
+                                                    Một ly cà phê đen sánh đậm hoặc nâu đá truyền thống, đượm vị đắng ngọt, nạp đầy năng lượng tỉnh táo tức thì.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="1" data-key="habit" data-value="sua_da"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem;">
+                                                🥛
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Ngọt Ngào Êm Ái — Cà Phê Sữa Đá Sành Điệu</h4>
+                                                <p class="small mb-0" style="color: #D1C5B4;">
+                                                    Thích sự béo ngậy hài hòa, vị đắng sô-cô-la quyện cùng sữa đặc ngọt bùi, hậu vị êm dịu vòm họng.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="1" data-key="habit" data-value="den_thanh"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem;">
+                                                🌸
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Tinh Tế &amp; Thư Thái — Cà Phê Đen Thanh Nhẹ</h4>
+                                                <p class="small mb-0" style="color: #D1C5B4;">
+                                                    Nhâm nhi từng ngụm chậm rãi, thưởng lãm hương hoa quả tươi sáng, vị chua thanh tao như nước quả nhiệt đới.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="1" data-key="habit" data-value="coldbrew_sangtao"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem;">
+                                                🧊
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Hiện Đại &amp; Sảng Khoái — Giải Nhiệt Mát Lạnh</h4>
+                                                <p class="small mb-0" style="color: #D1C5B4;">
+                                                    Cold Brew ủ lạnh 24 giờ mát rượi, Espresso Tonic sảng khoái ngày nắng, hương cam chanh bừng sức sống.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- =================================================== -->
+                        <!-- STEP 2: BREWING GEAR                                -->
+                        <!-- =================================================== -->
+                        <div class="profiler-step-content d-none" data-step-panel="2">
+                            <div class="text-center mb-4">
+                                <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
+                                    Bạn thường pha chế cà phê bằng thiết bị nào?
+                                </h2>
+                                <p style="color: #D1C5B4;">Dụng cụ chiết xuất quyết định kích thước bột xay và độ trích ly tối ưu.</p>
+                            </div>
+
+                            <div class="row g-3 ins-card-row-balanced">
+                                <div class="col-md-6">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="2" data-key="gear" data-value="phin"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <h4 class="h5 fw-bold text-light mb-2">Phin Nhôm Truyền Thống</h4>
+                                        <p class="small mb-0" style="color: #D1C5B4;">
+                                            Phương pháp chiết xuất nhỏ giọt tí tách kinh điển của người Việt, đậm đà thể chất và lớp dầu tự nhiên.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="2" data-key="gear" data-value="espresso"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <h4 class="h5 fw-bold text-light mb-2">Máy Pha Espresso Gia Đình / Cầm Tay</h4>
+                                        <p class="small mb-0" style="color: #D1C5B4;">
+                                            Chiết xuất áp suất cao 9 bar trong 25-30 giây, tạo lớp Crema dày vàng óng ả và hương thơm bung tỏa.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="2" data-key="gear" data-value="dripbag"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <h4 class="h5 fw-bold text-light mb-2">Phin Giấy Túi Lọc Drip Bag</h4>
+                                        <p class="small mb-0" style="color: #D1C5B4;">
+                                            Tiện lợi tại bàn làm việc hoặc du lịch, màng lọc Nhật Bản chiết xuất trong trẻo chỉ với một ấm nước sôi.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="2" data-key="gear" data-value="pourover"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <h4 class="h5 fw-bold text-light mb-2">Bình Pour-Over V60 / French Press / Cold Brew</h4>
+                                        <p class="small mb-0" style="color: #D1C5B4;">
+                                            Nghệ thuật pha chế thủ công tôn vinh các tầng hương hoa quả tinh vi và độ trong trẻo tuyệt hảo.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-light rounded-pill px-4 btn-profiler-prev">
+                                    ← Quay lại
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- =================================================== -->
+                        <!-- STEP 3: FLAVOR NOTES                                -->
+                        <!-- =================================================== -->
+                        <div class="profiler-step-content d-none" data-step-panel="3">
+                            <div class="text-center mb-4">
+                                <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
+                                    Nốt hương nào cuốn hút khứu giác của bạn nhất?
+                                </h2>
+                                <p style="color: #D1C5B4;">Hương thơm bộc lộ qua phản ứng rang mộc tự nhiên của hạt.</p>
+                            </div>
+
+                            <div class="row g-3 ins-card-row-balanced">
+                                <div class="col-md-4">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="3" data-key="flavor" data-value="nutty_choco"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <div class="mb-3 text-amber fs-3">🍫</div>
+                                        <h4 class="h5 fw-bold text-light mb-2">Trầm Ấm &amp; Cổ Điển</h4>
+                                        <p class="small mb-0" style="color: #D1C5B4;">
+                                            Sô-cô-la đen 85%, hạt dẻ nướng, caramel bơ đậu phộng, mật mía và gỗ sồi trầm.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="3" data-key="flavor" data-value="fruity_floral"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <div class="mb-3 text-amber fs-3">🍊</div>
+                                        <h4 class="h5 fw-bold text-light mb-2">Tươi Sáng &amp; Sinh Động</h4>
+                                        <p class="small mb-0" style="color: #D1C5B4;">
+                                            Hoa nhài trắng thanh khiết, cam Bergamot, táo xanh, quả mọng đào chín và trà Earl Grey.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="3" data-key="flavor" data-value="honey_balanced"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <div class="mb-3 text-amber fs-3">🍯</div>
+                                        <h4 class="h5 fw-bold text-light mb-2">Cân Bằng &amp; Ngọt Ngào</h4>
+                                        <p class="small mb-0" style="color: #D1C5B4;">
+                                            Mật ong hoa rừng, táo đỏ, caramel kem bơ, hạnh nhân thơm bùi, hậu vị ngọt kéo dài.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-light rounded-pill px-4 btn-profiler-prev">
+                                    ← Quay lại
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- =================================================== -->
+                        <!-- STEP 4: CAFFEINE INTENSITY                          -->
+                        <!-- =================================================== -->
+                        <div class="profiler-step-content d-none" data-step-panel="4">
+                            <div class="text-center mb-4">
+                                <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
+                                    Mức độ tiếp nhận caffeine &amp; độ đậm đặc của bạn?
+                                </h2>
+                                <p style="color: #D1C5B4;">Chọn mức năng lượng để cơ thể cảm thấy thoải mái và sảng khoái nhất.</p>
+                            </div>
+
+                            <div class="row g-3 ins-card-row-balanced">
+                                <div class="col-md-4">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="4" data-key="caffeine" data-value="high"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <h4 class="h5 fw-bold text-light mb-2">Đô Mạnh — Cần Tỉnh Táo Tuyệt Đối</h4>
+                                        <p class="small mb-0" style="color: #D1C5B4;">
+                                            Hàm lượng caffeine tự nhiên cao của Fine Robusta Cư M'gar, thể chất dày đặc, duy trì năng lượng tập trung trọn vẹn cả ngày.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="4" data-key="caffeine" data-value="medium"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <h4 class="h5 fw-bold text-light mb-2">Cân Bằng — Tỉnh Táo Êm Dịu</h4>
+                                        <p class="small mb-0" style="color: #D1C5B4;">
+                                            Hòa quyện tỷ lệ vàng giữa Robusta và Arabica, giải phóng năng lượng êm ái, tỉnh táo minh mẫn không hồi hộp.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100 p-4 profiler-option-card cursor-pointer border rounded-4 text-start"
+                                         data-step="4" data-key="caffeine" data-value="low"
+                                         style="background-color: #2C1810; border-color: rgba(212, 136, 66, 0.25); transition: all 0.25s ease;">
+                                        <h4 class="h5 fw-bold text-light mb-2">Nhẹ Nhàng — Nhạy Cảm Caffeine</h4>
+                                        <p class="small mb-0" style="color: #D1C5B4;">
+                                            100% Arabica núi sương Cầu Đất, hàm lượng caffeine dịu nhẹ, thưởng thức trọn vẹn hương hoa quả mà không sợ say.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-light rounded-pill px-4 btn-profiler-prev">
+                                    ← Quay lại
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- =================================================== -->
+                        <!-- STEP 5: RESULT COCKPIT                              -->
+                        <!-- =================================================== -->
+                        <div class="profiler-result-cockpit d-none py-2">
+                            <div class="text-center mb-5">
+                                <span class="badge rounded-pill px-3 py-2 mb-2 text-uppercase fw-bold"
+                                      style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; border: 1px solid rgba(212, 136, 66, 0.35);">
+                                    Kết Quả Ghép Đôi Hương Vị Cá Nhân Hóa
+                                </span>
+                                <h2 class="display-6 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
+                                    Dòng Cà Phê Dành Riêng Cho Khẩu Vị Của Bạn
+                                </h2>
+                                <p style="color: #D1C5B4;">
+                                    Dựa trên thuật toán khoảng cách vector 7D, đây là sự lựa chọn phù hợp nhất với phong cách của bạn.
+                                </p>
+                            </div>
+
+                            <!-- TOP 1 PERFECT MATCH CARD -->
+                            <div class="card border rounded-4 mb-4 overflow-hidden"
+                                 style="background-color: #2C1810; border-color: #D48842 !important; box-shadow: 0 12px 36px rgba(212, 136, 66, 0.25);">
+                                <div class="card-header py-3 px-4 d-flex align-items-center justify-content-between"
+                                     style="background: linear-gradient(90deg, rgba(212, 136, 66, 0.25), rgba(30, 18, 11, 0.9)); border-bottom: 1px solid rgba(212, 136, 66, 0.3);">
+                                    <div class="d-flex align-items-center">
+                                        <span class="fs-4 me-2">🏆</span>
+                                        <span class="fw-bold text-uppercase" style="color: #E5A93C; letter-spacing: 0.05em; font-size: 0.85rem;">
+                                            Khuyến Nghị Hoàn Hảo (Perfect Match)
+                                        </span>
+                                    </div>
+                                    <span class="badge rounded-pill px-3 py-2 fw-bold top1-match-badge"
+                                          style="background-color: #D48842; color: #1E120B !important; font-size: 0.9rem;">
+                                        91.7% Tương thích
+                                    </span>
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-7">
+                                            <h3 class="h3 fw-bold text-light mb-2 top1-product-name" style="font-family: 'Playfair Display', serif;">
+                                                Đắk Lắk Highland Fine Robusta Natural
+                                            </h3>
+                                            <p class="fst-italic mb-3 top1-product-tagline" style="color: #E5A93C;">
+                                                Bản sắc đại ngàn — Vị đậm đà ngút ngàn, ngọt sâu hậu vị
+                                            </p>
+
+                                            <!-- Specs Grid -->
+                                            <div class="row g-2 mb-3 small" style="color: #D1C5B4;">
+                                                <div class="col-sm-6">
+                                                    <strong>Vùng trồng:</strong> <span class="top1-product-origin">Cư M'gar, Đắk Lắk</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <strong>Sơ chế:</strong> <span class="top1-product-process">Natural (Phơi giàn)</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <strong>Điểm SCA:</strong> <span class="top1-product-cupping text-amber fw-bold">84.5 điểm</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <strong>Quy cách:</strong> <span>Túi 250g (Van 1 chiều)</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Tasting Notes -->
+                                            <div class="mb-4">
+                                                <span class="small d-block mb-1 fw-bold text-light">Nốt hương chủ đạo:</span>
+                                                <div class="top1-product-notes d-flex flex-wrap">
+                                                    <span class="badge rounded-pill px-3 py-1 me-1 mb-1" style="background: rgba(212,136,66,0.18); color: #E5A93C; border: 1px solid rgba(212,136,66,0.3);">Sô-cô-la đen 85%</span>
+                                                    <span class="badge rounded-pill px-3 py-1 me-1 mb-1" style="background: rgba(212,136,66,0.18); color: #E5A93C; border: 1px solid rgba(212,136,66,0.3);">Hạt dẻ nướng</span>
+                                                    <span class="badge rounded-pill px-3 py-1 me-1 mb-1" style="background: rgba(212,136,66,0.18); color: #E5A93C; border: 1px solid rgba(212,136,66,0.3);">Mật mía</span>
+                                                    <span class="badge rounded-pill px-3 py-1 me-1 mb-1" style="background: rgba(212,136,66,0.18); color: #E5A93C; border: 1px solid rgba(212,136,66,0.3);">Gỗ sồi</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex align-items-center flex-wrap gap-3">
+                                                <div class="fs-4 fw-bold text-light top1-product-price">
+                                                    125.000 ₫
+                                                </div>
+                                                <button type="button"
+                                                        class="btn btn-primary rounded-pill px-4 py-2 fw-bold btn-top1-add-to-cart shadow"
+                                                        style="background: linear-gradient(135deg, #E5A93C, #D48842); color: #1E120B !important; border: none;">
+                                                    Thêm Vào Giỏ Hàng Ngay 🛒
+                                                </button>
+                                                <a href="/products" class="btn btn-outline-light rounded-pill px-3 py-2 small">
+                                                    Xem chi tiết hạt →
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <!-- Sensory Wheel Preview -->
+                                        <div class="col-lg-5 text-center mt-4 mt-lg-0">
+                                            <div class="p-3 rounded-4" style="background-color: rgba(18, 10, 6, 0.6); border: 1px solid rgba(212, 136, 66, 0.2);">
+                                                <span class="small d-block fw-bold text-uppercase mb-2" style="color: #D48842; font-size: 0.75rem;">
+                                                    Dấu Ấn Giác Quan 6 Chiều (SCA Radar)
+                                                </span>
+                                                <div class="profiler-sensory-wheel-target mx-auto" style="max-width: 280px; height: 280px;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TOP 2 DISCOVERY MATCH CARD -->
+                            <div class="card border rounded-4 mb-4 p-4"
+                                 style="background-color: #23130C; border-color: rgba(212, 136, 66, 0.25);">
+                                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                    <div>
+                                        <div class="d-flex align-items-center mb-1">
+                                            <span class="badge rounded-pill px-3 py-1 me-2 top2-match-badge"
+                                                  style="background: rgba(212,136,66,0.2); color: #E5A93C; border: 1px solid rgba(212,136,66,0.35); font-size: 0.8rem;">
+                                                90.5% Khám phá đổi vị
+                                            </span>
+                                            <span class="small" style="color: #D1C5B4;">Gợi ý trải nghiệm mở rộng</span>
+                                        </div>
+                                        <h4 class="h5 fw-bold text-light mb-1 top2-product-name">
+                                            Innokafe Espresso Barista Master 80/20
+                                        </h4>
+                                        <p class="small mb-0 top2-product-tagline" style="color: #D1C5B4;">
+                                            Chuẩn mực quầy bar chuyên nghiệp — Crema dày mịn, ổn định chiết xuất
+                                        </p>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="fw-bold text-light top2-product-price">135.000 ₫</span>
+                                        <button type="button"
+                                                class="btn btn-outline-warning rounded-pill px-3 py-2 btn-top2-add-to-cart small"
+                                                style="color: #D48842; border-color: #D48842;">
+                                            Thử dòng này 🛒
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- DISCOVERY BOX HIGH-CONVERTING CTA -->
+                            <div class="card rounded-4 p-4 text-center border-0"
+                                 style="background: linear-gradient(135deg, rgba(212, 136, 66, 0.2) 0%, rgba(30, 18, 11, 0.9) 100%); border: 1px solid rgba(212, 136, 66, 0.4) !important;">
+                                <h4 class="h4 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
+                                    Chưa Chắc Chắn? Trải Nghiệm Hộp Khám Phá Nghệ Nhân (Discovery Box)
+                                </h4>
+                                <p class="mx-auto mb-3" style="max-width: 680px; color: #FAF6F0;">
+                                    Thử trọn bộ <strong>4 gói mẫu thử 100g</strong> đại diện cho 4 phong cách chế biến và vùng trồng đặc trưng (Robusta Natural, Arabica Washed, Signature Red Honey, Cold Brew Blend) chỉ với <strong>189.000 ₫</strong>.
+                                </p>
+                                <div class="d-flex justify-content-center gap-3">
+                                    <a href="/shop/cart?add_product=4"
+                                       class="btn btn-primary rounded-pill px-4 py-2 fw-bold"
+                                       style="background: linear-gradient(135deg, #E5A93C, #D48842); color: #1E120B !important; border: none;">
+                                        Đặt Hộp Khám Phá Discovery Box (189K)
+                                    </a>
+                                    <button type="button" class="btn btn-outline-light rounded-pill px-4 py-2 btn-profiler-restart">
+                                        🔄 Làm lại trắc nghiệm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOAST NOTIFICATION CONTAINER -->
+            <div id="innokafe-cart-toast" class="d-none" role="alert"/>
+
+            <!-- =============================================================== -->
+            <!-- ASSURANCE FOOTER SECTION                                        -->
+            <!-- =============================================================== -->
+            <section class="s_innokafe_profiler_pledge o_colored_level o_cc o_cc5 py-5 text-light text-center"
+                     data-snippet="s_innokafe_profiler_pledge"
+                     data-name="Profiler Pledge"
+                     style="background-color: #120A06; border-top: 1px solid rgba(212, 136, 66, 0.15);">
+                <div class="container">
+                    <div class="row g-4 text-center">
+                        <div class="col-md-3">
+                            <div class="h3 mb-2" style="color: #D48842;">🌱</div>
+                            <h5 class="fw-bold text-light">100% Rang Mộc</h5>
+                            <p class="small mb-0" style="color: #D1C5B4;">Cam kết 4 Không: Không hương liệu, không chất bảo quản, không đậu bơ bắp.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="h3 mb-2" style="color: #D48842;">🔥</div>
+                            <h5 class="fw-bold text-light">Rang Mới Mỗi Tuần</h5>
+                            <p class="small mb-0" style="color: #D1C5B4;">Công nghệ Hot-Air Châu Âu, mẻ rang được ủ degas tối ưu trước khi gửi.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="h3 mb-2" style="color: #D48842;">🛡️</div>
+                            <h5 class="fw-bold text-light">Bảo Quản Van Thụy Sĩ</h5>
+                            <p class="small mb-0" style="color: #D1C5B4;">Bao bì màng nhôm 3 lớp tích hợp van 1 chiều WICOVALVE giải phóng CO2.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="h3 mb-2" style="color: #D48842;">🚚</div>
+                            <h5 class="fw-bold text-light">Giao Hàng Hỏa Tốc</h5>
+                            <p class="small mb-0" style="color: #D1C5B4;">Đóng gói cẩn thận, giao nhanh toàn quốc trong 24-48 giờ.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="oe_structure_bottom" class="oe_structure oe_empty"/>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,363 @@
+// ==============================================================================
+// INNOKAFE SPECIALTY COFFEE DESIGN SYSTEM TOKENS (WARM EARTH & COFFEE HERITAGE)
+// ==============================================================================
+// Brand Palette:
+//   Deep Espresso:  #1E120B (Primary dark surface, 16.44:1 AAA with Cream Foam)
+//   Warm Amber:     #D48842 (Primary brand accent, 6.45:1 AA with Deep Espresso)
+//   Cream Foam:     #F7F2EA (Primary light surface, milk foam crema)
+//   Forest Leaf:    #2D4739 (Agro-forestry emerald, 9.09:1 AAA with Cream Foam)
+//
+// CRITICAL WCAG ACCESSIBILITY MANDATE:
+//   Buttons and elements with background Warm Amber #D48842 MUST use Deep Espresso
+//   #1E120B text (color: #1E120B !important; 6.45:1 AA).
+//   NEVER USE WHITE #FFFFFF ON WARM AMBER (2.84:1 CONTRAST VIOLATION - STRICT FAIL).
+// ==============================================================================
+
+// Google Fonts Playfair Display & Plus Jakarta Sans are preloaded via HTML <link> in website_templates.xml
+// Do not use @import url(...) with semicolons in SCSS as Odoo's asset compiler splits on semicolons.
+
+:root {
+    // Core Brand Identity Colors
+    --inno-espresso-dark:   #1E120B; // Deep Espresso: Nền chính, cà phê rang đậm
+    --inno-espresso-rgb:    30, 18, 11;
+    --inno-amber-warm:      #D48842; // Warm Amber: Màu nhấn chính, caramel mật ong
+    --inno-amber-rgb:       212, 136, 66;
+    --inno-cream-foam:      #F7F2EA; // Cream Foam: Màu nền sáng, bọt sữa crema
+    --inno-cream-rgb:       247, 242, 234;
+    --inno-forest-leaf:     #2D4739; // Forest Leaf: Màu lá cà phê, nông nghiệp xanh
+    --inno-forest-rgb:      45, 71, 57;
+
+    // Extended Terroir Palette
+    --inno-roasted-bean:    #3C2415; // Secondary Dark Surface
+    --inno-golden-crema:    #E6A15C; // Golden Crema: Highlight sáng
+    --inno-clay-soil:       #8C4820; // Red Basalt Clay Soil Accent
+    --inno-pure-dark:       #120A06; // Dark Roast Pure Black Background
+    --inno-card-light:      #FBF8F3; // Ultra-light Foam Card Background
+
+    // Glassmorphism & Borders
+    --inno-border-subtle:   rgba(212, 136, 66, 0.22);
+    --inno-border-light:    rgba(247, 242, 234, 0.15);
+    --inno-border-dark:     rgba(30, 18, 11, 0.15);
+    --inno-glass-bg:        rgba(30, 18, 11, 0.85);
+    --inno-card-hover-glow: 0 12px 36px rgba(212, 136, 66, 0.22);
+
+    // Primary Unified CTA Gradients
+    --inno-btn-gradient:       linear-gradient(135deg, #E6A15C 0%, #D48842 50%, #B86E2A 100%);
+    --inno-btn-gradient-hover: linear-gradient(135deg, #FFB366 0%, #E6954A 50%, #C97830 100%);
+
+    // Typography Tokens
+    --inno-font-heading:    'Playfair Display', Georgia, serif;
+    --inno-font-body:       'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+// -----------------------------------------------------------------------------
+// 1. TYPOGRAPHY & TEXT BALANCING
+// -----------------------------------------------------------------------------
+body {
+    font-family: var(--inno-font-body);
+    color: var(--inno-cream-foam);
+    background-color: var(--inno-espresso-dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6,
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6,
+.inno-heading {
+    font-family: var(--inno-font-heading);
+    letter-spacing: 0.02em;
+    text-wrap: balance;
+    color: var(--inno-cream-foam);
+}
+
+p, .inno-body {
+    text-wrap: pretty;
+    line-height: 1.65;
+}
+
+// Eyebrow / Overline text
+.inno-eyebrow {
+    font-family: var(--inno-font-body);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--inno-golden-crema);
+}
+
+// -----------------------------------------------------------------------------
+// 2. CRITICAL WCAG AA/AAA BUTTONS & ACCESSIBILITY ENFORCEMENT
+// -----------------------------------------------------------------------------
+// Any button or element with Warm Amber #D48842 background MUST use Deep Espresso
+// #1E120B text (6.45:1 contrast AA). Absolute prohibition of white #FFFFFF.
+.btn-primary,
+.btn-inno-primary,
+.btn-amber,
+.bg-amber,
+.bg-inno-amber,
+.badge-amber,
+.badge-inno-amber,
+[class*="bg-amber"] {
+    background-color: var(--inno-amber-warm) !important;
+    background-image: none !important;
+    color: #1E120B !important;
+    border-color: var(--inno-amber-warm) !important;
+    font-weight: 700 !important;
+
+    * {
+        color: #1E120B !important;
+    }
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        background-color: var(--inno-golden-crema) !important;
+        background-image: none !important;
+        color: #1E120B !important;
+        border-color: var(--inno-golden-crema) !important;
+        box-shadow: 0 4px 18px rgba(212, 136, 66, 0.45) !important;
+
+        * {
+            color: #1E120B !important;
+        }
+    }
+}
+
+// Outline Buttons
+.btn-outline-primary,
+.btn-outline-amber {
+    color: var(--inno-amber-warm) !important;
+    border-color: var(--inno-amber-warm) !important;
+    background-color: transparent !important;
+    font-weight: 600;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: var(--inno-amber-warm) !important;
+        color: #1E120B !important;
+        border-color: var(--inno-amber-warm) !important;
+
+        * {
+            color: #1E120B !important;
+        }
+    }
+}
+
+.btn-outline-cream {
+    color: var(--inno-cream-foam) !important;
+    border-color: rgba(247, 242, 234, 0.35) !important;
+    background-color: transparent !important;
+    font-weight: 600;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: var(--inno-cream-foam) !important;
+        color: var(--inno-espresso-dark) !important;
+        border-color: var(--inno-cream-foam) !important;
+    }
+}
+
+// Forest CTA (9.09:1 AAA with Cream Foam)
+.btn-forest,
+.bg-forest {
+    background-color: var(--inno-forest-leaf) !important;
+    color: var(--inno-cream-foam) !important;
+    border-color: var(--inno-forest-leaf) !important;
+    font-weight: 600;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: #3b5c4b !important;
+        color: var(--inno-cream-foam) !important;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 3. BADGES, CHIPS & STATUS PILLS (ABSOLUTE CENTERING & CONTRAST)
+// -----------------------------------------------------------------------------
+.badge,
+.badge-pill,
+.rounded-pill,
+.inno-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    vertical-align: middle;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    border-radius: 50rem;
+    font-weight: 600;
+}
+
+.badge-forest {
+    background-color: var(--inno-forest-leaf) !important;
+    color: var(--inno-cream-foam) !important;
+}
+
+.badge-cream {
+    background-color: var(--inno-cream-foam) !important;
+    color: var(--inno-espresso-dark) !important;
+}
+
+.badge-espresso {
+    background-color: var(--inno-espresso-dark) !important;
+    color: var(--inno-cream-foam) !important;
+    border: 1px solid var(--inno-border-subtle);
+}
+
+.badge-clay {
+    background-color: var(--inno-clay-soil) !important;
+    color: var(--inno-cream-foam) !important;
+}
+
+// -----------------------------------------------------------------------------
+// 4. BASELINE LOCK FOR CARD ROWS (.ins-card-row-balanced)
+// -----------------------------------------------------------------------------
+.ins-card-row-balanced,
+.inno-card-grid {
+    display: flex;
+    flex-wrap: wrap;
+
+    .card,
+    .card-innokafe,
+    .card-innokafe-light {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .card-body {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-footer,
+        .inno-card-actions {
+            margin-top: auto;
+        }
+    }
+}
+
+// Dark Card (Deep Espresso & Roasted Bean)
+.card-innokafe {
+    background: var(--inno-roasted-bean);
+    border: 1px solid var(--inno-border-subtle);
+    border-radius: 1rem;
+    color: var(--inno-cream-foam);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--inno-card-hover-glow);
+        border-color: var(--inno-amber-warm);
+    }
+}
+
+// Light Card (Cream Foam Surface)
+.card-innokafe-light {
+    background: var(--inno-card-light);
+    border: 1px solid rgba(212, 136, 66, 0.18);
+    border-radius: 1rem;
+    color: var(--inno-espresso-dark);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--inno-espresso-dark) !important;
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(30, 18, 11, 0.12);
+        border-color: var(--inno-amber-warm);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 5. COLOR UTILITY CLASSES
+// -----------------------------------------------------------------------------
+.bg-espresso       { background-color: var(--inno-espresso-dark) !important; color: var(--inno-cream-foam) !important; }
+.bg-cream          { background-color: var(--inno-cream-foam) !important; color: var(--inno-espresso-dark) !important; }
+.bg-forest         { background-color: var(--inno-forest-leaf) !important; color: var(--inno-cream-foam) !important; }
+.bg-roasted        { background-color: var(--inno-roasted-bean) !important; color: var(--inno-cream-foam) !important; }
+.bg-clay           { background-color: var(--inno-clay-soil) !important; color: var(--inno-cream-foam) !important; }
+.bg-golden         { background-color: var(--inno-golden-crema) !important; color: var(--inno-espresso-dark) !important; }
+
+.text-espresso     { color: var(--inno-espresso-dark) !important; }
+.text-amber        { color: var(--inno-amber-warm) !important; }
+.text-cream        { color: var(--inno-cream-foam) !important; }
+.text-forest       { color: var(--inno-forest-leaf) !important; }
+.text-golden       { color: var(--inno-golden-crema) !important; }
+.text-muted-cream  { color: rgba(247, 242, 234, 0.72) !important; }
+
+.border-amber      { border-color: var(--inno-amber-warm) !important; }
+.border-forest     { border-color: var(--inno-forest-leaf) !important; }
+.border-subtle     { border-color: var(--inno-border-subtle) !important; }
+.border-light      { border-color: var(--inno-border-light) !important; }
+
+// -----------------------------------------------------------------------------
+// 6. SENSORY RADAR WHEEL SVG STYLING
+// -----------------------------------------------------------------------------
+.innokafe-sensory-wheel {
+    overflow: visible;
+
+    .sensory-data-polygon {
+        fill: url(#sensoryAmberGrad);
+        stroke: var(--inno-amber-warm);
+        stroke-width: 2.5;
+        filter: drop-shadow(0 0 8px rgba(212, 136, 66, 0.45));
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    text {
+        font-family: var(--inno-font-body);
+        font-weight: 600;
+        fill: var(--inno-cream-foam);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 7. TASTE PROFILER INTERACTIVE STYLING
+// -----------------------------------------------------------------------------
+.inno-profiler-option {
+    border: 2px solid var(--inno-border-subtle);
+    border-radius: 1rem;
+    background: rgba(60, 36, 21, 0.45);
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+
+    &:hover {
+        border-color: var(--inno-golden-crema);
+        background: rgba(60, 36, 21, 0.85);
+        transform: translateY(-2px);
+    }
+
+    &.selected {
+        border-color: var(--inno-amber-warm);
+        background: rgba(212, 136, 66, 0.15);
+        box-shadow: 0 0 20px rgba(212, 136, 66, 0.25);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 8. CINEMA VIDEO BACKGROUND & AMBIENT LOOPS
+// -----------------------------------------------------------------------------
+.inno-cinema-hero-section {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--inno-espresso-dark);
+
+    video {
+        pointer-events: none;
+        user-select: none;
+        will-change: transform;
+    }
+}
+
