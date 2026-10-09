@@ -60,10 +60,10 @@
                             <!-- Executive Language Switcher (VN / EN) -->
                             <div class="ins-lang-switcher d-flex align-items-center me-1" id="innoria_lang_switcher">
                                 <div class="btn-group btn-group-sm p-1 rounded-pill" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);">
-                                    <a href="/" id="lang_toggle_vi" class="btn btn-sm rounded-pill px-2 py-0 fw-bold ins-lang-btn" style="font-size: 0.72rem; transition: all 0.2s ease; background: #0ABBDB !important; color: #05101E !important; box-shadow: 0 0 10px rgba(10,187,219,0.35);">
+                                    <a href="/" id="lang_toggle_vi" class="ins-lang-pill text-decoration-none rounded-pill px-2 py-0 fw-bold ins-lang-toggle" style="font-size: 0.72rem; transition: all 0.2s ease; background: #0ABBDB !important; color: #05101E !important; box-shadow: 0 0 10px rgba(10,187,219,0.35);">
                                         <span>🇻🇳 VN</span>
                                     </a>
-                                    <a href="/en" id="lang_toggle_en" class="btn btn-sm rounded-pill px-2 py-0 fw-bold ins-lang-btn" style="font-size: 0.72rem; transition: all 0.2s ease; background: transparent !important; color: #94A3B8 !important;">
+                                    <a href="/en" id="lang_toggle_en" class="ins-lang-pill text-decoration-none rounded-pill px-2 py-0 fw-bold ins-lang-toggle" style="font-size: 0.72rem; transition: all 0.2s ease; background: transparent !important; color: #94A3B8 !important;">
                                         <span>🇬🇧 EN</span>
                                     </a>
                                 </div>
@@ -614,6 +614,290 @@
                     .o_skip_to_content {
                         background: #0F172A !important;
                         color: #FFFFFF !important;
+                        min-height: 44px !important;
+                        display: inline-flex !important;
+                        align-items: center !important;
+                    }
+
+                    /* --- HERO INTERACTIVE STAGE BULLETPROOF SCSS NORMALIZATION --- */
+                    .innoria-hero-slider-section,
+                    .innoria-hero-interactive-stage {
+                        position: relative !important;
+                        background: #070B14 !important;
+                        min-height: 820px !important;
+                        display: flex !important;
+                        flex-direction: column !important;
+                        justify-content: space-between !important;
+                        overflow: hidden !important;
+                        max-width: 100vw !important;
+                        padding-top: 60px !important;
+                        padding-bottom: 30px !important;
+                    }
+                    .hero-video-stage {
+                        position: absolute !important;
+                        inset: 0 !important;
+                        width: 100% !important;
+                        height: 100% !important;
+                        overflow: hidden !important;
+                        max-width: 100vw !important;
+                        z-index: 0 !important;
+                    }
+                    .video-slide-layer {
+                        position: absolute !important;
+                        inset: 0 !important;
+                        width: 100% !important;
+                        height: 100% !important;
+                        object-fit: cover !important;
+                        max-width: 100vw !important;
+                        opacity: 0 !important;
+                        visibility: hidden !important;
+                        transform: scale(1.0) !important;
+                        transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                        pointer-events: none !important;
+                        z-index: 1 !important;
+                    }
+                    .video-slide-layer.active {
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                        transform: scale(1.0) !important;
+                        z-index: 2 !important;
+                    }
+                    .hero-slide-item {
+                        display: none !important;
+                        opacity: 0 !important;
+                        transform: translateY(20px) !important;
+                        transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                    }
+                    .hero-slide-item.active {
+                        display: block !important;
+                        opacity: 1 !important;
+                        transform: translateY(0) !important;
+                    }
+                    .hero-main-title {
+                        font-size: clamp(2.2rem, 4.5vw, 3.8rem) !important;
+                        font-weight: 800 !important;
+                        line-height: 1.15 !important;
+                        letter-spacing: -0.02em !important;
+                        color: #FFFFFF !important;
+                    }
+                    .hero-gradient-text {
+                        background: var(--hero-gradient, linear-gradient(135deg, #0ABBDB 0%, #00F0FF 100%)) !important;
+                        -webkit-background-clip: text !important;
+                        -webkit-text-fill-color: transparent !important;
+                    }
+                    .hero-lead-desc {
+                        color: #CBD5E1 !important;
+                        font-size: clamp(1rem, 1.35vw, 1.25rem) !important;
+                        line-height: 1.65 !important;
+                        max-width: 900px !important;
+                        margin-left: auto !important;
+                        margin-right: auto !important;
+                    }
+                    .hero-badge-pill {
+                        display: inline-flex !important;
+                        align-items: center !important;
+                        gap: 8px !important;
+                        padding: 6px 16px !important;
+                        border-radius: 9999px !important;
+                        font-family: ui-monospace, monospace !important;
+                        font-size: 0.78rem !important;
+                        letter-spacing: 0.08em !important;
+                        font-weight: 700 !important;
+                        background: rgba(11, 19, 36, 0.85) !important;
+                        border: 1px solid var(--hero-accent, #00F0FF) !important;
+                        color: var(--hero-accent, #00F0FF) !important;
+                        box-shadow: 0 0 16px var(--hero-accent-glow, rgba(0, 240, 255, 0.3)) !important;
+                        backdrop-filter: blur(12px) !important;
+                        max-width: 100% !important;
+                        white-space: normal !important;
+                        text-wrap: balance !important;
+                    }
+                    .hero-feature-chips-deck {
+                        display: flex !important;
+                        flex-wrap: wrap !important;
+                        justify-content: center !important;
+                        gap: 12px !important;
+                        margin-bottom: 2rem !important;
+                    }
+                    .hero-feature-chip {
+                        display: inline-flex !important;
+                        align-items: center !important;
+                        gap: 8px !important;
+                        padding: 6px 14px !important;
+                        border-radius: 8px !important;
+                        font-size: 0.8rem !important;
+                        font-weight: 500 !important;
+                        color: #CBD5E1 !important;
+                        background: rgba(15, 23, 42, 0.65) !important;
+                        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+                        backdrop-filter: blur(8px) !important;
+                        max-width: 100% !important;
+                    }
+                    .hero-cta-group {
+                        display: flex !important;
+                        flex-wrap: wrap !important;
+                        justify-content: center !important;
+                        gap: 16px !important;
+                        margin-bottom: 2rem !important;
+                    }
+                    .hero-cta-btn-primary {
+                        display: inline-flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        gap: 10px !important;
+                        padding: 14px 32px !important;
+                        min-height: 48px !important;
+                        border-radius: 9999px !important;
+                        font-size: 0.95rem !important;
+                        font-weight: 700 !important;
+                        color: #05101E !important;
+                        background: var(--hero-accent, #00F0FF) !important;
+                        border: none !important;
+                        text-decoration: none !important;
+                        box-shadow: 0 0 24px var(--hero-accent-glow, rgba(0, 240, 255, 0.5)) !important;
+                    }
+                    .hero-cta-btn-secondary {
+                        display: inline-flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        gap: 10px !important;
+                        padding: 14px 28px !important;
+                        min-height: 48px !important;
+                        border-radius: 9999px !important;
+                        font-size: 0.95rem !important;
+                        font-weight: 600 !important;
+                        color: #FFFFFF !important;
+                        background: rgba(15, 23, 42, 0.7) !important;
+                        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                        text-decoration: none !important;
+                        backdrop-filter: blur(8px) !important;
+                    }
+                    .hero-scene-switcher-nav {
+                        display: flex !important;
+                        justify-content: center !important;
+                        gap: 12px !important;
+                        flex-wrap: wrap !important;
+                    }
+                    .hero-scene-tab-btn {
+                        display: inline-flex !important;
+                        align-items: center !important;
+                        gap: 8px !important;
+                        padding: 10px 18px !important;
+                        min-height: 44px !important;
+                        border-radius: 12px !important;
+                        font-size: 0.82rem !important;
+                        font-weight: 600 !important;
+                        color: #94A3B8 !important;
+                        background: rgba(15, 23, 42, 0.75) !important;
+                        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+                        backdrop-filter: blur(12px) !important;
+                        cursor: pointer !important;
+                    }
+                    .hero-scene-tab-btn.active {
+                        color: #FFFFFF !important;
+                        border-color: var(--tab-accent, #00F0FF) !important;
+                        box-shadow: 0 0 20px var(--tab-glow, rgba(0, 240, 255, 0.35)) !important;
+                        background: rgba(15, 23, 42, 0.95) !important;
+                    }
+
+                    /* Prevent badge and text horizontal overflow across viewports */
+                    .badge, .badge-innoria-cyan, .badge-digiforce, .badge-mojoai, .ins-badge-aurora, .ins-cctv-box-tag {
+                        white-space: normal !important;
+                        word-break: break-word !important;
+                        max-width: 100% !important;
+                        text-wrap: balance !important;
+                        display: inline-block !important;
+                    }
+
+                    /* Prevent stage logo overflow */
+                    img.stage-logo {
+                        max-width: 140px !important;
+                        max-height: 105px !important;
+                        width: auto !important;
+                        height: auto !important;
+                        object-fit: contain !important;
+                        display: block !important;
+                        margin: 0 auto !important;
+                    }
+                    .pillar-logo-stage {
+                        height: 140px !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        overflow: hidden !important;
+                        position: relative !important;
+                    }
+                    .pillar-card {
+                        overflow: hidden !important;
+                        max-width: 100% !important;
+                    }
+
+                    /* Language switchers touch target */
+                    #lang_toggle_vi, #lang_toggle_en {
+                        min-height: 38px !important;
+                        display: inline-flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        padding: 6px 12px !important;
+                    }
+
+                    /* WCAG AAA Contrast for Orange Badges */
+                    .badge-innoria-orange {
+                        background: #FFF7ED !important;
+                        color: #9A3412 !important;
+                        border: 1px solid #FDBA74 !important;
+                    }
+
+                    /* Hero Ambient Glow responsive containment */
+                    .hero-ambient-glow {
+                        max-width: 100vw !important;
+                        width: min(700px, 90vw) !important;
+                        overflow: hidden !important;
+                    }
+
+                    /* AIaaS Flow Track Mobile Wrap */
+                    @media (max-width: 767.98px) {
+                        .aiaas-flow-track {
+                            flex-wrap: wrap !important;
+                            gap: 0.75rem !important;
+                            justify-content: center !important;
+                        }
+                        .aiaas-flow-track .flow-line {
+                            display: none !important;
+                        }
+                        .aiaas-flow-node {
+                            width: 100% !important;
+                            max-width: 280px !important;
+                        }
+                    }
+
+                    /* Footer link and email touch target padding */
+                    a.innoria-footer-link,
+                    a.text-decoration-none.fw-semibold {
+                        min-height: 40px !important;
+                        display: inline-flex !important;
+                        align-items: center !important;
+                    }
+
+                    /* Interactive Toggle Button touch ergonomics */
+                    .dx-toggle-btn {
+                        min-height: 40px !important;
+                        padding: 0.45rem 1rem !important;
+                        display: inline-flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                    }
+
+                    /* Rounded pill flex container safe wrapping */
+                    .rounded-pill.d-inline-flex {
+                        max-width: 100% !important;
+                        white-space: normal !important;
+                        text-wrap: balance !important;
+                        word-break: break-word !important;
+                    }
+                    .rounded-pill.d-inline-flex span {
+                        max-width: 100% !important;
+                        word-break: break-word !important;
                     }
                 </style>
                 <div class="oe_structure oe_empty" id="oe_structure_innoria_home_top"/>
@@ -641,20 +925,20 @@
 
                         <!-- Video Backdrop Layers (Pristine Ambient Loops - Zero HUD Text Collision) -->
                         <!-- Mode 0: [Cloud & Data Fabric] -->
-                        <video class="video-slide-layer active" data-video-slide="0" data-scene-id="cloud-fabric" autoplay="autoplay" muted="muted" loop="loop" playsinline="playsinline" preload="auto" poster="/insilos_website/static/src/video/hero_innoria_cloud_ambient_poster.webp">
-                            <source src="/insilos_website/static/src/video/hero_innoria_cloud_ambient.mp4" type="video/mp4"/>
+                        <video class="video-slide-layer active" data-video-slide="0" data-scene-id="cloud-fabric" autoplay="autoplay" muted="muted" loop="loop" playsinline="playsinline" preload="auto" poster="/insilos_website/static/src/video/hero_innoria_cloud_ambient_poster.webp?v=20261009_v2">
+                            <source src="/insilos_website/static/src/video/hero_innoria_cloud_ambient.mp4?v=20261009_v2" type="video/mp4"/>
                         </video>
                         <!-- Mode 1: [Autonomous AI Swarm] -->
-                        <video class="video-slide-layer" data-video-slide="1" data-scene-id="ai-swarm" muted="muted" loop="loop" playsinline="playsinline" preload="auto" poster="/insilos_website/static/src/video/hero_innoria_ai_ambient_poster.webp">
-                            <source src="/insilos_website/static/src/video/hero_innoria_ai_ambient.mp4" type="video/mp4"/>
+                        <video class="video-slide-layer" data-video-slide="1" data-scene-id="ai-swarm" muted="muted" loop="loop" playsinline="playsinline" preload="auto" poster="/insilos_website/static/src/video/hero_innoria_ai_ambient_poster.webp?v=20261009_v2">
+                            <source src="/insilos_website/static/src/video/hero_innoria_ai_ambient.mp4?v=20261009_v2" type="video/mp4"/>
                         </video>
                         <!-- Mode 2: [Intelligent ERP] -->
-                        <video class="video-slide-layer" data-video-slide="2" data-scene-id="smart-erp" muted="muted" loop="loop" playsinline="playsinline" preload="auto" poster="/insilos_website/static/src/video/hero_innoria_erp_ambient_poster.webp">
-                            <source src="/insilos_website/static/src/video/hero_innoria_erp_ambient.mp4" type="video/mp4"/>
+                        <video class="video-slide-layer" data-video-slide="2" data-scene-id="smart-erp" muted="muted" loop="loop" playsinline="playsinline" preload="auto" poster="/insilos_website/static/src/video/hero_innoria_erp_ambient_poster.webp?v=20261009_v2">
+                            <source src="/insilos_website/static/src/video/hero_innoria_erp_ambient.mp4?v=20261009_v2" type="video/mp4"/>
                         </video>
                         <!-- Mode 3: [Enterprise Trust & Security] -->
-                        <video class="video-slide-layer" data-video-slide="3" data-scene-id="trust-security" muted="muted" loop="loop" playsinline="playsinline" preload="auto" poster="/insilos_website/static/src/video/hero_innoria_security_ambient_poster.webp">
-                            <source src="/insilos_website/static/src/video/hero_innoria_security_ambient.mp4" type="video/mp4"/>
+                        <video class="video-slide-layer" data-video-slide="3" data-scene-id="trust-security" muted="muted" loop="loop" playsinline="playsinline" preload="auto" poster="/insilos_website/static/src/video/hero_innoria_security_ambient_poster.webp?v=20261009_v2">
+                            <source src="/insilos_website/static/src/video/hero_innoria_security_ambient.mp4?v=20261009_v2" type="video/mp4"/>
                         </video>
 
                         <!-- Cinematic Masks & Overlays -->
