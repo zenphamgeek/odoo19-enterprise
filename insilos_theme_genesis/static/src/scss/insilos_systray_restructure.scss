@@ -41,8 +41,12 @@ header.o_navbar {
   .o_main_navbar {
     height: 100% !important;
     min-height: var(--insilos-shellbar-height, 48px) !important;
+    width: 100% !important;
     display: flex !important;
     align-items: center !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
     padding: 0 12px !important;
     gap: 0 !important;
     background: transparent !important;
@@ -155,6 +159,9 @@ header.o_navbar {
       align-items: center !important;
       position: static !important;
       height: 100% !important;
+      max-width: clamp(160px, 20vw, 280px) !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
       padding-right: 14px !important;
       margin-right: 8px !important;
       border-right: 1px solid var(--insilos-border-subtle, #e2e8f0);
@@ -193,12 +200,15 @@ header.o_navbar {
       font-weight: 650 !important;
       letter-spacing: -0.01em;
       color: var(--insilos-text-primary, #0f172a) !important;
+      max-width: clamp(140px, 18vw, 260px) !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      display: inline-block !important;
+      line-height: normal !important;
       padding: 0 !important;
       margin: 0 !important;
       height: auto !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      white-space: nowrap !important;
       text-decoration: none !important;
       border-right: none !important;
       flex-shrink: 0 !important;
@@ -213,18 +223,33 @@ header.o_navbar {
       display: flex !important;
       align-items: center !important;
       height: 100% !important;
+      flex: 1 1 0% !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+      white-space: nowrap !important;
       margin: 0 0 0 4px !important;
       gap: 2px !important;
 
-      .dropdown,
-      .o_nav_entry {
+      .dropdown:not(.d-none),
+      .dropdown-toggle:not(.d-none),
+      .o_nav_entry:not(.d-none) {
         height: 100% !important;
         display: flex !important;
         align-items: center !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+      }
+
+      .dropdown.d-none,
+      .dropdown-toggle.d-none,
+      .o_nav_entry.d-none,
+      *.d-none {
+        display: none !important;
       }
 
       .dropdown-toggle,
       a.dropdown-item,
+      .o_nav_entry,
       .o_nav_entry > a {
         height: 48px !important;
         line-height: 48px !important;
@@ -236,6 +261,8 @@ header.o_navbar {
         background: transparent !important;
         text-decoration: none !important;
         position: relative !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
         transition: color var(--insilos-transition-fast), background-color var(--insilos-transition-fast);
 
         &:hover {
@@ -258,6 +285,63 @@ header.o_navbar {
             height: 3px;
             background-color: var(--insilos-primary, #0b2e64);
             border-radius: 2px 2px 0 0;
+          }
+        }
+      }
+
+      /* IBM Carbon 11 / SAP Fiori Horizon More Dropdown Trigger */
+      .o_menu_sections_more {
+        height: 100% !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+        margin-left: 2px !important;
+
+        > .dropdown,
+        > .dropdown-toggle,
+        > button {
+          height: 100% !important;
+          display: inline-flex !important;
+          align-items: center !important;
+        }
+
+        button,
+        .dropdown-toggle {
+          height: 36px !important;
+          line-height: 36px !important;
+          min-width: 36px !important;
+          padding: 0 10px !important;
+          margin: 6px 0 !important;
+          border-radius: var(--insilos-radius-sm, 4px) !important;
+          border: 1px solid transparent !important;
+          background: transparent !important;
+          color: var(--insilos-text-secondary, #475569) !important;
+          font-size: 13px !important;
+          font-weight: 500 !important;
+          cursor: pointer !important;
+          transition: all var(--insilos-transition-fast);
+
+          i, .ph {
+            font-size: 16px !important;
+            vertical-align: middle !important;
+          }
+
+          &:hover {
+            color: var(--insilos-text-primary, #0f172a) !important;
+            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+            border-color: var(--insilos-border-subtle, #e2e8f0) !important;
+          }
+
+          &:focus-visible {
+            outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+            outline-offset: -2px !important;
+          }
+
+          &.active,
+          &[aria-expanded="true"] {
+            color: var(--insilos-primary, #0b2e64) !important;
+            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+            border-color: var(--insilos-primary, #0b2e64) !important;
           }
         }
       }
@@ -823,6 +907,31 @@ body.o_dark_mode,
             }
           }
         }
+
+        .o_menu_sections_more {
+          button,
+          .dropdown-toggle {
+            color: #94a3b8 !important;
+
+            &:hover {
+              color: #00F2FE !important;
+              background-color: rgba(0, 242, 254, 0.1) !important;
+              border-color: rgba(0, 242, 254, 0.3) !important;
+            }
+
+            &:focus-visible {
+              outline: 2px solid #00F2FE !important;
+              outline-offset: -2px !important;
+            }
+
+            &.active,
+            &[aria-expanded="true"] {
+              color: #00F2FE !important;
+              background-color: rgba(0, 242, 254, 0.15) !important;
+              border-color: #00F2FE !important;
+            }
+          }
+        }
       }
 
       .o_menu_systray {
@@ -1056,5 +1165,80 @@ body.o_dark_mode,
   0% { transform: scale(0.85); opacity: 0.7; box-shadow: 0 0 4px #00F0FF; }
   50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 10px #00F0FF, 0 0 16px #00F0FF; }
   100% { transform: scale(0.85); opacity: 0.7; box-shadow: 0 0 4px #00F0FF; }
+}
+
+/* ----------------------------------------------------------------------------
+   Global Dropdown Menu Surfaces for Navbar Sections More Dropdown
+   IBM Carbon 11 Floating Surface / SAP Fiori Horizon Menu Standard
+   ---------------------------------------------------------------------------- */
+.o-dropdown--menu.dropdown-menu:has(.o_more_dropdown_section),
+.o_menu_sections_more .dropdown-menu {
+  border-radius: var(--insilos-radius-sm, 4px) !important;
+  border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04) !important;
+  padding: 6px 0 !important;
+  min-width: 190px !important;
+  background-color: #ffffff !important;
+  z-index: 1050 !important;
+
+  .o_more_dropdown_section.dropdown-item {
+    font-size: 13px !important;
+    font-weight: 450 !important;
+    padding: 8px 16px !important;
+    height: auto !important;
+    line-height: 1.4 !important;
+    color: var(--insilos-text-primary, #0f172a) !important;
+    transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
+
+    &:hover,
+    &.focus {
+      background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+      color: var(--insilos-primary, #0b2e64) !important;
+    }
+  }
+
+  .o_more_dropdown_section_group {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    color: var(--insilos-text-muted, #64748b) !important;
+    background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+    padding: 6px 16px 4px 16px !important;
+    margin: 4px 0 2px 0 !important;
+    border-top: 1px solid var(--insilos-border-subtle, #e2e8f0);
+
+    &:first-child {
+      border-top: none;
+      margin-top: 0;
+    }
+  }
+}
+
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
+  .o-dropdown--menu.dropdown-menu:has(.o_more_dropdown_section),
+  .o_menu_sections_more .dropdown-menu {
+    background-color: #141e33 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 240, 255, 0.2) !important;
+
+    .o_more_dropdown_section.dropdown-item {
+      color: #cbd5e1 !important;
+
+      &:hover,
+      &.focus {
+        background-color: rgba(0, 242, 254, 0.1) !important;
+        color: #00f2fe !important;
+      }
+    }
+
+    .o_more_dropdown_section_group {
+      color: #94a3b8 !important;
+      background-color: rgba(255, 255, 255, 0.04) !important;
+      border-top-color: rgba(255, 255, 255, 0.08);
+    }
+  }
 }
 
