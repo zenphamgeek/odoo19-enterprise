@@ -185,19 +185,26 @@ export class InnokafeTasteProfiler {
     _parseInitialRoute() {
         if (typeof window === "undefined") return;
 
+        const pathname = window.location.pathname;
         const urlParams = new URLSearchParams(window.location.search);
         const hash = window.location.hash || "";
 
-        // 1. Direct SKU target param
-        const targetSku = urlParams.get("sku") || urlParams.get("sku_code") || this.root.getAttribute("data-initial-top1");
+        // Check path-based step routing: /taste-profiler/step/:step
+        const stepMatch = pathname.match(/\/taste-profiler\/step\/(\d+)/);
+        // Check path-based SKU routing: /taste-profiler/result/:sku or /taste-profiler/sku/:sku
+        const resultSkuMatch = pathname.match(/\/taste-profiler\/(?:result|sku)\/([A-Za-z0-9_-]+)/);
+
+        // 1. Direct SKU target param or path
+        const targetSku = (resultSkuMatch ? resultSkuMatch[1] : null) || urlParams.get("sku") || urlParams.get("sku_code") || this.root.getAttribute("data-initial-top1");
         if (targetSku) {
-            const matched = this.skus.find((s) => s.sku_code && s.sku_code.toLowerCase() === targetSku.toLowerCase());
+            const cleanTarget = targetSku.toLowerCase().replace(/_/g, "-");
+            const matched = this.skus.find((s) => s.sku_code && s.sku_code.toLowerCase().replace(/_/g, "-") === cleanTarget);
             if (matched) {
                 const others = this.skus.filter((s) => s.sku_code !== matched.sku_code);
                 const top2 = others[0] || matched;
                 this.currentResult = {
-                    top1: Object.assign({}, matched, { match_score: 94.5 }),
-                    top2: Object.assign({}, top2, { match_score: 89.0 }),
+                    top1: Object.assign({}, matched, { match_score: 96.5 }),
+                    top2: Object.assign({}, top2, { match_score: 89.5 }),
                     all_ranked: this.skus,
                     user_vector: matched.vector,
                 };
@@ -220,11 +227,19 @@ export class InnokafeTasteProfiler {
 
         // 3. Step or Result Route
         const initialStepAttr = parseInt(this.root.getAttribute("data-initial-step"), 10);
-        const isResultRoute = hash === "#result" || window.location.pathname.endsWith("/result") || initialStepAttr === 5;
+        const isResultRoute = hash === "#result" || pathname.endsWith("/result") || initialStepAttr === 5;
 
         if (isResultRoute || (habit && gear && flavor && caffeine)) {
             this.calculateAndShowResult(false);
             return;
+        }
+
+        if (stepMatch) {
+            const stepNum = parseInt(stepMatch[1], 10);
+            if (stepNum >= 1 && stepNum <= 4) {
+                this.goToStep(stepNum, false);
+                return;
+            }
         }
 
         if (hash.startsWith("#step-")) {
@@ -235,7 +250,8 @@ export class InnokafeTasteProfiler {
             }
         }
 
-        this.goToStep(1, false);
+        const stepToInit = (initialStepAttr >= 1 && initialStepAttr <= 4) ? initialStepAttr : 1;
+        this.goToStep(stepToInit, false);
     }
 
     _syncActiveCards() {
@@ -253,6 +269,40 @@ export class InnokafeTasteProfiler {
 
     _bindPopState() {
         window.addEventListener("popstate", (e) => {
+            const pathname = window.location.pathname;
+            const stepMatch = pathname.match(/\/taste-profiler\/step\/(\d+)/);
+            const resultSkuMatch = pathname.match(/\/taste-profiler\/(?:result|sku)\/([A-Za-z0-9_-]+)/);
+
+            if (resultSkuMatch) {
+                const targetSku = resultSkuMatch[1].toLowerCase().replace(/_/g, "-");
+                const matched = this.skus.find((s) => s.sku_code && s.sku_code.toLowerCase().replace(/_/g, "-") === targetSku);
+                if (matched) {
+                    const others = this.skus.filter((s) => s.sku_code !== matched.sku_code);
+                    this.currentResult = {
+                        top1: Object.assign({}, matched, { match_score: 96.5 }),
+                        top2: Object.assign({}, others[0] || matched, { match_score: 89.5 }),
+                        all_ranked: this.skus,
+                        user_vector: matched.vector,
+                    };
+                    this.goToStep(5, false);
+                    this._renderResultCockpit(this.currentResult);
+                    return;
+                }
+            } else if (stepMatch) {
+                const stepNum = parseInt(stepMatch[1], 10);
+                if (stepNum >= 1 && stepNum <= 4) {
+                    this.goToStep(stepNum, false);
+                    return;
+                }
+            } else if (pathname.endsWith("/result") || (e.state && e.state.step === 5)) {
+                if (e.state && e.state.answers) {
+                    this.answers = Object.assign({}, this.answers, e.state.answers);
+                    this._syncActiveCards();
+                }
+                this.calculateAndShowResult(false);
+                return;
+            }
+
             if (e.state && typeof e.state.step === "number") {
                 this.goToStep(e.state.step, false);
                 if (e.state.step === 5) {
@@ -338,14 +388,18 @@ export class InnokafeTasteProfiler {
                 const top1Code = this.currentResult && this.currentResult.top1
                     ? (this.currentResult.top1.sku_code || this.currentResult.top1.code)
                     : "";
-                const params = new URLSearchParams({
-                    habit: this.answers.habit,
-                    gear: this.answers.gear,
-                    flavor: this.answers.flavor,
-                    caffeine: this.answers.caffeine,
-                });
-                if (top1Code) params.set("sku", top1Code);
-                const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}#result`;
+                let shareUrl;
+                if (top1Code) {
+                    shareUrl = `${window.location.origin}/taste-profiler/result/${top1Code}`;
+                } else {
+                    const params = new URLSearchParams({
+                        habit: this.answers.habit,
+                        gear: this.answers.gear,
+                        flavor: this.answers.flavor,
+                        caffeine: this.answers.caffeine,
+                    });
+                    shareUrl = `${window.location.origin}/taste-profiler/result?${params.toString()}`;
+                }
 
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(shareUrl).then(() => {
@@ -364,16 +418,12 @@ export class InnokafeTasteProfiler {
         if (nativeShareBtn && typeof navigator !== "undefined" && navigator.share) {
             nativeShareBtn.classList.remove("d-none");
             nativeShareBtn.addEventListener("click", () => {
-                const top1Name = this.currentResult && this.currentResult.top1
-                    ? this.currentResult.top1.name
-                    : "Cà Phê Đặc Sản InnoKafe";
-                const params = new URLSearchParams({
-                    habit: this.answers.habit,
-                    gear: this.answers.gear,
-                    flavor: this.answers.flavor,
-                    caffeine: this.answers.caffeine,
-                });
-                const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}#result`;
+                const top1 = this.currentResult && this.currentResult.top1;
+                const top1Name = top1 ? top1.name : "Cà Phê Đặc Sản InnoKafe";
+                const top1Code = top1 ? (top1.sku_code || top1.code) : "";
+                const shareUrl = top1Code
+                    ? `${window.location.origin}/taste-profiler/result/${top1Code}`
+                    : `${window.location.origin}/taste-profiler/result`;
                 navigator.share({
                     title: `Hồ Sơ Vị Giác InnoKafe - ${top1Name}`,
                     text: `Khám phá dòng cà phê mộc phù hợp với khẩu vị của tôi: ${top1Name}`,
@@ -416,16 +466,24 @@ export class InnokafeTasteProfiler {
 
         if (updateHistory && typeof window !== "undefined" && window.history) {
             if (step >= 1 && step <= 4) {
-                const url = `${window.location.pathname}#step-${step}`;
+                const url = `/taste-profiler/step/${step}`;
                 window.history.pushState({ step }, "", url);
             } else if (step === 5) {
-                const params = new URLSearchParams({
-                    habit: this.answers.habit,
-                    gear: this.answers.gear,
-                    flavor: this.answers.flavor,
-                    caffeine: this.answers.caffeine,
-                });
-                const url = `${window.location.pathname}?${params.toString()}#result`;
+                const top1Code = this.currentResult && this.currentResult.top1
+                    ? (this.currentResult.top1.sku_code || this.currentResult.top1.code)
+                    : "";
+                let url;
+                if (top1Code) {
+                    url = `/taste-profiler/result/${top1Code}`;
+                } else {
+                    const params = new URLSearchParams({
+                        habit: this.answers.habit,
+                        gear: this.answers.gear,
+                        flavor: this.answers.flavor,
+                        caffeine: this.answers.caffeine,
+                    });
+                    url = `/taste-profiler/result?${params.toString()}`;
+                }
                 window.history.pushState({ step: 5, answers: this.answers }, "", url);
             }
         }

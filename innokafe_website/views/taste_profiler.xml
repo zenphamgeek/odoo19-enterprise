@@ -2,6 +2,19 @@
 <odoo>
     <template id="taste_profiler_page" name="Taste Profiler, Tìm Gu Cà Phê Của Bạn">
         <t t-call="website.layout">
+            <t t-set="additional_title" t-value="meta_title or 'Tìm Gu Cà Phê Của Bạn | Trắc Nghiệm Cảm Quan SCA'"/>
+            <t t-set="head">
+                <meta property="og:title" t-att-content="meta_title or 'Tìm Gu Cà Phê Của Bạn | InnoKafe'"/>
+                <meta property="og:description" t-att-content="meta_desc or 'Chỉ 60 giây với 4 câu hỏi trắc nghiệm cảm quan, Innokafe gợi ý dòng hạt rang mộc chuẩn SCA cho riêng bạn.'"/>
+                <meta property="og:url" t-att-content="meta_url or 'https://innokafe.com/taste-profiler'"/>
+                <meta property="og:type" content="website"/>
+                <t t-if="meta_image">
+                    <meta property="og:image" t-att-content="meta_image"/>
+                </t>
+                <meta name="twitter:card" content="summary_large_image"/>
+                <meta name="twitter:title" t-att-content="meta_title or 'Tìm Gu Cà Phê Của Bạn | InnoKafe'"/>
+                <meta name="twitter:description" t-att-content="meta_desc or 'Trắc nghiệm cảm quan 4 bước chuẩn SCA tìm dòng hạt cà phê mộc của bạn.'"/>
+            </t>
             <div id="wrap" class="oe_structure oe_empty"/>
 
             <!-- =============================================================== -->
@@ -15,16 +28,36 @@
                         <ol class="breadcrumb justify-content-center mb-0 small text-uppercase font-monospace">
                             <li class="breadcrumb-item"><a href="/" class="text-secondary text-decoration-none">Trang Chủ</a></li>
                             <li class="breadcrumb-item"><a href="/products" class="text-secondary text-decoration-none">Sản Phẩm</a></li>
-                            <li class="breadcrumb-item active text-warning" aria-current="page">Tìm Gu Cà Phê</li>
+                            <t t-if="initial_step == 5 and top1">
+                                <li class="breadcrumb-item"><a href="/taste-profiler" class="text-secondary text-decoration-none">Tìm Gu Cà Phê</a></li>
+                                <li class="breadcrumb-item active text-warning" aria-current="page"><t t-out="top1.get('name')"/></li>
+                            </t>
+                            <t t-elif="initial_step and initial_step &gt; 1">
+                                <li class="breadcrumb-item"><a href="/taste-profiler" class="text-secondary text-decoration-none">Tìm Gu Cà Phê</a></li>
+                                <li class="breadcrumb-item active text-warning" aria-current="page">Bước <t t-out="initial_step"/></li>
+                            </t>
+                            <t t-else="">
+                                <li class="breadcrumb-item active text-warning" aria-current="page">Tìm Gu Cà Phê</li>
+                            </t>
                         </ol>
                     </nav>
                     <p class="text-uppercase tracking-widest text-warning small font-monospace mb-2">CÁ NHÂN HÓA TRẢI NGHIỆM THƯỞNG THỨC</p>
                     <h1 class="display-4 fw-bold mb-3 text-light" style="font-family: 'Playfair Display', serif; text-wrap: balance;">
-                        Tìm Gu Cà Phê Của Bạn
+                        <t t-if="initial_step == 5 and top1">
+                            Kết Quả Phân Tích Cảm Quan Vị Giác
+                        </t>
+                        <t t-else="">
+                            Tìm Gu Cà Phê Của Bạn
+                        </t>
                     </h1>
                     <p class="lead mx-auto mb-0" style="max-width: 760px; color: rgba(247, 242, 234, 0.8); line-height: 1.7; text-wrap: balance;">
-                        Mỗi người sở hữu một bản đồ vị giác độc nhất. Chỉ 60 giây với 4 câu hỏi trắc nghiệm cảm quan,
-                        Innokafe sẽ gợi ý chính xác dòng hạt rang mộc sinh ra để dành riêng cho khẩu vị của bạn.
+                        <t t-if="initial_step == 5 and top1">
+                            Dựa trên thói quen pha chế và sở thích hương vị, đây là dòng hạt rang mộc sinh ra dành riêng cho khẩu vị của bạn.
+                        </t>
+                        <t t-else="">
+                            Mỗi người sở hữu một bản đồ vị giác độc nhất. Chỉ 60 giây với 4 câu hỏi trắc nghiệm cảm quan,
+                            Innokafe sẽ gợi ý chính xác dòng hạt rang mộc sinh ra để dành riêng cho khẩu vị của bạn.
+                        </t>
                     </p>
                 </div>
             </section>
@@ -47,7 +80,8 @@
                         <!-- Progress Header -->
                         <div class="d-flex align-items-center justify-content-between mb-3 text-light">
                             <span class="profiler-progress-text fw-bold text-uppercase" style="color: #D48842; font-size: 0.85rem; letter-spacing: 0.05em;">
-                                Bước 1 / 4
+                                <t t-if="initial_step and initial_step &lt;= 4">Bước <t t-out="initial_step"/> / 4</t>
+                                <t t-else="">Hoàn tất kết quả</t>
                             </span>
                             <span class="small" style="color: rgba(247, 242, 234, 0.7);">
                                 Trắc nghiệm cảm quan khẩu vị chuẩn SCA
@@ -56,13 +90,13 @@
                         <div class="progress mb-5" style="height: 6px; background-color: rgba(247, 242, 234, 0.12); border-radius: 999px;">
                             <div class="progress-bar profiler-progress-bar"
                                  role="progressbar"
-                                 style="width: 25%; background: linear-gradient(90deg, #E5A93C, #D48842); transition: width 0.4s ease; border-radius: 999px;"/>
+                                 t-attf-style="width: #{0 if initial_step == 1 else (25 if initial_step == 2 else (50 if initial_step == 3 else (75 if initial_step == 4 else 100)))}%; background: linear-gradient(90deg, #E5A93C, #D48842); transition: width 0.4s ease; border-radius: 999px;"/>
                         </div>
 
                         <!-- =================================================== -->
                         <!-- STEP 1: ROUTINE & VIBE                              -->
                         <!-- =================================================== -->
-                        <div class="profiler-step-content" id="step-1" data-step-panel="1">
+                        <div t-attf-class="profiler-step-content #{'d-none' if initial_step != 1 else ''}" id="step-1" data-step-panel="1">
                             <div class="text-center mb-4">
                                 <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
                                     Khoảnh khắc cà phê lý tưởng trong ngày của bạn?
@@ -141,7 +175,7 @@
                         <!-- =================================================== -->
                         <!-- STEP 2: BREWING GEAR                                -->
                         <!-- =================================================== -->
-                        <div class="profiler-step-content d-none" id="step-2" data-step-panel="2">
+                        <div t-attf-class="profiler-step-content #{'d-none' if initial_step != 2 else ''}" id="step-2" data-step-panel="2">
                             <div class="text-center mb-4">
                                 <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
                                     Bạn thường pha chế cà phê bằng thiết bị nào?
@@ -197,7 +231,7 @@
                         <!-- =================================================== -->
                         <!-- STEP 3: FLAVOR NOTES                                -->
                         <!-- =================================================== -->
-                        <div class="profiler-step-content d-none" id="step-3" data-step-panel="3">
+                        <div t-attf-class="profiler-step-content #{'d-none' if initial_step != 3 else ''}" id="step-3" data-step-panel="3">
                             <div class="text-center mb-4">
                                 <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
                                     Nốt hương nào cuốn hút khứu giác của bạn nhất?
@@ -247,7 +281,7 @@
                         <!-- =================================================== -->
                         <!-- STEP 4: CAFFEINE INTENSITY                          -->
                         <!-- =================================================== -->
-                        <div class="profiler-step-content d-none" id="step-4" data-step-panel="4">
+                        <div t-attf-class="profiler-step-content #{'d-none' if initial_step != 4 else ''}" id="step-4" data-step-panel="4">
                             <div class="text-center mb-4">
                                 <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
                                     Mức độ tiếp nhận caffeine &amp; độ đậm đặc của bạn?
@@ -294,7 +328,7 @@
                         <!-- =================================================== -->
                         <!-- STEP 5: RESULT COCKPIT                              -->
                         <!-- =================================================== -->
-                        <div class="profiler-result-cockpit d-none py-2" id="result" data-step-panel="5">
+                        <div t-attf-class="profiler-result-cockpit py-2 #{'d-none' if initial_step != 5 else ''}" id="result" data-step-panel="5">
                             <div class="text-center mb-5">
                                 <p class="text-uppercase tracking-widest text-warning small font-monospace mb-2">KẾT QUẢ CẢM QUAN KHẨU VỊ</p>
                                 <h2 class="display-6 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
@@ -317,29 +351,29 @@
                                     </div>
                                     <span class="badge rounded-pill px-3 py-2 fw-bold top1-match-badge bg-warning text-dark font-monospace"
                                            style="font-size: 0.85rem;">
-                                        91.7% Tương thích
+                                        <t t-out="top1.get('match_score', 94.5) if top1 else 94.5"/>% Tương thích
                                     </span>
                                 </div>
                                 <div class="p-4 p-md-5">
                                     <div class="row align-items-center">
                                         <div class="col-lg-7">
                                             <h3 class="h3 fw-bold text-light mb-2 top1-product-name" style="font-family: 'Playfair Display', serif;">
-                                                Đắk Lắk Highland Fine Robusta Natural
+                                                <t t-out="top1.get('name', 'Đắk Lắk Highland Fine Robusta Natural') if top1 else 'Đắk Lắk Highland Fine Robusta Natural'"/>
                                             </h3>
                                             <p class="fst-italic mb-3 top1-product-tagline" style="color: #E5A93C;">
-                                                Bản sắc đại ngàn, Vị đậm đà ngút ngàn, ngọt sâu hậu vị
+                                                <t t-out="top1.get('tagline', '') if top1 else 'Bản sắc đại ngàn, vị đậm đà sâu lắng, ngọt sâu hậu vị'"/>
                                             </p>
 
                                             <!-- Specs Grid -->
                                             <div class="row g-2 mb-3 small" style="color: rgba(247, 242, 234, 0.8);">
                                                 <div class="col-sm-6">
-                                                    <strong class="text-white">Vùng trồng:</strong> <span class="top1-product-origin">Cư M'gar, Đắk Lắk</span>
+                                                    <strong class="text-white">Vùng trồng:</strong> <span class="top1-product-origin"><t t-out="top1.get('origin', 'Cư M\'gar, Đắk Lắk') if top1 else 'Cư M\'gar, Đắk Lắk'"/></span>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <strong class="text-white">Sơ chế:</strong> <span class="top1-product-process">Natural (Phơi giàn)</span>
+                                                    <strong class="text-white">Sơ chế:</strong> <span class="top1-product-process"><t t-out="top1.get('process', 'Natural (Phơi giàn)') if top1 else 'Natural (Phơi giàn)'"/></span>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <strong class="text-white">Điểm SCA:</strong> <span class="top1-product-cupping text-warning fw-bold">84.5 điểm</span>
+                                                    <strong class="text-white">Điểm SCA:</strong> <span class="top1-product-cupping text-warning fw-bold"><t t-out="top1.get('cupping_score', 84.5) if top1 else 84.5"/> điểm</span>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <strong class="text-white">Quy cách:</strong> <span>Túi 250g (Van 1 chiều)</span>
@@ -350,22 +384,39 @@
                                             <div class="mb-4">
                                                 <span class="small d-block mb-2 fw-bold text-light">Nốt hương chủ đạo:</span>
                                                 <div class="top1-product-notes d-flex flex-wrap gap-2">
-                                                    <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Sô-cô-la đen 85%</span>
-                                                    <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Hạt dẻ nướng</span>
-                                                    <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Mật mía</span>
-                                                    <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Gỗ sồi</span>
+                                                    <t t-if="top1 and top1.get('tasting_notes')">
+                                                        <t t-foreach="top1.get('tasting_notes')" t-as="note">
+                                                            <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0" t-out="note"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Sô-cô-la đen 85%</span>
+                                                        <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Hạt dẻ nướng</span>
+                                                        <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Mật mía</span>
+                                                        <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Gỗ sồi</span>
+                                                    </t>
                                                 </div>
                                             </div>
 
                                             <div class="d-flex align-items-center flex-wrap gap-3">
                                                 <div class="fs-4 fw-bold text-warning top1-product-price">
-                                                    125.000 ₫
+                                                    <t t-if="top1 and top1.get('price_250g')">
+                                                        <t t-out="'{:,} ₫'.format(top1.get('price_250g')).replace(',', '.')"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        125.000 ₫
+                                                    </t>
                                                 </div>
                                                 <button type="button"
-                                                        class="btn btn-primary rounded-pill px-4 py-2 fw-bold btn-top1-add-to-cart shadow">
+                                                        class="btn btn-primary rounded-pill px-4 py-2 fw-bold btn-top1-add-to-cart shadow"
+                                                        t-att-data-sku="top1.get('sku_code') if top1 else 'INNO-ROBUSTA-NAT-01'"
+                                                        t-att-data-product-id="top1.get('product_id', 1) if top1 else 1"
+                                                        t-att-data-product-tmpl-id="top1.get('product_tmpl_id', 1) if top1 else 1"
+                                                        t-att-data-name="top1.get('name') if top1 else 'Đắk Lắk Highland Fine Robusta Natural'">
                                                     <i class="fa fa-shopping-bag me-2"/>Thêm Vào Giỏ Hàng Ngay
                                                 </button>
-                                                <a href="/products#INNO-ROBUSTA-NAT-01" class="btn btn-outline-light rounded-pill px-3 py-2 small top1-product-link">
+                                                <a t-attf-href="/products##{top1.get('sku_code', 'INNO-ROBUSTA-NAT-01') if top1 else 'INNO-ROBUSTA-NAT-01'}"
+                                                   class="btn btn-outline-light rounded-pill px-3 py-2 small top1-product-link">
                                                     Xem chi tiết hạt →
                                                 </a>
                                             </div>
@@ -377,7 +428,47 @@
                                                 <span class="small d-block fw-bold text-uppercase mb-2 text-warning" style="font-size: 0.75rem;">
                                                     Dấu Ấn Giác Quan (SCA Radar)
                                                 </span>
-                                                <div class="profiler-sensory-wheel-target mx-auto" style="max-width: 280px; height: 280px;"/>
+                                                <div class="profiler-sensory-wheel-target mx-auto" style="max-width: 280px; height: 280px;">
+                                                    <t t-if="radar_points">
+                                                        <svg viewBox="0 0 300 300" class="innokafe-sensory-wheel-svg" style="width: 100%; height: 100%; overflow: visible; display: block;">
+                                                            <defs>
+                                                                <radialGradient id="sensoryGrad_ssr" cx="50%" cy="50%" r="65%">
+                                                                    <stop offset="0%" stop-color="#E5A93C" stop-opacity="0.6"/>
+                                                                    <stop offset="70%" stop-color="#D48842" stop-opacity="0.3"/>
+                                                                    <stop offset="100%" stop-color="#1E120B" stop-opacity="0.1"/>
+                                                                </radialGradient>
+                                                                <filter id="sensoryGlow_ssr" x="-20%" y="-20%" width="140%" height="140%">
+                                                                    <feGaussianBlur stdDeviation="3" result="blur"/>
+                                                                    <feMerge>
+                                                                        <feMergeNode in="blur"/>
+                                                                        <feMergeNode in="SourceGraphic"/>
+                                                                    </feMerge>
+                                                                </filter>
+                                                            </defs>
+                                                            <!-- Web concentric background rings -->
+                                                            <polygon points="150.0,50.0 236.6,100.0 236.6,200.0 150.0,250.0 63.4,200.0 63.4,100.0" fill="none" stroke="rgba(247, 242, 234, 0.15)" stroke-width="1"/>
+                                                            <polygon points="150.0,75.0 215.0,112.5 215.0,187.5 150.0,225.0 85.0,187.5 85.0,112.5" fill="none" stroke="rgba(247, 242, 234, 0.12)" stroke-width="1"/>
+                                                            <polygon points="150.0,100.0 193.3,125.0 193.3,175.0 150.0,200.0 106.7,175.0 106.7,125.0" fill="none" stroke="rgba(247, 242, 234, 0.08)" stroke-width="1"/>
+                                                            <polygon points="150.0,125.0 171.7,137.5 171.7,162.5 150.0,175.0 128.3,162.5 128.3,137.5" fill="none" stroke="rgba(247, 242, 234, 0.05)" stroke-width="1"/>
+                                                            <!-- Axis spoke lines -->
+                                                            <line x1="150" y1="150" x2="150.0" y2="50.0" stroke="rgba(247, 242, 234, 0.15)" stroke-width="1"/>
+                                                            <line x1="150" y1="150" x2="236.6" y2="100.0" stroke="rgba(247, 242, 234, 0.15)" stroke-width="1"/>
+                                                            <line x1="150" y1="150" x2="236.6" y2="200.0" stroke="rgba(247, 242, 234, 0.15)" stroke-width="1"/>
+                                                            <line x1="150" y1="150" x2="150.0" y2="250.0" stroke="rgba(247, 242, 234, 0.15)" stroke-width="1"/>
+                                                            <line x1="150" y1="150" x2="63.4" y2="200.0" stroke="rgba(247, 242, 234, 0.15)" stroke-width="1"/>
+                                                            <line x1="150" y1="150" x2="63.4" y2="100.0" stroke="rgba(247, 242, 234, 0.15)" stroke-width="1"/>
+                                                            <!-- Radar Polygon -->
+                                                            <polygon t-att-points="radar_points" fill="url(#sensoryGrad_ssr)" stroke="#D48842" stroke-width="2.5" filter="url(#sensoryGlow_ssr)"/>
+                                                            <!-- Axis Labels -->
+                                                            <text x="150.0" y="38.0" text-anchor="middle" fill="#F7F2EA" font-size="10" font-weight="600" font-family="monospace">Aroma (Hương)</text>
+                                                            <text x="254.0" y="96.0" text-anchor="start" fill="#F7F2EA" font-size="10" font-weight="600" font-family="monospace">Acidity (Chua)</text>
+                                                            <text x="254.0" y="206.0" text-anchor="start" fill="#F7F2EA" font-size="10" font-weight="600" font-family="monospace">Body (Thể chất)</text>
+                                                            <text x="150.0" y="268.0" text-anchor="middle" fill="#F7F2EA" font-size="10" font-weight="600" font-family="monospace">Sweetness (Ngọt)</text>
+                                                            <text x="46.0" y="206.0" text-anchor="end" fill="#F7F2EA" font-size="10" font-weight="600" font-family="monospace">Clean Cup (Trong)</text>
+                                                            <text x="46.0" y="96.0" text-anchor="end" fill="#F7F2EA" font-size="10" font-weight="600" font-family="monospace">Aftertaste (Hậu)</text>
+                                                        </svg>
+                                                    </t>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -391,24 +482,36 @@
                                         <div class="d-flex align-items-center mb-1">
                                             <span class="badge rounded-pill px-3 py-1 me-2 top2-match-badge badge-clay font-monospace"
                                                   style="font-size: 0.8rem;">
-                                                90.5% Khám phá đổi vị
+                                                <t t-out="top2.get('match_score', 89.5) if top2 else 89.5"/>% Khám phá đổi vị
                                             </span>
                                             <span class="small" style="color: rgba(247, 242, 234, 0.7);">Gợi ý trải nghiệm mở rộng</span>
                                         </div>
                                         <h4 class="h5 fw-bold text-light mb-1 top2-product-name">
-                                            Innokafe Espresso Barista Master 80/20
+                                            <t t-out="top2.get('name', 'Innokafe Espresso Barista Master 80/20') if top2 else 'Innokafe Espresso Barista Master 80/20'"/>
                                         </h4>
                                         <p class="small mb-0 top2-product-tagline" style="color: rgba(247, 242, 234, 0.8);">
-                                            Chuẩn mực quầy bar chuyên nghiệp, Crema dày mịn, ổn định chiết xuất
+                                            <t t-out="top2.get('tagline', '') if top2 else 'Chuẩn mực quầy bar chuyên nghiệp, Crema dày mịn, ổn định chiết xuất'"/>
                                         </p>
                                     </div>
                                     <div class="d-flex align-items-center gap-3">
-                                        <span class="fw-bold text-warning top2-product-price">135.000 ₫</span>
+                                        <span class="fw-bold text-warning top2-product-price">
+                                            <t t-if="top2 and top2.get('price_250g')">
+                                                <t t-out="'{:,} ₫'.format(top2.get('price_250g')).replace(',', '.')"/>
+                                            </t>
+                                            <t t-else="">
+                                                135.000 ₫
+                                            </t>
+                                        </span>
                                         <button type="button"
-                                                class="btn btn-outline-warning rounded-pill px-3 py-2 btn-top2-add-to-cart small">
+                                                class="btn btn-outline-warning rounded-pill px-3 py-2 btn-top2-add-to-cart small"
+                                                t-att-data-sku="top2.get('sku_code') if top2 else 'INNO-HORECA-BARISTA-06'"
+                                                t-att-data-product-id="top2.get('product_id', 1) if top2 else 1"
+                                                t-att-data-product-tmpl-id="top2.get('product_tmpl_id', 1) if top2 else 1"
+                                                t-att-data-name="top2.get('name') if top2 else 'Innokafe Espresso Barista Master 80/20'">
                                             <i class="fa fa-shopping-bag me-1"/>Thử dòng này
                                         </button>
-                                        <a href="/products#INNO-HORECA-BARISTA-06" class="btn btn-outline-light rounded-pill px-3 py-2 small top2-product-link">
+                                        <a t-attf-href="/products##{top2.get('sku_code', 'INNO-HORECA-BARISTA-06') if top2 else 'INNO-HORECA-BARISTA-06'}"
+                                           class="btn btn-outline-light rounded-pill px-3 py-2 small top2-product-link">
                                             Xem chi tiết →
                                         </a>
                                     </div>

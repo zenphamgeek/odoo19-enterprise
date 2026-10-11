@@ -526,6 +526,10 @@ class InnokafeMainController(Website):
     @http.route(
         [
             "/taste-profiler",
+            "/taste-profiler/",
+            "/taste-profiler/quiz",
+            "/taste-profiler/start",
+            "/taste-profiler/step/<int:step_id>",
             "/taste-profiler/result",
             "/taste-profiler/result/<string:sku_code>",
             "/taste-profiler/sku/<string:sku_code>",
@@ -535,7 +539,7 @@ class InnokafeMainController(Website):
         website=True,
         sitemap=True,
     )
-    def taste_profiler(self, sku_code=None, **kwargs):
+    def taste_profiler(self, step_id=None, sku_code=None, **kwargs):
         values = self._base_values()
         db_map = self._lookup_db_products()
         # Merge database IDs into signature skus for add-to-cart
@@ -560,10 +564,22 @@ class InnokafeMainController(Website):
         flavor = kwargs.get("flavor")
         caffeine = kwargs.get("caffeine")
 
+        # Determine route context
+        path = request.httprequest.path.rstrip("/")
+        is_result_path = path.endswith("/result") or "/result/" in path or "/sku/" in path
+
         top1 = None
         top2 = None
         user_vector = None
         initial_step = 1
+
+        if step_id is not None:
+            if 1 <= step_id <= 4:
+                initial_step = step_id
+            elif step_id >= 5:
+                initial_step = 5
+            else:
+                initial_step = 1
 
         if habit and gear and flavor and caffeine:
             ranked_skus, user_vector = calculate_match_scores(habit, gear, flavor, caffeine)
@@ -579,23 +595,112 @@ class InnokafeMainController(Website):
             top2 = ranked_skus[1] if len(ranked_skus) > 1 else None
             initial_step = 5
         elif target_sku:
-            matched = [s for s in hydrated_skus if s["sku_code"].lower() == target_sku.lower()]
+            clean_sku = target_sku.strip().upper().replace("_", "-")
+            matched = [s for s in hydrated_skus if s["sku_code"].upper().replace("_", "-") == clean_sku]
             if matched:
                 top1 = dict(matched[0])
-                top1["match_score"] = 94.5
-                others = [s for s in hydrated_skus if s["sku_code"].lower() != target_sku.lower()]
+                top1["match_score"] = 96.5
+                others = [s for s in hydrated_skus if s["sku_code"] != top1["sku_code"]]
                 top2 = dict(others[0]) if others else None
                 if top2:
-                    top2["match_score"] = 89.0
+                    top2["match_score"] = 89.5
                 initial_step = 5
                 user_vector = top1.get("vector")
+            else:
+                top1 = dict(hydrated_skus[0])
+                top1["match_score"] = 94.5
+                top2 = dict(hydrated_skus[1])
+                top2["match_score"] = 89.0
+                initial_step = 5
+                user_vector = top1.get("vector")
+        elif is_result_path:
+            top1 = dict(hydrated_skus[0])
+            top1["match_score"] = 94.5
+            top2 = dict(hydrated_skus[1])
+            top2["match_score"] = 89.0
+            initial_step = 5
+            user_vector = top1.get("vector")
+
+        # Step title and SEO / OpenGraph metadata
+        step_names = {
+            1: "Bước 1: Phong Cách Thưởng Thức",
+            2: "Bước 2: Dụng Cụ Pha Chế",
+            3: "Bước 3: Tông Hương Vị Yêu Thích",
+            4: "Bước 4: Mức Độ Nhạy Cảm Caffeine",
+        }
+        if initial_step == 5 and top1:
+            step_title = f"Kết Quả: {top1.get('name')}"
+            meta_title = f"{top1.get('name')} | Hồ Sơ Cảm Quan Gu Cà Phê | InnoKafe"
+            meta_desc = f"{top1.get('tagline')} - Nốt hương: {top1.get('tasting_notes_str', '')}. Vùng trồng: {top1.get('origin', '')}. Điểm SCA: {top1.get('cupping_score')}."
+            meta_image = top1.get("image_url", "/innokafe_website/static/src/img/beans_robusta_natural.svg")
+            meta_url = f"https://innokafe.com/taste-profiler/result/{top1.get('sku_code')}"
+        elif initial_step in step_names:
+            step_title = step_names[initial_step]
+            meta_title = f"{step_title} | Trắc Nghiệm Tìm Gu Cà Phê | InnoKafe"
+            meta_desc = "Chỉ 60 giây trắc nghiệm cảm quan 4 bước chuẩn SCA để InnoKafe gợi ý chính xác dòng hạt rang mộc sinh ra dành riêng cho khẩu vị của bạn."
+            meta_image = "/innokafe_website/static/src/img/beans_robusta_natural.svg"
+            meta_url = f"https://innokafe.com/taste-profiler/step/{initial_step}"
+        else:
+            step_title = "Tìm Gu Cà Phê Của Bạn"
+            meta_title = "Tìm Gu Cà Phê Của Bạn | Trắc Nghiệm Cảm Quan SCA | InnoKafe"
+            meta_desc = "Mỗi người sở hữu một bản đồ vị giác độc nhất. 60 giây với 4 câu hỏi trắc nghiệm cảm quan để tìm ra dòng hạt specialty rang mộc lý tưởng."
+            meta_image = "/innokafe_website/static/src/img/beans_robusta_natural.svg"
+            meta_url = "https://innokafe.com/taste-profiler"
 
         values["initial_step"] = initial_step
+        values["step_title"] = step_title
+        values["meta_title"] = meta_title
+        values["meta_desc"] = meta_desc
+        values["meta_image"] = meta_image
+        values["meta_url"] = meta_url
         values["top1"] = top1
         values["top2"] = top2
         values["user_vector"] = user_vector
         values["radar_points"] = compute_radar_points(top1.get("sensory_scores")) if top1 else ""
         return request.render("innokafe_website.taste_profiler_page", values)
+
+    @http.route(
+        "/taste-profiler/share/<string:sku_code>",
+        type="http",
+        auth="public",
+        website=True,
+        sitemap=False,
+    )
+    def taste_profiler_share(self, sku_code=None, **kwargs):
+        """Social sharing redirect / preview landing endpoint."""
+        target_sku = (sku_code or "").strip().upper()
+        return request.redirect(f"/taste-profiler/result/{target_sku}", code=302)
+
+    @http.route(
+        ["/taste-profiler/api/skus", "/taste-profiler/catalog"],
+        type="http",
+        auth="public",
+        methods=["GET"],
+        website=True,
+        csrf=False,
+    )
+    def taste_profiler_catalog_api(self, **kwargs):
+        """
+        Public JSON API returning the 6 signature specialty coffee SKUs
+        with complete 7D vectors, 6-axis SCA cupping scores, prices, tasting notes,
+        and pre-computed SVG radar points.
+        """
+        db_map = self._lookup_db_products()
+        hydrated_skus = []
+        for sku in SIGNATURE_SKUS:
+            item = dict(sku)
+            db_prod = db_map.get(sku["sku_code"])
+            if db_prod:
+                item["product_id"] = db_prod.product_variant_id.id if db_prod.product_variant_id else db_prod.id
+                item["product_tmpl_id"] = db_prod.id
+            else:
+                item["product_id"] = 1
+                item["product_tmpl_id"] = 1
+            hydrated_skus.append(item)
+        return request.make_response(
+            json.dumps({"status": "success", "count": len(hydrated_skus), "skus": hydrated_skus}, ensure_ascii=False),
+            headers=[("Content-Type", "application/json; charset=utf-8"), ("Access-Control-Allow-Origin", "*")],
+        )
 
     @http.route(
         ["/taste-profiler/cart/add", "/innokafe/cart/add"],

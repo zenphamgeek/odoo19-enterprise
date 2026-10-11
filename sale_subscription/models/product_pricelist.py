@@ -37,7 +37,8 @@ class ProductPricelist(models.Model):
 
         self.ensure_one()
 
-        date = kwargs.get('date')
+        domain_kwargs = dict(kwargs)
+        date = domain_kwargs.pop('date', None)
         if not date:
             if len(args) >= 2:
                 date = args[1]
@@ -49,9 +50,10 @@ class ProductPricelist(models.Model):
             # Prepend the recurring rules if a plan is given, as they are expected to take priority
             # over the standard rules.
             recurring_rules = self.env['product.pricelist.item'].with_context(active_test=False).search(
-                self._get_applicable_rules_domain(products=products, date=date, plan_id=plan_id, **kwargs),
+                self._get_applicable_rules_domain(products=products, date=date, plan_id=plan_id, **domain_kwargs),
                 order=self.env['product.pricelist.item']._get_recurring_rules_order(),
             ).with_context(self.env.context)
+
 
         # Do not give plan_id to super call
         return recurring_rules | super()._get_applicable_rules(products, *args, **kwargs)
