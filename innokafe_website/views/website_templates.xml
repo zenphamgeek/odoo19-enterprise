@@ -114,7 +114,7 @@
     <!-- INNOKAFE SPECIALTY COFFEE: NAVBAR VECTOR BRAND LOGO               -->
     <!-- ================================================================= -->
     <template id="innokafe_header_brand_logo" inherit_id="website.option_header_brand_logo" priority="25">
-        <xpath expr="//a[hasclass('navbar-brand')]" position="replace">
+        <xpath expr="//a[@data-name='Navbar Logo']" position="replace">
             <t t-if="(website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower())">
                 <a class="navbar-brand logo inno-logo-interactive d-inline-flex align-items-center py-1 me-xl-4 me-3" href="/" data-name="InnoKafe Navbar Logo">
                     <img class="inno-brand-logo img-fluid" src="/innokafe_website/static/src/img/branding/innokafe_logo_master.svg" alt="InnoKafe - Inspire the Techno"/>

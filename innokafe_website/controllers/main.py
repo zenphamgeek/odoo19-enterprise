@@ -3,6 +3,7 @@ import json
 import logging
 import math
 import time
+from markupsafe import Markup
 from odoo import http
 from odoo.http import request, Request
 from odoo.addons.website.controllers.main import Website
@@ -130,7 +131,7 @@ SIGNATURE_SKUS = [
     {
         "sku_code": "INNO-ROBUSTA-NAT-01",
         "name": "Đắk Lắk Highland Fine Robusta Natural",
-        "tagline": "Bản sắc đại ngàn — Vị đậm đà ngút ngàn, ngọt sâu hậu vị",
+        "tagline": "Bản sắc đại ngàn, vị đậm đà sâu lắng, ngọt sâu hậu vị",
         "origin": "Cư M'gar, Đắk Lắk (Độ cao 750m)",
         "varietal": "Robusta Sẻ thuần chủng",
         "process": "Natural (Phơi khô nguyên quả 28 ngày trên giàn)",
@@ -165,7 +166,7 @@ SIGNATURE_SKUS = [
     {
         "sku_code": "INNO-ARABICA-WASH-02",
         "name": "Cầu Đất Mountain Bourbon Washed",
-        "tagline": "Tinh hoa sương mù — Chua thanh hoa nhài, trong trẻo tao nhã",
+        "tagline": "Tinh hoa sương mù, chua thanh hoa nhài, trong trẻo tao nhã",
         "origin": "Trạm Hành, Cầu Đất, Lâm Đồng (Độ cao 1.620m)",
         "varietal": "Arabica Bourbon & Catimor",
         "process": "Fully Washed (Lên men kiểm soát 32 giờ, phơi giàn 14 ngày)",
@@ -200,7 +201,7 @@ SIGNATURE_SKUS = [
     {
         "sku_code": "INNO-SIGNATURE-HONEY-03",
         "name": "Innokafe Heritage Signature Red Honey",
-        "tagline": "Khúc giao hòa đỉnh cao — Ngọt ngào mật ong rừng, kem bơ sánh quyện",
+        "tagline": "Khúc giao hòa đỉnh cao, ngọt ngào mật ong rừng, kem bơ sánh quyện",
         "origin": "Blend 70% Cầu Đất Arabica x 30% Cư M'gar Robusta",
         "varietal": "Catimor x Robusta Sẻ",
         "process": "Red Honey (Giữ 75% lớp nhầy đường, phơi chậm 18 ngày)",
@@ -235,7 +236,7 @@ SIGNATURE_SKUS = [
     {
         "sku_code": "INNO-DRIP-EXPLORER-04",
         "name": "Hộp Drip Bag Khám Phá Nghệ Nhân (Artisan Box 10 Gói)",
-        "tagline": "Tiện lợi mọi lúc mọi nơi — Đẳng cấp cà phê phin giấy lọc Nhật Bản",
+        "tagline": "Tiện lợi mọi lúc mọi nơi, đẳng cấp cà phê phin giấy lọc Nhật Bản",
         "origin": "Đa vùng trồng (Cầu Đất, Đắk Lắk)",
         "varietal": "Tuyển tập Arabica & Fine Robusta",
         "process": "Phối trộn 3 phương pháp sơ chế",
@@ -270,7 +271,7 @@ SIGNATURE_SKUS = [
     {
         "sku_code": "INNO-COLDBREW-CITRUS-05",
         "name": "Innokafe Cold Brew Blend Summer Citrus",
-        "tagline": "Sảng khoái mùa hè — Chua ngọt bùng nổ, ủ lạnh 24h ngọt ngào",
+        "tagline": "Sảng khoái mùa hè, chua ngọt bùng nổ, ủ lạnh 24h ngọt ngào",
         "origin": "Cầu Đất, Lâm Đồng (Độ cao 1.550m)",
         "varietal": "100% Arabica Catimor",
         "process": "Natural x Washed Blend",
@@ -305,7 +306,7 @@ SIGNATURE_SKUS = [
     {
         "sku_code": "INNO-HORECA-BARISTA-06",
         "name": "Innokafe Espresso Barista Master 80/20",
-        "tagline": "Chuẩn mực quầy bar chuyên nghiệp — Crema dày mịn, ổn định chiết xuất",
+        "tagline": "Chuẩn mực quầy bar chuyên nghiệp, crema dày mịn, ổn định chiết xuất",
         "origin": "80% Cư M'gar Robusta Sẻ x 20% Cầu Đất Arabica",
         "varietal": "Fine Robusta & Catimor",
         "process": "Honey & Natural",
@@ -522,8 +523,19 @@ class InnokafeMainController(Website):
             values["products"] = []
         return request.render("innokafe_website.products_page", values)
 
-    @http.route(["/taste-profiler"], type="http", auth="public", website=True, sitemap=True)
-    def taste_profiler(self, **kwargs):
+    @http.route(
+        [
+            "/taste-profiler",
+            "/taste-profiler/result",
+            "/taste-profiler/result/<string:sku_code>",
+            "/taste-profiler/sku/<string:sku_code>",
+        ],
+        type="http",
+        auth="public",
+        website=True,
+        sitemap=True,
+    )
+    def taste_profiler(self, sku_code=None, **kwargs):
         values = self._base_values()
         db_map = self._lookup_db_products()
         # Merge database IDs into signature skus for add-to-cart
@@ -539,8 +551,96 @@ class InnokafeMainController(Website):
                 item["product_tmpl_id"] = 1
             hydrated_skus.append(item)
         values["signature_skus"] = hydrated_skus
-        values["skus_json"] = json.dumps(hydrated_skus)
+        values["skus_json"] = Markup(json.dumps(hydrated_skus))
+
+        # Check for deep-linked SKU or direct quiz parameters
+        target_sku = sku_code or kwargs.get("sku") or kwargs.get("sku_code")
+        habit = kwargs.get("habit")
+        gear = kwargs.get("gear")
+        flavor = kwargs.get("flavor")
+        caffeine = kwargs.get("caffeine")
+
+        top1 = None
+        top2 = None
+        user_vector = None
+        initial_step = 1
+
+        if habit and gear and flavor and caffeine:
+            ranked_skus, user_vector = calculate_match_scores(habit, gear, flavor, caffeine)
+            for item in ranked_skus:
+                db_prod = db_map.get(item["sku_code"])
+                if db_prod:
+                    item["product_id"] = db_prod.product_variant_id.id if db_prod.product_variant_id else db_prod.id
+                    item["product_tmpl_id"] = db_prod.id
+                else:
+                    item["product_id"] = 1
+                    item["product_tmpl_id"] = 1
+            top1 = ranked_skus[0] if ranked_skus else None
+            top2 = ranked_skus[1] if len(ranked_skus) > 1 else None
+            initial_step = 5
+        elif target_sku:
+            matched = [s for s in hydrated_skus if s["sku_code"].lower() == target_sku.lower()]
+            if matched:
+                top1 = dict(matched[0])
+                top1["match_score"] = 94.5
+                others = [s for s in hydrated_skus if s["sku_code"].lower() != target_sku.lower()]
+                top2 = dict(others[0]) if others else None
+                if top2:
+                    top2["match_score"] = 89.0
+                initial_step = 5
+                user_vector = top1.get("vector")
+
+        values["initial_step"] = initial_step
+        values["top1"] = top1
+        values["top2"] = top2
+        values["user_vector"] = user_vector
+        values["radar_points"] = compute_radar_points(top1.get("sensory_scores")) if top1 else ""
         return request.render("innokafe_website.taste_profiler_page", values)
+
+    @http.route(
+        ["/taste-profiler/cart/add", "/innokafe/cart/add"],
+        type="jsonrpc",
+        auth="public",
+        methods=["POST"],
+        website=True,
+    )
+    def taste_profiler_cart_add(self, product_id=None, product_template_id=None, quantity=1, **kwargs):
+        """
+        Adds selected taste-profiler specialty coffee product to shopping cart.
+        """
+        try:
+            qty = int(quantity or 1)
+            pid = int(product_id or product_template_id or 1)
+            order_sudo = request.cart or request.website._create_cart()
+
+            # Verify product exists in database
+            product = request.env["product.product"].sudo().browse(pid).exists()
+            if not product:
+                product = request.env["product.product"].sudo().search([("sale_ok", "=", True)], limit=1)
+                if product:
+                    pid = product.id
+
+            if product:
+                order_sudo.with_context(skip_cart_verification=True)._cart_add(
+                    product_id=pid,
+                    quantity=qty,
+                )
+                return {
+                    "status": "success",
+                    "cart_quantity": order_sudo.cart_quantity,
+                    "product_name": product.name,
+                    "product_id": pid,
+                }
+            return {
+                "status": "error",
+                "message": "Không tìm thấy sản phẩm trong hệ thống.",
+            }
+        except Exception as e:
+            _logger.warning("Error adding taste-profiler product to cart: %s", e)
+            return {
+                "status": "error",
+                "message": str(e),
+            }
 
     @http.route(["/solutions-b2b"], type="http", auth="public", website=True, sitemap=True)
     def solutions_b2b(self, **kwargs):
@@ -814,7 +914,7 @@ class InnokafeMainController(Website):
             if email:
                 try:
                     mail_vals = {
-                        "subject": f"[InnoKafe Club] Chào mừng Hội viên Artisan Coffee Club — Xác nhận gói #{sub_id}",
+                        "subject": f"[InnoKafe Club] Chào mừng Hội viên Artisan Coffee Club - Xác nhận gói #{sub_id}",
                         "email_from": request.env.company.email or "club@innokafe.com",
                         "email_to": email,
                         "body_html": f"""

@@ -11,6 +11,13 @@
                      data-snippet="s_innokafe_profiler_hero"
                      data-name="Profiler Hero">
                 <div class="container py-4">
+                    <nav aria-label="breadcrumb" class="mb-3">
+                        <ol class="breadcrumb justify-content-center mb-0 small text-uppercase font-monospace">
+                            <li class="breadcrumb-item"><a href="/" class="text-secondary text-decoration-none">Trang Chủ</a></li>
+                            <li class="breadcrumb-item"><a href="/products" class="text-secondary text-decoration-none">Sản Phẩm</a></li>
+                            <li class="breadcrumb-item active text-warning" aria-current="page">Tìm Gu Cà Phê</li>
+                        </ol>
+                    </nav>
                     <p class="text-uppercase tracking-widest text-warning small font-monospace mb-2">CÁ NHÂN HÓA TRẢI NGHIỆM THƯỞNG THỨC</p>
                     <h1 class="display-4 fw-bold mb-3 text-light" style="font-family: 'Playfair Display', serif; text-wrap: balance;">
                         Tìm Gu Cà Phê Của Bạn
@@ -33,7 +40,10 @@
                     <!-- Embedded JSON Data for Client Engine -->
                     <script id="innokafe-skus-data" type="application/json" t-out="skus_json"/>
 
-                    <div class="innokafe-profiler-root mx-auto" style="max-width: 920px;">
+                    <div class="innokafe-profiler-root mx-auto" style="max-width: 920px;"
+                         t-att-data-initial-step="initial_step"
+                         t-att-data-initial-top1="top1 and top1.get('sku_code') or ''"
+                         t-att-data-initial-top2="top2 and top2.get('sku_code') or ''">
                         <!-- Progress Header -->
                         <div class="d-flex align-items-center justify-content-between mb-3 text-light">
                             <span class="profiler-progress-text fw-bold text-uppercase" style="color: #D48842; font-size: 0.85rem; letter-spacing: 0.05em;">
@@ -52,7 +62,7 @@
                         <!-- =================================================== -->
                         <!-- STEP 1: ROUTINE & VIBE                              -->
                         <!-- =================================================== -->
-                        <div class="profiler-step-content" data-step-panel="1">
+                        <div class="profiler-step-content" id="step-1" data-step-panel="1">
                             <div class="text-center mb-4">
                                 <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
                                     Khoảnh khắc cà phê lý tưởng trong ngày của bạn?
@@ -131,7 +141,7 @@
                         <!-- =================================================== -->
                         <!-- STEP 2: BREWING GEAR                                -->
                         <!-- =================================================== -->
-                        <div class="profiler-step-content d-none" data-step-panel="2">
+                        <div class="profiler-step-content d-none" id="step-2" data-step-panel="2">
                             <div class="text-center mb-4">
                                 <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
                                     Bạn thường pha chế cà phê bằng thiết bị nào?
@@ -187,7 +197,7 @@
                         <!-- =================================================== -->
                         <!-- STEP 3: FLAVOR NOTES                                -->
                         <!-- =================================================== -->
-                        <div class="profiler-step-content d-none" data-step-panel="3">
+                        <div class="profiler-step-content d-none" id="step-3" data-step-panel="3">
                             <div class="text-center mb-4">
                                 <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
                                     Nốt hương nào cuốn hút khứu giác của bạn nhất?
@@ -237,7 +247,7 @@
                         <!-- =================================================== -->
                         <!-- STEP 4: CAFFEINE INTENSITY                          -->
                         <!-- =================================================== -->
-                        <div class="profiler-step-content d-none" data-step-panel="4">
+                        <div class="profiler-step-content d-none" id="step-4" data-step-panel="4">
                             <div class="text-center mb-4">
                                 <h2 class="h3 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
                                     Mức độ tiếp nhận caffeine &amp; độ đậm đặc của bạn?
@@ -284,7 +294,7 @@
                         <!-- =================================================== -->
                         <!-- STEP 5: RESULT COCKPIT                              -->
                         <!-- =================================================== -->
-                        <div class="profiler-result-cockpit d-none py-2">
+                        <div class="profiler-result-cockpit d-none py-2" id="result" data-step-panel="5">
                             <div class="text-center mb-5">
                                 <p class="text-uppercase tracking-widest text-warning small font-monospace mb-2">KẾT QUẢ CẢM QUAN KHẨU VỊ</p>
                                 <h2 class="display-6 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
@@ -355,7 +365,7 @@
                                                         class="btn btn-primary rounded-pill px-4 py-2 fw-bold btn-top1-add-to-cart shadow">
                                                     <i class="fa fa-shopping-bag me-2"/>Thêm Vào Giỏ Hàng Ngay
                                                 </button>
-                                                <a href="/products" class="btn btn-outline-light rounded-pill px-3 py-2 small">
+                                                <a href="/products#INNO-ROBUSTA-NAT-01" class="btn btn-outline-light rounded-pill px-3 py-2 small top1-product-link">
                                                     Xem chi tiết hạt →
                                                 </a>
                                             </div>
@@ -398,7 +408,31 @@
                                                 class="btn btn-outline-warning rounded-pill px-3 py-2 btn-top2-add-to-cart small">
                                             <i class="fa fa-shopping-bag me-1"/>Thử dòng này
                                         </button>
+                                        <a href="/products#INNO-HORECA-BARISTA-06" class="btn btn-outline-light rounded-pill px-3 py-2 small top2-product-link">
+                                            Xem chi tiết →
+                                        </a>
                                     </div>
+                                </div>
+                            </div>
+
+                            <!-- SHARE PROFILE COCKPIT -->
+                            <div class="inno-spatial-layer rounded-4 mb-4 p-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                                <div>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <i class="fa fa-share-alt text-warning me-2"/>
+                                        <h5 class="fw-bold text-light mb-0">Chia Sẻ Hồ Sơ Vị Giác Của Bạn</h5>
+                                    </div>
+                                    <p class="small text-secondary mb-0">
+                                        Gửi kết quả phân tích cảm quan cho bạn bè hoặc lưu lại để nhận gợi ý pha chế tối ưu.
+                                    </p>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <button type="button" class="btn btn-outline-warning rounded-pill px-4 py-2 btn-copy-result-link">
+                                        <i class="fa fa-copy me-2"/>Sao chép liên kết
+                                    </button>
+                                    <button type="button" class="btn btn-outline-light rounded-pill px-3 py-2 btn-native-share d-none">
+                                        <i class="fa fa-share-nodes me-1"/>Chia sẻ
+                                    </button>
                                 </div>
                             </div>
 
@@ -411,10 +445,13 @@
                                     Thử trọn bộ <strong>4 gói mẫu thử 100g</strong> đại diện cho 4 phong cách chế biến và vùng trồng đặc trưng (Robusta Natural, Arabica Washed, Signature Red Honey, Cold Brew Blend) chỉ với <strong>189.000 ₫</strong>.
                                 </p>
                                 <div class="d-flex justify-content-center flex-wrap gap-3">
-                                    <a href="/shop/cart?add_product=4"
-                                       class="btn btn-primary rounded-pill px-4 py-2 fw-bold">
-                                        Đặt Hộp Khám Phá Discovery Box (189K)
-                                    </a>
+                                    <button type="button"
+                                            class="btn btn-primary rounded-pill px-4 py-2 fw-bold btn-discovery-box-add"
+                                            data-sku="INNO-DRIP-EXPLORER-04"
+                                            data-product-id="4"
+                                            data-name="Hộp Drip Bag Khám Phá Nghệ Nhân (Artisan Box 10 Gói)">
+                                        <i class="fa fa-shopping-bag me-2"/>Đặt Hộp Khám Phá Discovery Box (189K)
+                                    </button>
                                     <button type="button" class="btn btn-outline-light rounded-pill px-4 py-2 btn-profiler-restart">
                                         <i class="fa fa-sync-alt me-2"/>Làm lại trắc nghiệm
                                     </button>

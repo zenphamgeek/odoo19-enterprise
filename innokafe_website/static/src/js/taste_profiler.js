@@ -151,6 +151,8 @@ export class InnokafeTasteProfiler {
 
         this.skus = this._loadSkus();
         this.sensoryWheelInstance = null;
+        this.currentResult = null;
+        this._toastTimeout = null;
         this.init();
     }
 
@@ -158,7 +160,13 @@ export class InnokafeTasteProfiler {
         const rawJsonEl = document.getElementById("innokafe-skus-data");
         if (rawJsonEl && rawJsonEl.textContent) {
             try {
-                return JSON.parse(rawJsonEl.textContent);
+                let text = rawJsonEl.textContent.trim();
+                if (text.includes("&")) {
+                    const txt = document.createElement("textarea");
+                    txt.innerHTML = text;
+                    text = txt.value;
+                }
+                return JSON.parse(text);
             } catch (e) {
                 console.warn("Failed to parse embedded SKUs data, using default:", e);
             }
@@ -169,7 +177,105 @@ export class InnokafeTasteProfiler {
     init() {
         this._bindOptionClicks();
         this._bindNavButtons();
-        this._updateStepView();
+        this._bindShareAndCartButtons();
+        this._bindPopState();
+        this._parseInitialRoute();
+    }
+
+    _parseInitialRoute() {
+        if (typeof window === "undefined") return;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const hash = window.location.hash || "";
+
+        // 1. Direct SKU target param
+        const targetSku = urlParams.get("sku") || urlParams.get("sku_code") || this.root.getAttribute("data-initial-top1");
+        if (targetSku) {
+            const matched = this.skus.find((s) => s.sku_code && s.sku_code.toLowerCase() === targetSku.toLowerCase());
+            if (matched) {
+                const others = this.skus.filter((s) => s.sku_code !== matched.sku_code);
+                const top2 = others[0] || matched;
+                this.currentResult = {
+                    top1: Object.assign({}, matched, { match_score: 94.5 }),
+                    top2: Object.assign({}, top2, { match_score: 89.0 }),
+                    all_ranked: this.skus,
+                    user_vector: matched.vector,
+                };
+                this.goToStep(5, false);
+                this._renderResultCockpit(this.currentResult);
+                return;
+            }
+        }
+
+        // 2. Direct quiz answers in query params
+        const habit = urlParams.get("habit");
+        const gear = urlParams.get("gear");
+        const flavor = urlParams.get("flavor");
+        const caffeine = urlParams.get("caffeine");
+        if (habit) this.answers.habit = habit;
+        if (gear) this.answers.gear = gear;
+        if (flavor) this.answers.flavor = flavor;
+        if (caffeine) this.answers.caffeine = caffeine;
+        this._syncActiveCards();
+
+        // 3. Step or Result Route
+        const initialStepAttr = parseInt(this.root.getAttribute("data-initial-step"), 10);
+        const isResultRoute = hash === "#result" || window.location.pathname.endsWith("/result") || initialStepAttr === 5;
+
+        if (isResultRoute || (habit && gear && flavor && caffeine)) {
+            this.calculateAndShowResult(false);
+            return;
+        }
+
+        if (hash.startsWith("#step-")) {
+            const stepNum = parseInt(hash.replace("#step-", ""), 10);
+            if (stepNum >= 1 && stepNum <= 4) {
+                this.goToStep(stepNum, false);
+                return;
+            }
+        }
+
+        this.goToStep(1, false);
+    }
+
+    _syncActiveCards() {
+        const optionCards = this.root.querySelectorAll(".profiler-option-card");
+        optionCards.forEach((card) => {
+            const key = card.getAttribute("data-key");
+            const val = card.getAttribute("data-value");
+            if (this.answers[key] === val) {
+                card.classList.add("active");
+            } else {
+                card.classList.remove("active");
+            }
+        });
+    }
+
+    _bindPopState() {
+        window.addEventListener("popstate", (e) => {
+            if (e.state && typeof e.state.step === "number") {
+                this.goToStep(e.state.step, false);
+                if (e.state.step === 5) {
+                    if (e.state.answers) {
+                        this.answers = Object.assign({}, this.answers, e.state.answers);
+                        this._syncActiveCards();
+                    }
+                    this.calculateAndShowResult(false);
+                }
+            } else {
+                const hash = window.location.hash || "";
+                if (hash.startsWith("#step-")) {
+                    const stepNum = parseInt(hash.replace("#step-", ""), 10);
+                    if (stepNum >= 1 && stepNum <= 4) {
+                        this.goToStep(stepNum, false);
+                    }
+                } else if (hash === "#result") {
+                    this.calculateAndShowResult(false);
+                } else {
+                    this.goToStep(1, false);
+                }
+            }
+        });
     }
 
     _bindOptionClicks() {
@@ -224,9 +330,105 @@ export class InnokafeTasteProfiler {
         }
     }
 
-    goToStep(step) {
+    _bindShareAndCartButtons() {
+        // Copy Link
+        const copyBtn = this.root.querySelector(".btn-copy-result-link");
+        if (copyBtn) {
+            copyBtn.addEventListener("click", () => {
+                const top1Code = this.currentResult && this.currentResult.top1
+                    ? (this.currentResult.top1.sku_code || this.currentResult.top1.code)
+                    : "";
+                const params = new URLSearchParams({
+                    habit: this.answers.habit,
+                    gear: this.answers.gear,
+                    flavor: this.answers.flavor,
+                    caffeine: this.answers.caffeine,
+                });
+                if (top1Code) params.set("sku", top1Code);
+                const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}#result`;
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(shareUrl).then(() => {
+                        this._showToast("Đã sao chép liên kết hồ sơ vị giác vào bộ nhớ tạm!");
+                    }).catch(() => {
+                        this._fallbackCopyText(shareUrl);
+                    });
+                } else {
+                    this._fallbackCopyText(shareUrl);
+                }
+            });
+        }
+
+        // Native Web Share API
+        const nativeShareBtn = this.root.querySelector(".btn-native-share");
+        if (nativeShareBtn && typeof navigator !== "undefined" && navigator.share) {
+            nativeShareBtn.classList.remove("d-none");
+            nativeShareBtn.addEventListener("click", () => {
+                const top1Name = this.currentResult && this.currentResult.top1
+                    ? this.currentResult.top1.name
+                    : "Cà Phê Đặc Sản InnoKafe";
+                const params = new URLSearchParams({
+                    habit: this.answers.habit,
+                    gear: this.answers.gear,
+                    flavor: this.answers.flavor,
+                    caffeine: this.answers.caffeine,
+                });
+                const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}#result`;
+                navigator.share({
+                    title: `Hồ Sơ Vị Giác InnoKafe - ${top1Name}`,
+                    text: `Khám phá dòng cà phê mộc phù hợp với khẩu vị của tôi: ${top1Name}`,
+                    url: shareUrl,
+                }).catch(() => {});
+            });
+        }
+
+        // Discovery Box Add to Cart
+        const discoveryBoxBtn = this.root.querySelector(".btn-discovery-box-add");
+        if (discoveryBoxBtn) {
+            discoveryBoxBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const pid = parseInt(discoveryBoxBtn.getAttribute("data-product-id") || 4, 10);
+                const name = discoveryBoxBtn.getAttribute("data-name") || "Hộp Drip Bag Khám Phá Nghệ Nhân";
+                this._addToCart(pid, pid, 1, name);
+            });
+        }
+    }
+
+    _fallbackCopyText(text) {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand("copy");
+            this._showToast("Đã sao chép liên kết hồ sơ vị giác vào bộ nhớ tạm!");
+        } catch (e) {
+            this._showToast("Không thể sao chép liên kết, vui lòng copy từ thanh địa chỉ.", false);
+        }
+        document.body.removeChild(textarea);
+    }
+
+    goToStep(step, updateHistory = true) {
         this.currentStep = step;
         this._updateStepView();
+
+        if (updateHistory && typeof window !== "undefined" && window.history) {
+            if (step >= 1 && step <= 4) {
+                const url = `${window.location.pathname}#step-${step}`;
+                window.history.pushState({ step }, "", url);
+            } else if (step === 5) {
+                const params = new URLSearchParams({
+                    habit: this.answers.habit,
+                    gear: this.answers.gear,
+                    flavor: this.answers.flavor,
+                    caffeine: this.answers.caffeine,
+                });
+                const url = `${window.location.pathname}?${params.toString()}#result`;
+                window.history.pushState({ step: 5, answers: this.answers }, "", url);
+            }
+        }
     }
 
     _updateStepView() {
@@ -366,9 +568,9 @@ export class InnokafeTasteProfiler {
         };
     }
 
-    async calculateAndShowResult() {
+    async calculateAndShowResult(updateHistory = true) {
         // Show step 5 (Cockpit)
-        this.goToStep(5);
+        this.goToStep(5, updateHistory);
 
         let result = null;
         try {
@@ -394,10 +596,12 @@ export class InnokafeTasteProfiler {
             result = this.calculateClientSide();
         }
 
+        this.currentResult = result;
         this._renderResultCockpit(result);
     }
 
     _renderResultCockpit(result) {
+        this.currentResult = result;
         const { top1, top2 } = result;
 
         // Render Top 1 (Perfect Match) Card
@@ -424,21 +628,27 @@ export class InnokafeTasteProfiler {
         const top1PriceEl = this.root.querySelector(".top1-product-price");
         if (top1PriceEl) {
             top1PriceEl.textContent = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
-                top1.price_250g || 145000
+                top1.price_250g || 125000
             );
         }
 
         const top1NotesEl = this.root.querySelector(".top1-product-notes");
         if (top1NotesEl && top1.tasting_notes) {
             top1NotesEl.innerHTML = top1.tasting_notes
-                .map((n) => `<span class="badge bg-espresso-subtle text-amber rounded-pill px-3 py-1 me-1 mb-1 border border-subtle">${n}</span>`)
+                .map((n) => `<span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">${n}</span>`)
                 .join("");
+        }
+
+        // Top 1 Product Link
+        const top1LinkEl = this.root.querySelector(".top1-product-link");
+        if (top1LinkEl && (top1.sku_code || top1.code)) {
+            top1LinkEl.href = `/products#${top1.sku_code || top1.code}`;
         }
 
         // Render Top 2 (Discovery Match) Card
         if (top2) {
             const top2BadgeEl = this.root.querySelector(".top2-match-badge");
-            if (top2BadgeEl) top2BadgeEl.textContent = `${top2.match_score}% Khám phá`;
+            if (top2BadgeEl) top2BadgeEl.textContent = `${top2.match_score}% Khám phá đổi vị`;
 
             const top2NameEl = this.root.querySelector(".top2-product-name");
             if (top2NameEl) top2NameEl.textContent = top2.name;
@@ -449,8 +659,14 @@ export class InnokafeTasteProfiler {
             const top2PriceEl = this.root.querySelector(".top2-product-price");
             if (top2PriceEl) {
                 top2PriceEl.textContent = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
-                    top2.price_250g || 155000
+                    top2.price_250g || 135000
                 );
+            }
+
+            // Top 2 Product Link
+            const top2LinkEl = this.root.querySelector(".top2-product-link");
+            if (top2LinkEl && (top2.sku_code || top2.code)) {
+                top2LinkEl.href = `/products#${top2.sku_code || top2.code}`;
             }
         }
 
@@ -495,51 +711,93 @@ export class InnokafeTasteProfiler {
         }
     }
 
-    async _addToCart(productId, productTemplateId, quantity, productName) {
-        const toastEl = document.getElementById("innokafe-cart-toast");
-        const showToast = (msg, success = true) => {
-            if (!toastEl) {
-                alert(msg);
-                return;
-            }
-            toastEl.textContent = msg;
-            toastEl.className = `alert alert-${success ? "success" : "warning"} position-fixed bottom-0 end-0 m-3 shadow-lg`;
-            toastEl.style.zIndex = "9999";
-            toastEl.classList.remove("d-none");
-            setTimeout(() => toastEl.classList.add("d-none"), 3500);
-        };
+    _showToast(msg, isSuccess = true, linkHref = null, linkText = null) {
+        let toastEl = document.getElementById("innokafe-cart-toast");
+        if (!toastEl) {
+            toastEl = document.createElement("div");
+            toastEl.id = "innokafe-cart-toast";
+            document.body.appendChild(toastEl);
+        }
+        toastEl.className = `alert alert-${isSuccess ? "success" : "warning"} position-fixed bottom-0 end-0 m-3 shadow-lg d-flex align-items-center gap-3`;
+        toastEl.style.zIndex = "99999";
+        toastEl.style.maxWidth = "480px";
 
+        let html = `<span>${msg}</span>`;
+        if (linkHref && linkText) {
+            html += `<a href="${linkHref}" class="btn btn-sm btn-light fw-bold text-nowrap ms-auto">${linkText}</a>`;
+        }
+        toastEl.innerHTML = html;
+        toastEl.classList.remove("d-none");
+        clearTimeout(this._toastTimeout);
+        this._toastTimeout = setTimeout(() => {
+            toastEl.classList.add("d-none");
+        }, 4500);
+    }
+
+    async _addToCart(productId, productTemplateId, quantity, productName) {
+        const pid = parseInt(productId, 10);
+        const qty = parseInt(quantity || 1, 10);
+        const ptid = parseInt(productTemplateId || productId, 10);
+
+        // Try primary /taste-profiler/cart/add endpoint
         try {
-            const response = await fetch("/shop/cart/add", {
+            const response = await fetch("/taste-profiler/cart/add", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     jsonrpc: "2.0",
                     method: "call",
                     params: {
-                        product_template_id: parseInt(productTemplateId || productId, 10),
-                        product_id: parseInt(productId, 10),
-                        quantity: parseInt(quantity, 10),
+                        product_id: pid,
+                        product_template_id: ptid,
+                        quantity: qty,
                     },
                 }),
             });
             const data = await response.json();
-            if (data.result || !data.error) {
-                showToast(`✓ Đã thêm "${productName}" vào giỏ hàng thành công!`);
-                // Update badge if website cart counter exists
+            if (data && data.result && data.result.status === "success") {
+                this._showToast(`Đã thêm "${productName}" vào giỏ hàng!`, true, "/shop/cart", "Xem giỏ hàng →");
+                const badge = document.querySelector(".my_cart_quantity");
+                if (badge) {
+                    badge.textContent = data.result.cart_quantity || (parseInt(badge.textContent || "0", 10) + qty);
+                }
+                return;
+            }
+        } catch (err) {
+            console.warn("RPC /taste-profiler/cart/add error, trying fallback:", err);
+        }
+
+        // Secondary fallback: /shop/cart/add
+        try {
+            const fallbackResp = await fetch("/shop/cart/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    jsonrpc: "2.0",
+                    method: "call",
+                    params: {
+                        product_template_id: ptid,
+                        product_id: pid,
+                        quantity: qty,
+                    },
+                }),
+            });
+            const fallbackData = await fallbackResp.json();
+            if (fallbackData && (fallbackData.result || !fallbackData.error)) {
+                this._showToast(`Đã thêm "${productName}" vào giỏ hàng!`, true, "/shop/cart", "Xem giỏ hàng →");
                 const badge = document.querySelector(".my_cart_quantity");
                 if (badge) {
                     const current = parseInt(badge.textContent || "0", 10);
-                    badge.textContent = current + 1;
+                    badge.textContent = current + qty;
                 }
-            } else {
-                window.location.href = `/shop/cart?add_product=${productId}`;
+                return;
             }
-        } catch (err) {
-            console.warn("Cart AJAX fallback:", err);
-            // Fallback: direct form navigation
-            window.location.href = `/shop/cart?add_product=${productId}`;
+        } catch (err2) {
+            console.warn("Fallback cart AJAX failed:", err2);
         }
+
+        // Direct navigation fallback
+        window.location.href = `/shop/cart?add_product=${pid}`;
     }
 }
 
