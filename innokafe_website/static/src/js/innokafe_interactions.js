@@ -2,7 +2,7 @@
 
 /**
  * ============================================================================
- * INNOKAFE SPECIALTY COFFEE BREW LAB — INTERACTIVE ENGINE
+ * INNOKAFE SPECIALTY COFFEE BREW LAB: INTERACTIVE ENGINE
  * Council of Barista Master & Odoo Snippets Web Architect
  * ============================================================================
  * Cung cấp khả năng tính toán định lượng chiết xuất động theo thời gian thực:
@@ -16,7 +16,7 @@ export const BREWING_METHODS = {
     phin: {
         name: "1. Phin Nhôm Nghệ Nhân",
         badge: "PHIN NHÔM NGHỆ NHÂN",
-        title: "Nghi Thức Bản Địa — Tinh Hoa Đậm Sánh",
+        title: "Nghi Thức Bản Địa, Tinh Hoa Đậm Sánh",
         ratio: 4,
         ratioText: "1 : 4",
         grind: "650 μm (Medium-Fine)",
@@ -32,7 +32,7 @@ export const BREWING_METHODS = {
     espresso: {
         name: "2. Espresso 9 Bar",
         badge: "ESPRESSO 9 BAR",
-        title: "Áp Suất Hoàng Kim — Lớp Crema Dày Đậm",
+        title: "Áp Suất Hoàng Kim, Lớp Crema Dày Đậm",
         ratio: 2,
         ratioText: "1 : 2",
         grind: "250 μm (Fine)",
@@ -48,7 +48,7 @@ export const BREWING_METHODS = {
     v60: {
         name: "3. Pour-Over V60",
         badge: "POUR-OVER V60",
-        title: "Vũ Điệu Dòng Nước — Thanh Tao Tinh Khiết",
+        title: "Chiết Xuất Trọng Lực, Thanh Tao Tinh Khiết",
         ratio: 15,
         ratioText: "1 : 15",
         grind: "800 μm (Medium)",
@@ -64,7 +64,7 @@ export const BREWING_METHODS = {
     coldbrew: {
         name: "4. Cold Brew 24H",
         badge: "COLD BREW 24H",
-        title: "Ủ Lạnh Chậm Rãi — Ngọt Dịu Thanh Mát",
+        title: "Ủ Lạnh Chậm Rãi, Ngọt Dịu Thanh Mát",
         ratio: 10,
         ratioText: "1 : 10",
         grind: "1100 μm (Coarse)",
@@ -80,7 +80,7 @@ export const BREWING_METHODS = {
     aeropress: {
         name: "5. Aeropress Inverted",
         badge: "AEROPRESS INVERTED",
-        title: "Áp Lực Khí Nén — Thể Chất Đa Tầng",
+        title: "Áp Lực Khí Nén, Thể Chất Đa Tầng",
         ratio: 12,
         ratioText: "1 : 12",
         grind: "600 μm (Medium-Fine)",

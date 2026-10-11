@@ -194,7 +194,7 @@
             var weightSelect = card ? card.querySelector('.inno-weight-select') : null;
             var pack = weightSelect ? weightSelect.value : '250';
             var packLabel = (weightSelect && weightSelect.options[weightSelect.selectedIndex]) ?
-                            weightSelect.options[weightSelect.selectedIndex].text.split('—')[0].trim() :
+                            weightSelect.options[weightSelect.selectedIndex].text.split(/[-\u2014,]/)[0].trim() :
                             (PACK_LABELS[pack] || pack + 'g');
 
             var grindSelect = card ? card.querySelector('.inno-grind-select') : null;
@@ -456,7 +456,7 @@
                             }
                         })
                     }).catch(function () {
-                        // Soft-fail: Client localStorage maintains state seamlessly
+                        // Soft-fail: Client localStorage maintains state locally
                     });
                 }
             } catch (err) {

@@ -23,7 +23,7 @@ export const CLIENT_SIGNATURE_SKUS = [
     {
         sku_code: "INNO-ROBUSTA-NAT-01",
         name: "Đắk Lắk Highland Fine Robusta Natural",
-        tagline: "Bản sắc đại ngàn — Vị đậm đà ngút ngàn, ngọt sâu hậu vị",
+        tagline: "Bản sắc đại ngàn, vị đậm đà sâu lắng, ngọt sâu hậu vị",
         origin: "Cư M'gar, Đắk Lắk (Độ cao 750m)",
         varietal: "Robusta Sẻ thuần chủng",
         process: "Natural (Phơi khô nguyên quả 28 ngày trên giàn)",
@@ -42,7 +42,7 @@ export const CLIENT_SIGNATURE_SKUS = [
     {
         sku_code: "INNO-ARABICA-WASH-02",
         name: "Cầu Đất Mountain Bourbon Washed",
-        tagline: "Tinh hoa sương mù — Chua thanh hoa nhài, trong trẻo tao nhã",
+        tagline: "Hạt Arabica Cầu Đất, chua thanh hoa nhài, trong trẻo tao nhã",
         origin: "Trạm Hành, Cầu Đất, Lâm Đồng (Độ cao 1.620m)",
         varietal: "Arabica Bourbon & Catimor",
         process: "Fully Washed (Lên men kiểm soát 32 giờ, phơi giàn 14 ngày)",
@@ -61,7 +61,7 @@ export const CLIENT_SIGNATURE_SKUS = [
     {
         sku_code: "INNO-SIGNATURE-HONEY-03",
         name: "Innokafe Heritage Signature Red Honey",
-        tagline: "Khúc giao hòa đỉnh cao — Ngọt ngào mật ong rừng, kem bơ sánh quyện",
+        tagline: "Dòng hạt Heritage Red Honey, mật ong rừng, kem bơ sánh quyện",
         origin: "Blend 70% Cầu Đất Arabica x 30% Cư M'gar Robusta",
         varietal: "Catimor x Robusta Sẻ",
         process: "Red Honey (Giữ 75% lớp nhầy đường, phơi chậm 18 ngày)",
@@ -80,7 +80,7 @@ export const CLIENT_SIGNATURE_SKUS = [
     {
         sku_code: "INNO-DRIP-EXPLORER-04",
         name: "Hộp Drip Bag Khám Phá Nghệ Nhân (Artisan Box 10 Gói)",
-        tagline: "Tiện lợi mọi lúc mọi nơi — Đẳng cấp cà phê phin giấy lọc Nhật Bản",
+        tagline: "Phin giấy lọc tiện lợi, cà phê mộc nguyên bản chuẩn Nhật Bản",
         origin: "Đa vùng trồng (Cầu Đất, Đắk Lắk)",
         varietal: "Tuyển tập Arabica & Fine Robusta",
         process: "Phối trộn 3 phương pháp sơ chế",
@@ -99,7 +99,7 @@ export const CLIENT_SIGNATURE_SKUS = [
     {
         sku_code: "INNO-COLDBREW-CITRUS-05",
         name: "Innokafe Cold Brew Blend Summer Citrus",
-        tagline: "Sảng khoái mùa hè — Chua ngọt bùng nổ, ủ lạnh 24h ngọt ngào",
+        tagline: "Hương cam chanh tươi mát, vị ngọt dịu êm sau 24h ủ lạnh",
         origin: "Cầu Đất, Lâm Đồng (Độ cao 1.550m)",
         varietal: "100% Arabica Catimor",
         process: "Natural x Washed Blend",
@@ -118,7 +118,7 @@ export const CLIENT_SIGNATURE_SKUS = [
     {
         sku_code: "INNO-HORECA-BARISTA-06",
         name: "Innokafe Espresso Barista Master 80/20",
-        tagline: "Chuẩn mực quầy bar chuyên nghiệp — Crema dày mịn, ổn định chiết xuất",
+        tagline: "Phối trộn chuyên biệt cho quầy bar, crema dày mịn, chiết xuất ổn định",
         origin: "80% Cư M'gar Robusta Sẻ x 20% Cầu Đất Arabica",
         varietal: "Fine Robusta & Catimor",
         process: "Honey & Natural",

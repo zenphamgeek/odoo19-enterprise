@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="contactus_page" name="Contact Us — Kết Nối Cùng Innokafe">
+    <template id="contactus_page" name="Contact Us, Kết Nối Cùng Innokafe">
         <t t-call="website.layout" logged_partner="env['ir.http']._get_visitor_from_request().partner_id">
             <t t-set="contactus_form_values" t-value="{'email_to': res_company.email}"/>
             <div id="wrap" class="oe_structure oe_empty inno-espresso-bg">
@@ -37,7 +37,7 @@
                                 <div>
                                     <div class="d-flex align-items-center mb-3">
                                         <div class="rounded-circle p-2 me-2 d-inline-flex align-items-center justify-content-center" style="background: rgba(212, 136, 66, 0.2); color: #D48842; width: 40px; height: 40px; font-size: 1.2rem;">
-                                            ☕
+                                            <i class="fa fa-coffee text-warning"/>
                                         </div>
                                         <span class="inno-badge-pill-dark font-monospace">
                                             SHOWROOM &amp; TASTING BAR
@@ -50,10 +50,10 @@
                                         Không gian trưng bày máy pha cao cấp, quầy bar trải nghiệm Specialty Coffee và trung tâm dịch vụ khách hàng miền Nam.
                                     </p>
                                     <ul class="list-unstyled small mb-4" style="color: rgba(247, 242, 234, 0.75); line-height: 1.8;">
-                                        <li>📍 <strong class="text-white">Địa chỉ:</strong> Tòa nhà Insilos Center, TP. Thủ Đức, TP. Hồ Chí Minh</li>
-                                        <li>⏰ <strong class="text-white">Giờ mở cửa:</strong> 07:30 – 21:00 (Thứ 2 – Chủ Nhật)</li>
-                                        <li>📞 <strong class="text-white">Hotline:</strong> 028 7300 6688 / 0909 123 456</li>
-                                        <li>✉️ <strong class="text-white">Email:</strong> hello@innokafe.com</li>
+                                        <li><i class="fa fa-map-marker-alt text-warning me-2"/><strong class="text-white">Địa chỉ:</strong> Tòa nhà Insilos Center, TP. Thủ Đức, TP. Hồ Chí Minh</li>
+                                        <li><i class="fa fa-clock text-warning me-2"/><strong class="text-white">Giờ mở cửa:</strong> 07:30 – 21:00 (Thứ 2 – Chủ Nhật)</li>
+                                        <li><i class="fa fa-phone text-warning me-2"/><strong class="text-white">Hotline:</strong> 028 7300 6688 / 0909 123 456</li>
+                                        <li><i class="fa fa-envelope text-warning me-2"/><strong class="text-white">Email:</strong> hello@innokafe.com</li>
                                     </ul>
                                 </div>
                                 <a href="tel:02873006688" class="btn btn-outline-light rounded-pill w-100 small">
@@ -68,7 +68,7 @@
                                 <div>
                                     <div class="d-flex align-items-center mb-3">
                                         <div class="rounded-circle p-2 me-2 d-inline-flex align-items-center justify-content-center" style="background: rgba(212, 136, 66, 0.2); color: #D48842; width: 40px; height: 40px; font-size: 1.2rem;">
-                                            🏭
+                                            <i class="fa fa-industry text-warning"/>
                                         </div>
                                         <span class="inno-badge-pill-dark font-monospace">
                                             XƯỞNG RANG &amp; CUPPING LAB
@@ -81,10 +81,10 @@
                                         Trái tim sản xuất của Innokafe: Nhà xưởng rang Hot-Air Châu Âu, phòng kiểm định chất lượng chuẩn SCA và kho bảo quản mộc.
                                     </p>
                                     <ul class="list-unstyled small mb-4" style="color: rgba(247, 242, 234, 0.75); line-height: 1.8;">
-                                        <li>📍 <strong class="text-white">Địa chỉ:</strong> Km 12, Quốc lộ 14, Huyện Cư M'gar, Tỉnh Đắk Lắk</li>
-                                        <li>⏰ <strong class="text-white">Giờ làm việc:</strong> 08:00 – 17:30 (Thứ 2 – Thứ 7)</li>
-                                        <li>📞 <strong class="text-white">Hotline xưởng:</strong> 0262 388 9988</li>
-                                        <li>✉️ <strong class="text-white">Email:</strong> roastery@innokafe.com</li>
+                                        <li><i class="fa fa-map-marker-alt text-warning me-2"/><strong class="text-white">Địa chỉ:</strong> Km 12, Quốc lộ 14, Huyện Cư M'gar, Tỉnh Đắk Lắk</li>
+                                        <li><i class="fa fa-clock text-warning me-2"/><strong class="text-white">Giờ làm việc:</strong> 08:00 – 17:30 (Thứ 2 – Thứ 7)</li>
+                                        <li><i class="fa fa-phone text-warning me-2"/><strong class="text-white">Hotline xưởng:</strong> 0262 388 9988</li>
+                                        <li><i class="fa fa-envelope text-warning me-2"/><strong class="text-white">Email:</strong> roastery@innokafe.com</li>
                                     </ul>
                                 </div>
                                 <a href="#contact_form" class="btn btn-outline-light rounded-pill w-100 small">
@@ -99,7 +99,7 @@
                                 <div>
                                     <div class="d-flex align-items-center mb-3">
                                         <div class="rounded-circle p-2 me-2 d-inline-flex align-items-center justify-content-center" style="background: rgba(212, 136, 66, 0.2); color: #D48842; width: 40px; height: 40px; font-size: 1.2rem;">
-                                            🌄
+                                            <i class="fa fa-mountain text-warning"/>
                                         </div>
                                         <span class="inno-badge-pill-dark font-monospace">
                                             TRẠM NÔNG TRẠI NÚI CAO
@@ -112,10 +112,10 @@
                                         Độ cao 1.620m giữa ngàn thông Cầu Đất: Giàn phơi sơ chế Natural &amp; Honey, vườn cây Arabica Bourbon cổ và không gian trải nghiệm Farm-to-Cup.
                                     </p>
                                     <ul class="list-unstyled small mb-4" style="color: rgba(247, 242, 234, 0.75); line-height: 1.8;">
-                                        <li>📍 <strong class="text-white">Địa chỉ:</strong> Thôn Trạm Hành, Xã Xuân Trường, TP. Đà Lạt, Tỉnh Lâm Đồng</li>
-                                        <li>⏰ <strong class="text-white">Giờ mở cửa:</strong> 07:00 – 17:00 (Mở cửa hàng ngày)</li>
-                                        <li>📞 <strong class="text-white">Hotline nông trại:</strong> 0263 355 6677</li>
-                                        <li>✉️ <strong class="text-white">Email:</strong> farm@innokafe.com</li>
+                                        <li><i class="fa fa-map-marker-alt text-warning me-2"/><strong class="text-white">Địa chỉ:</strong> Thôn Trạm Hành, Xã Xuân Trường, TP. Đà Lạt, Tỉnh Lâm Đồng</li>
+                                        <li><i class="fa fa-clock text-warning me-2"/><strong class="text-white">Giờ mở cửa:</strong> 07:00 – 17:00 (Mở cửa hàng ngày)</li>
+                                        <li><i class="fa fa-phone text-warning me-2"/><strong class="text-white">Hotline nông trại:</strong> 0263 355 6677</li>
+                                        <li><i class="fa fa-envelope text-warning me-2"/><strong class="text-white">Email:</strong> farm@innokafe.com</li>
                                     </ul>
                                 </div>
                                 <a href="#contact_form" class="btn btn-outline-light rounded-pill w-100 small">
@@ -130,7 +130,8 @@
             <!-- =============================================================== -->
             <!-- CONTACT FORM SECTION                                            -->
             <!-- =============================================================== -->
-            <section id="contact_form" class="s_innokafe_contact_form o_colored_level o_cc o_cc5 py-5 text-light inno-espresso-bg border-top border-secondary border-opacity-15"
+            <section id="contact_form" class="s_innokafe_contact_form o_colored_level o_cc o_cc5 py-5 text-light inno-espresso-bg"
+                     style="border-top: 1px solid var(--inno-spatial-hairline);"
                      data-snippet="s_innokafe_contact_form"
                      data-name="Contact Form">
                 <div class="container py-3">
@@ -152,7 +153,7 @@
                                 <t t-if="submitted">
                                     <div class="alert alert-success inno-inner-panel rounded-3 mb-4 p-4 text-center border-0"
                                          style="color: #FAF6F0; border: 1px solid rgba(45, 71, 57, 0.8) !important;">
-                                        <h4 class="h5 fw-bold mb-2">🎉 Gửi Tin Nhắn Thành Công!</h4>
+                                        <h4 class="h5 fw-bold mb-2">Gửi Lời Nhắn Thành Công!</h4>
                                         <p class="mb-0 small">
                                             Cảm ơn bạn đã liên hệ cùng Innokafe. Chúng tôi đã nhận được thông tin và sẽ phản hồi sớm nhất qua số điện thoại hoặc email bạn cung cấp.
                                         </p>
@@ -201,7 +202,7 @@
                                     <div class="col-12 text-center mt-4">
                                         <button type="submit"
                                                 class="btn btn-primary rounded-pill px-5 py-3 fw-bold shadow-lg">
-                                            Gửi Lời Nhắn Đến Innokafe ✉️
+                                            Gửi Lời Nhắn Đến InnoKafe
                                         </button>
                                     </div>
                                 </form>

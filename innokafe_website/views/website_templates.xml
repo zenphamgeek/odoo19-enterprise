@@ -9,11 +9,11 @@
                 <t t-set="curr_path" t-value="request.httprequest.path if request and request.httprequest else '/'"/>
                 <t t-set="disable_opengraph" t-value="True"/>
                 <t t-set="inno_meta_title" t-value="
-                    'InnoKafe — Cà Phê Việt Nam Nguyên Bản | Từ Nông Trại Bazan Đến Tách Cà Phê Có Gu' if curr_path == '/' else
-                    'Hành Trình Di Sản Nông Trại &amp; Cam Kết Cà Phê Mộc 4 Không — InnoKafe' if curr_path == '/story' else
-                    'Danh Mục Hạt Cà Phê Đặc Sản SCA &amp; Drip Bag Nghệ Nhân — InnoKafe' if curr_path == '/products' else
-                    'Tìm Gu Cà Phê Của Bạn Trong 60 Giây — Interactive Coffee Profiler' if curr_path == '/taste-profiler' else
-                    'Giải Pháp Cà Phê B2B Horeca &amp; Tài Trợ Máy Pha 0đ — InnoKafe' if curr_path == '/solutions-b2b' else
+                    'InnoKafe, Cà Phê Việt Nam Nguyên Bản | Từ Nông Trại Bazan Đến Tách Cà Phê Có Gu' if curr_path == '/' else
+                    'Hành Trình Di Sản Nông Trại &amp; Cam Kết Cà Phê Mộc 4 Không, InnoKafe' if curr_path == '/story' else
+                    'Danh Mục Hạt Cà Phê Đặc Sản SCA &amp; Drip Bag Nghệ Nhân, InnoKafe' if curr_path == '/products' else
+                    'Tìm Gu Cà Phê Của Bạn Trong 60 Giây, Interactive Coffee Profiler' if curr_path == '/taste-profiler' else
+                    'Giải Pháp Cà Phê B2B Horeca &amp; Tài Trợ Máy Pha 0đ, InnoKafe' if curr_path == '/solutions-b2b' else
                     'Liên Hệ &amp; Trải Nghiệm Tasting Bar InnoKafe' if curr_path == '/contactus' else
                     'InnoKafe Specialty Coffee &amp; Roastery'"/>
                 <t t-set="inno_meta_desc" t-value="
@@ -32,7 +32,7 @@
                 <meta property="og:image:type" content="image/jpeg"/>
                 <meta property="og:image:width" content="1200"/>
                 <meta property="og:image:height" content="630"/>
-                <meta property="og:image:alt" content="InnoKafe Specialty Coffee — Từ Nông Trại Bazan Đến Tách Cà Phê Có Gu"/>
+                <meta property="og:image:alt" content="InnoKafe Specialty Coffee, Từ Nông Trại Bazan Đến Tách Cà Phê Có Gu"/>
                 <meta property="og:locale" content="vi_VN"/>
 
                 <!-- Twitter Card Meta Suite -->
@@ -42,7 +42,7 @@
                 <meta name="twitter:title" t-att-content="inno_meta_title"/>
                 <meta name="twitter:description" t-att-content="inno_meta_desc"/>
                 <meta name="twitter:image" t-attf-content="{{ inno_base_url }}/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg"/>
-                <meta name="twitter:image:alt" content="InnoKafe Specialty Coffee — Cà Phê Mộc 4 Không"/>
+                <meta name="twitter:image:alt" content="InnoKafe Specialty Coffee, Cà Phê Mộc 4 Không"/>
 
                 <!-- Social Share Image Preload (WebP 61KB High Priority) -->
                 <link rel="preload" as="image" href="/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.webp" type="image/webp" fetchpriority="high"/>
@@ -326,7 +326,7 @@
                 <!-- Slide-over Offcanvas Cart Drawer Container -->
                 <aside id="innokafe_cart_drawer" class="inno-cart-drawer" role="dialog" aria-modal="true" aria-label="Giỏ Hàng Cà Phê Mộc InnoKafe">
                     <!-- Drawer Header -->
-                    <div class="inno-cart-header p-4 border-bottom border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                    <div class="inno-cart-header p-4 inno-cardless inno-cardless--bordered-bottom d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center gap-2">
                             <i class="fa fa-shopping-bag text-warning fs-5"/>
                             <h5 class="mb-0 text-white fw-bold">Giỏ Hàng Của Bạn</h5>
@@ -338,7 +338,7 @@
                     </div>
 
                     <!-- Freeship Progress Section (500k Threshold) -->
-                    <div class="inno-freeship-wrapper px-4 py-3 bg-black bg-opacity-40 border-bottom border-secondary border-opacity-20">
+                    <div class="inno-freeship-wrapper px-4 py-3 inno-inner-panel" style="border-radius: 0; border-bottom: 1px solid var(--inno-spatial-hairline);">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="small text-secondary inno-freeship-text">
                                 <i class="fa fa-truck text-warning me-1"/>
@@ -374,7 +374,7 @@
                     </div>
 
                     <!-- Drawer Footer (Subtotal, Shipping & Checkout) -->
-                    <div class="inno-cart-footer p-4 border-top border-secondary border-opacity-25 bg-black bg-opacity-60">
+                    <div class="inno-cart-footer p-4 inno-spatial-layer rounded-0" style="border-top: 1px solid var(--inno-spatial-hairline); border-left: none; border-right: none; border-bottom: none;">
                         <div class="d-flex justify-content-between align-items-center mb-2 small">
                             <span class="text-secondary">Tạm tính:</span>
                             <span class="text-white fw-semibold inno-cart-subtotal">0 đ</span>
@@ -383,7 +383,7 @@
                             <span class="text-secondary">Phí vận chuyển:</span>
                             <span class="inno-cart-shipping text-white">30.000 đ</span>
                         </div>
-                        <div class="d-flex justify-content-between align-items-center mb-3 pt-2 border-top border-secondary border-opacity-20">
+                        <div class="d-flex justify-content-between align-items-center mb-3 pt-2" style="border-top: 1px solid var(--inno-spatial-hairline);">
                             <span class="text-white fw-bold">Tổng thanh toán:</span>
                             <strong class="fs-4 inno-amber-text inno-cart-total">0 đ</strong>
                         </div>

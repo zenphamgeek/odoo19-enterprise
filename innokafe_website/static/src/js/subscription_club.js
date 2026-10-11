@@ -2,7 +2,7 @@
 
 /**
  * ============================================================================
- * INNOKAFE SPECIALTY COFFEE ARTISAN CLUB — 3-STEP SUBSCRIPTION WIZARD
+ * INNOKAFE SPECIALTY COFFEE ARTISAN CLUB: 3-STEP SUBSCRIPTION WIZARD
  * Platform: Insilos 20 / Odoo 20 Enterprise (innokafe.insilos.com)
  * ============================================================================
  * State machine managing the 3-step Artisan Subscription Club configurator:
@@ -400,7 +400,7 @@ export class InnokafeSubscriptionWizard {
             return;
         }
 
-        // Set Loading State on Submit Button
+        // Update submit button loading indicator
         const originalBtnHtml = this.submitBtn ? this.submitBtn.innerHTML : "";
         if (this.submitBtn) {
             this.submitBtn.disabled = true;
