@@ -582,7 +582,7 @@ class InnokafeMainController(Website):
                 f"Nhu cầu quan tâm: {service_interest_str}",
                 f"Sản lượng tiêu thụ dự kiến: {monthly_volume}",
                 f"Ghi chú chi tiết: {notes}",
-                "Nguồn: https://innokafe.insilos.com/solutions-b2b",
+                "Nguồn: https://innokafe.com/solutions-b2b",
             ]
 
             lead_vals = {
@@ -646,7 +646,7 @@ class InnokafeMainController(Website):
                 f"Số điện thoại: {phone}",
                 f"Chủ đề: {subject}",
                 f"Lời nhắn:<br/>{message}",
-                "Nguồn: https://innokafe.insilos.com/contactus",
+                "Nguồn: https://innokafe.com/contactus",
             ]
 
             lead_vals = {
@@ -758,7 +758,7 @@ class InnokafeMainController(Website):
                 "✓ Tặng 01 Voucher nếm thử Flagship Tasting Bar (150.000đ)",
                 "✓ Tặng Cẩm nang pha chế Specialty Coffee song ngữ",
                 f"Ghi chú giao hàng: {notes}",
-                "Nguồn đăng ký: https://innokafe.insilos.com/ (InnoKafe Club Wizard)",
+                "Nguồn đăng ký: https://innokafe.com/ (InnoKafe Club Wizard)",
             ]
 
             lead_vals = {
@@ -787,7 +787,7 @@ class InnokafeMainController(Website):
                 try:
                     mail_vals = {
                         "subject": f"[InnoKafe Club] Chào mừng Hội viên Artisan Coffee Club — Xác nhận gói #{sub_id}",
-                        "email_from": request.env.company.email or "club@innokafe.insilos.com",
+                        "email_from": request.env.company.email or "club@innokafe.com",
                         "email_to": email,
                         "body_html": f"""
                             <div style="font-family: 'Plus Jakarta Sans', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #1E120B; color: #F7F2EA; border: 1px solid rgba(212,136,66,0.3); border-radius: 12px; overflow: hidden;">

@@ -21,13 +21,14 @@
                 <t t-set="meta_description" t-value="inno_meta_desc"/>
 
                 <!-- Canonical Social Share & OpenGraph Suite (1200x630 Verified Image) -->
+                <t t-set="inno_base_url" t-value="((website or getattr(request, 'website', None)).domain or 'https://innokafe.com').rstrip('/')"/>
                 <meta property="og:site_name" content="InnoKafe Specialty Coffee"/>
                 <meta property="og:type" content="website"/>
-                <meta property="og:url" t-attf-content="https://innokafe.insilos.com{{ curr_path }}"/>
+                <meta property="og:url" t-attf-content="{{ inno_base_url }}{{ curr_path }}"/>
                 <meta property="og:title" t-att-content="inno_meta_title"/>
                 <meta property="og:description" t-att-content="inno_meta_desc"/>
-                <meta property="og:image" content="https://innokafe.insilos.com/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg"/>
-                <meta property="og:image:secure_url" content="https://innokafe.insilos.com/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg"/>
+                <meta property="og:image" t-attf-content="{{ inno_base_url }}/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg"/>
+                <meta property="og:image:secure_url" t-attf-content="{{ inno_base_url }}/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg"/>
                 <meta property="og:image:type" content="image/jpeg"/>
                 <meta property="og:image:width" content="1200"/>
                 <meta property="og:image:height" content="630"/>
@@ -40,11 +41,8 @@
                 <meta name="twitter:creator" content="@innokafe"/>
                 <meta name="twitter:title" t-att-content="inno_meta_title"/>
                 <meta name="twitter:description" t-att-content="inno_meta_desc"/>
-                <meta name="twitter:image" content="https://innokafe.insilos.com/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg"/>
+                <meta name="twitter:image" t-attf-content="{{ inno_base_url }}/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg"/>
                 <meta name="twitter:image:alt" content="InnoKafe Specialty Coffee — Cà Phê Mộc 4 Không"/>
-
-                <!-- Canonical URL -->
-                <link rel="canonical" t-attf-href="https://innokafe.insilos.com{{ curr_path }}"/>
 
                 <!-- Social Share Image Preload (WebP 61KB High Priority) -->
                 <link rel="preload" as="image" href="/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.webp" type="image/webp" fetchpriority="high"/>
@@ -54,12 +52,12 @@
                 {
                     "@context": "https://schema.org",
                     "@type": "CafeOrCoffeeShop",
-                    "@id": "https://innokafe.insilos.com/#organization",
+                    "@id": "https://innokafe.com/#organization",
                     "name": "InnoKafe Specialty Coffee &amp; Roastery",
                     "alternateName": "InnoKafe",
-                    "url": "https://innokafe.insilos.com",
-                    "logo": "https://innokafe.insilos.com/innokafe_website/static/src/img/branding/innokafe_logo_white.svg",
-                    "image": "https://innokafe.insilos.com/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg",
+                    "url": "https://innokafe.com",
+                    "logo": "https://innokafe.com/innokafe_website/static/src/img/branding/innokafe_logo_white.svg",
+                    "image": "https://innokafe.com/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg",
                     "description": "InnoKafe tôn vinh hạt cà phê Việt Nam nguyên bản từ thủ phủ Robusta Đắk Lắk (Cư M'gar) và thiên đường Arabica Cầu Đất (1.650m). Cam kết cà phê mộc 4 Không.",
                     "servesCuisine": "Specialty Coffee, Robusta Cư M'gar, Arabica Cầu Đất, Cold Brew",
                     "priceRange": "$$",
@@ -283,7 +281,7 @@
                                         </li>
                                         <li class="d-flex align-items-center gap-2">
                                             <i class="fa fa-envelope text-warning"/>
-                                            <span><strong>Email:</strong> <a href="mailto:hello@innokafe.insilos.com" class="text-white text-decoration-none">hello@innokafe.insilos.com</a></span>
+                                            <span><strong>Email:</strong> <a href="mailto:hello@innokafe.com" class="text-white text-decoration-none">hello@innokafe.com</a></span>
                                         </li>
                                     </ul>
                                     <div class="d-flex align-items-center gap-2 gap-sm-3 flex-wrap">
