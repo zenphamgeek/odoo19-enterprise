@@ -1,0 +1,158 @@
+// ==============================================================================
+// INNOKAFE SPECIALTY COFFEE - STYLE EXTENSIONS & ACCESSIBILITY TOKENS
+// ==============================================================================
+
+// Skip Link Ergonomics
+a.o_skip_to_content:not(:focus),
+.visually-hidden-focusable:not(:focus) {
+    display: none !important;
+}
+
+// Interactive Touch Targets Ergonomics (>= 36px - 44px)
+body.o_innokafe_theme {
+    a.o_skip_to_content:not(:focus),
+    .visually-hidden-focusable:not(:focus) {
+        display: none !important;
+        min-height: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+    }
+
+    button.border-0.dropdown-toggle,
+    .dropdown-toggle,
+    .navbar .dropdown-toggle,
+    header button,
+    header .dropdown-toggle,
+    header .nav-link.dropdown-toggle,
+    .btn:not(.o_skip_to_content),
+    .btn-outline-warning,
+    .btn-primary:not(.o_skip_to_content),
+    .btn-secondary {
+        min-height: 44px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .btn.rounded-circle,
+    .btn-sm.rounded-circle {
+        min-width: 44px !important;
+        min-height: 44px !important;
+        width: 44px !important;
+        height: 44px !important;
+    }
+
+    footer ul.list-unstyled a,
+    .s_text_block footer a,
+    footer a.text-decoration-none,
+    .text-secondary.text-decoration-none {
+        display: inline-flex !important;
+        align-items: center !important;
+        min-height: 36px !important;
+        min-width: 36px !important;
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+    }
+
+    footer a[href^="tel:"],
+    footer a[href^="mailto:"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        min-height: 36px !important;
+    }
+}
+
+// WCAG AAA Badge Contrast Recalibration
+body.o_innokafe_theme,
+[data-snippet^="s_innokafe_"] {
+    .badge-forest,
+    span.badge[class*="bg-info"],
+    span.badge.bg-info {
+        background-color: var(--inno-forest-leaf, #2D4739) !important;
+        color: var(--inno-cream-foam, #F7F2EA) !important;
+        font-weight: 700 !important;
+        border: 1px solid rgba(247, 242, 234, 0.2) !important;
+    }
+
+    .badge-clay,
+    span.badge[class*="bg-danger"],
+    span.badge.bg-danger {
+        background-color: var(--inno-clay-soil, #8C4820) !important;
+        color: var(--inno-cream-foam, #F7F2EA) !important;
+        font-weight: 700 !important;
+        border: 1px solid rgba(247, 242, 234, 0.2) !important;
+    }
+
+    .badge-amber,
+    span.badge.bg-secondary.text-warning,
+    span.badge.bg-secondary[class*="text-warning"] {
+        background-color: var(--inno-amber-warm, #D48842) !important;
+        color: #0D0805 !important;
+        border-color: var(--inno-amber-warm, #D48842) !important;
+        font-weight: 700 !important;
+    }
+
+    span.badge.bg-secondary.text-white,
+    span.badge.bg-secondary[class*="text-white"] {
+        background-color: var(--inno-forest-leaf, #2D4739) !important;
+        color: var(--inno-cream-foam, #F7F2EA) !important;
+        border-color: var(--inno-forest-leaf, #2D4739) !important;
+        font-weight: 700 !important;
+    }
+}
+
+// Responsive Grid Gutter & Mobile Viewport Containment
+@media (max-width: 1024px) {
+    .row.g-5 {
+        --bs-gutter-x: 1.25rem !important;
+        --gutter-x: 1.25rem !important;
+    }
+    .row {
+        --gutter-x: 1.25rem !important;
+    }
+    .container, .container-fluid {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        max-width: 100% !important;
+    }
+    body.o_innokafe_theme,
+    html,
+    body,
+    #wrap,
+    main#wrap {
+        overflow-x: clip !important;
+        max-width: 100vw !important;
+    }
+    .navbar-brand {
+        max-width: 180px !important;
+        overflow: hidden !important;
+    }
+    footer .badge,
+    .badge.badge-forest,
+    .badge.badge-amber {
+        white-space: normal !important;
+        max-width: 100% !important;
+    }
+}
+
+// Zero-CLS Header & Main Padding Stabilization Across Viewports
+header#top,
+header#top.o_header_standard,
+header#top.o_header_affixed,
+header.o_header_standard,
+header.o_header_standard.o_header_affixed {
+    position: sticky !important;
+    top: 0 !important;
+    transform: none !important;
+}
+
+#wrapwrap > main,
+#wrapwrap > main#wrap,
+#wrapwrap main,
+#wrapwrap main#wrap,
+main#wrap,
+#wrap {
+    padding-top: 0px !important;
+}
+
+

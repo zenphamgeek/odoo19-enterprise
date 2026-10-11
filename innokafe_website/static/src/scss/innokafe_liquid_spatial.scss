@@ -1,0 +1,285 @@
+/* ==========================================================================
+   INNOKAFE LIQUID SPATIAL UI & CARDLESS THEME ARCHITECTURE
+   Aesthetic Mandate: "Pure Craftsmanship, Zero AI Slop, Cardless Spatial Flow"
+   Author: InnoKafe Visual Architecture Fleet
+   ========================================================================== */
+
+:root {
+    // -------------------------------------------------------------------------
+    // 1. Deep Espresso Obsidian Canvas Hierarchy
+    // -------------------------------------------------------------------------
+    --inno-obsidian-deep: #0C0704;          // Primary deep roasted espresso obsidian canvas
+    --inno-obsidian-surface: #140C08;       // Section sub-tier depth canvas
+    --inno-espresso-bark: #1E120B;          // Rich coffee bark tone
+    --inno-espresso-roast: #26160E;         // Hot-Air drum ambient depth
+
+    // -------------------------------------------------------------------------
+    // 2. Specialty Terroir Liquid Accents (Honey, Crema, Amber)
+    // -------------------------------------------------------------------------
+    --inno-amber-honey: #D48842;            // Liquid Amber Honey (start)
+    --inno-honey-gold: #F59E0B;             // Vibrant Honey Gold (end)
+    --inno-crema-gold: #E5A967;             // Espresso Crema Gold
+    --inno-terroir-rust: #C2410C;           // Cư M'gar Red Basalt Clay
+    --inno-cream-foam: #F7F2EA;             // Warm Cream Foam (17.5:1 WCAG AAA on obsidian)
+    --inno-honey-gradient: linear-gradient(135deg, #D48842 0%, #F59E0B 100%);
+
+    // -------------------------------------------------------------------------
+    // 3. Multi-Tier Mesh Gradient Depth Formulas
+    // -------------------------------------------------------------------------
+    --inno-mesh-gradient-obsidian: radial-gradient(ellipse 80% 50% at 50% -15%, rgba(212, 136, 66, 0.16), transparent 70%),
+                                  radial-gradient(circle 650px at 85% 25%, rgba(245, 158, 11, 0.08), transparent 60%),
+                                  radial-gradient(circle 500px at 15% 75%, rgba(194, 65, 12, 0.06), transparent 60%),
+                                  #0C0704;
+
+    --inno-mesh-gradient-terroir: radial-gradient(ellipse 70% 60% at 20% 10%, rgba(212, 136, 66, 0.18), transparent 60%),
+                                 radial-gradient(circle 700px at 80% 90%, rgba(229, 169, 103, 0.12), transparent 60%),
+                                 radial-gradient(circle 500px at 50% 50%, rgba(38, 22, 14, 0.85), transparent 70%),
+                                 #0C0704;
+
+    // -------------------------------------------------------------------------
+    // 4. Diffused Ambient Optical Glows (Zero Machine Borders)
+    // -------------------------------------------------------------------------
+    --inno-glow-honey: 0 24px 50px -15px rgba(0, 0, 0, 0.85), 0 0 35px -8px rgba(212, 136, 66, 0.12);
+    --inno-glow-crema: 0 24px 50px -15px rgba(0, 0, 0, 0.85), 0 0 35px -8px rgba(229, 169, 103, 0.14);
+    --inno-glow-amber: 0 24px 50px -15px rgba(0, 0, 0, 0.85), 0 0 35px -8px rgba(245, 158, 11, 0.15);
+    --inno-spatial-hairline: rgba(255, 255, 255, 0.04);
+    --inno-spatial-hairline-subtle: rgba(255, 255, 255, 0.025);
+
+    // -------------------------------------------------------------------------
+    // 5. Translucent Spatial Floating Layers (Cardless Surfaces)
+    // -------------------------------------------------------------------------
+    --inno-spatial-layer-1: rgba(24, 14, 9, 0.45);   // Primary floating cardless surface
+    --inno-spatial-layer-2: rgba(14, 8, 4, 0.65);    // Secondary elevated layer
+    --inno-spatial-layer-blur: 24px;                 // Atmospheric backdrop-filter blur
+    --inno-spatial-layer-saturate: 160%;             // Frosted optical saturation
+}
+
+/* ==========================================================================
+   CARDLESS SPATIAL UI PRIMITIVES & FLOATING LAYERS
+   ========================================================================== */
+
+// 1. Mesh Canvas: Deep Atmospheric Terroir Background
+.inno-mesh-canvas {
+    background: var(--inno-mesh-gradient-obsidian);
+    background-color: var(--inno-obsidian-deep);
+    position: relative;
+
+    &.inno-mesh-canvas--terroir {
+        background: var(--inno-mesh-gradient-terroir);
+        background-color: var(--inno-obsidian-deep);
+    }
+}
+
+// 2. Spatial Floating Layer: Translucent Frosted Glass Surface (Zero Harsh Borders)
+.inno-spatial-layer {
+    background: var(--inno-spatial-layer-1);
+    backdrop-filter: blur(var(--inno-spatial-layer-blur)) saturate(var(--inno-spatial-layer-saturate));
+    -webkit-backdrop-filter: blur(var(--inno-spatial-layer-blur)) saturate(var(--inno-spatial-layer-saturate));
+    border: 1px solid var(--inno-spatial-hairline);
+    border-radius: 1.5rem;
+    box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--inno-glow-honey);
+        border-color: rgba(212, 136, 66, 0.12);
+    }
+
+    &.inno-spatial-layer--elevated {
+        background: var(--inno-spatial-layer-2);
+        box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.75);
+
+        &:hover {
+            box-shadow: var(--inno-glow-amber);
+            border-color: rgba(245, 158, 11, 0.14);
+        }
+    }
+}
+
+// 3. Floating Pod: Elevated 3D Pod with Multi-Tier Depth & Perspective
+.inno-floating-pod {
+    position: relative;
+    background: linear-gradient(145deg, rgba(26, 15, 9, 0.50) 0%, rgba(14, 8, 4, 0.75) 100%);
+    backdrop-filter: blur(var(--inno-spatial-layer-blur)) saturate(var(--inno-spatial-layer-saturate));
+    -webkit-backdrop-filter: blur(var(--inno-spatial-layer-blur)) saturate(var(--inno-spatial-layer-saturate));
+    border: 1px solid var(--inno-spatial-hairline);
+    border-radius: 1.25rem;
+    transform-style: preserve-3d;
+    box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease;
+
+    &:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: var(--inno-glow-honey);
+        border-color: rgba(212, 136, 66, 0.14);
+    }
+}
+
+// 4. Cardless Primitive: Strips Rigid Machine Borders & Boxes (Không dùng bừa bãi)
+.inno-cardless {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    position: relative;
+
+    // Organic hairline bottom separator for continuous editorial rhythm
+    &.inno-cardless--bordered-bottom {
+        border-bottom: 1px solid var(--inno-spatial-hairline) !important;
+        padding-bottom: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+// 5. Fluid Metadata Strip: Clean Horizontal Layout Replacing Boxed Metrics
+.inno-fluid-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--inno-spatial-hairline);
+    border-bottom: 1px solid var(--inno-spatial-hairline);
+
+    .inno-fluid-item {
+        display: flex;
+        flex-direction: column;
+        min-width: 120px;
+
+        .inno-metric-val {
+            font-family: var(--inno-font-serif, "Playfair Display", serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.2;
+        }
+
+        .inno-metric-lbl {
+            font-size: 0.8rem;
+            color: rgba(247, 242, 234, 0.65);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+    }
+}
+
+// 6. Liquid Amber Badge: Mint/Gold Gradient with High Contrast (WCAG AAA)
+.inno-badge-liquid {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--inno-honey-gradient) !important;
+    color: #0C0704 !important;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    box-shadow: 0 4px 15px rgba(212, 136, 66, 0.25);
+    border: none !important;
+}
+
+// 7. Liquid Dark Pill Badge: Frosted Hairline Pill
+.inno-badge-pill-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--inno-spatial-hairline);
+    border-radius: 9999px;
+    padding: 0.35rem 0.95rem;
+    font-size: 0.78rem;
+    color: var(--inno-cream-foam);
+    letter-spacing: 0.05em;
+}
+
+// 8. Global Universal Card Override (Force Clean Cardless & Spatial Glass on Legacy Views)
+body.o_innokafe_theme,
+.inno-brand-platform,
+[data-snippet^="s_innokafe_"] {
+
+    // Harmonize legacy card classes into Liquid Spatial layers
+    .card.bg-black,
+    .card.bg-dark,
+    .card-innokafe,
+    .inno-craft-card,
+    .inno-product-card {
+        background: var(--inno-spatial-layer-1) !important;
+        backdrop-filter: blur(var(--inno-spatial-layer-blur)) saturate(var(--inno-spatial-layer-saturate)) !important;
+        -webkit-backdrop-filter: blur(var(--inno-spatial-layer-blur)) saturate(var(--inno-spatial-layer-saturate)) !important;
+        border: 1px solid var(--inno-spatial-hairline) !important;
+        border-radius: 1.25rem !important;
+        box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.55) !important;
+        color: var(--inno-cream-foam) !important;
+
+        &:hover {
+            border-color: rgba(212, 136, 66, 0.14) !important;
+            box-shadow: var(--inno-glow-honey) !important;
+        }
+    }
+
+    // Completely purge harsh border-warning and border-secondary outlines
+    .card.border-warning,
+    .card.border-secondary,
+    .border-warning,
+    .border-secondary,
+    .border-opacity-25,
+    .border-opacity-20,
+    .border-opacity-15 {
+        border-color: var(--inno-spatial-hairline) !important;
+    }
+
+    // Eliminate standard Bootstrap card styling
+    .card {
+        border: none !important;
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+
+    // Responsive Craft Image Wrap (Zero Overflow Guarantee)
+    .inno-craft-img-wrap {
+        height: 220px !important;
+        max-height: 220px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        border-radius: 1.25rem 1.25rem 0 0 !important;
+
+        img {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            display: block !important;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        &:hover img {
+            transform: scale(1.05) !important;
+        }
+    }
+
+    // High Contrast Roast Preset Switcher (WCAG AAA Compliance)
+    .inno-preset-switcher .inno-preset-btn {
+        color: #F7F2EA !important;
+        border-color: rgba(212, 136, 66, 0.40) !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        transition: all 0.3s ease !important;
+
+        &:hover,
+        &.active {
+            background: #D48842 !important;
+            color: #0C0704 !important;
+            border-color: #D48842 !important;
+            font-weight: 700 !important;
+        }
+    }
+}

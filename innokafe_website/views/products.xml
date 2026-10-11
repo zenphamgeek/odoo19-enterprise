@@ -29,11 +29,11 @@
                                     <a href="#sku_list" class="btn btn-sm btn-primary rounded-pill px-3 py-2">Tất Cả 6 Sản Phẩm</a>
                                     <a href="#sensory_anchor" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">Biểu Đồ Hương Vị Sensory</a>
                                     <a href="#grind_guide" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">Cẩm Nang Cỡ Xay &amp; Pha Chế</a>
-                                    <a href="/taste-profiler" class="btn btn-sm btn-outline-warning rounded-pill px-3 py-2">Chưa Rõ Gu? Làm Quiz Ngay</a>
+                                    <a href="/taste-profiler" class="btn btn-sm btn-primary rounded-pill px-3 py-2 fw-semibold">Chưa Rõ Gu? Làm Quiz Ngay</a>
                                 </div>
                             </div>
                             <div class="col-lg-4 text-lg-end">
-                                <div class="p-4 rounded-4 bg-black bg-opacity-50 border border-secondary border-opacity-25 text-start">
+                                <div class="p-4 rounded-4 inno-craft-card text-start">
                                     <div class="text-warning small fw-bold text-uppercase mb-2">QUY CHUẨN XUẤT XƯỞNG</div>
                                     <ul class="list-unstyled text-secondary small mb-0 d-flex flex-column gap-2">
                                         <li class="d-flex align-items-center gap-2">
@@ -75,11 +75,15 @@
                         <div class="row g-4">
                             <!-- ================= SKU 1 ================= -->
                             <div class="col-lg-4 col-md-6">
-                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-ROBUSTA-NAT-01" data-price-250="125000" data-price-500="235000" data-price-1000="440000">
+                                <div class="inno-craft-card h-100 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-ROBUSTA-NAT-01" data-name="Đắk Lắk Highland Fine Robusta Natural" data-price-250="125000" data-price-500="235000" data-price-1000="440000" data-product-id="1" data-img="/innokafe_website/static/src/img/beans_robusta_natural.svg">
                                     <div>
+                                        <div class="position-relative rounded-3 overflow-hidden mb-3" style="aspect-ratio: 16 / 9;">
+                                            <img src="/innokafe_website/static/src/img/photography/farm_cherries_ripe.webp" alt="INNO-ROBUSTA-NAT-01" class="w-100 h-100 object-fit-cover"/>
+                                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, transparent 40%, rgba(20, 12, 7, 0.85) 100%);"/>
+                                        </div>
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="badge bg-danger bg-opacity-75 text-white font-monospace">FINE ROBUSTA</span>
-                                            <span class="badge bg-warning text-dark font-monospace fw-bold">84.50 SCA</span>
+                                            <span class="inno-badge-pill-dark text-warning font-monospace fw-bold">FINE ROBUSTA</span>
+                                            <span class="inno-badge-liquid font-monospace">84.50 SCA</span>
                                         </div>
                                         <h3 class="h4 fw-bold text-white mb-2">
                                             Đắk Lắk Highland Fine Robusta Natural
@@ -90,7 +94,7 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Sơ chế Natural phơi chậm 28 ngày trên giàn lưới. Thể chất đầm dày (Heavy body), sô-cô-la đen 85%, hạt dẻ nướng, caramel khói và hậu vị ngọt sâu lắng kéo dài.
                                         </p>
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
                                             <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Natural Khô Tự Nhiên (28 ngày)</div>
                                             <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Medium-Dark (Agtron 48)</div>
                                             <div class="text-secondary"><strong>Nốt hương:</strong> Dark Chocolate · Roasted Hazelnut · Molasses</div>
@@ -99,19 +103,20 @@
                                         <!-- Selector controls -->
                                         <div class="mb-3">
                                             <label class="text-secondary small fw-bold mb-1 d-block">Quy Cách Đóng Gói:</label>
-                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select">
-                                                <option value="250" selected="selected">Túi 250g (125.000 đ)</option>
-                                                <option value="500">Túi 500g (235.000 đ - Tiết kiệm 12%)</option>
-                                                <option value="1000">Gói 1kg (440.000 đ - Giá sỉ)</option>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select" data-pack-select="true">
+                                                <option value="250" selected="selected">Túi 250g (Van 1 chiều) — 125.000 đ</option>
+                                                <option value="500">Túi 500g (Tiết kiệm 12%) — 235.000 đ</option>
+                                                <option value="1000">Gói 1kg (Tiết kiệm) — 440.000 đ</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
                                             <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
-                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select">
-                                                <option value="whole" selected="selected">Nguyên Hạt (Whole Bean)</option>
-                                                <option value="phin">Xay Vừa (Pha Phin Truyền Thống)</option>
-                                                <option value="espresso">Xay Mịn (Máy Espresso Gia Đình)</option>
-                                                <option value="coldbrew">Xay Thô (Cold Brew / French Press)</option>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select" data-grind-select="true">
+                                                <option value="whole" selected="selected">Nguyên Hạt Mộc (Whole Bean)</option>
+                                                <option value="coldbrew">Cold Brew / French Press (900μm)</option>
+                                                <option value="v60">V60 / Drip Bag (800μm)</option>
+                                                <option value="phin">Phin Truyền Thống (650μm)</option>
+                                                <option value="espresso">Espresso (250μm)</option>
                                             </select>
                                         </div>
                                     </div>
@@ -121,7 +126,7 @@
                                             <span class="text-secondary small d-block">Giá thanh toán:</span>
                                             <strong class="fs-4 text-warning inno-price-display">125.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="1">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="1" data-sku="INNO-ROBUSTA-NAT-01">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -131,11 +136,15 @@
 
                             <!-- ================= SKU 2 ================= -->
                             <div class="col-lg-4 col-md-6">
-                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-ARABICA-WASH-02" data-price-250="185000" data-price-500="350000" data-price-1000="660000">
+                                <div class="inno-craft-card h-100 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-ARABICA-WASH-02" data-name="Cầu Đất Mountain Bourbon Washed" data-price-250="185000" data-price-500="350000" data-price-1000="660000" data-product-id="2" data-img="/innokafe_website/static/src/img/beans_arabica_washed.svg">
                                     <div>
+                                        <div class="position-relative rounded-3 overflow-hidden mb-3" style="aspect-ratio: 16 / 9;">
+                                            <img src="/innokafe_website/static/src/img/photography/farm_plantation_mist.webp" alt="INNO-ARABICA-WASH-02" class="w-100 h-100 object-fit-cover"/>
+                                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, transparent 40%, rgba(20, 12, 7, 0.85) 100%);"/>
+                                        </div>
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="badge bg-info bg-opacity-75 text-white font-monospace">SPECIALTY ARABICA</span>
-                                            <span class="badge bg-warning text-dark font-monospace fw-bold">86.75 SCA</span>
+                                            <span class="inno-badge-pill-dark text-warning font-monospace fw-bold">SPECIALTY ARABICA</span>
+                                            <span class="inno-badge-liquid font-monospace">86.75 SCA</span>
                                         </div>
                                         <h3 class="h4 fw-bold text-white mb-2">
                                             Cầu Đất Mountain Bourbon Washed
@@ -146,7 +155,7 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Sơ chế Fully Washed lên men kiểm soát 32 giờ. Hương hoa nhài trắng tỏa ngát, cam Bergamot thanh tao, táo xanh và trà Earl Grey. Tách cà phê trong trẻo tuyệt đối.
                                         </p>
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
                                             <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Fully Washed (Lên men 32h, phơi 14d)</div>
                                             <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Light-Medium (Agtron 72)</div>
                                             <div class="text-secondary"><strong>Nốt hương:</strong> White Jasmine · Bergamot · Green Apple · Peach</div>
@@ -154,19 +163,20 @@
 
                                         <div class="mb-3">
                                             <label class="text-secondary small fw-bold mb-1 d-block">Quy Cách Đóng Gói:</label>
-                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select">
-                                                <option value="250" selected="selected">Túi 250g (185.000 đ)</option>
-                                                <option value="500">Túi 500g (350.000 đ - Tiết kiệm 12%)</option>
-                                                <option value="1000">Gói 1kg (660.000 đ - Giá sỉ)</option>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select" data-pack-select="true">
+                                                <option value="250" selected="selected">Túi 250g (Van 1 chiều) — 185.000 đ</option>
+                                                <option value="500">Túi 500g (Tiết kiệm 12%) — 350.000 đ</option>
+                                                <option value="1000">Gói 1kg (Tiết kiệm) — 660.000 đ</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
                                             <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
-                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select">
-                                                <option value="whole" selected="selected">Nguyên Hạt (Whole Bean)</option>
-                                                <option value="pourover">Xay Thô Vừa (Pour-over V60 / Drip)</option>
-                                                <option value="phin">Xay Vừa (Pha Phin)</option>
-                                                <option value="coldbrew">Xay Thô (Ủ Lạnh Cold Brew)</option>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select" data-grind-select="true">
+                                                <option value="whole" selected="selected">Nguyên Hạt Mộc (Whole Bean)</option>
+                                                <option value="coldbrew">Cold Brew / French Press (900μm)</option>
+                                                <option value="v60">V60 / Drip Bag (800μm)</option>
+                                                <option value="phin">Phin Truyền Thống (650μm)</option>
+                                                <option value="espresso">Espresso (250μm)</option>
                                             </select>
                                         </div>
                                     </div>
@@ -176,7 +186,7 @@
                                             <span class="text-secondary small d-block">Giá thanh toán:</span>
                                             <strong class="fs-4 text-warning inno-price-display">185.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="2">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="2" data-sku="INNO-ARABICA-WASH-02">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -186,11 +196,15 @@
 
                             <!-- ================= SKU 3 ================= -->
                             <div class="col-lg-4 col-md-6">
-                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-SIGNATURE-HONEY-03" data-price-250="155000" data-price-500="295000" data-price-1000="550000">
+                                <div class="inno-craft-card h-100 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-SIGNATURE-HONEY-03" data-name="Innokafe Heritage Signature Red Honey" data-price-250="155000" data-price-500="295000" data-price-1000="550000" data-product-id="3" data-img="/innokafe_website/static/src/img/beans_heritage_honey.svg">
                                     <div>
+                                        <div class="position-relative rounded-3 overflow-hidden mb-3" style="aspect-ratio: 16 / 9;">
+                                            <img src="/innokafe_website/static/src/img/photography/artisan_drying_sun.webp" alt="INNO-SIGNATURE-HONEY-03" class="w-100 h-100 object-fit-cover"/>
+                                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, transparent 40%, rgba(20, 12, 7, 0.85) 100%);"/>
+                                        </div>
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="badge bg-warning text-dark font-monospace fw-bold">HERITAGE BLEND</span>
-                                            <span class="badge bg-warning text-dark font-monospace fw-bold">85.50 SCA</span>
+                                            <span class="inno-badge-liquid font-monospace">HERITAGE BLEND</span>
+                                            <span class="inno-badge-liquid font-monospace">85.50 SCA</span>
                                         </div>
                                         <h3 class="h4 fw-bold text-white mb-2">
                                             Innokafe Heritage Signature Red Honey
@@ -201,7 +215,7 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Khúc giao hòa hoàn hảo giữa độ thơm nồng của Arabica và thể chất đầm của Robusta. Sơ chế Red Honey giữ 75% lớp nhầy đường cho vị ngọt ngào như kem bơ mật ong.
                                         </p>
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
                                             <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Red Honey (Giữ 75% lớp nhầy đường)</div>
                                             <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Medium Roast (Agtron 58)</div>
                                             <div class="text-secondary"><strong>Nốt hương:</strong> Wild Honey · Butter Caramel · Red Apple · Almond</div>
@@ -209,19 +223,20 @@
 
                                         <div class="mb-3">
                                             <label class="text-secondary small fw-bold mb-1 d-block">Quy Cách Đóng Gói:</label>
-                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select">
-                                                <option value="250" selected="selected">Túi 250g (155.000 đ)</option>
-                                                <option value="500">Túi 500g (295.000 đ - Tiết kiệm 12%)</option>
-                                                <option value="1000">Gói 1kg (550.000 đ - Giá sỉ)</option>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select" data-pack-select="true">
+                                                <option value="250" selected="selected">Túi 250g (Van 1 chiều) — 155.000 đ</option>
+                                                <option value="500">Túi 500g (Tiết kiệm 12%) — 295.000 đ</option>
+                                                <option value="1000">Gói 1kg (Tiết kiệm) — 550.000 đ</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
                                             <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
-                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select">
-                                                <option value="whole" selected="selected">Nguyên Hạt (Whole Bean)</option>
-                                                <option value="espresso">Xay Mịn (Máy Espresso)</option>
-                                                <option value="phin">Xay Vừa (Phin Hiện Đại)</option>
-                                                <option value="coldbrew">Xay Thô (Cold Brew)</option>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select" data-grind-select="true">
+                                                <option value="whole" selected="selected">Nguyên Hạt Mộc (Whole Bean)</option>
+                                                <option value="coldbrew">Cold Brew / French Press (900μm)</option>
+                                                <option value="v60">V60 / Drip Bag (800μm)</option>
+                                                <option value="phin">Phin Truyền Thống (650μm)</option>
+                                                <option value="espresso">Espresso (250μm)</option>
                                             </select>
                                         </div>
                                     </div>
@@ -231,7 +246,7 @@
                                             <span class="text-secondary small d-block">Giá thanh toán:</span>
                                             <strong class="fs-4 text-warning inno-price-display">155.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="3">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="3" data-sku="INNO-SIGNATURE-HONEY-03">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -241,11 +256,15 @@
 
                             <!-- ================= SKU 4 ================= -->
                             <div class="col-lg-4 col-md-6">
-                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-DRIP-EXPLORER-04" data-price-single="165000">
+                                <div class="inno-craft-card h-100 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-DRIP-EXPLORER-04" data-name="Hộp Drip Bag Khám Phá Nghệ Nhân (10 Gói)" data-price-250="165000" data-price-500="310000" data-price-1000="580000" data-product-id="4" data-img="/innokafe_website/static/src/img/beans_drip_bag.svg">
                                     <div>
+                                        <div class="position-relative rounded-3 overflow-hidden mb-3" style="aspect-ratio: 16 / 9;">
+                                            <img src="/innokafe_website/static/src/img/photography/extraction_pourover_v60.webp" alt="INNO-DRIP-EXPLORER-04" class="w-100 h-100 object-fit-cover"/>
+                                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, transparent 40%, rgba(20, 12, 7, 0.85) 100%);"/>
+                                        </div>
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="badge bg-success bg-opacity-75 text-white font-monospace">DRIP BAG BOX</span>
-                                            <span class="badge bg-warning text-dark font-monospace fw-bold">85.00 SCA</span>
+                                            <span class="inno-badge-pill-dark text-warning font-monospace fw-bold">DRIP BAG BOX</span>
+                                            <span class="inno-badge-liquid font-monospace">85.00 SCA</span>
                                         </div>
                                         <h3 class="h4 fw-bold text-white mb-2">
                                             Hộp Drip Bag Khám Phá Nghệ Nhân (10 Gói)
@@ -256,22 +275,39 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Thưởng thức cà phê đặc sản mọi lúc mọi nơi chỉ với một ấm nước sôi. Hộp 10 túi lọc gồm 5 loại hạt tuyển chọn được đóng gói khí trơ ni-tơ bảo toàn 100% hương thơm.
                                         </p>
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
                                             <div class="text-secondary mb-1"><strong>Quy cách:</strong> Hộp 10 gói x 15g (Túi lọc màng dệt Nhật)</div>
                                             <div class="text-secondary mb-1"><strong>Thành phần:</strong> 2 Robusta Dark, 2 Arabica Washed, 2 Red Honey, 2 Cold Brew, 2 Signature</div>
                                             <div class="text-secondary"><strong>Cách pha:</strong> Châm 150ml nước sôi 92-95°C trong 2 phút</div>
                                         </div>
-                                        <div class="p-2 rounded-2 bg-black bg-opacity-30 border border-secondary border-opacity-15 mb-3 text-center">
-                                            <span class="text-secondary small">Tuyệt vời cho: Bàn làm việc · Du lịch · Quà tặng sang trọng</span>
+
+                                        <!-- Selector controls -->
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Quy Cách Đóng Gói:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select" data-pack-select="true">
+                                                <option value="250" selected="selected">Túi 250g (10 túi lọc) — 165.000 đ</option>
+                                                <option value="500">Túi 500g (20 túi lọc - Tiết kiệm 12%) — 310.000 đ</option>
+                                                <option value="1000">Gói 1kg (40 túi lọc - Tiết kiệm) — 580.000 đ</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select" data-grind-select="true">
+                                                <option value="v60" selected="selected">V60 / Drip Bag (800μm - Tiêu chuẩn)</option>
+                                                <option value="whole">Nguyên Hạt Mộc (Whole Bean)</option>
+                                                <option value="coldbrew">Cold Brew / French Press (900μm)</option>
+                                                <option value="phin">Phin Truyền Thống (650μm)</option>
+                                                <option value="espresso">Espresso (250μm)</option>
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="pt-3 border-top border-secondary border-opacity-25 mt-3 d-flex justify-content-between align-items-center">
                                         <div>
-                                            <span class="text-secondary small d-block">Hộp 10 túi lọc:</span>
-                                            <strong class="fs-4 text-warning">165.000 đ</strong>
+                                            <span class="text-secondary small d-block">Giá thanh toán:</span>
+                                            <strong class="fs-4 text-warning inno-price-display">165.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="4">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="4" data-sku="INNO-DRIP-EXPLORER-04">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -281,11 +317,15 @@
 
                             <!-- ================= SKU 5 ================= -->
                             <div class="col-lg-4 col-md-6">
-                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-COLDBREW-CITRUS-05" data-price-250="175000" data-price-500="330000" data-price-1000="620000">
+                                <div class="inno-craft-card h-100 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-COLDBREW-CITRUS-05" data-name="Innokafe Cold Brew Blend Summer Citrus" data-price-250="175000" data-price-500="330000" data-price-1000="620000" data-product-id="5" data-img="/innokafe_website/static/src/img/beans_coldbrew_citrus.svg">
                                     <div>
+                                        <div class="position-relative rounded-3 overflow-hidden mb-3" style="aspect-ratio: 16 / 9;">
+                                            <img src="/innokafe_website/static/src/img/photography/sensory_cupping_flight.webp" alt="INNO-COLDBREW-CITRUS-05" class="w-100 h-100 object-fit-cover"/>
+                                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, transparent 40%, rgba(20, 12, 7, 0.85) 100%);"/>
+                                        </div>
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="badge bg-primary bg-opacity-75 text-white font-monospace">COLD BREW BLEND</span>
-                                            <span class="badge bg-warning text-dark font-monospace fw-bold">86.00 SCA</span>
+                                            <span class="inno-badge-pill-dark text-warning font-monospace fw-bold">COLD BREW BLEND</span>
+                                            <span class="inno-badge-liquid font-monospace">86.00 SCA</span>
                                         </div>
                                         <h3 class="h4 fw-bold text-white mb-2">
                                             Innokafe Cold Brew Blend Summer Citrus
@@ -296,7 +336,7 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Được phối trộn và rang sáng (Light Roast) chuyên biệt cho phương pháp ngâm lạnh. Tách cold brew giải phóng vị cam vàng Valencia bùng nổ, đào chín, mật hoa dại sảng khoái.
                                         </p>
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
+                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
                                             <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Natural x Washed Blend</div>
                                             <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Light Roast (Agtron 78)</div>
                                             <div class="text-secondary"><strong>Nốt hương:</strong> Valencia Orange · Ripe Peach · Wild Blossom · Citrus</div>
@@ -304,17 +344,20 @@
 
                                         <div class="mb-3">
                                             <label class="text-secondary small fw-bold mb-1 d-block">Quy Cách Đóng Gói:</label>
-                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select">
-                                                <option value="250" selected="selected">Túi 250g (175.000 đ)</option>
-                                                <option value="500">Túi 500g (330.000 đ - Tiết kiệm 12%)</option>
-                                                <option value="1000">Gói 1kg (620.000 đ - Giá sỉ)</option>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select" data-pack-select="true">
+                                                <option value="250" selected="selected">Túi 250g (Van 1 chiều) — 175.000 đ</option>
+                                                <option value="500">Túi 500g (Tiết kiệm 12%) — 330.000 đ</option>
+                                                <option value="1000">Gói 1kg (Tiết kiệm) — 620.000 đ</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
                                             <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
-                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select">
-                                                <option value="coldbrew" selected="selected">Xay Thô Chuẩn Cold Brew (1.000 - 1.200 μm)</option>
-                                                <option value="whole">Nguyên Hạt (Tự xay tại nhà)</option>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select" data-grind-select="true">
+                                                <option value="coldbrew" selected="selected">Cold Brew / French Press (900μm)</option>
+                                                <option value="whole">Nguyên Hạt Mộc (Whole Bean)</option>
+                                                <option value="v60">V60 / Drip Bag (800μm)</option>
+                                                <option value="phin">Phin Truyền Thống (650μm)</option>
+                                                <option value="espresso">Espresso (250μm)</option>
                                             </select>
                                         </div>
                                     </div>
@@ -324,7 +367,7 @@
                                             <span class="text-secondary small d-block">Giá thanh toán:</span>
                                             <strong class="fs-4 text-warning inno-price-display">175.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="5">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="5" data-sku="INNO-COLDBREW-CITRUS-05">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -334,11 +377,15 @@
 
                             <!-- ================= SKU 6 ================= -->
                             <div class="col-lg-4 col-md-6">
-                                <div class="card h-100 bg-black bg-opacity-60 border border-secondary border-opacity-30 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-HORECA-BARISTA-06" data-price-single="380000">
+                                <div class="inno-craft-card h-100 rounded-4 p-4 text-white d-flex flex-column justify-content-between inno-product-card" data-sku="INNO-HORECA-BARISTA-06" data-name="Innokafe Espresso Barista Master 80/20" data-price-250="135000" data-price-500="245000" data-price-1000="380000" data-product-id="6" data-img="/innokafe_website/static/src/img/beans_espresso_barista.svg">
                                     <div>
+                                        <div class="position-relative rounded-3 overflow-hidden mb-3" style="aspect-ratio: 16 / 9;">
+                                            <img src="/innokafe_website/static/src/img/photography/extraction_espresso_crema.webp" alt="INNO-HORECA-BARISTA-06" class="w-100 h-100 object-fit-cover"/>
+                                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, transparent 40%, rgba(20, 12, 7, 0.85) 100%);"/>
+                                        </div>
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="badge bg-secondary bg-opacity-75 text-white font-monospace">HORECA BARISTA</span>
-                                            <span class="badge bg-warning text-dark font-monospace fw-bold">84.00 SCA</span>
+                                            <span class="inno-badge-pill-dark text-warning font-monospace fw-bold">HORECA BARISTA</span>
+                                            <span class="inno-badge-liquid font-monospace">84.00 SCA</span>
                                         </div>
                                         <h3 class="h4 fw-bold text-white mb-2">
                                             Innokafe Espresso Barista Master 80/20
@@ -349,28 +396,38 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Công thức vàng cho các quán cà phê chuyên nghiệp. Chiết xuất lớp crema vàng óng ánh cực dày, bền bỉ, hòa quyện xuất sắc cùng sữa đặc hoặc sữa tươi thanh trùng.
                                         </p>
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-20 mb-3 small">
-                                            <div class="text-secondary mb-1"><strong>Quy cách:</strong> Gói 1.000g (1kg) Horeca van 1 chiều</div>
+                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
+                                            <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Honey &amp; Natural</div>
                                             <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Medium-Dark (Agtron 50)</div>
                                             <div class="text-secondary"><strong>Nốt hương:</strong> Cocoa 70% · Peanut Butter · Smoke Caramel · Citrus Peel</div>
                                         </div>
 
                                         <div class="mb-3">
+                                            <label class="text-secondary small fw-bold mb-1 d-block">Quy Cách Đóng Gói:</label>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-weight-select" data-pack-select="true">
+                                                <option value="250" selected="selected">Túi 250g (Van 1 chiều) — 135.000 đ</option>
+                                                <option value="500">Túi 500g (Tiết kiệm 12%) — 245.000 đ</option>
+                                                <option value="1000">Gói 1kg (Tiết kiệm Horeca) — 380.000 đ</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
                                             <label class="text-secondary small fw-bold mb-1 d-block">Mức Độ Xay:</label>
-                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select">
-                                                <option value="whole" selected="selected">Nguyên Hạt Cho Máy Xay Quán</option>
-                                                <option value="espresso">Xay Mịn Cho Máy Espresso 9 bar</option>
-                                                <option value="phin">Xay Vừa Cho Phin Lớn</option>
+                                            <select class="form-select form-select-sm bg-dark text-white border-secondary inno-grind-select" data-grind-select="true">
+                                                <option value="espresso" selected="selected">Espresso (250μm)</option>
+                                                <option value="whole">Nguyên Hạt Mộc (Whole Bean)</option>
+                                                <option value="phin">Phin Truyền Thống (650μm)</option>
+                                                <option value="v60">V60 / Drip Bag (800μm)</option>
+                                                <option value="coldbrew">Cold Brew / French Press (900μm)</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="pt-3 border-top border-secondary border-opacity-25 mt-3 d-flex justify-content-between align-items-center">
                                         <div>
-                                            <span class="text-secondary small d-block">Gói 1kg Horeca:</span>
-                                            <strong class="fs-4 text-warning">380.000 đ</strong>
+                                            <span class="text-secondary small d-block">Giá thanh toán:</span>
+                                            <strong class="fs-4 text-warning inno-price-display">135.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="6">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="6" data-sku="INNO-HORECA-BARISTA-06">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -400,37 +457,37 @@
                                 </p>
                                 <div class="row g-3 mb-4">
                                     <div class="col-6">
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                        <div class="p-3 rounded-3 inno-inner-panel">
                                             <strong class="text-white small d-block mb-1">1. Aroma (Hương thơm)</strong>
                                             <span class="text-secondary" style="font-size: 0.8rem;">Độ lan tỏa và độ phức hợp của khí thơm.</span>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                        <div class="p-3 rounded-3 inno-inner-panel">
                                             <strong class="text-white small d-block mb-1">2. Acidity (Độ chua thanh)</strong>
                                             <span class="text-secondary" style="font-size: 0.8rem;">Độ sáng, độ tươi tao nhã của axit hữu cơ.</span>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                        <div class="p-3 rounded-3 inno-inner-panel">
                                             <strong class="text-white small d-block mb-1">3. Body (Thể chất)</strong>
                                             <span class="text-secondary" style="font-size: 0.8rem;">Độ dày dặn, độ sánh mượt trên vòm miệng.</span>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                        <div class="p-3 rounded-3 inno-inner-panel">
                                             <strong class="text-white small d-block mb-1">4. Sweetness (Độ ngọt)</strong>
                                             <span class="text-secondary" style="font-size: 0.8rem;">Vị ngọt tự nhiên của đường caramel chín.</span>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                        <div class="p-3 rounded-3 inno-inner-panel">
                                             <strong class="text-white small d-block mb-1">5. Clean Cup (Trong trẻo)</strong>
                                             <span class="text-secondary" style="font-size: 0.8rem;">Độ sạch vị, không tạp chất hay ám mùi.</span>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="p-3 rounded-3 bg-black bg-opacity-40 border border-secondary border-opacity-25">
+                                        <div class="p-3 rounded-3 inno-inner-panel">
                                             <strong class="text-white small d-block mb-1">6. Aftertaste (Hậu vị)</strong>
                                             <span class="text-secondary" style="font-size: 0.8rem;">Độ sâu lắng, lưu hương sau khi nuốt.</span>
                                         </div>
@@ -442,7 +499,7 @@
                                 </a>
                             </div>
                             <div class="col-lg-6">
-                                <div class="card bg-black bg-opacity-60 border border-warning border-opacity-30 rounded-4 p-4 text-center text-white">
+                                <div class="inno-craft-card rounded-4 p-4 text-center text-white">
                                     <h5 class="fw-bold text-white mb-2">Biểu Đồ So Khớp Cảm Quan Mẫu</h5>
                                     <div class="text-secondary small mb-4">Innokafe Heritage Signature Red Honey (85.50 SCA)</div>
 
@@ -477,8 +534,11 @@
                                             <text x="54" y="96" text-anchor="end" fill="#F7F2EA" font-size="11" font-weight="600">Aftertaste (8.8)</text>
                                         </svg>
                                     </div>
-                                    <div class="small text-secondary">
-                                        Trải nghiệm tương tác toàn phần trên trang <a href="/taste-profiler" class="text-warning text-decoration-none">Tìm Gu Cà Phê</a>.
+                                    <div class="small text-secondary d-flex align-items-center justify-content-center flex-wrap gap-1 mt-2">
+                                        <span>Trải nghiệm tương tác toàn phần trên trang</span>
+                                        <a href="/taste-profiler" class="text-warning text-decoration-underline fw-bold d-inline-flex align-items-center px-2 py-1" style="min-height: 44px;">
+                                            Tìm Gu Cà Phê →
+                                        </a>
                                     </div>
                                 </div>
                             </div>

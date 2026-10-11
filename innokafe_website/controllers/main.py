@@ -2,10 +2,29 @@
 import json
 import logging
 import math
+import time
 from odoo import http
-from odoo.http import request
+from odoo.http import request, Request
+from odoo.addons.website.controllers.main import Website
 
 _logger = logging.getLogger(__name__)
+
+# Ensure backward-compatible request.website attribute access in Odoo 20 QWeb templates
+if not hasattr(Request, "website"):
+    def _get_req_website(self):
+        if hasattr(self, "_website_instance"):
+            return self._website_instance
+        try:
+            if hasattr(self, "env") and self.env and "website" in self.env:
+                return self.env["website"].get_current_website()
+        except Exception:
+            pass
+        return None
+
+    def _set_req_website(self, val):
+        self._website_instance = val
+
+    Request.website = property(_get_req_website, _set_req_website)
 
 # ==============================================================================
 # INNOKAFE SIGNATURE SPECIALTY COFFEE CATALOGUE & SENSORY SPECIFICATIONS
@@ -21,6 +40,66 @@ WEIGHTS = {
     "balance": 0.9,
 }
 D_MAX = math.sqrt(sum(w * (9.0 ** 2) for w in WEIGHTS.values()))  # ~24.6475
+
+
+def parse_cart_quantity(quantity, default=1, max_qty=1000):
+    """
+    Parses and sanitizes cart item quantity for specialty coffee packages.
+    Ensures quantity is a positive whole integer within retail limits.
+    """
+    if quantity is None:
+        return default
+    if isinstance(quantity, bool):
+        raise TypeError("Quantity cannot be boolean")
+    if isinstance(quantity, str):
+        s = quantity.strip()
+        if not s:
+            return default
+        try:
+            quantity = float(s)
+        except ValueError:
+            raise ValueError(f"Invalid non-numeric quantity: {quantity}")
+    if isinstance(quantity, float):
+        if not quantity.is_integer():
+            raise ValueError(f"Fractional quantities not allowed for package units: {quantity}")
+        quantity = int(quantity)
+    if not isinstance(quantity, int):
+        raise TypeError(f"Quantity must be integer, got {type(quantity).__name__}")
+    if quantity <= 0:
+        raise ValueError(f"Cart quantity must be strictly positive: {quantity}")
+    if quantity > max_qty:
+        raise ValueError(
+            f"Quantity {quantity} exceeds maximum retail cart limit of {max_qty}. "
+            "Please contact B2B wholesale at /solutions-b2b for bulk orders."
+        )
+    return quantity
+
+
+def validate_cart_payload(payload, sku_catalog=None):
+    """
+    Validates add-to-cart payload schema and parameters.
+    Ensures product_id is a positive integer and quantity is valid.
+    """
+    if not isinstance(payload, dict):
+        raise TypeError("Cart payload must be a dictionary")
+    if "product_id" not in payload and "product_template_id" not in payload:
+        raise KeyError("Missing required field: product_id")
+
+    pid = payload.get("product_id") if payload.get("product_id") is not None else payload.get("product_template_id")
+    if isinstance(pid, bool) or not isinstance(pid, int):
+        raise TypeError(f"product_id must be integer, got {type(pid).__name__}")
+    if pid <= 0:
+        raise ValueError(f"product_id must be a positive database ID, got {pid}")
+
+    raw_qty = payload.get("quantity", payload.get("add_qty", 1))
+    qty = parse_cart_quantity(raw_qty)
+
+    if sku_catalog:
+        valid_pids = {s.get("product_id") for s in sku_catalog if s.get("product_id")}
+        if valid_pids and pid not in valid_pids:
+            raise LookupError(f"Product ID {pid} not found in signature SKU catalog")
+
+    return {"product_id": pid, "quantity": qty}
 
 
 def compute_radar_points(sensory_scores, center_x=150, center_y=150, radius=100):
@@ -352,7 +431,7 @@ def calculate_match_scores(habit, gear, flavor, caffeine):
 # MAIN CONTROLLER CLASS
 # ==============================================================================
 
-class InnokafeMainController(http.Controller):
+class InnokafeMainController(Website):
 
     def _base_values(self):
         website = request.env["website"].get_current_website() if "website" in request.env else None
@@ -382,6 +461,9 @@ class InnokafeMainController(http.Controller):
 
     @http.route(["/"], type="http", auth="public", website=True, sitemap=True)
     def index(self, **kwargs):
+        ws = getattr(request, 'website', None)
+        if not (ws and ('innokafe' in (ws.domain or '') or 'innokafe' in (ws.name or '').lower())):
+            return super().index(**kwargs)
         values = self._base_values()
         try:
             products = request.env["product.template"].sudo().search([
@@ -589,6 +671,185 @@ class InnokafeMainController(http.Controller):
             _logger.error("Failed to create Contact Lead: %s", e)
 
         return request.redirect("/contactus?submitted=1#contact_form")
+
+    # --------------------------------------------------------------------------
+    # INNOKAFE CLUB SUBSCRIPTION HANDLERS
+    # --------------------------------------------------------------------------
+
+    @http.route(
+        ["/innokafe/subscription/submit", "/club/subscribe"],
+        type="http",
+        auth="public",
+        methods=["POST"],
+        website=True,
+        csrf=False,
+    )
+    def subscription_submit(self, **post):
+        """
+        Receives 3-step Artisan Subscription Club configurator payload,
+        creates a CRM Opportunity with structured subscription metadata,
+        and dispatches an executive confirmation email to the subscriber.
+        """
+        member_name = (post.get("member_name") or post.get("name") or post.get("contact_name") or "").strip() or "Hội viên InnoKafe"
+        email = (post.get("email_from") or post.get("email") or "").strip()
+        phone = (post.get("phone") or "").strip()
+        shipping_address = (post.get("shipping_address") or post.get("street") or post.get("address") or "").strip()
+        taste_preference = (post.get("taste_preference") or "dam_ban_sac").strip()
+        weight_tier = (post.get("weight_tier") or "500g").strip()
+        frequency = (post.get("frequency") or "monthly").strip()
+        grind_size = (post.get("grind_size") or "whole_bean").strip()
+        notes = (post.get("notes") or "").strip()
+        payment_method = (post.get("payment_method") or "cod").strip()
+
+        # Generate unique Membership ID conforming to INNO-CLUB-2026-XXXXX
+        sub_id = f"INNO-CLUB-2026-{int(time.time() * 1000) % 100000:05d}"
+
+        # Standard human-readable labels
+        taste_labels = {
+            "dam_ban_sac": "Gu Đậm Bản Sắc (Fine Robusta Natural & Honey)",
+            "thanh_tuoi_moi": "Gu Thanh Tươi Mới (Specialty Arabica Bourbon Washed)",
+            "mix_kham_pha": "Mix Khám Phá Hàng Tháng (Discovery Flight Rotation)",
+        }
+        freq_labels = {
+            "biweekly": "Mỗi 2 tuần (Bi-weekly)",
+            "monthly": "Mỗi tháng (Monthly)",
+        }
+        grind_labels = {
+            "whole_bean": "Nguyên hạt mộc (Whole Bean)",
+            "phin": "Xay Phin truyền thống (650 μm)",
+            "espresso": "Xay Máy Espresso (250 μm)",
+            "v60": "Xay Pour-over V60 (800 μm)",
+            "coldbrew": "Xay Ủ lạnh Cold Brew (1000 μm)",
+        }
+
+        taste_title = taste_labels.get(taste_preference, taste_preference)
+        freq_title = freq_labels.get(frequency, frequency)
+        grind_title = grind_labels.get(grind_size, grind_size)
+        price_per_cycle = "390.000 đ" if weight_tier == "500g" else "690.000 đ"
+
+        lead_id = None
+        try:
+            CRMLead = request.env["crm.lead"].sudo()
+            CRMTag = request.env["crm.tag"].sudo()
+
+            tag = CRMTag.search([("name", "=", "Innokafe Club Subscription")], limit=1)
+            if not tag:
+                try:
+                    tag = CRMTag.create({"name": "Innokafe Club Subscription", "color": 4})
+                except Exception:
+                    tag = False
+
+            desc_lines = [
+                "=== ĐĂNG KÝ HỘI VIÊN INNOKAFE ARTISAN COFFEE CLUB ===",
+                f"Mã hội viên: {sub_id}",
+                f"Họ tên thành viên: {member_name}",
+                f"Số điện thoại: {phone}",
+                f"Email: {email}",
+                f"Địa chỉ nhận cà phê: {shipping_address}",
+                "--- CẤU HÌNH GÓI ĐỊNH KỲ ---",
+                f"Hồ sơ khẩu vị: {taste_title}",
+                f"Khối lượng gói: {weight_tier}",
+                f"Chu kỳ nhận hàng: {freq_title}",
+                f"Cỡ xay yêu cầu: {grind_title}",
+                f"Định phí ước tính: {price_per_cycle} / chu kỳ",
+                f"Hình thức thanh toán kỳ đầu: {payment_method.upper()}",
+                "--- QUÀ TẶNG KÈM CHÀO MỪNG (WELCOME GIFTS) ---",
+                "✓ Tặng 01 Phin nhôm nghệ nhân InnoKafe anodized 1.2mm dập logo",
+                "✓ Tặng 01 Voucher nếm thử Flagship Tasting Bar (150.000đ)",
+                "✓ Tặng Cẩm nang pha chế Specialty Coffee song ngữ",
+                f"Ghi chú giao hàng: {notes}",
+                "Nguồn đăng ký: https://innokafe.insilos.com/ (InnoKafe Club Wizard)",
+            ]
+
+            lead_vals = {
+                "name": f"InnoKafe Club: {member_name} - {weight_tier} ({freq_title}) [#{sub_id}]",
+                "contact_name": member_name,
+                "email_from": email,
+                "phone": phone,
+                "street": shipping_address,
+                "description": "<br/>".join(desc_lines),
+                "type": "opportunity",
+            }
+            if hasattr(request, "website") and request.website and request.website.company_id:
+                lead_vals["company_id"] = request.website.company_id.id
+            elif request.env.company:
+                lead_vals["company_id"] = request.env.company.id
+
+            if tag:
+                lead_vals["tag_ids"] = [(4, tag.id)]
+
+            lead = CRMLead.create(lead_vals)
+            lead_id = lead.id
+            _logger.info("Successfully created InnoKafe Club Opportunity #%s for %s", lead_id, member_name)
+
+            # Automated Confirmation Email Dispatch via mail.mail
+            if email:
+                try:
+                    mail_vals = {
+                        "subject": f"[InnoKafe Club] Chào mừng Hội viên Artisan Coffee Club — Xác nhận gói #{sub_id}",
+                        "email_from": request.env.company.email or "club@innokafe.insilos.com",
+                        "email_to": email,
+                        "body_html": f"""
+                            <div style="font-family: 'Plus Jakarta Sans', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #1E120B; color: #F7F2EA; border: 1px solid rgba(212,136,66,0.3); border-radius: 12px; overflow: hidden;">
+                                <div style="background: linear-gradient(135deg, #2C1810 0%, #1E120B 100%); padding: 32px 24px; text-align: center; border-bottom: 2px solid #D48842;">
+                                    <h1 style="color: #D48842; margin: 0 0 8px 0; font-size: 24px; text-transform: uppercase; letter-spacing: 2px;">InnoKafe Artisan Club</h1>
+                                    <p style="color: #F7F2EA; margin: 0; font-size: 14px;">Xác Nhận Đăng Ký Hội Viên &amp; Giao Cà Phê Mộc Định Kỳ</p>
+                                </div>
+                                <div style="padding: 28px 24px;">
+                                    <p style="font-size: 15px; line-height: 1.6;">Xin chào <strong>{member_name}</strong>,</p>
+                                    <p style="font-size: 14px; line-height: 1.6; color: #aaa;">Chào mừng bạn gia nhập cộng đồng những người sành cà phê đặc sản tại <strong>InnoKafe Club</strong>. Gói cà phê mộc định kỳ của bạn đã được kích hoạt thành công với thông số như sau:</p>
+                                    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px;">
+                                        <tr style="border-bottom: 1px solid rgba(247,242,234,0.1);"><td style="padding: 8px 0; color: #888;">Mã hội viên:</td><td style="padding: 8px 0; font-weight: bold; color: #D48842;">{sub_id}</td></tr>
+                                        <tr style="border-bottom: 1px solid rgba(247,242,234,0.1);"><td style="padding: 8px 0; color: #888;">Gu thưởng thức:</td><td style="padding: 8px 0; color: #fff;">{taste_title}</td></tr>
+                                        <tr style="border-bottom: 1px solid rgba(247,242,234,0.1);"><td style="padding: 8px 0; color: #888;">Quy cách đóng gói:</td><td style="padding: 8px 0; color: #fff;">{weight_tier} / {freq_title}</td></tr>
+                                        <tr style="border-bottom: 1px solid rgba(247,242,234,0.1);"><td style="padding: 8px 0; color: #888;">Cỡ xay:</td><td style="padding: 8px 0; color: #fff;">{grind_title}</td></tr>
+                                        <tr style="border-bottom: 1px solid rgba(247,242,234,0.1);"><td style="padding: 8px 0; color: #888;">Định phí mỗi kỳ:</td><td style="padding: 8px 0; font-weight: bold; color: #D48842;">{price_per_cycle}</td></tr>
+                                        <tr style="border-bottom: 1px solid rgba(247,242,234,0.1);"><td style="padding: 8px 0; color: #888;">Địa chỉ giao hàng:</td><td style="padding: 8px 0; color: #fff;">{shipping_address}</td></tr>
+                                    </table>
+                                    <div style="background: rgba(212,136,66,0.1); border-left: 4px solid #D48842; padding: 14px; border-radius: 4px; margin: 20px 0;">
+                                        <strong style="color: #D48842; display: block; margin-bottom: 6px;">🎁 Quà Tặng Kèm Đơn Đầu Tiên:</strong>
+                                        <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #ddd;">
+                                            <li>01 Phin nhôm nghệ nhân InnoKafe anodized 1.2mm dập logo (Trị giá 120.000đ)</li>
+                                            <li>01 Voucher nếm thử Flagship Tasting Bar (150.000đ)</li>
+                                            <li>01 Cẩm nang pha chế Specialty Coffee song ngữ</li>
+                                        </ul>
+                                    </div>
+                                    <p style="font-size: 13px; color: #aaa; line-height: 1.5;">Mẻ rang đầu tiên của bạn sẽ được đóng gói giao tươi trong vòng <strong>48 giờ</strong>. Mọi thắc mắc vui lòng liên hệ hotline: <strong>+84 28 7300 6688</strong>.</p>
+                                </div>
+                            </div>
+                        """,
+                    }
+                    mail = request.env["mail.mail"].sudo().create(mail_vals)
+                    try:
+                        mail.send()
+                    except Exception as mail_send_err:
+                        _logger.info("Mail queued (direct send deferred): %s", mail_send_err)
+                    _logger.info("Dispatched InnoKafe Club Welcome Email to %s", email)
+                except Exception as mail_err:
+                    _logger.error("Failed to compose or queue welcome email: %s", mail_err)
+
+        except Exception as e:
+            _logger.error("Failed to process InnoKafe Club subscription: %s", e)
+
+        # Handle AJAX JSON response or standard redirect
+        is_ajax = post.get("is_ajax") in ("1", "true", True) or request.httprequest.headers.get("X-Requested-With") == "XMLHttpRequest"
+        if is_ajax:
+            return request.make_response(
+                json.dumps({
+                    "status": "success",
+                    "sub_id": sub_id,
+                    "lead_id": lead_id,
+                    "member_name": member_name,
+                    "price": price_per_cycle,
+                    "taste_preference": taste_title,
+                    "weight_tier": weight_tier,
+                    "frequency": freq_title,
+                    "grind_size": grind_title,
+                }),
+                headers=[("Content-Type", "application/json")]
+            )
+
+        return request.redirect(f"/?club_submitted=1&sub_id={sub_id}#inno_subscription_wizard")
 
     # --------------------------------------------------------------------------
     # TASTE PROFILER JSON API (7D EUCLIDEAN MATCHMAKING)

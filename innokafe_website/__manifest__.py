@@ -29,6 +29,7 @@
     ],
     "assets": {
         "web.assets_frontend": [
+            "innokafe_website/static/src/scss/innokafe_liquid_spatial.scss",
             "innokafe_website/static/src/scss/innokafe_theme.scss",
             "innokafe_website/static/src/js/**/*",
         ],
