@@ -282,4 +282,37 @@ body.o_innokafe_theme,
             font-weight: 700 !important;
         }
     }
+
+    // 9. Radical Cardless & Anti-AI Slop Invariants (Zero Harsh Borders)
+    .inno-inner-panel {
+        background: rgba(255, 255, 255, 0.025) !important;
+        border: 1px solid var(--inno-spatial-hairline-subtle) !important;
+        border-radius: 1rem !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+    }
+
+    // Eliminate all legacy harsh borders across sections
+    section.border-top,
+    div.border-top,
+    div.border-bottom {
+        border-color: var(--inno-spatial-hairline) !important;
+    }
+
+    // Terroir Spec Table Refinement (Zero harsh table borders)
+    .table-dark {
+        --bs-table-bg: transparent !important;
+        background: transparent !important;
+
+        tr, td, th {
+            border-color: var(--inno-spatial-hairline) !important;
+            padding: 0.75rem 0.5rem !important;
+        }
+    }
+
+    // Subtle atmospheric ambient radial glow for section transitions
+    .s_cover, .s_features, .s_text_image, .s_image_text, .s_three_columns,
+    .s_bento_grid, .s_call_to_action, .s_testimonials, .s_media_list {
+        border-top: 1px solid var(--inno-spatial-hairline) !important;
+    }
 }

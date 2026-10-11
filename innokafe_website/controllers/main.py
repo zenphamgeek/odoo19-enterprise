@@ -456,6 +456,34 @@ class InnokafeMainController(Website):
         return product_map
 
     # --------------------------------------------------------------------------
+    # CANONICAL URL ROUTING: PURGE /en, /en/en, AND /vi PREFIXES
+    # --------------------------------------------------------------------------
+
+    @http.route([
+        "/en", "/en/", "/en/<path:subpath>",
+        "/vi", "/vi/", "/vi/<path:subpath>",
+    ], type="http", auth="public", website=True)
+    def clean_language_redirect(self, subpath="", **kwargs):
+        """
+        Enforces canonical Vietnamese root routing.
+        Permanently 301-redirects legacy /en, /en/en, /vi, and /vi/* prefixes to
+        clean canonical routes (e.g. /en -> /, /en/story -> /story).
+        """
+        ws = getattr(request, 'website', None)
+        if ws and ('innokafe' in (ws.domain or '') or 'innokafe' in (ws.name or '').lower()):
+            clean_path = (subpath or "").strip("/")
+            while clean_path.startswith("en/") or clean_path.startswith("vi/"):
+                clean_path = clean_path[3:].lstrip("/")
+            if clean_path in ("en", "vi"):
+                clean_path = ""
+            target = f"/{clean_path}" if clean_path else "/"
+            qs = request.httprequest.query_string.decode("utf-8") if request.httprequest.query_string else ""
+            if qs:
+                target = f"{target}?{qs}"
+            return request.redirect(target, code=301)
+        return request.not_found()
+
+    # --------------------------------------------------------------------------
     # PUBLIC ROUTES
     # --------------------------------------------------------------------------
 

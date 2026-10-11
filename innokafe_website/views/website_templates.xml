@@ -128,13 +128,13 @@
     <!-- REUSABLE INNOKAFE GLOBAL CALL TO ACTION                           -->
     <!-- ================================================================= -->
     <template id="innokafe_global_cta" name="InnoKafe Global Call to Action">
-        <section class="s_call_to_action o_colored_level o_cc o_cc5 pt80 pb80 border-top border-secondary border-opacity-25 inno-espresso-bg position-relative overflow-hidden" data-snippet="s_call_to_action" data-name="InnoKafe Global CTA">
+        <section class="s_call_to_action o_colored_level o_cc o_cc5 pt80 pb80 border-top inno-hairline-top inno-espresso-bg inno-cardless position-relative overflow-hidden" data-snippet="s_call_to_action" data-name="InnoKafe Global CTA">
             <div class="container position-relative">
                 <div class="row align-items-center g-4">
                     <div class="col-lg-8">
-                        <div class="inno-pill-badge mb-3">
+                        <div class="inno-badge-liquid mb-3">
                             <span class="inno-live-pulse"/>
-                            <span>CÀ PHÊ VIỆT NAM NGUYÊN BẢN // TỪ NÔNG TRẠI ĐẾN TÁCH</span>
+                            <span>· CÀ PHÊ VIỆT NAM NGUYÊN BẢN · TỪ NÔNG TRẠI ĐẾN TÁCH</span>
                         </div>
                         <h2 class="display-4 fw-bold text-white mb-3">
                             Thưởng Thức Cà Phê Đặc Sản <span class="inno-amber-text">Nguyên Bản Việt Nam</span>
@@ -202,7 +202,7 @@
         <xpath expr="//div[@id='footer']" position="replace">
             <t t-if="(website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower())">
                 <div id="footer" class="oe_structure oe_structure_solo inno-espresso-bg text-white" t-ignore="true" t-if="not no_footer">
-                    <section class="s_text_block o_colored_level o_cc o_cc5 pt80 pb40 border-top border-secondary border-opacity-25" data-snippet="s_text_block" data-name="InnoKafe Institutional Footer">
+                    <section class="s_text_block o_colored_level o_cc o_cc5 pt80 pb40 inno-cardless" data-snippet="s_text_block" data-name="InnoKafe Institutional Footer">
                         <div class="container">
                             <div class="row g-5 mb-5">
                                 <!-- Col 1: Brand Philosophy & 4 Không -->
@@ -215,7 +215,7 @@
                                     <p class="text-secondary small mb-4 lh-base">
                                         InnoKafe là thương hiệu Cà phê Đặc sản (Specialty Coffee) tiên phong tôn vinh thổ nhưỡng Đắk Lắk và Cầu Đất. Chúng tôi cam kết 100% hạt rang mộc nguyên bản theo triết lý "Cà Phê Mộc 4 Không", đồng hành cùng người nông dân nâng tầm giá trị cà phê Việt Nam trên bản đồ thế giới.
                                     </p>
-                                    <div class="p-3 rounded-3 border border-warning border-opacity-25 mb-4" style="background: rgba(212, 136, 66, 0.08);">
+                                    <div class="p-3 inno-inner-panel mb-4">
                                         <div class="d-flex align-items-center gap-2 mb-1">
                                             <i class="fa fa-shield text-warning"/>
                                             <strong class="text-white small">CAM KẾT CÀ PHÊ MỘC 4 KHÔNG</strong>
@@ -292,7 +292,7 @@
                             </div>
 
                             <!-- Bottom Copyright & Compliance -->
-                            <div class="pt-4 border-top border-secondary border-opacity-25 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 small text-secondary">
+                            <div class="pt-4 border-top inno-hairline-top d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 small text-secondary">
                                 <div>
                                     © 2026 InnoKafe Specialty Coffee &amp; Roastery. Bản quyền thuộc về InnoKafe.
                                 </div>
