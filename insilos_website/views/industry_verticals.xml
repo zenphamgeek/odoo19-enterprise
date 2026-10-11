@@ -1,0 +1,1113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================================================================= -->
+    <!-- 1. PETROCHEMICAL & FERTILIZER REFINING (PVFCCO DPM PHU MY)        -->
+    <!-- Template ID: insilos_industry_petrochem_page                      -->
+    <!-- Route: /industries/petrochem & /dossiers/petrochem                -->
+    <!-- ================================================================= -->
+    <template id="insilos_industry_petrochem_page" name="Petrochemical &amp; Fertilizer Industry — PVFCCo DPM Phu My">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Hóa Chất &amp; Lọc Hóa Dầu (PVFCCo Đạm Phú Mỹ) — Insilos GRC Vertical Resilience™</t>
+            <t t-set="meta_description">Quản trị rủi ro quá trình PSM &amp; An toàn vận hành cụm tổng hợp Amoniac/Urê tại nhà máy Đạm Phú Mỹ: Khóa e-PTW đa cảm biến khí CH4/O2/H2S và giám sát rào cản Bow-Tie BHI.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
+                <div class="oe_structure oe_empty" id="oe_structure_petrochem_top"/>
+
+                <!-- Hero Section -->
+                <section class="s_cover position-relative overflow-hidden o_colored_level o_cc o_cc5 pt80 pb80 ins-radial-glow" data-snippet="s_cover" data-name="Petrochem Hero" data-bs-theme="dark">
+                    <div class="ins-hero-overlay o_not_editable"/>
+                    <div class="container py-lg-4 position-relative ins-hero-content-layer">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-7">
+                                <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+                                    <div class="ins-pill-badge">
+                                        <span class="ins-live-ping"/>
+                                        <span>PETROCHEMICAL PROCESS RESILIENCE</span>
+                                    </div>
+                                    <span class="badge bg-mint text-dark font-monospace small">PVFCCO ĐẠM PHÚ MỸ</span>
+                                    <span class="badge bg-white-10 text-cyan border border-white-10 small font-monospace">800.000 TẤN/NĂM</span>
+                                    <span class="badge bg-white-10 text-warning border border-white-10 small font-monospace">OSHA 1910.119 PSM</span>
+                                </div>
+
+                                <h1 class="display-3 fw-bold text-white mb-3 ins-title-balance">
+                                    Quản Trị Rủi Ro Quá Trình PSM<br class="d-none d-md-inline"/>
+                                    Và Vận Hành Khép Kín Cụm Tổng Hợp <span class="ins-gradient-headline">Amoniac &amp; Urê</span>
+                                </h1>
+
+                                <p class="lead text-secondary mb-4 col-lg-11 p-0">
+                                    Kiểm soát môi trường nhiệt động học áp suất cao 150–220 bar, nhiệt độ reformer &gt;1.000°C và hỗn hợp khí độc NH3/CH4/H2S. Kết nối cảm biến khí hiện trường với cấp phép làm việc e-PTW và bảo toàn rào cản Bow-Tie BHI thời gian thực.
+                                </p>
+
+                                <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 mb-4">
+                                    <a href="/dossiers/petrochem/scenario/1/pdf" class="btn btn-primary rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2 shadow-lg">
+                                        <svg class="ph-duotone ph-file-pdf ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-pdf"/></svg>
+                                        <span class="fw-semibold">Tải Hồ Sơ C-Suite Briefing (PDF)</span>
+                                    </a>
+                                    <a href="/brochure" class="btn btn-outline-light rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-book-open ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-book-open"/></svg>
+                                        <span>Xem B2B Brochure Tổng Quan</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                                <div class="rounded-2 border border-white-10 overflow-hidden shadow-2xl ins-glass-surface p-3">
+                                    <img src="/insilos_website/static/src/img/resilience/petrochem_ammonia_plant.jpg" alt="PVFCCo DPM Phu My Plant" class="img-fluid rounded-3 w-100" loading="eager"/>
+                                    <div class="p-3 bg-dark rounded-3 mt-3 border border-white-10">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="text-white fw-semibold small">Syngas Loop 103-J &amp; Reactor 105-D</span>
+                                            <span class="badge bg-mint text-dark font-monospace small">SIL-3 INTERLOCK</span>
+                                        </div>
+                                        <p class="text-secondary small mb-0">Ngăn chặn đường dẫn mất phòng vệ (Defenseless Path) bảo vệ toàn vẹn dây chuyền 29.5 tỷ VNĐ/ngày.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Asset Directory & Thermodynamics -->
+                <section class="s_three_columns o_colored_level o_cc o_cc5 py-5 border-top border-white-10" data-snippet="s_three_columns" data-name="Petrochem Asset Directory">
+                    <div class="container py-lg-4">
+                        <div class="row justify-content-center text-center mb-5">
+                            <div class="col-lg-10">
+                                <span class="ins-status-badge text-mint font-monospace mb-2">THERMODYNAMIC PROFILE &amp; ASSETS</span>
+                                <h2 class="display-5 fw-bold text-white mb-3 ins-title-balance">
+                                    Môi Trường Nhiệt Động Học &amp; Danh Mục Thiết Bị Cốt Lõi<br class="d-none d-md-inline"/>
+                                    Kiểm Soát Áp Suất 220 bar &amp; Hỗn Hợp Khí Cháy Nổ
+                                </h2>
+                                <p class="lead text-secondary">
+                                    Nhà máy Đạm Phú Mỹ vận hành chu trình tổng hợp Kellogg và công nghệ Urê Snamprogetti với các tài sản công nghiệp có mức độ nguy hại cao nhất (High-Hazard Tier 1).
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced mb-5">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-cyan font-monospace">COMP-103-J</span>
+                                            <span class="text-mint small font-monospace">200 BAR / SIL-3</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Máy Nén Khí Tổng Hợp Syngas Turbine</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Trái tim cụm tổng hợp Amoniac. Vòng lặp áp suất cao 200 bar với khóa liên động SIL-3 phần cứng. Giám sát rò rỉ hydro và rung độ ổ trục thời gian thực.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Rủi ro: Nổ đám mây hơi VCE
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-warning font-monospace">REACT-105-D</span>
+                                            <span class="text-warning small font-monospace">180 BAR / 190°C</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Tháp Tổng Hợp Urê Cao Áp</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Phản ứng tổng hợp ammonium carbamate ăn mòn cực mạnh. Giám sát liên tục van xả áp khẩn cấp VALV-XV-1031 và rào cản màng chống ăn mòn lót trong tháp.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Rủi ro: Ăn mòn thủng áp lực cao
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-danger font-monospace">FURN-101-B</span>
+                                            <span class="text-danger small font-monospace">1.000°C / SIL-2</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Lò Reforming Khí Tự Nhiên Sơ Cấp</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Nhiệt độ buồng đốt 1.000°C chuyển hóa khí tự nhiên thành hydro. Khóa liên động vòi đốt khí burner interlock và hệ thống phun nước dập khí độc Deluge DELUGE-04.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Rủi ro: Quá nhiệt nổ ống sinh khí
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interlock Logic Box -->
+                        <div class="p-4 rounded-2 bg-dark border border-white-10 ins-glass-surface">
+                            <div class="row align-items-center g-4">
+                                <div class="col-lg-8">
+                                    <span class="badge bg-mint text-dark font-monospace mb-2">KHÓA LIÊN ĐỘNG AN TOÀN BẮT BUỘC</span>
+                                    <h3 class="h4 text-white mb-2 ins-title-balance">
+                                        Khóa Khí e-PTW Hot Work: CH4 &lt; 10.0% LEL, 19.5% &lt;= O2 &lt;= 23.5%, H2S &lt; 10.0 ppm
+                                    </h3>
+                                    <p class="text-secondary small mb-0">
+                                        Nếu bất kỳ cảm biến khí đo được vượt ngưỡng cho phép, hệ thống tự động khóa fail-closed và từ chối phê duyệt cấp phép e-PTW với mã lỗi <code>VR_ERR_GAS_ATMOSPHERIC_TRIP</code>.
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 text-lg-end">
+                                    <div class="text-mint font-monospace h4 mb-1">ROI: 480% / 3-NĂM</div>
+                                    <div class="text-secondary small font-monospace">Hoàn vốn: 5.4 Tháng | Ròng: $1,355,000/Năm</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Scenarios Index for Petrochem -->
+                <section class="s_table o_colored_level o_cc o_cc5 py-5 border-top border-white-10" data-snippet="s_table" data-name="Petrochem Scenarios">
+                    <div class="container py-lg-4">
+                        <div class="row justify-content-center text-center mb-4">
+                            <div class="col-lg-8">
+                                <h3 class="h3 text-white mb-2 ins-title-balance">5 Kịch Bản Thẩm Định Nghiệp Vụ — Đạm Phú Mỹ</h3>
+                                <p class="text-secondary small">Tải tài liệu briefing chi tiết cho từng chức danh lãnh đạo trước buổi làm việc với ban dự án.</p>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive rounded-2 border border-white-10 bg-dark p-2">
+                            <table class="table table-dark table-hover mb-0 align-middle">
+                                <thead class="text-secondary small font-monospace">
+                                    <tr>
+                                        <th>MÃ</th>
+                                        <th>PERSONA</th>
+                                        <th>NỘI DUNG THẨM ĐỊNH</th>
+                                        <th class="text-end">TẢI VỀ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="small">
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-cyan font-monospace">VR-PETRO-01</span></td>
+                                        <td class="text-white">C-Suite &amp; Hội Đồng Quản Trị</td>
+                                        <td class="text-secondary">Bảo Toàn Chỉ Số Rào Cản Bow-Tie BHI &amp; Dự Báo Dừng Máy Khẩn Cấp</td>
+                                        <td class="text-end"><a href="/dossiers/petrochem/scenario/1/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#1)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-cyan font-monospace">VR-PETRO-02</span></td>
+                                        <td class="text-white">GĐ Vận Hành &amp; An Toàn HSE</td>
+                                        <td class="text-secondary">Cấp Phép e-PTW Làm Việc Nóng &amp; Khóa Cứng Đa Khí Hiện Trường CH4/O2/H2S</td>
+                                        <td class="text-end"><a href="/dossiers/petrochem/scenario/2/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#2)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-cyan font-monospace">VR-PETRO-03</span></td>
+                                        <td class="text-white">CISO, Pháp Chế &amp; DPO Nghị Định 13</td>
+                                        <td class="text-secondary">Dynamic Data Masking Bảo Vệ Căn Cước Kỹ Sư &amp; Sổ Khám Sức Khỏe Turnaround</td>
+                                        <td class="text-end"><a href="/dossiers/petrochem/scenario/3/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#3)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-cyan font-monospace">VR-PETRO-04</span></td>
+                                        <td class="text-white">Kỹ Sư An Toàn Quá Trình PSM &amp; SIS</td>
+                                        <td class="text-secondary">Khóa Liên Động Ngăn Chặn Đường Dẫn Mất Phòng Vệ (Defenseless Path) Theo CCPS</td>
+                                        <td class="text-end"><a href="/dossiers/petrochem/scenario/4/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#4)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-cyan font-monospace">VR-PETRO-05</span></td>
+                                        <td class="text-white">GĐ Chuyển Đổi Số &amp; QA/PMO</td>
+                                        <td class="text-secondary">Luồng Declarative Chuẩn Hóa Waves Z0-Z6 &amp; Bằng Chứng Mật Mã CEW 1080p</td>
+                                        <td class="text-end"><a href="/dossiers/petrochem/scenario/5/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#5)</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty" id="oe_structure_petrochem_bottom"/>
+            </main>
+        </t>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- 2. GAS MIDSTREAM & TRANSMISSION PIPELINE (NAM CON SON NCSP)       -->
+    <!-- Template ID: insilos_industry_gas_pipeline_page                   -->
+    <!-- Route: /industries/gas-pipeline & /dossiers/gas-pipeline          -->
+    <!-- ================================================================= -->
+    <template id="insilos_industry_gas_pipeline_page" name="Gas Midstream &amp; Pipeline — Nam Con Son NCSP">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Khí Đốt &amp; Tuyến Ống Truyền Dẫn (Nam Côn Sơn Pipeline NCSP) — Insilos GRC</t>
+            <t t-set="meta_description">Quản trị toàn vẹn tuyến ống dẫn khí cao áp 102 barg và trạm tiếp bờ Dinh Cố: Khóa liên động bẫy phóng thoi Pig Launcher và van SCADA ESD-201 theo chuẩn ASME B31.8.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
+                <div class="oe_structure oe_empty" id="oe_structure_pipeline_top"/>
+
+                <!-- Hero Section -->
+                <section class="s_cover position-relative overflow-hidden o_colored_level o_cc o_cc5 pt80 pb80 ins-radial-glow" data-snippet="s_cover" data-name="Pipeline Hero" data-bs-theme="dark">
+                    <div class="ins-hero-overlay o_not_editable"/>
+                    <div class="container py-lg-4 position-relative ins-hero-content-layer">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-7">
+                                <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+                                    <div class="ins-pill-badge">
+                                        <span class="ins-live-ping"/>
+                                        <span>MIDSTREAM PIPELINE INTEGRITY</span>
+                                    </div>
+                                    <span class="badge bg-cyan text-dark font-monospace small">NAM CÔN SƠN (NCSP)</span>
+                                    <span class="badge bg-white-10 text-cyan border border-white-10 small font-monospace">400 KM TUYẾN ỐNG</span>
+                                    <span class="badge bg-white-10 text-mint border border-white-10 small font-monospace">ASME B31.8 / API 1160</span>
+                                </div>
+
+                                <h1 class="display-3 fw-bold text-white mb-3 ins-title-balance">
+                                    Bảo Vệ Toàn Vẹn Tuyến Ống Cao Áp 102 barg<br class="d-none d-md-inline"/>
+                                    Và Khóa Khẩn Cấp <span class="ins-gradient-headline">SCADA ESD-201 Trạm Dinh Cố</span>
+                                </h1>
+
+                                <p class="lead text-secondary mb-4 col-lg-11 p-0">
+                                    Vận chuyển 20 triệu m³ khí/ngày cung cấp cho 30% sản lượng điện miền Nam. Khóa an toàn bẫy phóng thoi thông minh Pig Launcher, kiểm soát ăn mòn catot và chống xâm phạm hành lang tuyến khí.
+                                </p>
+
+                                <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 mb-4">
+                                    <a href="/dossiers/gas-pipeline/scenario/11/pdf" class="btn btn-primary rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2 shadow-lg">
+                                        <svg class="ph-duotone ph-file-pdf ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-pdf"/></svg>
+                                        <span class="fw-semibold">Tải Hồ Sơ C-Suite Briefing (PDF)</span>
+                                    </a>
+                                    <a href="/brochure" class="btn btn-outline-light rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-book-open ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-book-open"/></svg>
+                                        <span>Xem B2B Brochure Tổng Quan</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                                <div class="rounded-2 border border-white-10 overflow-hidden shadow-2xl ins-glass-surface p-3">
+                                    <img src="/insilos_website/static/src/img/resilience/gas_pipeline_terminal.jpg" alt="Nam Con Son Pipeline Dinh Co Terminal" class="img-fluid rounded-3 w-100" loading="eager"/>
+                                    <div class="p-3 bg-dark rounded-3 mt-3 border border-white-10">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="text-white fw-semibold small">Trạm Tiếp Bờ Dinh Cố &amp; Bẫy Thoi</span>
+                                            <span class="badge bg-cyan text-dark font-monospace small">102 BARG RATED</span>
+                                        </div>
+                                        <p class="text-secondary small mb-0">Ngăn chặn rủi ro phóng thoi khi van phân đoạn khẩn cấp chưa mở an toàn.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Asset Directory & Thermodynamics -->
+                <section class="s_three_columns o_colored_level o_cc o_cc5 py-5 border-top border-white-10" data-snippet="s_three_columns" data-name="Pipeline Asset Directory">
+                    <div class="container py-lg-4">
+                        <div class="row justify-content-center text-center mb-5">
+                            <div class="col-lg-10">
+                                <span class="ins-status-badge text-cyan font-monospace mb-2">ASSETS &amp; TELEMETRY INTERLOCKS</span>
+                                <h2 class="display-5 fw-bold text-white mb-3 ins-title-balance">
+                                    Hệ Thống Thiết Bị Tuyến Ống &amp; Khóa Liên Động SCADA<br class="d-none d-md-inline"/>
+                                    Bảo Toàn Chuỗi Cung Ứng Khí Trọng Yếu Quốc Gia
+                                </h2>
+                                <p class="lead text-secondary">
+                                    Bảo vệ 370 km tuyến ống ngầm dưới biển và 30 km hành lang trên bờ đi qua các khu dân cư đông đúc tại Bà Rịa - Vũng Tàu.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced mb-5">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-cyan font-monospace">PIG-TRAP-LAUNCH</span>
+                                            <span class="text-cyan small font-monospace">DINH CỐ TERMINAL</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Bẫy Phóng Thoi Thông Minh Intelligent Pig</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Khóa an toàn cửa bẫy thoi bắt buộc áp suất về đúng 0.0 barg trước khi cho phép mở. Ngăn chặn nổ áp suất văng nắp bẫy gây thương vong nghiêm trọng.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Chuẩn: ASME B31.8S / API 1160
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-mint font-monospace">VALV-ESD-201</span>
+                                            <span class="text-mint small font-monospace">SIL-3 CLASS 600</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Van Ngắt Phân Đoạn Khẩn Cấp Mainline</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Khóa vị trí van ARMED_OPEN trước khi phóng thoi ở vận tốc 15 km/h, ngăn va chạm nổ vỡ đường ống dẫn khí. Liên động trực tiếp với hệ thống SCADA trạm.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Mã lỗi: VR_ERR_SCADA_ESD_INTERLOCK
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-warning font-monospace">CP-STATION-04</span>
+                                            <span class="text-warning small font-monospace">-850mV ĐẾN -1200mV</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Trạm Bảo Vệ Ăn Mòn Catot Dòng Điện Ngoài</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Giám sát điện thế bảo vệ chống ăn mòn vỏ thép ống dẫn khí. Tự động cảnh báo sớm sụt giảm điện áp catot trước khi xảy ra ăn mòn mỏng thành ống.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Tiết kiệm: $250,000 / Năm
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interlock Logic Box -->
+                        <div class="p-4 rounded-2 bg-dark border border-white-10 ins-glass-surface">
+                            <div class="row align-items-center g-4">
+                                <div class="col-lg-8">
+                                    <span class="badge bg-cyan text-dark font-monospace mb-2">SCADA INTERLOCK CLEARANCE</span>
+                                    <h3 class="h4 text-white mb-2 ins-title-balance">
+                                        Áp Suất Bẫy Thoi &lt;= 45.0 barg &amp; Van ESD-201 Xác Thực Mở Hoàn Toàn
+                                    </h3>
+                                    <p class="text-secondary small mb-0">
+                                        Ngăn ngừa thảm họa va chạm thoi kiểm định ống với van đang đóng dở dang. Triệt tiêu nguy cơ gián đoạn khí trị giá $1,800,000 / ngày.
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 text-lg-end">
+                                    <div class="text-cyan font-monospace h4 mb-1">ROI: 390% / 3-NĂM</div>
+                                    <div class="text-secondary small font-monospace">Hoàn vốn: 6.1 Tháng | Ròng: $1,170,000/Năm</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Scenarios Index for Pipeline -->
+                <section class="s_table o_colored_level o_cc o_cc5 py-5 border-top border-white-10" data-snippet="s_table" data-name="Pipeline Scenarios">
+                    <div class="container py-lg-4">
+                        <div class="row justify-content-center text-center mb-4">
+                            <div class="col-lg-8">
+                                <h3 class="h3 text-white mb-2 ins-title-balance">5 Kịch Bản Thẩm Định Nghiệp Vụ — Nam Côn Sơn NCSP</h3>
+                                <p class="text-secondary small">Tải tài liệu briefing chi tiết cho từng chức danh lãnh đạo trước buổi làm việc với ban dự án.</p>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive rounded-2 border border-white-10 bg-dark p-2">
+                            <table class="table table-dark table-hover mb-0 align-middle">
+                                <thead class="text-secondary small font-monospace">
+                                    <tr>
+                                        <th>MÃ</th>
+                                        <th>PERSONA</th>
+                                        <th>NỘI DUNG THẨM ĐỊNH</th>
+                                        <th class="text-end">TẢI VỀ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="small">
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-cyan font-monospace">VR-PIPE-01</span></td>
+                                        <td class="text-white">Ban Điều Hành &amp; Phó TGĐ Vận Chuyển Khí</td>
+                                        <td class="text-secondary">Quản Trị Rủi Ro Toàn Vẹn Tuyến Ống 102 barg Chuẩn ASME B31.8 &amp; Cung Ứng Điện Năng</td>
+                                        <td class="text-end"><a href="/dossiers/gas-pipeline/scenario/11/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#11)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-cyan font-monospace">VR-PIPE-02</span></td>
+                                        <td class="text-white">Trưởng Trạm Tiếp Bờ &amp; An Toàn HSE</td>
+                                        <td class="text-secondary">Khóa An Toàn Bẫy Phóng Thoi Thông Minh Pig Launcher Và Triệt Tiêu Chênh Áp Dư</td>
+                                        <td class="text-end"><a href="/dossiers/gas-pipeline/scenario/12/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#12)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-cyan font-monospace">VR-PIPE-03</span></td>
+                                        <td class="text-white">GĐ Pháp Chế &amp; An Ninh Mạng CISO</td>
+                                        <td class="text-secondary">Bảo Mật Tọa Độ Tuyến Ống GIS &amp; Giám Sát An Ninh Hành Lang Tuyến Khí Điểm Nhạy Cảm</td>
+                                        <td class="text-end"><a href="/dossiers/gas-pipeline/scenario/13/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#13)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-cyan font-monospace">VR-PIPE-04</span></td>
+                                        <td class="text-white">Kỹ Sư SCADA &amp; Tự Động Hóa RTU Tuyến</td>
+                                        <td class="text-secondary">Khóa Liên Động Van Phân Đoạn Khẩn Cấp SCADA ESD-201 Khi Phát Hiện Rò Rỉ Tuyến</td>
+                                        <td class="text-end"><a href="/dossiers/gas-pipeline/scenario/14/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#14)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-cyan font-monospace">VR-PIPE-05</span></td>
+                                        <td class="text-white">Trưởng Ban Chuyển Đổi Số &amp; Quản Lý Dự Án</td>
+                                        <td class="text-secondary">Số Hóa Bằng Chứng Giám Sát Ăn Mòn Catot (-850mV) &amp; Nhật Ký Vận Hành Tuyến</td>
+                                        <td class="text-end"><a href="/dossiers/gas-pipeline/scenario/15/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#15)</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty" id="oe_structure_pipeline_bottom"/>
+            </main>
+        </t>
+    </template>
+    <template id="insilos_industry_gas-pipeline_page" name="Gas Midstream &amp; Pipeline Alias">
+        <t t-call="insilos_website.insilos_industry_gas_pipeline_page"/>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- 3. METALLURGY & STEEL SMELTING COMPLEX (HOA PHAT DUNG QUAT)       -->
+    <!-- Template ID: insilos_industry_metallurgy_page                     -->
+    <!-- Route: /industries/metallurgy & /dossiers/metallurgy              -->
+    <!-- ================================================================= -->
+    <template id="insilos_industry_metallurgy_page" name="Metallurgy &amp; Mining — Hoa Phat Dung Quat">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Luyện Kim &amp; Khai Khoáng (Hòa Phát Dung Quất) — Insilos GRC Vertical Resilience™</t>
+            <t t-set="meta_description">Quản trị rủi ro nhiệt độ cực hạn 1.500°C và nổ khí than CO tại Khu liên hợp Gang thép Hòa Phát Dung Quất: Khóa SIMOPS không gian và trunnion LOTO lò thổi.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
+                <div class="oe_structure oe_empty" id="oe_structure_metallurgy_top"/>
+
+                <!-- Hero Section -->
+                <section class="s_cover position-relative overflow-hidden o_colored_level o_cc o_cc5 pt80 pb80 ins-radial-glow" data-snippet="s_cover" data-name="Metallurgy Hero" data-bs-theme="dark">
+                    <div class="ins-hero-overlay o_not_editable"/>
+                    <div class="container py-lg-4 position-relative ins-hero-content-layer">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-7">
+                                <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+                                    <div class="ins-pill-badge">
+                                        <span class="ins-live-ping"/>
+                                        <span>HEAVY METALLURGY RESILIENCE</span>
+                                    </div>
+                                    <span class="badge bg-danger text-white font-monospace small">HÒA PHÁT DUNG QUẤT</span>
+                                    <span class="badge bg-white-10 text-danger border border-white-10 small font-monospace">1.500°C LIQUID METAL</span>
+                                    <span class="badge bg-white-10 text-warning border border-white-10 small font-monospace">CO GAS &gt; 25%</span>
+                                </div>
+
+                                <h1 class="display-3 fw-bold text-white mb-3 ins-title-balance">
+                                    Kiểm Soát Nhiệt Độ Cực Hạn 1.500°C<br class="d-none d-md-inline"/>
+                                    Và Khóa Xung Đột Không Gian <span class="ins-gradient-headline">SIMOPS 4 Lò Cao Hòa Phát</span>
+                                </h1>
+
+                                <p class="lead text-secondary mb-4 col-lg-11 p-0">
+                                    Dây chuyền 5.6 triệu tấn gang thép/năm vận hành liên tục 20 năm. Loại trừ thảm họa nổ hơi nước 1.700 lần do tiếp xúc kim loại nóng chảy với nước đọng, ngạt khí than CO và va chạm đoàn xe Torpedo Ladle.
+                                </p>
+
+                                <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 mb-4">
+                                    <a href="/dossiers/metallurgy/scenario/16/pdf" class="btn btn-primary rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2 shadow-lg">
+                                        <svg class="ph-duotone ph-file-pdf ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-pdf"/></svg>
+                                        <span class="fw-semibold">Tải Hồ Sơ C-Suite Briefing (PDF)</span>
+                                    </a>
+                                    <a href="/brochure" class="btn btn-outline-light rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-book-open ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-book-open"/></svg>
+                                        <span>Xem B2B Brochure Tổng Quan</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                                <div class="rounded-2 border border-white-10 overflow-hidden shadow-2xl ins-glass-surface p-3">
+                                    <img src="/insilos_website/static/src/img/resilience/metallurgy_blast_furnace.jpg" alt="Hoa Phat Dung Quat Blast Furnace" class="img-fluid rounded-3 w-100" loading="eager"/>
+                                    <div class="p-3 bg-dark rounded-3 mt-3 border border-white-10">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="text-white fw-semibold small">Lò Cao Số 1–4 &amp; Xe Torpedo Ladle</span>
+                                            <span class="badge bg-danger text-white font-monospace small">1.500°C HEARTH</span>
+                                        </div>
+                                        <p class="text-secondary small mb-0">Bảo vệ áo lò và ngăn ngừa đóng băng đáy lò gây thiệt hại tái thiết $100M.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Asset Directory & Metallurgy Physics -->
+                <section class="s_three_columns o_colored_level o_cc o_cc5 py-5 border-top border-white-10" data-snippet="s_three_columns" data-name="Metallurgy Asset Directory">
+                    <div class="container py-lg-4">
+                        <div class="row justify-content-center text-center mb-5">
+                            <div class="col-lg-10">
+                                <span class="ins-status-badge text-danger font-monospace mb-2">EXTREME TEMPERATURE ASSETS</span>
+                                <h2 class="display-5 fw-bold text-white mb-3 ins-title-balance">
+                                    Danh Mục Tài Sản Cốt Lõi Phân Xưởng Luyện Gang Thép<br class="d-none d-md-inline"/>
+                                    Kiểm Soát Rủi Ro Nhiệt Động Học &amp; Độc Chất CO
+                                </h2>
+                                <p class="lead text-secondary">
+                                    Quản lý an toàn đồng thời cho các trạm rót gang lỏng 300 tấn, bồn chứa khí than 100.000 m³ và đập thải quặng đuôi.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced mb-5">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-danger font-monospace">BF-HEARTH-01</span>
+                                            <span class="text-danger small font-monospace">2.500 M³ / 1.500°C</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Đáy &amp; Áo Gạch Chịu Lửa Lò Cao Số 1</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Theo dõi chiều dày lớp gạch chịu lửa và nhiệt độ vỏ thép. Khóa e-PTW mở lỗ ra gang đảm bảo khô ráo 100% không đọng nước trước khi tháo chốt dòng chảy.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Tiết kiệm dừng lò: $1,400,000 / Năm
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-warning font-monospace">BOF-CONV-02</span>
+                                            <span class="text-warning small font-monospace">120 TẤN / LÒ THỔI</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Lò Thổi Chuyển Đổi Oxy BOF Converter</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Khóa cơ khí chốt xoay trunnion và ngắt nguồn thủy lực khi công nhân vào bảo dưỡng lót gạch bên trong. Khóa tự động van oxy và argon ngăn cháy nổ.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Mã lỗi: VR_ERR_LOTO_TRUNNION_PIN_OPEN
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-cyan font-monospace">LADLE-TAP-01</span>
+                                            <span class="text-cyan small font-monospace">SIMOPS SPATIAL</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Trạm Rót Gang Đoàn Xe Torpedo Ladle</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Phát hiện và ngăn chặn xung đột không gian SIMOPS: cấm mọi giấy phép làm việc trên cao hoặc đi bộ ngang qua hành lang khi cẩu đang vận chuyển thùng rót 300 tấn.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Mã lỗi: VR_ERR_SIMOPS_SPATIAL_CONFLICT
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interlock Logic Box -->
+                        <div class="p-4 rounded-2 bg-dark border border-white-10 ins-glass-surface">
+                            <div class="row align-items-center g-4">
+                                <div class="col-lg-8">
+                                    <span class="badge bg-danger text-white font-monospace mb-2">SIMOPS SPATIAL EXCLUSION MATRIX</span>
+                                    <h3 class="h4 text-white mb-2 ins-title-balance">
+                                        Tự Động Phong Tỏa Vùng Bán Kính Nguy Hiểm Khi Rót Gang Lỏng 1.500°C
+                                    </h3>
+                                    <p class="text-secondary small mb-0">
+                                        Cấm cấp phép bảo trì cơ điện trong hành lang cẩu trục đang mang tải kim loại nóng chảy. Rút ngắn 4 giờ điều phối mỗi ca, tiết kiệm $450,000 / năm.
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 text-lg-end">
+                                    <div class="text-danger font-monospace h4 mb-1">ROI: 545% / 3-NĂM</div>
+                                    <div class="text-secondary small font-monospace">Hoàn vốn: 4.8 Tháng | Ròng: $2,005,000/Năm</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Scenarios Index for Metallurgy -->
+                <section class="s_table o_colored_level o_cc o_cc5 py-5 border-top border-white-10" data-snippet="s_table" data-name="Metallurgy Scenarios">
+                    <div class="container py-lg-4">
+                        <div class="row justify-content-center text-center mb-4">
+                            <div class="col-lg-8">
+                                <h3 class="h3 text-white mb-2 ins-title-balance">5 Kịch Bản Thẩm Định Nghiệp Vụ — Hòa Phát Dung Quất</h3>
+                                <p class="text-secondary small">Tải tài liệu briefing chi tiết cho từng chức danh lãnh đạo trước buổi làm việc với ban dự án.</p>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive rounded-2 border border-white-10 bg-dark p-2">
+                            <table class="table table-dark table-hover mb-0 align-middle">
+                                <thead class="text-secondary small font-monospace">
+                                    <tr>
+                                        <th>MÃ</th>
+                                        <th>PERSONA</th>
+                                        <th>NỘI DUNG THẨM ĐỊNH</th>
+                                        <th class="text-end">TẢI VỀ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="small">
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-danger font-monospace">VR-STEEL-01</span></td>
+                                        <td class="text-white">Hội Đồng Quản Trị &amp; Ban Giám Đốc</td>
+                                        <td class="text-secondary">Bảo Toàn OEE Lò Cao 98.5% &amp; Loại Trừ Rủi Ro Tràn Gang Lỏng 1.450°C Đóng Băng Đáy Lò</td>
+                                        <td class="text-end"><a href="/dossiers/metallurgy/scenario/16/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#16)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-danger font-monospace">VR-STEEL-02</span></td>
+                                        <td class="text-white">GĐ Lò Cao &amp; Trưởng Ban An Toàn</td>
+                                        <td class="text-secondary">Quy Trình e-PTW Mở Lỗ Ra Gang &amp; Khóa An Toàn Đường Ray Tuyến Xe Bao Torpedo Ladle</td>
+                                        <td class="text-end"><a href="/dossiers/metallurgy/scenario/17/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#17)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-danger font-monospace">VR-STEEL-03</span></td>
+                                        <td class="text-white">Trưởng Phòng Pháp Chế, Môi Trường &amp; DPO</td>
+                                        <td class="text-secondary">Tuân Thủ An Toàn Môi Trường Luyện Kim &amp; Bảo Mật Dữ Liệu Nhân Sự Nghị Định 13</td>
+                                        <td class="text-end"><a href="/dossiers/metallurgy/scenario/18/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#18)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-danger font-monospace">VR-STEEL-04</span></td>
+                                        <td class="text-white">Kỹ Sư An Toàn Quá Trình &amp; Tự Động Lò Cao</td>
+                                        <td class="text-secondary">Hệ Thống Cảnh Báo Khí CO Không Gian Hẹp &amp; Khóa Oxy Lò Thổi BOF Chống Nổ Hơi</td>
+                                        <td class="text-end"><a href="/dossiers/metallurgy/scenario/19/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#19)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-danger font-monospace">VR-STEEL-05</span></td>
+                                        <td class="text-white">Trưởng Ban Cải Tiến Kaizen &amp; Kiểm Định</td>
+                                        <td class="text-secondary">Chứng Nhận Kiểm Định Bằng Bằng Chứng Mật Mã Merkle DAG Bất Biến Kỳ Đại Tu</td>
+                                        <td class="text-end"><a href="/dossiers/metallurgy/scenario/20/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#20)</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty" id="oe_structure_metallurgy_bottom"/>
+            </main>
+        </t>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- 4. SUPERCRITICAL THERMAL POWER (AES MONG DUONG 500KV)             -->
+    <!-- Template ID: insilos_industry_thermal_power_page                  -->
+    <!-- Route: /industries/thermal-power & /dossiers/thermal-power        -->
+    <!-- ================================================================= -->
+    <template id="insilos_industry_thermal_power_page" name="Thermal Power Generation — AES Mong Duong 500kV">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Nhiệt Điện Siêu Tới Hạn &amp; Trạm 500kV (AES Mông Dương) — Insilos GRC</t>
+            <t t-set="meta_description">Quản trị rủi ro hơi siêu tới hạn 24.2 MPa và cô lập kép 500kV LOTO tại nhà máy nhiệt điện AES Mông Dương: Giám sát phát thải CEMS và bảo toàn khả dụng PPA.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
+                <div class="oe_structure oe_empty" id="oe_structure_power_top"/>
+
+                <!-- Hero Section -->
+                <section class="s_cover position-relative overflow-hidden o_colored_level o_cc o_cc5 pt80 pb80 ins-radial-glow" data-snippet="s_cover" data-name="Power Hero" data-bs-theme="dark">
+                    <div class="ins-hero-overlay o_not_editable"/>
+                    <div class="container py-lg-4 position-relative ins-hero-content-layer">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-7">
+                                <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+                                    <div class="ins-pill-badge">
+                                        <span class="ins-live-ping"/>
+                                        <span>SUPERCRITICAL POWER RESILIENCE</span>
+                                    </div>
+                                    <span class="badge bg-warning text-dark font-monospace small">AES MÔNG DƯƠNG 2</span>
+                                    <span class="badge bg-white-10 text-warning border border-white-10 small font-monospace">1.240 MW / 500KV</span>
+                                    <span class="badge bg-white-10 text-cyan border border-white-10 small font-monospace">NFPA 70E / IEEE 1584</span>
+                                </div>
+
+                                <h1 class="display-3 fw-bold text-white mb-3 ins-title-balance">
+                                    Áp Suất Hơi Siêu Tới Hạn 24.2 MPa<br class="d-none d-md-inline"/>
+                                    Và Khóa Cô Lập Kép <span class="ins-gradient-headline">LOTO 500kV Trạm Biến Áp</span>
+                                </h1>
+
+                                <p class="lead text-secondary mb-4 col-lg-11 p-0">
+                                    Nhà máy nhiệt điện than 1.240 MW cung cấp điện tải cho miền Bắc. Khóa liên động máy cắt 500kV Ngăn 571 vào hộp khóa trung tâm Lockbox bảo vệ chống hồ quang 19.000°C và giám sát phát thải CEMS trực tuyến.
+                                </p>
+
+                                <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 mb-4">
+                                    <a href="/dossiers/thermal-power/scenario/6/pdf" class="btn btn-primary rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2 shadow-lg">
+                                        <svg class="ph-duotone ph-file-pdf ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-pdf"/></svg>
+                                        <span class="fw-semibold">Tải Hồ Sơ C-Suite Briefing (PDF)</span>
+                                    </a>
+                                    <a href="/brochure" class="btn btn-outline-light rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-book-open ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-book-open"/></svg>
+                                        <span>Xem B2B Brochure Tổng Quan</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                                <div class="rounded-2 border border-white-10 overflow-hidden shadow-2xl ins-glass-surface p-3">
+                                    <img src="/insilos_website/static/src/img/resilience/thermal_power_substation.jpg" alt="AES Mong Duong 500kV Substation" class="img-fluid rounded-3 w-100" loading="eager"/>
+                                    <div class="p-3 bg-dark rounded-3 mt-3 border border-white-10">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="text-white fw-semibold small">Trạm 500kV GIS &amp; Ngăn Máy Cắt 571</span>
+                                            <span class="badge bg-warning text-dark font-monospace small">4.000A LOAD</span>
+                                        </div>
+                                        <p class="text-secondary small mb-0">Ngăn ngừa thao tác nhầm dao tiếp địa gây phạt hợp đồng PPA $65,000 / giờ.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Asset Directory & Power Thermodynamics -->
+                <section class="s_three_columns o_colored_level o_cc o_cc5 py-5 border-top border-white-10" data-snippet="s_three_columns" data-name="Power Asset Directory">
+                    <div class="container py-lg-4">
+                        <div class="row justify-content-center text-center mb-5">
+                            <div class="col-lg-10">
+                                <span class="ins-status-badge text-warning font-monospace mb-2">HIGH VOLTAGE &amp; STEAM ASSETS</span>
+                                <h2 class="display-5 fw-bold text-white mb-3 ins-title-balance">
+                                    Tài Sản Cao Áp 500kV &amp; Chu Trình Hơi Nước Siêu Tới Hạn<br class="d-none d-md-inline"/>
+                                    Kiểm Soát An Toàn 1.200 Nhà Thầu Kỳ Đại Tu 45 Ngày
+                                </h2>
+                                <p class="lead text-secondary">
+                                    Vận hành tổ hợp 2 tổ máy đốt than bột phun với lò hơi tuần hoàn một lần ASME Sec I và trạm phân phối điện 500kV lớn nhất vùng Đông Bắc.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced mb-5">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-warning font-monospace">SWGR-500KV-571</span>
+                                            <span class="text-warning small font-monospace">BAY 571 / 500KV</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Máy Cắt Xuất Tuyến Máy Biến Áp 500kV</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Khóa e-PTW bắt buộc máy cắt kéo ra vị trí thí nghiệm (RACKED_OUT) và dao tiếp địa ES-500KV-571 đóng hoàn toàn trước khi cho phép vào khu vực máy biến áp.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Mã lỗi: VR_ERR_LOTO_EARTH_OPEN
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-danger font-monospace">BOIL-SUPCR-01</span>
+                                            <span class="text-danger small font-monospace">24.2 MPA / 566°C</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Lò Hơi Siêu Tới Hạn Một Lần CFB Boiler</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Áp suất hơi 24.2 MPa có thể cắt đứt kim loại khi rò rỉ. Tích hợp cảnh báo sớm rò rỉ âm học và kiểm soát nồng độ bụi/khí dễ cháy máy nghiền than MILL-PULV-03.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Tránh nhảy lò: $750,000 / Năm
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-mint font-monospace">CEMS-STACK-01</span>
+                                            <span class="text-mint small font-monospace">SO2, NOX, DUST</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Trạm Giám Sát Khí Thải Ống Khói CEMS</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Quan trắc phát thải tự động liên tục truyền về Sở TN&amp;MT Quảng Ninh. Cảnh báo ngưỡng KRI 80% ngăn ngừa nguy cơ bị điều độ EVN cắt công suất phát điện.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Tránh phạt PPA: $120,000 / Năm
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interlock Logic Box -->
+                        <div class="p-4 rounded-2 bg-dark border border-white-10 ins-glass-surface">
+                            <div class="row align-items-center g-4">
+                                <div class="col-lg-8">
+                                    <span class="badge bg-warning text-dark font-monospace mb-2">LOTO DUAL-CUSTODY ISOLATION INVARIANT</span>
+                                    <h3 class="h4 text-white mb-2 ins-title-balance">
+                                        Máy Cắt RACKED_OUT &amp; Dao Tiếp Địa CLOSED &amp; Tối Thiểu 2 Ổ Khóa
+                                    </h3>
+                                    <p class="text-secondary small mb-0">
+                                        Bảo vệ 100% sinh mạng kỹ sư bảo trì trước nguy cơ phóng điện hồ quang ở nhiệt độ 19.000°C. Rút ngắn 2 ngày trong kỳ đại tu 45 ngày, tiết kiệm $480,000 / năm.
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 text-lg-end">
+                                    <div class="text-warning font-monospace h4 mb-1">ROI: 425% / 3-NĂM</div>
+                                    <div class="text-secondary small font-monospace">Hoàn vốn: 5.9 Tháng | Ròng: $1,240,000/Năm</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Scenarios Index for Thermal Power -->
+                <section class="s_table o_colored_level o_cc o_cc5 py-5 border-top border-white-10" data-snippet="s_table" data-name="Thermal Power Scenarios">
+                    <div class="container py-lg-4">
+                        <div class="row justify-content-center text-center mb-4">
+                            <div class="col-lg-8">
+                                <h3 class="h3 text-white mb-2 ins-title-balance">5 Kịch Bản Thẩm Định Nghiệp Vụ — AES Mông Dương</h3>
+                                <p class="text-secondary small">Tải tài liệu briefing chi tiết cho từng chức danh lãnh đạo trước buổi làm việc với ban dự án.</p>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive rounded-2 border border-white-10 bg-dark p-2">
+                            <table class="table table-dark table-hover mb-0 align-middle">
+                                <thead class="text-secondary small font-monospace">
+                                    <tr>
+                                        <th>MÃ</th>
+                                        <th>PERSONA</th>
+                                        <th>NỘI DUNG THẨM ĐỊNH</th>
+                                        <th class="text-end">TẢI VỀ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="small">
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-warning font-monospace">VR-POWER-01</span></td>
+                                        <td class="text-white">Ban Lãnh Đạo &amp; Giám Đốc Rủi Ro CRO</td>
+                                        <td class="text-secondary">Bảo Toàn Khả Dụng Hợp Đồng PPA &amp; Giám Sát Phát Thải CEMS Ngăn Chặn Đình Chỉ EVN</td>
+                                        <td class="text-end"><a href="/dossiers/thermal-power/scenario/6/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#6)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-warning font-monospace">VR-POWER-02</span></td>
+                                        <td class="text-white">Chỉ Huy Trưởng Điện Lực &amp; An Toàn</td>
+                                        <td class="text-secondary">Quy Trình LOTO 500kV Dual-Custody Khóa Hộp Trung Tâm Lockbox Ngăn Phóng Điện</td>
+                                        <td class="text-end"><a href="/dossiers/thermal-power/scenario/7/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#7)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-warning font-monospace">VR-POWER-03</span></td>
+                                        <td class="text-white">An Ninh Thông Tin Trạm Biến Áp &amp; Legal</td>
+                                        <td class="text-secondary">Tuân Thủ An Toàn Thông Tin Hạ Tầng Trọng Yếu &amp; Nghị Định 13/2023 Cho Kỹ Sư Lưới Điện</td>
+                                        <td class="text-end"><a href="/dossiers/thermal-power/scenario/8/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#8)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-warning font-monospace">VR-POWER-04</span></td>
+                                        <td class="text-white">Kỹ Sư Điều Khiển Tự Động DCS/I&amp;C</td>
+                                        <td class="text-secondary">Giám Sát Rung Độ Ổ Trục Turbine &amp; Cảnh Báo Sớm Rò Ống Sinh Hơi 24.2 MPa</td>
+                                        <td class="text-end"><a href="/dossiers/thermal-power/scenario/9/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#9)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-warning font-monospace">VR-POWER-05</span></td>
+                                        <td class="text-white">Trưởng Ban Đảm Bảo Chất Lượng QA</td>
+                                        <td class="text-secondary">Khép Kín Chu Trình Deming PDCA Kỳ Đại Tu 45 Ngày 1.200 Nhà Thầu Không Tai Nạn</td>
+                                        <td class="text-end"><a href="/dossiers/thermal-power/scenario/10/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#10)</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty" id="oe_structure_power_bottom"/>
+            </main>
+        </t>
+    </template>
+    <template id="insilos_industry_thermal-power_page" name="Thermal Power Alias">
+        <t t-call="insilos_website.insilos_industry_thermal_power_page"/>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- 5. PHARMACEUTICAL GXP & CLEANROOMS (DHG PHARMA)                   -->
+    <!-- Template ID: insilos_industry_pharma_page                         -->
+    <!-- Route: /industries/pharma & /dossiers/pharma                      -->
+    <!-- ================================================================= -->
+    <template id="insilos_industry_pharma_page" name="Pharma GxP &amp; Cleanroom — DHG Pharma">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Dược Phẩm GxP &amp; Phòng Sạch (DHG Pharma) — Insilos GRC Vertical Resilience™</t>
+            <t t-set="meta_description">Toàn vẹn dữ liệu lô sản xuất MBR theo chuẩn US FDA 21 CFR Part 11 và EU-GMP Annex 11 tại Dược Hậu Giang: Ký số RFC 8785 Canonical JSON và kiểm soát chênh áp phòng sạch.</t>
+
+            <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
+                <div class="oe_structure oe_empty" id="oe_structure_pharma_top"/>
+
+                <!-- Hero Section -->
+                <section class="s_cover position-relative overflow-hidden o_colored_level o_cc o_cc5 pt80 pb80 ins-radial-glow" data-snippet="s_cover" data-name="Pharma Hero" data-bs-theme="dark">
+                    <div class="ins-hero-overlay o_not_editable"/>
+                    <div class="container py-lg-4 position-relative ins-hero-content-layer">
+                        <div class="row align-items-center g-5">
+                            <div class="col-lg-7">
+                                <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+                                    <div class="ins-pill-badge">
+                                        <span class="ins-live-ping"/>
+                                        <span>GOVERNED PHARMA MANUFACTURING</span>
+                                    </div>
+                                    <span class="badge bg-mint text-dark font-monospace small">DHG PHARMA (DƯỢC HẬU GIANG)</span>
+                                    <span class="badge bg-white-10 text-mint border border-white-10 small font-monospace">JAPAN-GMP CERTIFIED</span>
+                                    <span class="badge bg-white-10 text-cyan border border-white-10 small font-monospace">FDA 21 CFR PART 11</span>
+                                </div>
+
+                                <h1 class="display-3 fw-bold text-white mb-3 ins-title-balance">
+                                    Kiểm Soát Lô Hoàng Kim Golden Batch<br class="d-none d-md-inline"/>
+                                    Và Toàn Vẹn Dữ Liệu <span class="ins-gradient-headline">US FDA 21 CFR Part 11</span>
+                                </h1>
+
+                                <p class="lead text-secondary mb-4 col-lg-11 p-0">
+                                    Tổ hợp nhà máy công nghệ cao sản xuất thuốc tiêm và viên nén vô trùng. Chữ ký số mã hóa RFC 8785 Canonical JSON, quy trình MOC 3 tầng SoD Maker-Checker và tường lửa chống rò rỉ công thức thuốc qua IBM Guardium DAM.
+                                </p>
+
+                                <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 mb-4">
+                                    <a href="/dossiers/pharma/scenario/21/pdf" class="btn btn-primary rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2 shadow-lg">
+                                        <svg class="ph-duotone ph-file-pdf ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-pdf"/></svg>
+                                        <span class="fw-semibold">Tải Hồ Sơ C-Suite Briefing (PDF)</span>
+                                    </a>
+                                    <a href="/brochure" class="btn btn-outline-light rounded-pill px-4 py-3 d-inline-flex align-items-center gap-2">
+                                        <svg class="ph-duotone ph-book-open ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-book-open"/></svg>
+                                        <span>Xem B2B Brochure Tổng Quan</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                                <div class="rounded-2 border border-white-10 overflow-hidden shadow-2xl ins-glass-surface p-3">
+                                    <img src="/insilos_website/static/src/img/resilience/pharma_gxp_cleanroom.jpg" alt="DHG Pharma High Tech Cleanroom" class="img-fluid rounded-3 w-100" loading="eager"/>
+                                    <div class="p-3 bg-dark rounded-3 mt-3 border border-white-10">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="text-white fw-semibold small">Phòng Sạch Grade A/B Suite 04</span>
+                                            <span class="badge bg-mint text-dark font-monospace small">ΔP &gt;= 15 PA CASCADE</span>
+                                        </div>
+                                        <p class="text-secondary small mb-0">Loại trừ nguy cơ nhiễm vi sinh vật và thu hồi lô thuốc trị giá $3.5M / vụ.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Asset Directory & Pharma Standards -->
+                <section class="s_three_columns o_colored_level o_cc o_cc5 py-5 border-top border-white-10" data-snippet="s_three_columns" data-name="Pharma Asset Directory">
+                    <div class="container py-lg-4">
+                        <div class="row justify-content-center text-center mb-5">
+                            <div class="col-lg-10">
+                                <span class="ins-status-badge text-mint font-monospace mb-2">STERILE CLEANROOM ASSETS</span>
+                                <h2 class="display-5 fw-bold text-white mb-3 ins-title-balance">
+                                    Danh Mục Thiết Bị Vô Trùng &amp; Hồ Sơ Lô Điện Tử (MBR)<br class="d-none d-md-inline"/>
+                                    Chống Gian Lận Dữ Liệu &amp; Bỏ Qua Phê Duyệt Chất Lượng
+                                </h2>
+                                <p class="lead text-secondary">
+                                    Bảo vệ quy trình sản xuất thuốc theo các tiêu chuẩn khắt khe nhất của Bộ Y tế, PIC/S, Japan-GMP và Cơ quan Quản lý Dược phẩm Hoa Kỳ US FDA.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 ins-card-row-balanced mb-5">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-mint font-monospace">CR-SUITE-04</span>
+                                            <span class="text-mint small font-monospace">GRADE A/B (ISO 5/7)</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Tổ Hợp Phòng Sạch Thuốc Tiêm Vô Trùng</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Giám sát chênh áp vi mô qua các buồng đệm airlock. Nếu chênh áp Grade A tụt dưới 15 Pa quá 30 giây, hệ thống tự động treo lô sản xuất và tạo phiếu deviation.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Tránh thu hồi lô: $1,800,000 / Năm
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-cyan font-monospace">LYOPH-01</span>
+                                            <span class="text-cyan small font-monospace">50.000 LỌ / MẺ</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Máy Đông Khô Công Nghiệp Lyophilizer</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Kiểm soát chu trình đông khô tự động. Chữ ký số điện tử xác thực 2 yếu tố cho mỗi mẻ thuốc, ngăn chặn hành vi sửa đổi thông số nhiệt độ buồng sấy.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        Chuẩn: FDA 21 CFR Part 11
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 bg-dark border border-white-10 rounded-2 p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-white-10 text-warning font-monospace">DB-FORMULA-01</span>
+                                            <span class="text-warning small font-monospace">IBM GUARDIUM DAM</span>
+                                        </div>
+                                        <h4 class="h5 text-white mb-2 ins-card-title">Cơ Sở Dữ Liệu Công Thức Thuốc Gốc</h4>
+                                        <p class="text-secondary small ins-card-desc mb-0">
+                                            Giám sát bảo mật cấp gói tin mạng: chặn đứng việc quản trị viên DBA can thiệp trực tiếp vào bảng công thức hoặc trích xuất hàng loạt thông tin bệnh nhân.
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto pt-3 border-top border-white-10 text-secondary small font-monospace">
+                                        SLA xử lý sự cố: &lt; 4 Giờ
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interlock Logic Box -->
+                        <div class="p-4 rounded-2 bg-dark border border-white-10 ins-glass-surface">
+                            <div class="row align-items-center g-4">
+                                <div class="col-lg-8">
+                                    <span class="badge bg-mint text-dark font-monospace mb-2">MOC 3-STAGE MAKER-CHECKER ENFORCEMENT</span>
+                                    <h3 class="h4 text-white mb-2 ins-title-balance">
+                                        Đảm Bảo Chất Lượng (QA) → Thẩm Định (Validation) → Tổng Giám Đốc
+                                    </h3>
+                                    <p class="text-secondary small mb-0">
+                                        Nghiêm cấm người đề xuất thay đổi tự phê duyệt quy trình (<code>VR_ERR_SOD_MAKER_CANNOT_BE_APPROVER</code>). Tiết kiệm 8 tuần chuẩn bị hồ sơ cho mỗi kỳ thanh tra quốc tế.
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 text-lg-end">
+                                    <div class="text-mint font-monospace h4 mb-1">ROI: 565% / 3-NĂM</div>
+                                    <div class="text-secondary small font-monospace">Hoàn vốn: 4.6 Tháng | Ròng: $2,170,000/Năm</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Scenarios Index for Pharma -->
+                <section class="s_table o_colored_level o_cc o_cc5 py-5 border-top border-white-10" data-snippet="s_table" data-name="Pharma Scenarios">
+                    <div class="container py-lg-4">
+                        <div class="row justify-content-center text-center mb-4">
+                            <div class="col-lg-8">
+                                <h3 class="h3 text-white mb-2 ins-title-balance">5 Kịch Bản Thẩm Định Nghiệp Vụ — DHG Pharma</h3>
+                                <p class="text-secondary small">Tải tài liệu briefing chi tiết cho từng chức danh lãnh đạo trước buổi làm việc với ban dự án.</p>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive rounded-2 border border-white-10 bg-dark p-2">
+                            <table class="table table-dark table-hover mb-0 align-middle">
+                                <thead class="text-secondary small font-monospace">
+                                    <tr>
+                                        <th>MÃ</th>
+                                        <th>PERSONA</th>
+                                        <th>NỘI DUNG THẨM ĐỊNH</th>
+                                        <th class="text-end">TẢI VỀ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="small">
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-mint font-monospace">VR-PHARMA-01</span></td>
+                                        <td class="text-white">Ban Tổng Giám Đốc &amp; Giám Đốc Chất Lượng CQA</td>
+                                        <td class="text-secondary">Toàn Vẹn Dữ Liệu Lô Sản Xuất &amp; Ngăn Ngừa Thu Hồi Thuốc Tiêu Chuẩn FDA ($3.5M/Vụ)</td>
+                                        <td class="text-end"><a href="/dossiers/pharma/scenario/21/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#21)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-mint font-monospace">VR-PHARMA-02</span></td>
+                                        <td class="text-white">GĐ Xưởng Sản Xuất &amp; Đảm Bảo Vệ Sinh</td>
+                                        <td class="text-secondary">Kiểm Soát Chênh Áp Phòng Sạch ΔP &gt;= 15 Pa &amp; e-PTW Khử Trùng Khí VHP Vô Trùng</td>
+                                        <td class="text-end"><a href="/dossiers/pharma/scenario/22/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#22)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-mint font-monospace">VR-PHARMA-03</span></td>
+                                        <td class="text-white">CISO, Thanh Tra Pháp Chế &amp; DPO Dược Phẩm</td>
+                                        <td class="text-secondary">Kiểm Soát Audit Trail 21 CFR Part 11 &amp; Dynamic Data Masking Thử Nghiệm Lâm Sàng</td>
+                                        <td class="text-end"><a href="/dossiers/pharma/scenario/23/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#23)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-mint font-monospace">VR-PHARMA-04</span></td>
+                                        <td class="text-white">Kỹ Sư Tự Động Hóa SCADA/BMS Phòng Sạch</td>
+                                        <td class="text-secondary">Giám Sát Chu Trình Đông Khô Lyophilization &amp; Khóa An Toàn Van Nồi Hấp Tiệt Trùng</td>
+                                        <td class="text-end"><a href="/dossiers/pharma/scenario/24/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#24)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-white-10 text-mint font-monospace">VR-PHARMA-05</span></td>
+                                        <td class="text-white">Trưởng Phòng Thẩm Định Validation &amp; PMO</td>
+                                        <td class="text-secondary">Số Hóa Hồ Sơ Thẩm Định Thiết Bị DQ/IQ/OQ/PQ Bằng Chứng Số Hóa Japan-GMP</td>
+                                        <td class="text-end"><a href="/dossiers/pharma/scenario/25/pdf" class="btn btn-primary btn-sm rounded-pill px-3">Tải PDF (#25)</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="oe_structure oe_empty" id="oe_structure_pharma_bottom"/>
+            </main>
+        </t>
+    </template>
+</odoo>

@@ -15,7 +15,7 @@
                     <div class="col-lg-9 mx-auto">
                         <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-15 border border-primary border-opacity-30 text-cyan small mb-3 font-monospace">
                             <span class="ins-live-ping--emerald"/>
-                            <span>SOVEREIGN DIGITAL TWIN // THREE.JS 360° WEBGL</span>
+                            <span>Mô Hình 3D Thiết Bị V-LIFT 2500E</span>
                         </div>
                         <h2 class="display-5 fw-bold text-white mb-3">
                             Mô Hình 3D Kỹ Thuật Số Xe Kéo Điện V-LIFT 2500E
@@ -31,14 +31,6 @@
                     <div class="col-12">
                         <div class="ins-3d-viewport position-relative ins-3d-digital-twin-canvas" id="insilosDigitalTwinViewport" data-insilos-3d="digital-twin">
                             <!-- Cybernetic Grid & Reticle Backdrop -->
-                            <div class="ins-3d-grid-bg"/>
-                            <div class="ins-neon-corner ins-corner-tl"/>
-                            <div class="ins-neon-corner ins-corner-tr"/>
-                            <div class="ins-neon-corner ins-corner-bl"/>
-                            <div class="ins-neon-corner ins-corner-br"/>
-                            <div class="ins-3d-crosshair">
-                                <div class="ins-crosshair-ring"/>
-                            </div>
 
                             <!-- Canvas Element -->
                             <canvas id="insilosDigitalTwinCanvas" class="ins-3d-canvas"/>
@@ -74,41 +66,6 @@
                                     <span class="ins-hotspot-pill">Bo Mạch Cortex-M4</span>
                                 </div>
                             </div>
-
-                            <!-- Floating HUD Control Bar -->
-                            <div class="ins-hud-controls">
-                                <span class="ins-hud-badge-status">
-                                    <span class="ins-live-ping--emerald"/>
-                                    <span>LIVE ERP: CONNECTED</span>
-                                </span>
-                                <button type="button" class="ins-hud-btn active" data-action="toggle-model" id="btnModelVlift">
-                                    <svg class="ph-duotone ph-truck"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg>
-                                    <span>V-LIFT 2500E</span>
-                                </button>
-                                <button type="button" class="ins-hud-btn" data-action="toggle-model" id="btnModelCnc">
-                                    <svg class="ph-duotone ph-crosshair"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-crosshair"/></svg>
-                                    <span>Trạm Cắt Laser CNC</span>
-                                </button>
-                                <button type="button" class="ins-hud-btn" data-action="toggle-exploded" id="btnExplodedBom">
-                                    <svg class="ph-duotone ph-arrows-out"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrows-out"/></svg>
-                                    <span>Phân Rã BOM</span>
-                                </button>
-                                <button type="button" class="ins-hud-btn" data-action="set-mode" data-mode="pbr" data-render-mode="pbr" id="btnModePbr">
-                                    <span>PBR Kim Loại</span>
-                                </button>
-                                <button type="button" class="ins-hud-btn" data-action="set-mode" data-mode="wireframe" data-render-mode="wireframe" id="btnModeWire">
-                                    <span>Wireframe HUD</span>
-                                </button>
-                                <button type="button" class="ins-hud-btn" data-action="set-mode" data-mode="xray" data-render-mode="xray" id="btnModeXray">
-                                    <span>Tia X-Ray</span>
-                                </button>
-                                <button type="button" class="ins-hud-btn" data-action="reset-camera" id="btnResetCam" title="Đặt lại góc nhìn">
-                                    <svg class="ph-duotone ph-arrows-clockwise"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrows-clockwise"/></svg>
-                                </button>
-                                <button type="button" class="ins-hud-btn" data-action="toggle-fullscreen" id="btnFullscreen" title="Toàn màn hình">
-                                    <svg class="ph-duotone ph-corners-out"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-corners-out"/></svg>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -116,10 +73,10 @@
                 <!-- Verified ERP Grounded Spec Ledger (HBox Balanced) -->
                 <div class="row g-4 ins-card-row-balanced">
                     <div class="col-lg-4 col-md-6">
-                        <div class="card ins-spatial-layer h-100 rounded-4 p-4 d-flex flex-column justify-content-between">
+                        <div class="ins-spatial-layer h-100 rounded-2 p-4 d-flex flex-column justify-content-between">
                             <div>
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge rounded-pill bg-primary bg-opacity-20 text-primary border border-primary border-opacity-30 px-3 py-1 font-monospace">BOM CẤP 1 // ID 10</span>
+                                    <span class="badge rounded-1 bg-primary bg-opacity-20 text-primary border border-primary border-opacity-30 px-3 py-1 font-monospace">BOM CẤP 1 · ID 10</span>
                                     <span class="text-secondary small font-monospace">BOM-VLIFT-2500E</span>
                                 </div>
                                 <h4 class="card-title text-white fw-bold mb-2">Định Mức Lắp Ráp Xe Kéo Điện</h4>
@@ -145,10 +102,10 @@
                     </div>
 
                     <div class="col-lg-4 col-md-6">
-                        <div class="card ins-spatial-layer h-100 rounded-4 p-4 d-flex flex-column justify-content-between">
+                        <div class="ins-spatial-layer h-100 rounded-2 p-4 d-flex flex-column justify-content-between">
                             <div>
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge rounded-pill bg-success bg-opacity-20 text-success border border-success border-opacity-30 px-3 py-1 font-monospace">LỆNH SẢN XUẤT // MO</span>
+                                    <span class="badge rounded-1 bg-success bg-opacity-20 text-success border border-success border-opacity-30 px-3 py-1 font-monospace">LỆNH SẢN XUẤT · MO</span>
                                     <span class="text-success small font-monospace">WH/MO/00010</span>
                                 </div>
                                 <h4 class="card-title text-white fw-bold mb-2">Trạm Cắt Laser &amp; Hàn Robot</h4>
@@ -174,10 +131,10 @@
                     </div>
 
                     <div class="col-lg-4 col-md-6">
-                        <div class="card ins-spatial-layer h-100 rounded-4 p-4 d-flex flex-column justify-content-between">
+                        <div class="ins-spatial-layer h-100 rounded-2 p-4 d-flex flex-column justify-content-between">
                             <div>
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge rounded-pill bg-info bg-opacity-20 text-info border border-info border-opacity-30 px-3 py-1 font-monospace">HỢP ĐỒNG PO // NHÀ CUNG CẤP THÉP</span>
+                                    <span class="badge rounded-1 bg-info bg-opacity-20 text-info border border-info border-opacity-30 px-3 py-1 font-monospace">HỢP ĐỒNG PO · NHÀ CUNG CẤP THÉP</span>
                                     <span class="text-secondary small font-monospace">#VN-PO2026-001</span>
                                 </div>
                                 <h4 class="card-title text-white fw-bold mb-2">Vật Tư Thép Tấm Kết Cấu</h4>
@@ -220,7 +177,7 @@
                     <div class="col-lg-9 mx-auto">
                         <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-15 border border-primary border-opacity-30 text-cyan small mb-3 font-monospace">
                             <span class="ins-live-ping--emerald"/>
-                            <span>MULTIMODAL SUPPLY CHAIN RADAR // VSIP TO SEAPORT</span>
+                            <span>Hành Lang Vận Tải Đa Phương Thức</span>
                         </div>
                         <h2 class="display-5 fw-bold text-white mb-3">
                             Bản Đồ 3D Chuỗi Tiếp Vận &amp; Cụm Cảng Biển Quốc Tế
@@ -235,11 +192,6 @@
                 <div class="row g-4 mb-4">
                     <div class="col-12">
                         <div class="ins-3d-viewport ins-radar-viewport position-relative ins-3d-logistics-radar-canvas" id="insilosLogisticsRadarViewport" data-insilos-3d="logistics-radar">
-                            <div class="ins-3d-grid-bg"/>
-                            <div class="ins-neon-corner ins-corner-tl ins-corner-orange"/>
-                            <div class="ins-neon-corner ins-corner-tr ins-corner-orange"/>
-                            <div class="ins-neon-corner ins-corner-bl ins-corner-orange"/>
-                            <div class="ins-neon-corner ins-corner-br ins-corner-orange"/>
 
                             <!-- Canvas Element -->
                             <canvas id="insilosLogisticsRadarCanvas" class="ins-3d-canvas"/>
@@ -270,13 +222,13 @@
                 <!-- Interactive Timeline Scrubber & Live Yard Telemetry -->
                 <div class="row g-4 mb-5 align-items-center">
                     <div class="col-lg-8">
-                        <div class="bg-dark bg-opacity-60 border border-secondary border-opacity-25 rounded-4 p-4">
+                        <div class="ins-spatial-layer rounded-2 p-4">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="text-white fw-bold d-inline-flex align-items-center gap-2">
                                     <svg class="ph-duotone ph-clock text-primary fs-5"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-clock"/></svg>
                                     <span>Tiến Trình Hành Trình Vận Tải (Timeline Scrubber)</span>
                                 </span>
-                                <span class="text-cyan font-monospace small" id="radarTimelineValue">35% // Tuyến Vành Đai 2</span>
+                                <span class="text-cyan font-monospace small" id="radarTimelineValue">35% · Tuyến Vành Đai 2</span>
                             </div>
                             <input type="range" class="form-range ins-timeline-scrubber mb-2" id="insilosLogisticsTimeline" min="0" max="100" value="35"/>
                             <div class="d-flex justify-content-between text-secondary small font-monospace">
@@ -287,10 +239,10 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="bg-dark bg-opacity-60 border border-secondary border-opacity-25 rounded-4 p-4">
+                        <div class="ins-spatial-layer rounded-2 p-4">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <span class="text-secondary small">Cảnh Báo DET/DEM:</span>
-                                <span class="badge rounded-pill bg-success bg-opacity-20 text-success border border-success border-opacity-30 font-monospace">AN TOÀN</span>
+                                <span class="badge rounded-1 bg-success bg-opacity-20 text-success border border-success border-opacity-30 font-monospace">AN TOÀN</span>
                             </div>
                             <h4 class="text-white fw-bold mb-1 font-monospace">38.5h Miễn Phí</h4>
                             <p class="text-secondary small mb-0">Tiết kiệm dự kiến: <strong class="text-primary font-monospace">5.950.000 ₫/ngày</strong> nhờ điều xe thông minh.</p>
@@ -301,10 +253,10 @@
                 <!-- Logistics Telemetry Row (HBox Balanced) -->
                 <div class="row g-4 ins-card-row-balanced">
                     <div class="col-lg-4 col-md-6">
-                        <div class="card h-100 bg-dark bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 d-flex flex-column justify-content-between">
+                        <div class="ins-spatial-layer h-100 rounded-2 p-4 d-flex flex-column justify-content-between">
                             <div>
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge rounded-pill bg-info bg-opacity-20 text-info border border-info border-opacity-30 px-3 py-1 font-monospace">XE ĐẦU KÉO // FLEET</span>
+                                    <span class="badge rounded-1 bg-info bg-opacity-20 text-info border border-info border-opacity-30 px-3 py-1 font-monospace">XE ĐẦU KÉO · FLEET</span>
                                     <span class="text-white small font-monospace">51C-982.45</span>
                                 </div>
                                 <h4 class="card-title text-white fw-bold mb-2">Đội Xe Vận Tải Hyundai Xcient</h4>
@@ -330,10 +282,10 @@
                     </div>
 
                     <div class="col-lg-4 col-md-6">
-                        <div class="card h-100 bg-dark bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 d-flex flex-column justify-content-between">
+                        <div class="ins-spatial-layer h-100 rounded-2 p-4 d-flex flex-column justify-content-between">
                             <div>
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge rounded-pill bg-primary bg-opacity-20 text-primary border border-primary border-opacity-30 px-3 py-1 font-monospace">ĐỐI TÁC CẢNG // QUỐC TẾ</span>
+                                    <span class="badge rounded-1 bg-primary bg-opacity-20 text-primary border border-primary border-opacity-30 px-3 py-1 font-monospace">ĐỐI TÁC CẢNG · QUỐC TẾ</span>
                                     <span class="text-cyan small font-monospace">#VN-SO2026-001</span>
                                 </div>
                                 <h4 class="card-title text-white fw-bold mb-2">Hợp Đồng Tiếp Vận Cảng Biển Quốc Tế</h4>
@@ -359,10 +311,10 @@
                     </div>
 
                     <div class="col-lg-4 col-md-6">
-                        <div class="card h-100 bg-dark bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 d-flex flex-column justify-content-between">
+                        <div class="ins-spatial-layer h-100 rounded-2 p-4 d-flex flex-column justify-content-between">
                             <div>
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge rounded-pill bg-warning bg-opacity-20 text-warning border border-warning border-opacity-30 px-3 py-1 font-monospace">VẬN TẢI DRAYAGE</span>
+                                    <span class="badge rounded-1 bg-warning bg-opacity-20 text-warning border border-warning border-opacity-30 px-3 py-1 font-monospace">VẬN TẢI DRAYAGE</span>
                                     <span class="text-secondary small font-monospace">GEMADEPT</span>
                                 </div>
                                 <h4 class="card-title text-white fw-bold mb-2">Kế Hoạch Điều Xe Drayage</h4>
@@ -405,7 +357,7 @@
                     <div class="col-lg-9 mx-auto">
                         <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-15 border border-primary border-opacity-30 text-cyan small mb-3 font-monospace">
                             <span class="ins-live-ping--emerald"/>
-                            <span>CINEMA HUD TELEMETRY // REAL-TIME ERP SYNCHRONIZATION</span>
+                            <span>Đồng Bộ Dữ Liệu ERP Thời Gian Thực</span>
                         </div>
                         <h2 class="display-5 fw-bold text-white mb-3">
                             Trình Phát Video Cinema HUD Đồng Bộ Live ERP
@@ -476,13 +428,12 @@
                     <div class="col-lg-5">
                         <div class="ins-cinema-player-card p-3 h-100 d-flex flex-column justify-content-between">
                             <div class="ins-hud-terminal mb-3">
-                                <div class="ins-scanline-overlay"/>
                                 <div class="terminal-header">
                                     <div class="d-flex align-items-center gap-2">
                                         <span class="ins-live-ping--emerald"/>
-                                        <span class="text-cyan small fw-bold font-monospace">TELEMETRY STREAM // LIVE</span>
+                                        <span class="text-cyan small fw-bold font-monospace">TELEMETRY STREAM · LIVE</span>
                                     </div>
-                                    <span class="badge rounded-pill bg-primary bg-opacity-20 text-primary border border-primary border-opacity-30 small font-monospace" id="telemetryModelBadge">
+                                    <span class="badge rounded-1 bg-primary bg-opacity-20 text-primary border border-primary border-opacity-30 small font-monospace" id="telemetryModelBadge">
                                         mrp.production
                                     </span>
                                 </div>
@@ -532,7 +483,7 @@
                     <div class="col-lg-9 mx-auto">
                         <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-15 border border-primary border-opacity-30 text-cyan small mb-3 font-monospace">
                             <span class="ins-live-ping--emerald"/>
-                            <span>INTERACTIVE ROI &amp; FACTORY CONFIGURATOR</span>
+                            <span>Công Cụ Định Lượng ROI Nhà Máy</span>
                         </div>
                         <h2 class="display-5 fw-bold text-white mb-3">
                             Bộ Công Cụ Cấu Hình 3D &amp; Ước Tính ROI Nhà Máy
@@ -548,28 +499,15 @@
                     <!-- Left: 3D Factory Layout Viewport -->
                     <div class="col-lg-7">
                         <div class="ins-3d-viewport position-relative ins-3d-factory-configurator-canvas" id="insilosFactoryRoiViewport" data-insilos-3d="factory-configurator">
-                            <div class="ins-3d-grid-bg"/>
-                            <div class="ins-neon-corner ins-corner-tl"/>
-                            <div class="ins-neon-corner ins-corner-tr"/>
-                            <div class="ins-neon-corner ins-corner-bl"/>
-                            <div class="ins-neon-corner ins-corner-br"/>
 
                             <!-- Canvas Element -->
                             <canvas id="insilosFactoryRoiCanvas" class="ins-3d-canvas"/>
-
-                            <!-- Viewport Info Pill -->
-                            <div class="position-absolute top-0 start-0 p-3 z-2">
-                                <span class="badge rounded-pill bg-dark bg-opacity-75 text-cyan border border-cyan border-opacity-30 px-3 py-2 font-monospace small">
-                                    <span class="ins-live-ping--emerald"/>
-                                    <span id="factoryInstancesCount">50 ĐẦU XE // 6 TRẠM GIA CÔNG CNC</span>
-                                </span>
-                            </div>
                         </div>
                     </div>
 
                     <!-- Right: Interactive Sliders & Financial Projections -->
                     <div class="col-lg-5">
-                        <div class="bg-dark bg-opacity-50 border border-secondary border-opacity-25 rounded-4 p-4 h-100 d-flex flex-column justify-content-between">
+                        <div class="ins-spatial-layer rounded-2 p-4 h-100 d-flex flex-column justify-content-between">
                             <div>
                                 <h4 class="text-white fw-bold mb-4 d-inline-flex align-items-center gap-2">
                                     <svg class="ph-duotone ph-sliders text-primary fs-5"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-sliders"/></svg>
@@ -679,32 +617,6 @@
                 <div class="row g-4 mb-4">
                     <div class="col-12">
                         <div class="innoria-3d-viewport position-relative" id="innoriaTopologyViewport" data-innoria-3d="topology">
-
-                            <!-- Floating HUD Control Bar -->
-                            <div class="innoria-hud-control-bar">
-                                <span class="d-inline-flex align-items-center gap-2 px-3 py-1 text-white small font-monospace border-end border-secondary border-opacity-25 me-1">
-                                    <span class="d-inline-block rounded-circle bg-info" style="width: 7px; height: 7px; box-shadow: 0 0 6px #0ABBDB;"/>
-                                    <span>TOPOLOGY HUD</span>
-                                </span>
-                                <button type="button" class="innoria-hud-btn" data-action="focus-node" data-node-key="DIGIFORCE">
-                                    <span>DIGIFORCE (No-Code)</span>
-                                </button>
-                                <button type="button" class="innoria-hud-btn" data-action="focus-node" data-node-key="MOJO_AI">
-                                    <span>MOJO AI (Swarm)</span>
-                                </button>
-                                <button type="button" class="innoria-hud-btn" data-action="focus-node" data-node-key="ZENCODE_ENT" data-node-alias="MOJOVERSE">
-                                    <span>ZENCODE-ENT</span>
-                                </button>
-                                <button type="button" class="innoria-hud-btn" data-action="focus-node" data-node-key="INSILOS" data-node-alias="INTELLIGENT_ERP">
-                                    <span>INSILOS ERP</span>
-                                </button>
-                                <button type="button" class="innoria-hud-btn" data-action="toggle-mode" id="innoriaSnippetModeToggleBtn">
-                                    <span>🏛️ Kiến Trúc Dịch Vụ</span>
-                                </button>
-                                <button type="button" class="innoria-hud-btn btn-reset" data-action="reset-view">
-                                    <span>↺ Toàn Cảnh</span>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -748,7 +660,7 @@
                  data-snippet="s_innoria_3d_architecture_deck"
                  data-name="Innoria 3D Architecture Deck"
                  id="architecture_deck"
-                 style="background: #070B14 !important;">
+                 style="background: #070B14 !important; color: #F8FAFC !important;">
             <div class="container py-4">
                 <div class="deck-app-container" style="background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important;">
 
@@ -768,30 +680,6 @@
                             </h2>
                         </div>
 
-                        <div class="action-controls">
-                            <button id="btnExplode" type="button" class="btn-action" title="Phân rã các lớp theo trục Z">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <polyline points="9 21 3 21 3 15"></polyline>
-                                    <line x1="21" y1="3" x2="14" y2="10"></line>
-                                    <line x1="3" y1="21" x2="10" y2="14"></line>
-                                </svg>
-                                <span id="btnExplodeText">Phân Rã Deck</span>
-                            </button>
-
-                            <button id="btnResetView" type="button" class="btn-action" title="Đặt lại góc chiếu chuẩn">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                                    <path d="M3 3v5h5"></path>
-                                </svg>
-                                <span>Đặt Lại Góc</span>
-                            </button>
-
-                            <button id="btnAutoTour" type="button" class="btn-action opacity-50" title="Bật/Tắt chế độ tự động trình diễn">
-                                <span class="status-dot"></span>
-                                <span id="btnAutoTourText">Auto Demo: OFF</span>
-                            </button>
-                        </div>
                     </div>
 
                     <!-- Main Grid: 3D Stage (Left) &amp; Description Column (Right) -->
@@ -884,10 +772,10 @@
                                     </div>
                                     <div class="card-info">
                                         <div class="card-header-line">
-                                            <div class="card-title">Nền Tảng No-Code</div>
+                                            <div class="card-title" style="color: #FFFFFF !important;">Nền Tảng No-Code</div>
                                             <span class="card-layer-chip">LỚP 1</span>
                                         </div>
-                                        <p class="card-desc">
+                                        <p class="card-desc" style="color: #CBD5E1 !important;">
                                             Xây dựng ứng dụng doanh nghiệp tốc độ cao qua giao diện kéo thả trực quan, tự sinh API REST/GraphQL chuẩn mực.
                                         </p>
                                     </div>
@@ -905,10 +793,10 @@
                                     </div>
                                     <div class="card-info">
                                         <div class="card-header-line">
-                                            <div class="card-title">Dịch Vụ Nền Tảng</div>
+                                            <div class="card-title" style="color: #FFFFFF !important;">Dịch Vụ Nền Tảng</div>
                                             <span class="card-layer-chip">LỚP 2</span>
                                         </div>
-                                        <p class="card-desc">
+                                        <p class="card-desc" style="color: #CBD5E1 !important;">
                                             Kiến trúc Microservices độc lập, Quản trị bảo mật Zero-Trust, phân quyền RBAC/ABAC đa cấp và CI/CD tự động hoá.
                                         </p>
                                     </div>
@@ -932,10 +820,10 @@
                                     </div>
                                     <div class="card-info">
                                         <div class="card-header-line">
-                                            <div class="card-title">Trí Tuệ Nhân Tạo (Enterprise AI)</div>
+                                            <div class="card-title" style="color: #FFFFFF !important;">Trí Tuệ Nhân Tạo (Enterprise AI)</div>
                                             <span class="card-layer-chip">LỚP 3</span>
                                         </div>
-                                        <p class="card-desc">
+                                        <p class="card-desc" style="color: #CBD5E1 !important;">
                                             Generative AI, Explainable AI và Human-Machine Understanding hỗ trợ ra quyết định thời gian thực và tự động hoá.
                                         </p>
                                     </div>
@@ -952,10 +840,10 @@
                                     </div>
                                     <div class="card-info">
                                         <div class="card-header-line">
-                                            <div class="card-title">Kho Dữ Liệu &amp; ERP Cốt Lõi</div>
+                                            <div class="card-title" style="color: #FFFFFF !important;">Kho Dữ Liệu &amp; ERP Cốt Lõi</div>
                                             <span class="card-layer-chip">LỚP 4</span>
                                         </div>
-                                        <p class="card-desc">
+                                        <p class="card-desc" style="color: #CBD5E1 !important;">
                                             Đồng bộ hoá nguồn dữ liệu đa dạng: ERP, GRC (Quản trị rủi ro), IIoT cảm biến và sổ cái phi tập trung hợp nhất.
                                         </p>
                                     </div>
@@ -976,7 +864,7 @@
                                         </svg>
                                     </div>
                                     <div class="deep-title-group">
-                                        <p style="color: #00F0FF !important; font-weight: 700;">LỚP 01 // APPLICATION DEVELOPMENT</p>
+                                        <p style="color: #00F0FF !important; font-weight: 700;">LỚP 01 · APPLICATION DEVELOPMENT</p>
                                         <h3 class="mb-0">No-Code Platform &amp; App Studio</h3>
                                     </div>
                                     <button type="button" class="btn-close-deep ms-auto" data-action="close-deep" title="Quay lại tổng quan 4 lớp">
@@ -1054,7 +942,7 @@
                                         </svg>
                                     </div>
                                     <div class="deep-title-group">
-                                        <p style="color: #3B82F6 !important; font-weight: 700;">LỚP 02 // INFRASTRUCTURE &amp; SECURITY</p>
+                                        <p style="color: #3B82F6 !important; font-weight: 700;">LỚP 02 · INFRASTRUCTURE &amp; SECURITY</p>
                                         <h3 class="mb-0">Platform Services &amp; Zero-Trust</h3>
                                     </div>
                                     <button type="button" class="btn-close-deep ms-auto" data-action="close-deep" title="Quay lại tổng quan 4 lớp">
@@ -1138,7 +1026,7 @@
                                         </svg>
                                     </div>
                                     <div class="deep-title-group">
-                                        <p style="color: #F59E0B !important; font-weight: 700;">LỚP 03 // INTELLIGENCE &amp; AGENT SWARMS</p>
+                                        <p style="color: #F59E0B !important; font-weight: 700;">LỚP 03 · INTELLIGENCE &amp; AGENT SWARMS</p>
                                         <h3 class="mb-0">Artificial Intelligence &amp; Mojo AI</h3>
                                     </div>
                                     <button type="button" class="btn-close-deep ms-auto" data-action="close-deep" title="Quay lại tổng quan 4 lớp">
@@ -1151,7 +1039,7 @@
                                 </div>
 
                                 <p class="deep-narrative">
-                                    Tích hợp trí tuệ nhân tạo chuyên sâu vào từng mắt xích vận hành doanh nghiệp. Kết hợp Generative AI, Explainable AI (XAI), thị giác máy tính VLM và bầy đàn đặc vụ tự hành (Agent Swarms) giúp tối ưu hóa chuỗi cung ứng, dự báo tồn kho và ra quyết định chính xác.
+                                    Tích hợp trí tuệ nhân tạo chuyên sâu vào từng mắt xích vận hành doanh nghiệp. Kết hợp Generative AI, Explainable AI (XAI), thị giác máy tính VLM và cụm tác nhân AI tự chủ (Multi-Agent Swarms) giúp tối ưu hóa chuỗi cung ứng, dự báo tồn kho và ra quyết định chính xác.
                                 </p>
 
                                 <div class="deep-feature-grid">
@@ -1215,7 +1103,7 @@
                                         </svg>
                                     </div>
                                     <div class="deep-title-group">
-                                        <p style="color: #10B981 !important; font-weight: 700;">LỚP 04 // CORE ENGINE &amp; LEDGER</p>
+                                        <p style="color: #10B981 !important; font-weight: 700;">LỚP 04 · CORE ENGINE &amp; LEDGER</p>
                                         <h3 class="mb-0">Data Lake &amp; Core ERP (Sovereign DB)</h3>
                                     </div>
                                     <button type="button" class="btn-close-deep ms-auto" data-action="close-deep" title="Quay lại tổng quan 4 lớp">
@@ -1284,19 +1172,6 @@
                         </div>
 
                     </div>
-
-                    <!-- Bottom Telemetry Strip -->
-                    <div class="deck-footer">
-                        <div class="footer-left">
-                            <span>ARCHITECTURAL SLABS: 4/4 MOUNTED</span>
-                            <span>LATENCY: 0.12ms</span>
-                            <span class="footer-highlight">INNORIA SOVEREIGN STACK CERTIFIED</span>
-                        </div>
-                        <div>
-                            <span>Innoria Enterprise Platform v20.0 &#8226; 60 FPS CSS 3D Engine</span>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -1370,7 +1245,7 @@
                         <div class="bottom"/>
                         <div class="front-right">
                             <div class="title-text">Trợ Lý Điều Hành Mojo AI Swarm</div>
-                            <div class="sub-text">16 Nốt Tính Toán Độc Lập · Suy Luận VLM · Phá Vỡ Silo</div>
+                            <div class="sub-text">16 Nút Tính Toán Độc Lập · Suy Luận VLM · Phá Vỡ Ốc Đảo Dữ Liệu</div>
                         </div>
                         <div class="front-left"/>
                         <div class="back-right"/>
@@ -1419,13 +1294,12 @@
                     <!-- Left: Legacy Monolith Silo Core -->
                     <div class="shift-core-monolith" id="shift-core-legacy" data-core-type="legacy">
                         <div class="monolith-face top">
-                            <span class="core-tag">Hệ Thống Rời Rạc</span>
-                            <span class="core-metric">Xử Lý Batch Trễ 48h</span>
+                            <span class="core-metric">Batch Trễ 48h</span>
                         </div>
                         <div class="monolith-face bottom"/>
                         <div class="monolith-face front-right">
-                            <div class="title-text">Hệ Thống Rời Rạc (Legacy Silo)</div>
-                            <div class="sub-text">450+ Mã T-Codes · Cấu Trúc Cứng Nhắc</div>
+                            <div class="title-text">Hệ Thống Rời Rạc</div>
+                            <div class="sub-text">Legacy Silo · 450+ T-Codes</div>
                         </div>
                         <div class="monolith-face front-left"/>
                         <div class="monolith-face back-right"/>
@@ -1440,19 +1314,15 @@
                         <div class="conduit-stream stream-tco"><div class="conduit-pulse"/></div>
                     </div>
 
-                    <!-- Right: Innoria Autonomous AI Fabric Core (4-tier Stack) -->
+                    <!-- Right: Innoria Autonomous AI Fabric Core (4-tier Stack - Clean Volumetric Slabs) -->
                     <div class="shift-core-fabric" id="shift-core-ai" data-core-type="ai">
                         <!-- Tier 0: Speed & Real-time Event Bus -->
                         <div class="shift-tier-layer pulled-out" id="shift-tier-speed" data-metric="speed"
-                             style="--tier-base-z: 75px; --tier-accent: #0284C7; --tier-glow: rgba(2, 132, 199, 0.45);">
-                            <div class="tier-face top">
-                                <span class="tier-badge">TỐC ĐỘ &amp; LUỒNG SỰ KIỆN</span>
-                                <span class="tier-val">&lt; 1.2s Thời Gian Thực</span>
-                            </div>
+                             style="--tier-base-z: 84px; --tier-accent: #0284C7; --tier-glow: rgba(2, 132, 199, 0.45);">
+                            <div class="tier-face top"/>
                             <div class="tier-face bottom"/>
                             <div class="tier-face front-right">
-                                <div class="tier-title">Luồng Dữ Liệu Thời Gian Thực</div>
-                                <div class="tier-desc">Không Chờ Batch · Định Tuyến Tức Thì</div>
+                                <div class="tier-title">Sự Kiện &lt; 1.2s</div>
                             </div>
                             <div class="tier-face front-left"/>
                             <div class="tier-face back-right"/>
@@ -1461,15 +1331,11 @@
 
                         <!-- Tier 1: Learning Curve & Conversational Intent -->
                         <div class="shift-tier-layer dimmed" id="shift-tier-learning" data-metric="learning"
-                             style="--tier-base-z: 50px; --tier-accent: #2563EB; --tier-glow: rgba(37, 99, 235, 0.45);">
-                            <div class="tier-face top">
-                                <span class="tier-badge">TRỢ LÝ TỰ NHIÊN</span>
-                                <span class="tier-val">Không Cần Đào Tạo Phức Tạp</span>
-                            </div>
+                             style="--tier-base-z: 56px; --tier-accent: #2563EB; --tier-glow: rgba(37, 99, 235, 0.45);">
+                            <div class="tier-face top"/>
                             <div class="tier-face bottom"/>
                             <div class="tier-face front-right">
-                                <div class="tier-title">Tương Tác Ngôn Ngữ Tự Nhiên</div>
-                                <div class="tier-desc">Vận Hành Bằng Hội Thoại · Hướng Dẫn Tự Động</div>
+                                <div class="tier-title">AI Copilot Tự Nhiên</div>
                             </div>
                             <div class="tier-face front-left"/>
                             <div class="tier-face back-right"/>
@@ -1478,15 +1344,11 @@
 
                         <!-- Tier 2: Error Rate & Autonomous Validation -->
                         <div class="shift-tier-layer dimmed" id="shift-tier-error" data-metric="error"
-                             style="--tier-base-z: 25px; --tier-accent: #10B981; --tier-glow: rgba(16, 185, 129, 0.45);">
-                            <div class="tier-face top">
-                                <span class="tier-badge">TOÀN VẸN TỰ TRỊ</span>
-                                <span class="tier-val">99.98% Khớp 3 Chiều</span>
-                            </div>
+                             style="--tier-base-z: 28px; --tier-accent: #10B981; --tier-glow: rgba(16, 185, 129, 0.45);">
+                            <div class="tier-face top"/>
                             <div class="tier-face bottom"/>
                             <div class="tier-face front-right">
-                                <div class="tier-title">Triệt Tiêu Lỗi Nhập Liệu Lại</div>
-                                <div class="tier-desc">AI Tự Động Đối Soát Khớp Số Dư</div>
+                                <div class="tier-title">Khớp 3 Chiều 99.98%</div>
                             </div>
                             <div class="tier-face front-left"/>
                             <div class="tier-face back-right"/>
@@ -1496,28 +1358,16 @@
                         <!-- Tier 3: TCO & Sovereign Economics -->
                         <div class="shift-tier-layer dimmed" id="shift-tier-tco" data-metric="tco"
                              style="--tier-base-z: 0px; --tier-accent: #D97706; --tier-glow: rgba(217, 119, 6, 0.45);">
-                            <div class="tier-face top">
-                                <span class="tier-badge">TCO CHỦ QUYỀN</span>
-                                <span class="tier-val">-65% Chi Phí Vận Hành</span>
-                            </div>
+                            <div class="tier-face top"/>
                             <div class="tier-face bottom"/>
                             <div class="tier-face front-right">
-                                <div class="tier-title">Hiệu Suất Tự Trị Vượt Trội</div>
-                                <div class="tier-desc">Tối Ưu Ngân Sách · Tự Do Chủ Quyền</div>
+                                <div class="tier-title">Tối Ưu TCO (-65%)</div>
                             </div>
                             <div class="tier-face front-left"/>
                             <div class="tier-face back-right"/>
                             <div class="tier-face back-left"/>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Dynamic Telemetry Chip (Clean Minimalist Badge, Zero Instructional Text) -->
-            <div class="d-flex justify-content-center mt-2">
-                <div class="shift-telemetry-chip d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill" id="shiftTelemetryChip" style="border-color: #0284C7; box-shadow: 0 0 16px rgba(2, 132, 199, 0.25);">
-                    <span class="telemetry-ping"/>
-                    <span class="small fw-semibold telemetry-text" id="shiftTelemetryText">TỐC ĐỘ: 48h Batch Queue ➔ Real-Time Event Bus (&lt; 1.2s)</span>
                 </div>
             </div>
         </div>

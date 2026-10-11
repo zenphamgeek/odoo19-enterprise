@@ -1315,11 +1315,11 @@ class InsilosWebsite(http.Controller):
         # render thì main_object mặc định là chính view, nên block bị khoá.
         current_path = request.httprequest.path
         if current_path.startswith("/en"):
-            request.env.context = dict(request.env.context, lang="en_US")
+            request.update_context(lang="en_US")
             values["lang"] = "en_US"
             values["is_english"] = True
         elif current_path.startswith("/vi"):
-            request.env.context = dict(request.env.context, lang="vi_VN")
+            request.update_context(lang="vi_VN")
             values["lang"] = "vi_VN"
             values["is_english"] = False
         else:
@@ -1336,7 +1336,10 @@ class InsilosWebsite(http.Controller):
             if "insilos.com" in request.website.custom_code_head:
                 cleaned_head = re.sub(r'<link\s+rel=["\']canonical["\']\s+href=["\']https://insilos\.com/?["\']\s*/?>', '', request.website.custom_code_head)
                 if cleaned_head != request.website.custom_code_head:
-                    request.website.custom_code_head = cleaned_head
+                    try:
+                        request.website.sudo().write({"custom_code_head": cleaned_head})
+                    except Exception:
+                        pass
         values.update(extra)
         return values
 

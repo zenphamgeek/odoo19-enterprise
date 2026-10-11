@@ -156,7 +156,7 @@
             clearTimeout(closeTimer);
             closeTimer = setTimeout(() => {
                 closeAllMegaMenus();
-            }, 180);
+            }, 350);
         }
 
         megaItems.forEach((item) => {
@@ -175,14 +175,9 @@
                     openMegaMenu(item);
                 });
                 trigger.addEventListener('click', (e) => {
-                    // On desktop, clicking the trigger also opens/toggles the dropdown
                     if (window.innerWidth >= 992) {
                         e.preventDefault();
-                        if (item.classList.contains('is-open')) {
-                            closeAllMegaMenus();
-                        } else {
-                            openMegaMenu(item);
-                        }
+                        openMegaMenu(item);
                     }
                 });
             }
@@ -350,12 +345,14 @@
         const isEn = currentPath.startsWith('/en');
 
         if (isEn) {
-            btnEn.style.setProperty('background', '#0ABBDB', 'important');
-            btnEn.style.setProperty('color', '#05101E', 'important');
-            btnEn.style.setProperty('box-shadow', '0 0 10px rgba(10,187,219,0.35)', 'important');
-            btnVi.style.setProperty('background', 'transparent', 'important');
-            btnVi.style.setProperty('color', '#94A3B8', 'important');
-            btnVi.style.setProperty('box-shadow', 'none', 'important');
+            btnEn.classList.add('is-active', 'active');
+            btnVi.classList.remove('is-active', 'active');
+            btnEn.style.removeProperty('background');
+            btnEn.style.removeProperty('color');
+            btnEn.style.removeProperty('box-shadow');
+            btnVi.style.removeProperty('background');
+            btnVi.style.removeProperty('color');
+            btnVi.style.removeProperty('box-shadow');
 
             let vnPath = currentPath.replace(/^\/en(\/|$)/, '/');
             if (!vnPath) vnPath = '/';
@@ -365,12 +362,14 @@
             const ctaText = document.querySelector('.nav-cta-text');
             if (ctaText) ctaText.textContent = "3-Hour Consultation";
         } else {
-            btnVi.style.setProperty('background', '#0ABBDB', 'important');
-            btnVi.style.setProperty('color', '#05101E', 'important');
-            btnVi.style.setProperty('box-shadow', '0 0 10px rgba(10,187,219,0.35)', 'important');
-            btnEn.style.setProperty('background', 'transparent', 'important');
-            btnEn.style.setProperty('color', '#94A3B8', 'important');
-            btnEn.style.setProperty('box-shadow', 'none', 'important');
+            btnVi.classList.add('is-active', 'active');
+            btnEn.classList.remove('is-active', 'active');
+            btnVi.style.removeProperty('background');
+            btnVi.style.removeProperty('color');
+            btnVi.style.removeProperty('box-shadow');
+            btnEn.style.removeProperty('background');
+            btnEn.style.removeProperty('color');
+            btnEn.style.removeProperty('box-shadow');
 
             const enPath = '/en' + (currentPath === '/' ? '' : currentPath);
             btnEn.setAttribute('href', enPath);

@@ -119,15 +119,32 @@
     }
 }
 
-// 4. Cardless Primitive: Strips Rigid Machine Borders & Boxes
-.ins-cardless {
+// 4. Cardless Primitive: Strips Rigid Machine Borders & Boxes (Apple / Stripe / Vercel Spatial Standard)
+.ins-cardless,
+.ins-spatial-cardless {
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
+    border-radius: 0 !important;
 
-    // Organic bottom separator instead of box borders
+    // Organic directional separators instead of all-around box borders
     &.ins-cardless--bordered-bottom {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    &.ins-cardless--bordered-top {
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    &.ins-cardless--bordered-left {
+        border-left: 2px solid rgba(255, 255, 255, 0.10) !important;
+        padding-left: 1.5rem !important;
+        transition: border-color 0.25s ease, transform 0.25s ease;
+
+        &:hover {
+            border-left-color: var(--ins-aurora-cyan, #00F2FE) !important;
+            transform: translateX(2px);
+        }
     }
 }
 
@@ -153,16 +170,18 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--ins-aurora-gradient) !important;
+    background-color: var(--ins-aurora-mint, #42E6C3) !important;
+    background-image: var(--ins-aurora-gradient) !important;
     color: #05101E !important;
     font-weight: 600;
     font-size: 0.78rem;
     letter-spacing: 0.03em;
     padding: 0.35rem 0.85rem;
-    border-radius: 9999px;
-    border: none;
-    box-shadow: 0 4px 14px rgba(66, 230, 195, 0.25);
-    line-height: 1;
+    border-radius: 2px !important;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px rgba(66, 230, 195, 0.2);
+    line-height: 1.2;
+    text-transform: uppercase;
     vertical-align: middle;
 }
 
@@ -174,13 +193,14 @@
     background: var(--ins-electric-indigo) !important;
     color: #FFFFFF !important;
     font-weight: 600;
-    font-size: 0.78rem;
-    letter-spacing: 0.03em;
-    padding: 0.35rem 0.85rem;
-    border-radius: 9999px;
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 2px !important;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.28);
-    line-height: 1;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+    line-height: 1.2;
+    text-transform: uppercase;
     vertical-align: middle;
 }
 
@@ -192,14 +212,127 @@
     background: var(--ins-rose-glow) !important;
     color: #05101E !important;
     font-weight: 600;
-    font-size: 0.78rem;
-    letter-spacing: 0.03em;
-    padding: 0.35rem 0.85rem;
-    border-radius: 9999px;
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 2px !important;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 4px 14px rgba(244, 63, 94, 0.28);
-    line-height: 1;
+    box-shadow: 0 2px 8px rgba(244, 63, 94, 0.2);
+    line-height: 1.2;
+    text-transform: uppercase;
     vertical-align: middle;
+}
+
+/* ==========================================================================
+   IBM CARBON DESIGN SYSTEM 11 ARCHITECTURAL STANDARD (CARDS, LABELS, BORDERS)
+   ========================================================================== */
+
+:root {
+    --cds-radius-card: 4px;
+    --cds-radius-tag: 2px;
+    --cds-border-subtle: rgba(255, 255, 255, 0.08);
+    --cds-border-strong: rgba(255, 255, 255, 0.16);
+    --cds-layer-01: rgba(15, 23, 42, 0.70);
+    --cds-layer-02: rgba(30, 41, 59, 0.60);
+    --cds-layer-hover: rgba(30, 41, 59, 0.90);
+    --cds-focus-cyan: #00F2FE;
+}
+
+// 1. Carbon Structured Tile (Replaces Bulky Rounded-4/5 Cards)
+.cds-tile,
+.ins-carbon-tile,
+.ins-carbon-card {
+    background: var(--cds-layer-01) !important;
+    backdrop-filter: blur(16px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+    border: 1px solid var(--cds-border-subtle) !important;
+    border-radius: var(--cds-radius-card) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+    transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                background 0.2s ease !important;
+
+    &:hover {
+        background: var(--cds-layer-hover) !important;
+        border-color: rgba(0, 242, 254, 0.35) !important;
+        transform: translateY(-2px);
+    }
+
+    &.ins-carbon-tile--accent-left {
+        border-left: 3px solid var(--cds-focus-cyan) !important;
+    }
+}
+
+// 2. Carbon Micro-Tag & Label (Replaces 9999px Capsule Pills)
+.cds-tag,
+.ins-carbon-tag {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 0.25rem 0.65rem !important;
+    border-radius: var(--cds-radius-tag) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #F8FAFC !important;
+    line-height: 1.2 !important;
+    vertical-align: middle !important;
+    box-shadow: none !important;
+
+    &.cds-tag--cyan {
+        background: rgba(0, 242, 254, 0.10) !important;
+        border-color: rgba(0, 242, 254, 0.30) !important;
+        color: #00F2FE !important;
+    }
+
+    &.cds-tag--orange {
+        background: rgba(255, 128, 0, 0.12) !important;
+        border-color: rgba(255, 128, 0, 0.32) !important;
+        color: #FF9020 !important;
+    }
+
+    &.cds-tag--green {
+        background: rgba(16, 185, 129, 0.12) !important;
+        border-color: rgba(16, 185, 129, 0.30) !important;
+        color: #34D399 !important;
+    }
+}
+
+// 3. Global Constraint Overrides for Carbon Precision
+// Ensures any existing .card or .badge inside the website adopts Carbon aesthetics
+.ins-mesh-canvas,
+.innoria-homepage,
+.innoria-navbar,
+main#wrap {
+    // Restrain bulky cards from 16px/24px to crisp 4px
+    .card:not(.modal-content):not(.dropdown-menu),
+    .rounded-4:not(.modal):not(.dropdown-menu):not(.rounded-circle),
+    .rounded-5:not(.modal):not(.dropdown-menu):not(.rounded-circle) {
+        border-radius: 4px !important;
+    }
+
+    // Restrain badges & tags from rounded-pill to 2px Carbon micro-tags
+    .badge.rounded-pill,
+    .badge.rounded-1,
+    .badge:not(.btn):not(.avatar) {
+        border-radius: 2px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        font-size: 0.72rem !important;
+        font-weight: 600 !important;
+    }
+
+    // Refined 1px hairline borders
+    .border-white-10 {
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .border-white-20 {
+        border-color: rgba(255, 255, 255, 0.14) !important;
+    }
 }
 
 /* ==========================================================================
@@ -245,20 +378,107 @@
    GLOBAL CARDLESS OVERRIDES (Dissolving Boxed Machine Cards)
    ========================================================================== */
 
-// 1. Convert preview cards and service cards to Liquid Spatial Layers
+// 1. Genuine Cardless / Liquid Spatial UI Primitives (Eliminating Card Bloat)
+.ins-cardless-step,
+.innoria-cadence-step {
+    background: transparent !important;
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.10) !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 1.75rem 1.25rem 1.25rem !important;
+    height: 100%;
+    transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &:hover {
+        border-top-color: var(--ins-aurora-mint) !important;
+        transform: translateY(-2px);
+    }
+
+    .cadence-badge {
+        font-size: 1.35rem;
+        font-weight: 800;
+        background: var(--ins-aurora-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: var(--bs-font-monospace, monospace);
+    }
+}
+
+.ins-cardless-solution {
+    background: transparent !important;
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 1.75rem 1rem !important;
+    height: 100%;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+        border-top-color: var(--ins-aurora-cyan) !important;
+    }
+}
+
+.ins-cardless-kpi {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 1rem !important;
+}
+
+.ins-cardless-quote {
+    background: transparent !important;
+    border: none !important;
+    border-start: 2px solid var(--ins-aurora-cyan) !important;
+    padding-left: 1.25rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    box-shadow: none !important;
+}
+
+.ins-cardless-layer {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 1rem 0 !important;
+    transition: border-color 0.25s ease;
+
+    &:last-child {
+        border-bottom: none !important;
+    }
+
+    &:hover {
+        border-bottom-color: rgba(66, 230, 195, 0.3) !important;
+    }
+}
+
+.ins-cardless-partner {
+    background: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+    border-radius: 2rem !important;
+    padding: 0.5rem 1.25rem !important;
+    opacity: 0.75;
+    transition: opacity 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+
+    &:hover {
+        opacity: 1;
+        border-color: var(--ins-aurora-cyan) !important;
+    }
+}
+
+// 2. Selective Floating Surfaces (Strictly Single Layer, Only When Essential)
 .ins-preview-card,
-.innoria-service-card,
-.innoria-cadence-card,
-.pillar-card-wrap .pillar-card,
-.dx-metric-card,
-.s_three_columns .card,
-.s_features_grid .card {
+.innoria-service-card {
     border: 1px solid var(--ins-spatial-border-glow) !important;
     background: var(--ins-spatial-layer-1) !important;
     backdrop-filter: blur(var(--ins-spatial-layer-blur)) saturate(var(--ins-spatial-layer-saturate)) !important;
     -webkit-backdrop-filter: blur(var(--ins-spatial-layer-blur)) saturate(var(--ins-spatial-layer-saturate)) !important;
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
-    border-radius: 1.5rem !important;
+    border-radius: 1.25rem !important;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.35s ease !important;
@@ -270,7 +490,18 @@
     }
 }
 
-// 2. Eliminate rigid #E2E8F0 borders on website cards
+// 3. Micro Metrics - Pure Typographic Baseline (No Heavy Card Overrides)
+.dx-metric-card {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    border-radius: 0 !important;
+    padding: 0.75rem 0.5rem !important;
+}
+
+// 4. Eliminate rigid #E2E8F0 borders on website cards
 .o_colored_level {
     .card.border,
     .card.border-secondary,
@@ -285,3 +516,1457 @@
     background: transparent !important;
     box-shadow: none !important;
 }
+
+// 4. Standard Enterprise Section Spacing Cadence (64px / 80px / 96px)
+.inn-section-md {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+    @media (max-width: 768px) {
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
+    }
+}
+
+.inn-section-lg {
+    padding-top: 80px !important;
+    padding-bottom: 80px !important;
+    @media (max-width: 768px) {
+        padding-top: 52px !important;
+        padding-bottom: 52px !important;
+    }
+}
+
+.inn-section-xl {
+    padding-top: 96px !important;
+    padding-bottom: 96px !important;
+    @media (max-width: 768px) {
+        padding-top: 64px !important;
+        padding-bottom: 64px !important;
+    }
+}
+
+
+// ==============================================================================
+// INNORIA LOGISTICS INTERACTIVE: LANDED-COST WATERFALL & FTA TREATY CITATION
+// Scope: #innoria_logistics_jobfile_interactive
+// Design System: Dark Mode Liquid Spatial Architecture (Bootstrap 5 Compatible)
+// Standard: WCAG AAA Compliant (Contrast >= 7:1 on citation texts)
+// Zero-Clipping & 0px Horizontal Overflow Guarantee
+// ==============================================================================
+
+#innoria_logistics_jobfile_interactive {
+  // ----------------------------------------------------------------------------
+  // 1. DESIGN TOKENS & LIQUID SPATIAL VARIABLES
+  // ----------------------------------------------------------------------------
+  --ins-navy-deep: #050B14;
+  --ins-navy-surface: #0B132B;
+  --ins-navy-elevated: rgba(15, 23, 42, 0.75);
+  --ins-aurora-mint: #42E6C3;
+  --ins-aurora-mint-glow: rgba(66, 230, 195, 0.28);
+  --ins-aurora-mint-subtle: rgba(66, 230, 195, 0.12);
+  --ins-electric-blue: #38BDF8;
+  --ins-electric-blue-glow: rgba(56, 189, 248, 0.25);
+  --ins-slate-dark: #0F172A;
+  --ins-slate-muted: #64748B;
+  --ins-slate-border: rgba(148, 163, 184, 0.15);
+  
+  // Cost Stage Semantic Palette
+  --ins-cost-fob: #64748B;          // Slate (Base Value)
+  --ins-cost-freight: #38BDF8;      // Electric Blue (Ocean/Air Freight)
+  --ins-cost-port: #F59E0B;         // Amber (Port Handling & Drayage)
+  --ins-cost-mfn: #F43F5E;          // Rose/Coral (Standard MFN Tariff Penalty)
+  --ins-cost-duty-paid: #A855F7;    // Violet/Purple (Reconciled Duty Paid)
+  --ins-cost-saved: #42E6C3;        // Aurora Mint (FTA Tariff Savings Delta)
+  
+  // Typography & Contrast Tokens (Strict WCAG AAA >= 7:1)
+  --ins-text-primary: #FFFFFF;      // 19.5:1 against #050B14 (AAA Pass)
+  --ins-text-high-contrast: #F1F5F9;// 16.2:1 against #050B14 (AAA Pass)
+  --ins-text-secondary: #CBD5E1;    // 12.8:1 against #050B14 (AAA Pass)
+  --ins-text-mint-aaa: #5EF3D2;     // 13.1:1 against #050B14 (AAA Pass)
+  --ins-font-mono: "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, monospace;
+  --ins-font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+  // Spatial Dimensions
+  --ins-radius-sm: 6px;
+  --ins-radius-md: 10px;
+  --ins-radius-lg: 12px;
+  --ins-radius-xl: 16px;
+  --ins-transition-base: all 260ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  // Structural Root Resets
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-family: var(--ins-font-sans);
+  color: var(--ins-text-primary);
+  background: transparent;
+  overflow-x: clip;
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  // ----------------------------------------------------------------------------
+  // 2. INTERACTIVE WATERFALL AUDIT TOGGLE
+  // ----------------------------------------------------------------------------
+  .inn-waterfall-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+
+    .inn-toggle-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      .inn-toggle-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--ins-text-primary);
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+
+        .inn-live-indicator {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: var(--ins-aurora-mint);
+          box-shadow: 0 0 10px var(--ins-aurora-mint);
+          display: inline-block;
+          animation: inn-pulse-glow 2s infinite ease-in-out;
+        }
+      }
+
+      .inn-toggle-subtitle {
+        font-size: 0.8125rem;
+        color: var(--ins-text-secondary);
+        margin: 0;
+        font-weight: 400;
+      }
+    }
+
+    .inn-toggle-switch {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px;
+      border-radius: 9999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--ins-slate-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+
+      .inn-toggle-btn {
+        appearance: none;
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-family: var(--ins-font-sans);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--ins-text-secondary);
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        min-height: 44px; // Mobile touch target accessibility
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: var(--ins-transition-base);
+        white-space: nowrap;
+
+        &:focus-visible {
+          box-shadow: 0 0 0 2px var(--ins-electric-blue);
+        }
+
+        .inn-btn-badge {
+          font-family: var(--ins-font-mono);
+          font-size: 0.6875rem;
+          padding: 2px 6px;
+          border-radius: 4px;
+          background: rgba(148, 163, 184, 0.15);
+          color: var(--ins-text-secondary);
+          transition: var(--ins-transition-base);
+        }
+
+        &.active, &[aria-pressed="true"] {
+          color: #050B14;
+          background: var(--ins-aurora-mint);
+          box-shadow: 0 2px 12px var(--ins-aurora-mint-glow);
+
+          .inn-btn-badge {
+            background: rgba(5, 11, 20, 0.2);
+            color: #050B14;
+            font-weight: 700;
+          }
+        }
+
+        &.active-pre {
+          color: #FFFFFF;
+          background: rgba(56, 189, 248, 0.2);
+          border: 1px solid var(--ins-electric-blue);
+          box-shadow: 0 2px 10px var(--ins-electric-blue-glow);
+
+          .inn-btn-badge {
+            background: var(--ins-electric-blue);
+            color: #050B14;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+
+  // ----------------------------------------------------------------------------
+  // 3. MAIN WATERFALL CONTAINER (Cardless Liquid Spatial Styling)
+  // ----------------------------------------------------------------------------
+  .inn-waterfall-container {
+    position: relative;
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: var(--ins-radius-lg);
+    background: rgba(5, 11, 20, 0.85);
+    border: 1px solid var(--ins-aurora-mint-subtle);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 
+      0 20px 40px -15px rgba(0, 0, 0, 0.7),
+      0 0 0 1px rgba(66, 230, 195, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: var(--ins-transition-base);
+
+    // Subtle liquid edge highlight
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(66, 230, 195, 0.35) 50%, transparent 100%);
+      pointer-events: none;
+    }
+  }
+
+  // ----------------------------------------------------------------------------
+  // 4. WATERFALL 6-STAGE RESPONSIVE GRID
+  // ----------------------------------------------------------------------------
+  .inn-waterfall-grid {
+    display: grid;
+    width: 100%;
+    gap: 0.875rem;
+    margin-bottom: 2rem;
+
+    // Desktop: >=992px -> 6 equal columns
+    @media (min-width: 992px) {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    // Tablet: 768px - 991.98px -> 3 columns x 2 rows
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    // Mobile: <768px -> 1 column stacked flow
+    @media (max-width: 767.98px) {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+  }
+
+  // ----------------------------------------------------------------------------
+  // 5. WATERFALL STAGE COMPONENT (.inn-waterfall-stage)
+  // ----------------------------------------------------------------------------
+  .inn-waterfall-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    min-height: 168px;
+    border-radius: var(--ins-radius-md);
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    transition: var(--ins-transition-base);
+    overflow: hidden;
+
+    &:hover {
+      background: rgba(15, 23, 42, 0.7);
+      border-color: rgba(66, 230, 195, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.6);
+    }
+
+    // Header: Step Chip & Stage Code
+    .inn-stage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+
+      .inn-stage-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        font-family: var(--ins-font-mono);
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: rgba(148, 163, 184, 0.12);
+        color: var(--ins-text-secondary);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .inn-stage-tag {
+        font-family: var(--ins-font-mono);
+        font-size: 0.6875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--ins-slate-muted);
+        font-weight: 600;
+      }
+    }
+
+    // Body: Title & Reference
+    .inn-stage-body {
+      flex: 1 1 auto;
+      margin-bottom: 0.75rem;
+
+      .inn-stage-title {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        line-height: 1.35;
+        color: var(--ins-text-high-contrast);
+        margin: 0 0 0.25rem 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .inn-stage-doc {
+        font-size: 0.6875rem;
+        color: var(--ins-slate-muted);
+        display: block;
+        font-family: var(--ins-font-mono);
+      }
+    }
+
+    // Footer: Value & Delta Indicator
+    .inn-stage-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      border-top: 1px dashed rgba(148, 163, 184, 0.12);
+      padding-top: 0.625rem;
+
+      .inn-stage-amount {
+        font-family: var(--ins-font-mono);
+        font-size: 1.0625rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--ins-text-primary);
+        line-height: 1.2;
+      }
+
+      .inn-stage-delta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        font-family: var(--ins-font-mono);
+        color: var(--ins-text-secondary);
+
+        .delta-icon {
+          font-size: 0.625rem;
+        }
+
+        &.delta-positive {
+          color: var(--ins-electric-blue);
+        }
+
+        &.delta-savings {
+          color: var(--ins-text-mint-aaa);
+          font-weight: 700;
+        }
+
+        &.delta-struck {
+          color: var(--ins-cost-mfn);
+          text-decoration: line-through;
+          opacity: 0.75;
+        }
+      }
+    }
+
+    // Stage Specific Variants
+    &.stage--fob {
+      .inn-stage-chip { color: var(--ins-text-secondary); }
+    }
+
+    &.stage--freight {
+      border-left: 2px solid var(--ins-cost-freight);
+      .inn-stage-chip { background: rgba(56, 189, 248, 0.15); color: var(--ins-cost-freight); }
+    }
+
+    &.stage--port {
+      border-left: 2px solid var(--ins-cost-port);
+      .inn-stage-chip { background: rgba(245, 158, 11, 0.15); color: var(--ins-cost-port); }
+    }
+
+    &.stage--mfn {
+      border-left: 2px solid var(--ins-cost-mfn);
+      background: rgba(244, 63, 94, 0.04);
+      .inn-stage-chip { background: rgba(244, 63, 94, 0.15); color: var(--ins-cost-mfn); }
+    }
+
+    &.stage--fta {
+      border-left: 2px solid var(--ins-aurora-mint);
+      background: rgba(66, 230, 195, 0.05);
+      border-color: rgba(66, 230, 195, 0.2);
+
+      .inn-stage-chip { 
+        background: var(--ins-aurora-mint); 
+        color: #050B14;
+        font-weight: 800;
+      }
+
+      .inn-stage-amount {
+        color: var(--ins-text-mint-aaa);
+      }
+    }
+
+    &.stage--landed {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(6, 182, 212, 0.12));
+      border: 1px solid var(--ins-aurora-mint);
+      box-shadow: 0 0 16px rgba(66, 230, 195, 0.15);
+
+      .inn-stage-chip {
+        background: var(--ins-aurora-mint);
+        color: #050B14;
+        font-weight: 800;
+      }
+
+      .inn-stage-amount {
+        font-size: 1.1875rem;
+        color: #FFFFFF;
+        text-shadow: 0 0 12px var(--ins-aurora-mint-glow);
+      }
+    }
+  }
+
+  // ----------------------------------------------------------------------------
+  // 6. HORIZONTAL STACKED BREAKDOWN BARS (.inn-waterfall-bars)
+  // ----------------------------------------------------------------------------
+  .inn-waterfall-bars-wrapper {
+    margin-bottom: 2rem;
+    width: 100%;
+
+    .inn-bars-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.625rem;
+      font-size: 0.75rem;
+
+      .inn-bars-label {
+        color: var(--ins-text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .inn-bars-total {
+        font-family: var(--ins-font-mono);
+        color: var(--ins-text-primary);
+        font-weight: 700;
+      }
+    }
+
+    .inn-waterfall-bars {
+      display: flex;
+      width: 100%;
+      height: 28px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+      position: relative;
+
+      .inn-bar-segment {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: width 600ms cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: pointer;
+
+        &::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: rgba(255, 255, 255, 0);
+          transition: background 180ms ease;
+        }
+
+        &:hover::after {
+          background: rgba(255, 255, 255, 0.15);
+        }
+
+        .inn-segment-text {
+          font-family: var(--ins-font-mono);
+          font-size: 0.6875rem;
+          font-weight: 700;
+          color: #050B14;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding: 0 4px;
+        }
+
+        // Segment Palette
+        &.bar--fob {
+          background: var(--ins-cost-fob);
+          .inn-segment-text { color: #FFFFFF; }
+        }
+
+        &.bar--freight {
+          background: var(--ins-cost-freight);
+          .inn-segment-text { color: #050B14; }
+        }
+
+        &.bar--port {
+          background: var(--ins-cost-port);
+          .inn-segment-text { color: #050B14; }
+        }
+
+        &.bar--duty-paid {
+          background: var(--ins-cost-duty-paid);
+          .inn-segment-text { color: #FFFFFF; }
+        }
+
+        &.bar--tariff-saved {
+          background: repeating-linear-gradient(
+            45deg,
+            var(--ins-aurora-mint),
+            var(--ins-aurora-mint) 6px,
+            #2dd4bf 6px,
+            #2dd4bf 12px
+          );
+          box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+          animation: inn-shimmer-stripes 25s linear infinite;
+
+          .inn-segment-text {
+            color: #050B14;
+            font-weight: 800;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+          }
+        }
+      }
+    }
+
+    // Legend
+    .inn-bars-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      margin-top: 0.75rem;
+      padding: 0;
+      list-style: none;
+
+      .inn-legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4375rem;
+        font-size: 0.75rem;
+        color: var(--ins-text-secondary);
+        font-weight: 500;
+
+        .legend-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 2px;
+          flex-shrink: 0;
+        }
+
+        &.item--fob .legend-dot { background: var(--ins-cost-fob); }
+        &.item--freight .legend-dot { background: var(--ins-cost-freight); }
+        &.item--port .legend-dot { background: var(--ins-cost-port); }
+        &.item--duty-paid .legend-dot { background: var(--ins-cost-duty-paid); }
+        &.item--saved .legend-dot { 
+          background: var(--ins-aurora-mint); 
+          box-shadow: 0 0 6px var(--ins-aurora-mint);
+        }
+      }
+    }
+  }
+
+  // ----------------------------------------------------------------------------
+  // 7. FTA TREATY CITATION COMPONENT (WCAG AAA >= 7:1)
+  // ----------------------------------------------------------------------------
+  .inn-treaty-citation {
+    position: relative;
+    width: 100%;
+    padding: 1.25rem;
+    border-radius: var(--ins-radius-md);
+    background: #08101E; // Opaque deep obsidian base ensures 100% stable AAA contrast
+    border: 1px solid rgba(66, 230, 195, 0.22);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+    .inn-citation-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.875rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+
+      .inn-badge-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+
+        .inn-treaty-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.375rem;
+          padding: 0.3125rem 0.625rem;
+          border-radius: var(--ins-radius-sm);
+          font-family: var(--ins-font-mono);
+          font-size: 0.75rem;
+          font-weight: 700;
+          line-height: 1;
+          letter-spacing: 0.02em;
+
+          &.badge-treaty {
+            background: rgba(66, 230, 195, 0.12);
+            color: var(--ins-text-mint-aaa); // 13.1:1 on #08101E (AAA)
+            border: 1px solid rgba(66, 230, 195, 0.35);
+          }
+
+          &.badge-origin {
+            background: rgba(56, 189, 248, 0.12);
+            color: #7DD3FC; // 10.9:1 on #08101E (AAA)
+            border: 1px solid rgba(56, 189, 248, 0.3);
+          }
+        }
+      }
+
+      .inn-verification-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--ins-text-primary); // 19.5:1 (AAA)
+
+        .status-check {
+          color: var(--ins-aurora-mint);
+          font-weight: 900;
+        }
+      }
+    }
+
+    .inn-citation-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .inn-legal-basis {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--ins-text-primary); // 19.5:1 (AAA)
+        margin: 0;
+        line-height: 1.45;
+      }
+
+      .inn-legal-clause {
+        font-size: 0.8125rem;
+        line-height: 1.5;
+        color: var(--ins-text-secondary); // 12.8:1 (AAA)
+        margin: 0;
+
+        strong {
+          color: var(--ins-text-high-contrast);
+          font-weight: 700;
+        }
+      }
+    }
+
+    .inn-citation-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed rgba(148, 163, 184, 0.12);
+
+      .inn-citation-hash {
+        font-family: var(--ins-font-mono);
+        font-size: 0.6875rem;
+        color: #94A3B8; // 7.2:1 against #08101E (WCAG AAA compliant)
+        letter-spacing: 0.04em;
+      }
+
+      .inn-citation-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--ins-text-mint-aaa);
+        text-decoration: none;
+        padding: 0.375rem 0.75rem;
+        border-radius: var(--ins-radius-sm);
+        background: rgba(66, 230, 195, 0.08);
+        border: 1px solid rgba(66, 230, 195, 0.25);
+        min-height: 44px; // WCAG Touch Target
+        transition: var(--ins-transition-base);
+
+        &:hover, &:focus-visible {
+          background: var(--ins-aurora-mint);
+          color: #050B14;
+          box-shadow: 0 0 12px var(--ins-aurora-mint-glow);
+        }
+      }
+    }
+  }
+
+  // ----------------------------------------------------------------------------
+  // 8. MOBILE OPTIMIZATIONS & ZERO-HORIZONTAL-OVERFLOW RIGOR
+  // ----------------------------------------------------------------------------
+  @media (max-width: 767.98px) {
+    .inn-waterfall-container {
+      padding: 1rem;
+      border-radius: var(--ins-radius-md);
+    }
+
+    .inn-waterfall-toggle {
+      flex-direction: column;
+      align-items: stretch;
+
+      .inn-toggle-switch {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        .inn-toggle-btn {
+          width: 100%;
+          padding: 0.625rem 0.5rem;
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    .inn-waterfall-stage {
+      min-height: auto;
+      padding: 0.875rem;
+
+      .inn-stage-footer {
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-between;
+      }
+    }
+
+    .inn-waterfall-bars-wrapper {
+      .inn-waterfall-bars {
+        height: 24px;
+
+        .inn-bar-segment .inn-segment-text {
+          font-size: 0.625rem;
+        }
+      }
+
+      .inn-bars-legend {
+        gap: 0.5rem 0.875rem;
+        .inn-legend-item { font-size: 0.6875rem; }
+      }
+    }
+
+    .inn-treaty-citation {
+      padding: 1rem;
+
+      .inn-citation-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .inn-citation-footer {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .inn-citation-cta {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+  // ----------------------------------------------------------------------------
+  // 9. ANIMATION DEFINITIONS & ACCESSIBILITY GUARD
+  // ----------------------------------------------------------------------------
+  @keyframes inn-pulse-glow {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.45;
+      transform: scale(0.92);
+    }
+  }
+
+  @keyframes inn-shimmer-stripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 400px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   10. INSILOS LUXURY LABELS, BADGES & ELEVATED STATUS TOKENS (.ins-label-lux)
+   WCAG AAA Compliant // Monospace Tracked Micro-Pills // Optical Glow Borders
+   ========================================================================== */
+.ins-label-lux {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.375rem !important;
+    height: 22px !important;
+    min-height: 22px !important;
+    padding: 0 0.55rem !important;
+    border-radius: 4px !important;
+    font-family: var(--bs-font-monospace, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace) !important;
+    font-size: 0.675rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+    transition: all 0.2s ease !important;
+    user-select: none !important;
+
+    &::before {
+        content: "" !important;
+        display: inline-block !important;
+        width: 5px !important;
+        height: 5px !important;
+        border-radius: 50% !important;
+        background-color: currentColor !important;
+        box-shadow: 0 0 6px currentColor !important;
+        flex-shrink: 0 !important;
+    }
+
+    &.ins-label-lux-pill {
+        border-radius: 9999px !important;
+        padding: 0 0.65rem !important;
+    }
+
+    // Color Token: Cyan (Tech & Intelligence)
+    &.ins-label-lux-cyan {
+        background: rgba(10, 187, 219, 0.12) !important;
+        color: #38BDF8 !important;
+        border: 1px solid rgba(10, 187, 219, 0.38) !important;
+        box-shadow: 0 0 10px rgba(10, 187, 219, 0.18) !important;
+        &::before {
+            background-color: #00F0FF !important;
+            box-shadow: 0 0 6px #00F0FF !important;
+        }
+    }
+
+    // Color Token: Mint / Emerald (Security, Verification & Pass)
+    &.ins-label-lux-mint {
+        background: rgba(16, 185, 129, 0.12) !important;
+        color: #34D399 !important;
+        border: 1px solid rgba(16, 185, 129, 0.38) !important;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.18) !important;
+        &::before {
+            background-color: #10B981 !important;
+            box-shadow: 0 0 6px #10B981 !important;
+        }
+    }
+
+    // Color Token: Blue / Cobalt (Core Platform & Standard)
+    &.ins-label-lux-blue {
+        background: rgba(2, 132, 199, 0.12) !important;
+        color: #7DD3FC !important;
+        border: 1px solid rgba(2, 132, 199, 0.38) !important;
+        box-shadow: 0 0 10px rgba(2, 132, 199, 0.18) !important;
+        &::before {
+            background-color: #38BDF8 !important;
+            box-shadow: 0 0 6px #38BDF8 !important;
+        }
+    }
+
+    // Color Token: Amber / Orange (Warning, High Priority & Freight)
+    &.ins-label-lux-amber {
+        background: rgba(245, 158, 11, 0.12) !important;
+        color: #FCD34D !important;
+        border: 1px solid rgba(245, 158, 11, 0.38) !important;
+        box-shadow: 0 0 10px rgba(245, 158, 11, 0.18) !important;
+        &::before {
+            background-color: #F59E0B !important;
+            box-shadow: 0 0 6px #F59E0B !important;
+        }
+    }
+
+    // Color Token: Rose / Crimson (Critical, LOTO, Hazard & Emergency)
+    &.ins-label-lux-rose {
+        background: rgba(239, 68, 68, 0.12) !important;
+        color: #FCA5A5 !important;
+        border: 1px solid rgba(239, 68, 68, 0.38) !important;
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.18) !important;
+        &::before {
+            background-color: #EF4444 !important;
+            box-shadow: 0 0 6px #EF4444 !important;
+        }
+    }
+
+    // Color Token: Violet / Indigo (AI Swarm, Cognitive & Quantum)
+    &.ins-label-lux-violet {
+        background: rgba(168, 85, 247, 0.12) !important;
+        color: #C084FC !important;
+        border: 1px solid rgba(168, 85, 247, 0.38) !important;
+        box-shadow: 0 0 10px rgba(168, 85, 247, 0.18) !important;
+        &::before {
+            background-color: #A855F7 !important;
+            box-shadow: 0 0 6px #A855F7 !important;
+        }
+    }
+
+    // Color Token: Subtle / Slate (Air-Gapped, Titanium & Structure)
+    &.ins-label-lux-subtle {
+        background: rgba(255, 255, 255, 0.06) !important;
+        color: #E2E8F0 !important;
+        border: 1px solid rgba(255, 255, 255, 0.16) !important;
+        box-shadow: none !important;
+        &::before {
+            background-color: #94A3B8 !important;
+            box-shadow: 0 0 4px #94A3B8 !important;
+        }
+    }
+}
+
+/* ==========================================================================
+   11. INSILOS LUXURY BUTTON ARCHITECTURE (.ins-btn-lux)
+   ========================================================================== */
+.ins-btn-lux {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    border-radius: 9999px !important;
+    padding: 0.75rem 1.65rem !important;
+    min-height: 44px !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    position: relative !important;
+    overflow: hidden !important;
+
+    &.ins-btn-lux-primary {
+        background: linear-gradient(135deg, #0ABBDB 0%, #00F0FF 100%) !important;
+        color: #05101E !important;
+        border: 1px solid rgba(0, 240, 255, 0.5) !important;
+        box-shadow: 0 4px 20px rgba(0, 240, 255, 0.35) !important;
+
+        &:hover, &:focus-visible {
+            background: linear-gradient(135deg, #00F0FF 0%, #38BDF8 100%) !important;
+            color: #05101E !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 28px rgba(0, 240, 255, 0.55) !important;
+        }
+    }
+
+    &.ins-btn-lux-outline {
+        background: rgba(255, 255, 255, 0.05) !important;
+        color: #FFFFFF !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+
+        &:hover, &:focus-visible {
+            background: rgba(255, 255, 255, 0.12) !important;
+            color: #FFFFFF !important;
+            border-color: #0ABBDB !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(10, 187, 219, 0.25) !important;
+        }
+    }
+
+    &.ins-btn-lux-secondary {
+        background: rgba(15, 23, 42, 0.8) !important;
+        color: #F8FAFC !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        backdrop-filter: blur(8px) !important;
+
+        &:hover, &:focus-visible {
+            background: rgba(30, 41, 59, 0.9) !important;
+            color: #FFFFFF !important;
+            border-color: rgba(255, 255, 255, 0.25) !important;
+            transform: translateY(-2px) !important;
+        }
+    }
+}
+
+/* ==========================================================================
+   12. HOMEPAGE & INTERACTIVE SNIPPETS SCSS UNIFICATION
+   Extracted from inline styles into unified web.assets_frontend
+   ========================================================================== */
+
+// Bulletproof Poor Layout Normalization
+html, body, #wrapwrap, main#wrap {
+    overflow-x: clip !important;
+    max-width: 100vw !important;
+}
+
+.innoria-hud-control-bar {
+    max-width: calc(100% - 1.5rem) !important;
+    overflow-x: auto !important;
+
+    @media (max-width: 767.98px) {
+        left: 0.5rem !important;
+        right: 0.5rem !important;
+        transform: none !important;
+        width: calc(100% - 1rem) !important;
+        max-width: calc(100% - 1rem) !important;
+        bottom: 0.5rem !important;
+        padding: 0.25rem 0.4rem !important;
+        gap: 0.25rem !important;
+        border-radius: 0.75rem !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+}
+
+.innoria-hud-btn {
+    @media (max-width: 767.98px) {
+        font-size: 0.68rem !important;
+        padding: 0.25rem 0.5rem !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+    }
+}
+
+.service-img-wrapper {
+    height: 200px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+}
+
+.service-img {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+.innoria-service-card {
+    max-width: 100% !important;
+    overflow: hidden !important;
+}
+
+.o_skip_to_content {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+// Hero Interactive Stage Architecture
+.innoria-hero-slider-section,
+.innoria-hero-interactive-stage {
+    position: relative !important;
+    background: #070B14 !important;
+    min-height: 820px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+    max-width: 100vw !important;
+    padding-top: 60px !important;
+    padding-bottom: 30px !important;
+}
+
+.hero-video-stage {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    max-width: 100vw !important;
+    z-index: 0 !important;
+}
+
+.video-slide-layer {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    max-width: 100vw !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: scale(1.0) !important;
+    transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+
+    &.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: scale(1.0) !important;
+        z-index: 2 !important;
+    }
+}
+
+.hero-slide-item {
+    display: none !important;
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+    &.active {
+        display: block !important;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+}
+
+.hero-main-title {
+    font-size: clamp(2.2rem, 4.5vw, 3.8rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.02em !important;
+    color: #FFFFFF !important;
+    text-wrap: balance !important;
+}
+
+.hero-gradient-text {
+    background: var(--hero-gradient, linear-gradient(135deg, #0ABBDB 0%, #00F0FF 100%)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+.hero-lead-desc {
+    color: #CBD5E1 !important;
+    font-size: clamp(1rem, 1.35vw, 1.25rem) !important;
+    line-height: 1.65 !important;
+    max-width: 900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-wrap: balance !important;
+}
+
+.hero-badge-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 4px 12px !important;
+    border-radius: 2px !important;
+    font-family: ui-monospace, monospace !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    background: rgba(11, 19, 36, 0.90) !important;
+    border: 1px solid var(--hero-accent, #00F0FF) !important;
+    color: var(--hero-accent, #00F0FF) !important;
+    box-shadow: 0 0 12px var(--hero-accent-glow, rgba(0, 240, 255, 0.25)) !important;
+    backdrop-filter: blur(12px) !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    text-wrap: balance !important;
+}
+
+.hero-feature-chips-deck {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin-bottom: 2rem !important;
+}
+
+.hero-feature-chip {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 4px 10px !important;
+    border-radius: 2px !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    color: #CBD5E1 !important;
+    background: rgba(15, 23, 42, 0.65) !important;
+    border: 1px solid rgba(255, 255, 255, 0.10) !important;
+    backdrop-filter: blur(8px) !important;
+    max-width: 100% !important;
+    transition: all 0.2s ease !important;
+
+    &:hover {
+        border-color: rgba(0, 242, 254, 0.35) !important;
+        color: #F8FAFC !important;
+    }
+}
+
+.hero-cta-group {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 16px !important;
+    margin-bottom: 2rem !important;
+}
+
+.hero-cta-btn-primary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 14px 32px !important;
+    min-height: 48px !important;
+    border-radius: 9999px !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #05101E !important;
+    background: var(--hero-accent, #00F0FF) !important;
+    border: none !important;
+    text-decoration: none !important;
+    box-shadow: 0 0 24px var(--hero-accent-glow, rgba(0, 240, 255, 0.5)) !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+
+    &:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 0 32px var(--hero-accent-glow, rgba(0, 240, 255, 0.75)) !important;
+        color: #05101E !important;
+    }
+}
+
+.hero-cta-btn-secondary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 14px 28px !important;
+    min-height: 48px !important;
+    border-radius: 9999px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #FFFFFF !important;
+    background: rgba(15, 23, 42, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    text-decoration: none !important;
+    backdrop-filter: blur(8px) !important;
+    transition: transform 0.25s ease, background 0.25s ease !important;
+
+    &:hover {
+        transform: translateY(-2px) !important;
+        background: rgba(255, 255, 255, 0.12) !important;
+        color: #FFFFFF !important;
+    }
+}
+
+.hero-scene-switcher-nav {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+}
+
+.hero-scene-tab-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 10px 18px !important;
+    min-height: 44px !important;
+    border-radius: 12px !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #94A3B8 !important;
+    background: rgba(15, 23, 42, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(12px) !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+
+    &.active {
+        color: #FFFFFF !important;
+        border-color: var(--tab-accent, #00F0FF) !important;
+        box-shadow: 0 0 20px var(--tab-glow, rgba(0, 240, 255, 0.35)) !important;
+        background: rgba(15, 23, 42, 0.95) !important;
+    }
+}
+
+// Anti-Overflow, Text-Wrap Balance & Component Hygiene
+.badge, .badge-innoria-cyan, .badge-digiforce, .badge-mojoai, .ins-badge-aurora, .ins-cctv-box-tag {
+    white-space: normal !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+    text-wrap: balance !important;
+    display: inline-block !important;
+}
+
+img.stage-logo {
+    max-width: 140px !important;
+    max-height: 105px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+.pillar-logo-stage {
+    height: 140px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+.pillar-card {
+    overflow: hidden !important;
+    max-width: 100% !important;
+}
+
+#lang_toggle_vi, #lang_toggle_en {
+    min-height: 38px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 6px 12px !important;
+    color: #F8FAFC !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    border-radius: 6px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    transition: all 0.2s ease-in-out !important;
+
+    &:hover {
+        color: #00F0FF !important;
+        background: rgba(255, 255, 255, 0.14) !important;
+        border-color: rgba(0, 240, 255, 0.5) !important;
+    }
+
+    &.is-active, &.active {
+        color: #070B14 !important;
+        background: #00F0FF !important;
+        border-color: #00F0FF !important;
+    }
+}
+
+.badge-innoria-orange {
+    background: #FFF7ED !important;
+    color: #9A3412 !important;
+    border: 1px solid #FDBA74 !important;
+}
+
+
+
+@media (max-width: 767.98px) {
+    .aiaas-flow-track {
+        flex-wrap: wrap !important;
+        gap: 0.75rem !important;
+        justify-content: center !important;
+
+        .flow-line {
+            display: none !important;
+        }
+
+        .aiaas-flow-node {
+            width: 100% !important;
+            max-width: 280px !important;
+        }
+    }
+}
+
+a.innoria-footer-link,
+a.text-decoration-none.fw-semibold {
+    min-height: 40px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.innoria-footer h6 {
+    color: #0F172A !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    margin-bottom: 1rem !important;
+}
+
+.innoria-footer-link {
+    color: #475569 !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease !important;
+
+    &:hover {
+        color: #0284C7 !important;
+        text-decoration: underline !important;
+    }
+}
+
+.dx-toggle-btn {
+    min-height: 40px !important;
+    padding: 0.45rem 1rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.rounded-pill.d-inline-flex {
+    max-width: 100% !important;
+    white-space: normal !important;
+    text-wrap: balance !important;
+    word-break: break-word !important;
+
+    span {
+        max-width: 100% !important;
+        word-break: break-word !important;
+    }
+}
+

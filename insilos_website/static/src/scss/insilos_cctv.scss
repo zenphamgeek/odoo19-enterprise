@@ -75,91 +75,10 @@
         }
 
         // Scanline Grid & CRT Effect
-        .ins-cctv-scanlines {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                rgba(18, 16, 16, 0) 50%, 
-                rgba(0, 0, 0, 0.25) 50%
-            ), linear-gradient(
-                90deg,
-                rgba(255, 0, 0, 0.03),
-                rgba(0, 255, 0, 0.01),
-                rgba(0, 0, 255, 0.03)
-            );
-            background-size: 100% 4px, 6px 100%;
-            pointer-events: none;
-            z-index: 4;
-            opacity: 0.65;
-        }
 
         // Tactical Corner Markers
-        .ins-cctv-corner {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            pointer-events: none;
-            z-index: 6;
-
-            &.ins-corner-tl {
-                top: 14px;
-                left: 14px;
-                border-top: 2px solid #ff8000;
-                border-left: 2px solid #ff8000;
-            }
-            &.ins-corner-tr {
-                top: 14px;
-                right: 14px;
-                border-top: 2px solid #ff8000;
-                border-right: 2px solid #ff8000;
-            }
-            &.ins-corner-bl {
-                bottom: 14px;
-                left: 14px;
-                border-bottom: 2px solid #ff8000;
-                border-left: 2px solid #ff8000;
-            }
-            &.ins-corner-br {
-                bottom: 14px;
-                right: 14px;
-                border-bottom: 2px solid #ff8000;
-                border-right: 2px solid #ff8000;
-            }
-        }
 
         // Central Targeting Reticle
-        .ins-cctv-reticle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            border: 1px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 4;
-
-            &::before, &::after {
-                content: '';
-                position: absolute;
-                background-color: rgba(255, 255, 255, 0.35);
-            }
-            &::before {
-                top: 50%;
-                left: -8px;
-                right: -8px;
-                height: 1px;
-                transform: translateY(-50%);
-            }
-            &::after {
-                left: 50%;
-                top: -8px;
-                bottom: -8px;
-                width: 1px;
-                transform: translateX(-50%);
-            }
-        }
 
         // Top Status HUD Bar
         .ins-cctv-topbar {
@@ -527,4 +446,158 @@
             }
         }
     }
+}
+
+/* ==========================================================================
+   AI CCTV HUD OVERLAYS, SCANLINES & BOUNDING BOX ARCHITECTURE
+   Unified into web.assets_frontend
+   ========================================================================== */
+.s_insilos_cctv_ai_camera {
+    .ins-cctv-laser-beam {
+        position: absolute !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 3px !important;
+        background: linear-gradient(90deg, transparent 0%, #42E6C3 15%, #00F2FE 50%, #FFFFFF 52%, #00F2FE 54%, #42E6C3 85%, transparent 100%) !important;
+        box-shadow: 0 0 18px #00F2FE, 0 0 32px rgba(66, 230, 195, 0.85), 0 0 50px rgba(0, 242, 254, 0.5) !important;
+        pointer-events: none !important;
+        z-index: 6 !important;
+        animation: cctvLaserScan 3.8s ease-in-out infinite !important;
+
+        &::after {
+            content: "" !important;
+            position: absolute !important;
+            left: 0 !important;
+            right: 0 !important;
+            top: -45px !important;
+            height: 45px !important;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 242, 254, 0.08) 60%, rgba(66, 230, 195, 0.22) 100%) !important;
+            pointer-events: none !important;
+        }
+    }
+
+    .ins-cctv-calibration-grid {
+        position: absolute !important;
+        inset: 0 !important;
+        pointer-events: none !important;
+        z-index: 2 !important;
+        background-image: 
+            linear-gradient(rgba(0, 242, 254, 0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 242, 254, 0.06) 1px, transparent 1px),
+            linear-gradient(rgba(66, 230, 195, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(66, 230, 195, 0.02) 1px, transparent 1px) !important;
+        background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px !important;
+        opacity: 0.75 !important;
+    }
+
+    .ins-cctv-overlay-layer {
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 5 !important;
+        pointer-events: none !important;
+    }
+
+    .ins-cctv-box {
+        position: absolute !important;
+        border-radius: 4px !important;
+        box-sizing: border-box !important;
+        pointer-events: none !important;
+        transition: opacity 0.25s ease, transform 0.2s ease, border-color 0.2s ease !important;
+        opacity: 1 !important;
+
+        &.is-hidden {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+
+        .ins-cctv-box-tag {
+            position: absolute !important;
+            top: -24px !important;
+            left: -2px !important;
+            font-family: var(--bs-font-monospace, monospace) !important;
+            font-size: 0.68rem !important;
+            font-weight: 700 !important;
+            padding: 2px 7px !important;
+            border-radius: 3px !important;
+            white-space: nowrap !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.04em !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+        }
+    }
+
+    .ins-bbox-helmet {
+        border: 2px solid #10B981 !important;
+        background-color: rgba(16, 185, 129, 0.14) !important;
+
+        .ins-cctv-box-tag {
+            background-color: #10B981 !important;
+            color: #022C22 !important;
+        }
+    }
+
+    .ins-bbox-vest {
+        border: 2px solid #06B6D4 !important;
+        background-color: rgba(6, 182, 212, 0.14) !important;
+
+        .ins-cctv-box-tag {
+            background-color: #06B6D4 !important;
+            color: #083344 !important;
+        }
+    }
+
+    .ins-bbox-person {
+        border: 1px dashed rgba(255, 255, 255, 0.4) !important;
+        background-color: rgba(255, 255, 255, 0.03) !important;
+
+        .ins-cctv-box-tag {
+            background-color: rgba(30, 41, 59, 0.9) !important;
+            color: #CBD5E1 !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+    }
+
+    .ins-bbox-danger-zone {
+        border: 2px dashed #F59E0B !important;
+        background-color: rgba(245, 158, 11, 0.12) !important;
+
+        .ins-cctv-box-tag {
+            background-color: #F59E0B !important;
+            color: #451A03 !important;
+        }
+    }
+
+    .ins-cctv-box.is-violation {
+        border: 2px solid #EF4444 !important;
+        background-color: rgba(239, 68, 68, 0.25) !important;
+
+        .ins-cctv-box-tag {
+            background-color: #EF4444 !important;
+            color: #FFFFFF !important;
+        }
+    }
+
+    .ins-cctv-rt-stream {
+        position: absolute !important;
+        bottom: 42px !important;
+        left: 14px !important;
+        right: 14px !important;
+        padding: 6px 14px !important;
+        background: rgba(3, 7, 18, 0.85) !important;
+        backdrop-filter: blur(8px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 8px !important;
+        z-index: 6 !important;
+        font-family: var(--bs-font-monospace, monospace) !important;
+        font-size: 0.72rem !important;
+        color: #94A3B8 !important;
+        pointer-events: none !important;
+    }
+}
+
+@keyframes cctvLaserScan {
+    0% { top: 0%; opacity: 0.9; }
+    50% { top: 100%; opacity: 1; }
+    100% { top: 0%; opacity: 0.9; }
 }

@@ -1,0 +1,476 @@
+/* ==========================================================================
+   INNORIA GRC (Governance, Risk & Compliance) Interactive Engines SCSS
+   File: enterprise/insilos_website/static/src/scss/innoria_grc_interactive.scss
+   High-contrast, WCAG AAA compliant, IBM Carbon / SAP Fiori inspired tokens.
+   ========================================================================== */
+
+.innoria-grc-section {
+    background: #070B14 !important;
+    color: #F8FAFC !important;
+    position: relative;
+    overflow-x: clip;
+
+    .grc-eyebrow {
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #0ABBDB !important;
+    }
+
+    .grc-headline {
+        font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+        font-weight: 800;
+        line-height: 1.2;
+        color: #FFFFFF;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+    }
+
+    .grc-subtitle {
+        color: #94A3B8;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        max-width: 820px;
+        text-wrap: pretty;
+    }
+
+    .grc-pill-tag {
+        font-size: 0.72rem;
+        font-family: ui-monospace, monospace;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 9999px;
+        background: rgba(10, 187, 219, 0.12);
+        color: #38BDF8;
+        border: 1px solid rgba(10, 187, 219, 0.3);
+    }
+
+    /* Interactive Tab Bar */
+    .grc-tab-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        background: rgba(15, 23, 42, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 6px;
+        border-radius: 12px;
+        backdrop-filter: blur(12px);
+
+        .grc-tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: #94A3B8;
+            padding: 8px 18px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            &:hover {
+                color: #FFFFFF;
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            &.active {
+                background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+                color: #FFFFFF;
+                border-color: rgba(56, 189, 248, 0.4);
+                box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+            }
+        }
+    }
+
+    .grc-tab-pane {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+
+        &.active {
+            display: block;
+            opacity: 1;
+        }
+    }
+
+    /* Interactive Workstation Card */
+    .grc-card {
+        background: rgba(11, 19, 36, 0.88);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 24px;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Structured Data Table */
+    .grc-table {
+        width: 100%;
+        margin-bottom: 0;
+        color: #E2E8F0;
+        border-collapse: separate;
+        border-spacing: 0;
+
+        th {
+            background: rgba(15, 23, 42, 0.85);
+            color: #94A3B8;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px 14px;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            vertical-align: middle;
+        }
+
+        tr.has-exception td {
+            background: rgba(234, 88, 12, 0.08);
+            border-bottom-color: rgba(234, 88, 12, 0.2);
+        }
+
+        tr.is-matched td {
+            background: rgba(16, 185, 129, 0.05);
+        }
+    }
+
+    /* Monospace Code & Audit Trail */
+    .grc-audit-box {
+        background: #030712;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        padding: 14px;
+        max-height: 240px;
+        overflow-y: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        color: #A5B4FC;
+    }
+
+    /* LOTO Interactive Padlock Points */
+    .loto-point-item {
+        background: rgba(15, 23, 42, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 16px;
+        transition: all 0.25s ease;
+
+        &.is-locked {
+            border-color: rgba(16, 185, 129, 0.45);
+            background: rgba(6, 78, 59, 0.15);
+        }
+
+        &.is-unlocked {
+            border-color: rgba(239, 68, 68, 0.45);
+            background: rgba(127, 29, 29, 0.15);
+        }
+    }
+
+    /* Shift Log Stream */
+    .shift-log-item {
+        border-left: 3px solid #64748B;
+        padding-left: 14px;
+        margin-bottom: 12px;
+
+        &[data-priority="P1"] {
+            border-left-color: #EF4444;
+        }
+        &[data-priority="P2"] {
+            border-left-color: #F59E0B;
+        }
+        &[data-priority="P3"] {
+            border-left-color: #38BDF8;
+        }
+    }
+
+    /* Breakthrough 3: LOTO Live Reactor Topology Circuit */
+    .loto-circuit-container {
+        background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.95) 0%, rgba(3, 7, 18, 0.98) 100%);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 16px;
+        padding: 1.25rem;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(56, 189, 248, 0.05);
+
+        .loto-feeder-line {
+            transition: stroke 0.4s ease, stroke-dasharray 0.4s ease, filter 0.4s ease;
+        }
+
+        .feeder-hazard-pulse {
+            stroke-dasharray: 8 6;
+            animation: lotoHazardPulse 1.2s linear infinite;
+        }
+
+        .feeder-isolated-safe {
+            stroke: #10B981 !important;
+            stroke-dasharray: none !important;
+            animation: none !important;
+            filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.6));
+        }
+
+        .loto-svg-node {
+            cursor: pointer;
+            transition: transform 0.2s ease, filter 0.2s ease;
+            &:hover {
+                transform: scale(1.04);
+                filter: brightness(1.2);
+            }
+        }
+    }
+
+    @keyframes lotoHazardPulse {
+        0% { stroke-dashoffset: 28; }
+        100% { stroke-dashoffset: 0; }
+    }
+
+    .ptw-stamp-box {
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px dashed rgba(56, 189, 248, 0.4);
+        border-radius: 12px;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        &.is-stamped {
+            background: rgba(6, 78, 59, 0.25);
+            border: 1px solid #10B981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+    }
+
+    /* Luxury Telemetry Badges (e-PTW, LOTO, Gauges) */
+    .ins-telemetry-badge,
+    #ptwGasStatus,
+    #ptwCountdownBadge,
+    .loto-circuit-container .badge {
+        border-radius: 9999px !important;
+        font-family: var(--bs-font-monospace, ui-monospace, monospace);
+        font-size: 0.76rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.03em;
+        padding: 6px 14px !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.25s ease;
+    }
+
+    #ptwGasStatus {
+        &.bg-warning,
+        &.border-warning,
+        &.text-warning {
+            background: rgba(245, 158, 11, 0.12) !important;
+            color: #FDE68A !important;
+            border: 1px solid rgba(245, 158, 11, 0.4) !important;
+            box-shadow: 0 2px 12px rgba(245, 158, 11, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        &.bg-success,
+        &.border-success,
+        &.text-success {
+            background: rgba(16, 185, 129, 0.12) !important;
+            color: #A7F3D0 !important;
+            border: 1px solid rgba(16, 185, 129, 0.4) !important;
+            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    #ptwCountdownBadge {
+        background: rgba(56, 189, 248, 0.12) !important;
+        color: #BAE6FD !important;
+        border: 1px solid rgba(56, 189, 248, 0.4) !important;
+        box-shadow: 0 2px 12px rgba(56, 189, 248, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    /* Executive Interactive Action Buttons */
+    #btnRunReconRules {
+        background: linear-gradient(135deg, rgba(2, 132, 199, 0.95) 0%, rgba(8, 145, 178, 0.95) 100%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+        box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        color: #FFFFFF !important;
+        backdrop-filter: blur(12px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+
+        &:hover {
+            transform: translateY(-1.5px);
+            background: linear-gradient(135deg, #0284C7 0%, #06B6D4 100%) !important;
+            border-color: rgba(66, 230, 195, 0.6) !important;
+            box-shadow: 0 6px 22px rgba(2, 132, 199, 0.5), 0 0 14px rgba(66, 230, 195, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+        }
+    }
+
+    #btnApproveRecon,
+    #btnSignPtw {
+        border-radius: 9999px !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        backdrop-filter: blur(12px);
+
+        &[disabled],
+        &:disabled {
+            background: rgba(30, 41, 59, 0.5) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            color: rgba(148, 163, 184, 0.55) !important;
+            box-shadow: none !important;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        &:not([disabled]):not(:disabled) {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+            border: 1px solid rgba(167, 243, 208, 0.35) !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+
+            &:hover {
+                transform: translateY(-1.5px);
+                background: linear-gradient(135deg, #34D399 0%, #059669 100%) !important;
+                border-color: rgba(167, 243, 208, 0.6) !important;
+                box-shadow: 0 6px 24px rgba(16, 185, 129, 0.5), 0 0 16px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+            }
+        }
+    }
+
+    .btn-loto-toggle {
+        border-radius: 9999px !important;
+        font-weight: 600 !important;
+        font-size: 0.8rem !important;
+        padding: 6px 16px !important;
+        backdrop-filter: blur(10px);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+        &.btn-outline-success {
+            background: rgba(16, 185, 129, 0.08) !important;
+            border: 1px solid rgba(16, 185, 129, 0.35) !important;
+            color: #A7F3D0 !important;
+            box-shadow: 0 2px 10px rgba(16, 185, 129, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+            &:hover {
+                background: rgba(16, 185, 129, 0.22) !important;
+                border-color: #10B981 !important;
+                color: #FFFFFF !important;
+                box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                transform: translateY(-1px);
+            }
+        }
+
+        &.btn-outline-danger {
+            background: rgba(239, 68, 68, 0.1) !important;
+            border: 1px solid rgba(239, 68, 68, 0.4) !important;
+            color: #FECACA !important;
+            box-shadow: 0 2px 10px rgba(239, 68, 68, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+            &:hover {
+                background: rgba(239, 68, 68, 0.25) !important;
+                border-color: #EF4444 !important;
+                color: #FFFFFF !important;
+                box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                transform: translateY(-1px);
+            }
+        }
+    }
+
+    #btnSimulateOverride {
+        background: rgba(225, 29, 72, 0.12) !important;
+        border: 1px solid rgba(244, 63, 94, 0.4) !important;
+        color: #FDA4AF !important;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(225, 29, 72, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transition: all 0.25s ease;
+
+        &:hover {
+            background: rgba(225, 29, 72, 0.24) !important;
+            border-color: #FB7185 !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 16px rgba(225, 29, 72, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+    }
+
+    #btnResetOverride {
+        background: rgba(2, 132, 199, 0.12) !important;
+        border: 1px solid rgba(56, 189, 248, 0.4) !important;
+        color: #BAE6FD !important;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(2, 132, 199, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transition: all 0.25s ease;
+
+        &:hover {
+            background: rgba(2, 132, 199, 0.24) !important;
+            border-color: #38BDF8 !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+    }
+
+    #btnToggleCoPreview,
+    #btnExportChemDossier {
+        border-radius: 9999px !important;
+        backdrop-filter: blur(10px);
+        transition: all 0.25s ease;
+
+        &.btn-outline-info {
+            background: rgba(2, 132, 199, 0.1) !important;
+            border: 1px solid rgba(56, 189, 248, 0.35) !important;
+            color: #BAE6FD !important;
+
+            &:hover {
+                background: rgba(2, 132, 199, 0.22) !important;
+                border-color: #38BDF8 !important;
+                color: #FFFFFF !important;
+                box-shadow: 0 4px 16px rgba(2, 132, 199, 0.3);
+                transform: translateY(-1px);
+            }
+        }
+
+        &.btn-outline-warning {
+            background: rgba(245, 158, 11, 0.1) !important;
+            border: 1px solid rgba(245, 158, 11, 0.35) !important;
+            color: #FDE68A !important;
+
+            &:hover {
+                background: rgba(245, 158, 11, 0.22) !important;
+                border-color: #F59E0B !important;
+                color: #FFFFFF !important;
+                box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+                transform: translateY(-1px);
+            }
+        }
+    }
+
+    .loto-status-badge {
+        border-radius: 9999px !important;
+        font-family: var(--bs-font-monospace, ui-monospace, monospace);
+        font-size: 0.72rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.02em;
+        padding: 4px 10px !important;
+        backdrop-filter: blur(10px);
+
+        &.bg-success {
+            background: rgba(16, 185, 129, 0.12) !important;
+            color: #A7F3D0 !important;
+            border: 1px solid rgba(16, 185, 129, 0.4) !important;
+        }
+
+        &.bg-danger {
+            background: rgba(239, 68, 68, 0.12) !important;
+            color: #FECACA !important;
+            border: 1px solid rgba(239, 68, 68, 0.4) !important;
+        }
+    }
+}

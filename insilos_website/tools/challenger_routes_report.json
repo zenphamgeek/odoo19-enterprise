@@ -1,0 +1,787 @@
+{
+  "timestamp": "2026-10-08T03:27:23Z",
+  "base_url": "http://localhost:28069",
+  "total_tests": 105,
+  "passed": 105,
+  "failed": 0,
+  "verdict": "Verdict: APPROVE",
+  "categories": {
+    "Happy Path Routes": {
+      "pass": 14,
+      "fail": 0,
+      "total": 14
+    },
+    "Master Brochure Streaming": {
+      "pass": 5,
+      "fail": 0,
+      "total": 5
+    },
+    "Vietnamese Scenario PDFs": {
+      "pass": 45,
+      "fail": 0,
+      "total": 45
+    },
+    "Boundary - Invalid Slugs": {
+      "pass": 6,
+      "fail": 0,
+      "total": 6
+    },
+    "Boundary - Out-of-Range Scenarios": {
+      "pass": 14,
+      "fail": 0,
+      "total": 14
+    },
+    "Boundary - Advanced Edge Cases": {
+      "pass": 10,
+      "fail": 0,
+      "total": 10
+    },
+    "Adversarial Injections & Traversals": {
+      "pass": 10,
+      "fail": 0,
+      "total": 10
+    },
+    "Concurrency Stress": {
+      "pass": 1,
+      "fail": 0,
+      "total": 1
+    }
+  },
+  "results": [
+    {
+      "name": "Brochure Main Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.63s, keywords confirmed"
+    },
+    {
+      "name": "Brochure Solution Alias Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.23s, keywords confirmed"
+    },
+    {
+      "name": "Dossiers Hub Main Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.93s, keywords confirmed"
+    },
+    {
+      "name": "Dossiers Solution Alias Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.12s, keywords confirmed"
+    },
+    {
+      "name": "Petrochem Dedicated Industry Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.48s, keywords confirmed"
+    },
+    {
+      "name": "Gas Pipeline Dedicated Industry Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.42s, keywords confirmed"
+    },
+    {
+      "name": "Metallurgy Dedicated Industry Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.42s, keywords confirmed"
+    },
+    {
+      "name": "Thermal Power Dedicated Industry Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.44s, keywords confirmed"
+    },
+    {
+      "name": "Pharma GxP Dedicated Industry Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.16s, keywords confirmed"
+    },
+    {
+      "name": "Petrochem Dossier Detail Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.24s, keywords confirmed"
+    },
+    {
+      "name": "Gas Pipeline Dossier Detail Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.18s, keywords confirmed"
+    },
+    {
+      "name": "Metallurgy Dossier Detail Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.16s, keywords confirmed"
+    },
+    {
+      "name": "Thermal Power Dossier Detail Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.18s, keywords confirmed"
+    },
+    {
+      "name": "Pharma Dossier Detail Route",
+      "category": "Happy Path Routes",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200 OK in 0.38s, keywords confirmed"
+    },
+    {
+      "name": "Master Brochure Download (Default)",
+      "category": "Master Brochure Streaming",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=7363747 bytes (>1MB), magic=b'%PDF-1.4', disp=inline, elapsed=0.13s"
+    },
+    {
+      "name": "Master Brochure Download (?dl=1)",
+      "category": "Master Brochure Streaming",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=7363747 bytes (>1MB), magic=b'%PDF-1.4', disp=attachment, elapsed=0.09s"
+    },
+    {
+      "name": "Master Brochure Download (?download=1)",
+      "category": "Master Brochure Streaming",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=7363747 bytes (>1MB), magic=b'%PDF-1.4', disp=attachment, elapsed=0.14s"
+    },
+    {
+      "name": "Master Brochure Download (Solution Alias)",
+      "category": "Master Brochure Streaming",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=7363747 bytes (>1MB), magic=b'%PDF-1.4', disp=inline, elapsed=0.11s"
+    },
+    {
+      "name": "Master Brochure Download (/brochure/pdf)",
+      "category": "Master Brochure Streaming",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=7363747 bytes (>1MB), magic=b'%PDF-1.4', disp=inline, elapsed=0.13s"
+    },
+    {
+      "name": "Scenario PDF (petrochem #1)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=2,348,071 bytes, filename=VR_Scenario_01_Petrochem_CSuite_Board_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (petrochem #2)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,399,812 bytes, filename=VR_Scenario_02_Petrochem_Operations_HSE_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (petrochem #3)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,490,977 bytes, filename=VR_Scenario_03_Petrochem_CISO_Legal_DPO_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (petrochem #4)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,939,621 bytes, filename=VR_Scenario_04_Petrochem_ProcessSafety_SIS_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (petrochem #5)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,412,096 bytes, filename=VR_Scenario_05_Petrochem_DigitalTrans_QA_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (thermal-power #1)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,442,492 bytes, filename=VR_Scenario_06_ThermalPower_CSuite_Board_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (thermal-power #2)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,657,916 bytes, filename=VR_Scenario_07_ThermalPower_Operations_HSE_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (thermal-power #3)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,638,294 bytes, filename=VR_Scenario_08_ThermalPower_CISO_Legal_DPO_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (thermal-power #4)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,416,242 bytes, filename=VR_Scenario_09_ThermalPower_ProcessSafety_SIS_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (thermal-power #5)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,926,552 bytes, filename=VR_Scenario_10_ThermalPower_DigitalTrans_QA_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (thermal-power #6)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,442,492 bytes, filename=VR_Scenario_06_ThermalPower_CSuite_Board_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (thermal-power #7)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,657,916 bytes, filename=VR_Scenario_07_ThermalPower_Operations_HSE_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (thermal-power #8)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,638,294 bytes, filename=VR_Scenario_08_ThermalPower_CISO_Legal_DPO_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (thermal-power #9)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,416,242 bytes, filename=VR_Scenario_09_ThermalPower_ProcessSafety_SIS_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (thermal-power #10)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,926,552 bytes, filename=VR_Scenario_10_ThermalPower_DigitalTrans_QA_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (gas-pipeline #1)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,552,094 bytes, filename=VR_Scenario_11_GasPipeline_CSuite_Board_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (gas-pipeline #2)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,568,980 bytes, filename=VR_Scenario_12_GasPipeline_Operations_HSE_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (gas-pipeline #3)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,714,316 bytes, filename=VR_Scenario_13_GasPipeline_CISO_Legal_DPO_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (gas-pipeline #4)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,524,699 bytes, filename=VR_Scenario_14_GasPipeline_ProcessSafety_SIS_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (gas-pipeline #5)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=2,139,718 bytes, filename=VR_Scenario_15_GasPipeline_DigitalTrans_QA_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (gas-pipeline #11)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,552,094 bytes, filename=VR_Scenario_11_GasPipeline_CSuite_Board_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (gas-pipeline #12)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,568,980 bytes, filename=VR_Scenario_12_GasPipeline_Operations_HSE_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (gas-pipeline #13)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,714,316 bytes, filename=VR_Scenario_13_GasPipeline_CISO_Legal_DPO_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (gas-pipeline #14)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,524,699 bytes, filename=VR_Scenario_14_GasPipeline_ProcessSafety_SIS_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (gas-pipeline #15)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=2,139,718 bytes, filename=VR_Scenario_15_GasPipeline_DigitalTrans_QA_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (metallurgy #1)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,406,022 bytes, filename=VR_Scenario_16_Metallurgy_CSuite_Board_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (metallurgy #2)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,407,377 bytes, filename=VR_Scenario_17_Metallurgy_Operations_HSE_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (metallurgy #3)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,276,227 bytes, filename=VR_Scenario_18_Metallurgy_CISO_Legal_DPO_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (metallurgy #4)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,707,579 bytes, filename=VR_Scenario_19_Metallurgy_ProcessSafety_SIS_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (metallurgy #5)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,402,940 bytes, filename=VR_Scenario_20_Metallurgy_DigitalTrans_QA_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (metallurgy #16)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,406,022 bytes, filename=VR_Scenario_16_Metallurgy_CSuite_Board_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (metallurgy #17)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,407,377 bytes, filename=VR_Scenario_17_Metallurgy_Operations_HSE_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (metallurgy #18)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,276,227 bytes, filename=VR_Scenario_18_Metallurgy_CISO_Legal_DPO_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (metallurgy #19)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,707,579 bytes, filename=VR_Scenario_19_Metallurgy_ProcessSafety_SIS_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (metallurgy #20)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,402,940 bytes, filename=VR_Scenario_20_Metallurgy_DigitalTrans_QA_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (pharma #1)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,548,852 bytes, filename=VR_Scenario_21_PharmaGxP_CSuite_Board_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (pharma #2)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,328,311 bytes, filename=VR_Scenario_22_PharmaGxP_Operations_HSE_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (pharma #3)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,287,413 bytes, filename=VR_Scenario_23_PharmaGxP_CISO_Legal_DPO_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (pharma #4)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,455,777 bytes, filename=VR_Scenario_24_PharmaGxP_ProcessSafety_SIS_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (pharma #5)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,490,908 bytes, filename=VR_Scenario_25_PharmaGxP_DigitalTrans_QA_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (pharma #21)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,548,852 bytes, filename=VR_Scenario_21_PharmaGxP_CSuite_Board_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (pharma #22)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,328,311 bytes, filename=VR_Scenario_22_PharmaGxP_Operations_HSE_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (pharma #23)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,287,413 bytes, filename=VR_Scenario_23_PharmaGxP_CISO_Legal_DPO_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (pharma #24)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,455,777 bytes, filename=VR_Scenario_24_PharmaGxP_ProcessSafety_SIS_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Scenario PDF (pharma #25)",
+      "category": "Vietnamese Scenario PDFs",
+      "passed": true,
+      "status_code": 200,
+      "details": "HTTP 200, size=1,490,908 bytes, filename=VR_Scenario_25_PharmaGxP_DigitalTrans_QA_VI.pdf, magic=%PDF-1.x"
+    },
+    {
+      "name": "Invalid Industry Slug: fake-slug",
+      "category": "Boundary - Invalid Slugs",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Invalid Industry Slug: invalid-slug-xyz",
+      "category": "Boundary - Invalid Slugs",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Invalid Numeric Industry Slug: 12345",
+      "category": "Boundary - Invalid Slugs",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Invalid Dossier Slug: invalid",
+      "category": "Boundary - Invalid Slugs",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Invalid Dossier Slug: fake-industry",
+      "category": "Boundary - Invalid Slugs",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Invalid Dossier Slug: non-existent-industry-999",
+      "category": "Boundary - Invalid Slugs",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: petrochem #0",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: petrochem #6",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: petrochem #99",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: petrochem #999",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: petrochem #-1",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: thermal-power #0",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: thermal-power #11",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: gas-pipeline #0",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: gas-pipeline #16",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: metallurgy #0",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: metallurgy #21",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: pharma #0",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Out-of-range Scenario: pharma #26",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Scenario with Invalid Industry Slug",
+      "category": "Boundary - Out-of-Range Scenarios",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404)"
+    },
+    {
+      "name": "Negative Scenario Number: -1",
+      "category": "Boundary - Advanced Edge Cases",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected (404,))"
+    },
+    {
+      "name": "Overflow Scenario Integer",
+      "category": "Boundary - Advanced Edge Cases",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected (404,))"
+    },
+    {
+      "name": "Non-numeric Scenario: abc",
+      "category": "Boundary - Advanced Edge Cases",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected (404,))"
+    },
+    {
+      "name": "Float Scenario Number: 1.5",
+      "category": "Boundary - Advanced Edge Cases",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected (404,))"
+    },
+    {
+      "name": "Scenario with Trailing Slash (Canonical 301/200)",
+      "category": "Boundary - Advanced Edge Cases",
+      "passed": true,
+      "status_code": 200,
+      "details": "Got HTTP 200 (expected (200, 301))"
+    },
+    {
+      "name": "Uppercase Industry Slug: PETROCHEM",
+      "category": "Boundary - Advanced Edge Cases",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected (404,))"
+    },
+    {
+      "name": "Uppercase Industry Route: PETROCHEM",
+      "category": "Boundary - Advanced Edge Cases",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected (404,))"
+    },
+    {
+      "name": "Buffer Overflow Length Slug (1000 chars)",
+      "category": "Boundary - Advanced Edge Cases",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected (404,))"
+    },
+    {
+      "name": "Buffer Overflow Length Industry Slug (1000 chars)",
+      "category": "Boundary - Advanced Edge Cases",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected (404,))"
+    },
+    {
+      "name": "Homoglyph Attack: Cyrillic 'e' in petrochem",
+      "category": "Boundary - Advanced Edge Cases",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected (404,))"
+    },
+    {
+      "name": "Path Traversal: URL-encoded dot-dot-slash in slug",
+      "category": "Adversarial Injections & Traversals",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404/400, strictly not 500)"
+    },
+    {
+      "name": "Path Traversal: Encoded /etc/passwd in slug",
+      "category": "Adversarial Injections & Traversals",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404/400, strictly not 500)"
+    },
+    {
+      "name": "Path Traversal: Double-encoded dot-dot",
+      "category": "Adversarial Injections & Traversals",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404/400, strictly not 500)"
+    },
+    {
+      "name": "Path Traversal: Redundant dots and slashes",
+      "category": "Adversarial Injections & Traversals",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404/400, strictly not 500)"
+    },
+    {
+      "name": "Path Traversal: Industry route dot-dot-slash",
+      "category": "Adversarial Injections & Traversals",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404/400, strictly not 500)"
+    },
+    {
+      "name": "Path Traversal: Industry route /etc/passwd",
+      "category": "Adversarial Injections & Traversals",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404/400, strictly not 500)"
+    },
+    {
+      "name": "SQL Injection Attempt: ' OR '1'='1 in slug",
+      "category": "Adversarial Injections & Traversals",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404/400, strictly not 500)"
+    },
+    {
+      "name": "XSS Injection Attempt: <script> in slug",
+      "category": "Adversarial Injections & Traversals",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404/400, strictly not 500)"
+    },
+    {
+      "name": "XSS Injection Attempt: <script> in industry",
+      "category": "Adversarial Injections & Traversals",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404/400, strictly not 500)"
+    },
+    {
+      "name": "SQL Injection Attempt: semicolon SELECT",
+      "category": "Adversarial Injections & Traversals",
+      "passed": true,
+      "status_code": 404,
+      "details": "Got HTTP 404 (expected clean 404/400, strictly not 500)"
+    },
+    {
+      "name": "Concurrent High-Throughput Probe",
+      "category": "Concurrency Stress",
+      "passed": true,
+      "status_code": 200,
+      "details": "40 requests across 8 threads completed in 5.00s (8.0 req/s). 0 server crashes. Errors: 0"
+    }
+  ]
+}
