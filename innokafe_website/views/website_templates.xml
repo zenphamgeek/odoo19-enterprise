@@ -3,10 +3,11 @@
     <!-- ================================================================= -->
     <!-- INNOKAFE SPECIALTY COFFEE: BRAND HEAD & METADATA                  -->
     <!-- ================================================================= -->
-    <template id="innokafe_head_metadata" inherit_id="website.layout" priority="20">
+    <template id="innokafe_head_metadata" inherit_id="website.layout" priority="5">
         <xpath expr="//head/*[1]" position="before">
             <t t-if="(website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower())">
                 <t t-set="curr_path" t-value="request.httprequest.path if request and request.httprequest else '/'"/>
+                <t t-set="disable_opengraph" t-value="True"/>
                 <t t-set="inno_meta_title" t-value="
                     'InnoKafe — Cà Phê Việt Nam Nguyên Bản | Từ Nông Trại Bazan Đến Tách Cà Phê Có Gu' if curr_path == '/' else
                     'Hành Trình Di Sản Nông Trại &amp; Cam Kết Cà Phê Mộc 4 Không — InnoKafe' if curr_path == '/story' else
@@ -17,6 +18,58 @@
                     'InnoKafe Specialty Coffee &amp; Roastery'"/>
                 <t t-set="inno_meta_desc" t-value="
                     'InnoKafe tôn vinh hạt cà phê Việt Nam nguyên bản từ thủ phủ Robusta Đắk Lắk (Cư M\'gar) và thiên đường Arabica Cầu Đất (1.650m). Cam kết cà phê mộc 4 Không: Không hương liệu, Không chất bảo quản, Không phẩm màu, Không độn bắp/đậu nành/bơ.'"/>
+                <t t-set="meta_description" t-value="inno_meta_desc"/>
+
+                <!-- Canonical Social Share & OpenGraph Suite (1200x630 Verified Image) -->
+                <meta property="og:site_name" content="InnoKafe Specialty Coffee"/>
+                <meta property="og:type" content="website"/>
+                <meta property="og:url" t-attf-content="https://innokafe.insilos.com{{ curr_path }}"/>
+                <meta property="og:title" t-att-content="inno_meta_title"/>
+                <meta property="og:description" t-att-content="inno_meta_desc"/>
+                <meta property="og:image" content="https://innokafe.insilos.com/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg"/>
+                <meta property="og:image:secure_url" content="https://innokafe.insilos.com/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg"/>
+                <meta property="og:image:type" content="image/jpeg"/>
+                <meta property="og:image:width" content="1200"/>
+                <meta property="og:image:height" content="630"/>
+                <meta property="og:image:alt" content="InnoKafe Specialty Coffee — Từ Nông Trại Bazan Đến Tách Cà Phê Có Gu"/>
+                <meta property="og:locale" content="vi_VN"/>
+
+                <!-- Twitter Card Meta Suite -->
+                <meta name="twitter:card" content="summary_large_image"/>
+                <meta name="twitter:site" content="@innokafe"/>
+                <meta name="twitter:creator" content="@innokafe"/>
+                <meta name="twitter:title" t-att-content="inno_meta_title"/>
+                <meta name="twitter:description" t-att-content="inno_meta_desc"/>
+                <meta name="twitter:image" content="https://innokafe.insilos.com/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg"/>
+                <meta name="twitter:image:alt" content="InnoKafe Specialty Coffee — Cà Phê Mộc 4 Không"/>
+
+                <!-- Canonical URL -->
+                <link rel="canonical" t-attf-href="https://innokafe.insilos.com{{ curr_path }}"/>
+
+                <!-- Social Share Image Preload (WebP 61KB High Priority) -->
+                <link rel="preload" as="image" href="/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.webp" type="image/webp" fetchpriority="high"/>
+
+                <!-- InnoKafe Schema.org Structured Data -->
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "CafeOrCoffeeShop",
+                    "@id": "https://innokafe.insilos.com/#organization",
+                    "name": "InnoKafe Specialty Coffee &amp; Roastery",
+                    "alternateName": "InnoKafe",
+                    "url": "https://innokafe.insilos.com",
+                    "logo": "https://innokafe.insilos.com/innokafe_website/static/src/img/branding/innokafe_logo_white.svg",
+                    "image": "https://innokafe.insilos.com/innokafe_website/static/src/img/branding/innokafe_social_share_1200x630.jpg",
+                    "description": "InnoKafe tôn vinh hạt cà phê Việt Nam nguyên bản từ thủ phủ Robusta Đắk Lắk (Cư M'gar) và thiên đường Arabica Cầu Đất (1.650m). Cam kết cà phê mộc 4 Không.",
+                    "servesCuisine": "Specialty Coffee, Robusta Cư M'gar, Arabica Cầu Đất, Cold Brew",
+                    "priceRange": "$$",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": "Ho Chi Minh City",
+                        "addressCountry": "VN"
+                    }
+                }
+                </script>
 
                 <!-- High-Performance Typography Preconnect -->
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
