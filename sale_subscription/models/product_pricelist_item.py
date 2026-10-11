@@ -53,7 +53,7 @@ class ProductPricelistItem(models.Model):
             return False
         return super()._is_applicable_for(product, qty_in_product_uom)
 
-    def _compute_base_price(self, product, quantity, uom, date, currency, *, plan_id=None, **kwargs):
+    def _compute_base_price(self, product, quantity, uom, *args, date=False, currency=None, plan_id=None, **kwargs):
         """Override of `product` to consider pricelist items without pricelists as 'sales price' for recurring products.
 
         :param product: recordset of product (product.product/product.template)
@@ -66,6 +66,11 @@ class ProductPricelistItem(models.Model):
         :returns: base price, expressed in provided pricelist currency
         :rtype: float
         """
+        if len(args) >= 1 and not date:
+            date = args[0]
+        if len(args) >= 2 and not currency:
+            currency = args[1]
+
         rule_base = self.base or 'list_price'
         if rule_base == 'list_price' and product.recurring_invoice and plan_id:
             domain = self.env['product.pricelist']._get_applicable_rules_domain(
@@ -76,10 +81,10 @@ class ProductPricelistItem(models.Model):
             no_pl_rule = self.env['product.pricelist.item'].search(domain, order='plan_id', limit=1)
             if no_pl_rule:
                 return no_pl_rule._compute_price(
-                    product, quantity, uom, date, currency, plan_id=plan_id, **kwargs,
+                    product, quantity, uom, date=date, currency=currency, plan_id=plan_id, **kwargs,
                 )
         return super()._compute_base_price(
-            product, quantity, uom, date, currency, plan_id=plan_id, **kwargs
+            product, quantity, uom, date=date, currency=currency, plan_id=plan_id, **kwargs
         )
 
     # === TOOLING === #
