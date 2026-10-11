@@ -5,7 +5,7 @@
     <!-- ================================================================= -->
     <template id="insilos_platform_page" name="Insilos Platform">
         <t t-call="website.layout">
-            <t t-set="additional_title">Insilos Platform — Industrial &amp; Operational AI Foundation</t>
+            <t t-set="additional_title">Insilos Platform | Industrial &amp; Operational AI Foundation</t>
             <t t-set="meta_description">Nền tảng Insilos kết nối operational data, ontology, digital twins, Industrial AI models, agents và governed workflows.</t>
 
             <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
@@ -715,7 +715,7 @@
                             <div class="ins-code-canvas p-4 font-monospace">
                                 <!-- Pane 1: SCADA Stream (Python) -->
                                 <div class="ins-code-pane active" data-pane="scada">
-                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS — Layer 1: Sovereign Industrial SCADA &amp; Anomaly FFT</span>
+                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS - Layer 1: Sovereign Industrial SCADA &amp; Anomaly FFT</span>
 <span class="token-keyword">from</span> insilos.scada <span class="token-keyword">import</span> OPCUAClient, SensorStream, AnomalyDetector
 <span class="token-keyword">from</span> insilos.security <span class="token-keyword">import</span> MerkleAirGapValidator
 
@@ -737,7 +737,7 @@
 
                                 <!-- Pane 2: Vertical IDP (Python) -->
                                 <div class="ins-code-pane" data-pane="idp">
-                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS — Layer 2: Vertical IDP &amp; WCO SAFE Trade Engine</span>
+                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS - Layer 2: Vertical IDP &amp; WCO SAFE Trade Engine</span>
 <span class="token-keyword">from</span> insilos.idp <span class="token-keyword">import</span> MultimodalParser, CustomsRuleEngine
 <span class="token-keyword">from</span> insilos.compliance <span class="token-keyword">import</span> EVFTA_Matrix, VNACCS_Reconciler
 
@@ -766,7 +766,7 @@
 
                                 <!-- Pane 3: Knowledge Graph (Cypher) -->
                                 <div class="ins-code-pane" data-pane="graph">
-                                    <pre class="m-0"><code><span class="token-comment">// Insilos Sovereign OS — Layer 3: Knowledge Graph Domino Risk Traversal</span>
+                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS - Layer 3: Knowledge Graph Domino Risk Traversal</span>
 <span class="token-keyword">MATCH</span> (p:PortNode {code: <span class="token-string">"VNSGN"</span>})&lt;-[:BERTHED_AT]-(v:Vessel)-[:CARRIES]-&gt;(c:Container)
 <span class="token-keyword">MATCH</span> (c)-[:CONTAINS]-&gt;(sku:SKU)-[:FEEDS_INTO]-&gt;(factory:Plant)-[:HAS_ASSET]-&gt;(m:Machine)
 <span class="token-keyword">WHERE</span> v.delay_hours &gt; <span class="token-number">48.0</span> <span class="token-keyword">AND</span> sku.safety_stock &lt; <span class="token-number">3</span>
@@ -783,7 +783,7 @@
 
                                 <!-- Pane 4: FSM Dispatch (Python) -->
                                 <div class="ins-code-pane" data-pane="fsm">
-                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS — Layer 4: Field Service Multi-Constraint Optimization</span>
+                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS - Layer 4: Field Service Multi-Constraint Optimization</span>
 <span class="token-keyword">from</span> insilos.fsm <span class="token-keyword">import</span> VehicleRoutingOptimizer, EngineerSkillMatcher
 <span class="token-keyword">from</span> insilos.erp <span class="token-keyword">import</span> InsilosConnector, TwoWayWriteBack
 
@@ -1684,7 +1684,7 @@
     <!-- ================================================================= -->
     <template id="insilos_solutions_page" name="Insilos Solutions Directory">
         <t t-call="website.layout">
-            <t t-set="additional_title">Enterprise Solutions — Insilos Operational AI</t>
+            <t t-set="additional_title">Enterprise Solutions | Insilos Operational AI</t>
             <t t-set="meta_description">Bộ giải pháp chuyên sâu: Enterprise Knowledge Graph, Vertical IDP, Trade Compliance và Field Service Intelligence.</t>
 
             <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
@@ -2680,13 +2680,13 @@
     <!-- ================================================================= -->
     <template id="insilos_solution_page" name="Insilos Solution Detail">
         <t t-call="website.layout">
-            <t t-set="additional_title"><t t-out="solution['name']"/> — Insilos Solutions</t>
+            <t t-set="additional_title"><t t-out="solution['name']"/>, Insilos Solutions</t>
             <t t-set="meta_description"><t t-out="solution['summary']"/></t>
 
             <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
                 <div class="oe_structure oe_empty"/>
 
-                <!-- Solution Hero — s_title / s_cover chuẩn -->
+                <!-- Solution Hero - s_title / s_cover chuẩn -->
                 <section class="s_title o_colored_level o_cc o_cc5 pt80 pb64" data-vcss="001" data-snippet="s_title" data-name="Title">
                     <div class="container s_allow_columns">
                         <div class="mb-3">
@@ -2705,7 +2705,7 @@
                     </div>
                 </section>
 
-                <!-- Telemetry & SLA Commitments — s_numbers chuẩn -->
+                <!-- Telemetry & SLA Commitments - s_numbers chuẩn -->
                 <section class="s_numbers pt64 pb64 o_colored_level o_cc o_cc5 border-bottom border-secondary border-opacity-25" data-snippet="s_numbers" data-name="Solution Telemetry &amp; SLA Commitment">
                     <div class="container s_allow_columns">
                         <div class="row g-4 text-center ins-card-row-balanced">
@@ -2741,7 +2741,7 @@
                     </div>
                 </section>
 
-                <!-- Capabilities — s_features chuẩn -->
+                <!-- Capabilities - s_features chuẩn -->
                 <section id="capabilities" class="s_features pt80 pb80 o_colored_level o_cc o_cc5" data-snippet="s_features" data-name="Capabilities">
                     <div class="container s_allow_columns">
                         <div class="row text-center mb-5">
@@ -2774,7 +2774,7 @@
                     </div>
                 </section>
 
-                <!-- Closed-Loop Execution Steps — s_process_steps chuẩn -->
+                <!-- Closed-Loop Execution Steps - s_process_steps chuẩn -->
                 <section class="s_process_steps o_colored_level o_cc o_cc5 pt80 pb80" data-vcss="002" data-vxml="002" data-snippet="s_process_steps" data-name="Steps">
                     <div class="container s_allow_columns">
                         <div class="row text-center mb-5">
@@ -2799,7 +2799,7 @@
                     </div>
                 </section>
 
-                <!-- 3D Cockpit Stack — s_cover chuẩn -->
+                <!-- 3D Cockpit Stack - s_cover chuẩn -->
                 <section class="s_cover o_colored_level o_cc o_cc5 pt80 pb80 position-relative" data-snippet="s_cover" data-name="C3.ai 3D Cockpit Stack" data-bs-theme="dark">
                     <div class="container py-lg-4 position-relative ins-hero-content-layer">
                         <div class="row align-items-center g-5">
@@ -2810,7 +2810,7 @@
                                 </div>
                                 <h2 class="display-4 fw-bold text-white mb-3">Điều Khiển Trực Quan 4 Tầng Tự Chủ</h2>
                                 <p class="lead text-secondary mb-4 col-lg-11 p-0">
-                                    Từ cảm biến IoT và chứng từ không cấu trúc đến đồ thị tri thức ngữ nghĩa và cụm tác nhân AI tự chủ — kiểm soát toàn bộ luồng dữ liệu nghiệp vụ với độ trễ phản hồi sub-second.
+                                    Từ cảm biến IoT và chứng từ không cấu trúc đến đồ thị tri thức ngữ nghĩa và cụm tác nhân AI tự chủ - kiểm soát toàn bộ luồng dữ liệu nghiệp vụ với độ trễ phản hồi sub-second.
                                 </p>
                                 <div class="d-flex flex-column gap-3 mb-4">
                                     <div class="d-flex align-items-center gap-3">
@@ -2946,7 +2946,7 @@
                     </div>
                 </section>
 
-                <!-- Systems Integration — s_text_image chuẩn -->
+                <!-- Systems Integration - s_text_image chuẩn -->
                 <section class="s_text_image pt80 pb80 o_colored_level o_cc o_cc5" data-snippet="s_text_image" data-name="Text - Image">
                     <div class="container">
                         <div class="row align-items-center g-5">
@@ -2980,7 +2980,7 @@
                     </div>
                 </section>
 
-                <!-- Related Industries — s_features chuẩn -->
+                <!-- Related Industries - s_features chuẩn -->
                 <section class="s_features o_colored_level o_cc o_cc5 pt80 pb80" data-snippet="s_features" data-name="Industries">
                     <div class="container s_allow_columns">
                         <div class="row text-center mb-5">
@@ -3007,7 +3007,7 @@
                     </div>
                 </section>
 
-                <!-- Solution Call To Action — s_call_to_action chuẩn -->
+                <!-- Solution Call To Action - s_call_to_action chuẩn -->
                 <section class="s_call_to_action pt96 pb96 o_colored_level o_cc o_cc5 text-center" data-snippet="s_call_to_action" data-name="Call To Action">
                     <div class="container s_allow_columns">
                         <div class="row">
@@ -3032,15 +3032,15 @@
     <!-- ================================================================= -->
     <!-- 4. BESPOKE ENTERPRISE KNOWLEDGE GRAPH PAGE                        -->
     <!-- ================================================================= -->
-    <template id="insilos_solution_enterprise_knowledge_graph_page" name="Enterprise Knowledge Graph — Insilos Solution">
+    <template id="insilos_solution_enterprise_knowledge_graph_page" name="Enterprise Knowledge Graph | Insilos Solution">
         <t t-call="website.layout">
-            <t t-set="additional_title">Enterprise Knowledge Graph &amp; Operational Ontology — Insilos</t>
+            <t t-set="additional_title">Enterprise Knowledge Graph &amp; Operational Ontology | Insilos</t>
             <t t-set="meta_description">Hợp nhất toàn bộ dữ liệu phân tán (Data Silos), mô hình hóa Digital Twins và suy luận ngữ cảnh vận hành bằng AI Đồ Thị thế hệ mới.</t>
 
             <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
                 <div class="oe_structure oe_empty"/>
 
-                <!-- 1. HERO — Video Viewport + 3D Knowledge Graph Neural Mesh -->
+                <!-- 1. HERO - Video Viewport + 3D Knowledge Graph Neural Mesh -->
                 <section class="s_cover o_colored_level o_cc o_cc5 pt80 pb80 position-relative overflow-hidden ins-hero-showcase" data-snippet="s_cover" data-name="Knowledge Graph Hero" data-bs-theme="dark">
                     <!-- Video Viewport & WebP Fallback -->
                     <div class="ins-hero-video-viewport o_not_editable">
@@ -3603,7 +3603,7 @@
                     </div>
                 </section>
 
-                <!-- 3.5. TREASURY LIQUIDITY & FX GRAPH REASONING — s_text_image chuẩn -->
+                <!-- 3.5. TREASURY LIQUIDITY & FX GRAPH REASONING - s_text_image chuẩn -->
                 <section class="s_text_image pt96 pb96 o_colored_level o_cc o_cc5 bg-dark" data-snippet="s_text_image" data-name="Treasury Graph Showcase">
                     <div class="container">
                         <div class="row text-center mb-5">
@@ -3823,15 +3823,15 @@
     <!-- ================================================================= -->
     <!-- 5. BESPOKE VERTICAL IDP PAGE                                      -->
     <!-- ================================================================= -->
-    <template id="insilos_solution_vertical_idp_page" name="Vertical IDP — Insilos Solution">
+    <template id="insilos_solution_vertical_idp_page" name="Vertical IDP | Insilos Solution">
         <t t-call="website.layout">
-            <t t-set="additional_title">Vertical IDP — Multi-Modal Logistics OCR &amp; Policy Extraction — Insilos</t>
+            <t t-set="additional_title">Vertical IDP | Multi-Modal Logistics OCR &amp; Policy Extraction | Insilos</t>
             <t t-set="meta_description">Tự động hóa bóc tách và đối soát 100% chứng từ vận tải, logistics và xuất nhập khẩu với độ chính xác 99.8%.</t>
 
             <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
                 <div class="oe_structure oe_empty"/>
 
-                <!-- 1. HERO — Video Viewport + Automated Terminal Logistics -->
+                <!-- 1. HERO - Video Viewport + Automated Terminal Logistics -->
                 <section class="s_cover o_colored_level o_cc o_cc5 pt80 pb80 position-relative overflow-hidden ins-hero-showcase" data-snippet="s_cover" data-name="Vertical IDP Hero" data-bs-theme="dark">
                     <!-- Video Viewport & WebP Fallback -->
                     <div class="ins-hero-video-viewport o_not_editable">
@@ -4429,7 +4429,7 @@
                     </div>
                 </section>
 
-                <!-- 3.5. ILOE & MARITIME CONTROL TOWER SHOWCASE — s_text_image chuẩn -->
+                <!-- 3.5. ILOE & MARITIME CONTROL TOWER SHOWCASE - s_text_image chuẩn -->
                 <section class="s_text_image pt96 pb96 o_colored_level o_cc o_cc5 bg-dark" data-snippet="s_text_image" data-name="Maritime &amp; ILOE Showcase">
                     <div class="container">
                         <div class="row text-center mb-5">
@@ -4474,7 +4474,7 @@
                                 <ul class="list-unstyled text-white-80 small">
                                     <li class="mb-2 d-flex align-items-center gap-2">
                                         <svg class="ph-duotone ph-check-circle ph-sm text-mint flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
-                                        <span>Cube Utilization đạt 91.4% — tiết kiệm hàng chục ngàn USD chi phí vận chuyển.</span>
+                                        <span>Cube Utilization đạt 91.4%, tiết kiệm hàng chục ngàn USD chi phí vận chuyển.</span>
                                     </li>
                                     <li class="mb-2 d-flex align-items-center gap-2">
                                         <svg class="ph-duotone ph-check-circle ph-sm text-mint flex-shrink-0"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>
@@ -4633,15 +4633,15 @@
     <!-- ================================================================= -->
     <!-- 6. BESPOKE TRADE COMPLIANCE & CUSTOMS INTELLIGENCE PAGE           -->
     <!-- ================================================================= -->
-    <template id="insilos_solution_trade_compliance_page" name="Trade Compliance — Insilos Solution">
+    <template id="insilos_solution_trade_compliance_page" name="Trade Compliance | Insilos Solution">
         <t t-call="website.layout">
-            <t t-set="additional_title">Trade Compliance &amp; Customs Intelligence — Insilos</t>
+            <t t-set="additional_title">Trade Compliance &amp; Customs Intelligence | Insilos</t>
             <t t-set="meta_description">Tự động hóa phân loại mã HS, kiểm soát quy tắc xuất xứ C/O FTA và thẩm định hồ sơ hải quan giảm 98% rủi ro xử phạt thuế.</t>
 
             <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
                 <div class="oe_structure oe_empty"/>
 
-                <!-- 1. HERO — Video Viewport + Global Maritime Trade Hub -->
+                <!-- 1. HERO - Video Viewport + Global Maritime Trade Hub -->
                 <section class="s_cover o_colored_level o_cc o_cc5 pt80 pb80 position-relative overflow-hidden ins-hero-showcase" data-snippet="s_cover" data-name="Trade Compliance Hero" data-bs-theme="dark">
                     <!-- Video Viewport & WebP Fallback -->
                     <div class="ins-hero-video-viewport o_not_editable">
@@ -5290,7 +5290,7 @@
                     </div>
                 </section>
 
-                <!-- 3.4. DYNAMIC RULES OF ORIGIN (ROO) & TARIFF SAVINGS MATRIX — s_text_image chuẩn -->
+                <!-- 3.4. DYNAMIC RULES OF ORIGIN (ROO) & TARIFF SAVINGS MATRIX - s_text_image chuẩn -->
                 <section class="s_text_image pt96 pb96 o_colored_level o_cc o_cc5  border-top border-bottom" data-snippet="s_text_image" data-name="Trade Compliance FTA Matrix">
                     <div class="container">
                         <div class="row align-items-center g-5">
@@ -5328,7 +5328,7 @@
                     </div>
                 </section>
 
-                <!-- 3.5. CAPITAL MARKETS & TREASURY RISK TERMINAL — s_text_image chuẩn -->
+                <!-- 3.5. CAPITAL MARKETS & TREASURY RISK TERMINAL - s_text_image chuẩn -->
                 <section class="s_text_image pt96 pb96 o_colored_level o_cc o_cc5 bg-dark" data-snippet="s_text_image" data-name="Capital Markets Terminal Showcase">
                     <div class="container">
                         <div class="row text-center mb-5">
@@ -5576,15 +5576,15 @@
     <!-- ================================================================= -->
     <!-- 7. BESPOKE FIELD SERVICE & ASSET OPERATIONS INTELLIGENCE PAGE     -->
     <!-- ================================================================= -->
-    <template id="insilos_solution_field_service_intelligence_page" name="Field Service Intelligence — Insilos Solution">
+    <template id="insilos_solution_field_service_intelligence_page" name="Field Service Intelligence | Insilos Solution">
         <t t-call="website.layout">
-            <t t-set="additional_title">Field Service &amp; Asset Operations Intelligence — Insilos</t>
+            <t t-set="additional_title">Field Service &amp; Asset Operations Intelligence | Insilos</t>
             <t t-set="meta_description">Điều phối kỹ thuật viên thông minh, dự báo bảo trì từ IoT telemetry và nâng cao tỷ lệ xử lý dứt điểm lần đầu (FTFR) lên 94.8%.</t>
 
             <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
                 <div class="oe_structure oe_empty"/>
 
-                <!-- 1. HERO — Video Viewport + Predictive FSM Operations -->
+                <!-- 1. HERO - Video Viewport + Predictive FSM Operations -->
                 <section class="s_cover o_colored_level o_cc o_cc5 pt80 pb80 position-relative overflow-hidden ins-hero-showcase" data-snippet="s_cover" data-name="FSM Intelligence Hero" data-bs-theme="dark">
                     <!-- Video Viewport & WebP Fallback -->
                     <div class="ins-hero-video-viewport o_not_editable">
@@ -6169,7 +6169,7 @@
                     </div>
                 </section>
 
-                <!-- 3.5. DIGITAL TWIN ASSET TELEMETRY & DISPATCH MESH — s_text_image chuẩn -->
+                <!-- 3.5. DIGITAL TWIN ASSET TELEMETRY & DISPATCH MESH - s_text_image chuẩn -->
                 <section class="s_text_image pt96 pb96 o_colored_level o_cc o_cc5 bg-dark" data-snippet="s_text_image" data-name="Digital Twin FSM Showcase">
                     <div class="container">
                         <div class="row text-center mb-5">

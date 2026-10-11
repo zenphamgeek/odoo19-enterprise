@@ -5,13 +5,13 @@
     <!-- ================= Industry Hub (/industry) ================= -->
     <template id="industry_hub_template" name="Industry Solutions Hub">
         <t t-call="website.layout">
-            <t t-set="additional_title">Industry Solutions — Insilos</t>
+            <t t-set="additional_title">Industry Solutions | Insilos</t>
             <t t-set="meta_description">Pre-configured enterprise workflows and live sandbox environments for every industry sector.</t>
 
             <main id="wrap" class="oe_structure">
                 <div class="oe_structure oe_empty"/>
 
-                <!-- HERO — s_title -->
+                <!-- HERO - s_title -->
                 <section class="s_title w_cc w_cc5 pt80 pb56" data-vcss="001" data-snippet="s_title" data-name="Title">
                     <div class="container s_allow_columns">
                         <p class="lead text-uppercase opacity-75">Industry Showcase</p>
@@ -30,7 +30,7 @@
                     </div>
                 </section>
 
-                <!-- CATEGORY FILTERS — s_text_block -->
+                <!-- CATEGORY FILTERS - s_text_block -->
                 <section class="s_text_block pt24 pb24" data-snippet="s_text_block" data-name="Text">
                     <div class="container s_allow_columns">
                         <p class="mb-0">
@@ -47,7 +47,7 @@
                     </div>
                 </section>
 
-                <!-- CATALOG — s_features + s_card -->
+                <!-- CATALOG - s_features + s_card -->
                 <t t-if="not categories">
                     <section class="s_text_block pt64 pb64" data-snippet="s_text_block" data-name="Text">
                         <div class="container s_allow_columns" style="text-align: center;">
@@ -86,7 +86,7 @@
                     </section>
                 </t>
 
-                <!-- CTA — s_call_to_action -->
+                <!-- CTA - s_call_to_action -->
                 <section class="s_call_to_action w_cc w_cc5 pt64 pb64" data-snippet="s_call_to_action" data-name="Call to Action">
                     <div class="container">
                         <div class="row align-items-center">
@@ -111,13 +111,13 @@
     <!-- ============ Industry Detail (/industry/&lt;slug&gt;) ============ -->
     <template id="industry_detail_template" name="Industry Solution Detail">
         <t t-call="website.layout">
-            <t t-set="additional_title"><t t-esc="landing.name"/> — Insilos</t>
+            <t t-set="additional_title"><t t-esc="landing.name"/>, Insilos</t>
             <t t-set="meta_description"><t t-esc="landing.summary"/></t>
 
             <main id="wrap" class="oe_structure">
                 <div class="oe_structure oe_empty"/>
 
-                <!-- HERO — s_cover -->
+                <!-- HERO - s_cover -->
                 <section class="s_cover parallax s_parallax_is_fixed w_cc w_cc5 pt184 pb184"
                          data-snippet="s_cover" data-name="Cover" data-scroll-background-ratio="1">
                     <span class="s_parallax_bg we_img_bg"
@@ -135,7 +135,7 @@
                     </div>
                 </section>
 
-                <!-- SANDBOX — s_text_image -->
+                <!-- SANDBOX - s_text_image -->
                 <section class="s_text_image pt64 pb64" data-snippet="s_text_image" data-name="Text - Image">
                     <div class="container">
                         <div class="row align-items-center">
@@ -155,7 +155,7 @@
                     </div>
                 </section>
 
-                <!-- FEATURES — s_features + s_card -->
+                <!-- FEATURES - s_features + s_card -->
                 <section class="s_features w_cc w_cc2 pt64 pb64" data-snippet="s_features" data-name="Features">
                     <div class="container">
                         <h2 class="h3-fs">Key features &amp; workflows</h2>
@@ -176,7 +176,7 @@
                     </div>
                 </section>
 
-                <!-- MODULES — s_features -->
+                <!-- MODULES - s_features -->
                 <section id="modules" class="s_features pt64 pb64" data-snippet="s_features" data-name="Modules">
                     <div class="container">
                         <h2 class="h3-fs">Pre-configured module suite</h2>
@@ -194,7 +194,7 @@
                     </div>
                 </section>
 
-                <!-- CTA — s_call_to_action -->
+                <!-- CTA - s_call_to_action -->
                 <section class="s_call_to_action w_cc w_cc5 pt64 pb64" data-snippet="s_call_to_action" data-name="Call to Action">
                     <div class="container">
                         <div class="row align-items-center">
@@ -219,7 +219,7 @@
     <!-- ================= SaaS 30-Day Free Trial Signup (/saas/signup) ================= -->
     <template id="saas_signup_template" name="SaaS 30-Day Free Trial Signup">
         <t t-call="website.layout">
-            <t t-set="additional_title">Đăng ký Dùng thử Miễn phí 30 Ngày — Insilos SaaS</t>
+            <t t-set="additional_title">Đăng ký Dùng thử Miễn phí 30 Ngày | Insilos SaaS</t>
             <t t-set="meta_description">Khởi tạo không gian làm việc chuyên biệt theo ngành nghề của bạn trong 30 giây. Miễn phí 30 ngày, đầy đủ tính năng, không yêu cầu thẻ tín dụng.</t>
 
             <main id="wrap" class="oe_structure bg-100">
@@ -267,7 +267,7 @@
                                                 <select name="template_slug" class="form-select form-select-lg" required="required">
                                                     <t t-foreach="templates" t-as="tmpl">
                                                         <option t-att-value="tmpl.slug" t-att-selected="'selected' if selected_template and selected_template.id == tmpl.id else None">
-                                                            <t t-esc="tmpl.name"/> — (<t t-esc="tmpl.category_id.name or 'Chuyên ngành'"/>)
+                                                            <t t-esc="tmpl.name"/>, (<t t-esc="tmpl.category_id.name or 'Chuyên ngành'"/>)
                                                         </option>
                                                     </t>
                                                 </select>
@@ -379,7 +379,7 @@
     <!-- ================= SaaS Signup Success Confirmation (/saas/signup/success) ================= -->
     <template id="saas_signup_success_template" name="SaaS Signup Success">
         <t t-call="website.layout">
-            <t t-set="additional_title">Khởi tạo Không gian Làm việc Thành công! — Insilos SaaS</t>
+            <t t-set="additional_title">Khởi tạo Không gian Làm việc Thành công! | Insilos SaaS</t>
             <main id="wrap" class="oe_structure bg-100 py-5">
                 <div class="container text-center py-5" style="max-width: 760px;">
                     <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-view">
@@ -429,7 +429,7 @@
     <!-- ================= SaaS 30-Day Conversion Checkout (/saas/checkout/<tenant_id>) ================= -->
     <template id="saas_checkout_template" name="SaaS Subscription Checkout">
         <t t-call="website.layout">
-            <t t-set="additional_title">Nâng Cấp Bản Quyền Chính Thức — Insilos SaaS</t>
+            <t t-set="additional_title">Nâng Cấp Bản Quyền Chính Thức | Insilos SaaS</t>
             <main id="wrap" class="oe_structure bg-100 py-5">
                 <div class="container" style="max-width: 860px;">
                     <div class="text-center mb-4">
@@ -529,7 +529,7 @@
     <!-- ================= SaaS Checkout Success (/saas/checkout/success) ================= -->
     <template id="saas_checkout_success_template" name="SaaS Checkout Success">
         <t t-call="website.layout">
-            <t t-set="additional_title">Bản Quyền Đã Kích Hoạt Thành Công! — Insilos SaaS</t>
+            <t t-set="additional_title">Bản Quyền Đã Kích Hoạt Thành Công! | Insilos SaaS</t>
             <main id="wrap" class="oe_structure bg-100 py-5">
                 <div class="container text-center py-5" style="max-width: 720px;">
                     <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-view">

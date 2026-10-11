@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <template id="insilos_homepage" name="Insilos — Intelligent Operations">
+    <template id="insilos_homepage" name="Insilos | Intelligent Operations">
         <t t-call="website.layout">
-            <t t-set="additional_title">Insilos — Industrial &amp; Operational AI Platform</t>
+            <t t-set="additional_title">Insilos | Industrial &amp; Operational AI Platform</t>
             <t t-set="meta_description">Nền tảng Industrial AI tiên phong hợp nhất Vertical IDP, Enterprise Knowledge Graph, Trade Compliance và Field Service Management (FSM) thành một hệ điều hành thống nhất.</t>
 
             <main id="wrap" class="oe_structure o_colored_level o_cc o_cc5">
@@ -55,7 +55,7 @@
                                         <span class="ins-gradient-headline">Một Hệ Điều Hành Sống Cho APAC.</span>
                                     </h1>
                                     <p class="lead text-secondary mb-4 ins-hero-desc">
-                                        Doanh nghiệp không thiếu phần mềm — họ bị giam cầm trong những ốc đảo rời rạc. Insilos kết nối trực tiếp cảm biến <strong class="text-white">SCADA hiện trường</strong> với sổ cái <strong class="text-white">ERP VAS 200</strong>, bóc tách chứng từ đạt <strong class="text-white">99.8% chính xác</strong> trong &lt; 3.2s và dự báo dừng máy trước 14 ngày.
+                                        Doanh nghiệp không thiếu phần mềm - họ bị giam cầm trong những ốc đảo rời rạc. Insilos kết nối trực tiếp cảm biến <strong class="text-white">SCADA hiện trường</strong> với sổ cái <strong class="text-white">ERP VAS 200</strong>, bóc tách chứng từ đạt <strong class="text-white">99.8% chính xác</strong> trong &lt; 3.2s và dự báo dừng máy trước 14 ngày.
                                     </p>
                                     <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 mb-4 ins-hero-action-buttons">
                                         <a href="/request-demo" class="btn btn-primary rounded-pill px-4 py-2 text-nowrap d-inline-flex align-items-center justify-content-center gap-2">
@@ -809,7 +809,7 @@
                                 5 Hiện Thực Vận Hành Khốc Liệt <span class="ins-silo-badge">Tại Phân Xưởng</span>
                             </h2>
                             <p class="lead text-secondary mx-auto col-lg-8 ins-title-balance text-wrap-pretty">
-                                Trong các quy trình hóa chất, luyện kim, khí đốt, truyền tải điện và dược phẩm, sai số không tính bằng phần trăm — nó được đo bằng sinh mạng con người và thiệt hại hàng triệu đô la.
+                                Trong các quy trình hóa chất, luyện kim, khí đốt, truyền tải điện và dược phẩm, sai số không tính bằng phần trăm - nó được đo bằng sinh mạng con người và thiệt hại hàng triệu đô la.
                             </p>
                         </div>
 
@@ -2311,7 +2311,7 @@
                             <div class="ins-code-canvas p-4 font-monospace">
                                 <!-- Pane 1: SCADA Stream (Python) -->
                                 <div class="ins-code-pane active" data-pane="scada">
-                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS — Layer 1: Sovereign Industrial SCADA &amp; Anomaly FFT</span>
+                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS - Layer 1: Sovereign Industrial SCADA &amp; Anomaly FFT</span>
 <span class="token-keyword">from</span> insilos.scada <span class="token-keyword">import</span> OPCUAClient, SensorStream, AnomalyDetector
 <span class="token-keyword">from</span> insilos.security <span class="token-keyword">import</span> MerkleAirGapValidator
 
@@ -2333,7 +2333,7 @@
 
                                 <!-- Pane 2: Vertical IDP (Python) -->
                                 <div class="ins-code-pane" data-pane="idp">
-                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS — Layer 2: Vertical IDP &amp; WCO SAFE Trade Engine</span>
+                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS - Layer 2: Vertical IDP &amp; WCO SAFE Trade Engine</span>
 <span class="token-keyword">from</span> insilos.idp <span class="token-keyword">import</span> MultimodalParser, CustomsRuleEngine
 <span class="token-keyword">from</span> insilos.compliance <span class="token-keyword">import</span> EVFTA_Matrix, VNACCS_Reconciler
 
@@ -2362,8 +2362,8 @@
 
                                 <!-- Pane 3: Knowledge Graph (Cypher) -->
                                 <div class="ins-code-pane" data-pane="graph">
-                                    <pre class="m-0"><code><span class="token-comment">// Insilos Sovereign OS — Layer 3: Knowledge Graph Domino Risk Traversal</span>
-<span class="token-comment">// Queries 1.4M Enterprise Nodes with &lt;15ms response under Merkle DAG</span>
+                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS - Layer 3: Knowledge Graph Domino Risk Traversal</span>
+<span class="token-comment"># Queries 1.4M Enterprise Nodes with &lt;15ms response under Merkle DAG</span>
 <span class="token-keyword">MATCH</span> (plant:<span class="token-class">ManufacturingPlant</span> {id: <span class="token-string">"PLANT_BINH_DUONG"</span>})-[:<span class="token-function">OPERATES</span>]-&gt;(line:<span class="token-class">ProductionLine</span>)
 <span class="token-keyword">MATCH</span> (line)-[:<span class="token-function">DEPENDS_ON</span>]-&gt;(component:<span class="token-class">CriticalComponent</span>)
 <span class="token-keyword">MATCH</span> (component)-[:<span class="token-function">SUPPLIED_BY</span>]-&gt;(vendor:<span class="token-class">Supplier</span>)
@@ -2380,7 +2380,7 @@
 
                                 <!-- Pane 4: FSM Dispatch (Python) -->
                                 <div class="ins-code-pane" data-pane="fsm">
-                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS — Layer 4: Intelligent FSM Dispatch &amp; Zero-Downtime</span>
+                                    <pre class="m-0"><code><span class="token-comment"># Insilos Sovereign OS - Layer 4: Intelligent FSM Dispatch &amp; Zero-Downtime</span>
 <span class="token-keyword">from</span> insilos.fsm <span class="token-keyword">import</span> DispatchEngine, MobileFieldHub
 <span class="token-keyword">from</span> insilos.erp <span class="token-keyword">import</span> ERPConnector
 
