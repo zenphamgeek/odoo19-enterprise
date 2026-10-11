@@ -375,23 +375,82 @@ body.o_innokafe_theme,
         }
     }
 
-    // Cinema Video Background & Ambient Loops
+    // Cinema Video Background & Ambient Loops (High Clarity, Vivid Terroir, Zero Slop)
     .inno-cinema-hero-section {
         position: relative;
         overflow: hidden;
-        background-color: var(--inno-espresso-dark);
+        background-color: var(--inno-pure-dark);
         min-height: 480px !important;
-        aspect-ratio: 16 / 9;
         width: 100%;
 
-        video {
+        // Ambient video loop container
+        .inno-hero-video-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
             pointer-events: none;
             user-select: none;
-            will-change: transform;
-            aspect-ratio: 16 / 9;
-            min-height: 480px;
-            width: 100%;
-            object-fit: cover;
+
+            video,
+            .inno-hero-video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.65;
+                filter: brightness(0.90) contrast(1.10) saturate(1.15);
+                transition: opacity 0.5s ease-in-out;
+                will-change: transform, opacity;
+
+                @media (prefers-reduced-motion: reduce) {
+                    display: none;
+                }
+            }
+
+            // Directional Left-Biased Scrim (Split Hero: Text on Left, Clear Video on Right)
+            .inno-hero-scrim-split {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, rgba(14, 8, 4, 0.78) 0%, rgba(14, 8, 4, 0.45) 55%, rgba(14, 8, 4, 0.18) 100%),
+                            linear-gradient(180deg, rgba(14, 8, 4, 0.10) 0%, rgba(14, 8, 4, 0.55) 100%);
+            }
+
+            // Radial Centered Scrim (Centered Hero: B2B, Taste Profiler, Contact)
+            .inno-hero-scrim-center {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(ellipse at 50% 40%, rgba(14, 8, 4, 0.38) 0%, rgba(14, 8, 4, 0.75) 100%),
+                            linear-gradient(180deg, rgba(14, 8, 4, 0.10) 0%, rgba(14, 8, 4, 0.60) 100%);
+            }
+        }
+
+        // Keep content above background video
+        > .container,
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        // High legibility text enhancement against moving video
+        .inno-hero-title {
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75), 0 1px 3px rgba(0, 0, 0, 0.90);
+        }
+
+        .inno-hero-lead {
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.80);
+            color: rgba(247, 242, 234, 0.92) !important;
         }
     }
 

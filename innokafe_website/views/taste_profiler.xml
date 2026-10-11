@@ -20,10 +20,18 @@
             <!-- =============================================================== -->
             <!-- HERO BANNER                                                     -->
             <!-- =============================================================== -->
-            <section class="s_innokafe_profiler_hero o_colored_level o_cc o_cc5 py-5 text-center text-light position-relative inno-espresso-bg inno-cardless--bordered-bottom"
+            <section class="s_innokafe_profiler_hero o_colored_level o_cc o_cc5 py-5 text-center text-light position-relative inno-cinema-hero-section inno-cardless--bordered-bottom"
                      data-snippet="s_innokafe_profiler_hero"
                      data-name="Profiler Hero">
-                <div class="container py-4">
+                <!-- InnoKafe Artisanal Pour & Extraction Cinema Video Loop Background -->
+                <div class="inno-hero-video-wrap">
+                    <video class="inno-hero-video" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" poster="/innokafe_website/static/src/video/posters/innokafe_coffee_pour_16x9_poster.webp">
+                        <source src="/innokafe_website/static/src/video/innokafe_coffee_pour_16x9_opt.mp4" type="video/mp4"/>
+                        <source src="/innokafe_website/static/src/video/innokafe_coffee_pour_16x9.webm" type="video/webm"/>
+                    </video>
+                    <div class="inno-hero-scrim-center"/>
+                </div>
+                <div class="container py-4 position-relative">
                     <nav aria-label="breadcrumb" class="mb-3">
                         <ol class="breadcrumb justify-content-center mb-0 small text-uppercase font-monospace">
                             <li class="breadcrumb-item"><a href="/" class="text-secondary text-decoration-none">Trang Chủ</a></li>
@@ -42,7 +50,7 @@
                         </ol>
                     </nav>
                     <p class="text-uppercase tracking-widest text-warning small font-monospace mb-2">CÁ NHÂN HÓA TRẢI NGHIỆM THƯỞNG THỨC</p>
-                    <h1 class="display-4 fw-bold mb-3 text-light" style="font-family: 'Playfair Display', serif; text-wrap: balance;">
+                    <h1 class="display-4 fw-bold mb-3 text-light inno-hero-title" style="font-family: 'Playfair Display', serif; text-wrap: balance;">
                         <t t-if="initial_step == 5 and top1">
                             Kết Quả Phân Tích Cảm Quan Vị Giác
                         </t>
@@ -50,7 +58,7 @@
                             Tìm Gu Cà Phê Của Bạn
                         </t>
                     </h1>
-                    <p class="lead mx-auto mb-0" style="max-width: 760px; color: rgba(247, 242, 234, 0.8); line-height: 1.7; text-wrap: balance;">
+                    <p class="lead mx-auto mb-0 inno-hero-lead" style="max-width: 760px; line-height: 1.7; text-wrap: balance;">
                         <t t-if="initial_step == 5 and top1">
                             Dựa trên thói quen pha chế và sở thích hương vị, đây là dòng hạt rang mộc sinh ra dành riêng cho khẩu vị của bạn.
                         </t>
