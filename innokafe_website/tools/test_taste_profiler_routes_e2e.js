@@ -15,12 +15,13 @@ const { chromium } = require('playwright');
         }
     });
 
-    const BASE_URL = "http://localhost:28071";
+    const BASE_URL = process.env.INNOKAFE_BASE_URL || "https://innokafe.com";
 
     try {
         // TEST 1: Base route loads and starts on Step 1
         console.log("\n[TEST 1] Visiting /taste-profiler");
-        await page.goto(`${BASE_URL}/taste-profiler`, { waitUntil: 'networkidle' });
+        await page.goto(`${BASE_URL}/taste-profiler`, { waitUntil: 'domcontentloaded' });
+        await page.waitForSelector('#step-1', { state: 'attached' });
         const title1 = await page.title();
         console.log(`Page title: ${title1}`);
         const step1Visible = await page.isVisible('#step-1');
@@ -30,7 +31,8 @@ const { chromium } = require('playwright');
 
         // TEST 2: Direct deep link to Step 2
         console.log("\n[TEST 2] Visiting /taste-profiler/step/2");
-        await page.goto(`${BASE_URL}/taste-profiler/step/2`, { waitUntil: 'networkidle' });
+        await page.goto(`${BASE_URL}/taste-profiler/step/2`, { waitUntil: 'domcontentloaded' });
+        await page.waitForSelector('#step-2', { state: 'attached' });
         const step2DeepVisible = await page.isVisible('#step-2');
         const step1DeepVisible = await page.isVisible('#step-1');
         console.log(`Step 2 visible: ${step2DeepVisible}, Step 1 hidden: ${!step1DeepVisible}`);
@@ -38,13 +40,15 @@ const { chromium } = require('playwright');
 
         // TEST 3: Direct deep link to Step 4
         console.log("\n[TEST 3] Visiting /taste-profiler/step/4");
-        await page.goto(`${BASE_URL}/taste-profiler/step/4`, { waitUntil: 'networkidle' });
+        await page.goto(`${BASE_URL}/taste-profiler/step/4`, { waitUntil: 'domcontentloaded' });
+        await page.waitForSelector('#step-4', { state: 'attached' });
         const step4DeepVisible = await page.isVisible('#step-4');
         if (!step4DeepVisible) throw new Error("Step 4 should be visible on /taste-profiler/step/4");
 
         // TEST 4: Direct deep link to SKU result
         console.log("\n[TEST 4] Visiting /taste-profiler/result/INNO-ARABICA-WASH-02");
-        await page.goto(`${BASE_URL}/taste-profiler/result/INNO-ARABICA-WASH-02`, { waitUntil: 'networkidle' });
+        await page.goto(`${BASE_URL}/taste-profiler/result/INNO-ARABICA-WASH-02`, { waitUntil: 'domcontentloaded' });
+        await page.waitForSelector('#result', { state: 'attached' });
         const resultVisible = await page.isVisible('#result');
         const top1Name = await page.innerText('.top1-product-name');
         console.log(`Result visible: ${resultVisible}, Top 1 Name: ${top1Name}`);
@@ -59,7 +63,9 @@ const { chromium } = require('playwright');
 
         // TEST 5: Interactive step progression from Step 1
         console.log("\n[TEST 5] Interactive progression through all 4 steps");
-        await page.goto(`${BASE_URL}/taste-profiler`, { waitUntil: 'networkidle' });
+        await page.goto(`${BASE_URL}/taste-profiler`, { waitUntil: 'domcontentloaded' });
+        await page.waitForFunction(() => !!window.InnokafeTasteProfiler);
+        await page.waitForTimeout(300);
         
         // Click Option in Step 1 (Sữa Đá)
         console.log("Selecting Habit in Step 1...");

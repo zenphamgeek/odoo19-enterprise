@@ -108,7 +108,7 @@ VIEWS_DIR = BASE_DIR / "views"
 SCSS_DIR = BASE_DIR / "static" / "src" / "scss"
 JS_DIR = BASE_DIR / "static" / "src" / "js"
 CONTROLLERS_DIR = BASE_DIR / "controllers"
-DEFAULT_BASE_URL = os.environ.get("INNOKAFE_BASE_URL", os.environ.get("INSILOS_BASE_URL", "https://innokafe.insilos.com"))
+DEFAULT_BASE_URL = os.environ.get("INNOKAFE_BASE_URL", os.environ.get("INSILOS_BASE_URL", "https://innokafe.com"))
 
 try:
     import psycopg2
