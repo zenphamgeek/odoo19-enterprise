@@ -18,7 +18,7 @@
 
                     <!-- Navbar Toggler for Mobile -->
                     <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#innoriaNavContent" aria-controls="innoriaNavContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <svg class="ph-duotone ph-list" style="width: 1.75rem; height: 1.75rem; color: #0ABBDB;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-list"/></svg>
+                        <svg class="ph-duotone ph-list ph-md text-cyan" ><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-list"/></svg>
                     </button>
 
                     <!-- Nav Links Wrapper with Dynamic Indicator Sheen -->
@@ -28,44 +28,44 @@
                             <ul id="top_menu" class="nav navbar-nav top_menu align-items-center mb-0 gap-1" role="menu">
                                 <!-- Products Mega Menu Trigger (GRC Technology Suites) -->
                                 <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="innoria_products">
-                                    <a role="menuitem" href="/#innoria_trade_compliance_interactive" class="nav-link ins-megamenu-trigger text-white fw-semibold" style="color: #F8FAFC !important;" aria-expanded="false">
+                                    <a role="menuitem" href="/#innoria_trade_compliance_interactive" class="nav-link ins-megamenu-trigger text-white fw-semibold" aria-expanded="false">
                                         <span>Sản Phẩm</span>
                                         <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
                                     </a>
                                 </li>
                                 <!-- Platform Mega Menu Trigger -->
                                 <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="innoria_platform">
-                                    <a role="menuitem" href="/platform" class="nav-link ins-megamenu-trigger text-white fw-semibold" style="color: #F8FAFC !important;" aria-expanded="false">
+                                    <a role="menuitem" href="/platform" class="nav-link ins-megamenu-trigger text-white fw-semibold" aria-expanded="false">
                                         <span>Nền Tảng</span>
                                         <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
                                     </a>
                                 </li>
                                 <!-- Solutions Mega Menu Trigger -->
                                 <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="innoria_solutions">
-                                    <a role="menuitem" href="/solutions" class="nav-link ins-megamenu-trigger text-white fw-semibold" style="color: #F8FAFC !important;" aria-expanded="false">
+                                    <a role="menuitem" href="/solutions" class="nav-link ins-megamenu-trigger text-white fw-semibold" aria-expanded="false">
                                         <span>Giải Pháp</span>
                                         <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
                                     </a>
                                 </li>
                                 <!-- Industries Link -->
                                 <li role="presentation" class="nav-item ins-nav-item">
-                                    <a role="menuitem" href="/industries" class="nav-link text-white fw-semibold" style="color: #F8FAFC !important;">
+                                    <a role="menuitem" href="/industries" class="nav-link text-white fw-semibold">
                                         <span>Ngành Nghề</span>
                                     </a>
                                 </li>
 
                                 <!-- Company Link -->
                                 <li role="presentation" class="nav-item ins-nav-item">
-                                    <a role="menuitem" href="/about" class="nav-link text-white fw-semibold" style="color: #F8FAFC !important;">
+                                    <a role="menuitem" href="/about" class="nav-link text-white fw-semibold">
                                         <span>Về Innoria</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                         <!-- Right CTA & Language Switcher -->
-                        <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                        <div class="d-flex flex-wrap flex-lg-nowrap align-items-center gap-2 mt-3 mt-lg-0">
                             <!-- Executive Language Switcher (VN / EN) -->
-                            <div class="ins-lang-switcher d-flex align-items-center me-2" id="innoria_lang_switcher">
+                            <div class="ins-lang-switcher d-flex align-items-center me-1" id="innoria_lang_switcher">
                                 <div class="btn-group btn-group-sm ins-lang-group">
                                     <a href="/" id="lang_toggle_vi" class="ins-lang-pill ins-lang-toggle is-active active">
                                         <span>VN</span>
@@ -75,28 +75,68 @@
                                     </a>
                                 </div>
                             </div>
-                            <a href="/contactus" class="btn ins-btn-lux ins-btn-lux-primary btn-innoria-nav d-inline-flex align-items-center gap-2">
+                            <!-- User Authentication & Sign In / Portal -->
+                            <t t-if="user_id._is_public()">
+                                <a href="/web/login" class="btn btn-outline-light d-inline-flex align-items-center gap-1 px-3 py-2 rounded-1 fw-semibold">
+                                    <svg class="ph-duotone ph-sign-in ph-sm" width="16" height="16"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-sign-in"/></svg>
+                                    <span>Đăng Nhập</span>
+                                </a>
+                            </t>
+                            <t t-else="">
+                                <div class="dropdown ins-user-dropdown d-inline-block">
+                                    <a href="#" class="btn btn-sm btn-outline-light dropdown-toggle d-inline-flex align-items-center gap-1 px-3 py-2 rounded-1 fw-semibold text-white" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <svg class="ph-duotone ph-user-circle ph-sm" width="18" height="18"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-user-circle"/></svg>
+                                        <span t-out="user_id.name" class="d-inline-block text-truncate"/>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-lg py-2 mt-1">
+                                        <li><h6 class="dropdown-header text-muted small text-uppercase">Tài khoản</h6></li>
+                                        <li><a class="dropdown-item py-2 text-light d-flex align-items-center gap-2" href="/my">
+                                            <svg class="ph-duotone ph-user ph-sm" width="16" height="16"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-user"/></svg>
+                                            <span>Hồ sơ &amp; Cổng Portal</span>
+                                        </a></li>
+                                        <t t-if="user_id._is_internal()">
+                                            <li><a class="dropdown-item py-2 text-info d-flex align-items-center gap-2 fw-semibold" href="/web">
+                                                <svg class="ph-duotone ph-squares-four ph-sm" width="16" height="16"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-squares-four"/></svg>
+                                                <span>Hệ thống ERP / Apps</span>
+                                            </a></li>
+                                        </t>
+                                        <li><hr class="dropdown-divider my-1 border-secondary border-opacity-25"/></li>
+                                        <li><a class="dropdown-item py-2 text-danger d-flex align-items-center gap-2" href="/web/session/logout?redirect=/insilos">
+                                            <svg class="ph-duotone ph-sign-out ph-sm" width="16" height="16"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-sign-out"/></svg>
+                                            <span>Đăng Xuất</span>
+                                        </a></li>
+                                    </ul>
+                                </div>
+                            </t>
+                            <a href="/contactus" class="btn ins-btn-lux ins-btn-lux-primary btn-innoria-nav d-inline-flex justify-content-center align-items-center gap-2 w-100 w-lg-auto mt-2 mt-lg-0">
                                 <span class="nav-cta-text">Tham Vấn Kiến Trúc 3 Giờ</span>
-                                <svg class="ph-duotone ph-arrow-right" style="width: 1rem; height: 1rem; fill: currentColor;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                                <svg class="ph-duotone ph-arrow-right ph-sm" ><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Mega-Menu 0: Products Dropdown (GRC Technology Suites) -->
+                                <!-- Sovereign Innoria Mega-Menus -->
+                <t t-call="insilos_website.innoria_navbar_megamenus"/>
+            </nav>
+        </header>
+    </template>
+
+    <template id="innoria_navbar_megamenus" name="INNORIA Navbar Mega-Menus">
+<!-- Mega-Menu 0: Products Dropdown (GRC Technology Suites) -->
                 <div class="ins-megamenu-dropdown innoria-megamenu-dropdown innoria-megamenu-products shadow-lg" id="ins_megamenu_innoria_products" data-megamenu-target="innoria_products">
                     <div class="container py-4">
                         <div class="row g-4 align-items-stretch">
                             <!-- Col 1: Trade Compliance Intelligence -->
                             <div class="col-lg-4">
                                 <div class="ins-megamenu-col-header mb-3">
-                                    <span class="ins-col-eyebrow text-uppercase fw-semibold small" style="color: #0ABBDB !important;">Xuất Nhập Khẩu &amp; Hải Quan</span>
+                                    <span class="ins-col-eyebrow ins-eyebrow-cyan text-uppercase fw-semibold small">Xuất Nhập Khẩu &amp; Hải Quan</span>
                                     <h5 class="text-white fw-bold mb-0">Trade Compliance Intelligence</h5>
                                 </div>
                                 <div class="d-flex flex-column gap-2">
                                     <!-- Recon -->
-                                    <a href="/#innoria_trade_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #0ABBDB; background: rgba(10, 187, 219, 0.1); border-color: rgba(10, 187, 219, 0.3);">
+                                    <a href="/#innoria_trade_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1">
+                                        <div class="ins-menu-icon-box ins-icon-cyan flex-shrink-0">
                                             <svg class="ph-duotone ph-file-search ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-file-search"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -104,12 +144,12 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Đối Chiếu Chứng Từ XNK</span>
                                                 <span class="ins-label-lux ins-label-lux-mint">Multi-Doc Diff</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Đối chiếu PO, Invoice, Packing List và Tờ khai hải quan</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Đối chiếu PO, Invoice, Packing List và Tờ khai hải quan</p>
                                         </div>
                                     </a>
                                     <!-- C/O Management -->
-                                    <a href="/#innoria_trade_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #0284C7; background: rgba(2, 132, 199, 0.1); border-color: rgba(2, 132, 199, 0.3);">
+                                    <a href="/#innoria_trade_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1">
+                                        <div class="ins-menu-icon-box ins-icon-blue flex-shrink-0">
                                             <svg class="ph-duotone ph-certificate ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-certificate"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -117,12 +157,12 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Quản Trị Xuất Xứ C/O</span>
                                                 <span class="ins-label-lux ins-label-lux-blue">RVC &amp; CTC Rules</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Kiểm soát quy tắc xuất xứ BOM và cấp bộ hồ sơ C/O chuẩn</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Kiểm soát quy tắc xuất xứ BOM và cấp bộ hồ sơ C/O chuẩn</p>
                                         </div>
                                     </a>
                                     <!-- Chemical Compliance -->
-                                    <a href="/#innoria_trade_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #FF8000; background: rgba(255, 128, 0, 0.1); border-color: rgba(255, 128, 0, 0.3);">
+                                    <a href="/#innoria_trade_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1">
+                                        <div class="ins-menu-icon-box ins-icon-orange flex-shrink-0">
                                             <svg class="ph-duotone ph-flask ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-flask"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -130,7 +170,7 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Thương Mại Hóa Chất</span>
                                                 <span class="ins-label-lux ins-label-lux-amber">CAS Mapping</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Chuẩn hóa mã định danh CAS và giấy phép tiền chất tự động</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Chuẩn hóa mã định danh CAS và giấy phép tiền chất tự động</p>
                                         </div>
                                     </a>
                                 </div>
@@ -139,13 +179,13 @@
                             <!-- Col 2: Operational Compliance Intelligence -->
                             <div class="col-lg-4">
                                 <div class="ins-megamenu-col-header mb-3">
-                                    <span class="ins-col-eyebrow text-uppercase fw-semibold small" style="color: #0284C7 !important;">Vận Hành &amp; An Toàn Kỹ Thuật</span>
+                                    <span class="ins-col-eyebrow ins-eyebrow-blue text-uppercase fw-semibold small">Vận Hành &amp; An Toàn Kỹ Thuật</span>
                                     <h5 class="text-white fw-bold mb-0">Operational Compliance Intelligence</h5>
                                 </div>
                                 <div class="d-flex flex-column gap-2">
                                     <!-- PTW & LOTO -->
-                                    <a href="/#innoria_operational_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #EF4444; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3);">
+                                    <a href="/#innoria_operational_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1">
+                                        <div class="ins-menu-icon-box ins-icon-red flex-shrink-0">
                                             <svg class="ph-duotone ph-lock-key ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lock-key"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -153,12 +193,12 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Giấy Phép e-PTW &amp; LOTO</span>
                                                 <span class="ins-label-lux ins-label-lux-rose">ISO 45001</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Cô lập nguồn năng lượng van điện LOTO và ký duyệt số e-PTW</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Cô lập nguồn năng lượng van điện LOTO và ký duyệt số e-PTW</p>
                                         </div>
                                     </a>
                                     <!-- Operations Logbook -->
-                                    <a href="/#innoria_operational_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #38BDF8; background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3);">
+                                    <a href="/#innoria_operational_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1">
+                                        <div class="ins-menu-icon-box ins-icon-sky flex-shrink-0">
                                             <svg class="ph-duotone ph-notebook ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-notebook"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -166,12 +206,12 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Nhật Ký &amp; Bàn Giao Ca</span>
                                                 <span class="ins-label-lux ins-label-lux-blue">Shift Handover</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Nhật ký ca vận hành tự động và ký nhận bàn giao việc ca</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Nhật ký ca vận hành tự động và ký nhận bàn giao việc ca</p>
                                         </div>
                                     </a>
                                     <!-- EHS Management -->
-                                    <a href="/#innoria_operational_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #10B981; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
+                                    <a href="/#innoria_operational_compliance_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1">
+                                        <div class="ins-menu-icon-box ins-icon-emerald flex-shrink-0">
                                             <svg class="ph-duotone ph-shield-check ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -179,7 +219,7 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Quản Trị An Toàn EHS</span>
                                                 <span class="ins-label-lux ins-label-lux-mint">CAPA &amp; Risk</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Quản trị rủi ro HSE hiện trường và hành động phòng ngừa CAPA</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Quản trị rủi ro HSE hiện trường và hành động phòng ngừa CAPA</p>
                                         </div>
                                     </a>
                                 </div>
@@ -188,13 +228,13 @@
                             <!-- Col 3: Logistics Operations Solutions (Symmetrical 3 Items) -->
                             <div class="col-lg-4">
                                 <div class="ins-megamenu-col-header mb-3">
-                                    <span class="ins-col-eyebrow text-uppercase fw-semibold small" style="color: #10B981 !important;">Forwarder &amp; Chuỗi Cung Ứng Liền Kề</span>
+                                    <span class="ins-col-eyebrow ins-eyebrow-emerald text-uppercase fw-semibold small">Forwarder &amp; Chuỗi Cung Ứng Liền Kề</span>
                                     <h5 class="text-white fw-bold mb-0">Logistics Operations Solutions</h5>
                                 </div>
                                 <div class="d-flex flex-column gap-2">
                                     <!-- Forwarder Cost Control -->
-                                    <a href="/#innoria_logistics_jobfile_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #10B981; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
+                                    <a href="/#innoria_logistics_jobfile_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1">
+                                        <div class="ins-menu-icon-box ins-icon-emerald flex-shrink-0">
                                             <svg class="ph-duotone ph-truck ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-truck"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -202,12 +242,12 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Kiểm Soát Forwarder</span>
                                                 <span class="ins-label-lux ins-label-lux-mint">Jobfile Engine</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Tự động sinh Jobfile từ B/L và đối soát biểu phí forwarder</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Tự động sinh Jobfile từ B/L và đối soát biểu phí forwarder</p>
                                         </div>
                                     </a>
                                     <!-- Supply Chain Solutions -->
-                                    <a href="/#innoria_logistics_jobfile_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #0ABBDB; background: rgba(10, 187, 219, 0.1); border-color: rgba(10, 187, 219, 0.3);">
+                                    <a href="/#innoria_logistics_jobfile_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1">
+                                        <div class="ins-menu-icon-box ins-icon-cyan flex-shrink-0">
                                             <svg class="ph-duotone ph-intersect ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-intersect"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -215,12 +255,12 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Chuỗi Cung Ứng Ngành</span>
                                                 <span class="ins-label-lux ins-label-lux-cyan">End-to-End</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Hợp nhất chuỗi cung ứng công nghiệp và điều phối liên bến cảng</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Hợp nhất chuỗi cung ứng công nghiệp và điều phối liên bến cảng</p>
                                         </div>
                                     </a>
                                     <!-- Container Depot Management (NEW Symmetrical Item) -->
-                                    <a href="/#innoria_logistics_jobfile_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #38BDF8; background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3);">
+                                    <a href="/#innoria_logistics_jobfile_interactive" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1">
+                                        <div class="ins-menu-icon-box ins-icon-sky flex-shrink-0">
                                             <svg class="ph-duotone ph-cube ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cube"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -228,7 +268,7 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Quản Trị Vỏ Container</span>
                                                 <span class="ins-label-lux ins-label-lux-amber">Detention 0d</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Kiểm soát vòng quay vỏ rỗng liên depot, triệt tiêu phí DEM</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Kiểm soát vòng quay vỏ rỗng liên depot, triệt tiêu phí DEM</p>
                                         </div>
                                     </a>
                                 </div>
@@ -244,12 +284,12 @@
                             <!-- Col 1: Core Platforms -->
                             <div class="col-lg-4">
                                 <div class="ins-megamenu-col-header mb-3">
-                                    <span class="ins-col-eyebrow text-uppercase fw-semibold small" style="color: #0ABBDB !important;">Nền Tảng Cốt Lõi</span>
+                                    <span class="ins-col-eyebrow ins-eyebrow-cyan text-uppercase fw-semibold small">Nền Tảng Cốt Lõi</span>
                                     <h5 class="text-white fw-bold mb-0">4 Trụ Cột Nền Tảng Lõi</h5>
                                 </div>
                                 <div class="d-flex flex-column gap-2">
                                     <!-- DIGIFORCE -->
-                                    <a href="/no-code-platform" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3 is-active" style="color: #F8FAFC !important;"
+                                    <a href="/no-code-platform" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1 is-active"
                                        data-badge="Sprint 3h · Go-Live 3m"
                                        data-title="DIGIFORCE Sovereign Platform"
                                        data-icon="ph-cpu"
@@ -258,7 +298,7 @@
                                        data-m3-val="3 Months" data-m3-lbl="Hệ Lõi Tự Chủ"
                                        data-desc="Nền tảng No-Code / Low-Code siêu tốc: Xây dựng ứng dụng doanh nghiệp tùy biến sâu theo chuẩn 3h -> 3d -> 3w -> 3m."
                                        data-href="/no-code-platform">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #0ABBDB; background: rgba(10, 187, 219, 0.1); border-color: rgba(10, 187, 219, 0.3);">
+                                        <div class="ins-menu-icon-box ins-icon-cyan flex-shrink-0">
                                             <svg class="ph-duotone ph-cpu ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -266,11 +306,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">DIGIFORCE</span>
                                                 <span class="ins-label-lux ins-label-lux-cyan">Sprint 3h</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Kiến tạo ứng dụng tùy biến sâu, rút ngắn 80% thời gian phát triển</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Kiến tạo ứng dụng tùy biến sâu, rút ngắn 80% thời gian phát triển</p>
                                         </div>
                                     </a>
                                     <!-- MOJO AI -->
-                                    <a href="/ai-solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;"
+                                    <a href="/ai-solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="16 Nodes · 99.8% VLM"
                                        data-title="MOJO AI Multi-Agent Swarm"
                                        data-icon="ph-robot"
@@ -279,7 +319,7 @@
                                        data-m3-val="16 Nodes" data-m3-lbl="Nút Tác Nhân Hoạt Động"
                                        data-desc="Mạng lưới AI đa tác nhân phối hợp nhận thức VLM See-Detect-Analyze-Adapt và lập kế hoạch tự chủ Reason-Solve-Plan-Execute."
                                        data-href="/ai-solutions">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #0284C7; background: rgba(2, 132, 199, 0.1); border-color: rgba(2, 132, 199, 0.3);">
+                                        <div class="ins-menu-icon-box ins-icon-blue flex-shrink-0">
                                             <svg class="ph-duotone ph-robot ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-robot"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -287,11 +327,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">MOJO AI</span>
                                                 <span class="ins-label-lux ins-label-lux-blue">16 Swarm Nodes</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Thị giác máy tính VLM và quy trình tự chủ nhận thức khép kín</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Thị giác máy tính VLM và quy trình tự chủ nhận thức khép kín</p>
                                         </div>
                                     </a>
                                     <!-- ZENCODE-ENT -->
-                                    <a href="/zencode" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;"
+                                    <a href="/zencode" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="Swarm PDCA · Zero-Telemetry"
                                        data-title="ZENCODE-ENT Autonomous OS"
                                        data-icon="ph-cpu"
@@ -300,7 +340,7 @@
                                        data-m3-val="Binary Veto" data-m3-lbl="Forensic Gate"
                                        data-desc="Hệ điều hành kỹ nghệ tự trị khép kín cho Ngân hàng, Cổng thanh toán quốc gia và Monorepo. Hiện đại hóa Strangler-Fig monolith và triệt tiêu rò rỉ dữ liệu."
                                        data-href="/zencode">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #42E6C3; background: rgba(66, 230, 195, 0.1); border-color: rgba(66, 230, 195, 0.3);">
+                                        <div class="ins-menu-icon-box ins-icon-cyan flex-shrink-0">
                                             <svg class="ph-duotone ph-cpu ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -308,11 +348,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">ZENCODE-ENT</span>
                                                 <span class="ins-label-lux ins-label-lux-mint">Zero-Telemetry</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Hệ điều hành kỹ nghệ tự trị, Swarm PDCA &amp; Zero-Telemetry</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Hệ điều hành kỹ nghệ tự trị, Swarm PDCA &amp; Zero-Telemetry</p>
                                         </div>
                                     </a>
                                     <!-- INSILOS -->
-                                    <a href="/insilos" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3" style="color: #F8FAFC !important;"
+                                    <a href="/insilos" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="99.98% OEE · TT 200/78"
                                        data-title="INSILOS Enterprise Platform"
                                        data-icon="ph-buildings"
@@ -321,7 +361,7 @@
                                        data-m3-val="MES &amp; BOM" data-m3-lbl="OEE ≥ 95%"
                                        data-desc="Nền tảng ERP tự hành hợp nhất chuỗi cung ứng SD-MM, logistics bến cảng Cát Lái - Cái Mép, sản xuất cơ khí chính xác và lõi tài chính VAS Thông tư 200."
                                        data-href="/insilos">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #00F0FF; background: rgba(0, 240, 255, 0.1); border-color: rgba(0, 240, 255, 0.3);">
+                                        <div class="ins-menu-icon-box ins-icon-cyan flex-shrink-0">
                                             <svg class="ph-duotone ph-buildings ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-buildings"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -329,7 +369,7 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">INSILOS</span>
                                                 <span class="ins-label-lux ins-label-lux-cyan">TT 200 &amp; MES</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Lõi vận hành tự chủ: Chuỗi cung ứng, MES xưởng và Kế toán TT200</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Lõi vận hành tự chủ: Chuỗi cung ứng, MES xưởng và Kế toán TT200</p>
                                         </div>
                                     </a>
                                 </div>
@@ -337,12 +377,12 @@
                             <!-- Col 2: Sovereign Architecture -->
                             <div class="col-lg-4">
                                 <div class="ins-megamenu-col-header mb-3">
-                                    <span class="ins-col-eyebrow text-uppercase fw-semibold small" style="color: #0284C7 !important;">Kiến Trúc Tự Chủ</span>
+                                    <span class="ins-col-eyebrow ins-eyebrow-blue text-uppercase fw-semibold small">Kiến Trúc Tự Chủ</span>
                                     <h5 class="text-white fw-bold mb-0">Kiến Trúc Triển Khai Thực Chiến</h5>
                                 </div>
                                 <div class="d-flex flex-column gap-2">
                                     <!-- Air-Gapped Cloud -->
-                                    <a href="/platform" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/platform" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="Air-Gapped · On-Premises"
                                        data-title="Sovereign Cloud &amp; Hardware"
                                        data-icon="ph-cloud-check"
@@ -359,11 +399,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Đám Mây Tự Chủ</span>
                                                 <span class="ins-label-lux ins-label-lux-subtle">Air-Gapped</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Private GPU Cluster On-Premise, zero rò rỉ dữ liệu ra ngoài</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Private GPU Cluster On-Premise, zero rò rỉ dữ liệu ra ngoài</p>
                                         </div>
                                     </a>
                                     <!-- Circular 200/78 E-Invoice -->
-                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="Viettel · VNPT S-Invoice"
                                        data-title="Tuân Thủ Thuế &amp; Kế Toán VN"
                                        data-icon="ph-file-text"
@@ -380,11 +420,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Thuế &amp; Hóa Đơn TT 78</span>
                                                 <span class="ins-label-lux ins-label-lux-blue">TT 200/78</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Đồng bộ Cục Thuế tự động, loại trừ 100% rủi ro hóa đơn sai sót</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Đồng bộ Cục Thuế tự động, loại trừ 100% rủi ro hóa đơn sai sót</p>
                                         </div>
                                     </a>
                                     <!-- Industrial VLM Vision -->
-                                    <a href="/industries" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/industries" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="99.8% STP · Zero Incident"
                                        data-title="AI Giám Sát Thị Giác Công Nghiệp"
                                        data-icon="ph-eye"
@@ -401,11 +441,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Thị Giác AI Công Nghiệp</span>
                                                 <span class="ins-label-lux ins-label-lux-mint">99.8% VLM</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Giám sát bảo hộ PPE xưởng cơ khí, cảnh báo an toàn tức thời</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Giám sát bảo hộ PPE xưởng cơ khí, cảnh báo an toàn tức thời</p>
                                         </div>
                                     </a>
                                     <!-- Drayage Logistics Hub -->
-                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="Cát Lái · Cái Mép Hub"
                                        data-title="Điều Phối Vận Tải Cảng Container"
                                        data-icon="ph-truck"
@@ -422,41 +462,41 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Vận Tải Cảng Biển</span>
                                                 <span class="ins-label-lux ins-label-lux-amber">Zero Loss</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Theo dõi container liên bãi depot, triệt tiêu chi phí DET/DEM</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Theo dõi container liên bãi depot, triệt tiêu chi phí DET/DEM</p>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                             <!-- Col 3: Live Interactive Preview Card -->
                             <div class="col-lg-4">
-                                <div class="card h-100 p-4 rounded-2 border border-secondary border-opacity-25 d-flex flex-column justify-content-between ins-preview-card" id="innoria_platform_preview_card" style="background: rgba(11, 19, 36, 0.85); border-color: rgba(10, 187, 219, 0.3) !important;">
+                                <div class="card h-100 p-4 rounded-2 border border-secondary border-opacity-25 d-flex flex-column justify-content-between ins-preview-card" id="innoria_platform_preview_card">
                                     <div class="ins-preview-content">
                                         <div class="d-flex justify-content-between align-items-start mb-3">
-                                            <div class="ins-card-pictogram ins-pictogram-lg inn-plat-preview-icon" style="background: rgba(10, 187, 219, 0.15); border: 1px solid rgba(10, 187, 219, 0.4); color: #0ABBDB;">
+                                            <div class="ins-card-pictogram ins-pictogram-lg inn-plat-preview-icon">
                                                 <svg class="ph-duotone ph-cpu ph-xl"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg>
                                             </div>
                                             <span class="ins-label-lux ins-label-lux-cyan inn-plat-preview-badge">Sprint 3h · Go-Live 3m</span>
                                         </div>
                                         <h4 class="text-white fw-bold mb-2 inn-plat-preview-title">DIGIFORCE Sovereign Platform</h4>
-                                        <p class="small mb-3 inn-plat-preview-desc" style="color: #94A3B8 !important;">Nền tảng No-Code / Low-Code siêu tốc: Xây dựng ứng dụng doanh nghiệp tùy biến sâu theo chuẩn 3h -> 3d -> 3w -> 3m.</p>
+                                        <p class="small mb-3 inn-plat-preview-desc">Nền tảng No-Code / Low-Code siêu tốc: Xây dựng ứng dụng doanh nghiệp tùy biến sâu theo chuẩn 3h -> 3d -> 3w -> 3m.</p>
                                         <!-- Live SLA Metrics Grid -->
                                         <div class="row g-2 mb-3">
                                             <div class="col-4">
-                                                <div class="ins-metric-cell p-2 rounded-3 text-center" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);">
-                                                    <div class="ins-metric-val fw-bold inn-plat-m1-val" style="color: #0ABBDB;">3 Hours</div>
-                                                    <div class="ins-metric-lbl x-small inn-plat-m1-lbl" style="color: #64748B;">Nguyên Mẫu</div>
+                                                <div class="ins-metric-cell p-2 rounded-1 text-center">
+                                                    <div class="ins-metric-val fw-bold inn-plat-m1-val">3 Hours</div>
+                                                    <div class="ins-metric-lbl x-small inn-plat-m1-lbl">Nguyên Mẫu</div>
                                                 </div>
                                             </div>
                                             <div class="col-4">
-                                                <div class="ins-metric-cell p-2 rounded-3 text-center" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);">
-                                                    <div class="ins-metric-val fw-bold inn-plat-m2-val" style="color: #38BDF8;">3 Days</div>
-                                                    <div class="ins-metric-lbl x-small inn-plat-m2-lbl" style="color: #64748B;">Bản Chạy POC</div>
+                                                <div class="ins-metric-cell p-2 rounded-1 text-center">
+                                                    <div class="ins-metric-val fw-bold inn-plat-m2-val">3 Days</div>
+                                                    <div class="ins-metric-lbl x-small inn-plat-m2-lbl">Bản Chạy POC</div>
                                                 </div>
                                             </div>
                                             <div class="col-4">
-                                                <div class="ins-metric-cell p-2 rounded-3 text-center" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);">
-                                                    <div class="ins-metric-val fw-bold inn-plat-m3-val" style="color: #FF8000;">3 Months</div>
-                                                    <div class="ins-metric-lbl x-small inn-plat-m3-lbl" style="color: #64748B;">Hệ Lõi Tự Chủ</div>
+                                                <div class="ins-metric-cell p-2 rounded-1 text-center">
+                                                    <div class="ins-metric-val fw-bold inn-plat-m3-val">3 Months</div>
+                                                    <div class="ins-metric-lbl x-small inn-plat-m3-lbl">Hệ Lõi Tự Chủ</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -480,12 +520,12 @@
                             <!-- Col 1: Enterprise Workflows -->
                             <div class="col-lg-4">
                                 <div class="ins-megamenu-col-header mb-3">
-                                    <span class="ins-col-eyebrow text-uppercase fw-semibold small" style="color: #0ABBDB !important;">Quy Trình Nghiệp Vụ</span>
+                                    <span class="ins-col-eyebrow ins-eyebrow-cyan text-uppercase fw-semibold small">Quy Trình Nghiệp Vụ</span>
                                     <h5 class="text-white fw-bold mb-0">Quy Trình Nghiệp Vụ Doanh Nghiệp</h5>
                                 </div>
                                 <div class="d-flex flex-column gap-2">
                                     <!-- MES -->
-                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3 is-active"
+                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1 is-active"
                                        data-badge="OEE &gt;= 92% · SS400"
                                        data-title="Quản Trị Sản Xuất MES &amp; BOM Đa Tầng"
                                        data-icon="ph-gear-six"
@@ -494,7 +534,7 @@
                                        data-m3-val="0.0s" data-m3-lbl="Độ Trễ MES"
                                        data-desc="Hệ thống điều độ phân xưởng MES trực quan, cân bằng phụ tải máy cắt Laser Fiber CNC và theo dõi chi phí lệnh sản xuất."
                                        data-href="/solutions">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #0ABBDB; background: rgba(10, 187, 219, 0.1); border-color: rgba(10, 187, 219, 0.3);">
+                                        <div class="ins-menu-icon-box ins-icon-cyan flex-shrink-0">
                                             <svg class="ph-duotone ph-gear-six ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-gear-six"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -502,11 +542,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Sản Xuất Cơ Khí MES</span>
                                                 <span class="ins-label-lux ins-label-lux-cyan">OEE &gt;= 92%</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">BOM đa tầng V-LIFT, lệnh sản xuất CNC và ghi nhận công đoạn</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">BOM đa tầng V-LIFT, lệnh sản xuất CNC và ghi nhận công đoạn</p>
                                         </div>
                                     </a>
                                     <!-- Warehouse -->
-                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="Barcode · QR · Barcode 2D"
                                        data-title="Quản Trị Kho Vận &amp; Truy Vết Lô"
                                        data-icon="ph-package"
@@ -515,7 +555,7 @@
                                        data-m3-val="FIFO" data-m3-lbl="Xuất Nhập Tồn"
                                        data-desc="Quản lý vị trí kho thông minh, quét mã vạch Barcode/QR bằng thiết bị cầm tay PDA, theo dõi hạn dùng và truy xuất số lô."
                                        data-href="/solutions">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #0284C7; background: rgba(2, 132, 199, 0.1); border-color: rgba(2, 132, 199, 0.3);">
+                                        <div class="ins-menu-icon-box ins-icon-blue flex-shrink-0">
                                             <svg class="ph-duotone ph-package ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-package"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -523,11 +563,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Kho Thông Minh (WMS)</span>
                                                 <span class="ins-label-lux ins-label-lux-blue">Barcode / QR</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Quản trị tồn kho đa điểm, đối soát xuất nhập kho tức thời</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Quản trị tồn kho đa điểm, đối soát xuất nhập kho tức thời</p>
                                         </div>
                                     </a>
                                     <!-- Finance -->
-                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="B01-DN · B02-DN"
                                        data-title="Kế Toán Tài Chính &amp; Thuế TT 200"
                                        data-icon="ph-currency-circle-dollar"
@@ -536,7 +576,7 @@
                                        data-m3-val="B01-B02" data-m3-lbl="Báo Cáo Tự Động"
                                        data-desc="Hạch toán tự động hệ thống tài khoản kế toán Việt Nam, kết nối trực tiếp phân hệ Bán hàng, Mua hàng và Tính giá thành sản xuất."
                                        data-href="/solutions">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #FF8000; background: rgba(255, 128, 0, 0.1); border-color: rgba(255, 128, 0, 0.3);">
+                                        <div class="ins-menu-icon-box ins-icon-orange flex-shrink-0">
                                             <svg class="ph-duotone ph-currency-circle-dollar ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-currency-circle-dollar"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -544,11 +584,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Tài Chính Kế Toán</span>
                                                 <span class="ins-label-lux ins-label-lux-amber">VAS / IFRS</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Hệ thống tài khoản Thông tư 200, quyết toán thuế minh bạch</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Hệ thống tài khoản Thông tư 200, quyết toán thuế minh bạch</p>
                                         </div>
                                     </a>
                                     <!-- Procurement -->
-                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="Lead-to-Cash · 3 Cấp Duyệt"
                                        data-title="Mua Hàng &amp; Quản Trị Chuỗi Cung Ứng"
                                        data-icon="ph-shopping-cart"
@@ -557,7 +597,7 @@
                                        data-m3-val="100%" data-m3-lbl="Khóa Biên Lãi"
                                        data-desc="Quy trình RFQ gửi nhà cung cấp, so sánh báo giá thép SS400, kiểm soát định mức và khóa biên lợi nhuận trước khi duyệt mua."
                                        data-href="/solutions">
-                                        <div class="ins-menu-icon-box flex-shrink-0" style="color: #10B981; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
+                                        <div class="ins-menu-icon-box ins-icon-emerald flex-shrink-0">
                                             <svg class="ph-duotone ph-shopping-cart ph-md"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shopping-cart"/></svg>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
@@ -565,7 +605,7 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Mua Hàng &amp; Đấu Thầu</span>
                                                 <span class="ins-label-lux ins-label-lux-mint">Khóa Biên Lãi</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Đối soát PO, hóa đơn và biên bản giao hàng 3 chiều chuẩn</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Đối soát PO, hóa đơn và biên bản giao hàng 3 chiều chuẩn</p>
                                         </div>
                                     </a>
                                 </div>
@@ -573,12 +613,12 @@
                             <!-- Col 2: Smart Integrations -->
                             <div class="col-lg-4">
                                 <div class="ins-megamenu-col-header mb-3">
-                                    <span class="ins-col-eyebrow text-uppercase fw-semibold small" style="color: #0284C7 !important;">Smart Integrations</span>
+                                    <span class="ins-col-eyebrow ins-eyebrow-blue text-uppercase fw-semibold small">Smart Integrations</span>
                                     <h5 class="text-white fw-bold mb-0">Công Nghệ Tích Hợp Thông Minh</h5>
                                 </div>
                                 <div class="d-flex flex-column gap-2">
                                     <!-- Predictive Maintenance -->
-                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="ISO 10816 · FFT Rung"
                                        data-title="Bảo Trì Dự Đoán Máy Móc RCM"
                                        data-icon="ph-pulse"
@@ -595,11 +635,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Bảo Trì RCM Dự Đoán</span>
                                                 <span class="ins-label-lux ins-label-lux-blue">ISO 10816</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Cảnh báo rung động trục quay trước 14 ngày xảy ra sự cố</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Cảnh báo rung động trục quay trước 14 ngày xảy ra sự cố</p>
                                         </div>
                                     </a>
                                     <!-- Logistics Tower -->
-                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="GPS · AIS · Real-Time"
                                        data-title="Tháp Giám Sát Đội Xe &amp; Depot"
                                        data-icon="ph-navigation-arrow"
@@ -616,11 +656,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Tháp Vận Tải Logistics</span>
                                                 <span class="ins-label-lux ins-label-lux-cyan">GPS / AIS</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Điều phối xe rơ-moóc liên cảng, kiểm soát mức tiêu hao dầu</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Điều phối xe rơ-moóc liên cảng, kiểm soát mức tiêu hao dầu</p>
                                         </div>
                                     </a>
                                     <!-- Customs AI -->
-                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="WCO SAFE · HS 8-10 Số"
                                        data-title="Bóc Tách Tờ Khai &amp; Chứng Từ Hải Quan"
                                        data-icon="ph-file-search"
@@ -637,11 +677,11 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">Hải Quan &amp; Chứng Từ XNK</span>
                                                 <span class="ins-label-lux ins-label-lux-amber">WCO SAFE</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">AI-OCR chứng từ đa thể thức, đối soát luồng tờ khai VNACCS</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">AI-OCR chứng từ đa thể thức, đối soát luồng tờ khai VNACCS</p>
                                         </div>
                                     </a>
                                     <!-- HSE Safety -->
-                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
+                                    <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-1"
                                        data-badge="Zero Incident · ISO 45001"
                                        data-title="An Toàn Lao Động HSE CCTV AI"
                                        data-icon="ph-hard-hat"
@@ -658,41 +698,41 @@
                                                 <span class="ins-menu-item-title fw-semibold text-white">An Toàn Lao Động HSE</span>
                                                 <span class="ins-label-lux ins-label-lux-rose">Zero Incident</span>
                                             </div>
-                                            <p class="ins-menu-item-desc text-secondary small mb-0" style="color: #94A3B8 !important;">Thị giác máy tính phát hiện vi phạm mũ bảo hộ, giấy phép e-PTW</p>
+                                            <p class="ins-menu-item-desc text-secondary small mb-0">Thị giác máy tính phát hiện vi phạm mũ bảo hộ, giấy phép e-PTW</p>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                             <!-- Col 3: Live Interactive Preview Card -->
                             <div class="col-lg-4">
-                                <div class="card h-100 p-4 rounded-2 border border-secondary border-opacity-25 d-flex flex-column justify-content-between ins-preview-card" id="innoria_solutions_preview_card" style="background: rgba(11, 19, 36, 0.85); border-color: rgba(10, 187, 219, 0.3) !important;">
+                                <div class="card h-100 p-4 rounded-2 border border-secondary border-opacity-25 d-flex flex-column justify-content-between ins-preview-card" id="innoria_solutions_preview_card">
                                     <div class="ins-preview-content">
                                         <div class="d-flex justify-content-between align-items-start mb-3">
-                                            <div class="ins-card-pictogram ins-pictogram-lg inn-sol-preview-icon" style="background: rgba(10, 187, 219, 0.15); border: 1px solid rgba(10, 187, 219, 0.4); color: #0ABBDB;">
+                                            <div class="ins-card-pictogram ins-pictogram-lg inn-sol-preview-icon">
                                                 <svg class="ph-duotone ph-gear-six ph-xl"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-gear-six"/></svg>
                                             </div>
                                             <span class="ins-label-lux ins-label-lux-cyan inn-sol-preview-badge">OEE &gt;= 92% · SS400</span>
                                         </div>
                                         <h4 class="text-white fw-bold mb-2 inn-sol-preview-title">Quản Trị Sản Xuất MES &amp; BOM Đa Tầng</h4>
-                                        <p class="small mb-3 inn-sol-preview-desc" style="color: #94A3B8 !important;">Hệ thống điều độ phân xưởng MES trực quan, cân bằng phụ tải máy cắt Laser Fiber CNC và theo dõi chi phí lệnh sản xuất.</p>
+                                        <p class="small mb-3 inn-sol-preview-desc">Hệ thống điều độ phân xưởng MES trực quan, cân bằng phụ tải máy cắt Laser Fiber CNC và theo dõi chi phí lệnh sản xuất.</p>
                                         <!-- Live SLA Metrics Grid -->
                                         <div class="row g-2 mb-3">
                                             <div class="col-4">
-                                                <div class="ins-metric-cell p-2 rounded-3 text-center" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);">
-                                                    <div class="ins-metric-val fw-bold inn-sol-m1-val" style="color: #0ABBDB;">&gt;= 92%</div>
-                                                    <div class="ins-metric-lbl x-small inn-sol-m1-lbl" style="color: #64748B;">OEE Rating</div>
+                                                <div class="ins-metric-cell p-2 rounded-1 text-center">
+                                                    <div class="ins-metric-val fw-bold inn-sol-m1-val">&gt;= 92%</div>
+                                                    <div class="ins-metric-lbl x-small inn-sol-m1-lbl">OEE Rating</div>
                                                 </div>
                                             </div>
                                             <div class="col-4">
-                                                <div class="ins-metric-cell p-2 rounded-3 text-center" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);">
-                                                    <div class="ins-metric-val fw-bold inn-sol-m2-val" style="color: #38BDF8;">5 Cấp</div>
-                                                    <div class="ins-metric-lbl x-small inn-sol-m2-lbl" style="color: #64748B;">BOM Đa Tầng</div>
+                                                <div class="ins-metric-cell p-2 rounded-1 text-center">
+                                                    <div class="ins-metric-val fw-bold inn-sol-m2-val">5 Cấp</div>
+                                                    <div class="ins-metric-lbl x-small inn-sol-m2-lbl">BOM Đa Tầng</div>
                                                 </div>
                                             </div>
                                             <div class="col-4">
-                                                <div class="ins-metric-cell p-2 rounded-3 text-center" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);">
-                                                    <div class="ins-metric-val fw-bold inn-sol-m3-val" style="color: #10B981;">0.0s</div>
-                                                    <div class="ins-metric-lbl x-small inn-sol-m3-lbl" style="color: #64748B;">Độ Trễ MES</div>
+                                                <div class="ins-metric-cell p-2 rounded-1 text-center">
+                                                    <div class="ins-metric-val fw-bold inn-sol-m3-val">0.0s</div>
+                                                    <div class="ins-metric-lbl x-small inn-sol-m3-lbl">Độ Trễ MES</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -708,17 +748,13 @@
                         </div>
                     </div>
                 </div>
-            </nav>
-        </header>
-    </template>
+                </template>
 
     <template id="innoria_homepage_template" name="Innoria | Tailored Technology">
-        <t t-call="website.layout" no_header="True" no_footer="True">
+        <t t-set="is_innoria_page" t-value="True"/>
+        <t t-call="website.layout" no_footer="True">
             <t t-set="additional_title">INNORIA | Tailored Technology | AI, DIGIFORCE, ZENCODE-ENT &amp; INSILOS</t>
             <t t-set="meta_description">Innoria biến thách thức vận hành thành giải pháp số trong 30 ngày. Hợp nhất nền tảng Low-Code DIGIFORCE, mô hình trí tuệ nhân tạo MOJO AI, hệ điều hành kỹ nghệ tự trị ZENCODE-ENT và nền tảng quản trị tự hành INSILOS.</t>
-
-            <!-- Reusable Innoria Navbar -->
-            <t t-call="insilos_website.innoria_navbar"/>
 
             <main id="wrap" class="oe_structure o_colored_level" style="background-color: #FFFFFF; color: #0F172A; overflow-x: clip; max-width: 100vw;">
                 <div class="oe_structure oe_empty" id="oe_structure_innoria_home_top"/>

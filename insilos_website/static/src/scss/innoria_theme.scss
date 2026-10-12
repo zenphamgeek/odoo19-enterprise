@@ -172,15 +172,24 @@ body:has(#innoria_main_nav) {
 // -----------------------------------------------------------------------------
 // 3. Dedicated Innoria Navbar & Mega-Menu (Executive Glassmorphism Dark Mode)
 // -----------------------------------------------------------------------------
+:root {
+    --innoria-header-bg: var(--o-header-bg, rgba(7, 11, 20, 0.94));
+    --innoria-header-border: var(--o-header-border, rgba(255, 255, 255, 0.08));
+    --innoria-nav-link-color: var(--o-theme-nav-link-color, #F8FAFC);
+    --innoria-nav-link-hover: var(--o-theme-nav-link-hover-color, #0ABBDB);
+    --innoria-nav-cta-bg: var(--o-theme-primary, #0284C7);
+    --innoria-nav-cta-color: var(--o-theme-primary-color, #FFFFFF);
+}
+
 .innoria-navbar {
     position: sticky;
     top: 0;
     z-index: 1050;
-    background: rgba(7, 11, 20, 0.94) !important;
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 30px rgba(10, 187, 219, 0.06) !important;
+    background: var(--innoria-header-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--innoria-header-border);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 30px rgba(10, 187, 219, 0.06);
     padding: 0.65rem 0;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -191,27 +200,27 @@ body:has(#innoria_main_nav) {
     }
 
     .nav-link {
-        color: #F8FAFC !important;
+        color: var(--innoria-nav-link-color);
         font-weight: 600;
         font-size: 0.88rem;
         letter-spacing: 0.02em;
-        padding: 0.5rem 0.95rem !important;
+        padding: 0.5rem 0.95rem;
         transition: color 0.2s ease;
 
         &:hover,
         &.active {
-            color: #0ABBDB !important;
+            color: var(--innoria-nav-link-hover);
         }
     }
 
-    // Dynamic Sliding Indicator Sheen
+    // Dynamic Sliding Indicator Sheen (Carbon 4px radius)
     .ins-nav-indicator {
         position: absolute;
         top: 0;
         left: 0;
         width: 0;
         height: 0;
-        border-radius: 9999px;
+        border-radius: 4px;
         background: rgba(10, 187, 219, 0.12);
         border: 1px solid rgba(10, 187, 219, 0.45);
         box-shadow: 0 0 16px rgba(10, 187, 219, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -226,37 +235,104 @@ body:has(#innoria_main_nav) {
     }
 
     .btn-innoria-nav {
-        background: linear-gradient(135deg, #0369A1 0%, #0B2E64 100%) !important;
-        background-color: #0369A1 !important;
-        color: #FFFFFF !important;
+        background: var(--innoria-nav-cta-bg, linear-gradient(135deg, #0369A1 0%, #0B2E64 100%));
+        background-color: #0369A1;
+        color: var(--innoria-nav-cta-color, #FFFFFF);
         font-weight: 700;
         font-size: 0.85rem;
         letter-spacing: 0.04em;
-        border-radius: 9999px;
+        border-radius: 4px;
         padding: 0.45rem 1.25rem;
         border: 1px solid rgba(0, 240, 255, 0.35);
         box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
         transition: all 0.25s ease;
 
         .nav-cta-text {
-            color: #FFFFFF !important;
+            color: inherit;
         }
 
         &:hover {
-            background: linear-gradient(135deg, #0284C7 0%, #071739 100%) !important;
-            background-color: #0284C7 !important;
-            color: #FFFFFF !important;
+            background: linear-gradient(135deg, #0284C7 0%, #071739 100%);
+            background-color: #0284C7;
+            color: #FFFFFF;
             border-color: #00F0FF;
             box-shadow: 0 6px 22px rgba(0, 240, 255, 0.45);
             transform: translateY(-1px);
         }
     }
 
+    .ins-lang-pill {
+        border-radius: 2px;
+    }
+
+    .btn-mojo-cyan {
+        background-color: #00F0FF;
+        border: 1px solid #00F0FF;
+        color: #070B14;
+        font-weight: 700;
+        border-radius: 4px;
+        &:hover {
+            background-color: #38BDF8;
+            border-color: #38BDF8;
+            color: #070B14;
+        }
+    }
+
+    .btn-mojo-outline-cyan {
+        color: #00F0FF;
+        border: 1px solid rgba(0, 240, 255, 0.4);
+        background: transparent;
+        border-radius: 4px;
+        &:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00F0FF;
+            color: #FFFFFF;
+        }
+    }
+
     .inn-plat-preview-btn,
     .inn-sol-preview-btn {
-        background: linear-gradient(135deg, #0ABBDB 0%, #0284C7 100%) !important;
-        border: none !important;
+        background: linear-gradient(135deg, #0ABBDB 0%, #0284C7 100%);
+        border: none;
+        border-radius: 4px;
         font-weight: 700;
+    }
+
+    // Semantic Eyebrow & Icon Color Tokens for Mega-Menus
+    .ins-eyebrow-cyan { color: #0ABBDB; }
+    .ins-eyebrow-blue { color: #0284C7; }
+    .ins-eyebrow-emerald { color: #10B981; }
+    .ins-eyebrow-orange { color: #FF8000; }
+
+    .ins-icon-cyan {
+        color: #0ABBDB;
+        background: rgba(10, 187, 219, 0.1);
+        border: 1px solid rgba(10, 187, 219, 0.3);
+    }
+    .ins-icon-blue {
+        color: #0284C7;
+        background: rgba(2, 132, 199, 0.1);
+        border: 1px solid rgba(2, 132, 199, 0.3);
+    }
+    .ins-icon-orange {
+        color: #FF8000;
+        background: rgba(255, 128, 0, 0.1);
+        border: 1px solid rgba(255, 128, 0, 0.3);
+    }
+    .ins-icon-red {
+        color: #EF4444;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .ins-icon-sky {
+        color: #38BDF8;
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .ins-icon-emerald {
+        color: #10B981;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.3);
     }
 }
 
@@ -267,11 +343,11 @@ body:has(#innoria_main_nav) {
     left: 0;
     right: 0;
     width: 100%;
-    background: rgba(7, 11, 20, 0.96) !important;
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    background: var(--innoria-dropdown-bg, rgba(7, 11, 20, 0.96));
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-bottom: 1px solid rgba(10, 187, 219, 0.35) !important;
+    border-bottom: 1px solid rgba(10, 187, 219, 0.35);
     box-shadow: 0 28px 64px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 40px rgba(10, 187, 219, 0.1);
     opacity: 0;
     visibility: hidden;
@@ -285,6 +361,37 @@ body:has(#innoria_main_nav) {
         visibility: visible;
         transform: translateY(0);
         pointer-events: auto;
+    }
+
+    .ins-preview-card {
+        background: rgba(11, 19, 36, 0.85);
+        border: 1px solid rgba(10, 187, 219, 0.3);
+        border-radius: 4px;
+        
+        .ins-card-pictogram {
+            background: rgba(10, 187, 219, 0.15);
+            border: 1px solid rgba(10, 187, 219, 0.4);
+            color: #0ABBDB;
+            border-radius: 4px;
+        }
+
+        .inn-plat-preview-desc,
+        .inn-sol-preview-desc {
+            color: #94A3B8;
+        }
+
+        .ins-metric-cell {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+        }
+
+        .inn-plat-m1-val, .inn-sol-m1-val { color: #0ABBDB; }
+        .inn-plat-m2-val, .inn-sol-m2-val { color: #38BDF8; }
+        .inn-plat-m3-val { color: #FF8000; }
+        .inn-sol-m3-val { color: #10B981; }
+        .inn-plat-m1-lbl, .inn-plat-m2-lbl, .inn-plat-m3-lbl,
+        .inn-sol-m1-lbl, .inn-sol-m2-lbl, .inn-sol-m3-lbl { color: #64748B; }
     }
 }
 

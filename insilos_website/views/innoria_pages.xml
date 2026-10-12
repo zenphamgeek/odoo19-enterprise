@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="insilos_about_page" name="Về Chúng Tôi | INNORIA">
-        <t t-call="website.layout" no_header="True" no_footer="True">
-            <t t-call="insilos_website.innoria_navbar"/>
+        <t t-set="is_innoria_page" t-value="True"/>
+        <t t-call="website.layout" no_footer="True">
             <main id="wrap" class="oe_structure o_colored_level" style="--innoria-canvas:#FFFFFF;--innoria-card:#FFFFFF;--innoria-cyan:#0284C7;--innoria-orange:#FF8000;--innoria-blue:#0284C7;background-color:#FFFFFF;color:#0F172A;overflow-x:clip;max-width:100%;">
                 <style>
                     .inn-about{font-family:Inter,system-ui,sans-serif}.inn-about .eyebrow{color:#0284C7;letter-spacing:.12em;font-size:.75rem;font-weight:700;text-transform:uppercase}.inn-about .display{font-size:clamp(2.7rem,6vw,5.2rem);font-weight:800;letter-spacing:-.025em;line-height:1.05;color:#0F172A}.inn-about .section-title{font-size:clamp(2rem,4vw,3.6rem);font-weight:800;letter-spacing:-.02em;line-height:1.1;color:#0F172A}.inn-about .glass{background:transparent;border:none;border-top:1px solid #E2E8F0;border-radius:0;box-shadow:none;padding-top:1.5rem}.inn-about .accent-line{height:3px;width:64px;background:linear-gradient(90deg,#0284C7,#0ABBDB)}.inn-about .hover-card{transition:transform .25s ease,border-color .25s ease}.inn-about .hover-card:hover{transform:translateY(-3px);border-color:#0284C7;background:transparent;box-shadow:none}.inn-about .timeline-line{position:absolute;left:15px;top:1rem;bottom:1rem;width:1px;background:#E2E8F0}.inn-about .timeline-dot{width:31px;height:31px;border-radius:50%;background:#FFFFFF;border:2px solid #0284C7;position:relative;z-index:1}.inn-about .number{color:#0284C7;font-size:3rem;font-weight:800;line-height:1}.inn-about .quote{border-left:3px solid #FF8000;color:#334155}.inn-about .logo-cell{height:96px;display:flex;align-items:center;justify-content:center;border:1px solid #E2E8F0;border-radius:.75rem;background:#FFFFFF}.inn-about .logo-cell img{max-height:42px;max-width:130px;filter:grayscale(1);opacity:.72}.inn-about .matrix-head{color:#0284C7;font-weight:700}.inn-about .btn-innoria{background:#0284C7;border-color:#0284C7;color:#FFFFFF;font-weight:800}.inn-about .btn-innoria:hover{background:#0284C7;border-color:#0284C7;color:#FFFFFF}
@@ -315,13 +315,11 @@
     </template>
 
     <template id="insilos_platform_page" name="MOJO AI Platform | INNORIA">
-    <t t-call="website.layout" no_header="True" no_footer="True">
+    <t t-set="is_innoria_page" t-value="True"/>
+    <t t-call="website.layout" no_footer="True">
         <t t-set="additional_title">MOJO AI | Intelligence, Cost-Saving, Efficient | One-Stop AI Agent Solutions Builder | INNORIA</t>
         <t t-set="meta_description">MOJO AI - Nền tảng kiến tạo AI Agent doanh nghiệp toàn diện từ INNORIA. Phục vụ hơn 700.000 người dùng trên 200 quốc gia. Tối ưu chi phí, nâng cao hiệu suất vận hành trong sản xuất, viễn thông và năng lượng.</t>
         
-        <!-- Reusable Sovereign INNORIA Navbar -->
-        <t t-call="insilos_website.innoria_navbar"/>
-
         <main id="wrap" class="oe_structure o_colored_level mojo-platform-root" style="background-color: #FFFFFF; color: #0F172A; overflow-x: clip; max-width: 100%;">
             <!-- Scoped Design System & Animations for MOJO AI -->
             <style>
@@ -731,7 +729,7 @@
                                         <div class="small font-monospace text-light" style="font-size: 0.75rem; color: #CBD5E1 !important;">
                                             Mô hình: <strong class="text-white">MOJO-Omni-v4.8</strong> | Hàng rào bảo vệ: <strong style="color: #34D399;">Tất định (Deterministic)</strong>
                                         </div>
-                                        <button type="button" id="mojo-btn-run" class="btn btn-sm rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2 font-monospace" style="background-color: #00F0FF !important; border: 1px solid #00F0FF !important; color: #070B14 !important;">
+                                        <button type="button" id="mojo-btn-run" class="btn btn-sm rounded-1 px-3 py-2 d-inline-flex align-items-center gap-2 font-monospace btn-mojo-cyan">
                                             <span style="color: #070B14 !important; font-weight: 700;">KÍCH HOẠT ĐIỀU PHỐI MULTI-AGENT</span>
                                             <svg class="ph-duotone ph-play" style="width: 0.9rem; height: 0.9rem; fill: #070B14;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-play"/></svg>
                                         </button>
@@ -1587,7 +1585,7 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
                                     <span>Đặt Lịch Tư Vấn 3 Giờ Cùng Chuyên Gia</span>
                                     <svg class="ph-duotone ph-calendar-check" style="width: 1.25rem; height: 1.25rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-calendar-check"/></svg>
                                 </a>
-                                <a href="mailto:ai@mojo.vn" class="btn ins-btn-lux ins-btn-lux-outline btn-lg px-4 py-3 d-inline-flex align-items-center gap-2" style="color: #00F0FF !important; border: 1px solid rgba(0, 240, 255, 0.4) !important;">
+                                <a href="mailto:ai@mojo.vn" class="btn ins-btn-lux ins-btn-lux-outline btn-lg px-4 py-3 d-inline-flex align-items-center gap-2 btn-mojo-outline-cyan">
                                     <span>Email: ai@mojo.vn</span>
                                     <svg class="ph-duotone ph-envelope" style="width: 1.15rem; height: 1.15rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-envelope"/></svg>
                                 </a>
@@ -1828,8 +1826,8 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
 
 
     <template id="innoria_digiforce_page" name="Nền Tảng Low-Code DIGIFORCE | INNORIA">
-        <t t-call="website.layout" no_header="True" no_footer="True">
-            <t t-call="insilos_website.innoria_navbar"/>
+        <t t-set="is_innoria_page" t-value="True"/>
+        <t t-call="website.layout" no_footer="True">
             <main id="wrap" class="oe_structure o_colored_level" style="background-color: #050811; color: #F8FAFC; overflow-x: clip; max-width: 100%;">
                 <style>
                     .df-page{--df-dark:#FFFFFF;--df-card:#FFFFFF;--df-cyan:#0ABBDB;--df-orange:#FF8000;--df-green:#0284C7;--df-muted:#64748B;font-family:inherit;overflow:hidden}
@@ -1997,8 +1995,8 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
     </template>
 
     <template id="innoria_blockchain_page" name="ZenCode Enterprise | Autonomous Engineering OS | INNORIA &amp; ZENCODE">
-        <t t-call="website.layout" no_header="True" no_footer="True">
-            <t t-call="insilos_website.innoria_navbar"/>
+        <t t-set="is_innoria_page" t-value="True"/>
+        <t t-call="website.layout" no_footer="True">
             <main id="wrap" class="oe_structure o_colored_level" style="background-color:#070B14; color:#F1F5F9; overflow-x:clip; max-width:100%;">
                 
                 <!-- HERO SECTION: ZENCODE ENTERPRISE AUTONOMOUS OS -->
@@ -2399,8 +2397,8 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
     </template>
 
     <template id="insilos_solutions_page" name="INSILOS Enterprise Platform | Autonomous Operations OS | INNORIA &amp; INSILOS">
-        <t t-call="website.layout" no_header="True" no_footer="True">
-            <t t-call="insilos_website.innoria_navbar"/>
+        <t t-set="is_innoria_page" t-value="True"/>
+        <t t-call="website.layout" no_footer="True">
             <main id="wrap" class="oe_structure o_colored_level" style="background-color:#070B14; color:#F1F5F9; overflow-x:clip; max-width:100%;">
                 
                 <!-- HERO SECTION: INSILOS AUTONOMOUS ENTERPRISE PLATFORM -->
@@ -3062,8 +3060,8 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
     </template>
 
     <template id="insilos_industries_page" name="Giải Pháp Số Hóa Ngành Trọng Điểm &amp; AI Biên | INNORIA">
-        <t t-call="website.layout" no_header="True" no_footer="True">
-            <t t-call="insilos_website.innoria_navbar"/>
+        <t t-set="is_innoria_page" t-value="True"/>
+        <t t-call="website.layout" no_footer="True">
             <main id="wrap" class="oe_structure o_colored_level ins-industries-stage" style="background-color: #050811; color: #F8FAFC; overflow-x: clip; max-width: 100%;">
                 
                 <!-- ================================================================= -->
@@ -3935,9 +3933,8 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
     </template>
 
     <template id="innoria_contactus" name="Contact Us | INNORIA">
-    <t t-call="website.layout" no_header="True" no_footer="True">
-        <t t-call="insilos_website.innoria_navbar"/>
-
+    <t t-set="is_innoria_page" t-value="True"/>
+    <t t-call="website.layout" no_footer="True">
         <main id="wrap" class="oe_structure o_colored_level" style="--innoria-canvas: #FFFFFF; --innoria-card: #FFFFFF; --innoria-cyan: #0284C7; --innoria-orange: #FF8000; background-color: #FFFFFF; color: #0F172A; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; overflow-x: clip; max-width: 100%;">
             <div class="oe_structure oe_empty" id="oe_structure_innoria_contactus_top"/>
             <style>

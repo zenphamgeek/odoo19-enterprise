@@ -1152,62 +1152,221 @@
     </template>
 
     <!-- Glassmorphism Header Class Attribute -->
+    <!-- Glassmorphism Header Class Attribute -->
     <template id="insilos_header_layout_glass" inherit_id="website.layout" priority="20">
         <xpath expr="//t[@t-set='header_content_width']" position="attributes">
             <attribute name="t-valuef">container-fluid</attribute>
         </xpath>
         <xpath expr="//header" position="attributes">
-            <attribute name="t-attf-class" add="ins-glass-header" separator=" "/>
+            <attribute name="t-attf-class" add="ins-glass-header #{'innoria-navbar' if (is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))) else ''}" separator=" "/>
+        </xpath>
+    </template>
+
+    <!-- Executive Brand Logo Switching (Innoria SVG vs Insilos Brand, Editable in Website Builder) -->
+    <template id="insilos_header_brand_logo" inherit_id="website.placeholder_header_brand" priority="25">
+        <xpath expr="//*[@id='o_fake_navbar_brand']" position="replace">
+            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <t t-set="base_options" t-value="{'widget': 'image'}"/>
+            <t t-if="is_innoria">
+                <a data-name="Navbar Logo" href="/" t-attf-class="navbar-brand logo py-0 d-flex align-items-center me-xl-4 me-3 #{_link_class}">
+                    <span
+                        t-if="editable"
+                        t-field="website.logo"
+                        t-options="base_options"
+                        role="img"
+                        t-att-aria-label="'Logo of %s' % website.name"
+                        t-att-title="website.name"
+                    />
+                    <img t-else="" src="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA" class="navbar-brand-logo" width="138" height="38"/>
+                </a>
+            </t>
+            <t t-else="">
+                <a data-name="Navbar Logo" href="/" t-attf-class="navbar-brand logo #{_link_class}">
+                    <span
+                        t-field="website.logo"
+                        t-options="base_options if editable else dict(base_options, width=95, height=40)"
+                        role="img"
+                        t-att-aria-label="'Logo of %s' % website.name"
+                        t-att-title="website.name"
+                    />
+                </a>
+            </t>
         </xpath>
     </template>
 
     <!-- Executive Glassmorphism Mega-Menu (Desktop Navigation) -->
-    <template id="insilos_megamenu_desktop" inherit_id="website.template_header_default" priority="25">
-        <xpath expr="//t[@t-call='website.navbar_nav']" position="replace">
-            <div class="ins-nav-wrapper d-flex align-items-center position-relative me-auto">
-                <div class="ins-nav-indicator" id="ins_nav_indicator"/>
-                <ul id="top_menu" class="nav navbar-nav top_menu align-items-center mb-0 gap-1" role="menu">
-                    <li role="presentation" class="nav-item ins-nav-item">
-                        <a role="menuitem" href="/platform" class="nav-link">
-                            <span>Platform</span>
-                        </a>
-                    </li>
-                    <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="solutions">
-                        <a role="menuitem" href="/solutions" class="nav-link ins-megamenu-trigger" aria-expanded="false">
-                            <span>Solutions</span>
-                            <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
-                        </a>
-                    </li>
-                    <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="industries">
-                        <a role="menuitem" href="/industries" class="nav-link ins-megamenu-trigger" aria-expanded="false">
-                            <span>Industries</span>
-                            <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
-                        </a>
-                    </li>
-                    <li role="presentation" class="nav-item ins-nav-item">
-                        <a role="menuitem" href="/resources" class="nav-link">
-                            <span>Resources</span>
-                        </a>
-                    </li>
-                    <li role="presentation" class="nav-item ins-nav-item">
-                        <a role="menuitem" href="/showcase-3d" class="nav-link d-inline-flex align-items-center gap-1">
-                            <span class="badge bg-danger bg-opacity-75 text-white font-monospace ins-badge-micro-tag">HSE VIDEO</span>
-                            <span>Video &amp; 3D</span>
-                        </a>
-                    </li>
-                    <li role="presentation" class="nav-item ins-nav-item">
-                        <a role="menuitem" href="/pricing" class="nav-link">
-                            <span>Pricing</span>
-                        </a>
-                    </li>
-                    <li role="presentation" class="nav-item ins-nav-item">
-                        <a role="menuitem" href="/about" class="nav-link">
-                            <span>Company</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- Solutions Mega-Menu Dropdown Panel (Full-Width Viewport-anchored) -->
+        <template id="insilos_megamenu_desktop" inherit_id="website.template_header_default" priority="25">
+        <!-- 1. Dynamic Menu Loop inside website.navbar_nav (preserves native nav and alignment options) -->
+        <xpath expr="//t[@t-call='website.navbar_nav']//t[@t-foreach='website.menu_id.child_id']" position="replace">
+            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <li class="ins-nav-indicator" id="ins_nav_indicator"/>
+            <t t-if="is_innoria">
+                        <t t-if="website.menu_id and len(website.menu_id.child_id) &gt; 1">
+                            <t t-foreach="website.menu_id.child_id" t-as="submenu">
+                                <t t-set="menu_url" t-value="submenu._clean_url()"/>
+                                <t t-set="menu_name_lower" t-value="(submenu.name or '').lower()"/>
+                                <t t-set="is_products_mm" t-value="'sản phẩm' in menu_name_lower or 'product' in menu_name_lower or 'trade_compliance' in menu_url"/>
+                                <t t-set="is_platform_mm" t-value="'nền tảng' in menu_name_lower or 'platform' in menu_name_lower or menu_url == '/platform'"/>
+                                <t t-set="is_solutions_mm" t-value="'giải pháp' in menu_name_lower or 'solution' in menu_name_lower or menu_url == '/solutions'"/>
+                                
+                                <t t-if="is_products_mm">
+                                    <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="innoria_products">
+                                        <a role="menuitem" t-att-href="menu_url" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                                            <span t-field="submenu.name"/>
+                                            <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                        </a>
+                                    </li>
+                                </t>
+                                <t t-elif="is_platform_mm">
+                                    <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="innoria_platform">
+                                        <a role="menuitem" t-att-href="menu_url" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                                            <span t-field="submenu.name"/>
+                                            <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                        </a>
+                                    </li>
+                                </t>
+                                <t t-elif="is_solutions_mm">
+                                    <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="innoria_solutions">
+                                        <a role="menuitem" t-att-href="menu_url" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                                            <span t-field="submenu.name"/>
+                                            <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                        </a>
+                                    </li>
+                                </t>
+                                <t t-else="">
+                                    <t t-call="website.submenu"
+                                        item_class.f="nav-item ins-nav-item"
+                                        link_class.f="nav-link"
+                                        dropdown_toggler_classes.f="nav-link"
+                                        dropdown_menu_classes.f=""/>
+                                </t>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="innoria_products">
+                                <a role="menuitem" href="/#innoria_trade_compliance_interactive" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                                    <span>Sản Phẩm</span>
+                                    <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="innoria_platform">
+                                <a role="menuitem" href="/platform" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                                    <span>Nền Tảng</span>
+                                    <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="innoria_solutions">
+                                <a role="menuitem" href="/solutions" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                                    <span>Giải Pháp</span>
+                                    <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item ins-nav-item">
+                                <a role="menuitem" href="/industries" class="nav-link">
+                                    <span>Ngành Nghề</span>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item ins-nav-item">
+                                <a role="menuitem" href="/about" class="nav-link">
+                                    <span>Về Innoria</span>
+                                </a>
+                            </li>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <!-- Insilos Navigation -->
+                        <t t-if="website.menu_id and len(website.menu_id.child_id) &gt; 1">
+                            <t t-foreach="website.menu_id.child_id" t-as="submenu">
+                                <t t-set="menu_url" t-value="submenu._clean_url()"/>
+                                <t t-set="menu_name_lower" t-value="(submenu.name or '').lower()"/>
+                                <t t-set="is_ins_solutions" t-value="'solution' in menu_name_lower or menu_url == '/solutions'"/>
+                                <t t-set="is_ins_industries" t-value="'industr' in menu_name_lower or menu_url == '/industries'"/>
+                                <t t-set="is_ins_video" t-value="'video' in menu_name_lower or '3d' in menu_name_lower or menu_url == '/showcase-3d'"/>
+                                
+                                <t t-if="is_ins_solutions">
+                                    <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="solutions">
+                                        <a role="menuitem" t-att-href="menu_url" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                                            <span t-field="submenu.name"/>
+                                            <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                        </a>
+                                    </li>
+                                </t>
+                                <t t-elif="is_ins_industries">
+                                    <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="industries">
+                                        <a role="menuitem" t-att-href="menu_url" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                                            <span t-field="submenu.name"/>
+                                            <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                        </a>
+                                    </li>
+                                </t>
+                                <t t-elif="is_ins_video">
+                                    <li role="presentation" class="nav-item ins-nav-item">
+                                        <a role="menuitem" t-att-href="menu_url" class="nav-link d-inline-flex align-items-center gap-1">
+                                            <span class="badge bg-danger bg-opacity-75 text-white font-monospace ins-badge-micro-tag">HSE VIDEO</span>
+                                            <span t-field="submenu.name"/>
+                                        </a>
+                                    </li>
+                                </t>
+                                <t t-else="">
+                                    <t t-call="website.submenu"
+                                        item_class.f="nav-item ins-nav-item"
+                                        link_class.f="nav-link"
+                                        dropdown_toggler_classes.f="nav-link"
+                                        dropdown_menu_classes.f=""/>
+                                </t>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <li role="presentation" class="nav-item ins-nav-item">
+                                <a role="menuitem" href="/platform" class="nav-link">
+                                    <span>Platform</span>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="solutions">
+                                <a role="menuitem" href="/solutions" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                                    <span>Solutions</span>
+                                    <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item ins-nav-item ins-has-megamenu" data-megamenu="industries">
+                                <a role="menuitem" href="/industries" class="nav-link ins-megamenu-trigger" aria-expanded="false">
+                                    <span>Industries</span>
+                                    <svg class="ph-duotone ph-caret-down ph-xs ms-1" width="12" height="12"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-caret-down"/></svg>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item ins-nav-item">
+                                <a role="menuitem" href="/resources" class="nav-link">
+                                    <span>Resources</span>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item ins-nav-item">
+                                <a role="menuitem" href="/showcase-3d" class="nav-link d-inline-flex align-items-center gap-1">
+                                    <span class="badge bg-danger bg-opacity-75 text-white font-monospace ins-badge-micro-tag">HSE VIDEO</span>
+                                    <span>Video &amp; 3D</span>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item ins-nav-item">
+                                <a role="menuitem" href="/pricing" class="nav-link">
+                                    <span>Pricing</span>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item ins-nav-item">
+                                <a role="menuitem" href="/about" class="nav-link">
+                                    <span>Company</span>
+                                </a>
+                            </li>
+                        </t>
+                    </t>
+        </xpath>
+
+        <!-- 2. Attach Mega-Menu Dropdown Panels directly after website.navbar_nav -->
+        <xpath expr="//t[@t-call='website.navbar_nav']" position="after">
+            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <t t-if="is_innoria">
+                <t t-call="insilos_website.innoria_navbar_megamenus"/>
+            </t>
+            <t t-else="">
+<!-- Solutions Mega-Menu Dropdown Panel (Full-Width Viewport-anchored) -->
             <div class="ins-megamenu-dropdown ins-megamenu-solutions shadow-lg" id="ins_megamenu_solutions" data-megamenu-target="solutions">
                 <div class="container py-4">
                     <div class="row g-4 align-items-stretch">
@@ -1838,122 +1997,266 @@
                     </div>
                 </div>
             </div>
+                    </t>
         </xpath>
-        <xpath expr="//t[@t-call='website.placeholder_header_call_to_action']" position="replace">
-            <li class="nav-item ms-2">
-                <a href="/request-demo" class="btn btn-primary rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2">
-                    <span>Yêu Cầu Demo</span>
-                    <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
-                </a>
-            </li>
+        <xpath expr="//t[@t-call='website.placeholder_header_call_to_action']" position="before">
+            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <t t-if="is_innoria">
+                <!-- Executive Language Switcher (VN / EN) -->
+                <li class="nav-item d-flex align-items-center me-2" id="innoria_lang_switcher">
+                    <div class="btn-group btn-group-sm ins-lang-group">
+                        <a href="/" id="lang_toggle_vi" class="ins-lang-pill ins-lang-toggle is-active active">
+                            <span>VN</span>
+                        </a>
+                        <a href="/en" id="lang_toggle_en" class="ins-lang-pill ins-lang-toggle">
+                            <span>EN</span>
+                        </a>
+                    </div>
+                </li>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Executive Header Call to Action Button (Full Native Odoo 20 In-Place Editability) -->
+    <template id="insilos_header_call_to_action" inherit_id="website.header_call_to_action" priority="25">
+        <xpath expr="//li" position="attributes">
+            <attribute name="class" add="nav-item ms-1" separator=" "/>
+        </xpath>
+        <xpath expr="//a[hasclass('btn_cta')]" position="replace">
+            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <a t-if="is_innoria" href="/contactus" class="oe_unremovable btn btn_cta ins-btn-lux ins-btn-lux-primary btn-innoria-nav rounded-1 px-3 py-2 d-inline-flex align-items-center gap-2">
+                <span class="nav-cta-text">Tham Vấn Kiến Trúc 3 Giờ</span>
+                <svg class="ph-duotone ph-arrow-right ph-sm" width="16" height="16"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+            </a>
+            <a t-else="" href="/request-demo" class="oe_unremovable btn btn_cta btn-primary rounded-1 px-3 py-2 d-inline-flex align-items-center gap-2">
+                <span>Yêu Cầu Demo</span>
+                <svg class="ph-duotone ph-arrow-right ph-sm" width="16" height="16"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+            </a>
         </xpath>
     </template>
 
     <!-- Executive Mobile Drawer Navigation (< 992px) with Accordion Collapse -->
+        <!-- Executive Mobile Drawer Navigation (< 992px) with Accordion Collapse -->
     <template id="insilos_megamenu_mobile" inherit_id="website.template_header_mobile" priority="25">
         <xpath expr="//div[@id='top_menu_collapse_mobile']//t[@t-call='website.navbar_nav']/.." position="replace">
+            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <li class="w-100 px-3 py-2">
-                <div class="accordion accordion-flush ins-mobile-accordion" id="insMobileAccordion">
-                    <!-- Mobile Solutions Accordion -->
-                    <div class="accordion-item bg-transparent border-secondary border-opacity-25">
-                        <h2 class="accordion-header" id="headingMobileSolutions">
-                            <button class="accordion-button collapsed bg-transparent text-white px-0 py-3 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileSolutions" aria-expanded="false" aria-controls="collapseMobileSolutions">
-                                <span class="fw-semibold">Solutions</span>
-                            </button>
-                        </h2>
-                        <div id="collapseMobileSolutions" class="accordion-collapse collapse" aria-labelledby="headingMobileSolutions" data-bs-parent="#insMobileAccordion">
-                            <div class="accordion-body px-0 pt-0 pb-3">
-                                <div class="d-flex flex-column gap-2">
-                                    <div class="text-uppercase text-mint x-small fw-semibold mt-2">Core Intelligence</div>
-                                    <a href="/solutions/vertical-idp" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Vertical IDP</span>
-                                        <span class="ins-label-lux ins-label-lux-cyan">99.8% STP</span>
-                                    </a>
-                                    <a href="/solutions/enterprise-knowledge-graph" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Knowledge Graph</span>
-                                        <span class="ins-label-lux ins-label-lux-mint">&lt; 15ms</span>
-                                    </a>
-                                    <a href="/solutions/trade-compliance" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Trade Compliance</span>
-                                        <span class="ins-label-lux ins-label-lux-blue">WCO SAFE</span>
-                                    </a>
-                                    <a href="/solutions/field-service-intelligence" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Field Service (FSM)</span>
-                                        <span class="ins-label-lux ins-label-lux-blue">IEC 61850</span>
-                                    </a>
-                                    <div class="text-uppercase text-cyan x-small fw-semibold mt-2">Operations &amp; Optimization</div>
-                                    <a href="/solutions/asset-reliability" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Asset Reliability</span>
-                                        <span class="ins-label-lux ins-label-lux-blue">ISO 10816</span>
-                                    </a>
-                                    <a href="/solutions/logistics-control-tower" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Logistics Control Tower</span>
-                                        <span class="ins-label-lux ins-label-lux-cyan">ETA</span>
-                                    </a>
-                                    <a href="/solutions/process-optimization" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Process Optimization</span>
-                                        <span class="ins-label-lux ins-label-lux-mint">Closed-Loop</span>
-                                    </a>
-                                    <a href="/solutions" class="ins-mobile-menu-link text-orange text-decoration-none fw-semibold py-1">
-                                        <span>Khám Phá Tất Cả Giải Pháp →</span>
-                                    </a>
+                <t t-if="is_innoria">
+                    <div class="accordion accordion-flush ins-mobile-accordion" id="innoriaMobileAccordion">
+                        <!-- Mobile Products Accordion -->
+                        <div class="accordion-item bg-transparent border-secondary border-opacity-25">
+                            <h2 class="accordion-header" id="headingMobileProducts">
+                                <button class="accordion-button collapsed bg-transparent text-white px-0 py-3 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileProducts" aria-expanded="false" aria-controls="collapseMobileProducts">
+                                    <span class="fw-semibold">Sản Phẩm</span>
+                                </button>
+                            </h2>
+                            <div id="collapseMobileProducts" class="accordion-collapse collapse" aria-labelledby="headingMobileProducts" data-bs-parent="#innoriaMobileAccordion">
+                                <div class="accordion-body px-0 pt-0 pb-3">
+                                    <div class="d-flex flex-column gap-2">
+                                        <div class="text-uppercase text-cyan x-small fw-semibold mt-2">Xuất Nhập Khẩu &amp; Hải Quan</div>
+                                        <a href="/#innoria_trade_compliance_interactive" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Trade Compliance</span>
+                                            <span class="ins-label-lux ins-label-lux-cyan">Recon</span>
+                                        </a>
+                                        <div class="text-uppercase text-blue x-small fw-semibold mt-2">Vận Hành &amp; Kỹ Thuật</div>
+                                        <a href="/#innoria_operational_compliance_interactive" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Operational Safety</span>
+                                            <span class="ins-label-lux ins-label-lux-blue">LOTO</span>
+                                        </a>
+                                        <div class="text-uppercase text-mint x-small fw-semibold mt-2">Forwarder &amp; Chuỗi Cung Ứng</div>
+                                        <a href="/#innoria_logistics_jobfile_interactive" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Jobfile Tự Động</span>
+                                            <span class="ins-label-lux ins-label-lux-mint">B/L STP</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Platform Accordion -->
+                        <div class="accordion-item bg-transparent border-secondary border-opacity-25">
+                            <h2 class="accordion-header" id="headingMobilePlatform">
+                                <button class="accordion-button collapsed bg-transparent text-white px-0 py-3 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobilePlatform" aria-expanded="false" aria-controls="collapseMobilePlatform">
+                                    <span class="fw-semibold">Nền Tảng</span>
+                                </button>
+                            </h2>
+                            <div id="collapseMobilePlatform" class="accordion-collapse collapse" aria-labelledby="headingMobilePlatform" data-bs-parent="#innoriaMobileAccordion">
+                                <div class="accordion-body px-0 pt-0 pb-3">
+                                    <div class="d-flex flex-column gap-2">
+                                        <a href="/no-code-platform" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>DIGIFORCE No-Code</span>
+                                            <span class="ins-label-lux ins-label-lux-cyan">3 Hours</span>
+                                        </a>
+                                        <a href="/ai-solutions" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>MOJO AI Swarm</span>
+                                            <span class="ins-label-lux ins-label-lux-blue">Agentic</span>
+                                        </a>
+                                        <a href="/zencode" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>ZENCODE-ENT OS</span>
+                                            <span class="ins-label-lux ins-label-lux-mint">Zero-Tele</span>
+                                        </a>
+                                        <a href="/insilos" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>INSILOS Platform</span>
+                                            <span class="ins-label-lux ins-label-lux-cyan">ERP VAS 200</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Solutions Accordion -->
+                        <div class="accordion-item bg-transparent border-secondary border-opacity-25">
+                            <h2 class="accordion-header" id="headingMobileInnoSolutions">
+                                <button class="accordion-button collapsed bg-transparent text-white px-0 py-3 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileInnoSolutions" aria-expanded="false" aria-controls="collapseMobileInnoSolutions">
+                                    <span class="fw-semibold">Giải Pháp</span>
+                                </button>
+                            </h2>
+                            <div id="collapseMobileInnoSolutions" class="accordion-collapse collapse" aria-labelledby="headingMobileInnoSolutions" data-bs-parent="#innoriaMobileAccordion">
+                                <div class="accordion-body px-0 pt-0 pb-3">
+                                    <div class="d-flex flex-column gap-2">
+                                        <a href="/solutions" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>MES Xưởng Cơ Khí</span>
+                                            <span class="ins-label-lux ins-label-lux-cyan">&gt;= 92% OEE</span>
+                                        </a>
+                                        <a href="/solutions" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Kho Vận Thông Minh WMS</span>
+                                            <span class="ins-label-lux ins-label-lux-blue">Real-Time</span>
+                                        </a>
+                                        <a href="/solutions" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Kế Toán Tài Chính TT200</span>
+                                            <span class="ins-label-lux ins-label-lux-amber">Triple-Entry</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Mobile Industries Accordion -->
-                    <div class="accordion-item bg-transparent border-secondary border-opacity-25">
-                        <h2 class="accordion-header" id="headingMobileIndustries">
-                            <button class="accordion-button collapsed bg-transparent text-white px-0 py-3 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileIndustries" aria-expanded="false" aria-controls="collapseMobileIndustries">
-                                <span class="fw-semibold">Industries</span>
-                            </button>
-                        </h2>
-                        <div id="collapseMobileIndustries" class="accordion-collapse collapse" aria-labelledby="headingMobileIndustries" data-bs-parent="#insMobileAccordion">
-                            <div class="accordion-body px-0 pt-0 pb-3">
-                                <div class="d-flex flex-column gap-2">
-                                    <div class="text-uppercase text-mint x-small fw-semibold mt-2">Flagship Verticals</div>
-                                    <a href="/industries/logistics" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Logistics &amp; Cảng Biển</span>
-                                        <span class="ins-label-lux ins-label-lux-cyan">Seaport</span>
-                                    </a>
-                                    <a href="/industries/pharma" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Dược Phẩm &amp; GxP</span>
-                                        <span class="ins-label-lux ins-label-lux-mint">FDA 21 CFR</span>
-                                    </a>
-                                    <a href="/industries/energy" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Năng Lượng &amp; Utilities</span>
-                                        <span class="ins-label-lux ins-label-lux-rose">Power Grid</span>
-                                    </a>
-                                    <a href="/industries/fsm" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
-                                        <span>Dịch Vụ Hiện Trường</span>
-                                        <span class="ins-label-lux ins-label-lux-amber">94.8% FTFR</span>
-                                    </a>
-                                    <a href="/industries" class="ins-mobile-menu-link text-orange text-decoration-none fw-semibold py-1">
-                                        <span>Danh Mục 101 Ngành Công Nghiệp →</span>
-                                    </a>
+                    <!-- Dynamic & Direct Nav Links for Innoria Mobile Drawer -->
+                    <div class="d-flex flex-column gap-2 border-top border-secondary border-opacity-25 pt-3" t-if="website.menu_id and len(website.menu_id.child_id) &gt; 1">
+                        <t t-foreach="website.menu_id.child_id" t-as="submenu">
+                            <t t-set="menu_url" t-value="submenu._clean_url()"/>
+                            <t t-set="menu_name_lower" t-value="(submenu.name or '').lower()"/>
+                            <t t-set="is_known_mm" t-value="'sản phẩm' in menu_name_lower or 'product' in menu_name_lower or 'nền tảng' in menu_name_lower or 'platform' in menu_name_lower or 'giải pháp' in menu_name_lower or 'solution' in menu_name_lower"/>
+                            <t t-if="not is_known_mm">
+                                <a t-att-href="menu_url" class="text-white text-decoration-none py-2 fw-medium">
+                                    <span t-field="submenu.name"/>
+                                </a>
+                            </t>
+                        </t>
+                    </div>
+                    <div class="d-flex flex-column gap-2 border-top border-secondary border-opacity-25 pt-3" t-else="">
+                        <a href="/industries" class="text-white text-decoration-none py-2 fw-medium">Ngành Nghề</a>
+                        <a href="/about" class="text-white text-decoration-none py-2 fw-medium">Về Innoria</a>
+                    </div>
+                    <!-- Action Button in Mobile Drawer -->
+                    <div class="pt-3 pb-2">
+                        <a href="/contactus" class="btn ins-btn-lux ins-btn-lux-primary btn-innoria-nav rounded-1 w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2">
+                            <span>Tham Vấn Kiến Trúc 3 Giờ</span>
+                            <svg class="ph-duotone ph-arrow-right ph-sm" width="16" height="16"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                        </a>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="accordion accordion-flush ins-mobile-accordion" id="insMobileAccordion">
+                        <!-- Mobile Solutions Accordion -->
+                        <div class="accordion-item bg-transparent border-secondary border-opacity-25">
+                            <h2 class="accordion-header" id="headingMobileSolutions">
+                                <button class="accordion-button collapsed bg-transparent text-white px-0 py-3 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileSolutions" aria-expanded="false" aria-controls="collapseMobileSolutions">
+                                    <span class="fw-semibold">Solutions</span>
+                                </button>
+                            </h2>
+                            <div id="collapseMobileSolutions" class="accordion-collapse collapse" aria-labelledby="headingMobileSolutions" data-bs-parent="#insMobileAccordion">
+                                <div class="accordion-body px-0 pt-0 pb-3">
+                                    <div class="d-flex flex-column gap-2">
+                                        <div class="text-uppercase text-mint x-small fw-semibold mt-2">Core Intelligence</div>
+                                        <a href="/solutions/vertical-idp" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Vertical IDP</span>
+                                            <span class="ins-label-lux ins-label-lux-cyan">99.8% STP</span>
+                                        </a>
+                                        <a href="/solutions/enterprise-knowledge-graph" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Knowledge Graph</span>
+                                            <span class="ins-label-lux ins-label-lux-mint">&lt; 15ms</span>
+                                        </a>
+                                        <a href="/solutions/trade-compliance" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Trade Compliance</span>
+                                            <span class="ins-label-lux ins-label-lux-blue">WCO SAFE</span>
+                                        </a>
+                                        <a href="/solutions/field-service-intelligence" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Field Service (FSM)</span>
+                                            <span class="ins-label-lux ins-label-lux-blue">IEC 61850</span>
+                                        </a>
+                                        <div class="text-uppercase text-cyan x-small fw-semibold mt-2">Operations &amp; Optimization</div>
+                                        <a href="/solutions/asset-reliability" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Asset Reliability</span>
+                                            <span class="ins-label-lux ins-label-lux-blue">ISO 10816</span>
+                                        </a>
+                                        <a href="/solutions/logistics-control-tower" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Logistics Control Tower</span>
+                                            <span class="ins-label-lux ins-label-lux-cyan">ETA</span>
+                                        </a>
+                                        <a href="/solutions/process-optimization" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Process Optimization</span>
+                                            <span class="ins-label-lux ins-label-lux-mint">Closed-Loop</span>
+                                        </a>
+                                        <a href="/solutions" class="ins-mobile-menu-link text-orange text-decoration-none fw-semibold py-1">
+                                            <span>Khám Phá Tất Cả Giải Pháp →</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Industries Accordion -->
+                        <div class="accordion-item bg-transparent border-secondary border-opacity-25">
+                            <h2 class="accordion-header" id="headingMobileIndustries">
+                                <button class="accordion-button collapsed bg-transparent text-white px-0 py-3 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobileIndustries" aria-expanded="false" aria-controls="collapseMobileIndustries">
+                                    <span class="fw-semibold">Industries</span>
+                                </button>
+                            </h2>
+                            <div id="collapseMobileIndustries" class="accordion-collapse collapse" aria-labelledby="headingMobileIndustries" data-bs-parent="#insMobileAccordion">
+                                <div class="accordion-body px-0 pt-0 pb-3">
+                                    <div class="d-flex flex-column gap-2">
+                                        <div class="text-uppercase text-mint x-small fw-semibold mt-2">Flagship Verticals</div>
+                                        <a href="/industries/logistics" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Logistics &amp; Cảng Biển</span>
+                                            <span class="ins-label-lux ins-label-lux-cyan">Seaport</span>
+                                        </a>
+                                        <a href="/industries/pharma" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Dược Phẩm &amp; GxP</span>
+                                            <span class="ins-label-lux ins-label-lux-mint">FDA 21 CFR</span>
+                                        </a>
+                                        <a href="/industries/energy" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Năng Lượng &amp; Utilities</span>
+                                            <span class="ins-label-lux ins-label-lux-rose">Power Grid</span>
+                                        </a>
+                                        <a href="/industries/fsm" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                            <span>Dịch Vụ Hiện Trường</span>
+                                            <span class="ins-label-lux ins-label-lux-amber">94.8% FTFR</span>
+                                        </a>
+                                        <a href="/industries" class="ins-mobile-menu-link text-orange text-decoration-none fw-semibold py-1">
+                                            <span>Danh Mục 101 Ngành Công Nghiệp →</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Direct Nav Links -->
-                <div class="d-flex flex-column gap-2 border-top border-secondary border-opacity-25 pt-3">
-                    <a href="/platform" class="text-white text-decoration-none py-2 fw-medium">Platform</a>
-                    <a href="/showcase-3d" class="text-white text-decoration-none py-2 fw-medium d-flex align-items-center justify-content-between">
-                        <span>Video &amp; 3D Showcase</span>
-                        <span class="badge bg-danger font-monospace">HSE VIDEO</span>
-                    </a>
-                    <a href="/resources" class="text-white text-decoration-none py-2 fw-medium">Resources</a>
-                    <a href="/pricing" class="text-white text-decoration-none py-2 fw-medium">Pricing</a>
-                    <a href="/about" class="text-white text-decoration-none py-2 fw-medium">Company</a>
-                </div>
-                <!-- Action Button in Mobile Drawer -->
-                <div class="pt-3 pb-2">
-                    <a href="/request-demo" class="btn btn-primary rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2">
-                        <span>Yêu Cầu Live Demo</span>
-                        <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
-                    </a>
-                </div>
+                    <!-- Direct Nav Links -->
+                    <div class="d-flex flex-column gap-2 border-top border-secondary border-opacity-25 pt-3">
+                        <a href="/platform" class="text-white text-decoration-none py-2 fw-medium">Platform</a>
+                        <a href="/showcase-3d" class="text-white text-decoration-none py-2 fw-medium d-flex align-items-center justify-content-between">
+                            <span>Video &amp; 3D Showcase</span>
+                            <span class="badge bg-danger font-monospace">HSE VIDEO</span>
+                        </a>
+                        <a href="/resources" class="text-white text-decoration-none py-2 fw-medium">Resources</a>
+                        <a href="/pricing" class="text-white text-decoration-none py-2 fw-medium">Pricing</a>
+                        <a href="/about" class="text-white text-decoration-none py-2 fw-medium">Company</a>
+                    </div>
+                    <!-- Action Button in Mobile Drawer -->
+                    <div class="pt-3 pb-2">
+                        <a href="/request-demo" class="btn btn-primary rounded-1 w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2">
+                            <span>Yêu Cầu Live Demo</span>
+                            <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
+                        </a>
+                    </div>
+                </t>
             </li>
         </xpath>
     </template>

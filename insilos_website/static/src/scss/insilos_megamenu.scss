@@ -13,68 +13,63 @@ header#innoria_top,
 header.o_header_standard,
 .ins-glass-header,
 .innoria-navbar {
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-    background: rgba(7, 11, 20, 0.94) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 1040 !important;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: var(--o-header-bg, var(--o-cc-bg, rgba(7, 11, 20, 0.94)));
+    border-bottom: 1px solid var(--o-header-border, var(--o-cc-border, rgba(255, 255, 255, 0.08)));
+    position: sticky;
+    top: 0;
+    z-index: 1040;
     transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
     &.o_header_is_scrolled {
-        background: rgba(7, 11, 20, 0.95) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+        background: var(--o-header-bg-scrolled, rgba(7, 11, 20, 0.95));
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55),
-                    0 0 40px rgba(255, 128, 0, 0.04) !important;
+                    0 0 40px rgba(255, 128, 0, 0.04);
     }
 
     nav.navbar {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     #o_main_nav.container,
     #o_main_nav.container-fluid,
     #o_main_nav,
     .o_main_nav {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding-left: clamp(1.25rem, 2.5vw, 2.75rem) !important;
-        padding-right: clamp(1.25rem, 2.5vw, 2.75rem) !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        flex-wrap: nowrap !important;
+        padding-left: clamp(1.25rem, 2.5vw, 2.75rem);
+        padding-right: clamp(1.25rem, 2.5vw, 2.75rem);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
     }
 
     ul.navbar-nav.justify-content-end {
-        display: flex !important;
-        align-items: center !important;
-        flex-shrink: 0 !important;
-        gap: 0.5rem !important;
-        margin-left: auto !important;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        gap: 0.5rem;
     }
 }
 
 // 2. Desktop Navigation Layout & Indicator Sheen
 @media (min-width: 992px) {
     #innoriaNavContent {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        flex-basis: auto !important;
-        width: 100% !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-basis: auto;
+        width: 100%;
     }
 
     .ins-nav-wrapper {
-        display: inline-flex !important;
-        align-items: center !important;
-        flex: 0 1 auto !important;
+        display: inline-flex;
+        align-items: center;
+        flex: 0 1 auto;
     }
 }
 
@@ -96,7 +91,7 @@ header.o_header_standard,
     left: 0;
     width: 0;
     height: 0;
-    border-radius: 9999px;
+    border-radius: 4px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(16px);
@@ -123,32 +118,32 @@ header.o_header_standard,
     align-items: center;
 
     .nav-link {
-        color: rgba(255, 255, 255, 0.78) !important;
+        color: var(--o-cc-link, var(--innoria-nav-link-color, rgba(255, 255, 255, 0.78)));
         font-weight: 500;
         font-size: 0.925rem;
         height: 34px;
-        padding: 0.4rem 0.95rem !important;
-        border-radius: 9999px;
-        transition: color 0.2s ease;
+        padding: 0.4rem 0.95rem;
+        border-radius: 4px;
+        transition: color 0.2s ease, background-color 0.2s ease;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         vertical-align: middle;
-        line-height: 1 !important;
+        line-height: 1;
         gap: 0.25rem;
         cursor: pointer;
 
         > span {
             display: inline-flex;
             align-items: center;
-            line-height: 1 !important;
+            line-height: 1;
             vertical-align: middle;
         }
 
         &:hover,
         &.active,
         &.show {
-            color: #FFFFFF !important;
+            color: var(--o-cc-link-hover, #FFFFFF);
         }
 
         svg {
@@ -222,7 +217,7 @@ header.o_header_standard,
     text-decoration: none !important;
     background: transparent;
     border: 1px solid transparent;
-    border-radius: 0.75rem;
+    border-radius: 4px;
     padding: 0.65rem 0.75rem;
     transition: background 0.18s ease,
                 border-color 0.18s ease,
@@ -249,7 +244,7 @@ header.o_header_standard,
     .ins-menu-icon-box {
         width: 42px;
         height: 42px;
-        border-radius: 0.625rem;
+        border-radius: 4px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -524,13 +519,12 @@ header.o_header_standard,
 @media (max-width: 1600px) {
     .ins-glass-header {
         li:has(a[href^="tel"]),
-        li:has(.s_text_block),
-        .s_text_block {
-            display: none !important;
+        .o_header_text_element {
+            display: none;
         }
 
         .ins-badge-micro-tag {
-            display: none !important;
+            display: none;
         }
     }
 }
@@ -538,29 +532,29 @@ header.o_header_standard,
 @media (max-width: 1500px) {
     .ins-glass-header {
         .ins-nav-item .nav-link {
-            padding: 0.3rem 0.52rem !important;
-            font-size: 0.86rem !important;
-            gap: 0.15rem !important;
+            padding: 0.3rem 0.52rem;
+            font-size: 0.86rem;
+            gap: 0.15rem;
         }
 
         #top_menu {
-            gap: 0.1rem !important;
+            gap: 0.1rem;
         }
 
         .navbar-brand.logo {
-            margin-right: 1rem !important;
+            margin-right: 1rem;
         }
 
         ul.navbar-nav.justify-content-end {
-            gap: 0.35rem !important;
-            padding-left: 0.5rem !important;
+            gap: 0.35rem;
+            padding-left: 0.5rem;
         }
 
         a[href*="demo"],
         a[href*="request-demo"],
         .btn-primary.rounded-pill {
-            padding: 0.34rem 0.85rem !important;
-            font-size: 0.85rem !important;
+            padding: 0.34rem 0.85rem;
+            font-size: 0.85rem;
         }
     }
 }
@@ -568,33 +562,33 @@ header.o_header_standard,
 @media (max-width: 1366px) {
     .ins-glass-header {
         .ins-nav-item .nav-link {
-            padding: 0.26rem 0.4rem !important;
-            font-size: 0.81rem !important;
+            padding: 0.26rem 0.4rem;
+            font-size: 0.81rem;
         }
 
         #top_menu {
-            gap: 0.05rem !important;
+            gap: 0.05rem;
         }
 
         .navbar-brand.logo {
-            margin-right: 0.65rem !important;
+            margin-right: 0.65rem;
 
             img {
-                height: 30px !important;
+                height: 30px;
             }
         }
 
         a[href*="demo"],
         a[href*="request-demo"],
         .btn-primary.rounded-pill {
-            padding: 0.3rem 0.75rem !important;
-            font-size: 0.81rem !important;
+            padding: 0.3rem 0.75rem;
+            font-size: 0.81rem;
         }
 
         .o_nav_link_btn {
-            padding-left: 0.5rem !important;
-            padding-right: 0.5rem !important;
-            font-size: 0.81rem !important;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            font-size: 0.81rem;
         }
     }
 }
@@ -602,19 +596,19 @@ header.o_header_standard,
 @media (max-width: 1240px) {
     .ins-glass-header {
         .ins-nav-item .nav-link {
-            padding: 0.24rem 0.32rem !important;
-            font-size: 0.78rem !important;
+            padding: 0.24rem 0.32rem;
+            font-size: 0.78rem;
         }
 
         .ins-has-megamenu .nav-link svg {
-            display: none !important;
+            display: none;
         }
 
         a[href*="demo"],
         a[href*="request-demo"],
         .btn-primary.rounded-pill {
-            padding: 0.28rem 0.65rem !important;
-            font-size: 0.78rem !important;
+            padding: 0.28rem 0.65rem;
+            font-size: 0.78rem;
         }
     }
 }
