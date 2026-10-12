@@ -513,11 +513,68 @@ export class InnokafeTasteProfiler {
             }
         }
 
+        // Update Step Details (Hero, Breadcrumb, Document Title)
+        const stepMeta = {
+            1: {
+                badge: "BƯỚC 1 / 4 • THÓI QUEN THƯỞNG THỨC",
+                title: "Khoảnh Khắc Cà Phê Lý Tưởng Trong Ngày",
+                lead: "Bạn tìm kiếm điều gì trong ly cà phê mỗi sáng? Chọn phong cách phản ánh đúng thói quen, nhịp sống và cảm xúc thưởng thức của bạn nhất.",
+                breadcrumb: "Bước 1: Phong Cách Thưởng Thức",
+                docTitle: "Bước 1: Phong Cách Thưởng Thức | Trắc Nghiệm Cảm Quan SCA | InnoKafe",
+                pct: 25,
+            },
+            2: {
+                badge: "BƯỚC 2 / 4 • THIẾT BỊ CHIẾT XUẤT",
+                title: "Phương Pháp & Thiết Bị Pha Chế",
+                lead: "Dụng cụ chiết xuất quyết định áp suất, thời gian ngâm ủ và kích thước bột xay tối ưu. InnoKafe sẽ căn chỉnh cỡ rang và độ trích ly tương thích tuyệt đối.",
+                breadcrumb: "Bước 2: Thiết Bị Pha Chế",
+                docTitle: "Bước 2: Thiết Bị Pha Chế | Trắc Nghiệm Cảm Quan SCA | InnoKafe",
+                pct: 50,
+            },
+            3: {
+                badge: "BƯỚC 3 / 4 • BẢN ĐỒ KHỨU GIÁC",
+                title: "Tông Hương Vị Độc Bản Cuốn Hút Nhất",
+                lead: "Khứu giác và vị giác của bạn tìm kiếm nốt hương nào? Chocolate đen 85% ấm nồng, hoa quả tươi sáng hay mật ong caramel ngọt ngào?",
+                breadcrumb: "Bước 3: Tông Hương Vị",
+                docTitle: "Bước 3: Tông Hương Vị Yêu Thích | Trắc Nghiệm Cảm Quan SCA | InnoKafe",
+                pct: 75,
+            },
+            4: {
+                badge: "BƯỚC 4 / 4 • CƯỜNG ĐỘ NĂNG LƯỢNG",
+                title: "Mức Độ Tiếp Nhận Caffeine & Độ Đậm Đặc",
+                lead: "Bạn cần cú bừng tỉnh mạnh mẽ từ Fine Robusta Cư M'gar, năng lượng êm dịu cân bằng từ Robusta/Arabica blend, hay sự thanh tao từ 100% Arabica núi sương?",
+                breadcrumb: "Bước 4: Mức Độ Caffeine",
+                docTitle: "Bước 4: Mức Độ Tiếp Nhận Caffeine | Trắc Nghiệm Cảm Quan SCA | InnoKafe",
+                pct: 100,
+            },
+        };
+
+        const heroBadge = document.querySelector(".profiler-hero-badge");
+        const heroTitle = document.querySelector(".profiler-hero-title");
+        const heroLead = document.querySelector(".profiler-hero-lead");
+        const breadcrumbCurrent = document.querySelector(".profiler-breadcrumb-current");
+
+        if (this.currentStep <= 4 && stepMeta[this.currentStep]) {
+            const meta = stepMeta[this.currentStep];
+            if (heroBadge) heroBadge.textContent = meta.badge;
+            if (heroTitle) heroTitle.textContent = meta.title;
+            if (heroLead) heroLead.textContent = meta.lead;
+            if (breadcrumbCurrent) breadcrumbCurrent.textContent = meta.breadcrumb;
+            document.title = meta.docTitle;
+        } else if (this.currentStep === 5 && this.currentResult && this.currentResult.top1) {
+            const top1 = this.currentResult.top1;
+            if (heroBadge) heroBadge.textContent = `HỒ SƠ CẢM QUAN • TƯƠNG THÍCH ${top1.match_score || 96.5}%`;
+            if (heroTitle) heroTitle.textContent = `Dòng Hạt Dành Cho Bạn: ${top1.name}`;
+            if (heroLead) heroLead.textContent = `${top1.tagline || ""}. Dựa trên bản đồ vị giác và thói quen pha chế của bạn, InnoKafe tự hào giới thiệu dòng specialty rang mộc chuẩn SCA này.`;
+            if (breadcrumbCurrent) breadcrumbCurrent.textContent = top1.name;
+            document.title = `${top1.name} | Hồ Sơ Cảm Quan Gu Cà Phê | InnoKafe`;
+        }
+
         // Update Progress Indicator
         const progressBar = this.root.querySelector(".profiler-progress-bar");
         const progressText = this.root.querySelector(".profiler-progress-text");
         if (progressBar) {
-            const pct = Math.min(100, Math.round(((this.currentStep - 1) / 4) * 100));
+            const pct = this.currentStep <= 4 && stepMeta[this.currentStep] ? stepMeta[this.currentStep].pct : 100;
             progressBar.style.width = `${pct}%`;
         }
         if (progressText) {
@@ -694,6 +751,13 @@ export class InnokafeTasteProfiler {
         if (top1NotesEl && top1.tasting_notes) {
             top1NotesEl.innerHTML = top1.tasting_notes
                 .map((n) => `<span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">${n}</span>`)
+                .join("");
+        }
+
+        const top1BrewsEl = this.root.querySelector(".top1-product-brews");
+        if (top1BrewsEl && top1.best_brew_labels) {
+            top1BrewsEl.innerHTML = top1.best_brew_labels
+                .map((b) => `<span class="badge rounded-pill px-3 py-1 bg-dark text-warning border border-secondary">${b}</span>`)
                 .join("");
         }
 

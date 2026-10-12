@@ -42,7 +42,11 @@ class DiscussChannel(models.Model):
     def _to_store_defaults(self, target):
         return super()._to_store_defaults(target) + [Store.One("ai_agent_id", predicate=is_livechat_channel, sudo=True)]
 
-    def _sync_field_names(self):
+    def _sync_field_names(self, res=None):
+        if res is not None:
+            super()._sync_field_names(res)
+            res[None].one("ai_agent_id", [], predicate=is_livechat_channel, sudo=True)
+            return
         field_names = super()._sync_field_names()
         field_names[None].append(Store.One("ai_agent_id", predicate=is_livechat_channel, sudo=True))
         return field_names

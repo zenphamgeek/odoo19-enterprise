@@ -621,40 +621,83 @@ class InnokafeMainController(Website):
             initial_step = 5
             user_vector = top1.get("vector")
 
-        # Step title and SEO / OpenGraph metadata
-        step_names = {
-            1: "Bước 1: Phong Cách Thưởng Thức",
-            2: "Bước 2: Dụng Cụ Pha Chế",
-            3: "Bước 3: Tông Hương Vị Yêu Thích",
-            4: "Bước 4: Mức Độ Nhạy Cảm Caffeine",
+        # Step metadata and tailored SEO / OpenGraph / Hero parameters per route
+        step_meta_details = {
+            1: {
+                "badge": "BƯỚC 1 / 4 • THÓI QUEN THƯỞNG THỨC",
+                "title": "Khoảnh Khắc Cà Phê Lý Tưởng Trong Ngày",
+                "lead": "Bạn tìm kiếm điều gì trong ly cà phê mỗi sáng? Chọn phong cách phản ánh đúng thói quen, nhịp sống và cảm xúc thưởng thức của bạn nhất.",
+                "breadcrumb": "Bước 1: Phong Cách Thưởng Thức",
+                "meta_title": "Bước 1: Phong Cách Thưởng Thức | Trắc Nghiệm Cảm Quan SCA | InnoKafe",
+                "meta_desc": "Khám phá phong cách thưởng thức cà phê phù hợp với thói quen và khẩu vị của bạn qua trắc nghiệm cảm quan 4 bước chuẩn SCA.",
+            },
+            2: {
+                "badge": "BƯỚC 2 / 4 • THIẾT BỊ CHIẾT XUẤT",
+                "title": "Phương Pháp & Thiết Bị Pha Chế",
+                "lead": "Dụng cụ chiết xuất quyết định áp suất, thời gian ngâm ủ và kích thước bột xay tối ưu. InnoKafe sẽ căn chỉnh cỡ rang và độ trích ly tương thích tuyệt đối.",
+                "breadcrumb": "Bước 2: Thiết Bị Pha Chế",
+                "meta_title": "Bước 2: Thiết Bị Pha Chế | Trắc Nghiệm Cảm Quan SCA | InnoKafe",
+                "meta_desc": "Thiết bị chiết xuất (Phin, Espresso, V60, Drip Bag) quyết định độ trích ly và hồ sơ hương vị tối ưu.",
+            },
+            3: {
+                "badge": "BƯỚC 3 / 4 • BẢN ĐỒ KHỨU GIÁC",
+                "title": "Tông Hương Vị Độc Bản Cuốn Hút Nhất",
+                "lead": "Khứu giác và vị giác của bạn tìm kiếm nốt hương nào? Chocolate đen 85% ấm nồng, hoa quả tươi sáng hay mật ong caramel ngọt ngào?",
+                "breadcrumb": "Bước 3: Tông Hương Vị",
+                "meta_title": "Bước 3: Tông Hương Vị Yêu Thích | Trắc Nghiệm Cảm Quan SCA | InnoKafe",
+                "meta_desc": "Xác định bản đồ nốt hương khứu giác và khẩu vị riêng biệt trong tách specialty coffee rang mộc tự nhiên.",
+            },
+            4: {
+                "badge": "BƯỚC 4 / 4 • CƯỜNG ĐỘ NĂNG LƯỢNG",
+                "title": "Mức Độ Tiếp Nhận Caffeine & Độ Đậm Đặc",
+                "lead": "Bạn cần cú bừng tỉnh mạnh mẽ từ Fine Robusta Cư M'gar, năng lượng êm dịu cân bằng từ Robusta/Arabica blend, hay sự thanh tao từ 100% Arabica núi sương?",
+                "breadcrumb": "Bước 4: Mức Độ Caffeine",
+                "meta_title": "Bước 4: Mức Độ Tiếp Nhận Caffeine | Trắc Nghiệm Cảm Quan SCA | InnoKafe",
+                "meta_desc": "Định vị hàm lượng caffeine lý tưởng từ Robusta Cư M'gar đậm đà đến Arabica Cầu Đất dịu êm.",
+            },
         }
+
         if initial_step == 5 and top1:
-            step_title = f"Kết Quả: {top1.get('name')}"
+            hero_badge = f"HỒ SƠ CẢM QUAN • TƯƠNG THÍCH {top1.get('match_score', 96.5)}%"
+            hero_title = f"Dòng Hạt Dành Cho Bạn: {top1.get('name')}"
+            hero_lead = f"{top1.get('tagline')}. Dựa trên bản đồ vị giác và thói quen pha chế của bạn, InnoKafe tự hào giới thiệu dòng specialty rang mộc chuẩn SCA này."
+            breadcrumb_step = top1.get("name")
             meta_title = f"{top1.get('name')} | Hồ Sơ Cảm Quan Gu Cà Phê | InnoKafe"
             meta_desc = f"{top1.get('tagline')} - Nốt hương: {top1.get('tasting_notes_str', '')}. Vùng trồng: {top1.get('origin', '')}. Điểm SCA: {top1.get('cupping_score')}."
             meta_image = top1.get("image_url", "/innokafe_website/static/src/img/beans_robusta_natural.svg")
             meta_url = f"https://innokafe.com/taste-profiler/result/{top1.get('sku_code')}"
-        elif initial_step in step_names:
-            step_title = step_names[initial_step]
-            meta_title = f"{step_title} | Trắc Nghiệm Tìm Gu Cà Phê | InnoKafe"
-            meta_desc = "Chỉ 60 giây trắc nghiệm cảm quan 4 bước chuẩn SCA để InnoKafe gợi ý chính xác dòng hạt rang mộc sinh ra dành riêng cho khẩu vị của bạn."
+        elif initial_step in step_meta_details:
+            detail = step_meta_details[initial_step]
+            hero_badge = detail["badge"]
+            hero_title = detail["title"]
+            hero_lead = detail["lead"]
+            breadcrumb_step = detail["breadcrumb"]
+            meta_title = detail["meta_title"]
+            meta_desc = detail["meta_desc"]
             meta_image = "/innokafe_website/static/src/img/beans_robusta_natural.svg"
             meta_url = f"https://innokafe.com/taste-profiler/step/{initial_step}"
         else:
-            step_title = "Tìm Gu Cà Phê Của Bạn"
+            hero_badge = "CÁ NHÂN HÓA TRẢI NGHIỆM THƯỞNG THỨC"
+            hero_title = "Tìm Gu Cà Phê Của Bạn Trong 60 Giây"
+            hero_lead = "Mỗi người sở hữu một bản đồ vị giác độc nhất. Chỉ 60 giây với 4 câu hỏi trắc nghiệm cảm quan chuẩn SCA, InnoKafe sẽ gợi ý chính xác dòng hạt rang mộc lý tưởng cho bạn."
+            breadcrumb_step = None
             meta_title = "Tìm Gu Cà Phê Của Bạn | Trắc Nghiệm Cảm Quan SCA | InnoKafe"
             meta_desc = "Mỗi người sở hữu một bản đồ vị giác độc nhất. 60 giây với 4 câu hỏi trắc nghiệm cảm quan để tìm ra dòng hạt specialty rang mộc lý tưởng."
             meta_image = "/innokafe_website/static/src/img/beans_robusta_natural.svg"
             meta_url = "https://innokafe.com/taste-profiler"
 
         values["initial_step"] = initial_step
-        values["step_title"] = step_title
+        values["hero_badge"] = hero_badge
+        values["hero_title"] = hero_title
+        values["hero_lead"] = hero_lead
+        values["breadcrumb_step"] = breadcrumb_step
         values["meta_title"] = meta_title
         values["meta_desc"] = meta_desc
         values["meta_image"] = meta_image
         values["meta_url"] = meta_url
         values["top1"] = top1
         values["top2"] = top2
+        values["discovery_box"] = next((s for s in hydrated_skus if s.get("sku_code") == "INNO-DRIP-EXPLORER-04"), None)
         values["user_vector"] = user_vector
         values["radar_points"] = compute_radar_points(top1.get("sensory_scores")) if top1 else ""
         return request.render("innokafe_website.taste_profiler_page", values)

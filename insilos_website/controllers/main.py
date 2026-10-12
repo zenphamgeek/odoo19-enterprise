@@ -1366,7 +1366,12 @@ class InsilosWebsite(http.Controller):
 
     @http.route(["/solutions", "/erp-combine-with-ai", "/vi/solutions", "/vi/erp-combine-with-ai", "/insilos", "/vi/insilos", "/insilos-erp", "/vi/insilos-erp", "/en/solutions", "/en/erp-combine-with-ai", "/en/insilos", "/en/insilos-erp"], type="http", auth="public", website=True, sitemap=True)
     def solutions(self, **kwargs):
-        return request.render("insilos_website.insilos_solutions_page", self._base_values())
+        values = self._base_values()
+        if "main_object" not in values:
+            page = request.env["website.page"].sudo().search([("url", "in", ["/insilos", "/solutions"])], limit=1)
+            if page:
+                values["main_object"] = page
+        return request.render("insilos_website.insilos_solutions_page", values)
 
     @http.route(
         ["/solutions/<string:solution>", "/solutions/<path:solution>"],

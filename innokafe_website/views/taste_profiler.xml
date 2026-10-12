@@ -33,39 +33,31 @@
                 </div>
                 <div class="container py-4 position-relative">
                     <nav aria-label="breadcrumb" class="mb-3">
-                        <ol class="breadcrumb justify-content-center mb-0 small text-uppercase font-monospace">
+                        <ol class="breadcrumb justify-content-center mb-0 small text-uppercase font-monospace profiler-breadcrumb-list">
                             <li class="breadcrumb-item"><a href="/" class="text-secondary text-decoration-none">Trang Chủ</a></li>
                             <li class="breadcrumb-item"><a href="/products" class="text-secondary text-decoration-none">Sản Phẩm</a></li>
                             <t t-if="initial_step == 5 and top1">
                                 <li class="breadcrumb-item"><a href="/taste-profiler" class="text-secondary text-decoration-none">Tìm Gu Cà Phê</a></li>
-                                <li class="breadcrumb-item active text-warning" aria-current="page"><t t-out="top1.get('name')"/></li>
+                                <li class="breadcrumb-item"><a href="/taste-profiler/result" class="text-secondary text-decoration-none">Kết Quả</a></li>
+                                <li class="breadcrumb-item active text-warning profiler-breadcrumb-current" aria-current="page"><t t-out="top1.get('name')"/></li>
                             </t>
-                            <t t-elif="initial_step and initial_step &gt; 1">
+                            <t t-elif="breadcrumb_step">
                                 <li class="breadcrumb-item"><a href="/taste-profiler" class="text-secondary text-decoration-none">Tìm Gu Cà Phê</a></li>
-                                <li class="breadcrumb-item active text-warning" aria-current="page">Bước <t t-out="initial_step"/></li>
+                                <li class="breadcrumb-item active text-warning profiler-breadcrumb-current" aria-current="page"><t t-out="breadcrumb_step"/></li>
                             </t>
                             <t t-else="">
-                                <li class="breadcrumb-item active text-warning" aria-current="page">Tìm Gu Cà Phê</li>
+                                <li class="breadcrumb-item active text-warning profiler-breadcrumb-current" aria-current="page">Tìm Gu Cà Phê</li>
                             </t>
                         </ol>
                     </nav>
-                    <p class="text-uppercase tracking-widest text-warning small font-monospace mb-2">CÁ NHÂN HÓA TRẢI NGHIỆM THƯỞNG THỨC</p>
-                    <h1 class="display-4 fw-bold mb-3 text-light inno-hero-title" style="font-family: 'Playfair Display', serif; text-wrap: balance;">
-                        <t t-if="initial_step == 5 and top1">
-                            Kết Quả Phân Tích Cảm Quan Vị Giác
-                        </t>
-                        <t t-else="">
-                            Tìm Gu Cà Phê Của Bạn
-                        </t>
+                    <p class="text-uppercase tracking-widest text-warning small font-monospace mb-2 profiler-hero-badge">
+                        <t t-out="hero_badge or 'CÁ NHÂN HÓA TRẢI NGHIỆM THƯỞNG THỨC'"/>
+                    </p>
+                    <h1 class="display-4 fw-bold mb-3 text-light inno-hero-title profiler-hero-title" style="font-family: 'Playfair Display', serif; text-wrap: balance;">
+                        <t t-out="hero_title or 'Tìm Gu Cà Phê Của Bạn'"/>
                     </h1>
-                    <p class="lead mx-auto mb-0 inno-hero-lead" style="max-width: 760px; line-height: 1.7; text-wrap: balance;">
-                        <t t-if="initial_step == 5 and top1">
-                            Dựa trên thói quen pha chế và sở thích hương vị, đây là dòng hạt rang mộc sinh ra dành riêng cho khẩu vị của bạn.
-                        </t>
-                        <t t-else="">
-                            Mỗi người sở hữu một bản đồ vị giác độc nhất. Chỉ 60 giây với 4 câu hỏi trắc nghiệm cảm quan,
-                            Innokafe sẽ gợi ý chính xác dòng hạt rang mộc sinh ra để dành riêng cho khẩu vị của bạn.
-                        </t>
+                    <p class="lead mx-auto mb-0 inno-hero-lead profiler-hero-lead" style="max-width: 780px; line-height: 1.7; text-wrap: balance;">
+                        <t t-out="hero_lead or 'Mỗi người sở hữu một bản đồ vị giác độc nhất. Chỉ 60 giây với 4 câu hỏi trắc nghiệm cảm quan, Innokafe sẽ gợi ý chính xác dòng hạt rang mộc sinh ra để dành riêng cho khẩu vị của bạn.'"/>
                     </p>
                 </div>
             </section>
@@ -195,37 +187,65 @@
                                 <div class="col-md-6">
                                     <div class="inno-spatial-layer inno-floating-pod profiler-option-card cursor-pointer h-100 p-4 rounded-4 text-start d-flex flex-column justify-content-between"
                                          data-step="2" data-key="gear" data-value="phin">
-                                        <h4 class="h5 fw-bold text-light mb-2">Phin Nhôm Truyền Thống</h4>
-                                        <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
-                                            Phương pháp chiết xuất nhỏ giọt tí tách kinh điển của người Việt, đậm đà thể chất và lớp dầu tự nhiên.
-                                        </p>
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0 d-inline-flex align-items-center justify-content-center" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem; width: 54px; height: 54px;">
+                                                <i class="fa fa-filter text-warning"/>
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Phin Nhôm Truyền Thống</h4>
+                                                <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
+                                                    Phương pháp chiết xuất nhỏ giọt tí tách kinh điển của người Việt, đậm đà thể chất và lớp dầu tự nhiên.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="inno-spatial-layer inno-floating-pod profiler-option-card cursor-pointer h-100 p-4 rounded-4 text-start d-flex flex-column justify-content-between"
                                          data-step="2" data-key="gear" data-value="espresso">
-                                        <h4 class="h5 fw-bold text-light mb-2">Máy Pha Espresso Gia Đình / Cầm Tay</h4>
-                                        <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
-                                            Chiết xuất áp suất cao 9 bar trong 25-30 giây, tạo lớp Crema dày vàng óng ả và hương thơm bung tỏa.
-                                        </p>
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0 d-inline-flex align-items-center justify-content-center" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem; width: 54px; height: 54px;">
+                                                <i class="fa fa-bolt text-warning"/>
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Máy Pha Espresso Gia Đình / Cầm Tay</h4>
+                                                <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
+                                                    Chiết xuất áp suất cao 9 bar trong 25-30 giây, tạo lớp Crema dày vàng óng ả và hương thơm bung tỏa.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="inno-spatial-layer inno-floating-pod profiler-option-card cursor-pointer h-100 p-4 rounded-4 text-start d-flex flex-column justify-content-between"
                                          data-step="2" data-key="gear" data-value="dripbag">
-                                        <h4 class="h5 fw-bold text-light mb-2">Phin Giấy Túi Lọc Drip Bag</h4>
-                                        <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
-                                            Tiện lợi tại bàn làm việc hoặc du lịch, màng lọc Nhật Bản chiết xuất trong trẻo chỉ với một ấm nước sôi.
-                                        </p>
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0 d-inline-flex align-items-center justify-content-center" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem; width: 54px; height: 54px;">
+                                                <i class="fa fa-envelope-open-text text-warning"/>
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Phin Giấy Túi Lọc Drip Bag</h4>
+                                                <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
+                                                    Tiện lợi tại bàn làm việc hoặc du lịch, màng lọc Nhật Bản chiết xuất trong trẻo chỉ với một ấm nước sôi.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="inno-spatial-layer inno-floating-pod profiler-option-card cursor-pointer h-100 p-4 rounded-4 text-start d-flex flex-column justify-content-between"
                                          data-step="2" data-key="gear" data-value="pourover">
-                                        <h4 class="h5 fw-bold text-light mb-2">Bình Pour-Over V60 / French Press / Cold Brew</h4>
-                                        <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
-                                            Nghệ thuật pha chế thủ công tôn vinh các tầng hương hoa quả tinh vi và độ trong trẻo tuyệt hảo.
-                                        </p>
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0 d-inline-flex align-items-center justify-content-center" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem; width: 54px; height: 54px;">
+                                                <i class="fa fa-flask text-warning"/>
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Bình Pour-Over V60 / French Press / Cold Brew</h4>
+                                                <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
+                                                    Nghệ thuật pha chế thủ công tôn vinh các tầng hương hoa quả tinh vi và độ trong trẻo tuyệt hảo.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -301,28 +321,49 @@
                                 <div class="col-md-4">
                                     <div class="inno-spatial-layer inno-floating-pod profiler-option-card cursor-pointer h-100 p-4 rounded-4 text-start d-flex flex-column justify-content-between"
                                          data-step="4" data-key="caffeine" data-value="high">
-                                        <h4 class="h5 fw-bold text-light mb-2">Đô Mạnh, Cần Tỉnh Táo Tuyệt Đối</h4>
-                                        <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
-                                            Hàm lượng caffeine tự nhiên cao của Fine Robusta Cư M'gar, thể chất dày đặc, duy trì năng lượng tập trung trọn vẹn cả ngày.
-                                        </p>
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0 d-inline-flex align-items-center justify-content-center" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem; width: 54px; height: 54px;">
+                                                <i class="fa fa-fire text-warning"/>
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Đô Mạnh, Tỉnh Táo Tuyệt Đối</h4>
+                                                <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
+                                                    Caffeine tự nhiên cao từ Fine Robusta Cư M'gar, thể chất dày dặn, duy trì sự tập trung cao độ trọn vẹn cả ngày.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="inno-spatial-layer inno-floating-pod profiler-option-card cursor-pointer h-100 p-4 rounded-4 text-start d-flex flex-column justify-content-between"
                                          data-step="4" data-key="caffeine" data-value="medium">
-                                        <h4 class="h5 fw-bold text-light mb-2">Cân Bằng, Tỉnh Táo Êm Dịu</h4>
-                                        <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
-                                            Hòa quyện tỷ lệ vàng giữa Robusta và Arabica, giải phóng năng lượng êm ái, tỉnh táo minh mẫn không hồi hộp.
-                                        </p>
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0 d-inline-flex align-items-center justify-content-center" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem; width: 54px; height: 54px;">
+                                                <i class="fa fa-balance-scale text-warning"/>
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Cân Bằng, Tỉnh Táo Êm Dịu</h4>
+                                                <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
+                                                    Tỷ lệ vàng giữa Robusta và Arabica, giải phóng năng lượng êm ái, tinh thần minh mẫn, không hồi hộp.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="inno-spatial-layer inno-floating-pod profiler-option-card cursor-pointer h-100 p-4 rounded-4 text-start d-flex flex-column justify-content-between"
                                          data-step="4" data-key="caffeine" data-value="low">
-                                        <h4 class="h5 fw-bold text-light mb-2">Nhẹ Nhàng, Nhạy Cảm Caffeine</h4>
-                                        <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
-                                            100% Arabica núi sương Cầu Đất, hàm lượng caffeine dịu nhẹ, thưởng thức trọn vẹn hương hoa quả mà không sợ say.
-                                        </p>
+                                        <div class="d-flex align-items-start">
+                                            <div class="rounded-circle p-3 me-3 flex-shrink-0 d-inline-flex align-items-center justify-content-center" style="background-color: rgba(212, 136, 66, 0.15); color: #D48842; font-size: 1.5rem; width: 54px; height: 54px;">
+                                                <i class="fa fa-feather-alt text-warning"/>
+                                            </div>
+                                            <div>
+                                                <h4 class="h5 fw-bold text-light mb-1">Nhẹ Nhàng, Nhạy Cảm Caffeine</h4>
+                                                <p class="small mb-0" style="color: rgba(247, 242, 234, 0.8);">
+                                                    100% Arabica núi sương Cầu Đất, caffeine dịu nhẹ, thưởng thức trọn vẹn hương hoa quả thanh nhã mà không lo say.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -389,7 +430,7 @@
                                             </div>
 
                                             <!-- Tasting Notes -->
-                                            <div class="mb-4">
+                                            <div class="mb-3">
                                                 <span class="small d-block mb-2 fw-bold text-light">Nốt hương chủ đạo:</span>
                                                 <div class="top1-product-notes d-flex flex-wrap gap-2">
                                                     <t t-if="top1 and top1.get('tasting_notes')">
@@ -402,6 +443,23 @@
                                                         <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Hạt dẻ nướng</span>
                                                         <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Mật mía</span>
                                                         <span class="badge rounded-pill px-3 py-1 inno-inner-panel text-warning border-0">Gỗ sồi</span>
+                                                    </t>
+                                                </div>
+                                            </div>
+
+                                            <!-- Recommended Brewing Methods -->
+                                            <div class="mb-4">
+                                                <span class="small d-block mb-2 fw-bold text-light">Phương pháp pha chế tối ưu:</span>
+                                                <div class="top1-product-brews d-flex flex-wrap gap-2">
+                                                    <t t-if="top1 and top1.get('best_brew_labels')">
+                                                        <t t-foreach="top1.get('best_brew_labels')" t-as="brew">
+                                                            <span class="badge rounded-pill px-3 py-1 bg-dark text-warning border border-secondary" t-out="brew"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span class="badge rounded-pill px-3 py-1 bg-dark text-warning border border-secondary">Phin truyền thống</span>
+                                                        <span class="badge rounded-pill px-3 py-1 bg-dark text-warning border border-secondary">Cà phê sữa đá</span>
+                                                        <span class="badge rounded-pill px-3 py-1 bg-dark text-warning border border-secondary">Espresso</span>
                                                     </t>
                                                 </div>
                                             </div>
@@ -558,9 +616,10 @@
                                 <div class="d-flex justify-content-center flex-wrap gap-3">
                                     <button type="button"
                                             class="btn btn-primary rounded-pill px-4 py-2 fw-bold btn-discovery-box-add"
-                                            data-sku="INNO-DRIP-EXPLORER-04"
-                                            data-product-id="4"
-                                            data-name="Hộp Drip Bag Khám Phá Nghệ Nhân (Artisan Box 10 Gói)">
+                                            t-att-data-sku="discovery_box.get('sku_code') if discovery_box else 'INNO-DRIP-EXPLORER-04'"
+                                            t-att-data-product-id="discovery_box.get('product_id', 4) if discovery_box else 4"
+                                            t-att-data-product-tmpl-id="discovery_box.get('product_tmpl_id', 4) if discovery_box else 4"
+                                            t-att-data-name="discovery_box.get('name') if discovery_box else 'Hộp Drip Bag Khám Phá Nghệ Nhân (Artisan Box 10 Gói)'">
                                         <i class="fa fa-shopping-bag me-2"/>Đặt Hộp Khám Phá Discovery Box (189K)
                                     </button>
                                     <button type="button" class="btn btn-outline-light rounded-pill px-4 py-2 btn-profiler-restart">

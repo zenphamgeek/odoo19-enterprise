@@ -1163,8 +1163,8 @@
     </template>
 
     <!-- Executive Brand Logo Switching (Innoria SVG vs Insilos Brand, Editable in Website Builder) -->
-    <template id="insilos_header_brand_logo" inherit_id="website.placeholder_header_brand" priority="25">
-        <xpath expr="//*[@id='o_fake_navbar_brand']" position="replace">
+    <template id="insilos_header_brand_logo" inherit_id="website.option_header_brand_logo" priority="25">
+        <xpath expr="//a[hasclass('navbar-brand')]" position="replace">
             <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <t t-set="base_options" t-value="{'widget': 'image'}"/>
             <t t-if="is_innoria">
