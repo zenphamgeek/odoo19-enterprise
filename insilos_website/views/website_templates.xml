@@ -1163,25 +1163,15 @@
     </template>
 
     <!-- Executive Brand Logo Switching (Innoria SVG vs Insilos Brand, Editable in Website Builder) -->
-    <template id="insilos_header_brand_logo" inherit_id="website.option_header_brand_logo" priority="25">
-        <xpath expr="//a[hasclass('navbar-brand')]" position="replace">
+    <template id="option_header_brand_logo" inherit_id="website.placeholder_header_brand" priority="25">
+        <xpath expr="//*[@id='o_fake_navbar_brand']" position="replace">
             <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <t t-set="base_options" t-value="{'widget': 'image'}"/>
-            <t t-if="is_innoria">
-                <a data-name="Navbar Logo" href="/" t-attf-class="navbar-brand logo py-0 d-flex align-items-center me-xl-4 me-3 #{_link_class}">
-                    <span
-                        t-if="editable"
-                        t-field="website.logo"
-                        t-options="base_options"
-                        role="img"
-                        t-att-aria-label="'Logo of %s' % website.name"
-                        t-att-title="website.name"
-                    />
-                    <img t-else="" src="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA" class="navbar-brand-logo" width="138" height="38"/>
-                </a>
-            </t>
-            <t t-else="">
-                <a data-name="Navbar Logo" href="/" t-attf-class="navbar-brand logo #{_link_class}">
+            <a data-name="Navbar Logo" href="/" t-attf-class="navbar-brand logo py-0 d-flex align-items-center me-xl-4 me-3 #{_link_class}">
+                <t t-if="is_innoria and not editable">
+                    <img src="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA" class="navbar-brand-logo" width="138" height="38"/>
+                </t>
+                <t t-else="">
                     <span
                         t-field="website.logo"
                         t-options="base_options if editable else dict(base_options, width=95, height=40)"
@@ -1189,8 +1179,8 @@
                         t-att-aria-label="'Logo of %s' % website.name"
                         t-att-title="website.name"
                     />
-                </a>
-            </t>
+                </t>
+            </a>
         </xpath>
     </template>
 
