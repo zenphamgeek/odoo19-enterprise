@@ -36,17 +36,16 @@
                         <ol class="breadcrumb justify-content-center mb-0 small text-uppercase font-monospace profiler-breadcrumb-list">
                             <li class="breadcrumb-item"><a href="/" class="text-secondary text-decoration-none">Trang Chủ</a></li>
                             <li class="breadcrumb-item"><a href="/products" class="text-secondary text-decoration-none">Sản Phẩm</a></li>
+                            <li class="breadcrumb-item"><a href="/taste-profiler" class="text-secondary text-decoration-none">Tìm Gu Cà Phê</a></li>
                             <t t-if="initial_step == 5 and top1">
-                                <li class="breadcrumb-item"><a href="/taste-profiler" class="text-secondary text-decoration-none">Tìm Gu Cà Phê</a></li>
                                 <li class="breadcrumb-item"><a href="/taste-profiler/result" class="text-secondary text-decoration-none">Kết Quả</a></li>
                                 <li class="breadcrumb-item active text-warning profiler-breadcrumb-current" aria-current="page"><t t-out="top1.get('name')"/></li>
                             </t>
                             <t t-elif="breadcrumb_step">
-                                <li class="breadcrumb-item"><a href="/taste-profiler" class="text-secondary text-decoration-none">Tìm Gu Cà Phê</a></li>
                                 <li class="breadcrumb-item active text-warning profiler-breadcrumb-current" aria-current="page"><t t-out="breadcrumb_step"/></li>
                             </t>
                             <t t-else="">
-                                <li class="breadcrumb-item active text-warning profiler-breadcrumb-current" aria-current="page">Tìm Gu Cà Phê</li>
+                                <li class="breadcrumb-item active text-warning profiler-breadcrumb-current" aria-current="page">Bước 1: Phong Cách Thưởng Thức</li>
                             </t>
                         </ol>
                     </nav>
@@ -77,20 +76,40 @@
                          t-att-data-initial-step="initial_step"
                          t-att-data-initial-top1="top1 and top1.get('sku_code') or ''"
                          t-att-data-initial-top2="top2 and top2.get('sku_code') or ''">
-                        <!-- Progress Header -->
-                        <div class="d-flex align-items-center justify-content-between mb-3 text-light">
-                            <span class="profiler-progress-text fw-bold text-uppercase" style="color: #D48842; font-size: 0.85rem; letter-spacing: 0.05em;">
-                                <t t-if="initial_step and initial_step &lt;= 4">Bước <t t-out="initial_step"/> / 4</t>
-                                <t t-else="">Hoàn tất kết quả</t>
-                            </span>
-                            <span class="small" style="color: rgba(247, 242, 234, 0.7);">
-                                Trắc nghiệm cảm quan khẩu vị chuẩn SCA
-                            </span>
-                        </div>
-                        <div class="progress mb-5" style="height: 6px; background-color: rgba(247, 242, 234, 0.12); border-radius: 999px;">
-                            <div class="progress-bar profiler-progress-bar"
-                                 role="progressbar"
-                                 t-attf-style="width: #{0 if initial_step == 1 else (25 if initial_step == 2 else (50 if initial_step == 3 else (75 if initial_step == 4 else 100)))}%; background: linear-gradient(90deg, #E5A93C, #D48842); transition: width 0.4s ease; border-radius: 999px;"/>
+                        <!-- Progress & Stepper Navigation Header -->
+                        <div class="profiler-stepper-wrap mb-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3 text-light">
+                                <span class="profiler-progress-text fw-bold text-uppercase" style="color: #D48842; font-size: 0.85rem; letter-spacing: 0.05em;">
+                                    <t t-if="initial_step and initial_step &lt;= 4">Bước <t t-out="initial_step"/> / 4</t>
+                                    <t t-else="">Hoàn tất kết quả</t>
+                                </span>
+                                <span class="small" style="color: rgba(247, 242, 234, 0.7);">
+                                    Trắc nghiệm cảm quan khẩu vị chuẩn SCA
+                                </span>
+                            </div>
+                            <!-- Interactive 5-step pills -->
+                            <div class="d-flex justify-content-between gap-2 mb-3 profiler-step-indicators flex-wrap">
+                                <a href="/taste-profiler/step/1" data-goto-step="1" t-attf-class="btn btn-sm flex-fill rounded-pill py-1 px-2 font-monospace profiler-step-pill #{'btn-warning text-dark fw-bold shadow-sm' if initial_step == 1 else ('btn-outline-warning text-warning' if initial_step &gt; 1 else 'btn-outline-secondary text-secondary')}">
+                                    1. Thói Quen
+                                </a>
+                                <a href="/taste-profiler/step/2" data-goto-step="2" t-attf-class="btn btn-sm flex-fill rounded-pill py-1 px-2 font-monospace profiler-step-pill #{'btn-warning text-dark fw-bold shadow-sm' if initial_step == 2 else ('btn-outline-warning text-warning' if initial_step &gt; 2 else 'btn-outline-secondary text-secondary')}">
+                                    2. Thiết Bị
+                                </a>
+                                <a href="/taste-profiler/step/3" data-goto-step="3" t-attf-class="btn btn-sm flex-fill rounded-pill py-1 px-2 font-monospace profiler-step-pill #{'btn-warning text-dark fw-bold shadow-sm' if initial_step == 3 else ('btn-outline-warning text-warning' if initial_step &gt; 3 else 'btn-outline-secondary text-secondary')}">
+                                    3. Hương Vị
+                                </a>
+                                <a href="/taste-profiler/step/4" data-goto-step="4" t-attf-class="btn btn-sm flex-fill rounded-pill py-1 px-2 font-monospace profiler-step-pill #{'btn-warning text-dark fw-bold shadow-sm' if initial_step == 4 else ('btn-outline-warning text-warning' if initial_step &gt; 4 else 'btn-outline-secondary text-secondary')}">
+                                    4. Caffeine
+                                </a>
+                                <a href="/taste-profiler/result" data-goto-step="5" t-attf-class="btn btn-sm flex-fill rounded-pill py-1 px-2 font-monospace profiler-step-pill #{'btn-warning text-dark fw-bold shadow-sm' if initial_step == 5 else 'btn-outline-secondary text-secondary'}">
+                                    5. Kết Quả
+                                </a>
+                            </div>
+                            <div class="progress mb-4" style="height: 6px; background-color: rgba(247, 242, 234, 0.12); border-radius: 999px;">
+                                <div class="progress-bar profiler-progress-bar"
+                                     role="progressbar"
+                                     t-attf-style="width: #{20 if initial_step == 1 else (40 if initial_step == 2 else (60 if initial_step == 3 else (80 if initial_step == 4 else 100)))}%; background: linear-gradient(90deg, #E5A93C, #D48842); transition: width 0.4s ease; border-radius: 999px;"/>
+                            </div>
                         </div>
 
                         <!-- =================================================== -->

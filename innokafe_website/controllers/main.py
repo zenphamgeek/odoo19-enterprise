@@ -344,6 +344,38 @@ SIGNATURE_SKUS = [
 for item in SIGNATURE_SKUS:
     item["radar_points"] = compute_radar_points(item["sensory_scores"])
 
+SKU_ALIASES = {
+    "INNO-HERITAGE-HONEY-03": "INNO-SIGNATURE-HONEY-03",
+    "HERITAGE-HONEY-03": "INNO-SIGNATURE-HONEY-03",
+    "HERITAGE-HONEY": "INNO-SIGNATURE-HONEY-03",
+    "SIGNATURE-HONEY-03": "INNO-SIGNATURE-HONEY-03",
+    "HONEY-03": "INNO-SIGNATURE-HONEY-03",
+    "INNO-ESPRESSO-BAR-06": "INNO-HORECA-BARISTA-06",
+    "INNO-ESPRESSO-BARISTA-06": "INNO-HORECA-BARISTA-06",
+    "ESPRESSO-BAR-06": "INNO-HORECA-BARISTA-06",
+    "ESPRESSO-BARISTA-06": "INNO-HORECA-BARISTA-06",
+    "HORECA-BARISTA-06": "INNO-HORECA-BARISTA-06",
+    "BARISTA-06": "INNO-HORECA-BARISTA-06",
+    "INNO-ROBUSTA-NAT-01": "INNO-ROBUSTA-NAT-01",
+    "ROBUSTA-NAT-01": "INNO-ROBUSTA-NAT-01",
+    "ROBUSTA-01": "INNO-ROBUSTA-NAT-01",
+    "INNO-ARABICA-WASH-02": "INNO-ARABICA-WASH-02",
+    "ARABICA-WASH-02": "INNO-ARABICA-WASH-02",
+    "ARABICA-02": "INNO-ARABICA-WASH-02",
+    "INNO-DRIP-EXPLORER-04": "INNO-DRIP-EXPLORER-04",
+    "DRIP-EXPLORER-04": "INNO-DRIP-EXPLORER-04",
+    "DRIP-04": "INNO-DRIP-EXPLORER-04",
+    "INNO-COLDBREW-CITRUS-05": "INNO-COLDBREW-CITRUS-05",
+    "COLDBREW-CITRUS-05": "INNO-COLDBREW-CITRUS-05",
+    "COLDBREW-05": "INNO-COLDBREW-CITRUS-05",
+    "1": "INNO-ROBUSTA-NAT-01",
+    "2": "INNO-ARABICA-WASH-02",
+    "3": "INNO-SIGNATURE-HONEY-03",
+    "4": "INNO-DRIP-EXPLORER-04",
+    "5": "INNO-COLDBREW-CITRUS-05",
+    "6": "INNO-HORECA-BARISTA-06",
+}
+
 
 def calculate_match_scores(habit, gear, flavor, caffeine):
     """
@@ -595,7 +627,8 @@ class InnokafeMainController(Website):
             top2 = ranked_skus[1] if len(ranked_skus) > 1 else None
             initial_step = 5
         elif target_sku:
-            clean_sku = target_sku.strip().upper().replace("_", "-")
+            raw_sku = target_sku.strip().upper().replace("_", "-")
+            clean_sku = SKU_ALIASES.get(raw_sku, raw_sku)
             matched = [s for s in hydrated_skus if s["sku_code"].upper().replace("_", "-") == clean_sku]
             if matched:
                 top1 = dict(matched[0])

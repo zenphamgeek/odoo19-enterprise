@@ -136,6 +136,42 @@ export const CLIENT_SIGNATURE_SKUS = [
     },
 ];
 
+export const SKU_ALIASES = {
+    "inno-heritage-honey-03": "inno-signature-honey-03",
+    "heritage-honey-03": "inno-signature-honey-03",
+    "heritage-honey": "inno-signature-honey-03",
+    "honey-03": "inno-signature-honey-03",
+    "inno-espresso-bar-06": "inno-horeca-barista-06",
+    "inno-espresso-barista-06": "inno-horeca-barista-06",
+    "espresso-bar-06": "inno-horeca-barista-06",
+    "espresso-bar": "inno-horeca-barista-06",
+    "barista-06": "inno-horeca-barista-06",
+    "inno-robusta-nat-01": "inno-robusta-nat-01",
+    "robusta-nat-01": "inno-robusta-nat-01",
+    "robusta-01": "inno-robusta-nat-01",
+    "inno-arabica-wash-02": "inno-arabica-wash-02",
+    "arabica-wash-02": "inno-arabica-wash-02",
+    "arabica-02": "inno-arabica-wash-02",
+    "inno-drip-explorer-04": "inno-drip-explorer-04",
+    "drip-explorer-04": "inno-drip-explorer-04",
+    "drip-04": "inno-drip-explorer-04",
+    "inno-coldbrew-citrus-05": "inno-coldbrew-citrus-05",
+    "coldbrew-citrus-05": "inno-coldbrew-citrus-05",
+    "coldbrew-05": "inno-coldbrew-citrus-05",
+    "1": "inno-robusta-nat-01",
+    "2": "inno-arabica-wash-02",
+    "3": "inno-signature-honey-03",
+    "4": "inno-drip-explorer-04",
+    "5": "inno-coldbrew-citrus-05",
+    "6": "inno-horeca-barista-06",
+};
+
+export function resolveCanonicalSku(code) {
+    if (!code) return "";
+    const clean = code.trim().toLowerCase().replace(/_/g, "-");
+    return SKU_ALIASES[clean] || clean;
+}
+
 export class InnokafeTasteProfiler {
     constructor(rootElement) {
         this.root = typeof rootElement === "string" ? document.querySelector(rootElement) : rootElement;
@@ -195,9 +231,9 @@ export class InnokafeTasteProfiler {
         const resultSkuMatch = pathname.match(/\/taste-profiler\/(?:result|sku)\/([A-Za-z0-9_-]+)/);
 
         // 1. Direct SKU target param or path
-        const targetSku = (resultSkuMatch ? resultSkuMatch[1] : null) || urlParams.get("sku") || urlParams.get("sku_code") || this.root.getAttribute("data-initial-top1");
-        if (targetSku) {
-            const cleanTarget = targetSku.toLowerCase().replace(/_/g, "-");
+        const rawTargetSku = (resultSkuMatch ? resultSkuMatch[1] : null) || urlParams.get("sku") || urlParams.get("sku_code") || this.root.getAttribute("data-initial-top1");
+        if (rawTargetSku) {
+            const cleanTarget = resolveCanonicalSku(rawTargetSku);
             const matched = this.skus.find((s) => s.sku_code && s.sku_code.toLowerCase().replace(/_/g, "-") === cleanTarget);
             if (matched) {
                 const others = this.skus.filter((s) => s.sku_code !== matched.sku_code);
@@ -274,7 +310,7 @@ export class InnokafeTasteProfiler {
             const resultSkuMatch = pathname.match(/\/taste-profiler\/(?:result|sku)\/([A-Za-z0-9_-]+)/);
 
             if (resultSkuMatch) {
-                const targetSku = resultSkuMatch[1].toLowerCase().replace(/_/g, "-");
+                const targetSku = resolveCanonicalSku(resultSkuMatch[1]);
                 const matched = this.skus.find((s) => s.sku_code && s.sku_code.toLowerCase().replace(/_/g, "-") === targetSku);
                 if (matched) {
                     const others = this.skus.filter((s) => s.sku_code !== matched.sku_code);
@@ -300,6 +336,9 @@ export class InnokafeTasteProfiler {
                     this._syncActiveCards();
                 }
                 this.calculateAndShowResult(false);
+                return;
+            } else if (pathname === "/taste-profiler" || pathname === "/taste-profiler/" || pathname.endsWith("/quiz") || pathname.endsWith("/start")) {
+                this.goToStep(1, false);
                 return;
             }
 
@@ -378,6 +417,19 @@ export class InnokafeTasteProfiler {
                 this.goToStep(1);
             });
         }
+
+        const stepPills = this.root.querySelectorAll(".profiler-step-pill");
+        stepPills.forEach((pill) => {
+            pill.addEventListener("click", (e) => {
+                e.preventDefault();
+                const step = parseInt(pill.getAttribute("data-goto-step"), 10);
+                if (step >= 1 && step <= 4) {
+                    this.goToStep(step);
+                } else if (step === 5) {
+                    this.calculateAndShowResult();
+                }
+            });
+        });
     }
 
     _bindShareAndCartButtons() {
@@ -570,11 +622,24 @@ export class InnokafeTasteProfiler {
             document.title = `${top1.name} | Hồ Sơ Cảm Quan Gu Cà Phê | InnoKafe`;
         }
 
+        // Update Step Pills active state
+        const stepPills = this.root.querySelectorAll(".profiler-step-pill");
+        stepPills.forEach((pill) => {
+            const stepNum = parseInt(pill.getAttribute("data-goto-step"), 10);
+            if (stepNum === this.currentStep) {
+                pill.className = "btn btn-sm flex-fill rounded-pill py-1 px-2 font-monospace profiler-step-pill btn-warning text-dark fw-bold shadow-sm";
+            } else if (stepNum < this.currentStep) {
+                pill.className = "btn btn-sm flex-fill rounded-pill py-1 px-2 font-monospace profiler-step-pill btn-outline-warning text-warning";
+            } else {
+                pill.className = "btn btn-sm flex-fill rounded-pill py-1 px-2 font-monospace profiler-step-pill btn-outline-secondary text-secondary";
+            }
+        });
+
         // Update Progress Indicator
         const progressBar = this.root.querySelector(".profiler-progress-bar");
         const progressText = this.root.querySelector(".profiler-progress-text");
         if (progressBar) {
-            const pct = this.currentStep <= 4 && stepMeta[this.currentStep] ? stepMeta[this.currentStep].pct : 100;
+            const pct = this.currentStep <= 4 ? this.currentStep * 20 : 100;
             progressBar.style.width = `${pct}%`;
         }
         if (progressText) {
