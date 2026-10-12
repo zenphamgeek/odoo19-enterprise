@@ -127,6 +127,32 @@ const { chromium } = require('playwright');
         const discoveryToast = await page.innerText('#innokafe-cart-toast');
         console.log(`Discovery Box Toast Content: ${discoveryToast}`);
 
+        // TEST 9: Header Navigation Zero Duplicate Assertion
+        console.log("\n[TEST 9] Validating Zero Duplicate Header Navbar Links across Desktop & Mobile");
+        await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded' });
+        const navElements = await page.$$('header nav');
+        console.log(`Found ${navElements.length} nav container(s) in header`);
+        if (navElements.length === 0) throw new Error("Header nav elements missing");
+
+        const canonicalRoutes = ['/', '/story', '/products', '/taste-profiler', '/solutions-b2b', '/contactus'];
+        for (let i = 0; i < navElements.length; i++) {
+            const nav = navElements[i];
+            const hrefs = await nav.$$eval('a.nav-link', links => links.map(l => l.getAttribute('href')));
+            const counts = {};
+            for (const h of hrefs) {
+                if (canonicalRoutes.includes(h)) {
+                    counts[h] = (counts[h] || 0) + 1;
+                }
+            }
+            console.log(`Nav container #${i} counts:`, counts);
+            for (const r of canonicalRoutes) {
+                if (counts[r] !== 1) {
+                    throw new Error(`Nav container #${i} expected route '${r}' exactly once, found ${counts[r] || 0}`);
+                }
+            }
+        }
+        console.log("Header navigation deduplication verified: 100% clean across all nav containers.");
+
         console.log("\n=== ALL PLAYWRIGHT E2E ASSERTIONS PASSED WITH ZERO CRITICAL ERRORS ===");
         if (consoleErrors.length > 0) {
             console.log("Console errors observed:", consoleErrors);

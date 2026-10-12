@@ -1847,6 +1847,26 @@ class Tier2BoundaryCornerCaseTests(unittest.TestCase):
         resp = client.get("/innokafe_website/static/src/scss/innokafe_theme.scss")
         self.assertEqual(resp.status, 200)
 
+    def test_t2_b4_13_zero_duplicate_navbar_canonical_routes(self):
+        """B4.13: Header navigation bars (desktop & mobile) contain each canonical route exactly once with zero duplicates."""
+        from collections import Counter
+        client = InnokafeLiveHttpClient(DEFAULT_BASE_URL)
+        resp = client.get("/")
+        self.assertEqual(resp.status, 200)
+        html_content = resp.read().decode("utf-8")
+
+        header_match = re.search(r'<header[^>]*>(.*?)</header>', html_content, re.DOTALL)
+        self.assertIsNotNone(header_match, "Website header element must exist")
+        navs = re.findall(r'<nav[^>]*>(.*?)</nav>', header_match.group(1), re.DOTALL)
+        self.assertGreaterEqual(len(navs), 1, "Header must contain at least 1 navigation element")
+
+        canonical_routes = ['/', '/story', '/products', '/taste-profiler', '/solutions-b2b', '/contactus']
+        for i, nav in enumerate(navs):
+            links = [href for href in re.findall(r'<a\s+[^>]*href=[\"\']([^\"\']+)[\"\'][^>]*class=[\"\'][^\"\']*nav-link[^\"\']*[\"\']', nav) if href in canonical_routes]
+            counts = Counter(links)
+            for route in canonical_routes:
+                self.assertEqual(counts[route], 1, f"Route '{route}' must appear exactly once in nav #{i}; found {counts[route]}")
+
     # --- B5: Subscription Wizard & Controller Boundary Cases (5 tests) ---
     def test_t2_b5_01_subscription_invalid_taste_preference(self):
         """B5.1: Submitting unlisted taste preference falls back safely to default or custom label."""
