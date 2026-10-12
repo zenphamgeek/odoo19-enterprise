@@ -1609,7 +1609,7 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
             <script type="text/javascript">
                 <![CDATA[
                 document.addEventListener("DOMContentLoaded", function () {
- · Scenario Presets Dictionary
+                    // Scenario Presets Dictionary
                     var presets = {
                         mfg: {
                             prompt: "Phân tích dữ liệu vi rung động tần số cao trên Trục chính CNC #4, đối chiếu cảnh báo cảm biến nhiệt, truy vết lịch sử bảo trì ERP và tự động sinh lệnh sửa chữa SAP MES.",
@@ -1668,7 +1668,7 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
                         }
                     };
 
- · Console Preset Switcher
+                    // Console Preset Switcher
                     var presetButtons = document.querySelectorAll(".mojo-prompt-btn");
                     var promptInput = document.getElementById("mojo-console-prompt");
                     var consoleOutput = document.getElementById("mojo-console-output");
@@ -1712,7 +1712,7 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
                         });
                     });
 
- · Run Agent Execution Animation with Sequential Illumination & Typing
+                    // Run Agent Execution Animation with Sequential Illumination & Typing
                     if (runButton && promptInput && consoleOutput) {
                         runButton.addEventListener("click", function () {
                             runButton.disabled = true;
@@ -1763,7 +1763,7 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
                         });
                     }
 
- · Live Telemetry HUD Simulation
+                    // Live Telemetry HUD Simulation
                     setInterval(function () {
                         var latencyEl = document.getElementById("hud-latency");
                         var tokensEl = document.getElementById("hud-tokens");
@@ -1786,7 +1786,7 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
                         }
                     }, 1600);
 
- · Live Log Feed Append
+                    // Live Log Feed Append
                     var streamBox = document.getElementById("hud-stream-logs");
                     var logSamples = [
                         "[BĂNG-CHUYỀN-02] Đếm quang học thời gian thực: 1.480 sp/phút. Tỷ lệ lỗi: 0,00%.",
