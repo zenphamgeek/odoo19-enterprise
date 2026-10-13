@@ -131,13 +131,15 @@
    Dark Mode Overrides (IBM Carbon Gray 100 & SAP Horizon Dark)
    100% WCAG AAA Contrast — Strict Schema Invariant Design
    ========================================================================== */
+body.o_home_menu_background,
+.o_home_menu_background,
 body.o_dark_mode,
 .o_dark_mode,
 [data-bs-theme="dark"],
 [data-theme="dark"] {
   --insilos-bg-canvas: #070b14;
   --insilos-bg-surface: #0f172a;
-  --insilos-bg-card: #141e33;
+  --insilos-bg-card: rgba(255, 255, 255, 0.04);
   --insilos-bg-header: #0f172a;
   --insilos-bg-hover: #1e293b;
   --insilos-bg-active: #334155;
@@ -196,7 +198,7 @@ body.o_dark_mode,
    IBM Carbon 11 Blue (#0f62fe) in Light Mode, Tech Cyan (#00F2FE) in Dark Mode
    ========================================================================== */
 :focus-visible {
-  outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+  outline: 2px solid var(--insilos-border-focus) !important;
   outline-offset: 2px !important;
 }
 
@@ -205,8 +207,8 @@ body.o_dark_mode,
 [data-bs-theme="dark"],
 [data-theme="dark"] {
   :focus-visible {
-    outline: 2px solid var(--insilos-border-focus, #00f2fe) !important;
-    outline-color: var(--insilos-border-focus, #00f2fe) !important;
+    outline: 2px solid var(--insilos-border-focus) !important;
+    outline-color: var(--insilos-border-focus) !important;
   }
 
   .o-mail-MessagingMenuInDropdown-counter,
