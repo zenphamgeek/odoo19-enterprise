@@ -6,52 +6,60 @@
 
 :root {
     // -------------------------------------------------------------------------
-    // 1. Deep Espresso Obsidian Canvas Hierarchy
+    // 1. Kyoto Sumi Ink Canvas & Aged Hinoki Hierarchy (Option 3 Wabi-Sabi)
     // -------------------------------------------------------------------------
-    --inno-obsidian-deep: #0C0704;          // Primary deep roasted espresso obsidian canvas
-    --inno-obsidian-surface: #140C08;       // Section sub-tier depth canvas
-    --inno-espresso-bark: #1E120B;          // Rich coffee bark tone
-    --inno-espresso-roast: #26160E;         // Hot-Air drum ambient depth
+    --inno-sumi-canvas: #141312;             // Primary Kyoto Sumi Ink canvas (soft warm charcoal, zero muddy brown)
+    --inno-sumi-deep: #0E0D0C;               // Marquee, scrim & deep footer level
+    --inno-obsidian-deep: #141312;          // Base deep canvas alias
+    --inno-obsidian-surface: #1C1B19;       // Aged Hinoki Wood / Cedar Smoked Charcoal surface
+    --inno-espresso-bark: #1C1B19;          // Smoked cedar wood tone
+    --inno-espresso-roast: #22201D;         // Muted dark charcoal depth
 
     // -------------------------------------------------------------------------
-    // 2. Specialty Terroir Liquid Accents (Honey, Crema, Amber)
+    // 2. Artisanal Craft Accents (Aged Brass, Kintsugi Gold & Vermilion Seal)
     // -------------------------------------------------------------------------
-    --inno-amber-honey: #D48842;            // Liquid Amber Honey (start)
-    --inno-honey-gold: #F59E0B;             // Bright Honey Gold (end)
-    --inno-crema-gold: #E5A967;             // Espresso Crema Gold
-    --inno-terroir-rust: #C2410C;           // Cư M'gar Red Basalt Clay
-    --inno-cream-foam: #F7F2EA;             // Warm Cream Foam (17.5:1 WCAG AAA on obsidian)
-    --inno-honey-gradient: linear-gradient(135deg, #D48842 0%, #F59E0B 100%);
+    --inno-brass-gold: #C5A880;             // Aged Brass / Kintsugi Gold
+    --inno-brass-light: #D8B98A;            // Pale Champagne Brass shimmer
+    --inno-brass-deep: #A8865B;             // Antique brushed brass
+    --inno-amber-honey: #C5A880;            // Unified warm brass accent
+    --inno-honey-gold: #D8B98A;             // Soft golden highlight
+    --inno-crema-gold: #D8B98A;             // Subtle Crema highlight
+    --inno-amber: #C5A880;
+    --inno-vermilion-seal: #9A3412;         // Traditional vermilion red artisan stamp
+    --inno-terroir-rust: #9A3412;           // Vermilion terroir seal
+    --inno-cream-foam: #F8F5EE;             // Handmade Washi Paper White (18:1 WCAG AAA on Sumi)
+    --inno-honey-gradient: linear-gradient(135deg, #C5A880 0%, #D8B98A 100%);
+    --inno-brass-gradient: linear-gradient(135deg, #C5A880 0%, #D8B98A 100%);
 
     // -------------------------------------------------------------------------
-    // 3. Multi-Tier Mesh Gradient Depth Formulas
+    // 3. Multi-Tier Ambient Mist & Sumi Wash (Zero Muddy Brown)
     // -------------------------------------------------------------------------
-    --inno-mesh-gradient-obsidian: radial-gradient(ellipse 80% 50% at 50% -15%, rgba(212, 136, 66, 0.16), transparent 70%),
-                                  radial-gradient(circle 650px at 85% 25%, rgba(245, 158, 11, 0.08), transparent 60%),
-                                  radial-gradient(circle 500px at 15% 75%, rgba(194, 65, 12, 0.06), transparent 60%),
-                                  #0C0704;
+    --inno-mesh-gradient-obsidian: radial-gradient(ellipse 80% 50% at 50% -15%, rgba(197, 168, 128, 0.10), transparent 70%),
+                                  radial-gradient(circle 650px at 85% 25%, rgba(216, 185, 138, 0.05), transparent 60%),
+                                  radial-gradient(circle 500px at 15% 75%, rgba(154, 52, 18, 0.04), transparent 60%),
+                                  #141312;
 
-    --inno-mesh-gradient-terroir: radial-gradient(ellipse 70% 60% at 20% 10%, rgba(212, 136, 66, 0.18), transparent 60%),
-                                 radial-gradient(circle 700px at 80% 90%, rgba(229, 169, 103, 0.12), transparent 60%),
-                                 radial-gradient(circle 500px at 50% 50%, rgba(38, 22, 14, 0.85), transparent 70%),
-                                 #0C0704;
-
-    // -------------------------------------------------------------------------
-    // 4. Diffused Ambient Optical Glows (Zero Machine Borders)
-    // -------------------------------------------------------------------------
-    --inno-glow-honey: 0 24px 50px -15px rgba(0, 0, 0, 0.85), 0 0 35px -8px rgba(212, 136, 66, 0.12);
-    --inno-glow-crema: 0 24px 50px -15px rgba(0, 0, 0, 0.85), 0 0 35px -8px rgba(229, 169, 103, 0.14);
-    --inno-glow-amber: 0 24px 50px -15px rgba(0, 0, 0, 0.85), 0 0 35px -8px rgba(245, 158, 11, 0.15);
-    --inno-spatial-hairline: rgba(255, 255, 255, 0.04);
-    --inno-spatial-hairline-subtle: rgba(255, 255, 255, 0.025);
+    --inno-mesh-gradient-terroir: radial-gradient(ellipse 70% 60% at 20% 10%, rgba(197, 168, 128, 0.12), transparent 60%),
+                                 radial-gradient(circle 700px at 80% 90%, rgba(216, 185, 138, 0.08), transparent 60%),
+                                 radial-gradient(circle 500px at 50% 50%, rgba(28, 27, 25, 0.90), transparent 70%),
+                                 #141312;
 
     // -------------------------------------------------------------------------
-    // 5. Translucent Spatial Floating Layers (Cardless Surfaces)
+    // 4. Subtle Optical Glows & Fine Hairlines (Pure Architectural Restraint)
     // -------------------------------------------------------------------------
-    --inno-spatial-layer-1: rgba(24, 14, 9, 0.45);   // Primary floating cardless surface
-    --inno-spatial-layer-2: rgba(14, 8, 4, 0.65);    // Secondary elevated layer
-    --inno-spatial-layer-blur: 24px;                 // Atmospheric backdrop-filter blur
-    --inno-spatial-layer-saturate: 160%;             // Frosted optical saturation
+    --inno-glow-honey: 0 24px 50px -15px rgba(0, 0, 0, 0.85), 0 0 35px -8px rgba(197, 168, 128, 0.12);
+    --inno-glow-crema: 0 24px 50px -15px rgba(0, 0, 0, 0.85), 0 0 35px -8px rgba(216, 185, 138, 0.12);
+    --inno-glow-amber: 0 24px 50px -15px rgba(0, 0, 0, 0.85), 0 0 35px -8px rgba(197, 168, 128, 0.14);
+    --inno-spatial-hairline: rgba(248, 245, 238, 0.07);
+    --inno-spatial-hairline-subtle: rgba(248, 245, 238, 0.035);
+
+    // -------------------------------------------------------------------------
+    // 5. Translucent Spatial Floating Layers (Aged Hinoki Wood & Smoked Washi)
+    // -------------------------------------------------------------------------
+    --inno-spatial-layer-1: rgba(28, 27, 25, 0.65);   // Primary smoked Hinoki surface
+    --inno-spatial-layer-2: rgba(20, 19, 18, 0.85);    // Secondary elevated layer
+    --inno-spatial-layer-blur: 24px;                  // Atmospheric backdrop-filter blur
+    --inno-spatial-layer-saturate: 140%;              // Frosted optical saturation
 }
 
 /* ==========================================================================
@@ -102,7 +110,7 @@
 // 3. Floating Pod: Elevated 3D Pod with Multi-Tier Depth & Perspective
 .inno-floating-pod {
     position: relative;
-    background: linear-gradient(145deg, rgba(26, 15, 9, 0.50) 0%, rgba(14, 8, 4, 0.75) 100%);
+    background: linear-gradient(145deg, rgba(28, 27, 25, 0.70) 0%, rgba(20, 19, 18, 0.88) 100%);
     backdrop-filter: blur(var(--inno-spatial-layer-blur)) saturate(var(--inno-spatial-layer-saturate));
     -webkit-backdrop-filter: blur(var(--inno-spatial-layer-blur)) saturate(var(--inno-spatial-layer-saturate));
     border: 1px solid var(--inno-spatial-hairline);
@@ -116,7 +124,7 @@
     &:hover {
         transform: translateY(-4px) scale(1.01);
         box-shadow: var(--inno-glow-honey);
-        border-color: rgba(212, 136, 66, 0.14);
+        border-color: rgba(197, 168, 128, 0.20);
     }
 }
 
@@ -161,7 +169,7 @@
 
         .inno-metric-lbl {
             font-size: 0.8rem;
-            color: rgba(247, 242, 234, 0.65);
+            color: rgba(248, 245, 238, 0.65);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-top: 0.25rem;
@@ -175,15 +183,15 @@ span.badge.inno-badge-liquid {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #D48842 !important;
-    background-image: var(--inno-honey-gradient) !important;
-    color: #0C0704 !important;
+    background-color: var(--inno-brass-gold) !important;
+    background-image: var(--inno-brass-gradient) !important;
+    color: #141312 !important;
     font-weight: 700;
     font-size: 0.78rem;
     letter-spacing: 0.04em;
     padding: 0.35rem 0.85rem;
     border-radius: 9999px;
-    box-shadow: 0 4px 15px rgba(212, 136, 66, 0.25);
+    box-shadow: 0 4px 15px rgba(197, 168, 128, 0.25);
     border: none !important;
 }
 
@@ -223,7 +231,7 @@ body.o_innokafe_theme,
         color: var(--inno-cream-foam) !important;
 
         &:hover {
-            border-color: rgba(212, 136, 66, 0.14) !important;
+            border-color: rgba(197, 168, 128, 0.20) !important;
             box-shadow: var(--inno-glow-honey) !important;
         }
     }
@@ -329,7 +337,7 @@ body.o_innokafe_theme,
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    filter: drop-shadow(0 8px 24px rgba(212, 136, 66, 0.25));
+    filter: drop-shadow(0 8px 24px rgba(197, 168, 128, 0.20));
     transition: transform 0.4s ease;
 
     &:hover {
@@ -357,7 +365,7 @@ body.o_innokafe_theme,
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
-    background: rgba(14, 8, 4, 0.92);
+    background: rgba(20, 19, 18, 0.95);
     border-top: 1px solid var(--inno-spatial-hairline);
     border-bottom: 1px solid var(--inno-spatial-hairline);
     padding: 0.75rem 0;
@@ -377,12 +385,12 @@ body.o_innokafe_theme,
 
     &::before {
         left: 0;
-        background: linear-gradient(90deg, rgba(12, 7, 4, 0.95), transparent);
+        background: linear-gradient(90deg, rgba(20, 19, 18, 0.98), transparent);
     }
 
     &::after {
         right: 0;
-        background: linear-gradient(270deg, rgba(12, 7, 4, 0.95), transparent);
+        background: linear-gradient(270deg, rgba(20, 19, 18, 0.98), transparent);
     }
 }
 
@@ -419,7 +427,7 @@ body.o_innokafe_theme,
 }
 
 .inno-ticker-sep {
-    color: var(--inno-amber);
+    color: var(--inno-brass-gold);
     opacity: 0.6;
     font-size: 0.7rem;
 }
@@ -437,7 +445,7 @@ body.o_innokafe_theme,
 
 // 4. Roaster Passport / Lab Sheet Styling (Anti-Slop Cupping Card)
 .inno-roaster-passport {
-    background: linear-gradient(165deg, rgba(30, 18, 11, 0.75) 0%, rgba(14, 8, 4, 0.90) 100%);
+    background: linear-gradient(165deg, rgba(28, 27, 25, 0.85) 0%, rgba(20, 19, 18, 0.96) 100%);
     border: 1px solid var(--inno-spatial-hairline);
     border-radius: 1.5rem;
     position: relative;
@@ -455,14 +463,14 @@ body.o_innokafe_theme,
         left: 0;
         right: 0;
         height: 3px;
-        background: linear-gradient(90deg, transparent, var(--inno-amber), transparent);
+        background: linear-gradient(90deg, transparent, var(--inno-brass-gold), transparent);
         opacity: 0.6;
     }
 
     &:hover {
         transform: translateY(-5px);
-        box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px -10px rgba(212, 136, 66, 0.2);
-        border-color: rgba(212, 136, 66, 0.25);
+        box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.85), 0 0 40px -10px rgba(197, 168, 128, 0.18);
+        border-color: rgba(197, 168, 128, 0.25);
     }
 }
 
@@ -477,7 +485,7 @@ body.o_innokafe_theme,
 .inno-passport-tag {
     font-family: monospace;
     font-size: 0.75rem;
-    color: var(--inno-amber);
+    color: var(--inno-brass-gold);
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
@@ -502,8 +510,8 @@ body.o_innokafe_theme,
     transition: background-color 0.25s ease, border-color 0.25s ease;
 
     &:hover {
-        background: rgba(212, 136, 66, 0.12);
-        border-color: rgba(212, 136, 66, 0.3);
+        background: rgba(197, 168, 128, 0.12);
+        border-color: rgba(197, 168, 128, 0.30);
     }
 }
 
@@ -523,7 +531,7 @@ body.o_innokafe_theme,
     gap: 0.5rem;
     font-size: 0.75rem;
     font-family: monospace;
-    color: rgba(247, 242, 234, 0.75);
+    color: rgba(248, 245, 238, 0.75);
 
     .inno-agtron-swatch {
         height: 6px;
@@ -543,28 +551,28 @@ body.o_innokafe_theme,
         width: 32px;
         height: 32px;
         flex-shrink: 0;
-        stroke: var(--inno-amber);
+        stroke: var(--inno-brass-gold);
         transition: transform 0.3s ease, stroke 0.3s ease;
     }
 
     &:hover {
-        background: rgba(212, 136, 66, 0.08) !important;
-        border-color: rgba(212, 136, 66, 0.25) !important;
+        background: rgba(197, 168, 128, 0.08) !important;
+        border-color: rgba(197, 168, 128, 0.25) !important;
         transform: translateX(4px);
 
         .inno-brew-icon {
             transform: scale(1.1);
-            stroke: #F59E0B;
+            stroke: var(--inno-brass-light);
         }
     }
 
     &.active {
-        background: rgba(212, 136, 66, 0.15) !important;
-        border-color: var(--inno-amber) !important;
-        box-shadow: 0 8px 24px -6px rgba(212, 136, 66, 0.25) !important;
+        background: rgba(197, 168, 128, 0.16) !important;
+        border-color: var(--inno-brass-gold) !important;
+        box-shadow: 0 8px 24px -6px rgba(197, 168, 128, 0.25) !important;
 
         .inno-brew-icon {
-            stroke: #F59E0B;
+            stroke: var(--inno-brass-light);
         }
     }
 }
@@ -617,7 +625,7 @@ body.o_innokafe_theme,
 
     &:hover {
         background: var(--inno-spatial-layer-2);
-        border-color: rgba(212, 136, 66, 0.2);
+        border-color: rgba(197, 168, 128, 0.22);
         transform: translateY(-3px);
         box-shadow: var(--inno-glow-honey);
     }

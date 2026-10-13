@@ -25,39 +25,39 @@
 body.o_innokafe_theme,
 .inno-brand-platform,
 [data-snippet^="s_innokafe_"] {
-    // Core Brand Identity Colors
-    --inno-espresso-dark:   #1E120B; // Deep Espresso: Nền chính, cà phê rang đậm
-    --inno-espresso-rgb:    30, 18, 11;
-    --inno-espresso-roast:  #2C1810;
-    --inno-amber-warm:      #D48842; // Warm Amber: Màu nhấn chính, caramel mật ong
-    --inno-amber-rgb:       212, 136, 66;
-    --inno-amber:           #D48842;
-    --inno-amber-light:     #E5A93C;
-    --inno-cream-foam:      #F7F2EA; // Cream Foam: Màu nền sáng, bọt sữa crema
-    --inno-cream-rgb:       247, 242, 234;
-    --inno-cream:           #F7F2EA;
-    --inno-forest-leaf:     #2D4739; // Forest Leaf: Màu lá cà phê, nông nghiệp xanh
-    --inno-forest-rgb:      45, 71, 57;
-    --inno-forest:          #2D4739;
-    --inno-cherry:          #A32A29;
+    // Core Brand Identity Colors (Option 3 Wabi-Sabi Sumi & Hinoki Cedar)
+    --inno-espresso-dark:   #141312; // Kyoto Sumi Ink: Nền chính trầm ấm, không ám nâu đất
+    --inno-espresso-rgb:    20, 19, 18;
+    --inno-espresso-roast:  #1C1B19; // Aged Hinoki Wood / Smoked Cedar
+    --inno-amber-warm:      #C5A880; // Aged Brass: Màu nhấn chính, đồng vàng xước thủ công
+    --inno-amber-rgb:       197, 168, 128;
+    --inno-amber:           #C5A880;
+    --inno-amber-light:     #D8B98A;
+    --inno-cream-foam:      #F8F5EE; // Handmade Washi Paper White
+    --inno-cream-rgb:       248, 245, 238;
+    --inno-cream:           #F8F5EE;
+    --inno-forest-leaf:     #424E44; // Muted Highland Pine & Tea Moss
+    --inno-forest-rgb:      66, 78, 68;
+    --inno-forest:          #424E44;
+    --inno-cherry:          #9A3412; // Vermilion Seal Red
 
     // Extended Terroir Palette
-    --inno-roasted-bean:    #3C2415; // Secondary Dark Surface
-    --inno-golden-crema:    #E6A15C; // Golden Crema: Highlight sáng
-    --inno-clay-soil:       #8C4820; // Red Basalt Clay Soil Accent
-    --inno-pure-dark:       #120A06; // Dark Roast Pure Black Background
-    --inno-card-light:      #FBF8F3; // Ultra-light Foam Card Background
+    --inno-roasted-bean:    #242220; // Secondary Wabi-Sabi Charcoal Surface
+    --inno-golden-crema:    #D8B98A; // Aged Brass Shimmer Highlight
+    --inno-clay-soil:       #9A3412; // Vermilion Seal Accent
+    --inno-pure-dark:       #0E0D0C; // Deep Sumi Canvas Base
+    --inno-card-light:      #F8F5EE; // Washi Paper White Card Background
 
     // Glassmorphism & Borders
-    --inno-border-subtle:   rgba(212, 136, 66, 0.22);
-    --inno-border-light:    rgba(247, 242, 234, 0.15);
-    --inno-border-dark:     rgba(30, 18, 11, 0.15);
-    --inno-glass-bg:        rgba(30, 18, 11, 0.85);
-    --inno-card-hover-glow: 0 12px 36px rgba(212, 136, 66, 0.22);
+    --inno-border-subtle:   rgba(197, 168, 128, 0.18);
+    --inno-border-light:    rgba(248, 245, 238, 0.08);
+    --inno-border-dark:     rgba(20, 19, 18, 0.15);
+    --inno-glass-bg:        rgba(28, 27, 25, 0.85);
+    --inno-card-hover-glow: 0 12px 36px rgba(197, 168, 128, 0.16);
 
-    // Primary Unified CTA Gradients
-    --inno-btn-gradient:       linear-gradient(135deg, #E6A15C 0%, #D48842 50%, #B86E2A 100%);
-    --inno-btn-gradient-hover: linear-gradient(135deg, #FFB366 0%, #E6954A 50%, #C97830 100%);
+    // Primary Unified CTA Gradients (Aged Brass & Champagne Gold)
+    --inno-btn-gradient:       linear-gradient(135deg, #D8B98A 0%, #C5A880 50%, #A8865B 100%);
+    --inno-btn-gradient-hover: linear-gradient(135deg, #E2CA9E 0%, #D4B589 50%, #B8966B 100%);
 
     // Typography Tokens
     --inno-font-heading:    'Playfair Display', Georgia, serif;
@@ -318,16 +318,16 @@ body.o_innokafe_theme,
     .bg-clay           { background-color: var(--inno-clay-soil) !important; color: var(--inno-cream-foam) !important; }
     .bg-golden         { background-color: var(--inno-golden-crema) !important; color: var(--inno-espresso-dark) !important; }
 
-    .inno-cream-bg     { background-color: #F7F2EA !important; color: #1E120B !important; }
-    .inno-espresso-bg  { background-color: #1E120B !important; color: #F7F2EA !important; }
+    .inno-cream-bg     { background-color: #F8F5EE !important; color: #141312 !important; }
+    .inno-espresso-bg  { background-color: #141312 !important; color: #F8F5EE !important; }
 
-    .text-espresso     { color: var(--inno-espresso-dark) !important; }
+    .text-espresso     { color: #141312 !important; }
     .text-amber        { color: var(--inno-amber-warm) !important; }
     .text-cream        { color: var(--inno-cream-foam) !important; }
     .text-forest       { color: var(--inno-forest-leaf) !important; }
     .text-golden       { color: var(--inno-golden-crema) !important; }
-    .text-muted-cream  { color: rgba(247, 242, 234, 0.72) !important; }
-    .inno-amber-text   { color: #D48842 !important; }
+    .text-muted-cream  { color: rgba(248, 245, 238, 0.72) !important; }
+    .inno-amber-text   { color: #C5A880 !important; }
 
     .border-amber      { border-color: var(--inno-amber-warm) !important; }
     .border-forest     { border-color: var(--inno-forest-leaf) !important; }
