@@ -15,6 +15,19 @@ const HPG_BARS = [
 // the mail models; the web set alone leaves discuss.channel undefined.
 defineMailModels();
 
+if (typeof window !== "undefined" && window.matchMedia) {
+    const mql = window.matchMedia("(max-width: 0px)");
+    const mqlProto = Object.getPrototypeOf(mql);
+    if (mqlProto && !mqlProto.addListener) {
+        mqlProto.addListener = function (listener) {
+            this.addEventListener("change", listener);
+        };
+        mqlProto.removeListener = function (listener) {
+            this.removeEventListener("change", listener);
+        };
+    }
+}
+
 
 const PAYLOAD = {
     symbol: "HPG",
@@ -30,12 +43,12 @@ const PAYLOAD = {
 };
 
 function mockTerminalOrm(stream = { stale: true, sequence_gap: false }) {
-    mockService("orm", {
-        call(model, method) {
+    mockService("orm", () => ({
+        async call(model, method) {
             expect(model).toBe("market.terminal.data");
             return method === "get_terminal_payload" ? { ...PAYLOAD } : stream;
         },
-    });
+    }));
 }
 
 test("MKT-002 chart data equals API data and is never recomputed client-side", async () => {
@@ -43,6 +56,7 @@ test("MKT-002 chart data equals API data and is never recomputed client-side", a
     const terminal = await mountWithCleanup(MarketTerminalAction, { props: { action: {} } });
     await terminal.loadSymbol("HPG");
     await animationFrame();
+    console.log("[HOOT] terminal error:", terminal.state.error, "series:", !!terminal.series, "bars:", terminal.bars);
 
     // Read the OHLC back out of the chart engine, not out of our own state:
     // this is what proves the rendered candles carry the exchange values.
@@ -76,7 +90,11 @@ test("MKT-002 overlays render as governed, drillable chart artefacts", async () 
     ]);
 
     const opened = [];
-    mockService("action", { doAction: (action) => opened.push(action) });
+    mockService("action", () => ({
+        async doAction(action) {
+            opened.push(action);
+        },
+    }));
     const drillTerminal = await mountWithCleanup(MarketTerminalAction, { props: { action: {} } });
     await drillTerminal.loadSymbol("HPG");
     drillTerminal.openEvidence(drillTerminal.overlayRecords[1]);

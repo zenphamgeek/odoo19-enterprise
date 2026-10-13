@@ -29,6 +29,15 @@ export const colorSchemeService = {
                 await blockingWebClient.promise; // block WebClient rendering to avoid flickering
             }
         }
+        const effective = current || newColorScheme;
+        if (effective === "dark") {
+            document.documentElement.setAttribute("data-bs-theme", "dark");
+            document.documentElement.setAttribute("data-theme", "dark");
+            document.documentElement.classList.add("o_dark_mode");
+            if (document.body) {
+                document.body.classList.add("o_dark_mode");
+            }
+        }
         return {
             get systemColorScheme() {
                 return systemColorScheme();

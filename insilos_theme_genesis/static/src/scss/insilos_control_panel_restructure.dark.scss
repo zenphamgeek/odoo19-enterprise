@@ -1,0 +1,291 @@
+/* ==========================================================================
+   Insilos Control Panel & Action Bar Restructure — Dark Mode Bundle
+   SAP Fiori Horizon Smart FilterBar + IBM Carbon Data Toolbar
+   ========================================================================== */
+
+.o_control_panel {
+  background-color: var(--insilos-bg-header) !important;
+  border-bottom: 1px solid var(--insilos-border-subtle) !important;
+
+  .o_breadcrumb {
+    ol.breadcrumb .breadcrumb-item {
+      color: var(--insilos-text-secondary) !important;
+      a {
+        color: var(--insilos-text-secondary) !important;
+        &:hover {
+          color: var(--insilos-primary) !important;
+        }
+      }
+      &::after {
+        color: #64748b !important;
+      }
+    }
+    .o_last_breadcrumb_item {
+      color: var(--insilos-text-primary) !important;
+    }
+    .o_breadcrumb_item {
+      color: var(--insilos-text-secondary) !important;
+
+      &.active, &:last-child {
+        color: var(--insilos-text-primary) !important;
+      }
+    }
+  }
+
+  .o_control_panel_breadcrumbs_actions {
+    .btn,
+    .btn-light,
+    .o_btn_circle {
+      background: transparent !important;
+      border: none !important;
+      color: var(--insilos-text-secondary) !important;
+
+      &::before {
+        display: none !important;
+        background: transparent !important;
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        color: #ffffff !important;
+      }
+    }
+  }
+
+  .o_form_status_indicator {
+    .btn,
+    .btn-light,
+    .o_form_button_save,
+    .o_form_button_cancel {
+      background: transparent !important;
+      border: none !important;
+      color: var(--insilos-text-secondary) !important;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        color: #ffffff !important;
+      }
+    }
+
+    .o_form_button_save:hover {
+      color: var(--insilos-primary) !important;
+    }
+
+    .o_form_button_cancel:hover {
+      color: #ff4d4f !important;
+    }
+  }
+
+  .o_control_panel_main_buttons {
+    .btn,
+    .o_form_button_create {
+      background-color: rgba(255, 255, 255, 0.04) !important;
+      border: 1px solid rgba(0, 242, 254, 0.35) !important;
+      color: #00f2fe !important;
+      font-weight: 600 !important;
+
+      &:hover {
+        background-color: rgba(0, 242, 254, 0.12) !important;
+        border-color: #00f2fe !important;
+      }
+
+      &:focus-visible {
+        outline: 2px solid #00f2fe !important;
+      }
+    }
+
+    .o_list_button_add {
+      background-color: var(--insilos-primary) !important;
+      border: 1px solid var(--insilos-primary) !important;
+      color: #05101e !important;
+      font-weight: 600 !important;
+
+      &:hover {
+        background-color: #38bdf8 !important;
+        border-color: #38bdf8 !important;
+      }
+    }
+  }
+
+  .o_cp_buttons .btn {
+    &.btn-primary {
+      background-color: var(--insilos-primary) !important;
+      border-color: var(--insilos-primary) !important;
+      color: var(--insilos-text-on-primary) !important;
+      font-weight: 600 !important;
+
+      &:hover {
+        background-color: var(--insilos-primary-hover) !important;
+        border-color: var(--insilos-primary-hover) !important;
+      }
+    }
+
+    &.btn-secondary {
+      background-color: var(--insilos-bg-card) !important;
+      border-color: var(--insilos-border-subtle) !important;
+      color: var(--insilos-text-primary) !important;
+
+      &:hover {
+        background-color: var(--insilos-bg-hover) !important;
+      }
+    }
+  }
+
+  .o_smart_filterbar,
+  .o_cp_searchview {
+    background-color: var(--insilos-bg-card) !important;
+    border-color: var(--insilos-border-subtle) !important;
+
+    &:focus-within {
+      border-color: #00f2fe !important;
+      box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.25) !important;
+    }
+
+    .o_searchview,
+    .o_searchview_input_container {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    .o_searchview_input,
+    input.o_searchview_input {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      color: #f8fafc !important;
+
+      &:focus,
+      &.focus,
+      &:focus-visible {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    .o_searchview_facet {
+      background-color: var(--insilos-bg-surface) !important;
+      border-color: var(--insilos-border-subtle) !important;
+
+      .o_searchview_facet_label {
+        background-color: var(--insilos-primary-subtle) !important;
+        color: var(--insilos-primary) !important;
+      }
+
+      .o_facet_value {
+        color: #f8fafc !important;
+      }
+    }
+
+    .o_searchview_autocomplete {
+      background-color: var(--insilos-bg-surface) !important;
+      border: 1px solid var(--insilos-border-subtle) !important;
+
+      .o_menu_item {
+        color: #cbd5e1 !important;
+
+        &.focus, &:hover {
+          background-color: var(--insilos-bg-hover) !important;
+          color: #ffffff !important;
+        }
+      }
+    }
+  }
+
+  .o_cp_switch_buttons,
+  .o_cp_switch_buttons.o_carbon_content_switcher {
+    border-color: rgba(255, 255, 255, 0.14) !important;
+    background-color: rgba(255, 255, 255, 0.04) !important;
+
+    .btn,
+    .o_switch_view {
+      border-right-color: rgba(255, 255, 255, 0.1) !important;
+      color: #c6c6c6 !important;
+
+      &:last-child {
+        border-right: none !important;
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        color: #ffffff !important;
+      }
+
+      &:focus-visible {
+        outline: 2px solid #00f2fe !important;
+        outline-offset: -1px !important;
+      }
+
+      &.active {
+        background-color: var(--insilos-primary) !important;
+        color: #05101e !important;
+        font-weight: 600 !important;
+      }
+    }
+  }
+
+  .o_pager {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+
+    .o_pager_value,
+    .o_pager_limit {
+      color: #f8fafc !important;
+    }
+
+    .btn-group .btn {
+      background-color: transparent !important;
+      border: none !important;
+      color: #cbd5e1 !important;
+
+      &:hover:not(:disabled) {
+        background-color: rgba(0, 242, 254, 0.15) !important;
+        color: #00f2fe !important;
+      }
+    }
+
+    .o_knowledge_icon_search,
+    button.o_knowledge_icon_search {
+      background-color: transparent !important;
+      border: none !important;
+
+      svg {
+        fill: #00f2fe !important;
+
+        path:first-child {
+          fill: #60a5fa !important;
+          opacity: 0.4 !important;
+        }
+
+        path:last-child {
+          fill: #00f2fe !important;
+        }
+      }
+    }
+  }
+
+  .o_knowledge_icon_search,
+  button.o_knowledge_icon_search {
+    background-color: rgba(0, 242, 254, 0.08) !important;
+    border-color: rgba(0, 242, 254, 0.25) !important;
+
+    &:hover {
+      background-color: rgba(0, 242, 254, 0.18) !important;
+      border-color: #00f2fe !important;
+    }
+
+    svg {
+      fill: #00f2fe !important;
+
+      path:first-child {
+        fill: #60a5fa !important;
+        opacity: 0.4 !important;
+      }
+
+      path:last-child {
+        fill: #00f2fe !important;
+      }
+    }
+  }
+}

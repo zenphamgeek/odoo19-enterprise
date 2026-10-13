@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Insilos Webclient Dark Mode Structural Overrides
+   Binds direct dark styles to modals, dropdowns, and systray in web.assets_web_dark
+   Guarantees zero reliance on delayed JavaScript body class attachment
+   ========================================================================== */
+
+/* Modals & Dialogs */
+.modal.o_technical_modal .modal-dialog .modal-content,
+.o_dialog .modal .modal-dialog .modal-content,
+.modal .modal-dialog .modal-content {
+    background-color: #141e33 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 20px 30px -5px rgba(0, 0, 0, 0.6) !important;
+
+    .modal-header {
+        background-color: #0b0f19 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+        .modal-title,
+        h4.modal-title {
+            color: #f8fafc !important;
+        }
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+    }
+
+    .modal-body {
+        background-color: #141e33 !important;
+        color: #f8fafc !important;
+    }
+
+    .modal-footer {
+        background-color: #0b0f19 !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+}
+
+/* Dropdown Menus */
+.dropdown-menu,
+.o_menu_sections_more .dropdown-menu {
+    background-color: #0f172a !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #f8fafc !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+
+    .dropdown-item,
+    .o_more_dropdown_section.dropdown-item {
+        color: #f8fafc !important;
+
+        &:hover,
+        &:focus {
+            background-color: #1e293b !important;
+            color: #00f2fe !important;
+        }
+    }
+}
+
+/* Systray Elements in Navbar */
+.o_main_navbar .o_menu_systray {
+    .o_nav_entry,
+    button.btn,
+    .btn-secondary {
+        color: #cbd5e1 !important;
+
+        &:hover {
+            background-color: #1e293b !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            color: #00f2fe !important;
+        }
+    }
+}

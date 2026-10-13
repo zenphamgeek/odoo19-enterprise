@@ -36,7 +36,7 @@
             </button>
 
             <!-- 3. Export Button -->
-            <button t-if="props.canExport and props.onExport"
+            <button t-if="props.canExport &amp;&amp; props.onExport"
                     type="button"
                     class="btn btn-sm btn-outline-light is-floating-action-btn is-floating-btn-export d-inline-flex align-items-center"
                     t-on-click="props.onExport"
@@ -46,7 +46,7 @@
             </button>
 
             <!-- 4. Archive Button -->
-            <button t-if="props.canArchive and props.onArchive"
+            <button t-if="props.canArchive &amp;&amp; props.onArchive"
                     type="button"
                     class="btn btn-sm btn-outline-light is-floating-action-btn is-floating-btn-archive d-inline-flex align-items-center"
                     t-on-click="props.onArchive"
@@ -56,7 +56,7 @@
             </button>
 
             <!-- 5. Delete Button -->
-            <button t-if="props.canDelete and props.onDelete"
+            <button t-if="props.canDelete &amp;&amp; props.onDelete"
                     type="button"
                     class="btn btn-sm btn-danger is-floating-action-btn is-floating-btn-delete d-inline-flex align-items-center"
                     t-on-click="props.onDelete"

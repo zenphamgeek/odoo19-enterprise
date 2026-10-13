@@ -26,6 +26,10 @@ execution and write-back are excluded.
         'web.assets_backend': [
             'insilos_logistics_idp/static/src/dashboard/*',
             'insilos_logistics_idp/static/src/document/*',
+            ('remove', 'insilos_logistics_idp/static/src/**/*.dark.scss'),
+        ],
+        'web.assets_web_dark': [
+            'insilos_logistics_idp/static/src/dashboard/dashboard.dark.scss',
         ],
         'web.assets_unit_tests': [
             'insilos_logistics_idp/static/tests/**/*.test.js',

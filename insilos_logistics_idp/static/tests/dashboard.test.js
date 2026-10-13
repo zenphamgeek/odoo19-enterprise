@@ -58,19 +58,23 @@ function mountDashboard(data = DATA) {
     const actions = [];
     const calls = [];
     if (data.onboarding) data.onboarding.closed = false;
-    mockService("orm", {
-        call(model, method, args) {
+    mockService("orm", () => ({
+        async call(model, method, args) {
             calls.push({ model, method, args });
             if (model === "onboarding.onboarding.step") {
-                return { type: "is.actions.act_window", res_model: "logistics.idp.case" };
+                return { type: "ir.actions.act_window", res_model: "logistics.idp.case" };
             }
             if (model === "onboarding.onboarding") return false;
             expect(model).toBe("logistics.idp.case");
             if (method === "get_dashboard_data") return typeof data === "function" ? data() : data;
-            return { type: "is.actions.act_window", res_model: model, res_id: args[2] };
+            return { type: "ir.actions.act_window", res_model: model, res_id: args[2] };
         },
-    });
-    mockService("action", { doAction: (action) => actions.push(action) });
+    }));
+    mockService("action", () => ({
+        async doAction(action) {
+            actions.push(action);
+        },
+    }));
     return mountWithCleanup(LogisticsIdpDashboard, { props: { action: {} } }).then((component) => ({ actions, calls, component }));
 }
 
@@ -221,7 +225,7 @@ test("OCR aggregates and immutable history drilldown render", async () => {
 });
 
 test("queue keyboard and case state drilldowns remain available", async () => {
-    const { actions, calls } = await mountDashboard();
+    const { actions, calls, component } = await mountDashboard();
     await animationFrame();
     await contains('.w_idp_queue tbody th[scope="row"] button').press("Enter");
     expect(actions[0].res_id).toBe(42);

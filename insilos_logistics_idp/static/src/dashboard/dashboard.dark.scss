@@ -1,0 +1,83 @@
+// Part of Insilos. See LICENSE file for full copyright and licensing details.
+
+:root, html, body, .o_web_client {
+  --insilos-bg-canvas: #070b14;
+  --insilos-bg-surface: #0b1329;
+  --insilos-bg-card: #111827;
+  --insilos-bg-hover: rgba(255, 255, 255, 0.05);
+  --insilos-border-subtle: rgba(255, 255, 255, 0.1);
+  --insilos-text-primary: #f8fafc;
+  --insilos-text-secondary: #94a3b8;
+  --insilos-text-muted: #94a3b8;
+  --insilos-primary: #00f2fe;
+
+  .w_idp_dashboard {
+    background: #070b14 !important;
+    background-color: #070b14 !important;
+    color: #f8fafc !important;
+
+    .w_idp_card,
+    .w_idp_panel {
+      background: #111827 !important;
+      background-color: #111827 !important;
+      border-color: rgba(255, 255, 255, 0.1) !important;
+      color: #f8fafc !important;
+    }
+
+    .w_idp_card strong {
+      color: #00f2fe !important;
+    }
+
+    .w_idp_card small {
+      color: #94a3b8 !important;
+    }
+
+    .w_idp_header {
+      background: linear-gradient(120deg, #07152d, #0b1c3a) !important;
+      border: 1px solid rgba(0, 240, 255, 0.2) !important;
+    }
+
+    .w_idp_donut > div {
+      background: #111827 !important;
+      strong {
+        color: #00f2fe !important;
+      }
+      small {
+        color: #94a3b8 !important;
+      }
+    }
+
+    .w_idp_column:hover,
+    .w_idp_bar:hover {
+      background: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .w_idp_gridlines {
+      stroke: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .w_idp_axis,
+    .w_idp_empty {
+      color: #94a3b8 !important;
+    }
+
+    .w_idp_visual_line .w_idp_bar {
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .w_idp_column_track {
+      border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+      background: repeating-linear-gradient(
+        to top,
+        transparent 0,
+        transparent 39px,
+        rgba(255, 255, 255, 0.05) 39px,
+        rgba(255, 255, 255, 0.05) 40px
+      ) !important;
+    }
+
+    .w_idp_row {
+      border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+}

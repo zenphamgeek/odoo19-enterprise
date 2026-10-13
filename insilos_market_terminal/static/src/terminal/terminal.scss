@@ -1,0 +1,132 @@
+// Part of Insilos. See LICENSE file for full copyright and licensing details.
+
+.w_market_terminal {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100% !important;
+    height: 100% !important;
+    flex: 1 1 auto !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    background-color: var(--insilos-bg-canvas);
+    color: var(--insilos-text-primary);
+
+    // Structural border dividers
+    .border-bottom {
+        border-color: var(--insilos-border-subtle) !important;
+    }
+
+    .border-top {
+        border-color: var(--insilos-border-subtle) !important;
+    }
+
+    .border-start {
+        border-color: var(--insilos-border-subtle) !important;
+    }
+
+    // Search input
+    .w_input {
+        background-color: var(--insilos-bg-surface);
+        border: 1px solid var(--insilos-border-subtle);
+        color: var(--insilos-text-primary);
+        border-radius: 0.375rem;
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+        &::placeholder {
+            color: var(--insilos-text-muted);
+        }
+
+        &:focus {
+            background-color: var(--insilos-bg-surface);
+            border-color: var(--insilos-primary);
+            color: var(--insilos-text-primary);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 242, 254, 0.25);
+        }
+    }
+
+    // Technical indicator buttons
+    .btn-outline-secondary {
+        border-color: var(--insilos-border-subtle);
+        color: var(--insilos-text-secondary);
+        background-color: var(--insilos-bg-surface);
+
+        &:hover,
+        &:focus {
+            background-color: var(--insilos-bg-hover);
+            border-color: var(--insilos-border-subtle);
+            color: var(--insilos-text-primary);
+        }
+    }
+
+    .btn-primary {
+        background-color: var(--insilos-primary);
+        border-color: var(--insilos-primary);
+        color: #070b14;
+        font-weight: 600;
+
+        &:hover,
+        &:focus {
+            filter: brightness(1.1);
+        }
+    }
+
+    // Chart container
+    [t-ref="chart"],
+    div[t-ref="chart"] {
+        position: relative;
+        min-width: 0;
+        background-color: var(--insilos-bg-canvas);
+    }
+
+    // Aside market and portfolio state panel
+    aside {
+        background-color: var(--insilos-bg-surface);
+        border-left: 1px solid var(--insilos-border-subtle) !important;
+        color: var(--insilos-text-primary);
+
+        h6 {
+            color: var(--insilos-text-primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .text-muted {
+            color: var(--insilos-text-muted) !important;
+        }
+
+        .btn-outline-secondary {
+            background-color: var(--insilos-bg-card);
+            border: 1px solid var(--insilos-border-subtle);
+            color: var(--insilos-text-primary);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+            strong {
+                color: var(--insilos-primary);
+            }
+
+            &:hover {
+                background-color: var(--insilos-bg-hover);
+                border-color: var(--insilos-primary);
+                transform: translateY(-1px);
+            }
+        }
+
+        .w_terminal_latency {
+            font-size: 0.75rem;
+        }
+    }
+
+    // Overlays bottom bar
+    .overlay-bar,
+    .border-top.flex-wrap {
+        background-color: var(--insilos-bg-surface);
+    }
+}

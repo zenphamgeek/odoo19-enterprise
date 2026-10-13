@@ -39,9 +39,20 @@
             'insilos_theme_genesis/static/src/views/list/list_view_extension.xml',
             'insilos_theme_genesis/static/src/views/list/list_controller_patch.js',
             'insilos_theme_genesis/static/src/icons/insilos_icon_normalizer.js',
+            'insilos_theme_genesis/static/src/errors/runtime_error_dialog_patch.js',
+            'insilos_theme_genesis/static/src/errors/runtime_error_dialog_extension.xml',
         ],
         'web.assets_frontend': [
             'insilos_theme_genesis/static/src/scss/insilos_public_auth.scss',
+        ],
+        'web.assets_web_dark': [
+            'insilos_theme_genesis/static/src/scss/insilos_modern_tokens.dark.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_control_panel_restructure.dark.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_hub_restructure.dark.scss',
+            'insilos_theme_genesis/static/src/scss/insilos_webclient_general.dark.scss',
+        ],
+        'web.assets_unit_tests': [
+            'insilos_theme_genesis/static/tests/**/*.test.js',
         ],
     },
     'installable': True,

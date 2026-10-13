@@ -7,7 +7,7 @@
 .o_web_client.o_home_menu_background {
   background: radial-gradient(at 0% 0%, rgba(11, 46, 100, 0.04) 0px, transparent 50%),
               radial-gradient(at 100% 100%, rgba(15, 98, 254, 0.04) 0px, transparent 50%),
-              var(--insilos-bg-canvas, #f4f6f8) !important;
+              var(--insilos-bg-canvas) !important;
 }
 
 .o_home_menu {
@@ -15,9 +15,9 @@
   .database_expiration_panel,
   .alert-info {
     border-radius: var(--insilos-radius-sm, 4px) !important;
-    background-color: var(--insilos-bg-subtle, #f8fafc) !important;
-    border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-    color: var(--insilos-text-secondary, #475569) !important;
+    background-color: var(--insilos-bg-subtle) !important;
+    border: 1px solid var(--insilos-border-subtle) !important;
+    color: var(--insilos-text-secondary) !important;
     font-size: 12px !important;
     padding: 6px 16px !important;
     max-width: 900px;
@@ -28,20 +28,24 @@
   .o_fiori_kpi_card,
   [data-name="field_operations_overview"],
   .ins_field_command_bar {
-    max-width: 1320px;
-    margin: 16px auto 4px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 16px 0 4px !important;
   }
 
   /* --------------------------------------------------------------------------
      Launchpad Apps Grid (SAP Fiori Launchpad Space Matrix)
      -------------------------------------------------------------------------- */
   .container {
-    max-width: 1320px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
   }
 
   .o_apps {
-    max-width: 1320px !important;
-    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
     display: grid !important;
     grid-template-columns: repeat(auto-fill, 160px) !important;
     justify-content: center !important;
@@ -68,9 +72,12 @@
     max-width: 160px !important;
     padding: 12px 10px 10px !important;
     border-radius: 12px !important;
-    background-color: var(--insilos-bg-card, #ffffff) !important;
-    border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    background-color: var(--insilos-bg-card) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border: 1px solid var(--insilos-border-subtle) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -110,7 +117,7 @@
       font-family: var(--insilos-font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif) !important;
       font-size: 12.5px !important;
       font-weight: 600 !important;
-      color: var(--insilos-text-primary, #0f172a) !important;
+      color: #f8fafc !important;
       line-height: 1.2 !important;
       margin-top: 2px !important;
       max-width: 140px !important;
@@ -120,14 +127,14 @@
       display: -webkit-box !important;
       -webkit-line-clamp: 2 !important;
       -webkit-box-orient: vertical !important;
-      text-shadow: none !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
       transition: color var(--insilos-transition-fast, 0.18s ease) !important;
     }
 
     .o_sap_domain_tag {
       font-size: 10px !important;
       font-weight: 500 !important;
-      color: var(--insilos-text-muted, #64748b) !important;
+      color: #94a3b8 !important;
       line-height: 1.15 !important;
       margin-top: 2px !important;
       text-align: center !important;
@@ -189,9 +196,10 @@
 
     /* Hover State (Fiori Horizon Subtle Elevation & Primary Border Ring) */
     &:hover {
-      background-color: var(--insilos-bg-card, #ffffff) !important;
-      border-color: #cbd5e1 !important;
-      box-shadow: 0 8px 24px rgba(11, 46, 100, 0.08) !important;
+      background-color: rgba(255, 255, 255, 0.08) !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 128, 0, 0.5) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(255, 128, 0, 0.18) !important;
       transform: translateY(-3px) !important;
 
       .o_app_icon {
@@ -203,7 +211,7 @@
       }
 
       .o_sap_domain_tag {
-        color: #475569 !important;
+        color: #cbd5e1 !important;
       }
     }
 
@@ -214,31 +222,55 @@
 }
 
 /* Dark Mode Launchpad Adjustments */
+body.o_home_menu_background,
+.o_home_menu_background,
 body.o_dark_mode,
+body[data-bs-theme="dark"],
+body[data-theme="dark"],
 .o_dark_mode,
 [data-bs-theme="dark"],
 [data-theme="dark"] {
+  &.o_home_menu_background,
+  &.o_web_client,
   .o_home_menu_background,
   .o_web_client.o_home_menu_background {
-    background: radial-gradient(at 0% 0%, rgba(255, 128, 0, 0.04) 0px, transparent 50%),
-                #0f172a !important;
+    background: radial-gradient(ellipse at 50% -10%, rgba(255, 128, 0, 0.08) 0%, rgba(15, 23, 42, 0.98) 55%, #070B14 100%) !important;
   }
 
   .o_home_menu {
     .database_expiration_panel,
     .alert-info {
-      background-color: #1e293b !important;
+      background-color: rgba(30, 41, 59, 0.7) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
       border-color: rgba(255, 255, 255, 0.1) !important;
       color: #cbd5e1 !important;
     }
 
+    /* Executive KPI & Field Operations Overview Bar in Dark Mode */
+    .o_fiori_kpi_card,
+    [data-name="field_operations_overview"],
+    .ins_field_command_bar {
+      background: rgba(15, 23, 42, 0.65) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+      color: #f8fafc !important;
+    }
+
+    /* Crystal Glassmorphism / Transparent Tile Cards (Zero White Background) */
     .o_app {
-      background-color: #1e293b !important;
-      border-color: rgba(255, 255, 255, 0.08) !important;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+      background-color: rgba(255, 255, 255, 0.04) !important;
+      background: rgba(255, 255, 255, 0.04) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
 
       .o_caption {
         color: #f8fafc !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
       }
 
       .o_sap_domain_tag {
@@ -248,9 +280,10 @@ body.o_dark_mode,
       .o_sap_pill.badge,
       .badge.o_sap_pill,
       .badge {
-        background: rgba(30, 41, 59, 0.85) !important;
+        background: rgba(30, 41, 59, 0.8) !important;
         color: #cbd5e1 !important;
         border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        backdrop-filter: blur(8px) !important;
 
         &.o_sap_pill_bp {
           background: rgba(30, 58, 138, 0.45) !important;
@@ -286,12 +319,18 @@ body.o_dark_mode,
       }
 
       &:hover {
-        background-color: #1e293b !important;
-        border-color: rgba(255, 128, 0, 0.4) !important;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-color: rgba(255, 128, 0, 0.5) !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(255, 128, 0, 0.18) !important;
+        transform: translateY(-2px) !important;
 
         .o_caption {
           color: #FF8000 !important;
+        }
+
+        .o_sap_domain_tag {
+          color: #cbd5e1 !important;
         }
       }
     }

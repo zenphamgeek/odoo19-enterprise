@@ -1,0 +1,109 @@
+// Part of Insilos. See LICENSE file for full copyright and licensing details.
+
+:root, html, body, .o_web_client {
+    --insilos-bg-canvas: #070b14;
+    --insilos-bg-surface: #0f172a;
+    --insilos-bg-card: #111827;
+    --insilos-bg-hover: rgba(255, 255, 255, 0.06);
+    --insilos-border-subtle: rgba(255, 255, 255, 0.1);
+    --insilos-text-primary: #f8fafc;
+    --insilos-text-secondary: #94a3b8;
+    --insilos-text-muted: #94a3b8;
+    --insilos-primary: #00f2fe;
+
+    .w_market_terminal {
+        background-color: #070b14 !important;
+        color: #f8fafc !important;
+
+        .border-bottom,
+        .border-top,
+        .border-start {
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .w_input {
+            background-color: #0f172a !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            color: #f8fafc !important;
+
+            &::placeholder {
+                color: #94a3b8 !important;
+            }
+
+            &:focus {
+                background-color: #0f172a !important;
+                border-color: #00f2fe !important;
+                box-shadow: 0 0 0 0.2rem rgba(0, 242, 254, 0.25) !important;
+            }
+        }
+
+        .btn-outline-secondary {
+            background-color: #111827 !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
+            color: #94a3b8 !important;
+
+            &:hover,
+            &:focus {
+                background-color: rgba(255, 255, 255, 0.08) !important;
+                color: #f8fafc !important;
+                border-color: rgba(255, 255, 255, 0.2) !important;
+            }
+        }
+
+        .btn-primary {
+            background-color: #00f2fe !important;
+            border-color: #00f2fe !important;
+            color: #070b14 !important;
+
+            &:hover,
+            &:focus {
+                background-color: #38f9d7 !important;
+                border-color: #38f9d7 !important;
+            }
+        }
+
+        [t-ref="chart"],
+        div[t-ref="chart"] {
+            background-color: #070b14 !important;
+        }
+
+        aside {
+            background-color: #0f172a !important;
+            border-left-color: rgba(255, 255, 255, 0.1) !important;
+            color: #f8fafc !important;
+
+            h6 {
+                color: #f8fafc !important;
+            }
+
+            .text-muted {
+                color: #94a3b8 !important;
+            }
+
+            .btn-outline-secondary {
+                background-color: #111827 !important;
+                border-color: rgba(255, 255, 255, 0.1) !important;
+                color: #f8fafc !important;
+
+                strong {
+                    color: #00f2fe !important;
+                }
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.08) !important;
+                    border-color: #00f2fe !important;
+                }
+            }
+        }
+
+        .border-top.flex-wrap {
+            background-color: #0f172a !important;
+        }
+
+        .alert-danger {
+            background-color: rgba(239, 68, 68, 0.15) !important;
+            border-color: rgba(239, 68, 68, 0.4) !important;
+            color: #fca5a5 !important;
+        }
+    }
+}

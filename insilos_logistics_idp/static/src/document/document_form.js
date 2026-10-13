@@ -25,7 +25,7 @@ export function normalizeExtractedValue(value, boxType = "word") {
         return "";
     }
     const text = typeof value === "object" ? value.display_name || value.name || value.toString() : String(value);
-    const normalized = text.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    const normalized = text.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/đ/gi, "d").toLowerCase().trim();
     if (boxType === "number") {
         const number = Number(normalized.replace(/,/g, "").replace(/[^\d.-]/g, ""));
         return Number.isFinite(number) ? String(number) : normalized.replace(/[^\d-]/g, "");
@@ -33,7 +33,13 @@ export function normalizeExtractedValue(value, boxType = "word") {
     if (boxType === "date") {
         return normalized.replace(/\D/g, "");
     }
-    return normalized.replace(/\s+/g, " ").replace(/[^\p{L}\p{N}]+/gu, "");
+    return normalized
+        .replace(/[-_]/g, "")
+        .replace(/(\p{L})\s+(\p{N})/gu, "$1$2")
+        .replace(/(\p{N})\s+(\p{L})/gu, "$1$2")
+        .replace(/[^\p{L}\p{N}\s]+/gu, "")
+        .replace(/\s+/g, " ")
+        .trim();
 }
 
 export function hasBoxGeometry(box) {

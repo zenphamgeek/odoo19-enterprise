@@ -1,0 +1,127 @@
+/* ==========================================================================
+   Insilos Modern Design Tokens — Dark Mode Bundle
+   IBM Carbon 11 Gray 100 & SAP Fiori Horizon Dark Mode Variable Bindings
+   ========================================================================== */
+
+:root,
+html,
+body,
+.o_web_client {
+  /* Surface & Background Layers (IBM Carbon 100 & SAP Horizon Evening Dark) */
+  --insilos-bg-canvas: #070b14;
+  --insilos-bg-surface: #0f172a;
+  --insilos-bg-card: #111827;
+  --insilos-bg-header: #0f172a;
+  --insilos-bg-hover: #1e293b;
+  --insilos-bg-active: #334155;
+  --insilos-bg-subtle: #0b0f19;
+  --insilos-bg-selected: rgba(0, 242, 254, 0.12);
+
+  /* Hairline Architectural Borders */
+  --insilos-border-subtle: rgba(255, 255, 255, 0.1);
+  --insilos-border-medium: rgba(255, 255, 255, 0.18);
+  --insilos-border-strong: rgba(255, 255, 255, 0.32);
+  --insilos-border-focus: #00f2fe;
+
+  /* High-Contrast Typography */
+  --insilos-text-primary: #f8fafc;
+  --insilos-text-secondary: #cbd5e1;
+  --insilos-text-tertiary: #94a3b8;
+  --insilos-text-muted: #64748b;
+  --insilos-text-on-primary: #05101e;
+
+  /* Brand Accents (Tech Cyan & Ice Blue) */
+  --insilos-primary: #00f2fe;
+  --insilos-primary-hover: #38bdf8;
+  --insilos-primary-subtle: rgba(0, 242, 254, 0.12);
+  --insilos-primary-border: rgba(0, 242, 254, 0.35);
+  --insilos-accent: #38bdf8;
+  --insilos-accent-hover: #7dd3fc;
+
+  /* SAP Fiori Horizon Semantic Status Architecture (Dark Calibrated) */
+  --ins-emerald: #10b981;
+  --ins-cyan: #00f2fe;
+  --insilos-positive: #10b981;
+  --insilos-positive-bg: rgba(16, 185, 129, 0.18);
+  --insilos-positive-border: rgba(52, 211, 153, 0.4);
+
+  --insilos-critical: #f43f5e;
+  --insilos-critical-bg: rgba(244, 63, 94, 0.18);
+  --insilos-critical-border: rgba(244, 63, 94, 0.4);
+
+  --insilos-warning: #f59e0b;
+  --insilos-warning-bg: rgba(245, 158, 11, 0.18);
+  --insilos-warning-border: rgba(251, 191, 36, 0.4);
+
+  --insilos-information: #60a5fa;
+  --insilos-information-bg: rgba(59, 130, 246, 0.18);
+  --insilos-information-border: rgba(96, 165, 250, 0.4);
+
+  --insilos-neutral: #94a3b8;
+  --insilos-neutral-bg: rgba(148, 163, 184, 0.12);
+  --insilos-neutral-border: rgba(148, 163, 184, 0.3);
+
+  --insilos-table-sticky-col-bg: #0f172a;
+
+  /* Architectural Shadows */
+  --insilos-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --insilos-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  --insilos-shadow-card: 0 2px 6px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.25);
+  --insilos-shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.5);
+
+  /* Component Metrics & Dimensions */
+  --insilos-shellbar-height: 48px;
+  --insilos-control-panel-height: 44px;
+  --insilos-table-row-height: 34px;
+  --insilos-table-header-height: 36px;
+  --insilos-input-height: 32px;
+  --insilos-btn-height: 32px;
+  --insilos-btn-radius: 4px;
+  --insilos-btn-padding-x: 14px;
+  --insilos-btn-font-size: 12.5px;
+  --insilos-btn-font-weight: 550;
+  --insilos-form-sheet-min-width: 100%;
+  --insilos-form-sheet-max-width: 100%;
+  --insilos-chatter-min-width: 320px;
+  --insilos-chatter-desktop-width: clamp(340px, 24vw, 420px);
+  --insilos-kpi-height: 48px;
+  --insilos-kpi-radius: 8px;
+  --insilos-kpi-val-size: 20px;
+  --insilos-kpi-label-size: 11px;
+
+  /* Spacing & Radii */
+  --insilos-spacing-2xs: 2px;
+  --insilos-spacing-xs: 4px;
+  --insilos-spacing-sm: 8px;
+  --insilos-spacing-md: 12px;
+  --insilos-spacing-lg: 16px;
+  --insilos-spacing-xl: 24px;
+  --insilos-spacing-2xl: 32px;
+  --insilos-carbon-spacing-03: 8px;
+  --insilos-radius-micro: 2px;
+  --insilos-radius-architectural: 4px;
+  --insilos-radius-xs: 2px;
+  --insilos-radius-sm: 4px;
+  --insilos-radius-md: 6px;
+  --insilos-radius-lg: 8px;
+  --insilos-radius-xl: 12px;
+  --insilos-radius-full: 9999px;
+
+  /* Typography & Transitions */
+  --insilos-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --insilos-font-mono: 'JetBrains Mono', 'IBM Plex Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --insilos-transition-fast: 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+  --insilos-transition-normal: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Aliases & Direct Bindings */
+  --insilos-carbon-focus: #00f2fe;
+  --insilos-cyan-primary: #00f2fe;
+  --insilos-surface-card: #111827;
+  --insilos-carbon-hover: #1e293b;
+}
+
+/* Home Menu Launchpad app tiles remain transparent glassmorphic */
+body.o_home_menu_background,
+.o_home_menu_background {
+  --insilos-bg-card: rgba(255, 255, 255, 0.04);
+}

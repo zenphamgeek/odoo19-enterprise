@@ -100,7 +100,7 @@ class DiscussChannel(models.Model):
 
         return {
             "ai_channel_id": channel.id,
-            "data": Store().add(channel).get_result(),
+            "data": Store().add(channel, "_store_channel_fields").as_dict(),
             "prompts": [prompt.name for prompt in random_prompts],
             "model_has_thread": model_has_thread,
         }

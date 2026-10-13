@@ -10,8 +10,8 @@
 .o_popover:has(.is-user-identity-card) {
   min-width: 280px;
   max-width: 320px;
-  background-color: var(--insilos-bg-card, #ffffff) !important;
-  border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+  background-color: var(--insilos-bg-card) !important;
+  border: 1px solid var(--insilos-border-subtle) !important;
   border-radius: var(--insilos-radius-architectural, 4px) !important;
   padding: 8px !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.04) !important;
@@ -154,7 +154,7 @@
      3. Dropdown Menu Items (IBM Carbon Compact 32px)
      -------------------------------------------------------------------------- */
   .dropdown-divider {
-    border-top: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+    border-top: 1px solid var(--insilos-border-subtle) !important;
     margin: 4px 0 !important;
   }
 
@@ -165,35 +165,35 @@
     padding: 0 8px;
     font-size: 13px;
     font-weight: 500;
-    color: var(--insilos-text-primary, #0f172a) !important;
+    color: var(--insilos-text-primary) !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
     transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
 
     &:hover {
-      background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12)) !important;
-      color: var(--insilos-text-primary, #0f172a) !important;
+      background-color: var(--insilos-carbon-hover) !important;
+      color: var(--insilos-text-primary) !important;
     }
 
     &:focus-visible {
-      outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+      outline: 2px solid var(--insilos-carbon-focus) !important;
       outline-offset: -2px !important;
     }
 
     /* Log out Item */
     &[data-menu="log_out"] {
-      color: var(--insilos-critical, #bb0000) !important;
+      color: var(--insilos-critical) !important;
       font-weight: 600;
 
       &:hover {
-        background-color: var(--insilos-critical-bg, #fbeeed) !important;
-        color: var(--insilos-critical, #bb0000) !important;
+        background-color: var(--insilos-critical-bg) !important;
+        color: var(--insilos-critical) !important;
         border-radius: var(--insilos-radius-micro, 2px) !important;
       }
 
       &:focus-visible {
-        outline: 2px solid var(--insilos-critical, #bb0000) !important;
+        outline: 2px solid var(--insilos-critical) !important;
         outline-offset: -2px !important;
       }
     }
@@ -220,8 +220,8 @@ body.o_dark_mode,
   .o-dropdown--menu:has(.is-user-identity-card),
   .dropdown-menu:has(.is-user-identity-card),
   .o_popover:has(.is-user-identity-card) {
-    background-color: var(--insilos-bg-card, #141e33) !important;
-    border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+    background-color: var(--insilos-bg-card) !important;
+    border-color: var(--insilos-border-subtle) !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.25) !important;
 
     .is-user-identity-card {
@@ -280,31 +280,31 @@ body.o_dark_mode,
     }
 
     .dropdown-divider {
-      border-top-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+      border-top-color: var(--insilos-border-subtle) !important;
     }
 
     .dropdown-item {
-      color: var(--insilos-text-primary, #f8fafc) !important;
+      color: var(--insilos-text-primary) !important;
 
       &:hover {
-        background-color: var(--insilos-carbon-hover, rgba(141, 141, 141, 0.12)) !important;
-        color: var(--insilos-text-primary, #f8fafc) !important;
+        background-color: var(--insilos-carbon-hover) !important;
+        color: var(--insilos-text-primary) !important;
       }
 
       &:focus-visible {
-        outline-color: var(--insilos-cyan-primary, #00f2fe) !important;
+        outline-color: var(--insilos-cyan-primary) !important;
       }
 
       &[data-menu="log_out"] {
-        color: var(--insilos-critical, #f87171) !important;
+        color: var(--insilos-critical) !important;
 
         &:hover {
-          background-color: var(--insilos-critical-bg, rgba(239, 68, 68, 0.18)) !important;
-          color: var(--insilos-critical, #f87171) !important;
+          background-color: var(--insilos-critical-bg) !important;
+          color: var(--insilos-critical) !important;
         }
 
         &:focus-visible {
-          outline-color: var(--insilos-critical, #f87171) !important;
+          outline-color: var(--insilos-critical) !important;
         }
       }
     }

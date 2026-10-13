@@ -27,7 +27,7 @@ class AILivechatController(LivechatController):
         # sudo() => The visitor should be able to forward the chat to a scripted chatbot or a human operator
         if livechat_channel_rule.chatbot_script_id:
             channel.sudo()._forward_scripted_chatbot(chatbot_script_id=livechat_channel_rule.chatbot_script_id)
-            return {'success': True, 'store_data': Store().add(channel).get_result()}
+            return {'success': True, 'store_data': Store().add(channel, '_store_channel_fields').as_dict()}
 
         channel.sudo()._forward_human_operator()
         # forwarding failed given that the ai agent is still a member of the channel.

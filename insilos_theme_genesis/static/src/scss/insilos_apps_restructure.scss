@@ -172,11 +172,11 @@
           background: transparent !important;
           border: none !important;
           box-shadow: none !important;
-          color: var(--insilos-text-secondary, #64748b) !important;
+          color: var(--insilos-text-secondary) !important;
           padding: 2px 6px !important;
 
           &:hover {
-            color: var(--insilos-text-primary, #0f172a) !important;
+            color: var(--insilos-text-primary) !important;
           }
         }
       }
@@ -254,7 +254,7 @@
           grid-column: 2 !important;
           grid-row: 2 !important;
           font-size: 12px;
-          color: var(--insilos-text-secondary, #475569) !important;
+          color: var(--insilos-text-secondary) !important;
           line-height: 1.4;
           margin: 0 !important;
           padding-right: 28px !important;
@@ -314,20 +314,20 @@
 
           /* "Activate" Button (IBM Carbon Primary Button) */
           button.btn-primary {
-            background: var(--insilos-primary, #0b2e64) !important;
-            border: 1px solid var(--insilos-primary, #0b2e64) !important;
+            background: var(--insilos-primary) !important;
+            border: 1px solid var(--insilos-primary) !important;
             color: #ffffff !important;
             box-shadow: none !important;
             transition: background-color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
 
             &:hover {
-              background: var(--insilos-primary-hover, #082147) !important;
-              border-color: var(--insilos-primary-hover, #082147) !important;
+              background: var(--insilos-primary-hover) !important;
+              border-color: var(--insilos-primary-hover) !important;
               transform: none !important;
             }
 
             &:focus-visible {
-              outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+              outline: 2px solid var(--insilos-carbon-focus) !important;
               outline-offset: 2px !important;
             }
           }
@@ -336,9 +336,9 @@
           button.d-flex.align-items-center.text-muted,
           button.text-muted:disabled,
           .badge-installed {
-            background-color: var(--insilos-positive-bg, #e7f6ed) !important;
-            color: var(--insilos-positive, #107e3e) !important;
-            border: 1px solid var(--insilos-positive-border, rgba(16, 126, 62, 0.3)) !important;
+            background-color: var(--insilos-positive-bg) !important;
+            color: var(--insilos-positive) !important;
+            border: 1px solid var(--insilos-positive-border) !important;
             cursor: default !important;
             gap: 4px !important;
 
@@ -352,23 +352,23 @@
           /* Upgrade / Buy Button (SAP Fiori Information Semantic) */
           a.btn-info,
           button.btn-info {
-            background-color: var(--insilos-information-bg, #e8f2fe) !important;
-            color: var(--insilos-information, #0070f2) !important;
-            border: 1px solid var(--insilos-information-border, rgba(0, 112, 242, 0.3)) !important;
+            background-color: var(--insilos-information-bg) !important;
+            color: var(--insilos-information) !important;
+            border: 1px solid var(--insilos-information-border) !important;
             font-size: 11px !important;
             font-weight: 600 !important;
 
             &:hover {
-              background-color: var(--insilos-information, #0070f2) !important;
+              background-color: var(--insilos-information) !important;
               color: #ffffff !important;
             }
           }
 
           /* Processing / Disabled Action Buttons */
           button[disabled] {
-            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-            border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
-            color: var(--insilos-text-tertiary, #64748b) !important;
+            background-color: var(--insilos-bg-hover) !important;
+            border: 1px solid var(--insilos-border-medium) !important;
+            color: var(--insilos-text-tertiary) !important;
             cursor: not-allowed !important;
             opacity: 0.8 !important;
           }
@@ -396,20 +396,20 @@
             box-sizing: border-box !important;
             height: 28px !important;
             line-height: 1 !important;
-            background: var(--insilos-bg-subtle, #f8fafc) !important;
-            border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
-            color: var(--insilos-text-primary, #0f172a) !important;
+            background: var(--insilos-bg-subtle) !important;
+            border: 1px solid var(--insilos-border-medium) !important;
+            color: var(--insilos-text-primary) !important;
             transition: all var(--insilos-transition-fast) !important;
 
             &:hover {
-              background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-              color: var(--insilos-text-primary, #0f172a) !important;
-              border-color: var(--insilos-border-strong, #94a3b8) !important;
+              background-color: var(--insilos-bg-hover) !important;
+              color: var(--insilos-text-primary) !important;
+              border-color: var(--insilos-border-strong) !important;
               transform: none !important;
             }
 
             &:focus-visible {
-              outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+              outline: 2px solid var(--insilos-carbon-focus) !important;
               outline-offset: 2px !important;
             }
           }
@@ -427,8 +427,8 @@ body.o_dark_mode,
 [data-bs-theme="dark"],
 [data-theme="dark"] {
   .o_search_panel {
-    background-color: var(--insilos-bg-surface, #0f172a) !important;
-    border-right-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+    background-color: var(--insilos-bg-surface) !important;
+    border-right-color: var(--insilos-border-subtle) !important;
 
     .o_search_panel_section {
       header {
@@ -463,21 +463,21 @@ body.o_dark_mode,
   }
 
   .o_kanban_view.o_modules_kanban {
-    background-color: var(--insilos-bg-canvas, #070b14) !important;
+    background-color: var(--insilos-bg-canvas) !important;
 
     .o_kanban_renderer {
       .o_kanban_record {
-        background-color: var(--insilos-bg-card, #141e33) !important;
-        border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+        background-color: var(--insilos-bg-card) !important;
+        border-color: var(--insilos-border-subtle) !important;
 
         &:hover {
-          border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.2)) !important;
-          border-left-color: var(--insilos-cyan-primary, #00f2fe) !important;
+          border-color: var(--insilos-border-medium) !important;
+          border-left-color: var(--insilos-cyan-primary) !important;
         }
 
         .o_dropdown_kanban {
           button {
-            color: var(--insilos-text-tertiary, #94a3b8) !important;
+            color: var(--insilos-text-tertiary) !important;
             background: transparent !important;
             border: none !important;
 
@@ -497,12 +497,12 @@ body.o_dark_mode,
         > .o_record_main,
         > main {
           h2 {
-            color: var(--insilos-text-primary, #f8fafc) !important;
+            color: var(--insilos-text-primary) !important;
           }
 
           small.text-muted,
           small {
-            color: var(--insilos-text-secondary, #cbd5e1) !important;
+            color: var(--insilos-text-secondary) !important;
 
             code {
               background-color: var(--insilos-bg-hover, #1e293b);
@@ -514,19 +514,19 @@ body.o_dark_mode,
             button.d-flex.align-items-center.text-muted,
             button.text-muted:disabled,
             .badge-installed {
-              background-color: var(--insilos-positive-bg, rgba(16, 185, 129, 0.18)) !important;
-              color: var(--insilos-positive, #34d399) !important;
-              border-color: var(--insilos-positive-border, rgba(52, 211, 153, 0.4)) !important;
+              background-color: var(--insilos-positive-bg) !important;
+              color: var(--insilos-positive) !important;
+              border-color: var(--insilos-positive-border) !important;
             }
 
             button.btn-primary {
-              background: var(--insilos-cyan-primary, #00f2fe) !important;
-              border-color: var(--insilos-cyan-primary, #00f2fe) !important;
-              color: var(--insilos-text-on-primary, #05101e) !important;
+              background: var(--insilos-cyan-primary) !important;
+              border-color: var(--insilos-cyan-primary) !important;
+              color: var(--insilos-text-on-primary) !important;
 
               &:hover {
-                background: var(--insilos-primary-hover, #38bdf8) !important;
-                border-color: var(--insilos-primary-hover, #38bdf8) !important;
+                background: var(--insilos-primary-hover) !important;
+                border-color: var(--insilos-primary-hover) !important;
               }
             }
 
@@ -534,7 +534,7 @@ body.o_dark_mode,
             button.btn-secondary:not([disabled]),
             #module_info {
               background: rgba(255, 255, 255, 0.05) !important;
-              border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.16)) !important;
+              border-color: var(--insilos-border-medium) !important;
               color: #f1f5f9 !important;
 
               &:hover {
@@ -546,12 +546,12 @@ body.o_dark_mode,
 
             a.btn-info,
             button.btn-info {
-              background-color: var(--insilos-information-bg, rgba(59, 130, 246, 0.18)) !important;
-              color: var(--insilos-information, #60a5fa) !important;
-              border-color: var(--insilos-information-border, rgba(96, 165, 250, 0.4)) !important;
+              background-color: var(--insilos-information-bg) !important;
+              color: var(--insilos-information) !important;
+              border-color: var(--insilos-information-border) !important;
 
               &:hover {
-                background-color: var(--insilos-information, #60a5fa) !important;
+                background-color: var(--insilos-information) !important;
                 color: #ffffff !important;
               }
             }

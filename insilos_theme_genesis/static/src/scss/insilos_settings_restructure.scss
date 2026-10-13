@@ -93,7 +93,7 @@
 
       &:focus-within {
         background: var(--insilos-bg-surface) !important;
-        border-color: var(--insilos-carbon-focus, #0f62fe) !important;
+        border-color: var(--insilos-carbon-focus) !important;
         box-shadow: 0 0 0 2px var(--insilos-primary-subtle) !important;
       }
 
@@ -227,8 +227,9 @@
         flex: 1 1 auto;
 
         > .app_settings_block {
-          max-width: 1280px;
-          margin: 0 auto;
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 !important;
 
           /* Section header */
           h2 {
@@ -368,7 +369,7 @@
                   }
 
                   &:focus {
-                    box-shadow: 0 0 0 2px var(--insilos-carbon-focus, #0f62fe) !important;
+                    box-shadow: 0 0 0 2px var(--insilos-carbon-focus) !important;
                   }
                 }
               }
@@ -447,7 +448,7 @@
                     }
 
                     &:focus-visible {
-                      outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+                      outline: 2px solid var(--insilos-carbon-focus) !important;
                       outline-offset: 1px;
                     }
                   }
@@ -511,7 +512,7 @@
                   }
 
                   &:focus {
-                    box-shadow: 0 0 0 2px var(--insilos-carbon-focus, #0f62fe) !important;
+                    box-shadow: 0 0 0 2px var(--insilos-carbon-focus) !important;
                   }
                 }
 
@@ -721,7 +722,7 @@
                   object-fit: contain;
                   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
                   border: 1px solid var(--insilos-border-subtle, #e2e8f0);
-                  background: #ffffff;
+                  background: var(--insilos-bg-card, #ffffff);
                   padding: 4px;
                 }
               }
@@ -754,8 +755,8 @@ body.o_dark_mode,
       .o_cp_buttons {
         button.btn-primary,
         button.o_form_button_save {
-          background: var(--insilos-cyan-primary, #00F2FE) !important;
-          border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+          background: var(--insilos-cyan-primary) !important;
+          border-color: var(--insilos-cyan-primary) !important;
           color: #161616 !important;
           box-shadow: 0 2px 4px rgba(0, 242, 254, 0.25) !important;
 
@@ -767,7 +768,7 @@ body.o_dark_mode,
 
           &:focus-visible,
           &:focus {
-            outline: 2px solid var(--insilos-cyan-primary, #00F2FE) !important;
+            outline: 2px solid var(--insilos-cyan-primary) !important;
             outline-offset: 1px;
           }
         }
@@ -786,7 +787,7 @@ body.o_dark_mode,
 
           &:focus-visible,
           &:focus {
-            outline: 2px solid var(--insilos-cyan-primary, #00F2FE) !important;
+            outline: 2px solid var(--insilos-cyan-primary) !important;
             outline-offset: 1px;
           }
         }
@@ -798,7 +799,7 @@ body.o_dark_mode,
 
         &:focus-within {
           background: #1e1e1e !important;
-          border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+          border-color: var(--insilos-cyan-primary) !important;
           box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.25) !important;
         }
 
@@ -841,10 +842,10 @@ body.o_dark_mode,
 
             &.selected {
               background-color: rgba(0, 242, 254, 0.12) !important;
-              color: var(--insilos-cyan-primary, #00F2FE) !important;
+              color: var(--insilos-cyan-primary) !important;
 
               &::before {
-                background-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                background-color: var(--insilos-cyan-primary) !important;
               }
             }
           }
@@ -892,7 +893,7 @@ body.o_dark_mode,
                     }
 
                     &:checked {
-                      background-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                      background-color: var(--insilos-cyan-primary) !important;
 
                       &::before {
                         background-color: #161616 !important;
@@ -900,7 +901,7 @@ body.o_dark_mode,
                     }
 
                     &:focus {
-                      box-shadow: 0 0 0 2px var(--insilos-cyan-primary, #00F2FE) !important;
+                      box-shadow: 0 0 0 2px var(--insilos-cyan-primary) !important;
                     }
                   }
                 }
@@ -927,12 +928,12 @@ body.o_dark_mode,
                       border-color: #525252 !important;
 
                       &:checked {
-                        background-color: var(--insilos-cyan-primary, #00F2FE) !important;
-                        border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                        background-color: var(--insilos-cyan-primary) !important;
+                        border-color: var(--insilos-cyan-primary) !important;
                       }
 
                       &:focus {
-                        box-shadow: 0 0 0 2px var(--insilos-cyan-primary, #00F2FE) !important;
+                        box-shadow: 0 0 0 2px var(--insilos-cyan-primary) !important;
                       }
                     }
 
@@ -953,16 +954,16 @@ body.o_dark_mode,
                     background-color: #1e1e1e !important;
 
                     &:checked {
-                      border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                      border-color: var(--insilos-cyan-primary) !important;
                       background-color: #1e1e1e !important;
 
                       &::after {
-                        background-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                        background-color: var(--insilos-cyan-primary) !important;
                       }
                     }
 
                     &:focus {
-                      box-shadow: 0 0 0 2px var(--insilos-cyan-primary, #00F2FE) !important;
+                      box-shadow: 0 0 0 2px var(--insilos-cyan-primary) !important;
                     }
                   }
 
@@ -983,7 +984,7 @@ body.o_dark_mode,
                       color: #f4f4f4 !important;
 
                       &:focus {
-                        border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                        border-color: var(--insilos-cyan-primary) !important;
                         box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.25) !important;
                       }
                     }
@@ -991,8 +992,8 @@ body.o_dark_mode,
 
                   /* Action buttons & links */
                   button.btn-primary {
-                    background: var(--insilos-cyan-primary, #00F2FE) !important;
-                    border-color: var(--insilos-cyan-primary, #00F2FE) !important;
+                    background: var(--insilos-cyan-primary) !important;
+                    border-color: var(--insilos-cyan-primary) !important;
                     color: #161616 !important;
 
                     &:hover {
@@ -1001,7 +1002,7 @@ body.o_dark_mode,
                     }
 
                     &:focus-visible {
-                      outline: 2px solid var(--insilos-cyan-primary, #00F2FE) !important;
+                      outline: 2px solid var(--insilos-cyan-primary) !important;
                     }
                   }
 
@@ -1016,13 +1017,13 @@ body.o_dark_mode,
                     }
 
                     &:focus-visible {
-                      outline: 2px solid var(--insilos-cyan-primary, #00F2FE) !important;
+                      outline: 2px solid var(--insilos-cyan-primary) !important;
                     }
                   }
 
                   button.btn-link,
                   a.oe-link {
-                    color: var(--insilos-cyan-primary, #00F2FE) !important;
+                    color: var(--insilos-cyan-primary) !important;
 
                     &:hover {
                       color: #38bdf8 !important;
@@ -1108,8 +1109,8 @@ body.o_dark_mode,
   border-radius: 12px !important;
   object-fit: contain !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-  background: #ffffff !important;
+  border: 1px solid var(--insilos-border-subtle) !important;
+  background: var(--insilos-bg-card) !important;
   padding: 4px !important;
 }
 

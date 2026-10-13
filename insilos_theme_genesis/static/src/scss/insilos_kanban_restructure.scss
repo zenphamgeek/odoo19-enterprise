@@ -4,7 +4,7 @@
    ========================================================================== */
 
 .o_kanban_view:not(.o_modules_kanban) {
-  background-color: var(--insilos-bg-canvas, #f4f6f8) !important;
+  background-color: var(--insilos-bg-canvas) !important;
 
   .o_kanban_renderer {
     padding: var(--insilos-spacing-md, 12px) var(--insilos-spacing-lg, 16px) !important;
@@ -12,8 +12,8 @@
 
     /* Kanban Column Groups (IBM Carbon Structured List pattern) */
     .o_kanban_group {
-      background-color: var(--insilos-bg-subtle, #f8fafc) !important;
-      border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+      background-color: var(--insilos-bg-subtle) !important;
+      border: 1px solid var(--insilos-border-subtle) !important;
       border-radius: var(--insilos-radius-architectural, 4px) !important;
       padding: var(--insilos-carbon-spacing-03, var(--insilos-spacing-sm, 8px)) !important;
       transition: background-color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
@@ -26,12 +26,12 @@
       .o_kanban_header {
         margin-bottom: var(--insilos-carbon-spacing-03, var(--insilos-spacing-sm, 8px)) !important;
         padding-bottom: var(--insilos-carbon-spacing-03, var(--insilos-spacing-sm, 8px)) !important;
-        border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+        border-bottom: 1px solid var(--insilos-border-subtle) !important;
 
         .o_kanban_header_title {
           font-size: 13px !important;
           font-weight: 700 !important;
-          color: var(--insilos-text-primary, #0f172a) !important;
+          color: var(--insilos-text-primary) !important;
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
@@ -46,7 +46,7 @@
             border-radius: var(--insilos-radius-micro, 2px) !important;
 
             &:focus-visible {
-              outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+              outline: 2px solid var(--insilos-carbon-focus) !important;
               outline-offset: 1px !important;
             }
           }
@@ -67,15 +67,15 @@
             font-size: 11px !important;
             font-weight: 600 !important;
             font-variant-numeric: tabular-nums !important;
-            color: var(--insilos-text-secondary, #475569) !important;
+            color: var(--insilos-text-secondary) !important;
           }
         }
       }
 
       /* Kanban Cards Inside Column (SAP Fiori Horizon Card & Carbon Structured Item) */
       .o_kanban_record {
-        background: var(--insilos-bg-surface, #ffffff) !important;
-        border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+        background: var(--insilos-bg-surface) !important;
+        border: 1px solid var(--insilos-border-subtle) !important;
         border-left: 3px solid transparent !important;
         border-radius: var(--insilos-radius-architectural, 4px) !important;
         box-shadow: var(--insilos-shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05)) !important;
@@ -86,14 +86,14 @@
 
         &:hover {
           transform: none !important;
-          border-color: var(--insilos-border-medium, #cbd5e1) !important;
-          border-left: 3px solid var(--insilos-cyan-primary, #00f2fe) !important;
+          border-color: var(--insilos-border-medium) !important;
+          border-left: 3px solid var(--insilos-cyan-primary) !important;
           box-shadow: inset 3px 0 0 var(--insilos-cyan-primary, #00f2fe), var(--insilos-shadow-card, 0 1px 3px rgba(0, 0, 0, 0.06)) !important;
-          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+          background-color: var(--insilos-bg-hover) !important;
         }
 
         &:focus-visible {
-          outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+          outline: 2px solid var(--insilos-carbon-focus) !important;
           outline-offset: 1px !important;
         }
 
@@ -101,13 +101,13 @@
         .o_kanban_record_title {
           font-size: 13px !important;
           font-weight: 650 !important;
-          color: var(--insilos-text-primary, #0f172a) !important;
+          color: var(--insilos-text-primary) !important;
           line-height: 1.35 !important;
         }
 
         .o_kanban_record_subtitle {
           font-size: 12px !important;
-          color: var(--insilos-text-secondary, #475569) !important;
+          color: var(--insilos-text-secondary) !important;
         }
 
         /* Priority Stars */
@@ -141,28 +141,28 @@
 
         /* Activity / Clock Icons */
         .o_activity_color_today {
-          color: var(--insilos-warning, #e9730c) !important;
+          color: var(--insilos-warning) !important;
         }
         .o_activity_color_planned {
-          color: var(--insilos-positive, #107e3e) !important;
+          color: var(--insilos-positive) !important;
         }
         .o_activity_color_overdue {
-          color: var(--insilos-critical, #bb0000) !important;
+          color: var(--insilos-critical) !important;
         }
       }
 
       /* Quick Create Record Button */
       .o_kanban_quick_create {
         border-radius: var(--insilos-radius-architectural, 4px) !important;
-        border: 1px dashed var(--insilos-border-strong, #94a3b8) !important;
+        border: 1px dashed var(--insilos-border-strong) !important;
         background: transparent !important;
         padding: var(--insilos-carbon-spacing-03, var(--insilos-spacing-sm, 8px)) 12px !important;
         margin-bottom: var(--insilos-carbon-spacing-03, var(--insilos-spacing-sm, 8px)) !important;
         transition: background-color var(--insilos-transition-fast), border-color var(--insilos-transition-fast);
 
         &:hover {
-          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-          border-color: var(--insilos-primary, #0b2e64) !important;
+          background-color: var(--insilos-bg-hover) !important;
+          border-color: var(--insilos-primary) !important;
         }
 
         input.o_input {
@@ -171,8 +171,8 @@
           font-size: 12.5px !important;
 
           &:focus {
-            outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
-            border-color: var(--insilos-carbon-focus, #0f62fe) !important;
+            outline: 2px solid var(--insilos-carbon-focus) !important;
+            border-color: var(--insilos-carbon-focus) !important;
           }
         }
 
@@ -201,8 +201,8 @@
       gap: var(--insilos-carbon-spacing-03, var(--insilos-spacing-sm, 8px)) !important;
 
       .o_kanban_record {
-        background: var(--insilos-bg-surface, #ffffff) !important;
-        border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+        background: var(--insilos-bg-surface) !important;
+        border: 1px solid var(--insilos-border-subtle) !important;
         border-left: 3px solid transparent !important;
         border-radius: var(--insilos-radius-architectural, 4px) !important;
         box-shadow: var(--insilos-shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05)) !important;
@@ -212,14 +212,14 @@
 
         &:hover {
           transform: none !important;
-          border-color: var(--insilos-border-medium, #cbd5e1) !important;
-          border-left: 3px solid var(--insilos-cyan-primary, #00f2fe) !important;
+          border-color: var(--insilos-border-medium) !important;
+          border-left: 3px solid var(--insilos-cyan-primary) !important;
           box-shadow: inset 3px 0 0 var(--insilos-cyan-primary, #00f2fe), var(--insilos-shadow-card, 0 1px 3px rgba(0, 0, 0, 0.06)) !important;
-          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+          background-color: var(--insilos-bg-hover) !important;
         }
 
         &:focus-visible {
-          outline: 2px solid var(--insilos-carbon-focus, #0f62fe) !important;
+          outline: 2px solid var(--insilos-carbon-focus) !important;
           outline-offset: 1px !important;
         }
 
@@ -235,17 +235,17 @@
     /* Add Column Button */
     .o_kanban_add_column {
       border-radius: var(--insilos-radius-architectural, 4px) !important;
-      border: 1px dashed var(--insilos-border-medium, #cbd5e1) !important;
+      border: 1px dashed var(--insilos-border-medium) !important;
       padding: 12px !important;
       font-size: 12.5px !important;
       font-weight: 600 !important;
-      color: var(--insilos-text-secondary, #475569) !important;
+      color: var(--insilos-text-secondary) !important;
       transition: background-color var(--insilos-transition-fast), border-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
 
       &:hover {
-        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-        color: var(--insilos-primary, #0b2e64) !important;
-        border-color: var(--insilos-primary, #0b2e64) !important;
+        background-color: var(--insilos-bg-hover) !important;
+        color: var(--insilos-primary) !important;
+        border-color: var(--insilos-primary) !important;
       }
     }
   }
@@ -260,67 +260,67 @@ body.o_dark_mode,
 [data-bs-theme="dark"],
 [data-theme="dark"] {
   .o_kanban_view:not(.o_modules_kanban) {
-    background-color: var(--insilos-bg-canvas, #070b14) !important;
+    background-color: var(--insilos-bg-canvas) !important;
 
     .o_kanban_renderer {
       .o_kanban_group {
-        background-color: var(--insilos-bg-card, #141e33) !important;
-        border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+        background-color: var(--insilos-bg-card) !important;
+        border-color: var(--insilos-border-subtle) !important;
 
         .o_kanban_header {
-          border-bottom-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+          border-bottom-color: var(--insilos-border-subtle) !important;
 
           .o_kanban_header_title {
-            color: var(--insilos-text-primary, #f8fafc) !important;
+            color: var(--insilos-text-primary) !important;
           }
 
           .o_kanban_counter .o_kanban_counter_side {
-            color: var(--insilos-text-secondary, #cbd5e1) !important;
+            color: var(--insilos-text-secondary) !important;
           }
         }
 
         .o_kanban_record {
-          background-color: var(--insilos-bg-surface, #0f172a) !important;
-          border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+          background-color: var(--insilos-bg-surface) !important;
+          border-color: var(--insilos-border-subtle) !important;
           border-left: 3px solid transparent !important;
-          color: var(--insilos-text-primary, #f8fafc) !important;
+          color: var(--insilos-text-primary) !important;
 
           &:hover {
-            background-color: var(--insilos-bg-hover, #1e293b) !important;
-            border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18)) !important;
-            border-left: 3px solid var(--insilos-cyan-primary, #00f2fe) !important;
+            background-color: var(--insilos-bg-hover) !important;
+            border-color: var(--insilos-border-medium) !important;
+            border-left: 3px solid var(--insilos-cyan-primary) !important;
             box-shadow: inset 3px 0 0 var(--insilos-cyan-primary, #00f2fe), var(--insilos-shadow-hover, 0 6px 20px rgba(0, 0, 0, 0.5)) !important;
           }
 
           .o_kanban_record_title {
-            color: var(--insilos-text-primary, #f8fafc) !important;
+            color: var(--insilos-text-primary) !important;
           }
 
           .o_kanban_record_subtitle {
-            color: var(--insilos-text-secondary, #94a3b8) !important;
+            color: var(--insilos-text-secondary) !important;
           }
 
           .text-muted {
-            color: var(--insilos-text-muted, #64748b) !important;
+            color: var(--insilos-text-muted) !important;
           }
         }
 
         .o_kanban_quick_create {
-          border-color: var(--insilos-border-strong, rgba(255, 255, 255, 0.32)) !important;
+          border-color: var(--insilos-border-strong) !important;
 
           &:hover {
-            background-color: var(--insilos-bg-surface, #0f172a) !important;
-            border-color: var(--insilos-cyan-primary, #00f2fe) !important;
+            background-color: var(--insilos-bg-surface) !important;
+            border-color: var(--insilos-cyan-primary) !important;
           }
 
           input.o_input {
-            background-color: var(--insilos-bg-surface, #0f172a) !important;
-            border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.16)) !important;
-            color: var(--insilos-text-primary, #f8fafc) !important;
+            background-color: var(--insilos-bg-surface) !important;
+            border-color: var(--insilos-border-subtle) !important;
+            color: var(--insilos-text-primary) !important;
 
             &:focus {
-              border-color: var(--insilos-border-focus, #00f2fe) !important;
-              outline-color: var(--insilos-border-focus, #00f2fe) !important;
+              border-color: var(--insilos-border-focus) !important;
+              outline-color: var(--insilos-border-focus) !important;
             }
           }
         }
@@ -328,28 +328,28 @@ body.o_dark_mode,
 
       &.o_kanban_ungrouped {
         .o_kanban_record {
-          background-color: var(--insilos-bg-surface, #0f172a) !important;
-          border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+          background-color: var(--insilos-bg-surface) !important;
+          border-color: var(--insilos-border-subtle) !important;
           border-left: 3px solid transparent !important;
-          color: var(--insilos-text-primary, #f8fafc) !important;
+          color: var(--insilos-text-primary) !important;
 
           &:hover {
-            background-color: var(--insilos-bg-hover, #1e293b) !important;
-            border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18)) !important;
-            border-left: 3px solid var(--insilos-cyan-primary, #00f2fe) !important;
-            box-shadow: inset 3px 0 0 var(--insilos-cyan-primary, #00f2fe) !important;
+            background-color: var(--insilos-bg-hover) !important;
+            border-color: var(--insilos-border-medium) !important;
+            border-left: 3px solid var(--insilos-cyan-primary) !important;
+            box-shadow: inset 3px 0 0 var(--insilos-cyan-primary) !important;
           }
         }
       }
 
       .o_kanban_add_column {
-        border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.18)) !important;
-        color: var(--insilos-text-secondary, #94a3b8) !important;
+        border-color: var(--insilos-border-subtle) !important;
+        color: var(--insilos-text-secondary) !important;
 
         &:hover {
-          background-color: var(--insilos-bg-surface, #0f172a) !important;
-          color: var(--insilos-cyan-primary, #00f2fe) !important;
-          border-color: var(--insilos-cyan-primary, #00f2fe) !important;
+          background-color: var(--insilos-bg-surface) !important;
+          color: var(--insilos-cyan-primary) !important;
+          border-color: var(--insilos-cyan-primary) !important;
         }
       }
     }

@@ -21,7 +21,12 @@ execution.
     'assets': {
         'web.assets_backend': [
             'insilos_market_terminal/static/lib/lightweight-charts.standalone.production.js',
+            'insilos_market_terminal/static/src/terminal/terminal.scss',
             'insilos_market_terminal/static/src/terminal/**/*',
+            ('remove', 'insilos_market_terminal/static/src/**/*.dark.scss'),
+        ],
+        'web.assets_web_dark': [
+            'insilos_market_terminal/static/src/terminal/terminal.dark.scss',
         ],
         # The chart library must be present in the test bundle: the terminal
         # imports it at module level, and without it the whole suite fails to

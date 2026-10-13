@@ -5,19 +5,19 @@ import { patch } from "@web/core/utils/patch";
 
 patch(ChatWindow.prototype, {
     get showForwardOperatorButton() {
-        const thread = this.props.chatWindow.thread;
-        return thread.channel_type === 'livechat' && thread.ai_agent_id;
+        const thread = this.props.chatWindow?.thread;
+        return Boolean(thread && thread.channel_type === 'livechat' && thread.ai_agent_id);
     },
 
     async forwardOperator(ev) {
-        let thread = this.props.chatWindow.thread;
-        if (thread.channel_type !== "livechat") {
+        let thread = this.props.chatWindow?.thread;
+        if (!thread || thread.channel_type !== "livechat") {
             return;
         }
         // Forwarding can only happen on persisted threads.
-        if(thread.isTransient){
-            thread = await this.store.env.services["im_livechat.livechat"].persist(thread)
-            if (!thread){
+        if (thread.isTransient) {
+            thread = await this.store.env.services["im_livechat.livechat"].persist(thread);
+            if (!thread) {
                 return;
             }
         }

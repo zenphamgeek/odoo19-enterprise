@@ -11,5 +11,28 @@
         <xpath expr="//meta[@name='theme-color']" position="replace">
             <meta name="theme-color" t-att-content="'#070B14' if color_scheme == 'dark' else '#FF8000'"/>
         </xpath>
+        <xpath expr="//meta[@name='theme-color']" position="after">
+            <script type="text/javascript">
+                (function() {
+                    const cookieMatch = document.cookie.match(/(?:^|;\s*)color_scheme=([^;]+)/);
+                    const scheme = cookieMatch ? cookieMatch[1] : null;
+                    if (scheme === 'dark') {
+                        document.documentElement.setAttribute('data-bs-theme', 'dark');
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                        document.documentElement.classList.add('o_dark_mode');
+                        if (document.body) {
+                            document.body.classList.add('o_dark_mode');
+                        } else {
+                            document.addEventListener('DOMContentLoaded', function() {
+                                document.body.classList.add('o_dark_mode');
+                            });
+                        }
+                    }
+                })();
+            </script>
+        </xpath>
+        <xpath expr="//t[@t-call='web.layout']" position="attributes">
+            <attribute name="body_classname.f">o_web_client#{' o_dark_mode' if color_scheme == 'dark' else ''}</attribute>
+        </xpath>
     </template>
 </data>

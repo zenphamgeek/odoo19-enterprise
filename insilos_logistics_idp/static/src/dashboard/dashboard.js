@@ -78,7 +78,7 @@ export class LogisticsIdpDashboard extends Component {
     closeOnboarding() { return this.runAction(async () => { const onboarding = this.state.data.onboarding; await this.orm.call(onboarding.close_model, onboarding.close_method, []); onboarding.closed = true; }); }
     formatMetric(key, value, available = true) { if (!available) return _t("Not Available"); if (value == null) return "—"; return key === "stp_rate" ? `${Math.round(value * 100)}%` : value.toLocaleString(); }
     metricEntries() { return Object.entries(this.state.data?.metrics || {}).map(([key, metric]) => ({ key, label: KPI_LABELS[key], ...metric })); }
-    priorityMetrics() { const metrics = Object.fromEntries(this.metricEntries().map((metric) => [metric.key, metric])); return PRIORITY_KPIS.map((key) => metrics[key]).filter(Boolean); }
+    priorityMetrics() { const metrics = Object.fromEntries(this.metricEntries().map((metric) => [metric.key, metric])); return PRIORITY_KPIS.map((key) => metrics[key] || { key, label: KPI_LABELS[key], value: null, delta: null, available: true }); }
     activeQueue() { return (this.state.data?.live_queue || []).slice(0, 8); }
     count(row) { return row?.__count || row?.["id_count"] || 0; }
     stepStateLabel(state) { return ({ not_done: _t("To do"), just_done: _t("Just done"), done: _t("Done") })[state] || _t("To do"); }
@@ -101,7 +101,7 @@ export class LogisticsIdpDashboard extends Component {
         return `background: conic-gradient(${list.map((row, index) => {
             const start = offset;
             offset += this.count(row) * 100 / total;
-            return `${this.chartColor(index)} ${start}% ${offset}%`;
+            return this.chartColor(index) + " " + start + "% " + offset + "%";
         }).join(",")})`;
     }
     lineX(index, rows) { const list = rows || []; return list.length < 2 ? 300 : 24 + index * 552 / (list.length - 1); }

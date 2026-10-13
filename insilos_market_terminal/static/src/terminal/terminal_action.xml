@@ -6,11 +6,11 @@
         <div class="d-flex align-items-center gap-2 p-2 border-bottom">
             <input class="w_input" style="max-width: 12rem;" placeholder="Symbol (e.g. FPT)"
                    t-on-keydown="onSymbolKeydown"/>
-            <span t-if="state.instrument and !state.instrument.mapped" class="badge text-bg-warning">
+            <span t-if="state.instrument &amp;&amp; !state.instrument.mapped" class="badge text-bg-warning">
                 Unmapped symbol — no ERP overlays
             </span>
-            <span t-if="state.stream and state.stream.stale" class="badge text-bg-warning">STALE</span>
-            <span t-if="state.stream and state.stream.sequence_gap" class="badge text-bg-warning">Feed gap</span>
+            <span t-if="state.stream &amp;&amp; state.stream.stale" class="badge text-bg-warning">STALE</span>
+            <span t-if="state.stream &amp;&amp; state.stream.sequence_gap" class="badge text-bg-warning">Feed gap</span>
             <span t-if="state.lineage" class="text-muted small ms-auto">
                 <t t-esc="state.lineage.provider"/> · as of <t t-esc="state.lineage.source_as_of"/>
             </span>
@@ -27,7 +27,7 @@
             <div class="flex-grow-1" t-ref="chart"/>
             <aside class="border-start p-2" style="width: 18rem;" aria-label="Market and portfolio state">
                 <h6>Market state</h6>
-                <div t-if="state.marketState and state.marketState.status === 'available'" class="small">
+                <div t-if="state.marketState &amp;&amp; state.marketState.status === 'available'" class="small">
                     <div>Close: <strong><t t-esc="state.marketState.close"/></strong></div>
                     <div t-if="state.marketState.change_pct !== null">Change: <t t-esc="state.marketState.change_pct.toFixed(2)"/>%</div>
                     <div t-if="state.marketState.volume">Volume: <t t-esc="state.marketState.volume"/></div>
@@ -52,7 +52,7 @@
                 </button>
             </aside>
         </div>
-        <div t-if="overlayRecords and overlayRecords.length" class="d-flex gap-2 p-2 border-top flex-wrap">
+        <div t-if="overlayRecords &amp;&amp; overlayRecords.length" class="d-flex gap-2 p-2 border-top flex-wrap">
             <button t-foreach="overlayRecords" t-as="overlay" t-key="`${overlay.res_model}-${overlay.res_id}`"
                     class="btn btn-sm btn-outline-secondary" t-on-click="() => this.openEvidence(overlay)">
                 <t t-esc="overlay.label || overlay.text"/><t t-if="overlay.price">: <t t-esc="overlay.price"/></t>

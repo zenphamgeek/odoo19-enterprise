@@ -5,7 +5,7 @@
 
 .o_form_view.insilos_hub_form,
 .o_form_view.o_logistics_idp_onboarding_form {
-  background: var(--insilos-bg-canvas, #f4f6f8) !important;
+  background: var(--insilos-bg-canvas) !important;
   width: 100% !important;
   max-width: 100% !important;
 
@@ -315,13 +315,13 @@
      4. STANDARDIZED BUTTONS
      -------------------------------------------------------------------------- */
   .btn-hub-primary {
-    background: var(--insilos-primary, #0B2E64) !important;
-    border: 1px solid var(--insilos-primary, #0B2E64) !important;
+    background: var(--insilos-primary) !important;
+    border: 1px solid var(--insilos-primary) !important;
     color: #ffffff !important;
 
     &:hover, &:focus {
-      background: var(--insilos-primary-hover, #082147) !important;
-      border-color: var(--insilos-primary-hover, #082147) !important;
+      background: var(--insilos-primary-hover) !important;
+      border-color: var(--insilos-primary-hover) !important;
       color: #ffffff !important;
       box-shadow: 0 2px 6px rgba(11, 46, 100, 0.25) !important;
     }
@@ -329,25 +329,25 @@
 
   .btn-hub-secondary {
     background: transparent !important;
-    border: 1px solid var(--insilos-border-medium, #cbd5e1) !important;
-    color: var(--insilos-text-primary, #0f172a) !important;
+    border: 1px solid var(--insilos-border-medium) !important;
+    color: var(--insilos-text-primary) !important;
 
     &:hover, &:focus {
-      background: var(--insilos-bg-hover, #f1f5f9) !important;
-      border-color: var(--insilos-primary, #0B2E64) !important;
-      color: var(--insilos-primary, #0B2E64) !important;
+      background: var(--insilos-bg-hover) !important;
+      border-color: var(--insilos-primary) !important;
+      color: var(--insilos-primary) !important;
     }
   }
 
   .btn-hub-outline {
     background: transparent !important;
-    border: 1px solid var(--insilos-primary-border, rgba(11, 46, 100, 0.25)) !important;
-    color: var(--insilos-primary, #0B2E64) !important;
+    border: 1px solid var(--insilos-primary-border) !important;
+    color: var(--insilos-primary) !important;
 
     &:hover, &:focus {
-      background: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08)) !important;
-      border-color: var(--insilos-primary, #0B2E64) !important;
-      color: var(--insilos-primary, #0B2E64) !important;
+      background: var(--insilos-primary-subtle) !important;
+      border-color: var(--insilos-primary) !important;
+      color: var(--insilos-primary) !important;
     }
   }
 
@@ -412,8 +412,15 @@
 /* --------------------------------------------------------------------------
    DARK MODE OVERRIDES
    -------------------------------------------------------------------------- */
-body.o_dark_mode .o_form_view.insilos_hub_form {
-  background: #0b0f19 !important;
+body.o_dark_mode .o_form_view.insilos_hub_form,
+.o_dark_mode .o_form_view.insilos_hub_form,
+[data-bs-theme="dark"] .o_form_view.insilos_hub_form,
+[data-theme="dark"] .o_form_view.insilos_hub_form,
+.o_form_view.insilos_hub_form[data-bs-theme="dark"],
+body.o_dark_mode .o_form_view.o_logistics_idp_onboarding_form,
+.o_dark_mode .o_form_view.o_logistics_idp_onboarding_form,
+[data-bs-theme="dark"] .o_form_view.o_logistics_idp_onboarding_form {
+  background: var(--insilos-bg-canvas) !important;
 
   .insilos_hub_hero {
     background: linear-gradient(135deg, #07152d 0%, #0b1c3a 50%, #101c36 100%);

@@ -19,20 +19,68 @@ export class MarketTerminalAction extends Component {
         this.chartRef = useRef("chart");
         this.state = useState({ symbol: "", lineage: null, instrument: null, error: "", indicators: [], stream: null, marketState: null, portfolioCards: [], latency: null });
         this.chart = null;
+        this.bars = [];
+        this.overlayRecords = [];
+        this.priceLines = [];
+        this.indicatorSeries = [];
         this.latency = new LatencyTracker();
+        this.themeObserver = null;
         onMounted(() => this._createChart());
         onWillUnmount(() => {
             clearInterval(this.streamTimer);
+            if (this.themeObserver) this.themeObserver.disconnect();
             if (this.chart) this.chart.remove();
         });
     }
 
     _createChart() {
+        const getIsDark = () => {
+            return document.body.classList.contains("o_dark_mode") ||
+                   document.documentElement.classList.contains("o_dark_mode") ||
+                   document.documentElement.getAttribute("data-bs-theme") === "dark" ||
+                   document.documentElement.getAttribute("data-theme") === "dark";
+        };
+
+        const isDark = getIsDark();
+
         this.chart = LightweightCharts.createChart(this.chartRef.el, {
             autoSize: true,
-            layout: { attributionLogo: true },
+            layout: {
+                attributionLogo: true,
+                background: {
+                    type: "solid",
+                    color: isDark ? "#070b14" : "#ffffff",
+                },
+                textColor: isDark ? "#94a3b8" : "#334155",
+            },
+            grid: {
+                vertLines: { color: isDark ? "rgba(255, 255, 255, 0.06)" : "#f1f5f9" },
+                horzLines: { color: isDark ? "rgba(255, 255, 255, 0.06)" : "#f1f5f9" },
+            },
             timeScale: { timeVisible: true },
         });
+
+        // Reactively adapt chart theme on DOM changes
+        this.themeObserver = new MutationObserver(() => {
+            if (!this.chart) return;
+            const dark = getIsDark();
+            this.chart.applyOptions({
+                layout: {
+                    background: {
+                        type: "solid",
+                        color: dark ? "#070b14" : "#ffffff",
+                    },
+                    textColor: dark ? "#94a3b8" : "#334155",
+                },
+                grid: {
+                    vertLines: { color: dark ? "rgba(255, 255, 255, 0.06)" : "#f1f5f9" },
+                    horzLines: { color: dark ? "rgba(255, 255, 255, 0.06)" : "#f1f5f9" },
+                },
+            });
+        });
+        this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-bs-theme", "data-theme"] });
+        this.themeObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
         this.series = this.chart.addCandlestickSeries();
         // MKT-002: volume lives on its own overlay scale, otherwise share counts
         // and prices share an axis and the candles collapse into a flat line.
@@ -66,15 +114,15 @@ export class MarketTerminalAction extends Component {
             })));
             this._applyOverlays(payload.overlays);
             this._applyIndicators();
-            this._startStream();
+            await this._startStream();
         } catch (error) {
             this.state.error = error.data?.message || error.message || String(error);
         }
     }
 
-    _startStream() {
+    async _startStream() {
         clearInterval(this.streamTimer);
-        this._refreshStream();
+        await this._refreshStream();
         this.streamTimer = setInterval(() => this._refreshStream(), 5_000);
     }
 
@@ -122,7 +170,7 @@ export class MarketTerminalAction extends Component {
 
     openEvidence(overlay) {
         this.actionService.doAction({
-            type: "is.actions.act_window", res_model: overlay.res_model, res_id: overlay.res_id, views: [[false, "form"]],
+            type: "ir.actions.act_window", res_model: overlay.res_model, res_id: overlay.res_id, views: [[false, "form"]],
         });
     }
 

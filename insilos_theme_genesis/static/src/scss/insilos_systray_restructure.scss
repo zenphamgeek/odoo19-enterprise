@@ -18,6 +18,24 @@ img.o_menu_brand_icon,
   display: inline-block !important;
 }
 
+.o_insilos_launcher_icon,
+img.o_insilos_launcher_icon {
+  width: 26px !important;
+  height: 19px !important;
+  max-width: 26px !important;
+  max-height: 19px !important;
+  object-fit: contain !important;
+  vertical-align: middle !important;
+  display: inline-block !important;
+
+  &.o_insilos_launcher_icon_dark {
+    display: none !important;
+  }
+  &.o_insilos_launcher_icon_light {
+    display: inline-block !important;
+  }
+}
+
 .o_edit_website_container button,
 .o-website-btn-custo-primary,
 button.o-website-btn-custo-primary {
@@ -31,8 +49,8 @@ header.o_navbar {
   height: var(--insilos-shellbar-height, 48px) !important;
   min-height: var(--insilos-shellbar-height, 48px) !important;
   max-height: var(--insilos-shellbar-height, 48px) !important;
-  background-color: var(--insilos-bg-header, #ffffff) !important;
-  border-bottom: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+  background-color: var(--insilos-bg-header) !important;
+  border-bottom: 1px solid var(--insilos-border-subtle) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
   z-index: 1000 !important;
   padding: 0 !important;
@@ -66,7 +84,7 @@ header.o_navbar {
       align-items: center !important;
       justify-content: center !important;
       border-radius: var(--insilos-radius-sm, 4px) !important;
-      color: var(--insilos-text-primary, #0f172a) !important;
+      color: var(--insilos-text-primary) !important;
       text-decoration: none !important;
       transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast), transform 0.1s ease;
       margin: 6px 10px 6px 8px !important;
@@ -107,8 +125,8 @@ header.o_navbar {
       }
 
       &:hover {
-        background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-        color: var(--insilos-primary, #0b2e64) !important;
+        background-color: var(--insilos-bg-hover) !important;
+        color: var(--insilos-primary) !important;
       }
 
       &:active {
@@ -116,7 +134,7 @@ header.o_navbar {
       }
 
       &:focus-visible {
-        outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+        outline: 2px solid var(--insilos-border-focus) !important;
         outline-offset: -2px !important;
       }
     }
@@ -149,7 +167,7 @@ header.o_navbar {
     .o_menu_brand_separator {
       font-size: 16px !important;
       line-height: 1 !important;
-      color: var(--insilos-border-strong, #94a3b8) !important;
+      color: var(--insilos-border-strong) !important;
       margin-right: 8px !important;
       flex-shrink: 0 !important;
     }
@@ -167,6 +185,11 @@ header.o_navbar {
       border-right: 1px solid var(--insilos-border-subtle, #e2e8f0);
       flex-shrink: 0 !important;
       gap: 8px !important;
+
+      &.o_hidden,
+      &.d-none {
+        display: none !important;
+      }
     }
 
     .o_menu_brand_icon,
@@ -199,7 +222,7 @@ header.o_navbar {
       font-size: 13.5px !important;
       font-weight: 650 !important;
       letter-spacing: -0.01em;
-      color: var(--insilos-text-primary, #0f172a) !important;
+      color: var(--insilos-text-primary) !important;
       max-width: clamp(140px, 18vw, 260px) !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
@@ -214,6 +237,11 @@ header.o_navbar {
       flex-shrink: 0 !important;
       left: auto !important;
       top: auto !important;
+
+      &.o_hidden,
+      &.d-none {
+        display: none !important;
+      }
     }
 
     /* ------------------------------------------------------------------------
@@ -229,6 +257,11 @@ header.o_navbar {
       white-space: nowrap !important;
       margin: 0 0 0 4px !important;
       gap: 2px !important;
+
+      &.o_hidden,
+      &.d-none {
+        display: none !important;
+      }
 
       .dropdown:not(.d-none),
       .dropdown-toggle:not(.d-none),
@@ -256,7 +289,7 @@ header.o_navbar {
         padding: 0 12px !important;
         font-size: 13px !important;
         font-weight: 500 !important;
-        color: var(--insilos-text-secondary, #475569) !important;
+        color: var(--insilos-text-secondary) !important;
         border: none !important;
         background: transparent !important;
         text-decoration: none !important;
@@ -266,14 +299,14 @@ header.o_navbar {
         transition: color var(--insilos-transition-fast), background-color var(--insilos-transition-fast);
 
         &:hover {
-          color: var(--insilos-text-primary, #0f172a) !important;
-          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
+          color: var(--insilos-text-primary) !important;
+          background-color: var(--insilos-bg-hover) !important;
         }
 
         /* Active Horizon Highlight Indicator */
         &.active,
         &[aria-expanded="true"] {
-          color: var(--insilos-text-primary, #0f172a) !important;
+          color: var(--insilos-text-primary) !important;
           font-weight: 600 !important;
 
           &::after {
@@ -315,7 +348,7 @@ header.o_navbar {
           border-radius: var(--insilos-radius-sm, 4px) !important;
           border: 1px solid transparent !important;
           background: transparent !important;
-          color: var(--insilos-text-secondary, #475569) !important;
+          color: var(--insilos-text-secondary) !important;
           font-size: 13px !important;
           font-weight: 500 !important;
           cursor: pointer !important;
@@ -327,21 +360,21 @@ header.o_navbar {
           }
 
           &:hover {
-            color: var(--insilos-text-primary, #0f172a) !important;
-            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-            border-color: var(--insilos-border-subtle, #e2e8f0) !important;
+            color: var(--insilos-text-primary) !important;
+            background-color: var(--insilos-bg-hover) !important;
+            border-color: var(--insilos-border-subtle) !important;
           }
 
           &:focus-visible {
-            outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+            outline: 2px solid var(--insilos-border-focus) !important;
             outline-offset: -2px !important;
           }
 
           &.active,
           &[aria-expanded="true"] {
-            color: var(--insilos-primary, #0b2e64) !important;
-            background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-            border-color: var(--insilos-primary, #0b2e64) !important;
+            color: var(--insilos-primary) !important;
+            background-color: var(--insilos-bg-hover) !important;
+            border-color: var(--insilos-primary) !important;
           }
         }
       }
@@ -371,9 +404,9 @@ header.o_navbar {
         line-height: 28px !important;
         padding: 0 10px !important;
         border-radius: var(--insilos-radius-sm, 4px) !important;
-        background-color: var(--insilos-bg-subtle, #f8fafc) !important;
-        border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-        color: var(--insilos-text-primary, #0f172a) !important;
+        background-color: var(--insilos-bg-subtle) !important;
+        border: 1px solid var(--insilos-border-subtle) !important;
+        color: var(--insilos-text-primary) !important;
         font-size: 12px !important;
         font-weight: 600 !important;
         display: inline-flex !important;
@@ -392,20 +425,20 @@ header.o_navbar {
           transition: background-color var(--insilos-transition-fast), box-shadow var(--insilos-transition-fast);
 
           &.o_status_live {
-            background-color: var(--insilos-positive, #107e3e) !important;
-            box-shadow: 0 0 6px var(--insilos-positive, #107e3e) !important;
+            background-color: var(--insilos-positive) !important;
+            box-shadow: 0 0 6px var(--insilos-positive) !important;
           }
 
           &.o_status_offline {
-            background-color: var(--insilos-critical, #bb0000) !important;
-            box-shadow: 0 0 6px var(--insilos-critical, #bb0000) !important;
+            background-color: var(--insilos-critical) !important;
+            box-shadow: 0 0 6px var(--insilos-critical) !important;
           }
         }
 
         &:hover {
-          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-          border-color: var(--insilos-border-medium, #cbd5e1) !important;
-          color: var(--insilos-primary, #0b2e64) !important;
+          background-color: var(--insilos-bg-hover) !important;
+          border-color: var(--insilos-border-medium) !important;
+          color: var(--insilos-primary) !important;
         }
 
         .oe_topbar_name {
@@ -430,9 +463,9 @@ header.o_navbar {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: var(--insilos-bg-subtle, #f8fafc) !important;
-        border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-        color: var(--insilos-text-secondary, #334155) !important;
+        background: var(--insilos-bg-subtle) !important;
+        border: 1px solid var(--insilos-border-subtle) !important;
+        color: var(--insilos-text-secondary) !important;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
         position: relative !important;
@@ -443,9 +476,9 @@ header.o_navbar {
         }
 
         &:hover {
-          background-color: #ffffff !important;
-          border-color: #cbd5e1 !important;
-          color: var(--insilos-primary, #0b2e64) !important;
+          background-color: var(--insilos-bg-hover) !important;
+          border-color: var(--insilos-border-medium) !important;
+          color: var(--insilos-primary) !important;
           box-shadow: 0 2px 6px rgba(11, 46, 100, 0.08) !important;
           transform: translateY(-1px) !important;
         }
@@ -456,7 +489,7 @@ header.o_navbar {
         }
 
         &:focus-visible {
-          outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+          outline: 2px solid var(--insilos-border-focus) !important;
           outline-offset: 1px !important;
         }
 
@@ -472,8 +505,8 @@ header.o_navbar {
         &.o_ai_systray_btn,
         &[title*="AI"],
         &[title*="Ask AI"] {
-          background: var(--insilos-bg-subtle, #f8fafc) !important;
-          border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+          background: var(--insilos-bg-subtle) !important;
+          border: 1px solid var(--insilos-border-subtle) !important;
 
           .ai-systray-icon {
             width: 16px !important;
@@ -484,8 +517,8 @@ header.o_navbar {
           }
 
           &:hover {
-            background-color: #ffffff !important;
-            border-color: #cbd5e1 !important;
+            background-color: var(--insilos-bg-hover) !important;
+            border-color: var(--insilos-border-medium) !important;
             color: #FF8000 !important;
 
             .ai-systray-icon {
@@ -537,7 +570,7 @@ header.o_navbar {
           border-radius: 8px !important;
           background: #dc2626 !important;
           color: #ffffff !important;
-          border: 1.5px solid var(--insilos-bg-header, #ffffff) !important;
+          border: 1.5px solid var(--insilos-bg-header) !important;
           box-shadow: 0 1px 4px rgba(220, 38, 38, 0.4) !important;
           display: inline-flex !important;
           align-items: center !important;
@@ -559,9 +592,9 @@ header.o_navbar {
           height: 32px !important;
           padding: 0 10px !important;
           border-radius: 6px !important;
-          border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-          background: var(--insilos-bg-subtle, #f8fafc) !important;
-          color: var(--insilos-text-primary, #1e293b) !important;
+          border: 1px solid var(--insilos-border-subtle) !important;
+          background: var(--insilos-bg-subtle) !important;
+          color: var(--insilos-text-primary) !important;
           font-size: 12.5px !important;
           font-weight: 500 !important;
           display: inline-flex !important;
@@ -571,9 +604,9 @@ header.o_navbar {
           transition: all 0.2s ease !important;
 
           &:hover {
-            background: #ffffff !important;
-            border-color: #cbd5e1 !important;
-            color: var(--insilos-primary, #0b2e64) !important;
+            background: var(--insilos-bg-hover) !important;
+            border-color: var(--insilos-border-medium) !important;
+            color: var(--insilos-primary) !important;
           }
         }
       }
@@ -581,7 +614,7 @@ header.o_navbar {
       .o_website_systray_separator {
         height: 20px !important;
         margin: 0 8px !important;
-        border-left: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+        border-left: 1px solid var(--insilos-border-subtle) !important;
         opacity: 0.8 !important;
       }
 
@@ -595,7 +628,7 @@ header.o_navbar {
         gap: 6px !important;
         margin-left: 6px !important;
         padding-left: 8px !important;
-        border-left: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+        border-left: 1px solid var(--insilos-border-subtle) !important;
       }
 
       .o_website_publish_container {
@@ -664,8 +697,8 @@ header.o_navbar {
 
         // Unpublished state styling
         &:has(input:not(:checked)) a.o_nav_entry {
-          background: var(--insilos-bg-subtle, #f1f5f9) !important;
-          border-color: var(--insilos-border-subtle, #cbd5e1) !important;
+          background: var(--insilos-bg-subtle) !important;
+          border-color: var(--insilos-border-subtle) !important;
           color: #64748b !important;
 
           &:hover {
@@ -691,8 +724,8 @@ header.o_navbar {
           display: inline-flex !important;
           align-items: center !important;
           justify-content: center !important;
-          border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
-          background: var(--insilos-bg-subtle, #f8fafc) !important;
+          border: 1px solid var(--insilos-border-subtle) !important;
+          background: var(--insilos-bg-subtle) !important;
           color: #475569 !important;
           box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
           transition: all 0.2s ease !important;
@@ -702,9 +735,9 @@ header.o_navbar {
           }
 
           &:hover {
-            background: #ffffff !important;
-            border-color: #cbd5e1 !important;
-            color: var(--insilos-primary, #0b2e64) !important;
+            background: var(--insilos-bg-hover) !important;
+            border-color: var(--insilos-border-medium) !important;
+            color: var(--insilos-primary) !important;
             box-shadow: 0 2px 6px rgba(11, 46, 100, 0.08) !important;
           }
         }
@@ -735,17 +768,17 @@ header.o_navbar {
           gap: 6px !important;
           font-size: 12.5px !important;
           font-weight: 500 !important;
-          border: 1px solid var(--insilos-border-subtle, #cbd5e1) !important;
-          background: #ffffff !important;
-          color: #1e293b !important;
+          border: 1px solid var(--insilos-border-subtle) !important;
+          background: var(--insilos-bg-surface) !important;
+          color: var(--insilos-text-primary) !important;
           box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
           transition: all 0.2s ease !important;
           white-space: nowrap !important;
 
           &:hover {
-            background: #f8fafc !important;
-            border-color: #94a3b8 !important;
-            color: var(--insilos-primary, #0b2e64) !important;
+            background: var(--insilos-bg-hover) !important;
+            border-color: var(--insilos-border-strong) !important;
+            color: var(--insilos-primary) !important;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
           }
         }
@@ -796,23 +829,23 @@ header.o_navbar {
         border-radius: var(--insilos-radius-sm, 4px) !important;
         background: transparent !important;
         border: 1px solid transparent !important;
-        color: var(--insilos-text-primary, #0f172a) !important;
+        color: var(--insilos-text-primary) !important;
         cursor: pointer;
         transition: all var(--insilos-transition-fast);
 
         &:hover {
-          background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-          border-color: var(--insilos-border-subtle, #e2e8f0) !important;
+          background-color: var(--insilos-bg-hover) !important;
+          border-color: var(--insilos-border-subtle) !important;
         }
 
         &:focus-visible {
-          outline: 2px solid var(--insilos-border-focus, #0f62fe) !important;
+          outline: 2px solid var(--insilos-border-focus) !important;
           outline-offset: 1px !important;
         }
 
         &[aria-expanded="true"],
         &.show {
-          background-color: var(--insilos-primary-subtle, rgba(11, 46, 100, 0.08)) !important;
+          background-color: var(--insilos-primary-subtle) !important;
         }
 
         .o-mail-DiscussAvatar,
@@ -835,7 +868,7 @@ header.o_navbar {
         .oe_topbar_name {
           font-size: 12.5px !important;
           font-weight: 600 !important;
-          color: var(--insilos-text-primary, #0f172a) !important;
+          color: var(--insilos-text-primary) !important;
           margin-left: 6px !important;
           max-width: 120px;
           white-space: nowrap;
@@ -863,8 +896,8 @@ body.o_dark_mode,
 [data-theme="dark"] {
   .o_navbar,
   header.o_navbar {
-    background-color: var(--insilos-bg-header, #0f172a) !important;
-    border-bottom: 1px solid var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+    background-color: var(--insilos-bg-header) !important;
+    border-bottom: 1px solid var(--insilos-border-subtle) !important;
 
     .o_main_navbar {
       .o_insilos_brand_logo.o_insilos_brand_logo_light {
@@ -889,7 +922,7 @@ body.o_dark_mode,
       }
 
       .o_menu_brand_wrapper {
-        border-right-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+        border-right-color: var(--insilos-border-subtle) !important;
       }
 
       .o_menu_brand {
@@ -903,7 +936,7 @@ body.o_dark_mode,
           &.active,
           &[aria-expanded="true"] {
             &::after {
-              background-color: var(--insilos-primary, #00f2fe) !important;
+              background-color: var(--insilos-primary) !important;
             }
           }
         }
@@ -936,8 +969,8 @@ body.o_dark_mode,
 
       .o_menu_systray {
         .o_switch_company_menu {
-          background-color: var(--insilos-bg-card, #141e33) !important;
-          border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+          background-color: var(--insilos-bg-card) !important;
+          border-color: var(--insilos-border-subtle) !important;
 
           .o_live_status_dot.o_status_live {
             background-color: #24a148 !important;
@@ -1121,7 +1154,7 @@ body.o_dark_mode,
           }
 
           .o_user_avatar {
-            border-color: var(--insilos-border-medium, rgba(255, 255, 255, 0.18)) !important;
+            border-color: var(--insilos-border-medium) !important;
           }
         }
       }
@@ -1174,11 +1207,11 @@ body.o_dark_mode,
 .o-dropdown--menu.dropdown-menu:has(.o_more_dropdown_section),
 .o_menu_sections_more .dropdown-menu {
   border-radius: var(--insilos-radius-sm, 4px) !important;
-  border: 1px solid var(--insilos-border-subtle, #e2e8f0) !important;
+  border: 1px solid var(--insilos-border-subtle) !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04) !important;
   padding: 6px 0 !important;
   min-width: 190px !important;
-  background-color: #ffffff !important;
+  background-color: var(--insilos-bg-surface) !important;
   z-index: 1050 !important;
 
   .o_more_dropdown_section.dropdown-item {
@@ -1187,13 +1220,13 @@ body.o_dark_mode,
     padding: 8px 16px !important;
     height: auto !important;
     line-height: 1.4 !important;
-    color: var(--insilos-text-primary, #0f172a) !important;
+    color: var(--insilos-text-primary) !important;
     transition: background-color var(--insilos-transition-fast), color var(--insilos-transition-fast);
 
     &:hover,
     &.focus {
-      background-color: var(--insilos-bg-hover, #f1f5f9) !important;
-      color: var(--insilos-primary, #0b2e64) !important;
+      background-color: var(--insilos-bg-hover) !important;
+      color: var(--insilos-primary) !important;
     }
   }
 
@@ -1201,8 +1234,8 @@ body.o_dark_mode,
     font-size: 11px !important;
     font-weight: 700 !important;
     letter-spacing: 0.05em !important;
-    color: var(--insilos-text-muted, #64748b) !important;
-    background-color: var(--insilos-bg-subtle, #f8fafc) !important;
+    color: var(--insilos-text-muted) !important;
+    background-color: var(--insilos-bg-subtle) !important;
     padding: 6px 16px 4px 16px !important;
     margin: 4px 0 2px 0 !important;
     border-top: 1px solid var(--insilos-border-subtle, #e2e8f0);

@@ -7,34 +7,34 @@
     </xpath>
     <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="replace">
         <!-- Insilos Master Brand Logo (Visible only on Home Menu / Root) -->
-        <t t-if="!this.isInApp">
-            <img src="/web/static/img/insilos_logo.svg"
-                 alt="Insilos"
-                 class="o_insilos_brand_logo o_insilos_brand_logo_light d-none d-sm-inline-block align-middle ms-2 me-3"
-                 style="height: 24px; width: auto;"/>
-            <img src="/web/static/img/insilos_logo_dark.svg"
-                 alt="Insilos"
-                 class="o_insilos_brand_logo o_insilos_brand_logo_dark align-middle ms-2 me-3"
-                 style="height: 24px; width: auto;"/>
-        </t>
+        <img src="/web/static/img/insilos_logo_dark.svg"
+             alt="Insilos"
+             class="o_insilos_brand_logo align-middle ms-2 me-3"
+             t-att-class="{'o_hidden': this.isInApp}"
+             style="height: 24px; width: auto;"/>
 
-        <!-- Insilos App Launcher Button (Visible in Module Views or with Background Action) -->
-        <t t-if="this.isInApp or this.hasBackgroundAction">
-            <a t-if="!isScopedApp" href="/insilos" class="o_menu_toggle o_navbar_apps_menu border-0 align-items-center justify-content-center" accesskey="h" t-ref="this.menuApps" title="App Launcher" aria-label="App Launcher" t-on-click.prevent="() => { (this.ui?.isSmall || env.isSmall) ? this._openAppMenuSidebar() : this.hm.toggle() }">
-                <t t-if="(this.ui?.isSmall || env.isSmall) and !hm.hasHomeMenu">
-                    <t t-call="web.NavBar.AppsMenu.Sidebar"/>
-                </t>
-                <t t-else="">
-                    <i class="o_menu_toggle_icon ph-duotone ph-arrow-left fs-4 o_menu_toggle_back_icon d-none"/>
-                    <img src="/web/static/img/insilos_mark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_light"/>
-                    <img src="/web/static/img/insilos_mark_dark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_dark"/>
-                </t>
-            </a>
-            <a t-else="" t-att-href="pwa.startUrl" class="o_menu_toggle o_navbar_apps_menu border-0 align-items-center justify-content-center" t-ref="this.menuApps" title="App Launcher" aria-label="App Launcher">
-                <img src="/web/static/img/insilos_mark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_light"/>
-                <img src="/web/static/img/insilos_mark_dark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_dark"/>
-            </a>
-        </t>
+        <!-- Insilos App Launcher Button (Always present, hidden on Home Menu via o_hidden) -->
+        <a t-if="!isScopedApp" href="/insilos"
+           class="o_menu_toggle o_navbar_apps_menu border-0 align-items-center justify-content-center"
+           t-att-class="{'o_hidden': !this.isInApp and !this.hasBackgroundAction}"
+           accesskey="h" t-ref="this.menuApps" title="App Launcher" aria-label="App Launcher"
+           t-on-click.prevent="() => { (this.ui?.isSmall || env.isSmall) ? this._openAppMenuSidebar() : this.hm.toggle() }">
+            <t t-if="(this.ui?.isSmall || env.isSmall) and !hm.hasHomeMenu">
+                <t t-call="web.NavBar.AppsMenu.Sidebar"/>
+            </t>
+            <t t-else="">
+                <i class="o_menu_toggle_icon ph-duotone ph-arrow-left fs-4 o_menu_toggle_back_icon d-none"/>
+                <img src="/web/static/img/insilos_mark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_light" style="width: 26px; height: 19px; max-width: 26px; max-height: 19px; object-fit: contain;"/>
+                <img src="/web/static/img/insilos_mark_dark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_dark" style="width: 26px; height: 19px; max-width: 26px; max-height: 19px; object-fit: contain;"/>
+            </t>
+        </a>
+        <a t-else="" t-att-href="pwa.startUrl"
+           class="o_menu_toggle o_navbar_apps_menu border-0 align-items-center justify-content-center"
+           t-att-class="{'o_hidden': !this.isInApp and !this.hasBackgroundAction}"
+           t-ref="this.menuApps" title="App Launcher" aria-label="App Launcher">
+            <img src="/web/static/img/insilos_mark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_light" style="width: 26px; height: 19px; max-width: 26px; max-height: 19px; object-fit: contain;"/>
+            <img src="/web/static/img/insilos_mark_dark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_dark" style="width: 26px; height: 19px; max-width: 26px; max-height: 19px; object-fit: contain;"/>
+        </a>
 
         <!-- Current App Brand Title (Without Redundant App Icon) -->
         <t t-if="!(this.ui?.isSmall || env.isSmall) and currentApp">
