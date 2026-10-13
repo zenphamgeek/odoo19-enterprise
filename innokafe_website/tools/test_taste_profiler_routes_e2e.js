@@ -2,11 +2,17 @@ const { chromium } = require('playwright');
 
 (async () => {
     console.log("=== INNOKAFE TASTE PROFILER COMPREHENSIVE PLAYWRIGHT E2E SUITE ===");
-    const browser = await chromium.launch({ headless: true });
+    const browser = await chromium.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+    });
     const context = await browser.newContext({
-        viewport: { width: 1440, height: 900 }
+        viewport: { width: 1440, height: 900 },
+        userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
     });
     const page = await context.newPage();
+    page.setDefaultTimeout(45000);
+    page.setDefaultNavigationTimeout(45000);
 
     const consoleErrors = [];
     page.on('console', msg => {
@@ -20,19 +26,22 @@ const { chromium } = require('playwright');
     try {
         // TEST 1: Base route loads and starts on Step 1
         console.log("\n[TEST 1] Visiting /taste-profiler");
-        await page.goto(`${BASE_URL}/taste-profiler`, { waitUntil: 'domcontentloaded' });
-        await page.waitForSelector('#step-1', { state: 'attached' });
+        await page.goto(`${BASE_URL}/taste-profiler`, { waitUntil: 'load' });
+        await page.waitForSelector('#step-1', { state: 'visible', timeout: 15000 });
+        await page.waitForSelector('#step-2', { state: 'hidden', timeout: 15000 });
         const title1 = await page.title();
         console.log(`Page title: ${title1}`);
         const step1Visible = await page.isVisible('#step-1');
+        const step2Class = await page.getAttribute('#step-2', 'class');
         const step2Visible = await page.isVisible('#step-2');
-        console.log(`Step 1 visible: ${step1Visible}, Step 2 visible: ${step2Visible}`);
+        console.log(`Step 1 visible: ${step1Visible}, Step 2 class: "${step2Class}", Step 2 visible: ${step2Visible}`);
         if (!step1Visible || step2Visible) throw new Error("Step 1 should be visible, Step 2 hidden on /taste-profiler");
 
         // TEST 2: Direct deep link to Step 2
         console.log("\n[TEST 2] Visiting /taste-profiler/step/2");
-        await page.goto(`${BASE_URL}/taste-profiler/step/2`, { waitUntil: 'domcontentloaded' });
-        await page.waitForSelector('#step-2', { state: 'attached' });
+        await page.goto(`${BASE_URL}/taste-profiler/step/2`, { waitUntil: 'load' });
+        await page.waitForSelector('#step-2', { state: 'visible', timeout: 15000 });
+        await page.waitForSelector('#step-1', { state: 'hidden', timeout: 15000 });
         const step2DeepVisible = await page.isVisible('#step-2');
         const step1DeepVisible = await page.isVisible('#step-1');
         console.log(`Step 2 visible: ${step2DeepVisible}, Step 1 hidden: ${!step1DeepVisible}`);
@@ -40,14 +49,14 @@ const { chromium } = require('playwright');
 
         // TEST 3: Direct deep link to Step 4
         console.log("\n[TEST 3] Visiting /taste-profiler/step/4");
-        await page.goto(`${BASE_URL}/taste-profiler/step/4`, { waitUntil: 'domcontentloaded' });
-        await page.waitForSelector('#step-4', { state: 'attached' });
+        await page.goto(`${BASE_URL}/taste-profiler/step/4`, { waitUntil: 'load' });
+        await page.waitForSelector('#step-4', { state: 'visible', timeout: 15000 });
         const step4DeepVisible = await page.isVisible('#step-4');
         if (!step4DeepVisible) throw new Error("Step 4 should be visible on /taste-profiler/step/4");
 
         // TEST 4: Direct deep link to SKU result
         console.log("\n[TEST 4] Visiting /taste-profiler/result/INNO-ARABICA-WASH-02");
-        await page.goto(`${BASE_URL}/taste-profiler/result/INNO-ARABICA-WASH-02`, { waitUntil: 'domcontentloaded' });
+        await page.goto(`${BASE_URL}/taste-profiler/result/INNO-ARABICA-WASH-02`, { waitUntil: 'load' });
         await page.waitForSelector('#result', { state: 'attached' });
         const resultVisible = await page.isVisible('#result');
         const top1Name = await page.innerText('.top1-product-name');
@@ -116,20 +125,25 @@ const { chromium } = require('playwright');
         // TEST 7: Add to Cart Button
         console.log("\n[TEST 7] Testing Add to Cart Button");
         await page.click('.btn-top1-add-to-cart');
-        await page.waitForTimeout(1000);
+        await page.waitForFunction(() => {
+            const toast = document.querySelector('#innokafe-cart-toast');
+            return toast && !toast.classList.contains('d-none') && toast.innerText.includes('Đã thêm');
+        }, { timeout: 15000 });
         const toastText = await page.innerText('#innokafe-cart-toast');
         console.log(`Cart Toast Content: ${toastText}`);
+        if (!toastText.includes('Đã thêm')) throw new Error("Expected cart add confirmation toast");
 
         // TEST 8: Discovery Box Button
         console.log("\n[TEST 8] Testing Discovery Box Button");
         await page.click('.btn-discovery-box-add');
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(2000);
         const discoveryToast = await page.innerText('#innokafe-cart-toast');
         console.log(`Discovery Box Toast Content: ${discoveryToast}`);
 
         // TEST 9: Header Navigation Zero Duplicate Assertion
         console.log("\n[TEST 9] Validating Zero Duplicate Header Navbar Links across Desktop & Mobile");
-        await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded' });
+        await page.waitForTimeout(1000);
+        await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded', timeout: 45000 });
         const navElements = await page.$$('header nav');
         console.log(`Found ${navElements.length} nav container(s) in header`);
         if (navElements.length === 0) throw new Error("Header nav elements missing");

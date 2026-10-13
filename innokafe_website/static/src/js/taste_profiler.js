@@ -548,10 +548,12 @@ export class InnokafeTasteProfiler {
             const stepNum = parseInt(panel.getAttribute("data-step-panel"), 10);
             if (stepNum === this.currentStep) {
                 panel.classList.remove("d-none");
+                panel.style.removeProperty("display");
                 panel.style.opacity = "1";
                 panel.style.transform = "none";
             } else {
                 panel.classList.add("d-none");
+                panel.style.setProperty("display", "none", "important");
             }
         });
 
@@ -560,8 +562,10 @@ export class InnokafeTasteProfiler {
         if (resultCockpit) {
             if (this.currentStep === 5) {
                 resultCockpit.classList.remove("d-none");
+                resultCockpit.style.removeProperty("display");
             } else {
                 resultCockpit.classList.add("d-none");
+                resultCockpit.style.setProperty("display", "none", "important");
             }
         }
 
@@ -857,16 +861,37 @@ export class InnokafeTasteProfiler {
             }
         }
 
-        // Render Sensory Wheel Radar
+        // Render Enhanced Sensory Wheel Radar (Dual Comparison + SCA Score + Interactive Tuning)
         const wheelContainer = this.root.querySelector(".profiler-sensory-wheel-target");
         if (wheelContainer && top1.sensory_scores) {
             wheelContainer.innerHTML = "";
+            const v = this.computedVector || (this.state && this.state.vector) || {};
+            const userSensory = {
+                aroma: Math.min(10, Math.max(1, ((v.fruity_floral || 7.0) + (v.nutty_choco || 7.0)) / 2)),
+                acidity: Math.min(10, Math.max(1, v.acidity || 6.0)),
+                body: Math.min(10, Math.max(1, v.body || 8.0)),
+                sweetness: Math.min(10, Math.max(1, v.sweetness || 8.0)),
+                cleancup: Math.min(10, Math.max(1, v.balance || 8.5)),
+                aftertaste: Math.min(10, Math.max(1, ((v.nutty_choco || 7.5) + (v.body || 8.0)) / 2)),
+            };
+
             this.sensoryWheelInstance = new InnokafeSensoryWheel(wheelContainer, top1.sensory_scores, {
                 width: 280,
                 height: 280,
                 centerX: 140,
                 centerY: 140,
                 radius: 88,
+                color: "#D48842",
+                accentColor: "#00F2FE",
+                interactive: true,
+                showScoreBadge: true,
+                secondaryScores: userSensory,
+                onChange: (newScores, scaData) => {
+                    const scaEl = this.root.querySelector(".top1-sca-score-badge");
+                    if (scaEl) {
+                        scaEl.textContent = `SCA ${scaData.score.toFixed(1)}`;
+                    }
+                }
             });
         }
 

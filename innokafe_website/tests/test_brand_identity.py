@@ -1,4 +1,5 @@
 import sys
+import unittest
 from pathlib import Path
 
 # Add tools directory to path
@@ -12,3 +13,6 @@ from test_brand_identity_suite import (
     TestFaviconAndManifestSuite,
     TestNavbarAndHeaderIntegration,
 )
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)

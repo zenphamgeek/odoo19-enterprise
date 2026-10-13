@@ -1346,7 +1346,22 @@ class InsilosWebsite(http.Controller):
     @http.route(["/", "/en", "/vi"], type="http", auth="public", website=True, sitemap=True)
     def home(self, **kwargs):
         host = (request.httprequest.host or "").lower()
-        website_name = (request.website.name or "").lower() if getattr(request, "website", None) else ""
+        ws = getattr(request, "website", None)
+        website_name = (ws.name or "").lower() if ws else ""
+        website_domain = (ws.domain or "").lower() if ws else ""
+
+        if "innokafe" in host or "innokafe" in website_name or "innokafe" in website_domain:
+            if request.env["ir.ui.view"].sudo().search([("key", "=", "innokafe_website.homepage")], limit=1):
+                values = self._base_values()
+                try:
+                    products = request.env["product.template"].sudo().search([
+                        ("is_published", "=", True),
+                    ], limit=6)
+                    values["featured_products"] = products
+                except Exception:
+                    values["featured_products"] = []
+                return request.render("innokafe_website.homepage", values)
+
         if "innoria" in host or "innoria" in website_name:
             if request.env["ir.ui.view"].sudo().search([("key", "=", "insilos_website.innoria_homepage_template")], limit=1):
                 return request.render("insilos_website.innoria_homepage_template", self._base_values())

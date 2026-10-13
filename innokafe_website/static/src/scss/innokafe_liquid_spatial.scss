@@ -170,11 +170,13 @@
 }
 
 // 6. Liquid Amber Badge: Mint/Gold Gradient with High Contrast (WCAG AAA)
-.inno-badge-liquid {
+.inno-badge-liquid,
+span.badge.inno-badge-liquid {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--inno-honey-gradient) !important;
+    background-color: #D48842 !important;
+    background-image: var(--inno-honey-gradient) !important;
     color: #0C0704 !important;
     font-weight: 700;
     font-size: 0.78rem;
@@ -314,5 +316,328 @@ body.o_innokafe_theme,
     .s_cover, .s_features, .s_text_image, .s_image_text, .s_three_columns,
     .s_bento_grid, .s_call_to_action, .s_testimonials, .s_media_list {
         border-top: 1px solid var(--inno-spatial-hairline) !important;
+    }
+}
+
+/* ==========================================================================
+   10. ARTISAN SPECIALTY COFFEE GRAPHICS & MOTION ENGINE (ANTI-SLOP LUXURY)
+   ========================================================================== */
+
+// 1. Artisan Rotating Roaster Seal
+.inno-artisan-stamp-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 8px 24px rgba(212, 136, 66, 0.25));
+    transition: transform 0.4s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.inno-artisan-stamp {
+    animation: inno-stamp-spin 35s linear infinite;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+@keyframes inno-stamp-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// 2. Roastery Live Telemetry Marquee Ribbon
+.inno-roastery-ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    background: rgba(14, 8, 4, 0.92);
+    border-top: 1px solid var(--inno-spatial-hairline);
+    border-bottom: 1px solid var(--inno-spatial-hairline);
+    padding: 0.75rem 0;
+    position: relative;
+    z-index: 2;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 60px;
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    &::before {
+        left: 0;
+        background: linear-gradient(90deg, rgba(12, 7, 4, 0.95), transparent);
+    }
+
+    &::after {
+        right: 0;
+        background: linear-gradient(270deg, rgba(12, 7, 4, 0.95), transparent);
+    }
+}
+
+.inno-roastery-ticker-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    animation: inno-marquee 45s linear infinite;
+    will-change: transform;
+
+    &:hover {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes inno-marquee {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.inno-ticker-item {
+    font-family: var(--inno-font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--inno-cream-foam);
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+}
+
+.inno-ticker-sep {
+    color: var(--inno-amber);
+    opacity: 0.6;
+    font-size: 0.7rem;
+}
+
+// 3. Highland Topographic Contour Overlay
+.inno-topographic-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+    opacity: 0.65;
+    mix-blend-mode: screen;
+}
+
+// 4. Roaster Passport / Lab Sheet Styling (Anti-Slop Cupping Card)
+.inno-roaster-passport {
+    background: linear-gradient(165deg, rgba(30, 18, 11, 0.75) 0%, rgba(14, 8, 4, 0.90) 100%);
+    border: 1px solid var(--inno-spatial-hairline);
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--inno-amber), transparent);
+        opacity: 0.6;
+    }
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px -10px rgba(212, 136, 66, 0.2);
+        border-color: rgba(212, 136, 66, 0.25);
+    }
+}
+
+.inno-passport-header {
+    border-bottom: 1px solid var(--inno-spatial-hairline);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inno-passport-tag {
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: var(--inno-amber);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.inno-passport-body {
+    padding: 1.5rem;
+}
+
+// 5. Tactile Sensory Flavor Chip
+.inno-flavor-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--inno-spatial-hairline);
+    border-radius: 9999px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--inno-cream-foam);
+    letter-spacing: 0.02em;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+
+    &:hover {
+        background: rgba(212, 136, 66, 0.12);
+        border-color: rgba(212, 136, 66, 0.3);
+    }
+}
+
+.inno-chip-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+// 6. Agtron Spectrum Mini Bar
+.inno-agtron-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-family: monospace;
+    color: rgba(247, 242, 234, 0.75);
+
+    .inno-agtron-swatch {
+        height: 6px;
+        width: 48px;
+        border-radius: 3px;
+        display: inline-block;
+    }
+}
+
+// 7. Brewing Method Vector Gear Button
+.inno-brew-method-btn {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    position: relative;
+    overflow: hidden;
+
+    .inno-brew-icon {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        stroke: var(--inno-amber);
+        transition: transform 0.3s ease, stroke 0.3s ease;
+    }
+
+    &:hover {
+        background: rgba(212, 136, 66, 0.08) !important;
+        border-color: rgba(212, 136, 66, 0.25) !important;
+        transform: translateX(4px);
+
+        .inno-brew-icon {
+            transform: scale(1.1);
+            stroke: #F59E0B;
+        }
+    }
+
+    &.active {
+        background: rgba(212, 136, 66, 0.15) !important;
+        border-color: var(--inno-amber) !important;
+        box-shadow: 0 8px 24px -6px rgba(212, 136, 66, 0.25) !important;
+
+        .inno-brew-icon {
+            stroke: #F59E0B;
+        }
+    }
+}
+
+// 8. Subtle Golden Shimmer Specular Light Sweep
+@keyframes inno-shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.inno-btn-shimmer {
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            60deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.15) 50%,
+            transparent 70%
+        );
+        transform: rotate(30deg);
+        animation: inno-shimmer 6s infinite;
+        pointer-events: none;
+    }
+}
+
+// 9. Micro-lot Flight Card (Asymmetrical Showcase)
+.inno-flight-card {
+    background: var(--inno-spatial-layer-1);
+    border: 1px solid var(--inno-spatial-hairline);
+    border-radius: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.35s ease;
+
+    &:hover {
+        background: var(--inno-spatial-layer-2);
+        border-color: rgba(212, 136, 66, 0.2);
+        transform: translateY(-3px);
+        box-shadow: var(--inno-glow-honey);
+    }
+
+    .inno-flight-thumb {
+        width: 90px;
+        height: 90px;
+        border-radius: 1rem;
+        overflow: hidden;
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+    }
+
+    &:hover .inno-flight-thumb img {
+        transform: scale(1.08);
     }
 }

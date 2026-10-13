@@ -12,6 +12,15 @@
                 <!-- 1. PAGE HEADER & FILTER NAVIGATION                            -->
                 <!-- ============================================================= -->
                 <section class="s_cover o_colored_level o_cc o_cc5 pt100 pb60 position-relative overflow-hidden inno-cinema-hero-section" data-snippet="s_cover" data-name="Products Catalogue Header">
+                    <!-- Highland Topographic Contour Overlay -->
+                    <div class="inno-topographic-bg">
+                        <svg class="w-100 h-100" viewBox="0 0 1440 600" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M-100,100 C250,50 500,200 850,120 C1200,50 1400,160 1600,100" stroke="rgba(212, 136, 66, 0.18)" stroke-width="1.2"/>
+                            <path d="M-100,180 C200,120 480,260 900,180 C1250,110 1450,230 1600,180" stroke="rgba(212, 136, 66, 0.12)" stroke-width="1"/>
+                            <path d="M-100,260 C260,200 520,340 980,250 C1300,180 1480,310 1600,260" stroke="rgba(212, 136, 66, 0.10)" stroke-width="1" stroke-dasharray="6 5"/>
+                        </svg>
+                    </div>
+
                     <!-- InnoKafe Fresh Roasted Beans Cinema Video Loop Background -->
                     <div class="inno-hero-video-wrap">
                         <video class="inno-hero-video" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" poster="/innokafe_website/static/src/video/posters/innokafe_cooling_tray_16x9_poster.webp">
@@ -28,7 +37,7 @@
                                     <span>· BẢO CHỨNG CHẤT LƯỢNG · SCA 84+</span>
                                 </div>
                                 <h1 class="display-4 fw-bold text-white mb-3 inno-hero-title">
-                                    Danh Mục Hạt Cà Phê Đặc Sản &amp; <span class="inno-amber-text">Nghệ Nhân Rang Mộc</span>
+                                    Danh Mục Hạt Cà Phê Đặc Sản &amp; <span class="inno-amber-text fst-italic">Nghệ Nhân Rang Mộc</span>
                                 </h1>
                                 <p class="lead text-secondary mb-4 col-lg-11 p-0 lh-base inno-hero-lead">
                                     Mỗi mẻ cà phê InnoKafe xuất xưởng là một tác phẩm được bảo chứng bằng điểm chấm cupping quốc tế, thông số nông học minh bạch và hồ sơ hương vị độc bản. 100% hạt rang mộc Hot-Air, đóng gói van một chiều Thụy Sĩ.
@@ -37,12 +46,30 @@
                                     <a href="#sku_list" class="btn btn-sm btn-primary rounded-pill px-3 py-2">Tất Cả 6 Sản Phẩm</a>
                                     <a href="#sensory_anchor" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">Biểu Đồ Hương Vị Sensory</a>
                                     <a href="#grind_guide" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2">Cẩm Nang Cỡ Xay &amp; Pha Chế</a>
-                                    <a href="/taste-profiler" class="btn btn-sm btn-primary rounded-pill px-3 py-2 fw-semibold">Chưa Rõ Gu? Làm Quiz Ngay</a>
+                                    <a href="/taste-profiler" class="btn btn-sm btn-primary rounded-pill px-3 py-2 fw-semibold inno-btn-shimmer">Chưa Rõ Gu? Làm Quiz Ngay</a>
                                 </div>
                             </div>
                             <div class="col-lg-4 text-lg-end">
-                                <div class="p-4 inno-spatial-layer inno-floating-pod text-start">
-                                    <div class="text-warning small fw-bold text-uppercase mb-2">QUY CHUẨN XUẤT XƯỞNG</div>
+                                <div class="p-4 inno-spatial-layer inno-floating-pod text-start position-relative">
+                                    <!-- Rotating Artisan Roaster Stamp -->
+                                    <div class="inno-artisan-stamp-wrap position-absolute" style="top: -20px; right: -20px; z-index: 5;">
+                                        <svg class="inno-artisan-stamp" viewBox="0 0 160 160" width="90" height="90" aria-label="InnoKafe Certified Roastery Seal">
+                                            <defs>
+                                                <path id="innoStampPathProd" d="M 80, 80 m -56, 0 a 56,56 0 1,1 112,0 a 56,56 0 1,1 -112,0" fill="none"/>
+                                            </defs>
+                                            <circle cx="80" cy="80" r="74" stroke="rgba(212, 136, 66, 0.4)" stroke-width="1.2" stroke-dasharray="4 3" fill="none"/>
+                                            <circle cx="80" cy="80" r="68" stroke="rgba(212, 136, 66, 0.6)" stroke-width="1" fill="none"/>
+                                            <text font-family="'Plus Jakarta Sans', monospace" font-size="7" font-weight="700" fill="#E5A967" letter-spacing="2.6">
+                                                <textPath href="#innoStampPathProd" startOffset="0%">
+                                                    ★ SPECIALTY COFFEE ★ 100% RANG MỘC ★ SCA 84+ CERTIFIED ★
+                                                </textPath>
+                                            </text>
+                                            <circle cx="80" cy="80" r="42" stroke="rgba(212, 136, 66, 0.3)" stroke-width="1" fill="rgba(30, 18, 11, 0.9)"/>
+                                            <text x="80" y="85" font-family="'Playfair Display', serif" font-size="9" font-weight="700" text-anchor="middle" fill="#F59E0B">SCA 84+</text>
+                                        </svg>
+                                    </div>
+
+                                    <div class="text-warning small fw-bold text-uppercase mb-2 font-monospace">QUY CHUẨN XUẤT XƯỞNG</div>
                                     <ul class="list-unstyled text-secondary small mb-0 d-flex flex-column gap-2">
                                         <li class="d-flex align-items-center gap-2">
                                             <i class="fa fa-check text-warning"/> <span>Rang mới định kỳ mỗi tuần</span>
@@ -102,10 +129,15 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Sơ chế Natural phơi chậm 28 ngày trên giàn lưới. Thể chất đầm dày (Heavy body), sô-cô-la đen 85%, hạt dẻ nướng, caramel khói và hậu vị ngọt sâu lắng kéo dài.
                                         </p>
-                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
-                                            <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Natural Khô Tự Nhiên (28 ngày)</div>
-                                            <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Medium-Dark (Agtron 48)</div>
-                                            <div class="text-secondary"><strong>Nốt hương:</strong> Dark Chocolate · Roasted Hazelnut · Molasses</div>
+                                        <div class="inno-agtron-bar mb-2">
+                                            <span>MỨC RANG:</span>
+                                            <span class="inno-agtron-swatch" style="background: linear-gradient(90deg, #3C2415, #5A3825);"/>
+                                            <strong class="text-warning">Medium-Dark (Agtron 48)</strong>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-1 mb-3">
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #3B1F13;"/>Dark Chocolate</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #D48842;"/>Roasted Hazelnut</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #78350F;"/>Molasses</span>
                                         </div>
 
                                         <!-- Selector controls -->
@@ -134,7 +166,7 @@
                                             <span class="text-secondary small d-block">Giá thanh toán:</span>
                                             <strong class="fs-4 text-warning inno-price-display">125.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="1" data-sku="INNO-ROBUSTA-NAT-01">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn inno-btn-shimmer" data-product-id="1" data-sku="INNO-ROBUSTA-NAT-01">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -163,10 +195,16 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Sơ chế Fully Washed lên men kiểm soát 32 giờ. Hương hoa nhài trắng tỏa ngát, cam Bergamot thanh tao, táo xanh và trà Earl Grey. Tách cà phê trong trẻo tuyệt đối.
                                         </p>
-                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
-                                            <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Fully Washed (Lên men 32h, phơi 14d)</div>
-                                            <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Light-Medium (Agtron 72)</div>
-                                            <div class="text-secondary"><strong>Nốt hương:</strong> White Jasmine · Bergamot · Green Apple · Peach</div>
+                                        <div class="inno-agtron-bar mb-2">
+                                            <span>MỨC RANG:</span>
+                                            <span class="inno-agtron-swatch" style="background: linear-gradient(90deg, #6A4428, #9E6B47);"/>
+                                            <strong class="text-warning">Light-Medium (Agtron 72)</strong>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-1 mb-3">
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #E8DCC4;"/>Jasmine</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #D97706;"/>Bergamot</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #84CC16;"/>Green Apple</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #F97316;"/>Peach</span>
                                         </div>
 
                                         <div class="mb-3">
@@ -194,7 +232,7 @@
                                             <span class="text-secondary small d-block">Giá thanh toán:</span>
                                             <strong class="fs-4 text-warning inno-price-display">185.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="2" data-sku="INNO-ARABICA-WASH-02">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn inno-btn-shimmer" data-product-id="2" data-sku="INNO-ARABICA-WASH-02">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -223,10 +261,16 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Sự kết hợp cân bằng giữa hương thơm thanh tao của Arabica Cầu Đất và thể chất đậm đà của Fine Robusta Cư M'gar. Sơ chế Red Honey giữ 75% lớp nhầy đường thịt quả, mang đến vị ngọt tự nhiên như mật ong hoa rừng và hậu vị bùi béo.
                                         </p>
-                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
-                                            <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Red Honey (Giữ 75% lớp nhầy đường)</div>
-                                            <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Medium Roast (Agtron 58)</div>
-                                            <div class="text-secondary"><strong>Nốt hương:</strong> Wild Honey · Butter Caramel · Red Apple · Almond</div>
+                                        <div class="inno-agtron-bar mb-2">
+                                            <span>MỨC RANG:</span>
+                                            <span class="inno-agtron-swatch" style="background: linear-gradient(90deg, #4A2B18, #7A4E2C);"/>
+                                            <strong class="text-warning">Medium (Agtron 58)</strong>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-1 mb-3">
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #F59E0B;"/>Wild Honey</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #D97706;"/>Butter Caramel</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #DC2626;"/>Red Apple</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #A16207;"/>Almond</span>
                                         </div>
 
                                         <div class="mb-3">
@@ -254,7 +298,7 @@
                                             <span class="text-secondary small d-block">Giá thanh toán:</span>
                                             <strong class="fs-4 text-warning inno-price-display">155.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="3" data-sku="INNO-SIGNATURE-HONEY-03">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn inno-btn-shimmer" data-product-id="3" data-sku="INNO-SIGNATURE-HONEY-03">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -283,10 +327,15 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Thưởng thức cà phê đặc sản mọi lúc mọi nơi chỉ với một ấm nước sôi. Hộp 10 túi lọc gồm 5 loại hạt tuyển chọn được đóng gói khí trơ ni-tơ bảo toàn 100% hương thơm.
                                         </p>
-                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
-                                            <div class="text-secondary mb-1"><strong>Quy cách:</strong> Hộp 10 gói x 15g (Túi lọc màng dệt Nhật)</div>
-                                            <div class="text-secondary mb-1"><strong>Thành phần:</strong> 2 Robusta Dark, 2 Arabica Washed, 2 Red Honey, 2 Cold Brew, 2 Signature</div>
-                                            <div class="text-secondary"><strong>Cách pha:</strong> Châm 150ml nước sôi 92-95°C trong 2 phút</div>
+                                        <div class="inno-agtron-bar mb-2">
+                                            <span>TUYỂN TẬP:</span>
+                                            <span class="inno-agtron-swatch" style="background: linear-gradient(90deg, #2A1508, #6A4428, #9E6B47);"/>
+                                            <strong class="text-warning">Multi-Roast (10 Gói)</strong>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-1 mb-3">
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #D48842;"/>5 Dòng Tuyển</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #60A5FA;"/>Màng Lọc Nhật</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #34D399;"/>Khí Trơ Ni-tơ</span>
                                         </div>
 
                                         <!-- Selector controls -->
@@ -315,7 +364,7 @@
                                             <span class="text-secondary small d-block">Giá thanh toán:</span>
                                             <strong class="fs-4 text-warning inno-price-display">165.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="4" data-sku="INNO-DRIP-EXPLORER-04">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn inno-btn-shimmer" data-product-id="4" data-sku="INNO-DRIP-EXPLORER-04">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -344,10 +393,16 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                              Được phối trộn và rang sáng (Light Roast) chuyên biệt cho phương pháp ngâm lạnh. Tách cold brew giải phóng vị cam vàng Valencia bùng nổ, đào chín, mật hoa dại sảng khoái.
                                         </p>
-                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
-                                            <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Natural x Washed Blend</div>
-                                            <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Light Roast (Agtron 78)</div>
-                                            <div class="text-secondary"><strong>Nốt hương:</strong> Valencia Orange · Ripe Peach · Wild Blossom · Citrus</div>
+                                        <div class="inno-agtron-bar mb-2">
+                                            <span>MỨC RANG:</span>
+                                            <span class="inno-agtron-swatch" style="background: linear-gradient(90deg, #8A5938, #B07D54);"/>
+                                            <strong class="text-warning">Light Roast (Agtron 78)</strong>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-1 mb-3">
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #F97316;"/>Valencia Orange</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #FB923C;"/>Ripe Peach</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #F472B6;"/>Wild Blossom</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #FBBF24;"/>Citrus Sweet</span>
                                         </div>
 
                                         <div class="mb-3">
@@ -375,7 +430,7 @@
                                             <span class="text-secondary small d-block">Giá thanh toán:</span>
                                             <strong class="fs-4 text-warning inno-price-display">175.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="5" data-sku="INNO-COLDBREW-CITRUS-05">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn inno-btn-shimmer" data-product-id="5" data-sku="INNO-COLDBREW-CITRUS-05">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>
@@ -404,10 +459,16 @@
                                         <p class="text-secondary small mb-3 lh-base">
                                             Công thức vàng cho các quán cà phê chuyên nghiệp. Chiết xuất lớp crema vàng óng ánh cực dày, bền bỉ, hòa quyện xuất sắc cùng sữa đặc hoặc sữa tươi thanh trùng.
                                         </p>
-                                        <div class="p-3 rounded-3 inno-inner-panel mb-3 small">
-                                            <div class="text-secondary mb-1"><strong>Sơ chế:</strong> Honey &amp; Natural</div>
-                                            <div class="text-secondary mb-1"><strong>Mức độ rang:</strong> Medium-Dark (Agtron 50)</div>
-                                            <div class="text-secondary"><strong>Nốt hương:</strong> Cocoa 70% · Peanut Butter · Smoke Caramel · Citrus Peel</div>
+                                        <div class="inno-agtron-bar mb-2">
+                                            <span>MỨC RANG:</span>
+                                            <span class="inno-agtron-swatch" style="background: linear-gradient(90deg, #382012, #55321E);"/>
+                                            <strong class="text-warning">Medium-Dark (Agtron 50)</strong>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-1 mb-3">
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #5A3825;"/>Cocoa 70%</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #D97706;"/>Peanut Butter</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #B45309;"/>Smoke Caramel</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.72rem;"><span class="inno-chip-dot" style="background: #F59E0B;"/>Crema Dày</span>
                                         </div>
 
                                         <div class="mb-3">
@@ -435,7 +496,7 @@
                                             <span class="text-secondary small d-block">Giá thanh toán:</span>
                                             <strong class="fs-4 text-warning inno-price-display">135.000 đ</strong>
                                         </div>
-                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn" data-product-id="6" data-sku="INNO-HORECA-BARISTA-06">
+                                        <button class="btn btn-primary rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2 inno-add-cart-btn inno-btn-shimmer" data-product-id="6" data-sku="INNO-HORECA-BARISTA-06">
                                             <span>Thêm Vào Giỏ</span>
                                             <i class="fa fa-cart-plus"/>
                                         </button>

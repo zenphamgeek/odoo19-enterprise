@@ -391,6 +391,149 @@
             </section>
 
             <!-- =============================================================== -->
+            <!-- DYNAMIC WHOLESALE & ROI PRICING CALCULATOR                      -->
+            <!-- =============================================================== -->
+            <section id="b2b_calculator" class="s_innokafe_b2b_calculator o_colored_level o_cc o_cc5 py-5 text-light"
+                     data-snippet="s_innokafe_b2b_calculator"
+                     data-name="Wholesale ROI Calculator"
+                     style="background-color: #160D08; border-top: 1px solid rgba(212, 136, 66, 0.2);">
+                <div class="container py-3">
+                    <div class="text-center mb-4">
+                        <span class="inno-badge-liquid mb-2 text-uppercase">
+                            Công Cụ Dự Toán Tài Chính &amp; Giá Vốn F&amp;B
+                        </span>
+                        <h2 class="display-6 fw-bold text-light mb-2" style="font-family: 'Playfair Display', serif;">
+                            Bảng Tính Chiết Khấu Sỉ &amp; Tối Ưu Chi Phí Theo Sản Lượng
+                        </h2>
+                        <p style="color: #D1C5B4;" class="small max-w-700 mx-auto">
+                            Kéo thanh sản lượng hàng tháng của quán để xem ngay tỷ lệ chiết khấu, giá vốn trên từng tách cà phê, ngân sách tiết kiệm và các gói tài trợ thiết bị đi kèm.
+                        </p>
+                    </div>
+
+                    <div class="inno-spatial-layer inno-spatial-layer--elevated rounded-4 p-4 p-lg-5">
+                        <div class="row g-4 align-items-center">
+                            <!-- Left Controls Column -->
+                            <div class="col-lg-6">
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <label class="form-label small fw-bold text-light mb-0">
+                                            Sản lượng tiêu thụ dự kiến:
+                                        </label>
+                                        <span id="b2b_calc_vol_label" class="badge rounded-pill px-3 py-2 fw-bold"
+                                              style="background-color: #E5A93C !important; background-image: linear-gradient(135deg, #E5A93C, #D48842) !important; color: #1E120B !important; font-size: 0.95rem;">
+                                            50 kg / tháng
+                                        </span>
+                                    </div>
+                                    <input type="range" class="form-range inno-volume-slider" id="b2b_calc_volume"
+                                           min="10" max="300" step="5" value="50"
+                                           style="accent-color: #D48842; cursor: pointer;"/>
+                                    <div class="d-flex justify-content-between small text-muted px-1" style="font-size: 0.75rem;">
+                                        <span>10 kg (Khởi đầu)</span>
+                                        <span>80 kg (Tiêu chuẩn)</span>
+                                        <span>200+ kg (Chuỗi F&amp;B)</span>
+                                    </div>
+                                </div>
+
+                                <!-- Quick Presets -->
+                                <div class="mb-4">
+                                    <label class="form-label small fw-bold text-light d-block mb-2">Chọn nhanh mốc sản lượng:</label>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <button type="button" class="btn btn-outline-light btn-sm rounded-pill px-3 b2b-preset-vol" data-vol="20">
+                                            20 kg <span class="small opacity-75">(Tier 1)</span>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-light btn-sm rounded-pill px-3 b2b-preset-vol active" data-vol="50">
+                                            50 kg <span class="small opacity-75">(Tier 2)</span>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-light btn-sm rounded-pill px-3 b2b-preset-vol" data-vol="100">
+                                            100 kg <span class="small opacity-75">(Tier 3)</span>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-light btn-sm rounded-pill px-3 b2b-preset-vol" data-vol="250">
+                                            250 kg <span class="small opacity-75">(Tier 4)</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Blend Selector -->
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-light d-block mb-2">Dòng hạt chủ đạo của quán:</label>
+                                    <div class="row g-2">
+                                        <div class="col-sm-4">
+                                            <div class="inno-inner-panel p-2 rounded-3 text-center b2b-blend-card" data-base-price="280000" data-name="Robusta Sẻ Đắk Lắk" style="cursor: pointer; border: 1px solid rgba(212,136,66,0.3);">
+                                                <div class="small fw-bold text-light">Robusta Sẻ</div>
+                                                <div class="small text-amber" style="font-size: 0.75rem;">280.000đ/kg</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="inno-inner-panel p-2 rounded-3 text-center b2b-blend-card active" data-base-price="350000" data-name="Heritage Red Honey" style="cursor: pointer; border: 2px solid #D48842; background: rgba(212,136,66,0.15);">
+                                                <div class="small fw-bold text-light">Heritage Honey</div>
+                                                <div class="small text-amber" style="font-size: 0.75rem;">350.000đ/kg (Gu Quán)</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="inno-inner-panel p-2 rounded-3 text-center b2b-blend-card" data-base-price="420000" data-name="Arabica Cầu Đất" style="cursor: pointer; border: 1px solid rgba(212,136,66,0.3);">
+                                                <div class="small fw-bold text-light">Arabica Cầu Đất</div>
+                                                <div class="small text-amber" style="font-size: 0.75rem;">420.000đ/kg</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Metrics Display Column -->
+                            <div class="col-lg-6">
+                                <div class="p-4 rounded-4 inno-inner-panel" style="background: rgba(18, 10, 6, 0.7); border: 1px solid rgba(212, 136, 66, 0.35);">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="small text-uppercase tracking-wider" style="color: #D1C5B4;">Hạng Gói Đạt Được</span>
+                                        <span id="b2b_calc_tier_badge" class="badge rounded-pill px-3 py-1 fw-bold"
+                                              style="background: #2D4739; color: #FAF6F0; border: 1px solid #10B981;">
+                                            Tier 2: Silver (-25%)
+                                        </span>
+                                    </div>
+
+                                    <div class="row g-3 text-start mb-3">
+                                        <div class="col-6">
+                                            <span class="small d-block text-muted">Đơn giá sỉ sau chiết khấu:</span>
+                                            <div id="b2b_calc_net_price" class="h4 fw-bold text-light mb-0">262.500 đ<span class="small fs-6 fw-normal text-muted">/kg</span></div>
+                                            <span id="b2b_calc_base_price" class="small text-decoration-line-through text-muted">350.000 đ</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <span class="small d-block text-muted">Chi phí hạt / tách (18g):</span>
+                                            <div id="b2b_calc_cost_per_cup" class="h4 fw-bold text-amber mb-0">4.725 đ<span class="small fs-6 fw-normal text-muted">/tách</span></div>
+                                            <span class="small text-success">Biên lợi nhuận cao</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <span class="small d-block text-muted">Ngân sách đầu tư tháng:</span>
+                                            <div id="b2b_calc_monthly_cost" class="h5 fw-bold text-light mb-0">13.125.000 đ</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <span class="small d-block text-muted">Mức tiết kiệm tháng:</span>
+                                            <div id="b2b_calc_monthly_savings" class="h5 fw-bold text-success mb-0">+4.375.000 đ</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Perks List -->
+                                    <div class="p-3 rounded-3 mb-3" style="background: rgba(0, 0, 0, 0.35); border-left: 3px solid #D48842;">
+                                        <span class="small fw-bold d-block text-light mb-1">Quyền lợi thiết bị &amp; vận hành đi kèm:</span>
+                                        <div id="b2b_calc_perks" class="small" style="color: #FAF6F0; line-height: 1.6;">
+                                            <i class="fa fa-check text-warning me-2"/>Tài trợ máy pha 1-Group 0đ<br/>
+                                            <i class="fa fa-check text-warning me-2"/>Miễn phí vận chuyển nội thành hàng tuần<br/>
+                                            <i class="fa fa-check text-warning me-2"/>Tặng bộ Barista Pro trị giá 3.500.000đ
+                                        </div>
+                                    </div>
+
+                                    <button type="button" id="b2b_calc_apply_btn"
+                                            class="btn btn-primary rounded-pill w-100 py-3 fw-bold shadow"
+                                            style="background: linear-gradient(135deg, #E5A93C, #D48842); color: #1E120B !important; border: none;">
+                                        Áp Dụng Gói Này &amp; Nhận Hộp Mẫu Thử Miễn Phí →
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =============================================================== -->
             <!-- B2B SAMPLE REQUEST & CONSULTATION FORM                          -->
             <!-- =============================================================== -->
             <section id="b2b_form" class="s_innokafe_b2b_lead_form o_colored_level o_cc o_cc5 py-5 text-light"

@@ -520,11 +520,11 @@ class InnokafeMainController(Website):
     # PUBLIC ROUTES
     # --------------------------------------------------------------------------
 
-    @http.route(["/"], type="http", auth="public", website=True, sitemap=True)
-    def index(self, **kwargs):
+    @http.route(["/", "/en", "/vi"], type="http", auth="public", website=True, sitemap=True)
+    def home(self, **kwargs):
         ws = getattr(request, 'website', None)
         if not (ws and ('innokafe' in (ws.domain or '') or 'innokafe' in (ws.name or '').lower())):
-            return super().index(**kwargs)
+            return super().home(**kwargs) if hasattr(super(), 'home') else super().index(**kwargs)
         values = self._base_values()
         try:
             products = request.env["product.template"].sudo().search([
@@ -534,6 +534,10 @@ class InnokafeMainController(Website):
         except Exception:
             values["featured_products"] = []
         return request.render("innokafe_website.homepage", values)
+
+    @http.route(["/"], type="http", auth="public", website=True, sitemap=True)
+    def index(self, **kwargs):
+        return self.home(**kwargs)
 
     @http.route(["/story"], type="http", auth="public", website=True, sitemap=True)
     def story(self, **kwargs):

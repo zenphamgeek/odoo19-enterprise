@@ -1,1 +1,3 @@
-# __init__.py for innokafe_website tests
+# -*- coding: utf-8 -*-
+from . import test_branding_integrity
+from . import test_brand_identity

@@ -12,6 +12,19 @@
                 <!-- 1. HERO STORY COVER (CARDLESS / LIQUID SPATIAL UI)           -->
                 <!-- ============================================================= -->
                 <section class="s_cover o_colored_level o_cc o_cc5 pt100 pb80 position-relative overflow-hidden inno-cinema-hero-section" data-snippet="s_cover" data-name="Home Hero Cover">
+                    <!-- Highland Topographic Contour Overlay -->
+                    <div class="inno-topographic-bg">
+                        <svg class="w-100 h-100" viewBox="0 0 1440 600" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M-100,120 C200,60 450,220 800,140 C1150,60 1350,180 1600,110" stroke="rgba(212, 136, 66, 0.20)" stroke-width="1.2"/>
+                            <path d="M-100,180 C180,110 500,280 850,190 C1200,100 1380,240 1600,170" stroke="rgba(212, 136, 66, 0.16)" stroke-width="1"/>
+                            <path d="M-100,240 C220,170 480,340 900,240 C1250,150 1420,300 1600,230" stroke="rgba(212, 136, 66, 0.14)" stroke-width="1.2" stroke-dasharray="8 6"/>
+                            <path d="M-100,300 C250,230 520,390 950,290 C1300,200 1450,360 1600,290" stroke="rgba(212, 136, 66, 0.10)" stroke-width="1"/>
+                            <path d="M-100,360 C300,290 560,450 1000,340 C1350,250 1480,410 1600,350" stroke="rgba(212, 136, 66, 0.08)" stroke-width="1"/>
+                            <text x="820" y="132" font-family="monospace" font-size="10" fill="rgba(212, 136, 66, 0.4)" letter-spacing="1">1.650m CẦU ĐẤT</text>
+                            <text x="240" y="232" font-family="monospace" font-size="10" fill="rgba(212, 136, 66, 0.4)" letter-spacing="1">750m CƯ M'GAR</text>
+                        </svg>
+                    </div>
+
                     <!-- InnoKafe Ambient Cinema Video Loop Background -->
                     <div class="inno-hero-video-wrap">
                         <video class="inno-hero-video" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" poster="/innokafe_website/static/src/video/posters/innokafe_hero_terroir_16x9_poster.webp">
@@ -21,21 +34,24 @@
                         <div class="inno-hero-scrim-split"/>
                     </div>
 
-                    <div class="container position-relative">
+                    <div class="container position-relative" style="z-index: 2;">
                         <div class="row align-items-center g-5">
                             <div class="col-lg-7">
-                                <p class="text-uppercase tracking-widest text-warning small font-monospace mb-3">
-                                    Thổ Nhưỡng Cư M'gar &amp; Sương Lạnh Cầu Đất
-                                </p>
+                                <div class="d-flex align-items-center gap-2 mb-3">
+                                    <span class="inno-live-pulse"/>
+                                    <p class="text-uppercase tracking-widest text-warning small font-monospace mb-0">
+                                        Thổ Nhưỡng Cư M'gar &amp; Sương Lạnh Cầu Đất
+                                    </p>
+                                </div>
                                 <h1 class="display-3 fw-bold text-white mb-4 lh-sm inno-hero-title">
                                     Hạt Cà Phê Đặc Sản <br/>
-                                    <span class="inno-amber-text">Đất Đỏ &amp; Sương Khói Cao Nguyên</span>
+                                    <span class="inno-amber-text fst-italic">Đất Đỏ &amp; Sương Khói Cao Nguyên</span>
                                 </h1>
                                 <p class="lead text-secondary mb-4 col-lg-11 p-0 lh-lg inno-hero-lead" style="font-size: 1.15rem;">
                                     Từng hạt cà phê được thu hái thủ công từ vùng đất đỏ bazan Cư M'gar và miền sương mù Cầu Đất 1.650m. Chúng tôi phơi chậm tự nhiên trên giàn lưới 28 ngày và rang mộc bằng khí nóng Hot-Air đối lưu mỗi tuần, giữ trọn vị ngọt mật của quả chín và hương vị thổ nhưỡng nguyên bản.
                                 </p>
                                 <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 mb-5">
-                                    <a href="/products" class="btn btn-primary rounded-pill px-4 py-3 d-inline-flex align-items-center justify-content-center gap-2">
+                                    <a href="/products" class="btn btn-primary rounded-pill px-4 py-3 d-inline-flex align-items-center justify-content-center gap-2 inno-btn-shimmer">
                                         <span>Khám Phá Dòng Hạt</span>
                                         <i class="fa fa-shopping-bag"/>
                                     </a>
@@ -64,9 +80,39 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Right Column: Pure Cinematic Photography Frame (Zero AI Slop) -->
+                            <!-- Right Column: Pure Cinematic Photography Frame with Artisan Hot-Foil Seal -->
                             <div class="col-lg-5">
-                                <div class="inno-spatial-layer inno-spatial-layer--elevated p-2">
+                                <div class="inno-spatial-layer inno-spatial-layer--elevated p-2 position-relative">
+                                    <!-- Rotating Artisan Roastery Seal Badge -->
+                                    <div class="inno-artisan-stamp-wrap position-absolute" style="top: -24px; right: -24px; z-index: 5;">
+                                        <svg class="inno-artisan-stamp" viewBox="0 0 160 160" width="115" height="115" aria-label="InnoKafe Artisan Specialty Roaster Seal">
+                                            <defs>
+                                                <path id="innoStampPathHero" d="M 80, 80 m -58, 0 a 58,58 0 1,1 116,0 a 58,58 0 1,1 -116,0" fill="none"/>
+                                                <linearGradient id="innoGoldGlowHero" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                    <stop offset="0%" stop-color="#F59E0B"/>
+                                                    <stop offset="50%" stop-color="#D48842"/>
+                                                    <stop offset="100%" stop-color="#C2410C"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <circle cx="80" cy="80" r="76" stroke="rgba(212, 136, 66, 0.45)" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+                                            <circle cx="80" cy="80" r="70" stroke="rgba(212, 136, 66, 0.6)" stroke-width="1" fill="none"/>
+                                            <text font-family="'Plus Jakarta Sans', monospace" font-size="7.2" font-weight="700" fill="#E5A967" letter-spacing="2.8">
+                                                <textPath href="#innoStampPathHero" startOffset="0%">
+                                                    ★ INNOKAFE SPECIALTY ROASTERY ★ CƯ M'GAR &amp; CẦU ĐẤT TERROIR ★ DIRECT TRADE ★
+                                                </textPath>
+                                            </text>
+                                            <circle cx="80" cy="80" r="44" stroke="rgba(212, 136, 66, 0.3)" stroke-width="1" fill="rgba(30, 18, 11, 0.85)"/>
+                                            <g transform="translate(80, 80) scale(0.9)">
+                                                <path d="M 0 -18 C -10 -10, -10 4, 0 14 C 10 4, 10 -10, 0 -18 Z" fill="none" stroke="url(#innoGoldGlowHero)" stroke-width="1.5"/>
+                                                <path d="M 0 -14 L 0 10" stroke="rgba(212, 136, 66, 0.7)" stroke-width="1"/>
+                                                <circle cx="-5" cy="4" r="3.5" fill="#D48842"/>
+                                                <circle cx="5" cy="5" r="3" fill="#F59E0B"/>
+                                                <path d="M 0 -26 Q -4 -20, 0 -16 Q 4 -20, 0 -26 Z" fill="#F59E0B"/>
+                                            </g>
+                                            <text x="80" y="98" font-family="'Playfair Display', serif" font-size="7" font-weight="700" text-anchor="middle" fill="#F7F2EA" letter-spacing="1.5">EST. 2026</text>
+                                        </svg>
+                                    </div>
+
                                     <div class="position-relative rounded-4 overflow-hidden shadow-2xl" style="aspect-ratio: 4 / 3;">
                                         <img src="/innokafe_website/static/src/img/photography/cooling_tray_artisan_roast.webp" alt="Hạt cà phê đặc sản rang mộc InnoKafe trên khay làm nguội" class="img-fluid w-100 h-100 object-fit-cover" style="width: 100%; height: 100%; max-width: 100%; object-fit: cover; display: block;"/>
                                         <div class="position-absolute bottom-0 start-0 p-4 text-white w-100" style="background: linear-gradient(180deg, transparent 30%, rgba(14, 8, 4, 0.95) 100%);">
@@ -79,6 +125,31 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- ============================================================= -->
+                <!-- 1B. ROASTERY LIVE TELEMETRY MARQUEE RIBBON                    -->
+                <!-- ============================================================= -->
+                <div class="inno-roastery-ticker-wrap">
+                    <div class="inno-roastery-ticker-track">
+                        <span class="inno-ticker-item"><span class="inno-live-pulse me-2"/>MẺ RANG SỐ #0849: FINE ROBUSTA CƯ M'GAR · NHIỆT ĐỘ XẢ: 208°C · AGTRON 48 · SCA 84.50</span>
+                        <span class="inno-ticker-sep">✦</span>
+                        <span class="inno-ticker-item">MẺ RANG SỐ #0850: ARABICA BOURBON CẦU ĐẤT · 1.650M · NHIỆT ĐỘ XẢ: 202°C · AGTRON 72 · SCA 86.75</span>
+                        <span class="inno-ticker-sep">✦</span>
+                        <span class="inno-ticker-item">100% QUẢ CHÍN HÁI TAY · PHƠI GIÀN LƯỚI 28 NGÀY · RANG MỘC KHÍ NÓNG HOT-AIR</span>
+                        <span class="inno-ticker-sep">✦</span>
+                        <span class="inno-ticker-item">MẺ RANG SỐ #0851: HERITAGE RED HONEY BLEND · DTR 15.8% · THỂ CHẤT SÁNH MẬT ONG</span>
+                        <span class="inno-ticker-sep">✦</span>
+                        <!-- Seamless Infinite Repeat -->
+                        <span class="inno-ticker-item"><span class="inno-live-pulse me-2"/>MẺ RANG SỐ #0849: FINE ROBUSTA CƯ M'GAR · NHIỆT ĐỘ XẢ: 208°C · AGTRON 48 · SCA 84.50</span>
+                        <span class="inno-ticker-sep">✦</span>
+                        <span class="inno-ticker-item">MẺ RANG SỐ #0850: ARABICA BOURBON CẦU ĐẤT · 1.650M · NHIỆT ĐỘ XẢ: 202°C · AGTRON 72 · SCA 86.75</span>
+                        <span class="inno-ticker-sep">✦</span>
+                        <span class="inno-ticker-item">100% QUẢ CHÍN HÁI TAY · PHƠI GIÀN LƯỚI 28 NGÀY · RANG MỘC KHÍ NÓNG HOT-AIR</span>
+                        <span class="inno-ticker-sep">✦</span>
+                        <span class="inno-ticker-item">MẺ RANG SỐ #0851: HERITAGE RED HONEY BLEND · DTR 15.8% · THỂ CHẤT SÁNH MẬT ONG</span>
+                        <span class="inno-ticker-sep">✦</span>
+                    </div>
+                </div>
 
                 <!-- ============================================================= -->
                 <!-- 2. "4 KHÔNG" PLEDGE RIBBON                                     -->
@@ -153,8 +224,17 @@
                 <!-- ============================================================= -->
                 <!-- 4. DUAL TERROIR PORTFOLIO (HAI MIỀN THỔ NHƯỠNG)                -->
                 <!-- ============================================================= -->
-                <section class="s_text_image o_colored_level o_cc o_cc5 pt80 pb80 inno-cardless position-relative" data-snippet="s_text_image" data-name="Dual Terroir Portfolio">
-                    <div class="container">
+                <section class="s_text_image o_colored_level o_cc o_cc5 pt80 pb80 inno-cardless position-relative overflow-hidden" data-snippet="s_text_image" data-name="Dual Terroir Portfolio">
+                    <!-- Highland Topographic Elevation Overlay -->
+                    <div class="inno-topographic-bg">
+                        <svg class="w-100 h-100" viewBox="0 0 1440 600" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M-50,200 C300,100 600,320 950,200 C1300,80 1450,260 1600,180" stroke="rgba(212, 136, 66, 0.16)" stroke-width="1"/>
+                            <path d="M-50,280 C250,180 550,400 900,280 C1250,160 1400,340 1600,260" stroke="rgba(212, 136, 66, 0.12)" stroke-width="1.2" stroke-dasharray="6 4"/>
+                            <path d="M-50,360 C320,260 620,480 1000,360 C1380,240 1480,420 1600,340" stroke="rgba(212, 136, 66, 0.08)" stroke-width="1"/>
+                        </svg>
+                    </div>
+
+                    <div class="container position-relative" style="z-index: 2;">
                         <div class="row align-items-center g-5">
                             <div class="col-lg-6">
                                 <p class="text-uppercase tracking-widest text-warning small font-monospace mb-2">
@@ -162,7 +242,7 @@
                                 </p>
                                 <h2 class="display-5 fw-bold text-white mb-4">
                                     Hai Vùng Đất,<br/>
-                                    <span class="inno-amber-text">Hai Tính Cách Cà Phê</span>
+                                    <span class="inno-amber-text fst-italic">Hai Tính Cách Cà Phê</span>
                                 </h2>
                                 <p class="lead text-secondary mb-4 lh-base" style="color: rgba(247, 242, 234, 0.82) !important;">
                                     Việt Nam không chỉ có một vị cà phê. Sự tương phản kỳ diệu giữa cao nguyên bazan đầy nắng và thung lũng sương mù se lạnh đã tạo nên bản sắc độc bản cho từng dòng hạt.
@@ -195,8 +275,11 @@
                             <div class="col-lg-6">
                                 <div class="row g-3">
                                     <div class="col-6">
-                                        <div class="rounded-4 overflow-hidden shadow-lg" style="aspect-ratio: 4 / 5;">
+                                        <div class="rounded-4 overflow-hidden shadow-lg position-relative" style="aspect-ratio: 4 / 5;">
                                             <img src="/innokafe_website/static/src/img/photography/artisan_farmer_hands_harvest.webp" alt="Thu hoạch quả cà phê Robusta chín mọng bằng tay tại Cư M'gar" class="img-fluid w-100 h-100 object-fit-cover" style="width: 100%; height: 100%; max-width: 100%; object-fit: cover; display: block;"/>
+                                            <div class="position-absolute bottom-0 start-0 p-3 w-100" style="background: linear-gradient(180deg, transparent, rgba(14,8,4,0.9));">
+                                                <span class="badge bg-warning text-dark font-monospace small">750m MASL</span>
+                                            </div>
                                         </div>
                                         <div class="text-center mt-2">
                                             <span class="text-white small fw-bold d-block">Đắk Lắk · Cư M'gar</span>
@@ -204,8 +287,11 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="rounded-4 overflow-hidden shadow-lg" style="aspect-ratio: 4 / 5;">
+                                        <div class="rounded-4 overflow-hidden shadow-lg position-relative" style="aspect-ratio: 4 / 5;">
                                             <img src="/innokafe_website/static/src/img/photography/farm_plantation_mist.webp" alt="Arabica Cầu Đất trong sương" class="img-fluid w-100 h-100 object-fit-cover" style="width: 100%; height: 100%; max-width: 100%; object-fit: cover; display: block;"/>
+                                            <div class="position-absolute bottom-0 start-0 p-3 w-100" style="background: linear-gradient(180deg, transparent, rgba(14,8,4,0.9));">
+                                                <span class="badge badge-forest font-monospace small">1.650m MASL</span>
+                                            </div>
                                         </div>
                                         <div class="text-center mt-2">
                                             <span class="text-white small fw-bold d-block">Lâm Đồng · Cầu Đất</span>
@@ -217,6 +303,11 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- ============================================================= -->
+                <!-- 4B. INTERACTIVE HOT-AIR ROASTING SCIENCE LAB & LIVE ROR CURVE -->
+                <!-- ============================================================= -->
+                <t t-call="innokafe_website.s_innokafe_roast_mastery"/>
 
                 <!-- ============================================================= -->
                 <!-- 5. INTERACTIVE TASTE PROFILER TEASER                          -->
@@ -278,129 +369,159 @@
                 </section>
 
                 <!-- ============================================================= -->
-                <!-- 6. CURATED SPECIALTY PRODUCTS (PURE EDITORIAL CATALOGUE)       -->
+                <!-- 6. CURATED SPECIALTY PRODUCTS (ARTISAN TERROIR FLIGHT)       -->
                 <!-- ============================================================= -->
                 <section class="s_three_columns o_colored_level o_cc o_cc5 pt80 pb80 inno-cardless position-relative" data-snippet="s_three_columns" data-name="Curated Specialty Products">
                     <div class="container">
                         <div class="text-center mb-5">
                             <p class="text-uppercase tracking-widest text-warning small font-monospace mb-2">
-                                Bộ Sưu Tập Mùa Vụ Mới · Roast to Order
+                                Bộ Sưu Tập Mùa Vụ Mới · Micro-Lot Roaster's Flight
                             </p>
                             <h2 class="display-5 fw-bold text-white mb-3">
-                                Những Mẻ Rang Đậm Đà Thổ Nhưỡng
+                                Những Mẻ Rang <span class="inno-amber-text fst-italic">Đậm Đà Thổ Nhưỡng</span>
                             </h2>
                             <p class="lead text-secondary mx-auto col-lg-8" style="color: rgba(247, 242, 234, 0.78) !important;">
-                                Rang mới định kỳ mỗi tuần theo từng mẻ nhỏ 15kg bằng khí nóng đối lưu Hot-Air. Bảo quản trong túi giấy kraft tráng nhôm với van thoát khí một chiều Thụy Sĩ.
+                                Rang mộc theo mẻ nhỏ 15kg bằng khí nóng đối lưu tuần hoàn Hot-Air. Đóng gói trực tiếp sau khi làm nguội trong túi giấy kraft tráng nhôm với van thoát khí một chiều Thụy Sĩ.
                             </p>
                         </div>
 
-                        <!-- 3 Editorial Product Cards with Real Photography -->
-                        <div class="row g-4 ins-card-row-balanced">
-                            <!-- Product 1: Fine Robusta -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="inno-spatial-layer rounded-4 overflow-hidden h-100 d-flex flex-column text-white">
-                                    <div class="position-relative" style="aspect-ratio: 16 / 10;">
-                                        <img src="/innokafe_website/static/src/img/photography/cooling_tray_artisan_roast.webp" alt="Fine Robusta Cư M'gar mẻ rang mới" class="img-fluid w-100 h-100 object-fit-cover"/>
-                                        <div class="position-absolute top-0 end-0 p-3">
-                                            <span class="badge bg-warning text-dark font-monospace fw-bold">84.50 SCA</span>
+                        <!-- Asymmetrical Editorial Layout: Flagship Roaster's Passport Left + Stacked Micro-Lot Flight Right -->
+                        <div class="row g-4 align-items-stretch">
+                            <!-- Left: Flagship Micro-Lot Roaster Passport -->
+                            <div class="col-lg-7">
+                                <div class="inno-roaster-passport h-100 d-flex flex-column text-white">
+                                    <div class="inno-passport-header">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="inno-live-pulse"/>
+                                            <span class="inno-passport-tag">LOT #DKL-2026-R849 · NÔNG HỘ LIÊN KẾT CƯ M'GAR</span>
                                         </div>
+                                        <span class="badge bg-warning text-dark font-monospace fw-bold px-3 py-2">84.50 SCA</span>
                                     </div>
-                                    <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
-                                        <div>
-                                            <span class="text-warning small font-monospace fw-bold d-block mb-1">CƯ M'GAR · FINE ROBUSTA</span>
-                                            <h3 class="h4 fw-bold text-white mb-2 inno-card-title-balance">
-                                                Đắk Lắk Highland Fine Robusta Natural
-                                            </h3>
-                                            <div class="text-secondary small mb-3">Cư M'gar · Độ cao 750m · Sơ chế Natural phơi giàn 28 ngày</div>
-                                            <p class="text-secondary small mb-3 inno-card-desc-balance lh-base">
-                                                Hạt Robusta Sẻ phơi chậm nguyên quả 28 ngày trên giàn phơi. Thể chất đầm dày như mật, hòa quyện sô-cô-la đen 85%, hạt dẻ nướng thơm bùi và ngọt sâu lắng vòm họng.
-                                            </p>
-                                            <div class="p-2 mb-3 small text-secondary inno-cardless inno-cardless--bordered-bottom" style="border-top: 1px solid var(--inno-spatial-hairline) !important; border-bottom: 1px solid var(--inno-spatial-hairline) !important;">
-                                                <span>Nốt hương: </span><strong class="text-white">Dark Chocolate · Roasted Hazelnut · Molasses</strong>
+                                    <div class="inno-passport-body d-flex flex-column flex-grow-1">
+                                        <div class="row g-4 align-items-center mb-4">
+                                            <div class="col-md-5">
+                                                <div class="position-relative rounded-4 overflow-hidden shadow-lg" style="aspect-ratio: 1 / 1;">
+                                                    <img src="/innokafe_website/static/src/img/photography/cooling_tray_artisan_roast.webp" alt="Fine Robusta Cư M'gar mẻ rang mới" class="img-fluid w-100 h-100 object-fit-cover"/>
+                                                    <div class="position-absolute bottom-0 start-0 p-2 w-100 text-center" style="background: rgba(14, 8, 4, 0.85);">
+                                                        <span class="text-white-50 font-monospace small" style="font-size: 0.72rem;">KHAY LÀM NGUỘI 4 PHÚT</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <span class="text-warning small font-monospace fw-bold d-block mb-1">FLAGSHIP SINGLE ORIGIN</span>
+                                                <h3 class="h3 fw-bold text-white mb-2">
+                                                    Đắk Lắk Highland Fine Robusta Natural
+                                                </h3>
+                                                <div class="inno-agtron-bar mb-3">
+                                                    <span>MỨC RANG:</span>
+                                                    <span class="inno-agtron-swatch" style="background: linear-gradient(90deg, #3C2415, #5A3825);"/>
+                                                    <strong class="text-warning">Medium-Dark (Agtron 48)</strong>
+                                                </div>
+                                                <p class="text-secondary small mb-0 lh-base" style="color: rgba(247, 242, 234, 0.8) !important;">
+                                                    Hạt Robusta Sẻ thuần chủng phơi giàn lưới 28 ngày đón nắng đại ngàn. Thể chất đầm dày như mật, hòa quyện sô-cô-la đen 85% và ngọt sâu bền bỉ vòm họng.
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="pt-3 mt-auto d-flex justify-content-between align-items-center inno-cardless inno-cardless--bordered-bottom" style="border-top: 1px solid var(--inno-spatial-hairline) !important; border-bottom: none !important;">
+
+                                        <!-- Micro-Lot Origin Specs Matrix -->
+                                        <div class="row g-2 mb-4 text-start font-monospace small">
+                                            <div class="col-6 col-sm-3 p-2 rounded-2 inno-inner-panel">
+                                                <span class="text-secondary d-block" style="font-size: 0.7rem;">ĐỘ CAO:</span>
+                                                <strong class="text-white">750m MASL</strong>
+                                            </div>
+                                            <div class="col-6 col-sm-3 p-2 rounded-2 inno-inner-panel">
+                                                <span class="text-secondary d-block" style="font-size: 0.7rem;">GIỐNG HẠT:</span>
+                                                <strong class="text-white">Robusta Sẻ</strong>
+                                            </div>
+                                            <div class="col-6 col-sm-3 p-2 rounded-2 inno-inner-panel">
+                                                <span class="text-secondary d-block" style="font-size: 0.7rem;">SƠ CHẾ:</span>
+                                                <strong class="text-white">Natural 28N</strong>
+                                            </div>
+                                            <div class="col-6 col-sm-3 p-2 rounded-2 inno-inner-panel">
+                                                <span class="text-secondary d-block" style="font-size: 0.7rem;">DTR %:</span>
+                                                <strong class="text-warning">15.8% Crack</strong>
+                                            </div>
+                                        </div>
+
+                                        <!-- Tactile Sensory Flavor Chips -->
+                                        <div class="mb-4">
+                                            <div class="small text-secondary mb-2 font-monospace" style="font-size: 0.75rem;">NỐT HƯƠNG CẢM QUAN (CUPPING NOTES):</div>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <span class="inno-flavor-chip"><span class="inno-chip-dot" style="background: #3B1F13;"/>Dark Chocolate 85%</span>
+                                                <span class="inno-flavor-chip"><span class="inno-chip-dot" style="background: #8C532B;"/>Roasted Hazelnut</span>
+                                                <span class="inno-flavor-chip"><span class="inno-chip-dot" style="background: #C27838;"/>Cane Molasses</span>
+                                                <span class="inno-flavor-chip"><span class="inno-chip-dot" style="background: #503125;"/>Toasted Oak</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Footer Price & CTA -->
+                                        <div class="pt-3 mt-auto d-flex flex-wrap justify-content-between align-items-center gap-3" style="border-top: 1px solid var(--inno-spatial-hairline);">
                                             <div>
                                                 <span class="text-secondary small d-block">Quy cách 250g / 500g / 1kg:</span>
-                                                <strong class="fs-5 text-warning">Từ 125.000 đ</strong>
+                                                <strong class="fs-4 text-warning">Từ 125.000 đ</strong>
                                             </div>
-                                            <a href="/products" class="btn btn-outline-secondary rounded-pill px-4 py-2 small d-inline-flex align-items-center gap-2">
-                                                <span>Chọn Cỡ Xay</span>
-                                                <i class="fa fa-arrow-right"/>
+                                            <a href="/products" class="btn btn-primary rounded-pill px-4 py-2 small d-inline-flex align-items-center gap-2 inno-btn-shimmer">
+                                                <span>Chọn Cỡ Xay &amp; Đặt Rang</span>
+                                                <i class="fa fa-shopping-bag"/>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Product 2: Arabica Bourbon -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="inno-spatial-layer rounded-4 overflow-hidden h-100 d-flex flex-column text-white">
-                                    <div class="position-relative" style="aspect-ratio: 16 / 10;">
-                                        <img src="/innokafe_website/static/src/img/photography/farm_plantation_mist.webp" alt="Arabica Cầu Đất trong sương mù" class="img-fluid w-100 h-100 object-fit-cover"/>
-                                        <div class="position-absolute top-0 end-0 p-3">
+                            <!-- Right: Stacked Micro-Lot Flight Cards -->
+                            <div class="col-lg-5 d-flex flex-column gap-3">
+                                <!-- Micro-Lot 2: Arabica Bourbon -->
+                                <div class="inno-flight-card flex-grow-1">
+                                    <div class="inno-flight-thumb">
+                                        <img src="/innokafe_website/static/src/img/photography/farm_plantation_mist.webp" alt="Arabica Cầu Đất trong sương mù"/>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="badge badge-forest font-monospace">1.650m CẦU ĐẤT</span>
                                             <span class="badge bg-warning text-dark font-monospace fw-bold">86.75 SCA</span>
                                         </div>
-                                    </div>
-                                    <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
-                                        <div>
-                                            <span class="text-warning small font-monospace fw-bold d-block mb-1">CẦU ĐẤT · SPECIALTY ARABICA</span>
-                                            <h3 class="h4 fw-bold text-white mb-2 inno-card-title-balance">
-                                                Cầu Đất Mountain Bourbon Washed
-                                            </h3>
-                                            <div class="text-secondary small mb-3">Trạm Hành, Cầu Đất · Độ cao 1.620m · Fully Washed</div>
-                                            <p class="text-secondary small mb-3 inno-card-desc-balance lh-base">
-                                                Hương hoa nhài trắng tỏa ngát, cam Bergamot, táo xanh và trà Earl Grey thanh khiết. Độ chua thanh sáng rực rỡ và Clean Cup trong trẻo tuyệt đối.
-                                            </p>
-                                            <div class="p-2 mb-3 small text-secondary inno-cardless inno-cardless--bordered-bottom" style="border-top: 1px solid var(--inno-spatial-hairline) !important; border-bottom: 1px solid var(--inno-spatial-hairline) !important;">
-                                                <span>Nốt hương: </span><strong class="text-white">White Jasmine · Bergamot · Green Apple</strong>
-                                            </div>
+                                        <h4 class="h5 fw-bold text-white mb-1">Cầu Đất Mountain Bourbon Washed</h4>
+                                        <p class="text-secondary small mb-2 lh-sm" style="font-size: 0.8rem;">
+                                            Hoa nhài trắng tỏa ngát, cam Bergamot, táo xanh và trà Earl Grey thanh khiết.
+                                        </p>
+                                        <div class="d-flex flex-wrap gap-1 mb-2">
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.7rem;"><span class="inno-chip-dot" style="background: #E8DCC4;"/>Jasmine</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.7rem;"><span class="inno-chip-dot" style="background: #E8A838;"/>Bergamot</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.7rem;"><span class="inno-chip-dot" style="background: #78A860;"/>Green Apple</span>
                                         </div>
-                                        <div class="pt-3 mt-auto d-flex justify-content-between align-items-center inno-cardless inno-cardless--bordered-bottom" style="border-top: 1px solid var(--inno-spatial-hairline) !important; border-bottom: none !important;">
-                                            <div>
-                                                <span class="text-secondary small d-block">Quy cách 250g / 500g / 1kg:</span>
-                                                <strong class="fs-5 text-warning">Từ 185.000 đ</strong>
-                                            </div>
-                                            <a href="/products" class="btn btn-outline-secondary rounded-pill px-4 py-2 small d-inline-flex align-items-center gap-2">
-                                                <span>Chọn Cỡ Xay</span>
-                                                <i class="fa fa-arrow-right"/>
+                                        <div class="d-flex justify-content-between align-items-center pt-2" style="border-top: 1px solid var(--inno-spatial-hairline);">
+                                            <strong class="text-warning small">Từ 185.000 đ</strong>
+                                            <a href="/products" class="btn btn-outline-secondary rounded-pill px-3 py-1 small" style="font-size: 0.78rem;">
+                                                <span>Chọn Cỡ Xay →</span>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Product 3: Signature Blend -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="inno-spatial-layer rounded-4 overflow-hidden h-100 d-flex flex-column text-white">
-                                    <div class="position-relative" style="aspect-ratio: 16 / 10;">
-                                        <img src="/innokafe_website/static/src/img/photography/natural_raised_beds_drying.webp" alt="Heritage Red Honey phơi giàn tự nhiên" class="img-fluid w-100 h-100 object-fit-cover"/>
-                                        <div class="position-absolute top-0 end-0 p-3">
+                                <!-- Micro-Lot 3: Heritage Red Honey -->
+                                <div class="inno-flight-card flex-grow-1">
+                                    <div class="inno-flight-thumb">
+                                        <img src="/innokafe_website/static/src/img/photography/natural_raised_beds_drying.webp" alt="Heritage Red Honey phơi giàn tự nhiên"/>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="badge bg-secondary text-warning font-monospace">SIGNATURE BLEND</span>
                                             <span class="badge bg-warning text-dark font-monospace fw-bold">85.25 SCA</span>
                                         </div>
-                                    </div>
-                                    <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
-                                        <div>
-                                            <span class="text-warning small font-monospace fw-bold d-block mb-1">SIGNATURE BLEND · RED HONEY</span>
-                                            <h3 class="h4 fw-bold text-white mb-2 inno-card-title-balance">
-                                                Heritage Red Honey Specialty Blend
-                                            </h3>
-                                            <div class="text-secondary small mb-3">Tỷ lệ 70% Robusta Cư M'gar &amp; 30% Arabica Cầu Đất</div>
-                                            <p class="text-secondary small mb-3 inno-card-desc-balance lh-base">
-                                                Bản hòa tấu hương vị giữa sự đầm sâu của đất đỏ Tây Nguyên và nét thanh tao của sương mù Lâm Đồng. Thể chất sánh mịn, ngọt sâu mật ong hoa cà phê.
-                                            </p>
-                                            <div class="p-2 mb-3 small text-secondary inno-cardless inno-cardless--bordered-bottom" style="border-top: 1px solid var(--inno-spatial-hairline) !important; border-bottom: 1px solid var(--inno-spatial-hairline) !important;">
-                                                <span>Nốt hương: </span><strong class="text-white">Wild Honey · Toasted Almond · Citrus Zest</strong>
-                                            </div>
+                                        <h4 class="h5 fw-bold text-white mb-1">Heritage Red Honey Specialty Blend</h4>
+                                        <p class="text-secondary small mb-2 lh-sm" style="font-size: 0.8rem;">
+                                            70% Robusta Cư M'gar &amp; 30% Arabica Cầu Đất. Thể chất sánh mịn, ngọt sâu mật ong.
+                                        </p>
+                                        <div class="d-flex flex-wrap gap-1 mb-2">
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.7rem;"><span class="inno-chip-dot" style="background: #D48842;"/>Wild Honey</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.7rem;"><span class="inno-chip-dot" style="background: #A66838;"/>Almond</span>
+                                            <span class="inno-flavor-chip py-1 px-2" style="font-size: 0.7rem;"><span class="inno-chip-dot" style="background: #E58238;"/>Citrus</span>
                                         </div>
-                                        <div class="pt-3 mt-auto d-flex justify-content-between align-items-center inno-cardless inno-cardless--bordered-bottom" style="border-top: 1px solid var(--inno-spatial-hairline) !important; border-bottom: none !important;">
-                                            <div>
-                                                <span class="text-secondary small d-block">Quy cách 250g / 500g / 1kg:</span>
-                                                <strong class="fs-5 text-warning">Từ 155.000 đ</strong>
-                                            </div>
-                                            <a href="/products" class="btn btn-outline-secondary rounded-pill px-4 py-2 small d-inline-flex align-items-center gap-2">
-                                                <span>Chọn Cỡ Xay</span>
-                                                <i class="fa fa-arrow-right"/>
+                                        <div class="d-flex justify-content-between align-items-center pt-2" style="border-top: 1px solid var(--inno-spatial-hairline);">
+                                            <strong class="text-warning small">Từ 155.000 đ</strong>
+                                            <a href="/products" class="btn btn-outline-secondary rounded-pill px-3 py-1 small" style="font-size: 0.78rem;">
+                                                <span>Chọn Cỡ Xay →</span>
                                             </a>
                                         </div>
                                     </div>
@@ -410,8 +531,8 @@
 
                         <!-- Bottom Link to Full Catalog -->
                         <div class="text-center mt-5">
-                            <a href="/products" class="btn btn-primary rounded-pill px-5 py-3 d-inline-flex align-items-center gap-2">
-                                <span>Xem Toàn Bộ 8 Dòng Hạt Đặc Sản</span>
+                            <a href="/products" class="btn btn-outline-secondary rounded-pill px-5 py-3 d-inline-flex align-items-center gap-2">
+                                <span>Xem Toàn Bộ 8 Dòng Hạt Đặc Sản Mùa Vụ Mới</span>
                                 <i class="fa fa-arrow-right"/>
                             </a>
                         </div>
@@ -461,6 +582,11 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- ============================================================= -->
+                <!-- 7B. BARISTA INTERACTIVE BREW LAB & REALTIME CALCULATOR        -->
+                <!-- ============================================================= -->
+                <t t-call="innokafe_website.s_innokafe_brew_lab"/>
 
                 <!-- ============================================================= -->
                 <!-- 8. B2B SPECIALTY COFFEE PARTNER TEASER (ZERO FORM SLOP)       -->
