@@ -8,8 +8,20 @@ class AccountMove(models.Model):
     _inherit = ['account.move', 'pos.load.mixin']
 
     @api.model
-    def _load_pos_data_domain(self, data, config):
-        return [('pos_order_ids', 'in', [order['id'] for order in data['pos.order']])]
+    def _load_pos_data_domain(self, data, config=None):
+        if not isinstance(data, dict):
+            return [('id', '=', False)]
+        orders = data.get('pos.order', [])
+        if not isinstance(orders, list):
+            return [('id', '=', False)]
+        valid_order_ids = [order['id'] for order in orders if isinstance(order, dict) and isinstance(order.get('id'), int)]
+        if not valid_order_ids:
+            return [('id', '=', False)]
+        company_id = config.company_id.id if config and config.company_id else self.env.company.id
+        return [
+            ('pos_order_ids', 'in', valid_order_ids),
+            ('company_id', '=', company_id),
+        ]
 
     def _l10n_ec_get_payment_data(self):
         # EXTENDS l10n_ec_edi

@@ -16,11 +16,12 @@ class AccountMove(models.Model):
                 record.l10n_cl_sii_barcode_image = record._pdf417_barcode(record.l10n_cl_sii_barcode)
 
     @api.model
-    def _load_pos_data_domain(self, data, config):
-        result = super()._load_pos_data_domain(data, config)
+    def _load_pos_data_domain(self, data, config=None):
+        resolved_config = config or self.env['pos.config'].browse()
+        result = super()._load_pos_data_domain(data, resolved_config)
         if self.env.company.country_id.code == 'CL':
             return False
-        return result
+        return result or []
 
     @api.model
     def _load_pos_data_fields(self, config):

@@ -61,7 +61,7 @@ class AccountMove(models.Model):
         ("exception", "Exception"),
         ("bills_not_in_gstr2", "Bills Not in GSTR-2"),
         ("manually_matched", "Manually Matched"),
-        ("gstr2_bills_not_in_odoo", "GSTR-2 Bills not in Odoo")],
+        ("gstr2_bills_not_in_odoo", "GSTR-2 Bills not in Insilos")],
         string="GSTR-2B Reconciliation",
         readonly=True,
         default="pending",
