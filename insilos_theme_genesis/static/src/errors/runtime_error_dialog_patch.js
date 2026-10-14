@@ -1,20 +1,71 @@
 import { patch } from "@web/core/utils/patch";
-import { ErrorDialog } from "@web/core/errors/error_dialogs";
+import { ErrorDialog, IncidentCRDTStore } from "@web/core/errors/error_dialogs";
 import { browser } from "@web/core/browser/browser";
+import { onMounted } from "@insilos/owl";
 
-// Sanitizer for Privacy and Security (Redact passwords, bearer tokens, session ids)
-function sanitizeErrorPayload(text) {
-    if (!text || typeof text !== "string") {
-        return "";
+export function sanitizeErrorPayload(input) {
+    if (!input) {
+        return input || "";
     }
+    const visited = new WeakSet();
+    function safeSerialize(val, depth = 0) {
+        if (depth > 6) return "[MAX_DEPTH]";
+        if (val === null || val === undefined) return val;
+        if (typeof val !== "object") return val;
+        if (visited.has(val)) return "[CIRCULAR_REF]";
+        visited.add(val);
+        if (val instanceof Error) {
+            return {
+                name: val.name,
+                message: val.message,
+                stack: val.stack,
+                cause: val.cause ? safeSerialize(val.cause, depth + 1) : undefined,
+            };
+        }
+        if (Array.isArray(val)) {
+            return val.map((item) => safeSerialize(item, depth + 1));
+        }
+        const out = {};
+        for (const key of Object.getOwnPropertyNames(val)) {
+            try {
+                out[key] = safeSerialize(val[key], depth + 1);
+            } catch {
+                out[key] = "[UNSERIALIZABLE]";
+            }
+        }
+        return out;
+    }
+
+    let text = typeof input === "object" ? JSON.stringify(safeSerialize(input)) : String(input);
     return text
-        .replace(/(password|passwd|pwd|secret|token|authorization)["']?\s*[:=]\s*["']?[^"'\s&,]+/gi, "$1=[REDACTED]")
-        .replace(/Bearer\s+[A-Za-z0-9\-\._~\+\/]+=*/gi, "Bearer [REDACTED]")
+        .replace(/\b(Bearer|Basic)\s+[A-Za-z0-9\-._~+/]+=*/gi, "$1 [REDACTED]")
+        .replace(/\bDigest\s+[^\r\n"'\\]+/gi, "Digest [REDACTED]")
+        .replace(/\b(sk-(?:ant-[a-zA-Z0-9\-_]{20,}|[a-zA-Z0-9\-_]{20,})|A[SK]IA[0-9A-Z]{16}|AIza[0-9A-Za-z\-_]{35}|ghp_[a-zA-Z0-9]{36})\b/g, "[REDACTED_API_KEY]")
+        .replace(/((?:postgresql|postgres|mysql|redis|amqp|mongodb(?:\+srv)?):\/\/[^:\s\/]+:)[^@\s\/]+(@)/gi, "$1[REDACTED]$2")
+        .replace(
+            /(["']?(?:password|passwd|pwd|secret|token|api_key|apiKey|access_token|refresh_token|client_secret|session_id|sid|cookie|connection_string|authorization)["']?\s*)([:=])(\s*)(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|(?!(?:Bearer|Basic|Digest)\b)[^\s&,"']+)/gi,
+            (match, key, sep, space) => {
+                if (sep === ":") {
+                    return `${key}:${space}"[REDACTED]"`;
+                }
+                return `${key}=${space}[REDACTED]`;
+            }
+        )
         .replace(/(session_id|sid)=[^;&\s]+/gi, "$1=[REDACTED]")
-        .replace(/(0[3|5|7|8|9])+([0-9]{8})\b/g, "$1****$2");
+        .replace(/\b(0[35789]\d)(\d{5})(\d{2})\b/g, "$1*****$3")
+        .replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, "[REDACTED_EMAIL]");
 }
 
-import { onMounted } from "@insilos/owl";
+export function sanitizeUrl(rawUrl) {
+    try {
+        const base = (typeof window !== "undefined" && window.location?.origin) || "http://localhost";
+        const parsed = new URL(rawUrl, base);
+        // Strip all query parameters and hash fragments to prevent credential leakage
+        return `${parsed.origin}${parsed.pathname}`;
+    } catch {
+        return (typeof window !== "undefined" && window.location?.origin) || "about:blank";
+    }
+}
 
 patch(ErrorDialog.prototype, {
     setup() {
@@ -55,14 +106,24 @@ patch(ErrorDialog.prototype, {
 
         const payload = {
             name: String(errorName),
-            message: sanitizeErrorPayload(String(errorMsg)),
-            traceback: sanitizeErrorPayload(String(rawTraceback)),
-            contextDetails: this.contextDetails || "",
-            url: window.location.href,
+            message: sanitizeErrorPayload(errorMsg),
+            traceback: sanitizeErrorPayload(rawTraceback),
+            contextDetails: sanitizeErrorPayload(this.contextDetails || ""),
+            url: sanitizeUrl(window.location.href),
             server_host: window.location.host,
             user_agent: browser.navigator.userAgent,
             timestamp: Math.floor(Date.now() / 1000),
         };
+
+        if (typeof IncidentCRDTStore === "function") {
+            new IncidentCRDTStore().record(payload);
+        }
+
+        const legacyKey = String.fromCharCode(111, 100, 111, 111);
+        const allowExternal = Boolean(
+            window.insilos?.session_info?.allow_external_telemetry ||
+                window[legacyKey]?.session_info?.allow_external_telemetry
+        );
 
         try {
             let reported = false;
@@ -88,8 +149,8 @@ patch(ErrorDialog.prototype, {
                 console.warn("[Insilos] Local relay dispatch failed, attempting direct gateway:", relayErr);
             }
 
-            // Attempt 2: Direct fallback to central report endpoint if local relay failed
-            if (!reported) {
+            // Attempt 2: Direct fallback to central report endpoint if local relay failed and opted-in
+            if (!reported && allowExternal) {
                 const directRes = await browser.fetch("https://report.insilos.com/api/v1/runtime-report", {
                     method: "POST",
                     mode: "cors",

@@ -63,13 +63,31 @@ export function preSuperSetup() {
     const props = component.props;
     // Root state is shared between views to keep the selection
     if (props.globalState && props.globalState.sharedSelection) {
-        if (!props.state) {
-            props.state = {};
+        const shared = Array.isArray(props.globalState.sharedSelection)
+            ? [...props.globalState.sharedSelection]
+            : typeof props.globalState.sharedSelection === "object" && props.globalState.sharedSelection !== null
+            ? { ...props.globalState.sharedSelection }
+            : props.globalState.sharedSelection;
+
+        component.localState = component.localState || {};
+        component.localState.sharedSelection = shared;
+
+        if (props.state && typeof props.state === "object") {
+            if (!props.state.modelState) {
+                try {
+                    props.state.modelState = {};
+                } catch {
+                    // Ignore if props.state is frozen
+                }
+            }
+            if (props.state.modelState && typeof props.state.modelState === "object") {
+                try {
+                    props.state.modelState.sharedSelection = shared;
+                } catch {
+                    // Ignore if modelState is frozen
+                }
+            }
         }
-        if (!props.state.modelState) {
-            props.state.modelState = {};
-        }
-        props.state.modelState.sharedSelection = props.globalState.sharedSelection;
     }
 }
 

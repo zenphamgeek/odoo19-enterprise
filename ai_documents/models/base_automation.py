@@ -21,12 +21,14 @@ class BaseAutomation(models.Model):
         "Only one automation rule can be used to sort with AI a given folder",
     )
 
-    def _process(self, records, domain_post=None):
+    def _process(self, records, domain_post=None, *args, **kwargs):
+        rules = self
         if (
             self.env.context.get("ai_documents_skip_autosort")
             and records
             and records._name == "documents.document"
-            and self.ai_autosort_folder_id
         ):
-            return
-        return super()._process(records, domain_post)
+            rules = self.filtered(lambda r: not r.ai_autosort_folder_id)
+            if not rules:
+                return
+        return super(BaseAutomation, rules)._process(records, domain_post, *args, **kwargs)
