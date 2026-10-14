@@ -17,11 +17,11 @@ class AccountMove(models.Model):
 
     @api.model
     def _load_pos_data_domain(self, data, config=None):
-        resolved_config = config or self.env['pos.config'].browse()
-        result = super()._load_pos_data_domain(data, resolved_config)
         if self.env.company.country_id.code == 'CL':
-            return False
-        return result or []
+            return [('id', '=', False)]
+        if config is not None:
+            return super()._load_pos_data_domain(data, config)
+        return super()._load_pos_data_domain(data)
 
     @api.model
     def _load_pos_data_fields(self, config):
