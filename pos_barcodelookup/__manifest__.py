@@ -7,10 +7,13 @@
     'data': [
         'views/product_view.xml',
     ],
+    'pos_react_plugin_scripts': [
+        '/pos_barcodelookup/static/src/pos_react_plugin.js',
+    ],
     'assets': {
         'point_of_sale._assets_pos': [
             "product_barcodelookup/static/src/widgets/**/*",
-            "pos_barcodelookup/static/src/**/*",
+            "pos_barcodelookup/static/src/overrides/**/*",
         ],
         'web.assets_tests': [
             'pos_barcodelookup/static/tests/**/*',

@@ -186,7 +186,7 @@ class TestPosReactOrderSyncIntegration(TestPointOfSaleHttpCommon):
 
     def test_accepts_cash_first_then_one_electronic_remaining_slice(self):
         electronic = self.config.payment_method_ids.filtered(
-            lambda method: not method.is_cash_count
+            lambda method: not (getattr(method, "is_cash_count", False) or method.type == "cash")
         )[:1]
         self.assertTrue(electronic)
         payload = self._payload(str(uuid4()), 1, "paid")

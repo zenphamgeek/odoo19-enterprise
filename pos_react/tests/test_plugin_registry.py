@@ -233,8 +233,8 @@ class PluginRegistryTest(unittest.TestCase):
 
     def test_point_of_sale_worktree_is_untouched(self):
         result = subprocess.run(
-            ["git", "status", "--porcelain", "--", "odoo/addons/point_of_sale"],
-            cwd=MODULE.parents[2],
+            ["git", "status", "--porcelain", "--", "addons/point_of_sale"],
+            cwd=MODULE.parents[1],
             check=True,
             capture_output=True,
             text=True,

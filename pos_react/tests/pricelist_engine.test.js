@@ -14,6 +14,7 @@ let source = fs.readFileSync(modelPath, "utf8")
 const sandbox = {
     module: { exports: {} }, Base: class {}, alert() {}, _t: (value) => value,
     roundPrecision: (value, precision) => Math.round((value / precision) + Math.sign(value) * Number.EPSILON) * precision,
+    odoo: { pos_config_id: 1 },
 };
 vm.runInNewContext(source, sandbox, { filename: modelPath });
 const LegacyProduct = sandbox.module.exports;
@@ -37,14 +38,14 @@ const makePricelist = (item_ids) => {
 const product = { id: 7, lst_price: 100, standard_price: 60, parentCategories: [3], product_tmpl_id: null };
 const template = new LegacyProduct();
 Object.assign(template, { id: 4, list_price: 100, standard_price: 60, parentCategories: [3], models: {
-    "pos.config": { getFirst: () => ({ currency_id: { id: 1, rate: 1 } }) },
+    "pos.config": { getFirst: () => ({ currency_id: { id: 1, rate: 1 } }), get: () => ({ currency_id: { id: 1, rate: 1 } }) },
     "product.pricelist.item": { readMany: (ids) => activeRules.filter((rule) => ids.includes(rule.id)) },
 } });
 product.product_tmpl_id = template;
 
 const vectors = [
     ["fixed", [{ product_id: { id: 7 }, compute_price: "fixed", fixed_price: 42 }], 1],
-    ["percentage", [{ product_tmpl_id: { id: 4 }, compute_price: "percentage", percent_price: 15 }], 1],
+    ["percentage", [{ product_tmpl_id: { id: 4 }, compute_price: "percentage", percent_price: 15, price_discount: 15 }], 1],
     ["formula standard base", [{ categ_id: { id: 3 }, compute_price: "formula", base: "standard_price", price_discount: 10, price_round: 5, price_surcharge: 2, price_min_margin: -20, price_max_margin: 10 }], 1],
     ["quantity", [{ compute_price: "fixed", fixed_price: 90 }, { compute_price: "fixed", fixed_price: 70, min_quantity: 10 }], 12],
     ["date", [{ compute_price: "fixed", fixed_price: 10, date_end: now - 1 }, { compute_price: "fixed", fixed_price: 80, date_start: now - 1, date_end: now + 1 }], 1],
@@ -55,7 +56,7 @@ for (const [name, rules, quantity] of vectors) {
     const expected = template.getPrice(pricelist, quantity, 0, false, product);
     assert.equal(port.computePrice(product, pricelist, quantity, now), expected, name);
 }
-const base = makePricelist([{ id: 100, compute_price: "percentage", percent_price: 10 }]);
+const base = makePricelist([{ id: 100, compute_price: "percentage", percent_price: 10, price_discount: 10 }]);
 const nested = makePricelist([{ id: 101, compute_price: "formula", base: "pricelist", base_pricelist_id: base, price_surcharge: 5 }]);
 activeRules = [...base.item_ids, ...nested.item_ids];
 assert.equal(port.computePrice(product, nested, 1, now), template.getPrice(nested, 1, 0, false, product), "formula pricelist base");

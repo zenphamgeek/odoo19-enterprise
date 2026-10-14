@@ -175,7 +175,7 @@ class ProductPricing(models.Model):
 
         Note: model method
         """
-        is_product_template = product._name == "product.template"
+        is_product_template = product._name in ("product.template", "catalog.item") or "product_tmpl_id" not in product._fields
         available_pricings = self.env['product.pricing']
         if pricelist:
             for pricing in product.product_pricing_ids:

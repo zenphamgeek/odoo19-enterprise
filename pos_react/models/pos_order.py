@@ -16,9 +16,7 @@ class PosOrder(models.Model):
         if not session:
             raise ValidationError(_("The POS session is invalid."))
         session.check_access("read")
-        session.check_access_rule("read")
         session.config_id.check_access("read")
-        session.config_id.check_access_rule("read")
         company_id = order.get("company_id")
         if not isinstance(company_id, int) or company_id != session.company_id.id:
             raise ValidationError(_("The POS company does not match the session."))

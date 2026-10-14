@@ -151,7 +151,7 @@
             const reverse_data = {};
             for (const tax of sorted_taxes) {
                 const price_include = tax.has_negative_factor ? false : special_mode === "total_included" ? true : special_mode === "total_excluded" ? false : tax.price_include;
-                data[tax.id] = { tax, price_include, extra_base_for_tax: 0, extra_base_for_base: 0, group: batching.group_per_tax[tax.id], batch: batching.batch_per_tax[tax.id] };
+                data[tax.id] = { tax, price_include, original_price_include: tax.price_include, extra_base_for_tax: 0, extra_base_for_base: 0, group: batching.group_per_tax[tax.id], batch: batching.batch_per_tax[tax.id] };
                 if (tax.has_negative_factor) reverse_data[tax.id] = { ...data[tax.id], is_reverse_charge: true };
             }
             let raw_base = quantity * price_unit;
@@ -191,7 +191,7 @@
             return {
                 total_excluded,
                 total_included: total_excluded + list.reduce((sum, item) => sum + item.tax_amount, 0),
-                taxes_data: list.map((item) => ({ tax: item.tax, taxes: item.taxes, group: batching.group_per_tax[item.tax.id], batch: batching.batch_per_tax[item.tax.id], tax_amount: item.tax_amount, price_include: item.price_include, base_amount: item.base, is_reverse_charge: item.is_reverse_charge || false })),
+                taxes_data: list.map((item) => ({ tax: item.tax, taxes: item.taxes, group: batching.group_per_tax[item.tax.id], batch: batching.batch_per_tax[item.tax.id], tax_amount: item.tax_amount, price_include: item.price_include, original_price_include: item.original_price_include, base_amount: item.base, is_reverse_charge: item.is_reverse_charge || false })),
             };
         },
     };

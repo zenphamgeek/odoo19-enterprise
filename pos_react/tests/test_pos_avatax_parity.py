@@ -3,8 +3,7 @@ import unittest
 from pathlib import Path
 from xml.etree import ElementTree
 
-ROOT = Path(__file__).resolve().parents[4]
-MODULE = ROOT / "insilos/apps/pos_avatax"
+MODULE = Path(__file__).resolve().parents[2] / "pos_avatax"
 
 
 class PosAvataxParityOracleTest(unittest.TestCase):
@@ -51,7 +50,7 @@ class PosAvataxParityOracleTest(unittest.TestCase):
 
         display = order_display.read_text(encoding="utf-8")
         summary = order_summary.read_text(encoding="utf-8")
-        self.assertIn('x-if="this.props.isAvataxConfig"', display)
+        self.assertIn('t-if="this.props.isAvataxConfig"', display)
         self.assertIn('t-on-click="() =&gt; this.refreshAvatax()"', display.replace("=>", "=&gt;"))
         self.assertIn('name="refreshAvatax"', summary)
         self.assertIn('name="isAvataxConfig"', summary)

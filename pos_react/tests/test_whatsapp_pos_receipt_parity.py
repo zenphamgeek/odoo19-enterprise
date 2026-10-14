@@ -2,8 +2,7 @@ import ast
 import unittest
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[4]
-MODULE = ROOT / "insilos/apps/whatsapp_pos"
+MODULE = Path(__file__).resolve().parents[2] / "whatsapp_pos"
 
 
 class WhatsappPosReceiptParityTest(unittest.TestCase):
@@ -27,8 +26,8 @@ class WhatsappPosReceiptParityTest(unittest.TestCase):
         self.assertIn('action: "action_sent_receipt_on_whatsapp"', js)
         self.assertIn("destination: this.state.phone", js)
         self.assertIn('name: "WhatsApp"', js)
-        self.assertIn('x-if="pos.config.whatsapp_enabled"', xml)
-        self.assertIn('x-att-disabled="!isValidPhone"', xml)
+        self.assertIn('t-if="pos.config.whatsapp_enabled"', xml)
+        self.assertIn('t-att-disabled="!isValidPhone"', xml)
         self.assertIn("actionSendReceiptOnWhatsapp()", xml)
         self.assertTrue({"create", "_send_whatsapp_template"} <= calls)
         self.assertIn("self.mobile = phone", ast.unparse(method))

@@ -16,7 +16,7 @@ class AccountMove(models.Model):
         return ['name', 'amount_residual', 'pos_amount_unsettled']
 
     @api.model
-    def _load_pos_data_domain(self, data, config):
+    def _load_pos_data_domain(self, data, config=None):
         return False
 
     @api.depends('pos_order_line_ids', 'amount_residual_signed')

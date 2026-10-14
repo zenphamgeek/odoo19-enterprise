@@ -61,6 +61,7 @@ class PosDiscountReactPluginTest(unittest.TestCase):
                     { uuid: "one", productId: 1, price: 1, quantity: 1, taxIds: [4], discount: 0 },
                     { uuid: "two", productId: 2, price: 120, quantity: 1, taxIds: [5], discount: 0 },
                     { uuid: "three", productId: 3, price: 0.05, quantity: 3, taxIds: [1], discount: 0 },
+                    { uuid: "tip", productId: 8, price: 20, quantity: 1, taxIds: [], discount: 0 },
                     { uuid: "discount", productId: 9, price: -1, quantity: 1, taxIds: [4], discount: 0 },
                 ],
                 lines: [

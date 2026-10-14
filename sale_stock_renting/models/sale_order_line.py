@@ -16,6 +16,8 @@ class SaleOrderLine(models.Model):
     reserved_lot_ids = fields.Many2many(
         'stock.lot',
         'rental_reserved_lot_rel',
+        'sale_order_line_id',
+        'stock_lot_id',
         string="Reserved Lots",
         domain="[('product_id', '=', product_id)]",
         copy=False,
@@ -26,12 +28,16 @@ class SaleOrderLine(models.Model):
     pickedup_lot_ids = fields.Many2many(
         'stock.lot',
         'rental_pickedup_lot_rel',
+        'sale_order_line_id',
+        'stock_lot_id',
         domain="[('product_id', '=', product_id)]",
         copy=False,
     )
     returned_lot_ids = fields.Many2many(
         'stock.lot',
         'rental_returned_lot_rel',
+        'sale_order_line_id',
+        'stock_lot_id',
         domain="[('product_id', '=', product_id)]",
         copy=False,
     )

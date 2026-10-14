@@ -45,13 +45,13 @@ class ProductPricelistItem(models.Model):
 
     # === BUSINESS METHODS === #
 
-    def _is_applicable_for(self, product, qty_in_product_uom):
+    def _is_applicable_for(self, product, qty_in_product_uom, *args, **kwargs):
         # Subscription rules should not apply to non-recurring products
         if self.plan_id and not product.recurring_invoice:
             return False
         if not self.plan_id and product.recurring_invoice and not product.allow_one_time_sale:
             return False
-        return super()._is_applicable_for(product, qty_in_product_uom)
+        return super()._is_applicable_for(product, qty_in_product_uom, *args, **kwargs)
 
     def _compute_base_price(self, product, quantity, uom, *args, date=False, currency=None, plan_id=None, **kwargs):
         """Override of `product` to consider pricelist items without pricelists as 'sales price' for recurring products.

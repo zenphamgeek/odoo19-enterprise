@@ -1,5 +1,6 @@
 import { hasTouch, isIosApp, isMacOS } from "@web/core/browser/feature_detection";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
+import { rpc } from "@web/core/network/rpc";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { ExpirationPanel } from "./expiration_panel";
@@ -95,9 +96,22 @@ export class HomeMenu extends Component {
         this.homeMenuService = useService("home_menu");
         this.subscription = useService("enterprise_subscription");
         this.ui = useService("ui");
+        this.action = useService("action");
         this.state = proxy({
             focusedIndex: null,
             isIosApp: isIosApp(),
+            empDashboard: {
+                loading: true,
+                expanded: true,
+                activeTab: "overview",
+                data: null,
+                leavingForm: {
+                    notice_date: "2026-10-15",
+                    expected_last_day: "2026-11-15",
+                    handover_assignee: "Nguyễn Hoài Ân (CTO)",
+                    reason: "Chuyển giao công tác / Kế hoạch cá nhân",
+                },
+            },
         });
         this.pressTimer;
 
@@ -127,6 +141,7 @@ export class HomeMenu extends Component {
             if (!hasTouch()) {
                 this._focusInput();
             }
+            this._loadEmployeeDashboard();
         });
 
         onPatched(() => {
@@ -342,7 +357,7 @@ export class HomeMenu extends Component {
         if (
             document.activeElement !== inputEl &&
             this.ui.activeElement === document &&
-            !["TEXTAREA", "INPUT"].includes(document.activeElement.tagName)
+            !["TEXTAREA", "INPUT", "SELECT"].includes(document.activeElement.tagName)
         ) {
             this._focusInput();
         }
@@ -378,4 +393,169 @@ export class HomeMenu extends Component {
     _onCompositionStart() {
         this.compositionStart = true;
     }
+
+    //--------------------------------------------------------------------------
+    // Employee Self-Service, Payroll, Onboarding & Leaving Hub
+    //--------------------------------------------------------------------------
+
+    formatVnd(amount) {
+        return new Intl.NumberFormat("vi-VN").format(Math.round(Number(amount) || 0)) + " ₫";
+    }
+
+    getInitials(name) {
+        if (!name) {
+            return "NV";
+        }
+        const parts = String(name).trim().split(/\s+/);
+        if (parts.length === 1) {
+            return parts[0].slice(0, 2).toUpperCase();
+        }
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    async _loadEmployeeDashboard(employeeId = null) {
+        try {
+            this.state.empDashboard.loading = true;
+            const res = await rpc("/insilos/employee_dashboard/data", {
+                employee_id: employeeId,
+            });
+            if (res && res.current_employee) {
+                this.state.empDashboard.data = res;
+                if (res.leaving) {
+                    this.state.empDashboard.leavingForm.notice_date =
+                        res.leaving.notice_date || "2026-10-15";
+                    this.state.empDashboard.leavingForm.expected_last_day =
+                        res.leaving.expected_last_day || "2026-11-15";
+                    this.state.empDashboard.leavingForm.handover_assignee =
+                        res.leaving.handover_assignee || "Nguyễn Hoài Ân (CTO)";
+                    this.state.empDashboard.leavingForm.reason =
+                        res.leaving.reason || "Chuyển giao công tác / Kế hoạch cá nhân";
+                }
+            }
+        } catch {
+            // Non-blocking fallback if offline
+        } finally {
+            this.state.empDashboard.loading = false;
+        }
+    }
+
+    selectDashboardTab(tab) {
+        this.state.empDashboard.activeTab = tab;
+        this.state.empDashboard.expanded = true;
+    }
+
+    toggleDashboardExpanded() {
+        this.state.empDashboard.expanded = !this.state.empDashboard.expanded;
+    }
+
+    async onChangeDashboardEmployee(ev) {
+        const empId = parseInt(ev.target.value, 10);
+        if (empId) {
+            await this._loadEmployeeDashboard(empId);
+        }
+    }
+
+    async onToggleLifecycleStep(workflow, stepId, currentDone) {
+        const empId = this.state.empDashboard.data?.current_employee?.id;
+        if (!empId) {
+            return;
+        }
+        try {
+            const res = await rpc("/insilos/employee_dashboard/toggle_step", {
+                employee_id: empId,
+                workflow,
+                step_id: stepId,
+                done: !currentDone,
+            });
+            if (res && res.current_employee) {
+                this.state.empDashboard.data = res;
+            }
+        } catch {
+            // Fail-soft
+        }
+    }
+
+    async onSubmitLeavingRequest() {
+        const empId = this.state.empDashboard.data?.current_employee?.id;
+        if (!empId) {
+            return;
+        }
+        const form = this.state.empDashboard.leavingForm;
+        try {
+            const res = await rpc("/insilos/employee_dashboard/toggle_step", {
+                employee_id: empId,
+                action: "initiate_leaving",
+                notice_date: form.notice_date,
+                expected_last_day: form.expected_last_day,
+                handover_assignee: form.handover_assignee,
+                reason: form.reason,
+            });
+            if (res && res.current_employee) {
+                this.state.empDashboard.data = res;
+            }
+        } catch {
+            // Fail-soft
+        }
+    }
+
+    openHrApp() {
+        const hrApp = this.props.apps.find(
+            (a) => a.xmlid && (a.xmlid.startsWith("hr.") || a.xmlid === "hr.menu_hr_root")
+        );
+        if (hrApp) {
+            return this._openMenu(hrApp);
+        }
+        const empId = this.state.empDashboard.data?.current_employee?.id;
+        return this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Hồ sơ Nhân sự DGM",
+            res_model: "hr.employee",
+            res_id: empId || false,
+            views: [
+                [false, "kanban"],
+                [false, "list"],
+                [false, "form"],
+            ],
+            target: "current",
+        });
+    }
+
+    openPayrollApp() {
+        const payrollApp = this.props.apps.find(
+            (a) => a.xmlid && a.xmlid.startsWith("hr_payroll")
+        );
+        if (payrollApp) {
+            return this._openMenu(payrollApp);
+        }
+        return this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Bảng lương & Phiếu lương DGM",
+            res_model: "hr.payslip",
+            views: [
+                [false, "list"],
+                [false, "form"],
+            ],
+            target: "current",
+        });
+    }
+
+    openDocumentsApp() {
+        const docsApp = this.props.apps.find(
+            (a) => a.xmlid && a.xmlid.startsWith("documents")
+        );
+        if (docsApp) {
+            return this._openMenu(docsApp);
+        }
+        return this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Kho Tài liệu Số DGM",
+            res_model: "documents.document",
+            views: [
+                [false, "kanban"],
+                [false, "list"],
+            ],
+            target: "current",
+        });
+    }
 }
+

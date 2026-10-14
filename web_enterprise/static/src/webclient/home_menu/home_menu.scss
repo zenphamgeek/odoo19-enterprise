@@ -316,3 +316,311 @@
         text-shadow: $o-home-menu-custom-caption-shadow;
     }
 }
+
+// ============================================================================
+// Innoria / DGM Employee Self-Service, Payroll, Onboarding & Leaving Hub
+// ============================================================================
+.o_insilos_emp_dashboard {
+    border-radius: 16px;
+    padding: 18px 22px;
+    background-color: var(--insilos-bg-card);
+    border: 1px solid var(--insilos-border-subtle);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+    color: var(--insilos-text-primary);
+
+    .o_emp_avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: var(--insilos-text-inverse);
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+        flex-shrink: 0;
+    }
+
+    .o_emp_name {
+        font-size: 1.15rem;
+        color: var(--insilos-text-primary);
+    }
+
+    .o_emp_subtitle {
+        font-size: 0.84rem;
+        color: var(--insilos-text-secondary);
+    }
+
+    .o_emp_badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 10px;
+        border-radius: 9999px;
+        font-size: 0.74rem;
+        font-weight: 600;
+        border: 1px solid var(--insilos-border-subtle);
+        background-color: var(--insilos-bg-surface);
+        color: var(--insilos-text-primary);
+
+        &.o_emp_badge_primary {
+            border-color: rgba(59, 130, 246, 0.45);
+            color: #3b82f6;
+        }
+
+        &.o_emp_badge_emerald {
+            border-color: rgba(16, 185, 129, 0.45);
+            color: #10b981;
+        }
+
+        &.o_emp_badge_amber {
+            border-color: rgba(245, 158, 11, 0.45);
+            color: #f59e0b;
+        }
+    }
+
+    .o_emp_switcher_label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--insilos-text-secondary);
+    }
+
+    .o_emp_switcher_select,
+    .o_emp_input {
+        background-color: var(--insilos-bg-surface);
+        border: 1px solid var(--insilos-border-subtle);
+        color: var(--insilos-text-primary);
+        border-radius: 8px;
+        font-size: 0.82rem;
+    }
+
+    .o_emp_action_btn,
+    .o_emp_toggle_btn {
+        background-color: var(--insilos-bg-surface);
+        border: 1px solid var(--insilos-border-subtle);
+        color: var(--insilos-text-primary);
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 5px 12px;
+        transition: all 0.15s ease;
+
+        &:hover {
+            background-color: var(--insilos-bg-hover);
+            border-color: rgba(255, 128, 0, 0.55);
+            color: #ff8000;
+        }
+
+        &.o_emp_action_btn_accent {
+            border-color: rgba(16, 185, 129, 0.55);
+            color: #10b981;
+
+            &:hover {
+                border-color: #10b981;
+                background-color: var(--insilos-bg-selected);
+            }
+        }
+    }
+
+    .o_emp_dash_tabs {
+        border-bottom: 1px solid var(--insilos-border-subtle);
+        padding-bottom: 10px;
+    }
+
+    .o_emp_tab_btn {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--insilos-bg-surface);
+        border: 1px solid var(--insilos-border-subtle);
+        color: var(--insilos-text-secondary);
+        border-radius: 10px;
+        padding: 7px 14px;
+        font-size: 0.83rem;
+        font-weight: 600;
+        transition: all 0.15s ease;
+
+        &:hover {
+            background-color: var(--insilos-bg-hover);
+            color: var(--insilos-text-primary);
+        }
+
+        &.active {
+            background-color: var(--insilos-bg-selected);
+            border-color: rgba(255, 128, 0, 0.65);
+            color: #ff8000;
+        }
+    }
+
+    .o_emp_tab_pill {
+        padding: 1px 7px;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        background-color: var(--insilos-bg-card);
+        border: 1px solid var(--insilos-border-subtle);
+        color: var(--insilos-text-primary);
+    }
+
+    .o_emp_card {
+        background-color: var(--insilos-bg-surface);
+        border: 1px solid var(--insilos-border-subtle);
+        border-radius: 12px;
+        padding: 14px 16px;
+    }
+
+    .o_emp_card_title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--insilos-text-primary);
+        margin-bottom: 10px;
+    }
+
+    .o_emp_kv_list {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .o_emp_kv_row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.82rem;
+        padding-bottom: 5px;
+        border-bottom: 1px dashed var(--insilos-border-subtle);
+
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        &.o_emp_kv_row_net {
+            padding-top: 6px;
+            font-size: 0.9rem;
+        }
+    }
+
+    .o_emp_kv_label {
+        color: var(--insilos-text-secondary);
+    }
+
+    .o_emp_kv_val {
+        color: var(--insilos-text-primary);
+        text-align: right;
+    }
+
+    .o_emp_highlight_val {
+        color: #3b82f6;
+    }
+
+    .o_emp_deduct_val {
+        color: #f59e0b;
+    }
+
+    .o_emp_net_val {
+        color: #10b981;
+    }
+
+    .o_emp_kpi_box {
+        background-color: var(--insilos-bg-surface);
+        border: 1px solid var(--insilos-border-subtle);
+        border-radius: 12px;
+        padding: 12px 14px;
+    }
+
+    .o_emp_kpi_label {
+        font-size: 0.76rem;
+        color: var(--insilos-text-secondary);
+        margin-bottom: 4px;
+    }
+
+    .o_emp_kpi_value {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--insilos-text-primary);
+    }
+
+    .o_emp_table {
+        color: var(--insilos-text-primary);
+        font-size: 0.81rem;
+
+        th,
+        td {
+            background-color: transparent;
+            border-color: var(--insilos-border-subtle);
+            color: var(--insilos-text-primary);
+            vertical-align: middle;
+            padding: 7px 10px;
+        }
+
+        thead th {
+            color: var(--insilos-text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.03em;
+        }
+
+        .o_emp_row_selected td {
+            background-color: var(--insilos-bg-selected);
+        }
+    }
+
+    .o_emp_progress_track {
+        height: 8px;
+        border-radius: 999px;
+        background-color: var(--insilos-bg-canvas);
+        border: 1px solid var(--insilos-border-subtle);
+        overflow: hidden;
+    }
+
+    .o_emp_progress_fill {
+        height: 100%;
+        background: linear-gradient(90deg, #10b981, #3b82f6);
+        transition: width 0.25s ease;
+    }
+
+    .o_emp_step_list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .o_emp_step_item {
+        background-color: var(--insilos-bg-card);
+        border: 1px solid var(--insilos-border-subtle);
+        border-radius: 10px;
+        padding: 10px 14px;
+        cursor: pointer;
+        transition: border-color 0.15s ease, background-color 0.15s ease;
+
+        &:hover {
+            background-color: var(--insilos-bg-hover);
+            border-color: rgba(59, 130, 246, 0.45);
+        }
+
+        &.o_emp_step_done {
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+    }
+
+    .o_emp_step_title {
+        font-size: 0.86rem;
+        color: var(--insilos-text-primary);
+    }
+
+    .o_emp_step_desc {
+        font-size: 0.8rem;
+        color: var(--insilos-text-secondary);
+    }
+
+    .o_emp_step_meta {
+        font-size: 0.75rem;
+        color: var(--insilos-text-secondary);
+    }
+
+    .o_emp_form_label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--insilos-text-secondary);
+        margin-bottom: 3px;
+    }
+}
+

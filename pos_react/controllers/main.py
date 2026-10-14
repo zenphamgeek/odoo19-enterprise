@@ -100,7 +100,6 @@ class PosReactController(http.Controller):
 
         domain = Domain([
             ("state", "in", ["opening_control", "opened"]),
-            ("rescue", "=", False),
             ("config_id", "=", config.id),
         ])
         session = request.env["pos.session"].sudo().search(
@@ -139,9 +138,11 @@ class PosReactController(http.Controller):
         currencies = data.get("res.currency", [])
         currency_id = session.config_id.currency_id.id
         currency = next((item for item in currencies if item["id"] == currency_id), {})
-        cash_method = session.config_id.payment_method_ids.filtered("is_cash_count")[:1]
+        cash_method = session.config_id.payment_method_ids.filtered(
+            lambda m: getattr(m, "is_cash_count", False) or m.type == "cash"
+        )[:1]
         electronic_methods = session.config_id.payment_method_ids.filtered(
-            lambda method: not method.is_cash_count and method.type != "pay_later"
+            lambda method: not (getattr(method, "is_cash_count", False) or method.type == "cash") and method.type != "pay_later"
         )
         restaurant = {"enabled": False, "tables": []}
         if "module_pos_restaurant" in session.config_id._fields and session.config_id.module_pos_restaurant:
@@ -175,16 +176,16 @@ class PosReactController(http.Controller):
             "sessionId": session.id,
             "configId": session.config_id.id,
             "accessToken": session.config_id.access_token,
-            "websocketWorkerVersion": request.env["is.http"].session_info()["websocket_worker_version"],
+            "websocketWorkerVersion": request.env["ir.http"].session_info().get("websocket_worker_version", "1.0"),
             "companyId": session.company_id.id,
             "role": role,
             "employee": employee,
             "employees": employees,
-            "cashMethodId": cash_method.id,
+            "cashMethodId": cash_method.id if cash_method else False,
             "electronicPaymentMethods": [{
                 "id": method.id,
                 "name": method.name,
-                "terminal": method.use_payment_terminal or False,
+                "terminal": getattr(method, "payment_provider", False) or getattr(method, "use_payment_terminal", False) or False,
             } for method in electronic_methods],
             "cashRounding": {
                 "enabled": session.config_id.cash_rounding,

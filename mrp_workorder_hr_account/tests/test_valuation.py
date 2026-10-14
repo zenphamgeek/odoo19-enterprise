@@ -3,14 +3,14 @@
 
 from freezegun import freeze_time
 
-from odoo.addons.mrp_account.tests.test_valuation_layers import TestMrpValuationCommon
+from odoo.addons.mrp_account.tests.test_valuation_layers import TestMrpValuationStandard
 from odoo.fields import Command
 from odoo.tests import Form, tagged
 
 from datetime import datetime, timedelta
 
 
-class TestMrpWorkorderHrValuation(TestMrpValuationCommon):
+class TestMrpWorkorderHrValuation(TestMrpValuationStandard):
 
     @classmethod
     def setUpClass(cls):

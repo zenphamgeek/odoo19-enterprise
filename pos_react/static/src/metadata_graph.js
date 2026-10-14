@@ -310,7 +310,7 @@
                 for (const [model, ids] of missing) {
                     if (!requested.has(model)) requested.set(model, new Set());
                     ids.forEach((id) => requested.get(model).add(String(id)));
-                    const fields = [...models.get(model).fields.keys()].filter((field) => field !== "id");
+                    const fields = [...models.get(model).fields.values()].filter((f) => f.name !== "id" && !f.dummy).map((f) => f.name);
                     deltaRecords[model] = [...(deltaRecords[model] || []), ...await read(model, [...ids], fields)];
                 }
             }
@@ -369,7 +369,7 @@
             const output = {};
             const names = allFields ? models.get(model).fields.keys() : record.dirtyFields;
             for (const name of names) {
-                if (name === "id") continue;
+                if (name === "id" || descriptor(model, name).dummy) continue;
                 const field = descriptor(model, name);
                 const value = record[name];
                 if (allFields && value === undefined) continue;

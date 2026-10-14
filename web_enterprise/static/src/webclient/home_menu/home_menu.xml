@@ -14,7 +14,410 @@
             />
             <!-- When the subscription has expired, the expiration panel is show over the whole UI instead of here -->
             <ExpirationPanel t-if="subscription.warningType and !subscription.isWarningHidden and subscription.daysLeft &lt;= 30 and subscription.daysLeft > 0"/>
-            <div t-if="displayedApps.length" role="listbox" class="o_apps user-select-none mt-5 mx-0">
+
+            <!-- Innoria / DGM Employee Self-Service, Payroll, Onboarding & Leaving Hub -->
+            <div t-if="state.empDashboard and state.empDashboard.data" class="o_insilos_emp_dashboard mt-4 mb-2">
+                <t t-set="emp" t-value="state.empDashboard.data.current_employee"/>
+                <t t-set="summary" t-value="state.empDashboard.data.payroll_summary"/>
+                <t t-set="onb" t-value="state.empDashboard.data.onboarding"/>
+                <t t-set="lv" t-value="state.empDashboard.data.leaving"/>
+
+                <!-- Top Executive Identity & Action Header -->
+                <div class="o_emp_dash_header d-flex flex-wrap align-items-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="o_emp_avatar d-flex align-items-center justify-content-center fw-bold" t-out="getInitials(emp.name)"/>
+                        <div>
+                            <div class="d-flex flex-wrap align-items-center gap-2">
+                                <span class="o_emp_name fw-bold" t-out="emp.name"/>
+                                <span class="o_emp_badge o_emp_badge_primary" t-out="emp.registration_number"/>
+                                <span class="o_emp_badge o_emp_badge_emerald">
+                                    <i class="fa fa-shield me-1"/>BHXH Quận 7: TZ0857G
+                                </span>
+                            </div>
+                            <div class="o_emp_subtitle mt-1">
+                                <span class="fw-semibold" t-out="emp.job_title"/>
+                                <span class="mx-2">•</span>
+                                <span t-out="emp.department_name"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <div class="o_emp_switcher_wrap d-flex align-items-center gap-2">
+                            <label class="o_emp_switcher_label mb-0" for="dgm_emp_switcher">Nhân sự:</label>
+                            <select id="dgm_emp_switcher" class="form-select form-select-sm o_emp_switcher_select" t-on-change="onChangeDashboardEmployee">
+                                <t t-foreach="state.empDashboard.data.all_employees" t-as="item" t-key="item.id">
+                                    <option t-att-value="item.id" t-att-selected="item.id === emp.id" t-out="item.registration_number + ' — ' + item.name"/>
+                                </t>
+                            </select>
+                        </div>
+
+                        <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="openHrApp" title="Mở Hồ sơ Nhân sự">
+                            <i class="fa fa-id-card-o me-1"/>Hồ sơ HR
+                        </button>
+                        <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="openPayrollApp" title="Mở Phiếu lương &amp; Bảng lương">
+                            <i class="fa fa-money me-1"/>Bảng lương
+                        </button>
+                        <a class="btn btn-sm o_emp_action_btn o_emp_action_btn_accent" t-att-href="summary.vcb_export_url" target="_blank" title="Tải file Ủy nhiệm chi VCB DigiBiz 11 cột (.xlsx)">
+                            <i class="fa fa-download me-1"/>VCB DigiBiz (.xlsx)
+                        </a>
+                        <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="openDocumentsApp" title="Mở Kho Tài liệu Nhân sự &amp; Pháp lý">
+                            <i class="fa fa-folder-open-o me-1"/>Tài liệu
+                        </button>
+                        <button type="button" class="btn btn-sm o_emp_toggle_btn" t-on-click="toggleDashboardExpanded" t-att-title="state.empDashboard.expanded ? 'Thu gọn' : 'Mở rộng'">
+                            <i t-attf-class="fa {{state.empDashboard.expanded ? 'fa-chevron-up' : 'fa-chevron-down'}}"/>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive Navigation Tabs + Content -->
+                <div t-if="state.empDashboard.expanded" class="o_emp_dash_body mt-3">
+                    <div class="o_emp_dash_tabs d-flex flex-wrap gap-2 mb-3" role="tablist">
+                        <button type="button" class="o_emp_tab_btn" t-att-class="{ active: state.empDashboard.activeTab === 'overview' }" t-on-click="() => this.selectDashboardTab('overview')">
+                            <i class="fa fa-user-circle-o me-2"/>Thông tin Cơ bản &amp; Hợp đồng
+                        </button>
+                        <button type="button" class="o_emp_tab_btn" t-att-class="{ active: state.empDashboard.activeTab === 'payroll' }" t-on-click="() => this.selectDashboardTab('payroll')">
+                            <i class="fa fa-credit-card me-2"/>Bảng lương &amp; VCB DigiBiz
+                            <span class="o_emp_tab_pill ms-2" t-out="formatVnd(emp.net_wage)"/>
+                        </button>
+                        <button type="button" class="o_emp_tab_btn" t-att-class="{ active: state.empDashboard.activeTab === 'onboarding' }" t-on-click="() => this.selectDashboardTab('onboarding')">
+                            <i class="fa fa-rocket me-2"/>Quy trình Onboarding (SOP-DGM-04)
+                            <span class="o_emp_tab_pill ms-2" t-out="onb.completed_count + '/' + onb.total_count + ' (' + onb.progress_pct + '%)'"/>
+                        </button>
+                        <button type="button" class="o_emp_tab_btn" t-att-class="{ active: state.empDashboard.activeTab === 'leaving' }" t-on-click="() => this.selectDashboardTab('leaving')">
+                            <i class="fa fa-handshake-o me-2"/>Quy trình Leaving / Offboarding
+                            <span class="o_emp_tab_pill ms-2" t-out="lv.completed_count + '/' + lv.total_count"/>
+                        </button>
+                    </div>
+
+                    <!-- TAB 1: OVERVIEW (MY PROFILE, CONTRACT & STATUTORY COMPENSATION) -->
+                    <div t-if="state.empDashboard.activeTab === 'overview'" class="o_emp_tab_panel">
+                        <div class="row g-3">
+                            <div class="col-12 col-lg-4">
+                                <div class="o_emp_card h-100">
+                                    <div class="o_emp_card_title">
+                                        <i class="fa fa-address-card-o me-2"/>Hồ sơ Định danh &amp; Pháp lý
+                                    </div>
+                                    <div class="o_emp_kv_list">
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Họ và tên:</span>
+                                            <span class="o_emp_kv_val fw-semibold" t-out="emp.name"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Mã nhân viên:</span>
+                                            <span class="o_emp_kv_val font-monospace" t-out="emp.registration_number"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Số CCCD / Định danh:</span>
+                                            <span class="o_emp_kv_val font-monospace" t-out="emp.identification_id or 'Đã xác thực eKYC'"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Email công vụ:</span>
+                                            <span class="o_emp_kv_val" t-out="emp.work_email"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Điện thoại:</span>
+                                            <span class="o_emp_kv_val font-monospace" t-out="emp.work_phone"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Quản lý trực tiếp:</span>
+                                            <span class="o_emp_kv_val" t-out="emp.manager_name"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-4">
+                                <div class="o_emp_card h-100">
+                                    <div class="o_emp_card_title">
+                                        <i class="fa fa-file-text-o me-2"/>Hợp đồng Lao động &amp; Ngân hàng
+                                    </div>
+                                    <div class="o_emp_kv_list">
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Mẫu hợp đồng:</span>
+                                            <span class="o_emp_kv_val fw-semibold" t-out="emp.contract_name"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Ngày hiệu lực:</span>
+                                            <span class="o_emp_kv_val font-monospace" t-out="emp.join_date"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Đơn vị BHXH:</span>
+                                            <span class="o_emp_kv_val" t-out="emp.bhxh_unit"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Ngân hàng thụ hưởng:</span>
+                                            <span class="o_emp_kv_val fw-semibold" t-out="emp.bank_name + ' (' + emp.bank_bic + ')'"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Số tài khoản (Text):</span>
+                                            <span class="o_emp_kv_val font-monospace fw-bold o_emp_highlight_val" t-out="emp.bank_acc_number"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Kỳ lương gần nhất:</span>
+                                            <span class="o_emp_kv_val" t-out="emp.latest_payslip_name"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-4">
+                                <div class="o_emp_card h-100">
+                                    <div class="o_emp_card_title">
+                                        <i class="fa fa-calculator me-2"/>Cơ cấu Thu nhập &amp; Khấu trừ (Tháng 10/2026)
+                                    </div>
+                                    <div class="o_emp_kv_list">
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Lương Gross Hợp đồng:</span>
+                                            <span class="o_emp_kv_val font-monospace fw-bold" t-out="formatVnd(emp.gross_wage)"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">BHXH (8%) + BHYT (1.5%) + BHTN (1%):</span>
+                                            <span class="o_emp_kv_val font-monospace o_emp_deduct_val" t-out="'-' + formatVnd(emp.total_insurance)"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Thuế TNCN Lũy tiến (PIT):</span>
+                                            <span class="o_emp_kv_val font-monospace o_emp_deduct_val" t-out="'-' + formatVnd(emp.pit_amount)"/>
+                                        </div>
+                                        <div class="o_emp_kv_row o_emp_kv_row_net">
+                                            <span class="o_emp_kv_label fw-bold">Thực lĩnh (Net VCB DigiBiz):</span>
+                                            <span class="o_emp_kv_val font-monospace fw-bold o_emp_net_val" t-out="formatVnd(emp.net_wage)"/>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 d-flex flex-wrap gap-2">
+                                        <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="() => this.selectDashboardTab('onboarding')">
+                                            <i class="fa fa-check-square-o me-1"/>Onboarding (<t t-out="onb.progress_pct"/>%)
+                                        </button>
+                                        <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="() => this.selectDashboardTab('leaving')">
+                                            <i class="fa fa-sign-out me-1"/>Leaving / Bàn giao
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: PAYROLL & VCB DIGIBIZ 11-COLUMN BATCH -->
+                    <div t-if="state.empDashboard.activeTab === 'payroll'" class="o_emp_tab_panel">
+                        <div class="row g-3 mb-3">
+                            <div class="col-6 col-md-3">
+                                <div class="o_emp_kpi_box">
+                                    <div class="o_emp_kpi_label">Tổng Quỹ Lương Gross (<t t-out="summary.month_label"/>)</div>
+                                    <div class="o_emp_kpi_value font-monospace" t-out="formatVnd(summary.total_gross)"/>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="o_emp_kpi_box">
+                                    <div class="o_emp_kpi_label">Tổng Trích nộp BHXH/BHYT/BHTN (10.5%)</div>
+                                    <div class="o_emp_kpi_value font-monospace o_emp_deduct_val" t-out="formatVnd(summary.total_insurance)"/>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="o_emp_kpi_box">
+                                    <div class="o_emp_kpi_label">Tổng Khấu trừ Thuế TNCN (PIT)</div>
+                                    <div class="o_emp_kpi_value font-monospace o_emp_deduct_val" t-out="formatVnd(summary.total_pit)"/>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="o_emp_kpi_box">
+                                    <div class="o_emp_kpi_label">Tổng Thực lĩnh Chi lương VCB DigiBiz</div>
+                                    <div class="o_emp_kpi_value font-monospace o_emp_net_val" t-out="formatVnd(summary.total_net)"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="o_emp_card">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                <div class="o_emp_card_title mb-0">
+                                    <i class="fa fa-table me-2"/>Bảng Tổng hợp Lương &amp; Ủy nhiệm chi VCB DigiBiz (8 Nhân sự Chính thức — Mã ĐV BHXH: TZ0857G)
+                                </div>
+                                <a class="btn btn-sm o_emp_action_btn o_emp_action_btn_accent" t-att-href="summary.vcb_export_url" target="_blank">
+                                    <i class="fa fa-file-excel-o me-1"/>Xuất File VCB DigiBiz 11 Cột (.xlsx)
+                                </a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm o_emp_table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã NV</th>
+                                            <th>Họ và tên</th>
+                                            <th>Chức danh / Khối</th>
+                                            <th>Ngân hàng</th>
+                                            <th>Số TK (Text)</th>
+                                            <th class="text-end">Gross (VND)</th>
+                                            <th class="text-end">BHXH 10.5%</th>
+                                            <th class="text-end">Thuế TNCN</th>
+                                            <th class="text-end">Thực lĩnh Net</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="state.empDashboard.data.all_employees" t-as="row" t-key="row.id" t-att-class="{ o_emp_row_selected: row.id === emp.id }">
+                                            <td class="font-monospace fw-semibold" t-out="row.registration_number"/>
+                                            <td class="fw-semibold" t-out="row.name"/>
+                                            <td t-out="row.job_title"/>
+                                            <td t-out="row.bank_name"/>
+                                            <td class="font-monospace" t-out="row.bank_acc_number"/>
+                                            <td class="text-end font-monospace" t-out="formatVnd(row.gross_wage)"/>
+                                            <td class="text-end font-monospace o_emp_deduct_val" t-out="'-' + formatVnd(row.total_insurance)"/>
+                                            <td class="text-end font-monospace o_emp_deduct_val" t-out="'-' + formatVnd(row.pit_amount)"/>
+                                            <td class="text-end font-monospace fw-bold o_emp_net_val" t-out="formatVnd(row.net_wage)"/>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: ONBOARDING WORKFLOW (5 STEPS SOP-DGM-04) -->
+                    <div t-if="state.empDashboard.activeTab === 'onboarding'" class="o_emp_tab_panel">
+                        <div class="o_emp_card">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                                <div>
+                                    <div class="o_emp_card_title mb-1">
+                                        <i class="fa fa-rocket me-2"/>Quy trình Hội nhập Nhân sự Mới (SOP-DGM-04) — <span t-out="emp.name"/> (<span t-out="emp.registration_number"/>)
+                                    </div>
+                                    <div class="o_emp_subtitle">
+                                        Tích chọn từng bước để cập nhật trạng thái hoàn tất hồ sơ pháp lý, HĐLĐ 12 điều, báo tăng BHXH Quận 7 (TZ0857G) và cấp quyền hệ thống.
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="o_emp_badge o_emp_badge_emerald" t-out="'Hoàn thành: ' + onb.completed_count + '/' + onb.total_count + ' (' + onb.progress_pct + '%)'"/>
+                                </div>
+                            </div>
+
+                            <div class="o_emp_progress_track mb-3">
+                                <div class="o_emp_progress_fill" t-attf-style="width: {{onb.progress_pct}}%;"/>
+                            </div>
+
+                            <div class="o_emp_step_list">
+                                <div t-foreach="onb.steps" t-as="step" t-key="step.id" class="o_emp_step_item d-flex align-items-start justify-content-between gap-3" t-att-class="{ o_emp_step_done: step.done }" t-on-click="() => this.onToggleLifecycleStep('onboarding', step.id, step.done)">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <input type="checkbox" class="form-check-input o_emp_step_checkbox mt-1" t-att-checked="step.done" t-on-click.stop="() => this.onToggleLifecycleStep('onboarding', step.id, step.done)"/>
+                                        <div>
+                                            <div class="d-flex flex-wrap align-items-center gap-2">
+                                                <span class="o_emp_badge o_emp_badge_primary font-monospace" t-out="step.code"/>
+                                                <span class="fw-semibold o_emp_step_title" t-out="step.title"/>
+                                            </div>
+                                            <div class="o_emp_step_desc mt-1" t-out="step.description"/>
+                                            <div class="o_emp_step_meta mt-1">
+                                                <span><i class="fa fa-user-o me-1"/>Phụ trách: <strong t-out="step.owner"/></span>
+                                                <span class="mx-2">•</span>
+                                                <span><i class="fa fa-clock-o me-1"/>SLA: <strong t-out="step.sla"/></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-end flex-shrink-0">
+                                        <span t-if="step.done" class="o_emp_badge o_emp_badge_emerald">
+                                            <i class="fa fa-check me-1"/>Đã hoàn tất
+                                        </span>
+                                        <span t-else="" class="o_emp_badge o_emp_badge_amber">
+                                            <i class="fa fa-hourglass-half me-1"/>Đang thực hiện
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: LEAVING / OFFBOARDING WORKFLOW (5 CLEARANCE GATES SOP-DGM-03 & SOP-DGM-04) -->
+                    <div t-if="state.empDashboard.activeTab === 'leaving'" class="o_emp_tab_panel">
+                        <div class="row g-3">
+                            <div class="col-12 col-lg-4">
+                                <div class="o_emp_card h-100">
+                                    <div class="o_emp_card_title">
+                                        <i class="fa fa-file-text-o me-2"/>Khởi tạo Đề nghị Bàn giao / Thôi việc (Leaving Request)
+                                    </div>
+                                    <form t-on-submit.prevent="onSubmitLeavingRequest" class="o_emp_leaving_form">
+                                        <div class="mb-2">
+                                            <label class="form-label o_emp_form_label">Trạng thái hiện tại:</label>
+                                            <div>
+                                                <span t-if="lv.status === 'notice_submitted'" class="o_emp_badge o_emp_badge_amber">
+                                                    Đang trong kỳ bàn giao (Notice Submitted)
+                                                </span>
+                                                <span t-elif="lv.status === 'completed'" class="o_emp_badge o_emp_badge_emerald">
+                                                    Đã hoàn tất Offboarding &amp; Chốt sổ BHXH
+                                                </span>
+                                                <span t-else="" class="o_emp_badge o_emp_badge_primary">
+                                                    Đang làm việc chính thức (Active Employment)
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label o_emp_form_label">Ngày nộp thông báo (Notice Date):</label>
+                                            <input type="date" class="form-control form-control-sm o_emp_input" t-att-value="lv.notice_date or state.empDashboard.leavingForm.notice_date" t-on-change="(ev) => state.empDashboard.leavingForm.notice_date = ev.target.value"/>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label o_emp_form_label">Ngày làm việc cuối dự kiến (Last Working Day):</label>
+                                            <input type="date" class="form-control form-control-sm o_emp_input" t-att-value="lv.expected_last_day or state.empDashboard.leavingForm.expected_last_day" t-on-change="(ev) => state.empDashboard.leavingForm.expected_last_day = ev.target.value"/>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label o_emp_form_label">Người nhận bàn giao kỹ thuật / công việc:</label>
+                                            <input type="text" class="form-control form-control-sm o_emp_input" t-att-value="lv.handover_assignee or state.empDashboard.leavingForm.handover_assignee" t-on-input="(ev) => state.empDashboard.leavingForm.handover_assignee = ev.target.value"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label o_emp_form_label">Lý do &amp; Ghi chú đối soát công nợ TK 141:</label>
+                                            <input type="text" class="form-control form-control-sm o_emp_input" t-att-value="lv.reason or state.empDashboard.leavingForm.reason" t-on-input="(ev) => state.empDashboard.leavingForm.reason = ev.target.value"/>
+                                        </div>
+                                        <button type="submit" class="btn btn-sm o_emp_action_btn o_emp_action_btn_accent w-100">
+                                            <i class="fa fa-paper-plane-o me-1"/>Kích hoạt / Cập nhật Quy trình Bàn giao
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-8">
+                                <div class="o_emp_card h-100">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                                        <div>
+                                            <div class="o_emp_card_title mb-1">
+                                                <i class="fa fa-check-circle-o me-2"/>5 Chốt Kiểm soát Bàn giao &amp; Tất toán Thôi việc (SOP-DGM-03 &amp; SOP-DGM-04)
+                                            </div>
+                                            <div class="o_emp_subtitle">
+                                                Đảm bảo thu hồi quyền truy cập Git/SSO, đối soát tạm ứng TK 141, quyết toán thuế TNCN và báo giảm BHXH Quận 7 (TZ0857G).
+                                            </div>
+                                        </div>
+                                        <span class="o_emp_badge o_emp_badge_primary" t-out="lv.completed_count + '/' + lv.total_count + ' Chốt hoàn tất'"/>
+                                    </div>
+
+                                    <div class="o_emp_progress_track mb-3">
+                                        <div class="o_emp_progress_fill" t-attf-style="width: {{lv.progress_pct}}%;"/>
+                                    </div>
+
+                                    <div class="o_emp_step_list">
+                                        <div t-foreach="lv.steps" t-as="step" t-key="step.id" class="o_emp_step_item d-flex align-items-start justify-content-between gap-3" t-att-class="{ o_emp_step_done: step.done }" t-on-click="() => this.onToggleLifecycleStep('leaving', step.id, step.done)">
+                                            <div class="d-flex align-items-start gap-3">
+                                                <input type="checkbox" class="form-check-input o_emp_step_checkbox mt-1" t-att-checked="step.done" t-on-click.stop="() => this.onToggleLifecycleStep('leaving', step.id, step.done)"/>
+                                                <div>
+                                                    <div class="d-flex flex-wrap align-items-center gap-2">
+                                                        <span class="o_emp_badge o_emp_badge_primary font-monospace" t-out="step.code"/>
+                                                        <span class="fw-semibold o_emp_step_title" t-out="step.title"/>
+                                                    </div>
+                                                    <div class="o_emp_step_desc mt-1" t-out="step.description"/>
+                                                    <div class="o_emp_step_meta mt-1">
+                                                        <span><i class="fa fa-user-o me-1"/>Chốt duyệt: <strong t-out="step.owner"/></span>
+                                                        <span class="mx-2">•</span>
+                                                        <span><i class="fa fa-clock-o me-1"/>Thời hạn: <strong t-out="step.sla"/></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-end flex-shrink-0">
+                                                <span t-if="step.done" class="o_emp_badge o_emp_badge_emerald">
+                                                    <i class="fa fa-check me-1"/>Đã nghiệm thu
+                                                </span>
+                                                <span t-else="" class="o_emp_badge o_emp_badge_amber">
+                                                    <i class="fa fa-clock-o me-1"/>Chờ nghiệm thu
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div t-if="displayedApps.length" role="listbox" class="o_apps user-select-none mt-4 mx-0">
                 <div t-foreach="displayedApps" t-as="app" t-key="app.id" class="o_draggable mb-3">
                     <t t-set="sapAcronym" t-value="
                         (app.xmlid and app.xmlid.startsWith('contacts')) ? 'BP' :
