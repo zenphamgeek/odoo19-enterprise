@@ -261,10 +261,16 @@ export class DocumentsSearchModel extends SearchModel {
             if (this.context.documents_unique_folder_id) {
                 return [["id", "child_of", this.context.documents_unique_folder_id]];
             }
+            // [SEC-01 Guard]: Prevent BOLA/IDOR escape on empty query vs search query
             if (!this.query || !this.query.length) {
                 return [["folder_id", "=", false]];
             }
-            return [];
+            // When searching without an explicit folder selection, clamp to user's root scope
+            const rootScopeId = this.context.documents_root_folder_id || this.context.default_folder_id;
+            if (rootScopeId) {
+                return [["folder_id", "child_of", rootScopeId]];
+            }
+            return this.documentService.userIsInternal ? [["folder_id", "!=", false]] : [["folder_id", "=", false]];
         }
         const folder = this.getSelectedFolder();
         const folderIdToOpen = folder?.shortcut_document_id?.length
@@ -329,14 +335,21 @@ export class DocumentsSearchModel extends SearchModel {
         return false;
     }
 
+    // [SEC-03 & SEC-06 Guard]: Strict sanitization and integer normalization
     _normalizeFolderId(val) {
         if (val === false || val === "false" || val === null || val === undefined) {
             return false;
         }
+        if (typeof val === "number" && Number.isInteger(val) && val > 0) {
+            return val;
+        }
         if (typeof val === "string" && /^\d+$/.test(val)) {
             return parseInt(val, 10);
         }
-        return val;
+        if (typeof val === "string" && ["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(val)) {
+            return val;
+        }
+        return false;
     }
 
     _safeSetStorage(key, value) {
@@ -380,22 +393,28 @@ export class DocumentsSearchModel extends SearchModel {
         ) {
             return;
         }
-        // valueIds might contain different values than category.values
+        // [SEC-05 Guard]: Cycle-safe and orphan-resilient parent traversal
         if (category.activeValueId && category.values.has(category.activeValueId)) {
-            // We might be in a deleted subfolder, try to find the parent.
-            let newSection = category.values.get(
-                category.values.get(category.activeValueId).parentId
-            );
-            while (newSection && !this._isCategoryValueReachable(category, newSection.id)) {
-                newSection = category.values.get(newSection.parentId);
+            const seenIds = new Set();
+            let currId = category.activeValueId;
+            let resolvedSection = false;
+            while (currId && category.values.has(currId) && !seenIds.has(currId)) {
+                seenIds.add(currId);
+                const node = category.values.get(currId);
+                if (!node || !node.parentId || !category.values.has(node.parentId)) {
+                    break;
+                }
+                currId = node.parentId;
+                if (valueIds.includes(currId) && this._isCategoryValueReachable(category, currId)) {
+                    resolvedSection = currId;
+                    break;
+                }
             }
-            if (newSection) {
-                category.activeValueId = newSection.id || valueIds[Number(valueIds.length > 1)];
-            } else {
-                category.activeValueId = this.documentService.userIsInternal
+            category.activeValueId =
+                resolvedSection ||
+                (this.documentService.userIsInternal
                     ? "COMPANY"
-                    : (valueIds.length > 0 ? valueIds[0] : false);
-            }
+                    : (valueIds.length > 0 ? valueIds[0] : false));
             this._safeSetStorage("searchpanel_documents_document", category.activeValueId);
         } else {
             if (this.documentService.userIsInternal) {
