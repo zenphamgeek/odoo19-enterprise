@@ -42,9 +42,13 @@ linked to an SO, or only the validated timesheets
     'assets': {
         'web.assets_backend': [
             'sale_timesheet_enterprise/static/src/**/*',
+            ('remove', 'sale_timesheet_enterprise/static/src/scss/timesheet_leaderboard.dark.scss'),
             ('remove', 'sale_timesheet_enterprise/static/src/views/timesheet_analysis_pivot/**'),
             ('remove', 'sale_timesheet_enterprise/static/src/views/timesheet_grid/**'),
             ('remove', 'sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_timer_grid/**'),
+        ],
+        'web.assets_web_dark': [
+            'sale_timesheet_enterprise/static/src/scss/timesheet_leaderboard.dark.scss',
         ],
         'web.assets_backend_lazy': [
             'sale_timesheet_enterprise/static/src/components/**',
