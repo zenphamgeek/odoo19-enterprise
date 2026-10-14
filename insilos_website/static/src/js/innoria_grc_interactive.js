@@ -229,6 +229,62 @@
                 }, 100);
             });
         }
+
+        // Sub-Suite 4: Legal Authority Cascade & Tax Override Simulator (SEC-02 Remediated)
+        var btnSimulateOverride = section.querySelector('#btnSimulateOverride, .js_simulate_override');
+        var btnResetOverride = section.querySelector('#btnResetOverride, .js_reset_override');
+
+        if (btnSimulateOverride) {
+            btnSimulateOverride.addEventListener('click', function () {
+                var alertSel = btnSimulateOverride.getAttribute('data-target-alert') || '#cascadeAlertBox';
+                var tierSel = btnSimulateOverride.getAttribute('data-target-tier') || '#cascadeTierP4';
+                var logSel = btnSimulateOverride.getAttribute('data-target-log') || '#reconAuditTrailLog';
+
+                var alertBox = section.querySelector(alertSel) || document.querySelector(alertSel);
+                var tierP4 = section.querySelector(tierSel) || document.querySelector(tierSel);
+                var auditLog = section.querySelector(logSel) || document.querySelector(logSel);
+
+                if (alertBox) {
+                    alertBox.classList.remove('d-none');
+                }
+                if (tierP4) {
+                    tierP4.classList.add('border-danger', 'bg-danger', 'bg-opacity-10');
+                }
+                if (auditLog) {
+                    var entry = document.createElement('div');
+                    entry.className = 'audit-entry p-2 rounded-2 mb-2 bg-danger bg-opacity-25 border border-danger small font-monospace text-danger';
+                    entry.innerHTML = '[2026-10-10 08:00:22 UTC] <strong>SECURITY INVARIANT BREACH</strong>: P4/P5 Tax Override Rejected. HS 7219.33.00 (3.2%) cannot override Statutory Decree P1 HS 7219.34 (12%). Flagged for Compliance Officer review.';
+                    auditLog.appendChild(entry);
+                }
+
+                btnSimulateOverride.classList.add('d-none');
+                if (btnResetOverride) {
+                    btnResetOverride.classList.remove('d-none');
+                }
+            });
+        }
+
+        if (btnResetOverride) {
+            btnResetOverride.addEventListener('click', function () {
+                var alertSel = btnResetOverride.getAttribute('data-target-alert') || '#cascadeAlertBox';
+                var tierSel = btnResetOverride.getAttribute('data-target-tier') || '#cascadeTierP4';
+
+                var alertBox = section.querySelector(alertSel) || document.querySelector(alertSel);
+                var tierP4 = section.querySelector(tierSel) || document.querySelector(tierSel);
+
+                if (alertBox) {
+                    alertBox.classList.add('d-none');
+                }
+                if (tierP4) {
+                    tierP4.classList.remove('border-danger', 'bg-danger', 'bg-opacity-10');
+                }
+
+                btnResetOverride.classList.add('d-none');
+                if (btnSimulateOverride) {
+                    btnSimulateOverride.classList.remove('d-none');
+                }
+            });
+        }
     }
 
     function initOperationalComplianceInteractive() {

@@ -222,49 +222,112 @@ class SuiteScorecard:
 # Test Runner Implementation
 # ==============================================================================
 
+from urllib.parse import urlparse
 import ipaddress
 import socket
-from urllib.parse import urlparse
+from typing import Optional, Union
 
 BLOCKED_IP_NETWORKS = (
-    ipaddress.ip_network("169.254.0.0/16"),       # Link-local / Cloud Metadata (AWS, Azure, GCP)
-    ipaddress.ip_network("100.100.100.200/32"),   # Alibaba metadata
-    ipaddress.ip_network("169.254.170.2/32"),     # AWS ECS Task metadata
-    ipaddress.ip_network("fd00:ec2::/64"),        # IPv6 IMDS
+    ipaddress.ip_network("169.254.0.0/16"),         # Link-local / Cloud Metadata (AWS, Azure, GCP)
+    ipaddress.ip_network("fe80::/10"),              # IPv6 Link-local
+    ipaddress.ip_network("100.100.100.200/32"),     # Alibaba cloud metadata
+    ipaddress.ip_network("169.254.170.2/32"),       # AWS ECS Task metadata
+    ipaddress.ip_network("fd00:ec2::/64"),          # AWS IPv6 IMDS
+    ipaddress.ip_network("fd00:ec2::254/128"),      # AWS IPv6 IMDSv2
     ipaddress.ip_network("::ffff:169.254.0.0/112"), # IPv4-mapped IPv6 metadata
 )
 
 BLOCKED_METADATA_DOMAINS = frozenset({
+    "169.254.169.254",
     "metadata.google.internal",
+    "169.254.170.2",
+    "fd00:ec2::254",
     "metadata.azure.com",
     "instance-data",
+    "100.100.100.200",
 })
 
 
-def _validate_safe_url(url_str: str, allow_localhost: bool = True) -> str:
+def _decode_ip_candidate(host: str) -> Optional[Union[ipaddress.IPv4Address, ipaddress.IPv6Address]]:
+    try:
+        return ipaddress.ip_address(host)
+    except ValueError:
+        pass
+    try:
+        if host.startswith(("0x", "0X")):
+            val = int(host, 16)
+            if 0 <= val <= 0xFFFFFFFF:
+                return ipaddress.IPv4Address(val)
+        elif host.isdigit():
+            val = int(host, 10)
+            if 0 <= val <= 0xFFFFFFFF:
+                return ipaddress.IPv4Address(val)
+        elif host.startswith(("0o", "0O")):
+            val = int(host, 8)
+            if 0 <= val <= 0xFFFFFFFF:
+                return ipaddress.IPv4Address(val)
+    except (ValueError, OverflowError):
+        pass
+    parts = host.split(".")
+    if len(parts) == 4:
+        try:
+            octets = []
+            for p in parts:
+                if p.startswith(("0x", "0X")):
+                    octets.append(int(p, 16))
+                elif p.startswith("0") and len(p) > 1 and p.isdigit():
+                    octets.append(int(p, 8))
+                elif p.isdigit():
+                    octets.append(int(p, 10))
+                else:
+                    break
+            if len(octets) == 4 and all(0 <= o <= 255 for o in octets):
+                val = (octets[0] << 24) | (octets[1] << 16) | (octets[2] << 8) | octets[3]
+                return ipaddress.IPv4Address(val)
+        except (ValueError, OverflowError):
+            pass
+    return None
+
+
+def _is_ip_blocked(ip_obj: Union[ipaddress.IPv4Address, ipaddress.IPv6Address], allow_loopback: bool = True) -> bool:
+    # If IPv4-mapped IPv6 address, check underlying IPv4
+    if ip_obj.version == 6 and getattr(ip_obj, "ipv4_mapped", None):
+        v4_obj = ip_obj.ipv4_mapped
+        if _is_ip_blocked(v4_obj, allow_loopback=allow_loopback):
+            return True
+    if not allow_loopback and (ip_obj.is_loopback or ip_obj.is_private):
+        return True
+    if ip_obj.is_link_local:
+        return True
+    for blocked_net in BLOCKED_IP_NETWORKS:
+        if ip_obj in blocked_net and not (allow_loopback and ip_obj.is_loopback):
+            return True
+    return False
+
+
+def _validate_safe_url(url_str: str, allow_loopback: bool = True) -> str:
     parsed = urlparse(url_str)
     if parsed.scheme not in ("http", "https") or not parsed.hostname:
         raise ValueError(f"Security Violation (CWE-918): Invalid URL scheme or host: {url_str}")
 
     clean_host = parsed.hostname.rstrip(".").lower()
-    if clean_host in BLOCKED_METADATA_DOMAINS or clean_host.endswith(".internal"):
+    if clean_host in BLOCKED_METADATA_DOMAINS or clean_host.endswith(".internal") or clean_host.endswith(".azure.com"):
         raise ValueError(f"Security Violation (CWE-918): Blocked cloud metadata domain: {clean_host}")
 
+    # Canonical host resolution and decoding of integer/hex/octal IP formats (e.g. 2852039166, 0xa9fea9fe)
+    direct_ip = _decode_ip_candidate(clean_host)
+    if direct_ip is not None:
+        if _is_ip_blocked(direct_ip, allow_loopback=allow_loopback):
+            raise ValueError(f"Security Violation (CWE-918): Blocked IP network target: {direct_ip}")
+        return url_str.rstrip("/")
+
+    # DNS rebinding check via socket.getaddrinfo
     try:
-        addr_info = socket.getaddrinfo(clean_host, parsed.port or (80 if parsed.scheme == 'http' else 443))
+        addr_info = socket.getaddrinfo(clean_host, parsed.port or (80 if parsed.scheme == "http" else 443))
         for _, _, _, _, sockaddr in addr_info:
             ip_obj = ipaddress.ip_address(sockaddr[0])
-            # If IPv4-mapped IPv6 address, check underlying IPv4
-            if ip_obj.version == 6 and ip_obj.ipv4_mapped:
-                v4_obj = ip_obj.ipv4_mapped
-                for blocked_net in BLOCKED_IP_NETWORKS:
-                    if v4_obj in blocked_net:
-                        raise ValueError(f"Security Violation (CWE-918): Blocked IPv4-mapped target: {v4_obj}")
-            if not allow_localhost and (ip_obj.is_loopback or ip_obj.is_private):
-                raise ValueError(f"Security Violation (CWE-918): Private address forbidden: {ip_obj}")
-            for blocked_net in BLOCKED_IP_NETWORKS:
-                if ip_obj in blocked_net and not (allow_localhost and ip_obj.is_loopback):
-                    raise ValueError(f"Security Violation (CWE-918): Blocked IP network target: {ip_obj}")
+            if _is_ip_blocked(ip_obj, allow_loopback=allow_loopback):
+                raise ValueError(f"Security Violation (CWE-918): SSRF DNS rebinding blocked IP target: {ip_obj}")
     except socket.gaierror as err:
         raise ValueError(f"Security Violation: Unable to resolve hostname '{clean_host}': {err}")
 
