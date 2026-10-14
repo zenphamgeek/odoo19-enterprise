@@ -903,12 +903,13 @@ class DocumentsDocument(models.Model):
         return [('id', 'in', query)]
 
     def _field_to_sql(self, alias, fname, query=None) -> SQL:
+        alias_str = alias._alias if hasattr(alias, '_alias') else alias
         if fname == 'last_access_date_group':
             # Allow to group on the field
             return SQL("""(%s SELECT date FROM last_access_date WHERE document_id = %s)""",
-                       self._get_last_access_date_group_cte(), SQL.identifier(alias, 'id'))
+                       self._get_last_access_date_group_cte(), SQL.identifier(alias_str, 'id'))
 
-        return super()._field_to_sql(alias, fname, query)
+        return super()._field_to_sql(alias_str, fname, query)
 
     def _order_field_to_sql(self, alias, field_name, direction, nulls, query=None):
         if field_name == 'last_access_date_group':
@@ -1172,8 +1173,9 @@ class DocumentsDocument(models.Model):
             candidates_domain &= self._get_access_update_domain()
             candidates_query = self.with_context(active_test=False)._search(candidates_domain)
 
+            table_alias = candidates_query.table._alias if hasattr(candidates_query.table, '_alias') else candidates_query.table
             candidates = candidates_query.select(*(
-                self._field_to_sql(candidates_query.table, fname, candidates_query)
+                self._field_to_sql(table_alias, fname, candidates_query)
                 for fname in ('id', 'folder_id', 'shortcut_document_id', field)
             ))
 
