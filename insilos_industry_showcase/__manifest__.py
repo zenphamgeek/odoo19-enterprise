@@ -17,7 +17,7 @@ Features:
 """,
     'author': 'Insilos Core Team',
     'website': 'https://dev.insilos.com',
-    'depends': ['website', 'industry_templates', 'insilos_tenant_control'],
+    'depends': ['website', 'industry_templates', 'insilos_tenant_control', 'account'],
     'data': [
         'security/ir.model.access.csv',
         'data/industry_landing_data.xml',

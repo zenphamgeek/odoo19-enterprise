@@ -63,5 +63,37 @@ class PinnedConversionCron(models.AbstractModel):
 
     @api.model
     def _process_tenant_pinned_rates(self, company):
-        """Implementation of rates calculation strictly bound to company."""
+        """
+        Implementation of rates calculation strictly bound to company.
+        Safely dispatches to sale.order and al2c.timesheet.staging under with_company(company).
+        """
+        if 'sale.order' in self.env:
+            try:
+                sale_model = self.env['sale.order'].with_company(company)
+                if hasattr(sale_model, 'cron_process_pinned_conversions'):
+                    sale_model.cron_process_pinned_conversions()
+                elif hasattr(sale_model, '_cron_process_pinned_conversions'):
+                    sale_model._cron_process_pinned_conversions()
+            except Exception as exc:
+                _logger.error("Failed to process pinned conversions for sale.order on company %s: %s", company.id, exc)
+
+        if 'al2c.timesheet.staging' in self.env:
+            try:
+                staging_model = self.env['al2c.timesheet.staging'].with_company(company)
+                if hasattr(staging_model, '_cron_process_pinned_conversions'):
+                    staging_model._cron_process_pinned_conversions()
+                elif hasattr(staging_model, 'cron_process_pinned_conversions'):
+                    staging_model.cron_process_pinned_conversions()
+            except Exception as exc:
+                _logger.error("Failed to process pinned conversions for al2c.timesheet.staging on company %s: %s", company.id, exc)
+
+        if 'insilos.pinned.conversion.runner' in self.env:
+            try:
+                runner_model = self.env['insilos.pinned.conversion.runner'].with_company(company)
+                if hasattr(runner_model, '_process_company_cellular'):
+                    runner_model._process_company_cellular(company.id)
+            except Exception as exc:
+                _logger.error("Failed to process cellular conversions for insilos.pinned.conversion.runner on company %s: %s", company.id, exc)
+
         return True
+
