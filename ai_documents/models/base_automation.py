@@ -22,13 +22,14 @@ class BaseAutomation(models.Model):
     )
 
     def _process(self, records, domain_post=None, *args, **kwargs):
-        rules = self
-        if (
+        # Disallow unprivileged RPC context from suppressing automation rules
+        skip_autosort = (
             self.env.context.get("ai_documents_skip_autosort")
-            and records
-            and records._name == "documents.document"
-        ):
-            rules = self.filtered(lambda r: not r.ai_autosort_folder_id)
-            if not rules:
-                return
-        return super(BaseAutomation, rules)._process(records, domain_post, *args, **kwargs)
+            and (self.env.is_system() or self.env.user.has_group("base.group_system"))
+        )
+        executable_rules = self
+        if skip_autosort and records and getattr(records, "_name", None) == "documents.document":
+            executable_rules = self.filtered(lambda r: not r.ai_autosort_folder_id)
+        if not executable_rules:
+            return False
+        return super(BaseAutomation, executable_rules)._process(records, domain_post, *args, **kwargs)

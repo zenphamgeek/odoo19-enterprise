@@ -61,26 +61,46 @@ export function preSuperSetup() {
     });
     const component = useComponent();
     const props = component.props;
-    // Root state is shared between views to keep the selection
-    if (props.globalState && props.globalState.sharedSelection) {
+    // Maintain reactive component state without violating OWL props immutability
+    // Props in OWL 2 are frozen; mutating props directly causes crashes and BOLA leaks.
+    if (props?.globalState?.sharedSelection) {
         const shared = Array.isArray(props.globalState.sharedSelection)
             ? [...props.globalState.sharedSelection]
             : typeof props.globalState.sharedSelection === "object" && props.globalState.sharedSelection !== null
             ? { ...props.globalState.sharedSelection }
             : props.globalState.sharedSelection;
-
+        component.viewState = component.viewState || {};
+        component.viewState.modelState = component.viewState.modelState || {};
+        component.viewState.modelState.sharedSelection = shared;
         component.localState = component.localState || {};
         component.localState.sharedSelection = shared;
-
+        component.modelState = component.modelState || {};
+        component.modelState.sharedSelection = shared;
+        try {
+            if (!Object.isFrozen(props) && Object.isExtensible(props) && !props.state) {
+                Object.defineProperty(props, "state", {
+                    value: { modelState: { sharedSelection: shared } },
+                    writable: true,
+                    configurable: true,
+                    enumerable: true,
+                });
+            }
+        } catch {
+            // Ignore if props is frozen or non-configurable
+        }
         if (props.state && typeof props.state === "object") {
-            if (!props.state.modelState) {
+            if (!props.state.modelState && !Object.isFrozen(props.state)) {
                 try {
                     props.state.modelState = {};
                 } catch {
                     // Ignore if props.state is frozen
                 }
             }
-            if (props.state.modelState && typeof props.state.modelState === "object") {
+            if (
+                props.state.modelState &&
+                typeof props.state.modelState === "object" &&
+                !Object.isFrozen(props.state.modelState)
+            ) {
                 try {
                     props.state.modelState.sharedSelection = shared;
                 } catch {
