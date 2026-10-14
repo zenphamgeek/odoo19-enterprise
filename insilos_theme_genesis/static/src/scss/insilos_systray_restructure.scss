@@ -903,12 +903,19 @@ body.o_dark_mode,
       .o_insilos_brand_logo.o_insilos_brand_logo_light {
         display: none !important;
       }
-      .o_insilos_brand_logo.o_insilos_brand_logo_dark {
+      .o_insilos_brand_logo.o_insilos_brand_logo_dark:not(.o_hidden) {
         display: inline-block !important;
+      }
+      .o_insilos_brand_logo.o_hidden {
+        display: none !important;
       }
 
       .o_navbar_apps_menu,
       .o_menu_toggle {
+        &.o_hidden {
+          display: none !important;
+        }
+
         .o_insilos_launcher_icon.o_insilos_launcher_icon_light {
           display: none !important;
         }

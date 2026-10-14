@@ -217,6 +217,29 @@
             outline-offset: 2px !important;
           }
         }
+
+        /* Suppress redundant fallback button ('Ok') when action buttons (Save/Discard) are teleported into modal footer */
+        &:has(.o_form_button_save, .o_form_button_cancel, .o_form_button_create, .o_select_button) {
+          button.o-default-button,
+          .btn.o-default-button,
+          .o-default-button {
+            display: none !important;
+          }
+        }
+
+        /* Global fallback button suppression for multi-button dialogs */
+        button.o-default-button:not(:only-child),
+        .btn.o-default-button:not(:only-child),
+        .o-default-button:not(:only-child) {
+          display: none !important;
+        }
+
+        /* Hide legacy documents share traceback buttons in error dialog */
+        .o_documents_share_traceback_button,
+        button:has([class*="fa-share"]),
+        button[data-tooltip*="Share"] {
+          display: none !important;
+        }
       }
     }
   }

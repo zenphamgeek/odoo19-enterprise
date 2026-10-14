@@ -22,8 +22,10 @@ execution.
         'web.assets_backend': [
             'insilos_market_terminal/static/lib/lightweight-charts.standalone.production.js',
             'insilos_market_terminal/static/src/terminal/terminal.scss',
-            'insilos_market_terminal/static/src/terminal/**/*',
-            ('remove', 'insilos_market_terminal/static/src/**/*.dark.scss'),
+            'insilos_market_terminal/static/src/terminal/terminal_action.js',
+            'insilos_market_terminal/static/src/terminal/terminal_action.xml',
+            'insilos_market_terminal/static/src/terminal/indicators.js',
+            'insilos_market_terminal/static/src/terminal/latency.js',
         ],
         'web.assets_web_dark': [
             'insilos_market_terminal/static/src/terminal/terminal.dark.scss',

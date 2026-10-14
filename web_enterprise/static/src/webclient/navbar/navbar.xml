@@ -25,7 +25,7 @@
             <t t-else="">
                 <i class="o_menu_toggle_icon ph-duotone ph-arrow-left fs-4 o_menu_toggle_back_icon d-none"/>
                 <img src="/web/static/img/insilos_mark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_light" style="width: 26px; height: 19px; max-width: 26px; max-height: 19px; object-fit: contain;"/>
-                <img src="/web/static/img/insilos_mark_dark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_dark" style="width: 26px; height: 19px; max-width: 26px; max-height: 19px; object-fit: contain;"/>
+                <img src="/web/static/img/insilos_mark_dark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_dark" style="width: 26px; height: 19px; max-width: 26px; max-height: 19px; object-fit: contain; display: none;"/>
             </t>
         </a>
         <a t-else="" t-att-href="pwa.startUrl"
@@ -33,7 +33,7 @@
            t-att-class="{'o_hidden': !this.isInApp and !this.hasBackgroundAction}"
            t-ref="this.menuApps" title="App Launcher" aria-label="App Launcher">
             <img src="/web/static/img/insilos_mark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_light" style="width: 26px; height: 19px; max-width: 26px; max-height: 19px; object-fit: contain;"/>
-            <img src="/web/static/img/insilos_mark_dark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_dark" style="width: 26px; height: 19px; max-width: 26px; max-height: 19px; object-fit: contain;"/>
+            <img src="/web/static/img/insilos_mark_dark.svg" alt="App Launcher" class="o_insilos_launcher_icon o_insilos_launcher_icon_dark" style="width: 26px; height: 19px; max-width: 26px; max-height: 19px; object-fit: contain; display: none;"/>
         </a>
 
         <!-- Current App Brand Title (Without Redundant App Icon) -->

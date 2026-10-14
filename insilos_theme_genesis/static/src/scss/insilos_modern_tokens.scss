@@ -139,12 +139,12 @@
    Dark Mode Overrides (IBM Carbon Gray 100 & SAP Horizon Dark)
    100% WCAG AAA Contrast — Strict Schema Invariant Design
    ========================================================================== */
-body.o_home_menu_background,
-.o_home_menu_background,
 body.o_dark_mode,
 .o_dark_mode,
 [data-bs-theme="dark"],
 [data-theme="dark"] {
+  color: var(--insilos-text-primary) !important;
+  --bs-body-color: var(--insilos-text-primary) !important;
   --insilos-bg-canvas: #070b14;
   --insilos-bg-surface: #0f172a;
   --insilos-bg-card: rgba(255, 255, 255, 0.04);

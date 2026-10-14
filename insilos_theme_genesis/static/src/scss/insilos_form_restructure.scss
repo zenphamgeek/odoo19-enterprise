@@ -5,6 +5,7 @@
 
 .o_form_view {
   background-color: var(--insilos-bg-canvas) !important;
+  color: var(--insilos-text-primary) !important;
 
   /* Responsive Object Page Layout Engine (Guarantees Form Sheet 100% Full Width) */
   @media (min-width: 1440px) {
@@ -309,6 +310,7 @@
 
     .o_form_sheet {
       background-color: var(--insilos-bg-card) !important;
+      color: var(--insilos-text-primary) !important;
       border: 1px solid var(--insilos-border-subtle) !important;
       border-radius: var(--insilos-radius-md, 6px) !important;
       box-shadow: var(--insilos-shadow-card, 0 1px 3px rgba(0,0,0,0.06)) !important;
@@ -570,7 +572,10 @@
       .o_notebook {
         margin-top: 24px !important;
 
-        .nav-tabs {
+        .nav,
+        .nav-tabs,
+        .o_notebook_headers {
+          background-color: transparent !important;
           border-bottom: 1px solid var(--insilos-border-subtle) !important;
           gap: 4px !important;
 
@@ -1435,20 +1440,46 @@ body.o_dark_mode,
         }
 
         .o_notebook {
-          .nav-tabs {
+          .nav,
+          .nav-tabs,
+          .o_notebook_headers {
+            background-color: transparent !important;
             border-bottom-color: var(--insilos-border-subtle) !important;
 
             .nav-item .nav-link {
               color: var(--insilos-text-secondary) !important;
+              background-color: transparent !important;
+              background: transparent !important;
+              border: none !important;
+
+              &:hover {
+                color: var(--insilos-text-primary) !important;
+                background-color: var(--insilos-bg-hover, #1e293b) !important;
+              }
 
               &.active {
                 color: var(--insilos-primary) !important;
+                background-color: transparent !important;
+                background: transparent !important;
 
                 &::after {
                   background-color: var(--insilos-primary) !important;
                 }
               }
             }
+          }
+        }
+
+        .o_external_button,
+        .btn-light {
+          background-color: var(--insilos-bg-hover, #1e293b) !important;
+          color: var(--insilos-text-primary, #f8fafc) !important;
+          border-color: var(--insilos-border-subtle, rgba(255, 255, 255, 0.1)) !important;
+
+          &:hover,
+          &:focus {
+            background-color: var(--insilos-bg-active, #334155) !important;
+            color: var(--insilos-primary, #00f2fe) !important;
           }
         }
       }
@@ -1753,3 +1784,59 @@ body.o_dark_mode {
     }
   }
 }
+
+/* =============================================================================
+   100% Full-Width Layout Engine for All Enterprise Forms & Operational Consoles
+   Purges fixed max-width (1140px) capping across all form sheets and hubs
+   ============================================================================= */
+.o_action_manager > .o_action,
+.o_action_manager .o_form_view,
+.o_form_view {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+
+  > .o_content,
+  .o_content {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    .o_form_sheet_bg {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+
+      .o_form_sheet {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+    }
+  }
+}
+
+/* Operational Consoles, Hubs, and Analytics Workstations Across All insilos_* Modules */
+.w_market_terminal,
+.w_idp_dashboard,
+.o_executive_control_tower,
+.o_capital_markets_governance,
+.o_chemical_compliance_hub,
+.o_esg_bridge_dashboard,
+.o_hse_compliance_console,
+.insilos_hub_form,
+.o_logistics_idp_onboarding_form,
+.insilos_hub_sheet,
+.w_insilos_terminal,
+.w_insilos_console,
+.w_insilos_hub,
+[class*="insilos_hub"],
+[class*="_console"],
+[class*="_terminal"],
+[class*="_dashboard"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  flex: 1 1 100% !important;
+}
+

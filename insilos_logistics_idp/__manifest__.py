@@ -24,9 +24,10 @@ execution and write-back are excluded.
     ],
     'assets': {
         'web.assets_backend': [
-            'insilos_logistics_idp/static/src/dashboard/*',
+            'insilos_logistics_idp/static/src/dashboard/dashboard.scss',
+            'insilos_logistics_idp/static/src/dashboard/dashboard.js',
+            'insilos_logistics_idp/static/src/dashboard/dashboard.xml',
             'insilos_logistics_idp/static/src/document/*',
-            ('remove', 'insilos_logistics_idp/static/src/**/*.dark.scss'),
         ],
         'web.assets_web_dark': [
             'insilos_logistics_idp/static/src/dashboard/dashboard.dark.scss',

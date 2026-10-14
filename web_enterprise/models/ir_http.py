@@ -17,6 +17,8 @@ class IrHttp(models.AbstractModel):
 
     def color_scheme(self):
         cookie_scheme = request.httprequest.cookies.get('color_scheme')
+        if cookie_scheme in ('light', 'dark'):
+            return cookie_scheme
         scheme = cookie_scheme if cookie_scheme else super().color_scheme()
         if user := request.env.user:
             if user._is_public():

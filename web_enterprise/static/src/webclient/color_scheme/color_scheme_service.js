@@ -17,11 +17,16 @@ export const blockingWebClient = Promise.withResolvers();
 
 export const colorSchemeService = {
     async start() {
-        let newColorScheme = systemColorScheme();
-        if (["light", "dark"].includes(user.settings.color_scheme)) {
-            newColorScheme = user.settings.color_scheme;
-        }
         const current = currentColorScheme();
+        const savedLocalTheme = browser.localStorage?.getItem("insilos_theme");
+        let newColorScheme = systemColorScheme();
+        if (["light", "dark"].includes(savedLocalTheme)) {
+            newColorScheme = savedLocalTheme;
+        } else if (["light", "dark"].includes(user.settings.color_scheme)) {
+            newColorScheme = user.settings.color_scheme;
+        } else if (["light", "dark"].includes(current)) {
+            newColorScheme = current;
+        }
         if (newColorScheme !== current) {
             cookie.set("color_scheme", newColorScheme);
             if (current || (!current && newColorScheme === "dark")) {
