@@ -114,6 +114,38 @@
             });
         }
 
+        // Sub-Suite 1b: Legal Authority Cascade Override Simulation (CSP-compliant event listeners)
+        var btnSimulateOverride = section.querySelector('#btnSimulateOverride');
+        var btnResetOverride = section.querySelector('#btnResetOverride');
+        var cascadeAlertBox = section.querySelector('#cascadeAlertBox');
+        var cascadeTierP4 = section.querySelector('#cascadeTierP4');
+
+        if (btnSimulateOverride) {
+            btnSimulateOverride.addEventListener('click', function () {
+                if (cascadeAlertBox) cascadeAlertBox.classList.remove('d-none');
+                if (cascadeTierP4) cascadeTierP4.classList.add('border-danger', 'bg-danger', 'bg-opacity-10');
+                if (auditTrailLog) {
+                    var now = new Date();
+                    var timeStr = now.toISOString().replace('T', ' ').substring(0, 19);
+                    var entry = document.createElement('div');
+                    entry.className = 'audit-entry p-2 rounded-2 mb-2 bg-danger bg-opacity-25 border border-danger small font-monospace text-danger';
+                    entry.innerHTML = '[' + timeStr + ' UTC] <strong>SECURITY INVARIANT BREACH</strong>: P4/P5 Tax Override Rejected. HS 7219.33.00 (3.2%) cannot override Statutory Decree P1 HS 7219.34 (12%). Flagged for Compliance Officer review.';
+                    auditTrailLog.appendChild(entry);
+                }
+                btnSimulateOverride.classList.add('d-none');
+                if (btnResetOverride) btnResetOverride.classList.remove('d-none');
+            });
+        }
+
+        if (btnResetOverride) {
+            btnResetOverride.addEventListener('click', function () {
+                if (cascadeAlertBox) cascadeAlertBox.classList.add('d-none');
+                if (cascadeTierP4) cascadeTierP4.classList.remove('border-danger', 'bg-danger', 'bg-opacity-10');
+                btnResetOverride.classList.add('d-none');
+                if (btnSimulateOverride) btnSimulateOverride.classList.remove('d-none');
+            });
+        }
+
         // Sub-Suite 2: C/O Management Calculator
         var rvcFobInput = section.querySelector('#coRvcFob');
         var rvcVnmInput = section.querySelector('#coRvcVnm');
@@ -571,10 +603,52 @@
         }
     }
 
+    function initWaterfallInteractive() {
+        var btnWaterfallEvfta = document.getElementById('btnWaterfallEvfta');
+        var btnWaterfallMfn = document.getElementById('btnWaterfallMfn');
+
+        if (btnWaterfallEvfta && !btnWaterfallEvfta.dataset.evftaBound) {
+            btnWaterfallEvfta.dataset.evftaBound = 'true';
+            btnWaterfallEvfta.addEventListener('click', function () {
+                document.querySelectorAll('.inn-waterfall-stage.stage--mfn').forEach(function(el) { el.style.display = 'none'; });
+                document.querySelectorAll('.inn-waterfall-stage.stage--fta').forEach(function(el) { el.style.display = 'flex'; });
+                var b1 = document.getElementById('barMfnDuty');
+                if (b1) b1.style.display = 'none';
+                var b2 = document.getElementById('barTariffSaved');
+                if (b2) b2.style.display = 'flex';
+                var tc = document.getElementById('waterfallTotalCost');
+                if (tc) tc.innerText = '$4,220.00';
+                var sb = document.getElementById('waterfallSavingsBadge');
+                if (sb) sb.style.display = 'inline-flex';
+                btnWaterfallEvfta.classList.add('active');
+                if (btnWaterfallMfn) btnWaterfallMfn.classList.remove('active');
+            });
+        }
+
+        if (btnWaterfallMfn && !btnWaterfallMfn.dataset.mfnBound) {
+            btnWaterfallMfn.dataset.mfnBound = 'true';
+            btnWaterfallMfn.addEventListener('click', function () {
+                document.querySelectorAll('.inn-waterfall-stage.stage--mfn').forEach(function(el) { el.style.display = 'flex'; });
+                document.querySelectorAll('.inn-waterfall-stage.stage--fta').forEach(function(el) { el.style.display = 'none'; });
+                var b1 = document.getElementById('barMfnDuty');
+                if (b1) b1.style.display = 'flex';
+                var b2 = document.getElementById('barTariffSaved');
+                if (b2) b2.style.display = 'none';
+                var tc = document.getElementById('waterfallTotalCost');
+                if (tc) tc.innerText = '$4,700.00';
+                var sb = document.getElementById('waterfallSavingsBadge');
+                if (sb) sb.style.display = 'none';
+                btnWaterfallMfn.classList.add('active');
+                if (btnWaterfallEvfta) btnWaterfallEvfta.classList.remove('active');
+            });
+        }
+    }
+
     function initAllGrcEngines() {
         initTradeComplianceInteractive();
         initOperationalComplianceInteractive();
         initLogisticsJobfileInteractive();
+        initWaterfallInteractive();
     }
 
     if (document.readyState === 'loading') {

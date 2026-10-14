@@ -222,9 +222,58 @@ class SuiteScorecard:
 # Test Runner Implementation
 # ==============================================================================
 
+import ipaddress
+import socket
+from urllib.parse import urlparse
+
+BLOCKED_IP_NETWORKS = (
+    ipaddress.ip_network("169.254.0.0/16"),       # Link-local / Cloud Metadata (AWS, Azure, GCP)
+    ipaddress.ip_network("100.100.100.200/32"),   # Alibaba metadata
+    ipaddress.ip_network("169.254.170.2/32"),     # AWS ECS Task metadata
+    ipaddress.ip_network("fd00:ec2::/64"),        # IPv6 IMDS
+    ipaddress.ip_network("::ffff:169.254.0.0/112"), # IPv4-mapped IPv6 metadata
+)
+
+BLOCKED_METADATA_DOMAINS = frozenset({
+    "metadata.google.internal",
+    "metadata.azure.com",
+    "instance-data",
+})
+
+
+def _validate_safe_url(url_str: str, allow_localhost: bool = True) -> str:
+    parsed = urlparse(url_str)
+    if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        raise ValueError(f"Security Violation (CWE-918): Invalid URL scheme or host: {url_str}")
+
+    clean_host = parsed.hostname.rstrip(".").lower()
+    if clean_host in BLOCKED_METADATA_DOMAINS or clean_host.endswith(".internal"):
+        raise ValueError(f"Security Violation (CWE-918): Blocked cloud metadata domain: {clean_host}")
+
+    try:
+        addr_info = socket.getaddrinfo(clean_host, parsed.port or (80 if parsed.scheme == 'http' else 443))
+        for _, _, _, _, sockaddr in addr_info:
+            ip_obj = ipaddress.ip_address(sockaddr[0])
+            # If IPv4-mapped IPv6 address, check underlying IPv4
+            if ip_obj.version == 6 and ip_obj.ipv4_mapped:
+                v4_obj = ip_obj.ipv4_mapped
+                for blocked_net in BLOCKED_IP_NETWORKS:
+                    if v4_obj in blocked_net:
+                        raise ValueError(f"Security Violation (CWE-918): Blocked IPv4-mapped target: {v4_obj}")
+            if not allow_localhost and (ip_obj.is_loopback or ip_obj.is_private):
+                raise ValueError(f"Security Violation (CWE-918): Private address forbidden: {ip_obj}")
+            for blocked_net in BLOCKED_IP_NETWORKS:
+                if ip_obj in blocked_net and not (allow_localhost and ip_obj.is_loopback):
+                    raise ValueError(f"Security Violation (CWE-918): Blocked IP network target: {ip_obj}")
+    except socket.gaierror as err:
+        raise ValueError(f"Security Violation: Unable to resolve hostname '{clean_host}': {err}")
+
+    return url_str.rstrip("/")
+
+
 class Insilos3DTestSuite:
     def __init__(self, base_url: str, headless: bool = True, timeout: int = 30000, verbose: bool = False):
-        self.base_url = base_url.rstrip("/")
+        self.base_url = _validate_safe_url(base_url)
         self.headless = headless
         self.timeout = timeout
         self.verbose = verbose
@@ -1093,7 +1142,7 @@ def main():
     parser.add_argument(
         "--base-url",
         default=os.environ.get("INSILOS_BASE_URL", "http://localhost:28069"),
-        help="Odoo base URL (default: http://localhost:28069)"
+        help="Insilos base URL (default: http://localhost:28069)"
     )
     parser.add_argument(
         "--headless",
@@ -1134,6 +1183,7 @@ def main():
     )
 
     args = parser.parse_args()
+    args.base_url = _validate_safe_url(args.base_url)
 
     suite = Insilos3DTestSuite(
         base_url=args.base_url,

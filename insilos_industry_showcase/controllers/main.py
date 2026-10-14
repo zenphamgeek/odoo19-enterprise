@@ -113,11 +113,16 @@ class IndustryShowcaseController(http.Controller):
 
         TenantModel = request.env['insilos.tenant'].sudo()
         # Cross-Tenant Idempotency Probing & Hijack Guard (CWE-284 / CWE-384)
-        existing_operation = request.env['insilos.tenant.operation'].sudo().search([
-            ('operation_type', '=', 'provision'),
-            ('idempotency_key', '=', idempotency_key),
-            ('payload', 'ilike', f'%"{owner_email}"%')
-        ], limit=1) if (idempotency_key and owner_email) else None
+        existing_operation = None
+        if idempotency_key and owner_email and 'insilos.tenant.operation' in request.env:
+            existing_ops = request.env['insilos.tenant.operation'].sudo().search([
+                ('operation_type', '=', 'provision'),
+                ('idempotency_key', '=', idempotency_key),
+            ])
+            for op in existing_ops:
+                if op.tenant_id and op.tenant_id.owner_email == owner_email:
+                    existing_operation = op
+                    break
         # Double-check existing
         existing = TenantModel.search([('slug', '=', slug)], limit=1)
         if existing and (not existing_operation or existing_operation.tenant_id != existing):

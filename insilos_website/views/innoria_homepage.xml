@@ -1431,12 +1431,12 @@
                                                 Quy tắc bất biến: Diễn giải nội bộ (P4/P5) tuyệt đối không được phép ghi đè văn bản quy phạm pháp luật (P0/P1).
                                             </p>
                                         </div>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fw-semibold text-danger border-danger" id="btnSimulateOverride" onclick="var alt=document.getElementById('cascadeAlertBox');if(alt){alt.classList.remove('d-none');}var t4=document.getElementById('cascadeTierP4');if(t4){t4.classList.add('border-danger','bg-danger','bg-opacity-10');}var log=document.getElementById('reconAuditTrailLog');if(log){var entry=document.createElement('div');entry.className='audit-entry p-2 rounded-2 mb-2 bg-danger bg-opacity-25 border border-danger small font-monospace text-danger';entry.innerHTML='[2026-10-10 08:00:22 UTC] &lt;strong&gt;SECURITY INVARIANT BREACH&lt;/strong&gt;: P4/P5 Tax Override Rejected. HS 7219.33.00 (3.2%) cannot override Statutory Decree P1 HS 7219.34 (12%). Flagged for Compliance Officer review.';log.appendChild(entry);};this.classList.add('d-none');document.getElementById('btnResetOverride').classList.remove('d-none');">
+                                        <div class="d-flex flex-wrap align-items-center gap-2 mt-2 mt-sm-0">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fw-semibold text-danger border-danger js_simulate_override" id="btnSimulateOverride" data-action="simulate_cascade_override">
                                                 <svg class="ph-duotone ph-warning me-1" width="14" height="14"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-warning"/></svg>
                                                 Mô Phỏng Né Thuế (P4 Override)
                                             </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fw-semibold d-none" id="btnResetOverride" onclick="var alt=document.getElementById('cascadeAlertBox');if(alt){alt.classList.add('d-none');}var t4=document.getElementById('cascadeTierP4');if(t4){t4.classList.remove('border-danger','bg-danger','bg-opacity-10');}this.classList.add('d-none');document.getElementById('btnSimulateOverride').classList.remove('d-none');">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fw-semibold d-none js_reset_override" id="btnResetOverride" data-action="reset_cascade_override">
                                                 <span>Đặt Lại Trạng Thái Chuẩn</span>
                                             </button>
                                         </div>
@@ -2131,15 +2131,15 @@
                             <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25 gap-3">
                                 <div>
                                     <div class="d-flex align-items-center gap-2 mb-1">
-                                        <span class="badge bg-success bg-opacity-25 text-success border border-success">JOBFILE · #JOB-2026-SGN-0988</span>
+                                        <span class="badge border font-monospace" style="background-color: rgba(16, 185, 129, 0.15) !important; color: #10B981 !important; border-color: rgba(16, 185, 129, 0.4) !important; font-size: 0.74rem; padding: 4px 8px; border-radius: 9999px;">JOBFILE // #JOB-2026-SGN-0988</span>
                                         <span class="text-white fw-bold">Vận Chuyển Container Cát Lái (VNCLI) ➔ Los Angeles (USLAX)</span>
                                     </div>
                                     <div class="text-secondary small font-monospace">
-                                        Hãng Tàu: Maersk Line · Tàu: MAERSK MC-KINNEY MOLLER · 2x40' HC (`MSKU4918230`, `MSKU5019284`)
+                                        Hãng Tàu: Maersk Line · Tàu: MAERSK MC-KINNEY MOLLER · 2x40' HC (<code class="text-info">MSKU4918230</code>, <code class="text-info">MSKU5019284</code>)
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3 py-2 fw-semibold" id="btnDisputeDem">
-                                    <svg class="ph-duotone ph-warning-circle me-1" width="16" height="16"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-warning-circle"/></svg>
+                                <button type="button" class="btn btn-sm rounded-pill px-3 py-2 fw-semibold d-inline-flex align-items-center gap-1" id="btnDisputeDem" style="border: 1px solid #F59E0B !important; color: #F59E0B !important; background: transparent;">
+                                    <svg class="ph-duotone ph-warning-circle me-1" width="16" height="16" style="color: #F59E0B;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-warning-circle"/></svg>
                                     Sinh Thư Kháng Nghị Chi Phí Bất Thường
                                 </button>
                             </div>
@@ -2149,11 +2149,11 @@
                                 <table class="table grc-table align-middle">
                                     <thead>
                                         <tr>
-                                            <th>Khoản Mục Chi Phí (Local Charges &amp; Freight)</th>
-                                            <th>Biểu Phí Thỏa Thuận (Contract Tariff)</th>
-                                            <th>Hóa Đơn Thực Tế (Carrier Invoice)</th>
-                                            <th>Chênh Lệch</th>
-                                            <th class="text-end">Đánh Giá Đối Soát</th>
+                                            <th>KHOẢN MỤC CHI PHÍ (LOCAL CHARGES &amp; FREIGHT)</th>
+                                            <th>BIỂU PHÍ THỎA THUẬN (CONTRACT TARIFF)</th>
+                                            <th>HÓA ĐƠN THỰC TẾ (CARRIER INVOICE)</th>
+                                            <th>CHÊNH LỆCH</th>
+                                            <th class="text-end">ĐÁNH GIÁ ĐỐI SOÁT</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2165,7 +2165,7 @@
                                             <td><span class="font-monospace text-info">$1,850.00 / cntr ($3,700)</span></td>
                                             <td><span class="font-monospace text-info">$1,850.00 / cntr ($3,700)</span></td>
                                             <td><span class="font-monospace text-success">$0.00</span></td>
-                                            <td class="text-end"><span class="badge bg-success bg-opacity-25 text-success border border-success">✅ Khớp 100%</span></td>
+                                            <td class="text-end"><span class="badge border" style="background-color: rgba(16, 185, 129, 0.15) !important; color: #10B981 !important; border-color: rgba(16, 185, 129, 0.4) !important; padding: 4px 8px; border-radius: 9999px;">✓ Khớp 100%</span></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -2175,7 +2175,7 @@
                                             <td><span class="font-monospace text-info">4,850,000 VND / cntr</span></td>
                                             <td><span class="font-monospace text-info">4,850,000 VND / cntr</span></td>
                                             <td><span class="font-monospace text-success">0 VND</span></td>
-                                            <td class="text-end"><span class="badge bg-success bg-opacity-25 text-success border border-success">✅ Khớp 100%</span></td>
+                                            <td class="text-end"><span class="badge border" style="background-color: rgba(16, 185, 129, 0.15) !important; color: #10B981 !important; border-color: rgba(16, 185, 129, 0.4) !important; padding: 4px 8px; border-radius: 9999px;">✓ Khớp 100%</span></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -2185,7 +2185,7 @@
                                             <td><span class="font-monospace text-info">950,000 VND</span></td>
                                             <td><span class="font-monospace text-info">950,000 VND</span></td>
                                             <td><span class="font-monospace text-success">0 VND</span></td>
-                                            <td class="text-end"><span class="badge bg-success bg-opacity-25 text-success border border-success">✅ Khớp 100%</span></td>
+                                            <td class="text-end"><span class="badge border" style="background-color: rgba(16, 185, 129, 0.15) !important; color: #10B981 !important; border-color: rgba(16, 185, 129, 0.4) !important; padding: 4px 8px; border-radius: 9999px;">✓ Khớp 100%</span></td>
                                         </tr>
                                         <tr class="has-exception">
                                             <td>
@@ -2196,7 +2196,7 @@
                                             <td><span class="font-monospace text-danger fw-bold">4,600,000 VND (+2 Ngày Phạt)</span></td>
                                             <td><span class="font-monospace text-danger fw-bold">+4,600,000 VND</span></td>
                                             <td class="text-end">
-                                                <span class="badge border" style="color: #FDA4AF !important; background-color: rgba(225, 29, 72, 0.25) !important; border-color: rgba(244, 63, 94, 0.6) !important;">
+                                                <span class="badge border" style="color: #FDA4AF !important; background-color: rgba(159, 18, 57, 0.35) !important; border-color: rgba(244, 63, 94, 0.6) !important; font-size: 0.76rem; padding: 5px 10px; border-radius: 9999px;">
                                                     ⚠️ Thu Sai Điều Khoản Hợp Đồng
                                                 </span>
                                             </td>
@@ -2236,11 +2236,11 @@
                                         </p>
                                     </div>
                                     <div class="inn-toggle-switch">
-                                        <button type="button" class="inn-toggle-btn active" id="btnWaterfallEvfta" onclick="document.querySelectorAll('.inn-waterfall-stage.stage--mfn').forEach(function(el){el.style.display='none';});document.querySelectorAll('.inn-waterfall-stage.stage--fta').forEach(function(el){el.style.display='flex';});var b1=document.getElementById('barMfnDuty');if(b1){b1.style.display='none';}var b2=document.getElementById('barTariffSaved');if(b2){b2.style.display='flex';}var tc=document.getElementById('waterfallTotalCost');if(tc){tc.innerText='$4,220.00';}var sb=document.getElementById('waterfallSavingsBadge');if(sb){sb.style.display='inline-flex';}this.classList.add('active');var bm=document.getElementById('btnWaterfallMfn');if(bm){bm.classList.remove('active');}">
+                                        <button type="button" class="inn-toggle-btn active" id="btnWaterfallEvfta" data-action="toggle_waterfall_evfta">
                                             <span>Đã Khớp EVFTA (0%)</span>
                                             <span class="inn-btn-badge">TIẾT KIỆM $480</span>
                                         </button>
-                                        <button type="button" class="inn-toggle-btn" id="btnWaterfallMfn" onclick="document.querySelectorAll('.inn-waterfall-stage.stage--mfn').forEach(function(el){el.style.display='flex';});document.querySelectorAll('.inn-waterfall-stage.stage--fta').forEach(function(el){el.style.display='none';});var b1=document.getElementById('barMfnDuty');if(b1){b1.style.display='flex';}var b2=document.getElementById('barTariffSaved');if(b2){b2.style.display='none';}var tc=document.getElementById('waterfallTotalCost');if(tc){tc.innerText='$4,700.00';}var sb=document.getElementById('waterfallSavingsBadge');if(sb){sb.style.display='none';}this.classList.add('active');var be=document.getElementById('btnWaterfallEvfta');if(be){be.classList.remove('active');}">
+                                        <button type="button" class="inn-toggle-btn" id="btnWaterfallMfn" data-action="toggle_waterfall_mfn">
                                             <span>Biểu Phí MFN (10%)</span>
                                             <span class="inn-btn-badge">CHƯA KHỚP C/O</span>
                                         </button>
