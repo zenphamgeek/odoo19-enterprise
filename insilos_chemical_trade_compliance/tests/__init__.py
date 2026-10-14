@@ -10,3 +10,5 @@ from . import test_chemical_usage_tracking
 from . import test_compliance_data_check
 from . import test_dossier_reports_and_simulator
 from . import test_e2e_5stations_integration
+from . import test_chemical_concurrency_and_syntax
+

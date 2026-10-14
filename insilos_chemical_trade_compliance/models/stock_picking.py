@@ -42,3 +42,33 @@ class StockPicking(models.Model):
         action['views'] = [(self.env.ref('insilos_chemical_trade_compliance.view_is_chemical_compliance_dossier_form').id, 'form')]
         action['res_id'] = self.chemical_dossier_id.id
         return action
+
+    def button_validate(self):
+        self._enforce_chemical_compliance_wip_limit()
+        return super().button_validate()
+
+    def _enforce_chemical_compliance_wip_limit(self):
+        ICP = self.env['ir.config_parameter'].sudo()
+        wip_enabled = ICP.get_param('insilos.chemical.wip_throttle.enabled', 'False') == 'True'
+        if not wip_enabled:
+            return
+
+        max_unsettled = int(ICP.get_param('insilos.chemical.wip_limit', '25'))
+
+        # Check if any picking contains hazardous/regulated chemicals
+        regulated_pickings = self.filtered(lambda p: p.has_chemical_items)
+        if not regulated_pickings:
+            return
+
+        unsettled_count = self.env['is.chemical.usage.tracking.line'].search_count([
+            ('tracking_id.state', '=', 'draft')
+        ])
+
+        if unsettled_count >= max_unsettled:
+            from odoo.exceptions import UserError
+            raise UserError(_(
+                "Kanban WIP Limit Reached: %d chemical compliance records are currently pending "
+                "settlement (Limit: %d). Physical dispatch is held until downstream compliance reports "
+                "are validated."
+            ) % (unsettled_count, max_unsettled))
+

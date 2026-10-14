@@ -4,12 +4,38 @@ import { browser } from "@web/core/browser/browser";
 import { onMounted } from "@insilos/owl";
 
 export function sanitizeErrorPayload(input) {
-    if (!input) {
-        return input || "";
+    if (input === null || input === undefined) {
+        return "";
     }
+
+    const SENSITIVE_KEY_PATTERN =
+        /^(password|passwd|pwd|secret|token|api_?key|access_?token|refresh_?token|client_?secret|session_?id|sid|cookie|connection_?string|authorization|admin_passwd|master_pwd|private_?key|pin|otp)$/i;
+
+    function sanitizeString(text) {
+        return text
+            .replace(/\b(Digest)\s+[a-zA-Z0-9_]+=(?:"[^"]*"|[^\s,;'"]+)(?:,\s*[a-zA-Z0-9_]+=(?:"[^"]*"|[^\s,;'"]+))*/gi, "$1 [REDACTED]")
+            .replace(/\b(Bearer|Basic)\s+(?:[A-Za-z0-9\-._~+/]+=*|"[^"]*")/gi, "$1 [REDACTED]")
+            .replace(/\b(sk-ant-api\d{2}-[a-zA-Z0-9_\-]{20,}|sk-(?:ant-[a-zA-Z0-9\-_]{20,}|[a-zA-Z0-9\-_]{20,})|AIzaSy[A-Za-z0-9\-_]{33}|AIza[0-9A-Za-z\-_]{35}|A[SK]IA[0-9A-Z]{16}|ghp_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9_]{20,})\b/g, "[REDACTED_API_KEY]")
+            .replace(/-----BEGIN[ A-Z0-9_-]+KEY-----[A-Za-z0-9+/=\s\r\n]+-----END[ A-Z0-9_-]+KEY-----/g, "[REDACTED_PRIVATE_KEY]")
+            .replace(/((?:postgresql|postgres|mysql|redis|amqp|mongodb(?:\+srv)?|mssql|clickhouse):\/\/[^:\s\/]+:)[^@\s\/]+(@)/gi, "$1[REDACTED]$2")
+            .replace(
+                /(["']?(?:password|passwd|pwd|secret|token|api_?key|apiKey|access_?token|refresh_?token|client_?secret|session_?id|sid|cookie|connection_?string|authorization)["']?\s*)([:=])(\s*)(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|(?!(?:Bearer|Basic|Digest)\b)[^\s&,"']+)/gi,
+                (match, key, sep, space) => {
+                    if (sep === ":" && (key.startsWith('"') || key.startsWith("'"))) {
+                        return `${key}:${space}"[REDACTED]"`;
+                    }
+                    return `${key.replace(/["']/g, "").trim()}=[REDACTED]`;
+                }
+            )
+            .replace(/(session_id|sid)=[^;&\s]+/gi, "$1=[REDACTED]")
+            .replace(/\b(0[35789]\d)(\d{5})(\d{2})\b/g, "$1*****$3")
+            .replace(/(?:\+84|0)(?:[35789])(?:[\s.-]\d){8}\b/g, "[REDACTED_PHONE]")
+            .replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, "[REDACTED_EMAIL]");
+    }
+
     const visited = new WeakSet();
     function safeSerialize(val, depth = 0) {
-        if (depth > 6) return "[MAX_DEPTH]";
+        if (depth > 12) return "[MAX_DEPTH]";
         if (val === null || val === undefined) return val;
         if (typeof val !== "object") return val;
         if (visited.has(val)) return "[CIRCULAR_REF]";
@@ -36,24 +62,37 @@ export function sanitizeErrorPayload(input) {
         return out;
     }
 
-    let text = typeof input === "object" ? JSON.stringify(safeSerialize(input)) : String(input);
-    return text
-        .replace(/\b(Bearer|Basic)\s+[A-Za-z0-9\-._~+/]+=*/gi, "$1 [REDACTED]")
-        .replace(/\bDigest\s+[^\r\n"'\\]+/gi, "Digest [REDACTED]")
-        .replace(/\b(sk-(?:ant-[a-zA-Z0-9\-_]{20,}|[a-zA-Z0-9\-_]{20,})|A[SK]IA[0-9A-Z]{16}|AIza[0-9A-Za-z\-_]{35}|ghp_[a-zA-Z0-9]{36})\b/g, "[REDACTED_API_KEY]")
-        .replace(/((?:postgresql|postgres|mysql|redis|amqp|mongodb(?:\+srv)?):\/\/[^:\s\/]+:)[^@\s\/]+(@)/gi, "$1[REDACTED]$2")
-        .replace(
-            /(["']?(?:password|passwd|pwd|secret|token|api_key|apiKey|access_token|refresh_token|client_secret|session_id|sid|cookie|connection_string|authorization)["']?\s*)([:=])(\s*)(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|(?!(?:Bearer|Basic|Digest)\b)[^\s&,"']+)/gi,
-            (match, key, sep, space) => {
-                if (sep === ":") {
-                    return `${key}:${space}"[REDACTED]"`;
+    if (typeof input === "object") {
+        try {
+            const redactObject = (val, depth = 0) => {
+                if (depth > 12 || val === null || typeof val !== "object") return val;
+                if (Array.isArray(val)) return val.map((v) => redactObject(v, depth + 1));
+                const out = {};
+                for (const [k, v] of Object.entries(val)) {
+                    if (typeof v === "string") {
+                        const sanitizedVal = sanitizeString(v);
+                        if (sanitizedVal !== v) {
+                            out[k] = sanitizedVal;
+                        } else if (SENSITIVE_KEY_PATTERN.test(k)) {
+                            out[k] = "[REDACTED]";
+                        } else {
+                            out[k] = v;
+                        }
+                    } else if (SENSITIVE_KEY_PATTERN.test(k)) {
+                        out[k] = "[REDACTED]";
+                    } else {
+                        out[k] = redactObject(v, depth + 1);
+                    }
                 }
-                return `${key}=${space}[REDACTED]`;
-            }
-        )
-        .replace(/(session_id|sid)=[^;&\s]+/gi, "$1=[REDACTED]")
-        .replace(/\b(0[35789]\d)(\d{5})(\d{2})\b/g, "$1*****$3")
-        .replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, "[REDACTED_EMAIL]");
+                return out;
+            };
+            return JSON.stringify(redactObject(safeSerialize(input)));
+        } catch {
+            return sanitizeString(String(input));
+        }
+    }
+
+    return sanitizeString(String(input));
 }
 
 export function sanitizeUrl(rawUrl) {
