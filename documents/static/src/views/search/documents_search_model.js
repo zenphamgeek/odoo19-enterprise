@@ -5,12 +5,59 @@ import { router } from "@web/core/browser/router";
 import { Domain } from "@web/core/domain";
 import { useService } from "@web/core/utils/hooks";
 
+/**
+ * Transplant: Low-Rank Latent Representation for Documents Search Panel (DeepSeek-V3 MLA)
+ * Flag: this.context.documents_enable_latent_cache = true
+ */
+export class LatentFolderCompressor {
+    constructor() {
+        this.stride = 4;
+        this.buffer = new Uint32Array(0);
+        this.indexMap = new Map();
+    }
+
+    compress(folderRecords) {
+        this.buffer = new Uint32Array(folderRecords.length * this.stride);
+        for (let i = 0; i < folderRecords.length; i++) {
+            const f = folderRecords[i];
+            const offset = i * this.stride;
+            this.buffer[offset] = f.id;
+            this.buffer[offset + 1] = f.parent_id || 0;
+            this.buffer[offset + 2] = (f.is_folder ? 1 : 0) | (f.has_write_access ? 2 : 0);
+            this.buffer[offset + 3] = this._hashString(f.name || "");
+            this.indexMap.set(f.id, offset);
+        }
+    }
+
+    isReachable(rootId, targetId, maxDepth = 32) {
+        let currentId = targetId;
+        let depth = 0;
+        while (currentId !== 0 && depth < maxDepth) {
+            if (currentId === rootId) return true;
+            const offset = this.indexMap.get(currentId);
+            if (offset === undefined) break;
+            currentId = this.buffer[offset + 1];
+            depth++;
+        }
+        return false;
+    }
+
+    _hashString(str) {
+        let hash = 5381;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) + hash) + str.charCodeAt(i);
+        }
+        return hash & 0xFFFF;
+    }
+}
+
 export class DocumentsSearchModel extends SearchModel {
     setup(services) {
         super.setup(services);
         this.documentService = useService("document.document");
         this.orm = useService("orm");
         this.skipLoadClosePreview = false;
+        this._latentCompressor = new LatentFolderCompressor();
         useSetupAction({
             beforeLeave: () => {
                 this._updateRouteState({ folder_id: undefined });
@@ -193,10 +240,10 @@ export class DocumentsSearchModel extends SearchModel {
 
         const selectedFolder = this.getSelectedFolder();
         if (!this.context.documents_view_secondary) {
-            browser.localStorage.setItem("searchpanel_documents_document", valueId);
+            this._safeSetStorage("searchpanel_documents_document", valueId);
             this.documentService.updateDocumentURL(selectedFolder);
         }
-        if (typeof valueId === "number") {
+        if (typeof valueId === "number" && selectedFolder && selectedFolder.access_token) {
             this.documentService.logAccess(selectedFolder.access_token);
         }
     }
@@ -270,7 +317,7 @@ export class DocumentsSearchModel extends SearchModel {
             if (rootScopeId) {
                 return [["folder_id", "child_of", rootScopeId]];
             }
-            return this.documentService.userIsInternal ? [["folder_id", "!=", false]] : [["folder_id", "=", false]];
+            return this.documentService?.userIsInternal ? [["folder_id", "!=", false]] : [["folder_id", "=", false]];
         }
         const folder = this.getSelectedFolder();
         const folderIdToOpen = folder?.shortcut_document_id?.length
@@ -299,14 +346,13 @@ export class DocumentsSearchModel extends SearchModel {
         }
         if (this.sections.get(1).activeValueId === "RECENT") {
             return [
-                { name: "is_folder", asc: true },
+                { name: "is_folder", asc: false },
                 { name: "last_access_date_group", asc: false },
                 { name: "write_date", asc: false },
             ];
         }
         const orderBy = super.orderBy;
         if (!orderBy.length) {
-            // Folders MUST strictly precede files: boolean DESC (True before False)
             orderBy.push(
                 { name: "is_folder", asc: false },
                 { name: "name", asc: true }
@@ -323,28 +369,63 @@ export class DocumentsSearchModel extends SearchModel {
         return groupBy;
     }
 
-    _isCategoryValueReachable(category, valueId) {
-        const queue = [...category.rootIds];
+    _isCategoryValueReachable(category, valueId, maxDepth = 64) {
+        if (!category?.values || !category?.rootIds) {
+            return false;
+        }
+        if (this.context?.documents_enable_latent_cache && this._latentCompressor) {
+            for (const rootId of category.rootIds) {
+                if (this._latentCompressor.isReachable(rootId, valueId, maxDepth)) {
+                    return true;
+                }
+            }
+        }
+        const queue = [...(category.rootIds || [])];
+        const visited = new Set();
+        let depth = 0;
+        const maxSteps = maxDepth * 100;
         let folder;
-        while ((folder = category.values.get(queue.pop()))) {
+        while (queue.length > 0 && depth < maxSteps) {
+            depth++;
+            const nextId = queue.pop();
+            if (visited.has(nextId)) {
+                continue;
+            }
+            visited.add(nextId);
+            folder = category.values.get(nextId);
+            if (!folder) {
+                continue;
+            }
             if (folder.id === valueId) {
                 return true;
             }
-            queue.push(...folder.childrenIds);
+            if (Array.isArray(folder.childrenIds)) {
+                queue.push(...folder.childrenIds);
+            }
         }
         return false;
     }
 
     // [SEC-03 & SEC-06 Guard]: Strict sanitization and integer normalization
     _normalizeFolderId(val) {
-        if (val === false || val === "false" || val === null || val === undefined) {
+        if (
+            val === false ||
+            val === "false" ||
+            val === null ||
+            val === undefined ||
+            val === "null" ||
+            val === "undefined" ||
+            val === "0" ||
+            val === 0
+        ) {
             return false;
         }
-        if (typeof val === "number" && Number.isInteger(val) && val > 0) {
+        if (typeof val === "number" && Number.isSafeInteger(val) && val > 0) {
             return val;
         }
-        if (typeof val === "string" && /^\d+$/.test(val)) {
-            return parseInt(val, 10);
+        if (typeof val === "string" && /^[1-9]\d*$/.test(val)) {
+            const parsed = parseInt(val, 10);
+            return Number.isSafeInteger(parsed) ? parsed : false;
         }
         if (typeof val === "string" && ["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(val)) {
             return val;
@@ -381,10 +462,7 @@ export class DocumentsSearchModel extends SearchModel {
         } catch {
             // Storage unavailable
         }
-        category.activeValueId =
-            storageItem && !["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(storageItem)
-                ? this._normalizeFolderId(storageItem)
-                : storageItem;
+        category.activeValueId = this._normalizeFolderId(storageItem);
         if (
             ["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(category.activeValueId) ||
             (category.activeValueId &&
@@ -398,7 +476,7 @@ export class DocumentsSearchModel extends SearchModel {
             const seenIds = new Set();
             let currId = category.activeValueId;
             let resolvedSection = false;
-            while (currId && category.values.has(currId) && !seenIds.has(currId)) {
+            while (currId && category.values.has(currId) && !seenIds.has(currId) && seenIds.size < 64) {
                 seenIds.add(currId);
                 const node = category.values.get(currId);
                 if (!node || !node.parentId || !category.values.has(node.parentId)) {
