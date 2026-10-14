@@ -76,3 +76,21 @@ class TestCapTableSecurity(TransactionCase):
         )
         with self.assertRaises(ValidationError):
             cap_table_model._get_table_sql()
+
+    def test_unallocated_treasury_shares_retention(self):
+        """Invariant: Transactions with partner_id=False (treasury/reserve) must not be dropped."""
+        self.env['equity.transaction'].create({
+            'company_id': self.company_a.id,
+            'partner_id': False,
+            'security_class_id': self.sec_class_a.id,
+            'securities': 50000.0,
+            'transaction_type': 'issuance',
+            'date': '2026-01-01',
+        })
+        cap_table_model = self.env['equity.cap.table'].with_company(self.company_a)
+        sql_query = cap_table_model._get_table_sql()
+        self.env.cr.execute(SQL("SELECT security_class_id, SUM(securities) FROM (%s) AS q WHERE security_class_id = %s GROUP BY security_class_id", sql_query, self.sec_class_a.id))
+        res = self.env.cr.fetchone()
+        self.assertIsNotNone(res, "Treasury shares must be retained")
+        self.assertEqual(res[1], 150000.0, "SILENT DATA LOSS: Unallocated shares with partner_id=False were dropped!")
+

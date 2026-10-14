@@ -49,9 +49,9 @@ class EquityCapTable(models.Model):
 
         target_company = getattr(self, 'company_id', False) or self.env.company
         if 'company_id' in self.env['equity.transaction']._fields:
-            domain &= Domain('company_id', '=', target_company.id)
+            domain &= Domain('company_id', 'in', [False, target_company.id])
         else:
-            domain &= Domain('partner_id.company_id', 'in', [False, target_company.id])
+            domain &= Domain('|', ('partner_id', '=', False), ('partner_id.company_id', 'in', [False, target_company.id]))
 
         Transaction = self.env['equity.transaction']
         transactions_query = Transaction._search(domain)
