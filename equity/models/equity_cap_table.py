@@ -2,6 +2,7 @@ from collections import defaultdict
 from datetime import datetime
 
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 from odoo.fields import Domain
 from odoo.tools import SQL
 
@@ -38,33 +39,50 @@ class EquityCapTable(models.Model):
         current_date = self.env.context.get('current_date') or datetime.max.date()
 
         domain = Domain('date', '<=', current_date)
-        if current_transaction_id := self.env.context.get('current_transaction_id'):
-            domain &= Domain('id', '!=', current_transaction_id)
-        transactions_query = self.env['equity.transaction']._search(domain)
-        exercise_transactions_query = self.env['equity.transaction']._search(domain & Domain('transaction_type', '=', 'exercise'))
-        transfer_transactions_query = self.env['equity.transaction']._search(domain & Domain('transaction_type', '=', 'transfer'))
+        raw_tx_id = self.env.context.get('current_transaction_id')
+        if raw_tx_id:
+            try:
+                sanitized_tx_id = int(raw_tx_id)
+                domain &= Domain('id', '!=', sanitized_tx_id)
+            except (ValueError, TypeError):
+                raise ValidationError("Invalid transaction identifier in execution context.")
+
+        target_company = getattr(self, 'company_id', False) or self.env.company
+        if 'company_id' in self.env['equity.transaction']._fields:
+            domain &= Domain('company_id', '=', target_company.id)
+        else:
+            domain &= Domain('partner_id.company_id', 'in', [False, target_company.id])
+
+        Transaction = self.env['equity.transaction']
+        transactions_query = Transaction._search(domain)
+        exercise_transactions_query = Transaction._search(domain & Domain('transaction_type', '=', 'exercise'))
+        transfer_transactions_query = Transaction._search(domain & Domain('transaction_type', '=', 'transfer'))
+
+        tx_table = SQL.identifier(transactions_query.table)
+        ex_table = SQL.identifier(exercise_transactions_query.table)
+        tr_table = SQL.identifier(transfer_transactions_query.table)
+
         all_transactions = SQL(" UNION ALL ").join([
             transactions_query.select(
-                'partner_id AS partner_id',
-                'subscriber_id AS holder_id',
-                'security_class_id AS security_class_id',
-                """(CASE
-                        WHEN transaction_type IN ('issuance', 'transfer') THEN securities
-                        ELSE -securities
-                    END) AS securities"""
-                ,
+                SQL("%s.partner_id AS partner_id", tx_table),
+                SQL("%s.subscriber_id AS holder_id", tx_table),
+                SQL("%s.security_class_id AS security_class_id", tx_table),
+                SQL("""(CASE
+                        WHEN %s.transaction_type IN ('issuance', 'transfer') THEN CAST(%s.securities AS NUMERIC(18, 4))
+                        ELSE -CAST(%s.securities AS NUMERIC(18, 4))
+                    END) AS securities""", tx_table, tx_table, tx_table),
             ),
             exercise_transactions_query.select(
-                'partner_id AS partner_id',
-                'subscriber_id AS holder_id',
-                'destination_class_id AS security_class_id',
-                'securities AS securities',
+                SQL("%s.partner_id AS partner_id", ex_table),
+                SQL("%s.subscriber_id AS holder_id", ex_table),
+                SQL("%s.destination_class_id AS security_class_id", ex_table),
+                SQL("CAST(%s.securities AS NUMERIC(18, 4)) AS securities", ex_table),
             ),
             transfer_transactions_query.select(
-                'partner_id AS partner_id',
-                'seller_id AS holder_id',
-                'security_class_id AS security_class_id',
-                '-securities AS securities',
+                SQL("%s.partner_id AS partner_id", tr_table),
+                SQL("%s.seller_id AS holder_id", tr_table),
+                SQL("%s.security_class_id AS security_class_id", tr_table),
+                SQL("-CAST(%s.securities AS NUMERIC(18, 4)) AS securities", tr_table),
             ),
         ])
         return SQL(

@@ -10,7 +10,7 @@ class HrAppraisalSkillReport(models.BaseModel):
     _order = 'employee_id, evolution_sequence asc, current_level_progress desc, skill_type_id asc'
 
     id = fields.Id()
-    display_name = fields.Char(related='employee_id.name')
+    display_name = fields.Char(related='employee_id.name', readonly=True, store=False)
     create_date = fields.Date(string='Create Date', readonly=True)
     employee_id = fields.Many2one('hr.employee', readonly=True)
     company_id = fields.Many2one('res.company', readonly=True)

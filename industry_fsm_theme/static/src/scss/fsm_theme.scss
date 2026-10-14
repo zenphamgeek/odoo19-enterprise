@@ -193,8 +193,13 @@
     }
 }
 
-/* Dark Mode Overrides */
-body.o_dark_mode .ins_field_command_bar {
+/* Dark Mode Overrides - Strictly Scoped to Dark Theme States */
+body.o_dark_mode.o_home_menu_background .ins_field_command_bar,
+body[data-bs-theme="dark"].o_home_menu_background .ins_field_command_bar,
+body.o_dark_mode .ins_field_command_bar,
+body[data-bs-theme="dark"] .ins_field_command_bar,
+[data-bs-theme="dark"] .ins_field_command_bar,
+.o_dark_mode .ins_field_command_bar {
     .ins_command_inner {
         background: rgba(23, 35, 57, 0.85);
         border: 1px solid rgba(51, 65, 85, 0.7);
