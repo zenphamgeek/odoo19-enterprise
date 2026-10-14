@@ -77,8 +77,25 @@ export class DocumentsSearchPanel extends SearchPanel {
                 }
             } else {
                 const selectedFolderId = await this.env.searchModel.getSelectedFolderId();
-                if (selectedFolderId) {
-                    this.state.expanded[this.sections[0].id]["COMPANY"] = true;
+                const folderSection =
+                    this.sections.find((s) => s.fieldName === "user_folder_id") || this.sections[0];
+                if (folderSection && folderSection.values) {
+                    const sectionExpanded = (this.state.expanded[folderSection.id] ??= {});
+                    sectionExpanded["COMPANY"] = true;
+                    for (const [valId, val] of folderSection.values.entries()) {
+                        if (val.parentId === "COMPANY") {
+                            sectionExpanded[valId] = true;
+                            if (val.childrenIds) {
+                                for (const childId of val.childrenIds) {
+                                    sectionExpanded[childId] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (selectedFolderId && this.sections[0]) {
+                    const rootExpanded = (this.state.expanded[this.sections[0].id] ??= {});
+                    rootExpanded["COMPANY"] = true;
                     this._expandFolder({ folderId: selectedFolderId });
                 }
             }

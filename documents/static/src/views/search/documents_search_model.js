@@ -261,6 +261,9 @@ export class DocumentsSearchModel extends SearchModel {
             if (this.context.documents_unique_folder_id) {
                 return [["id", "child_of", this.context.documents_unique_folder_id]];
             }
+            if (!this.query || !this.query.length) {
+                return [["folder_id", "=", false]];
+            }
             return [];
         }
         const folder = this.getSelectedFolder();
@@ -279,7 +282,7 @@ export class DocumentsSearchModel extends SearchModel {
 
     /**
      * @override Force specific ordering in RECENT and TRASH
-     * and use write_date desc as default otherwise.
+     * and sort folders first then by name asc otherwise.
      */
     get orderBy() {
         if (this.sections.get(1).activeValueId === "TRASH") {
@@ -297,7 +300,11 @@ export class DocumentsSearchModel extends SearchModel {
         }
         const orderBy = super.orderBy;
         if (!orderBy.length) {
-            orderBy.push({ name: "create_date", asc: false });
+            // Folders MUST strictly precede files: boolean DESC (True before False)
+            orderBy.push(
+                { name: "is_folder", asc: false },
+                { name: "name", asc: true }
+            );
         }
         return orderBy;
     }
@@ -322,11 +329,31 @@ export class DocumentsSearchModel extends SearchModel {
         return false;
     }
 
+    _normalizeFolderId(val) {
+        if (val === false || val === "false" || val === null || val === undefined) {
+            return false;
+        }
+        if (typeof val === "string" && /^\d+$/.test(val)) {
+            return parseInt(val, 10);
+        }
+        return val;
+    }
+
+    _safeSetStorage(key, value) {
+        try {
+            browser.localStorage.setItem(key, String(value));
+        } catch {
+            // Fail-soft on Private Browsing or QuotaExceededError
+        }
+    }
+
     /**
      * @override
      */
     _ensureCategoryValue(category, valueIds) {
+        category.activeValueId = this._normalizeFolderId(category.activeValueId);
         if (
+            category.activeValueId &&
             valueIds.includes(category.activeValueId) &&
             this._isCategoryValueReachable(category, category.activeValueId)
         ) {
@@ -335,20 +362,26 @@ export class DocumentsSearchModel extends SearchModel {
 
         // If not set in context, or set to an unknown value, set active value
         // from localStorage
-        const storageItem = browser.localStorage.getItem("searchpanel_documents_document");
+        let storageItem = null;
+        try {
+            storageItem = browser.localStorage.getItem("searchpanel_documents_document");
+        } catch {
+            // Storage unavailable
+        }
         category.activeValueId =
             storageItem && !["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(storageItem)
-                ? JSON.parse(storageItem)
+                ? this._normalizeFolderId(storageItem)
                 : storageItem;
         if (
             ["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(category.activeValueId) ||
-            (valueIds.includes(category.activeValueId) &&
+            (category.activeValueId &&
+                valueIds.includes(category.activeValueId) &&
                 this._isCategoryValueReachable(category, category.activeValueId))
         ) {
             return;
         }
         // valueIds might contain different values than category.values
-        if (category.values.has(category.activeValueId)) {
+        if (category.activeValueId && category.values.has(category.activeValueId)) {
             // We might be in a deleted subfolder, try to find the parent.
             let newSection = category.values.get(
                 category.values.get(category.activeValueId).parentId
@@ -361,13 +394,23 @@ export class DocumentsSearchModel extends SearchModel {
             } else {
                 category.activeValueId = this.documentService.userIsInternal
                     ? "COMPANY"
-                    : valueIds[0];
+                    : (valueIds.length > 0 ? valueIds[0] : false);
             }
-            browser.localStorage.setItem("searchpanel_documents_document", category.activeValueId);
+            this._safeSetStorage("searchpanel_documents_document", category.activeValueId);
         } else {
-            // If still not a valid value, default to All (id=false) for internal users
-            // or root folder for portal users
-            category.activeValueId = this.documentService.userIsInternal ? false : valueIds[0];
+            if (this.documentService.userIsInternal) {
+                const companyRootFolders = [...category.values.values()].filter(
+                    (v) => v.parentId === "COMPANY"
+                );
+                category.activeValueId =
+                    companyRootFolders.length === 1 ? companyRootFolders[0].id : "COMPANY";
+                this._safeSetStorage(
+                    "searchpanel_documents_document",
+                    category.activeValueId
+                );
+            } else {
+                category.activeValueId = valueIds.length > 0 ? valueIds[0] : false;
+            }
         }
     }
 
