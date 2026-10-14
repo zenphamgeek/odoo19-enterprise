@@ -170,7 +170,7 @@ class TestMrpWorkorderHrValuation(TestMrpValuationStandard):
 
 
 @tagged('post_install', '-at_install')
-class TestMrpWorkorderHrValuationPostInstall(TestMrpValuationCommon):
+class TestMrpWorkorderHrValuationPostInstall(TestMrpValuationStandard):
     """
     Some tests rely on accounting operations. However, the Chart of Accounts is created
     only after all modules were loaded. Therefore, these tests need to be post_install.

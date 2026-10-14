@@ -95,12 +95,7 @@ class TestPOSReactPlugin(unittest.TestCase):
                 console.log(JSON.stringify({ point: action.point, id: action.id, success, denied, unauthenticated, calls, actions, fetches, navigations }));
             })();
         """
-        result = subprocess.run(
-            ["node", "-e", node_script, str(script_path)],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
+        result = _run_node_isolated(node_script, [str(script_path)], timeout=5.0)
         behavior = json.loads(result.stdout)
         self.assertEqual((behavior["point"], behavior["id"], behavior["success"]), ("action", "pos_barcodelookup.create", True))
         self.assertFalse(behavior["denied"])
@@ -142,12 +137,7 @@ class TestPOSReactPlugin(unittest.TestCase):
                 console.log(JSON.stringify({ badStatus, badType, success, requested, navigated }));
             })();
         """
-        result = subprocess.run(
-            ["node", "-e", node_script, str(script_path)],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
+        result = _run_node_isolated(node_script, [str(script_path)], timeout=5.0)
         behavior = json.loads(result.stdout)
         self.assertEqual((behavior["badStatus"], behavior["badType"], behavior["success"]), (False, False, True))
         self.assertEqual(behavior["requested"]["url"], "/api/model/call")
