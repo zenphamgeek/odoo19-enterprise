@@ -10,6 +10,31 @@ from contextlib import contextmanager
 from odoo.exceptions import UserError
 
 try:
+    from ..security.advisory_lock import (
+        acquire_tenant_xact_lock,
+        compute_partitioned_lock_key,
+        execute_with_detached_rpc,
+    )
+except (ImportError, ValueError):
+    try:
+        from enterprise.insilos_industry_showcase.security.advisory_lock import (
+            acquire_tenant_xact_lock,
+            compute_partitioned_lock_key,
+            execute_with_detached_rpc,
+        )
+    except (ImportError, Exception):
+        import sys
+        from pathlib import Path
+        _sec_path = Path(__file__).resolve().parent.parent / "security"
+        if str(_sec_path) not in sys.path:
+            sys.path.insert(0, str(_sec_path))
+        from advisory_lock import (
+            acquire_tenant_xact_lock,
+            compute_partitioned_lock_key,
+            execute_with_detached_rpc,
+        )
+
+try:
     from odoo import api, models
 except (ImportError, Exception):
     class models:
