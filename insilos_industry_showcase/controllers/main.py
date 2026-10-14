@@ -3,7 +3,9 @@
 
 import re
 import uuid
+import zlib
 from datetime import timedelta
+from psycopg2 import IntegrityError
 
 from odoo import fields, http
 from odoo.exceptions import UserError, ValidationError
@@ -98,10 +100,18 @@ class IndustryShowcaseController(http.Controller):
         if not re.fullmatch(r'[a-z0-9](?:[a-z0-9-]{1,28}[a-z0-9])?', slug):
             return request.redirect(f"/saas/signup?error=subdomain_invalid&plan={plan_tier}")
 
+        # DISM-TRL: Fast-path advisory lock via zlib.crc32(slug.encode('utf-8'))
+        lock_id = zlib.crc32(slug.encode('utf-8'))
+        request.env.cr.execute("SELECT pg_try_advisory_xact_lock(%s::bigint)", [lock_id])
+        lock_res = request.env.cr.fetchone()
+        if not (lock_res and lock_res[0]):
+            return request.redirect(f"/saas/signup?error=system_busy&plan={plan_tier}")
+
         TenantModel = request.env['insilos.tenant'].sudo()
         existing_operation = request.env['insilos.tenant.operation'].sudo().search([
             ('operation_type', '=', 'provision'), ('idempotency_key', '=', idempotency_key)
         ], limit=1) if idempotency_key else None
+        # Double-check existing
         existing = TenantModel.search([('slug', '=', slug)], limit=1)
         if existing and (not existing_operation or existing_operation.tenant_id != existing):
             return request.redirect(f"/saas/signup?error=subdomain_taken&plan={plan_tier}")
@@ -145,33 +155,51 @@ class IndustryShowcaseController(http.Controller):
                 return request.redirect(f"/saas/signup?error=idempotency_conflict&plan={plan_tier}")
             return request.redirect(f"/saas/signup/success?tenant_id={operation.tenant_id.id}&slug={operation.tenant_id.slug}&status=requested")
 
-        tenant = TenantModel.create({
-            'name': company_name or f"Doanh nghiệp {slug.capitalize()}",
-            'slug': slug,
-            'db_name': db_name,
-            'primary_domain': primary_domain,
-            'db_uuid': db_uuid,
-            'environment': 'production',
-            'region': 'ap-southeast-1',
-            'cluster': 'insilos-k8s-vn-prod-01',
-            'template_id': template.id,
-            'release_id': release.id,
-            'desired_state': 'provisioned',
-            'tenant_type': 'trial',
-            'billing_state': 'trial_active',
-            'trial_started_at': now,
-            'trial_ends_at': trial_ends_at,
-            'plan_tier': plan_tier,
-            'monthly_price': monthly_price,
-            'owner_name': owner_name,
-            'owner_email': owner_email,
-            'owner_phone': owner_phone,
-            'company_size': company_size,
-        })
+        request.env.cr.execute("SAVEPOINT saas_provision_atomic")
+        try:
+            tenant = TenantModel.create({
+                'name': company_name or f"Doanh nghiệp {slug.capitalize()}",
+                'slug': slug,
+                'db_name': db_name,
+                'primary_domain': primary_domain,
+                'db_uuid': db_uuid,
+                'environment': 'production',
+                'region': 'ap-southeast-1',
+                'cluster': 'insilos-k8s-vn-prod-01',
+                'template_id': template.id,
+                'release_id': release.id,
+                'desired_state': 'provisioned',
+                'tenant_type': 'trial',
+                'billing_state': 'trial_active',
+                'trial_started_at': now,
+                'trial_ends_at': trial_ends_at,
+                'plan_tier': plan_tier,
+                'monthly_price': monthly_price,
+                'owner_name': owner_name,
+                'owner_email': owner_email,
+                'owner_phone': owner_phone,
+                'company_size': company_size,
+            })
 
-        operation = request.env['insilos.tenant.operation'].sudo().queue_operation(
-            tenant, 'provision', idempotency_key=idempotency_key or str(uuid.uuid4()), payload=payload,
-        )
+            if 'saas.workspace' in request.env:
+                request.env['saas.workspace'].sudo().create({
+                    'subdomain': slug,
+                    'tenant_id': tenant.id,
+                    'state': 'provisioning',
+                    'idempotency_hash': idempotency_key or '',
+                })
+
+            operation = request.env['insilos.tenant.operation'].sudo().queue_operation(
+                tenant, 'provision', idempotency_key=idempotency_key or str(uuid.uuid4()), payload=payload,
+            )
+            request.env.cr.execute("RELEASE SAVEPOINT saas_provision_atomic")
+        except Exception as e:
+            request.env.cr.execute("ROLLBACK TO SAVEPOINT saas_provision_atomic")
+            err_msg = str(e).lower()
+            if 'unique' in err_msg or 'slug' in err_msg or 'subdomain' in err_msg or isinstance(e, IntegrityError):
+                return request.redirect(f"/saas/signup?error=subdomain_taken&plan={plan_tier}")
+            return request.redirect(f"/saas/signup?error=system_busy&plan={plan_tier}")
+
         return request.redirect(f"/saas/signup/success?tenant_id={tenant.id}&slug={slug}&status=requested&operation_id={operation.id}")
 
     @http.route('/saas/signup/success', type='http', auth="public", website=True)

@@ -236,17 +236,32 @@
                 </section>
 
                 <section class="py-5">
-                    <div class="container" style="max-width: 960px;">
+                    <div class="container">
                         <t t-if="error == 'subdomain_taken'">
-                            <div class="alert alert-danger d-flex align-items-center mb-4" role="alert">
-                                <i class="ph-duotone ph-warning-octagon fs-4 me-2"/>
-                                <div>Tên miền con (Subdomain) này đã có người sử dụng. Vui lòng chọn một tên miền con khác.</div>
+                            <div class="d-flex align-items-center p-3 mb-4 rounded-3 border-0 bg-danger-subtle text-danger" role="alert">
+                                <i class="ph-duotone ph-warning-octagon fs-4 me-3 flex-shrink-0"/>
+                                <div>
+                                    <div class="fw-semibold">Tên miền con (Subdomain) này đã có người sử dụng</div>
+                                    <div class="small opacity-75">Vui lòng chọn một tên miền con khác.</div>
+                                </div>
                             </div>
                         </t>
-                        <t t-if="error == 'subdomain_invalid'">
-                            <div class="alert alert-warning d-flex align-items-center mb-4" role="alert">
-                                <i class="ph-duotone ph-warning me-2 fs-4"/>
-                                <div>Tên miền con không hợp lệ. Vui lòng chỉ dùng chữ cái viết thường không dấu, số và dấu gạch ngang (tối thiểu 3 ký tự).</div>
+                        <t t-elif="error == 'system_busy'">
+                            <div class="d-flex align-items-center p-3 mb-4 rounded-3 border border-warning-subtle bg-warning-subtle text-warning" role="alert">
+                                <i class="ph-duotone ph-clock-countdown fs-4 me-3 flex-shrink-0"/>
+                                <div>
+                                    <div class="fw-semibold">Hệ thống đang quá tải tạm thời</div>
+                                    <div class="small opacity-75">Yêu cầu khởi tạo đang được xếp hàng an toàn. Vui lòng thử lại sau vài giây.</div>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-elif="error == 'subdomain_invalid'">
+                            <div class="d-flex align-items-center p-3 mb-4 rounded-3 border-0 bg-warning-subtle text-warning" role="alert">
+                                <i class="ph-duotone ph-warning fs-4 me-3 flex-shrink-0"/>
+                                <div>
+                                    <div class="fw-semibold">Tên miền con không hợp lệ</div>
+                                    <div class="small opacity-75">Vui lòng chỉ dùng chữ cái viết thường không dấu, số và dấu gạch ngang (tối thiểu 3 ký tự).</div>
+                                </div>
                             </div>
                         </t>
 
@@ -381,8 +396,8 @@
         <t t-call="website.layout">
             <t t-set="additional_title">Khởi tạo Không gian Làm việc Thành công! | Insilos SaaS</t>
             <main id="wrap" class="oe_structure bg-100 py-5">
-                <div class="container text-center py-5" style="max-width: 760px;">
-                    <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-view">
+                <div class="container text-center py-5">
+                    <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-transparent borderless-obsidian-stage">
                         <div class="mb-4">
                             <i class="ph-duotone ph-check-circle text-success" style="font-size: 72px;"/>
                         </div>
@@ -431,7 +446,7 @@
         <t t-call="website.layout">
             <t t-set="additional_title">Nâng Cấp Bản Quyền Chính Thức | Insilos SaaS</t>
             <main id="wrap" class="oe_structure bg-100 py-5">
-                <div class="container" style="max-width: 860px;">
+                <div class="container">
                     <div class="text-center mb-4">
                         <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2 rounded-pill fs-6 mb-2">
                             <i class="ph-duotone ph-crown me-1"/> CHUYỂN ĐỔI BẢN QUYỀN CHÍNH THỨC
@@ -531,7 +546,7 @@
         <t t-call="website.layout">
             <t t-set="additional_title">Bản Quyền Đã Kích Hoạt Thành Công! | Insilos SaaS</t>
             <main id="wrap" class="oe_structure bg-100 py-5">
-                <div class="container text-center py-5" style="max-width: 720px;">
+                <div class="container text-center py-5">
                     <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-view">
                         <div class="mb-3">
                             <i class="ph-duotone ph-seal-check text-success" style="font-size: 80px;"/>
