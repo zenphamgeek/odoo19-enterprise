@@ -7,6 +7,7 @@ patch(FormController.prototype, {
     setup() {
         super.setup();
         this.aiChatLauncher = useService("aiChatLauncher");
+        this.mailStore = useService("mail.store");
         const openAiChat = (ev) => this.openAiChat(ev.detail.origin);
         useEffect(
             () => {
@@ -18,18 +19,42 @@ patch(FormController.prototype, {
     },
 
     async openAiChat(callerComponentName) {
-        // save to allow to get messages from backend
-        if (!this.mailStore || !(await this.model.root.save())) {
+        if (this._aiChatDispatching) {
             return;
         }
-        this.aiChatLauncher.launchAIChat({
-            callerComponentName,
-            channelTitle: this.displayName(),
-            recordModel: this.model.root.resModel,
-            recordId: this.model.root.resId,
-            originalRecordData: this.model.root.data,
-            originalRecordFields: this.model.root.fields,
-            aiChatSourceId: this.model.root.resId,
-        });
+        this._aiChatDispatching = true;
+        try {
+            if (this.model?.root?.isNew) {
+                const saved = await this.model.root.save();
+                if (!saved) {
+                    return;
+                }
+            }
+            const recordModel = this.model?.root?.resModel;
+            const recordId = this.model?.root?.resId;
+            const channelTitle = typeof this.displayName === "function" ? this.displayName() : (this.model?.root?.data?.display_name || "AI Assistant");
+
+            // Allowlist projection: Exclude passwords, hashes, financial accounts, and tokens
+            const rawData = this.model?.root?.data || {};
+            const safeRecordData = {};
+            const FORBIDDEN_KEYS = /password|secret|token|hash|auth|credit|bank|salary|ssn|tax_id/i;
+            for (const [k, v] of Object.entries(rawData)) {
+                if (!FORBIDDEN_KEYS.test(k) && (typeof v !== "object" || v === null || Array.isArray(v))) {
+                    safeRecordData[k] = v;
+                }
+            }
+
+            this.aiChatLauncher.launchAIChat({
+                callerComponentName: callerComponentName || "chatter_ai_button",
+                channelTitle,
+                recordModel,
+                recordId,
+                originalRecordData: safeRecordData,
+                originalRecordFields: undefined,
+                aiChatSourceId: recordId,
+            });
+        } finally {
+            this._aiChatDispatching = false;
+        }
     },
 });

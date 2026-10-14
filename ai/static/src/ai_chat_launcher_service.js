@@ -94,7 +94,15 @@ export const aiChatLauncherService = {
                     ],
                 );
 
-                services['mail.store'].insert(data);
+                const payload = { ...data };
+                if (payload["party.master"]) {
+                    // Isolated mapping: Never overwrite standard res.partner ID namespace
+                    payload["party.master"] = payload["party.master"].map((rec) => ({
+                        ...rec,
+                        _source_model: "party.master",
+                    }));
+                }
+                services['mail.store'].insert(payload);
                 const thread = await services['mail.store'].Thread.getOrFetch({
                     model: "discuss.channel",
                     id: Number(ai_channel_id),
