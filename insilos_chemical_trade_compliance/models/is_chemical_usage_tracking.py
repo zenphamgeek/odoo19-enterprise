@@ -2,6 +2,7 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
+from odoo.exceptions import AccessError, ValidationError
 
 
 class ChemicalUsageTracking(models.Model):
@@ -167,9 +168,20 @@ class ChemicalUsageTrackingLine(models.Model):
     _order = 'date desc, id desc'
 
     _sql_constraints = [
-        ('chemical_usage_source_stock_move_unique', 'unique(source_stock_move_id)',
+        ('chemical_usage_source_stock_move_unique', 'UNIQUE(source_stock_move_id)',
          'An ERP stock move can only be synchronized once.'),
     ]
+
+    @api.constrains('source_stock_move_id')
+    def _check_source_stock_move_id_unique(self):
+        for record in self:
+            if record.source_stock_move_id:
+                duplicate = self.search([
+                    ('id', '!=', record.id),
+                    ('source_stock_move_id', '=', record.source_stock_move_id.id),
+                ], limit=1)
+                if duplicate:
+                    raise ValidationError(_('An ERP stock move can only be synchronized once.'))
 
     tracking_id = fields.Many2one('is.chemical.usage.tracking', string='Usage Tracking Report', required=True, ondelete='cascade', index=True)
     source_stock_move_id = fields.Many2one('stock.move', string='ERP Source Stock Move', readonly=True, copy=False, index=True)

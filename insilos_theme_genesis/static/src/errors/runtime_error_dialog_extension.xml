@@ -1,20 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates id="template" xml:space="preserve">
-    <t t-inherit="web.ErrorDialog" t-inherit-mode="extension">
-        <xpath expr="//t[@t-set-slot='footer']" position="inside">
-            <button class="btn btn-outline-danger ms-2 o_insilos_share_error_btn"
-                    t-on-click="() => this.onClickShareRuntimeError()"
-                    t-att-disabled="this.state.sharingError || this.state.sharingSuccess"
-                    data-available-offline="">
-                <i t-if="!this.state.sharingError &amp;&amp; !this.state.sharingSuccess" class="fa fa-paper-plane me-1"/>
-                <i t-if="this.state.sharingError" class="fa fa-spinner fa-spin me-1"/>
-                <i t-if="this.state.sharingSuccess" class="fa fa-check text-success me-1"/>
-                <span t-if="this.state.sharingSuccess" class="text-success fw-bold">
-                    <t t-esc="`Đã báo cáo (${this.state.incidentCode})`"/>
-                </span>
-                <span t-elif="this.state.sharingError">Đang nén &amp; gửi sự cố...</span>
-                <span t-else="">⚡ Báo lỗi cho Insilos Support</span>
-            </button>
-        </xpath>
-    </t>
 </templates>
