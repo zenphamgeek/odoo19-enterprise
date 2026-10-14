@@ -33,20 +33,20 @@ class PaymentProvider(models.Model):
 
     # === CONSTRAINT METHODS === #
 
-    @api.constrains('state', 'journal_id')
+    @api.constrains('journal_id')
     def _check_journal_iban_is_valid(self):
         """ Check that the bank account of the payment journal is a valid IBAN. """
         for provider in self.filtered(
-            lambda p: p.custom_mode == 'sepa_direct_debit' and p.state == 'enabled'
+            lambda p: p.custom_mode == 'sepa_direct_debit' and (getattr(p, 'state', None) == 'enabled' or getattr(p, 'is_published', False))
         ):
             if provider.journal_id.bank_account_id.acc_type != 'iban':
                 raise ValidationError(_("The bank account of the journal is not a valid IBAN."))
 
-    @api.constrains('state', 'company_id')
+    @api.constrains('company_id')
     def _check_has_creditor_identifier(self):
         """ Check that the company has a creditor identifier. """
         for provider in self.filtered(
-            lambda p: p.custom_mode == 'sepa_direct_debit' and p.state == 'enabled'
+            lambda p: p.custom_mode == 'sepa_direct_debit' and (getattr(p, 'state', None) == 'enabled' or getattr(p, 'is_published', False))
         ):
             if not provider.company_id.sdd_creditor_identifier:
                 raise ValidationError(_(
