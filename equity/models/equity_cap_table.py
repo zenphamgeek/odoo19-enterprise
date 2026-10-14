@@ -2,7 +2,7 @@ from collections import defaultdict
 from datetime import datetime
 
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import AccessError, ValidationError
 from odoo.fields import Domain
 from odoo.tools import SQL
 
@@ -35,25 +35,43 @@ class EquityCapTable(models.Model):
         return self._table_sql
 
     def _get_table_sql(self):
+        if self:
+            self.ensure_one()
         self.env['equity.transaction'].flush_model()
         current_date = self.env.context.get('current_date') or datetime.max.date()
+        if isinstance(current_date, str):
+            try:
+                current_date = fields.Date.to_date(current_date)
+            except Exception:
+                raise ValidationError("Invalid current_date format in execution context.")
 
         domain = Domain('date', '<=', current_date)
         raw_tx_id = self.env.context.get('current_transaction_id')
-        if raw_tx_id:
+        if raw_tx_id is not None and raw_tx_id is not False:
+            if isinstance(raw_tx_id, bool):
+                raise ValidationError("Transaction context identifier cannot be a boolean value.")
+            if isinstance(raw_tx_id, models.BaseModel):
+                raw_tx_id = raw_tx_id.ensure_one().id
             try:
                 sanitized_tx_id = int(raw_tx_id)
+                if sanitized_tx_id <= 0:
+                    raise ValueError()
                 domain &= Domain('id', '!=', sanitized_tx_id)
             except (ValueError, TypeError):
                 raise ValidationError("Invalid transaction identifier in execution context.")
 
-        target_company = getattr(self, 'company_id', False) or self.env.company
-        if 'company_id' in self.env['equity.transaction']._fields:
-            domain &= Domain('company_id', 'in', [False, target_company.id])
-        else:
-            domain &= Domain('|', ('partner_id', '=', False), ('partner_id.company_id', 'in', [False, target_company.id]))
+        target_company = (self.company_id if hasattr(self, 'company_id') and self.company_id else False) or self.env.company
+        if target_company not in self.env.companies:
+            raise AccessError("Unauthorized company scope in cap table calculation.")
 
         Transaction = self.env['equity.transaction']
+        if 'company_id' in Transaction._fields:
+            domain &= Domain('company_id', '=', target_company.id)
+        elif target_company.partner_id:
+            domain &= Domain('partner_id', '=', target_company.partner_id.id)
+        else:
+            domain &= Domain('partner_id.company_id', '=', target_company.id)
+
         transactions_query = Transaction._search(domain)
         exercise_transactions_query = Transaction._search(domain & Domain('transaction_type', '=', 'exercise'))
         transfer_transactions_query = Transaction._search(domain & Domain('transaction_type', '=', 'transfer'))
@@ -68,21 +86,22 @@ class EquityCapTable(models.Model):
                 SQL("%s.subscriber_id AS holder_id", tx_table),
                 SQL("%s.security_class_id AS security_class_id", tx_table),
                 SQL("""(CASE
-                        WHEN %s.transaction_type IN ('issuance', 'transfer') THEN CAST(%s.securities AS NUMERIC(18, 4))
-                        ELSE -CAST(%s.securities AS NUMERIC(18, 4))
+                        WHEN %s.transaction_type IN ('issuance', 'transfer')
+                        THEN COALESCE(CAST(%s.securities AS NUMERIC), 0)
+                        ELSE -COALESCE(CAST(%s.securities AS NUMERIC), 0)
                     END) AS securities""", tx_table, tx_table, tx_table),
             ),
             exercise_transactions_query.select(
                 SQL("%s.partner_id AS partner_id", ex_table),
                 SQL("%s.subscriber_id AS holder_id", ex_table),
                 SQL("%s.destination_class_id AS security_class_id", ex_table),
-                SQL("CAST(%s.securities AS NUMERIC(18, 4)) AS securities", ex_table),
+                SQL("COALESCE(CAST(%s.securities AS NUMERIC), 0) AS securities", ex_table),
             ),
             transfer_transactions_query.select(
                 SQL("%s.partner_id AS partner_id", tr_table),
                 SQL("%s.seller_id AS holder_id", tr_table),
                 SQL("%s.security_class_id AS security_class_id", tr_table),
-                SQL("-CAST(%s.securities AS NUMERIC(18, 4)) AS securities", tr_table),
+                SQL("-COALESCE(CAST(%s.securities AS NUMERIC), 0) AS securities", tr_table),
             ),
         ])
         return SQL(

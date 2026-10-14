@@ -77,6 +77,14 @@ class TestCapTableSecurity(TransactionCase):
         with self.assertRaises(ValidationError):
             cap_table_model._get_table_sql()
 
+    def test_genesis_transaction_boolean_true_rejection(self):
+        """Ensure current_transaction_id=True raises ValidationError instead of dropping Transaction #1."""
+        cap_table_model = self.env['equity.cap.table'].with_company(self.company_a).with_context(
+            current_transaction_id=True
+        )
+        with self.assertRaises(ValidationError):
+            cap_table_model._get_table_sql()
+
     def test_unallocated_treasury_shares_retention(self):
         """Invariant: Transactions with partner_id=False (treasury/reserve) must not be dropped."""
         self.env['equity.transaction'].create({
