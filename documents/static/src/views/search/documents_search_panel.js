@@ -31,18 +31,20 @@ export class DocumentsSearchPanelItemSettingsPopover extends Component {
 
 export class DocumentsSearchPanel extends SearchPanel {
     static modelExtension = "DocumentsSearchPanel";
-    static template = !uiUtils.isSmall() ? "documents.SearchPanel" : "documents.SearchPanel.Small";
-    static subTemplates = !uiUtils.isSmall()
-        ? {
-              section: "web.SearchPanel.Section",
-              category: "documents.SearchPanel.Category",
-              filtersGroup: "documents.SearchPanel.FiltersGroup",
-          }
-        : {
-              section: "web.SearchPanel.Section",
-              category: "documents.SearchPanel.Category.Small",
-              filtersGroup: "documents.SearchPanel.FiltersGroup.Small",
-          };
+    static template = "documents.SearchPanel";
+    static get subTemplates() {
+        return !uiUtils.isSmall()
+            ? {
+                  section: "web.SearchPanel.Section",
+                  category: "documents.SearchPanel.Category",
+                  filtersGroup: "documents.SearchPanel.FiltersGroup",
+              }
+            : {
+                  section: "web.SearchPanel.Section",
+                  category: "documents.SearchPanel.Category.Small",
+                  filtersGroup: "documents.SearchPanel.FiltersGroup.Small",
+              };
+    }
     static rootIcons = {
         false: "fa-folder-o",
         COMPANY: "fa-building",
@@ -53,6 +55,7 @@ export class DocumentsSearchPanel extends SearchPanel {
     };
     setup() {
         super.setup(...arguments);
+        this.state.sidebarExpanded = true;
         const { uploads } = useService("file_upload");
         this.documentService = useService("document.document");
         this.documentUploads = uploads;

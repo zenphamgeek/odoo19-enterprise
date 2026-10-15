@@ -195,3 +195,69 @@ body,
     }
 }
 
+/* Documents Kanban & SearchPanel Direct Dark Mode Bindings */
+.o_documents_kanban_view,
+.o_documents_list_view {
+    .o_search_panel {
+        background-color: var(--insilos-bg-card) !important;
+        border-right: 1px solid var(--insilos-border-subtle) !important;
+        color: var(--insilos-text-primary) !important;
+    }
+}
+
+.o_documents_kanban_view .o_kanban_renderer {
+    .o_kanban_record:not(.o_kanban_ghost) {
+        padding: 0 !important;
+        overflow: hidden;
+        background-color: var(--insilos-bg-surface) !important;
+        border: 1px solid var(--insilos-border-subtle) !important;
+        border-left: 3px solid transparent !important;
+        color: var(--insilos-text-primary) !important;
+
+        > div:nth-of-type(1) {
+            border: 0 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+
+        &.o_folder_record > div:nth-of-type(1) {
+            padding: 10px 14px !important;
+        }
+
+        &:hover {
+            background-color: var(--insilos-bg-hover) !important;
+            border-color: var(--insilos-border-medium) !important;
+            border-left: 3px solid var(--insilos-cyan-primary) !important;
+        }
+
+        &.o_record_selected {
+            background-color: var(--insilos-bg-selected) !important;
+            border-color: var(--insilos-cyan-primary) !important;
+            border-left: 3px solid var(--insilos-cyan-primary) !important;
+        }
+
+        .o_kanban_image_wrapper {
+            background-color: var(--insilos-bg-card) !important;
+            border-bottom: 1px solid var(--insilos-border-subtle);
+        }
+    }
+
+    .o_kanban_record.o_kanban_ghost,
+    .o_kanban_ghost {
+        height: 0 !important;
+        min-height: 0 !important;
+        max-height: 0 !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        border: 0 !important;
+        border-left: 0 !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        pointer-events: none !important;
+        visibility: hidden !important;
+        overflow: hidden !important;
+    }
+}
+

@@ -118,7 +118,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         ) {
             this.props.record.onClickPreview(ev);
         } else if (selectionKeyActive || isSelectionModeActive) {
-            this.rootRef.el.focus();
+            this.rootRef?.el?.focus();
             this.props.toggleSelection(this.props.record, ev.shiftKey);
         } else if (
             this.env.searchModel.getSelectedFolderId() === "TRASH" ||
@@ -126,7 +126,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         ) {
             // Select only one document record
             this.props.getSelection().forEach((r) => r.toggleSelection(false));
-            this.rootRef.el.focus();
+            this.rootRef?.el?.focus();
             this.props.toggleSelection(this.props.record);
         } else {
             this.props.record.openFolder();

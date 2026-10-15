@@ -7,7 +7,7 @@
         <xpath expr="//section" position="attributes">
             <attribute name="t-att-data-section-id">section.id</attribute>
         </xpath>
-        <xpath expr="//button[@t-on-click='toggleSidebar']" position="replace"/>
+        <xpath expr="//button[@t-on-click='this.toggleSidebar']" position="replace"/>
         <xpath expr="//header" position="replace"/>
     </t>
 
@@ -45,7 +45,7 @@
                     <i t-if="typeof valueId !== 'number'" t-attf-class="fa {{ this.constructor.rootIcons[valueId] }} ms-1"/>
                     <span
                         class="o_search_panel_label_title text-truncate"
-                        t-att-class="{'fw-bold' : value.bold, 'ps-1': typeof valueId !== number}"
+                        t-att-class="{'fw-bold' : value.bold, 'ps-1': typeof valueId !== 'number'}"
                         t-out="value.display_name"
                     />
                     <div class="ms-auto">
@@ -71,6 +71,9 @@
     <t t-name="documents.SearchPanel.Small" t-inherit="web.SearchPanel.Small" t-inherit-mode="primary"/>
 
     <t t-name="documents.SearchPanel" t-inherit="web.SearchPanel" t-inherit-mode="primary">
+        <xpath expr="//t[@t-call='web.SearchPanel.Small']" position="attributes">
+            <attribute name="t-call">documents.SearchPanel.Small</attribute>
+        </xpath>
         <xpath expr="//t[@t-call='web.SearchPanel.Regular']" position="attributes">
             <attribute name="t-call">documents.SearchPanel.Regular</attribute>
         </xpath>

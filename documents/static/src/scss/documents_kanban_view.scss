@@ -1,6 +1,16 @@
 
 ////// ======  Dashboard Kanban View ==========
 ////// ========================================
+.o_documents_kanban_view,
+.o_documents_list_view {
+    .o_search_panel:not(.w-100) {
+        flex: 0 0 280px;
+        width: 280px;
+        min-width: 240px;
+        max-width: 340px;
+    }
+}
+
 .o_documents_kanban_view  .o_content {
     .o_kanban_renderer {
         --KanbanRecord-padding-v: 0;
@@ -31,6 +41,11 @@
             margin: .5rem;
             border: none;
 
+            &:not(.o_kanban_ghost) {
+                padding: 0 !important;
+                overflow: hidden;
+            }
+
             @include media-breakpoint-down(xxl) {
                 max-width: calc(50% - 20px);
             }
@@ -43,11 +58,26 @@
             }
 
             > div:nth-of-type(1) {
-                border: $border-width solid var(--border-color);
+                border: 0 !important;
+            }
+
+            &.o_folder_record:not(.o_kanban_ghost) > div:nth-of-type(1) {
+                padding: 10px 14px !important;
             }
 
             &.o_kanban_ghost {
-                min-height: 0;
+                height: 0 !important;
+                min-height: 0 !important;
+                max-height: 0 !important;
+                padding: 0 !important;
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                border: 0 !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                pointer-events: none !important;
+                visibility: hidden !important;
+                overflow: hidden !important;
                 @include media-breakpoint-down(lg) {
                     display: none;
                 }
@@ -70,7 +100,7 @@
                 &:before, &:after {
                     content: '';
                     z-index: $o-dms-kanban-stack-zindex - 1;
-                    background: $o-view-background-color;
+                    background: var(--insilos-bg-surface);
                     outline: 1px solid var(--border-color);
                     width: 100%;
                     height: 100%;
@@ -84,7 +114,7 @@
             }
 
             > div:nth-of-type(1) {
-                background: $o-view-background-color;;
+                background: transparent !important;
             }
 
             &.o_record_selected {
@@ -95,11 +125,11 @@
 
             & > .o_kanban_attachment.oe_file_request {
                 border-style: dashed;
-                background-color: #fff0;
+                background-color: transparent;
             }
 
             .o_kanban_image_wrapper {
-                background-color: $body-bg;
+                background-color: var(--insilos-bg-surface) !important;
                 height: 140px;
                 width: 100%;
                 display: flex;
@@ -137,11 +167,11 @@
             }
 
             .o_request_image .o_kanban_image_wrapper {
-                background-color: #f1f1f1;
+                background-color: var(--insilos-bg-subtle);
                 opacity: 0.5;
 
                 &:hover {
-                    background-color: $gray-200;
+                    background-color: var(--insilos-bg-hover);
                 }
             }
 
