@@ -9,6 +9,11 @@
                     <h3 class="px-0 mb-1">
                         Insilos <t t-out="serverVersion"/> (Enterprise Edition)
                     </h3>
+                    <t t-if="serverBuildId">
+                        <div class="text-muted small mb-1 o_insilos_build_info" style="font-family: monospace;">
+                            Build <t t-out="serverBuildId"/> • Worktree <t t-out="serverBuildDatetime"/> • Tag <t t-out="serverBuildTag"/>
+                        </div>
+                    </t>
                     <t t-if="expirationDate">
                         <h5 class="text-muted mb-0">Database expiration: <t t-out="expirationDate"/></h5>
                     </t>

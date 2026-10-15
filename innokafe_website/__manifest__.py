@@ -2,7 +2,7 @@
 {
     "name": "InnoKafe Specialty Coffee Brand Platform",
     "summary": "Specialty Coffee Website, Taste Profiler, Sensory Wheel & Farm-to-Cup Heritage for InnoKafe",
-    "version": "20.0.1.0.0",
+    "version": "26.0.1.0.0",
     "category": "Website/Website",
     "author": "InnoKafe / Insilos",
     "website": "https://innokafe.insilos.com",

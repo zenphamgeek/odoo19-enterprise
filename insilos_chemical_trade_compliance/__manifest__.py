@@ -3,7 +3,7 @@
 
 {
     'name': 'Insilos Chemical Trade Compliance',
-    'version': '20.0.1.0.2',
+    'version': '26.0.1.0.2',
     'category': 'Logistics/Compliance',
     'summary': 'Chemical Regulatory Determination, NSW Dossier & Permit Quota — Luật Hóa chất 69/2025/QH15',
     'description': """

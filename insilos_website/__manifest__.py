@@ -1,7 +1,7 @@
 {
     "name": "Insilos Intelligent Operations Website",
     "summary": "Production-ready QWeb and Owl website for Insilos",
-    "version": "20.0.3.0.0",
+    "version": "26.0.3.0.0",
     "category": "Website/Website",
     "author": "Insilos",
     "website": "https://insilos.ai",

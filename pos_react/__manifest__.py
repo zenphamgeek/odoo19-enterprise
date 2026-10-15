@@ -2,7 +2,7 @@
     "name": "POS React",
     "summary": "Isolated React POS parity workspace",
     "category": "Sales/Point of Sale",
-    "version": "20.0.1.0.0",
+    "version": "26.0.1.0.0",
     'author': 'Insilos',
 
     "depends": ["point_of_sale"],

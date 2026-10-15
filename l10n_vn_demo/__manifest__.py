@@ -2,7 +2,7 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Vietnam - Manufacturing & Industrial Transport Demo Data (Sản Xuất & Vận Tải Công Nghiệp)',
-    'version': '20.0.2.0.0',
+    'version': '26.0.2.0.0',
     'category': 'Localization/Vietnam',
     'summary': 'Dữ liệu demo chuyên sâu ngành Sản Xuất Chế Tạo Cơ Khí & Vận Tải Tiếp Vận Đa Phương Thức tại Việt Nam',
     'description': """

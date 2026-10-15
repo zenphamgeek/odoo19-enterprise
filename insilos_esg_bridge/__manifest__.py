@@ -3,7 +3,7 @@
 
 {
     'name': 'Insilos ESG & Cross-App Sustainability Intelligence',
-    'version': '20.0.1.0.1',
+    'version': '26.0.1.0.1',
     'category': 'ESG/Operations',
     'summary': 'End-to-End ESG Integration: CEMS IoT Emissions, Freight Carbon (Scope 3 Cat 4), Chemical Environmental Footprint, CBAM Advisor & Knowledge Lineage',
     'description': """

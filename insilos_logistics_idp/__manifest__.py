@@ -1,7 +1,7 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Logistics IDP',
-    'version': '20.0.1.3.12',
+    'version': '26.0.1.3.12',
     'category': 'Services/Project',
     'summary': 'Logistics document control and trade-compliance workspace',
     'description': """

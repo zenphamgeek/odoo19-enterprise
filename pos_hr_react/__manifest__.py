@@ -2,7 +2,7 @@
     "name": "POS React Employees",
     "summary": "Employee permissions for POS React",
     "category": "Sales/Point of Sale",
-    "version": "20.0.1.0.0",
+    "version": "26.0.1.0.0",
     'author': 'Insilos',
 
     "depends": ["pos_react", "pos_hr", "pos_restaurant"],

@@ -3,7 +3,7 @@
 
 {
     'name': 'Insilos Pub/Sub Event Bridge',
-    'version': '20.0.2.3.0',
+    'version': '26.0.2.3.0',
     'category': 'Productivity/Integrations',
     'summary': 'Google Cloud Pub/Sub & Hermes AI Bi-Directional Event Bus Gateway',
     'description': """
