@@ -105,6 +105,17 @@ export class HomeMenu extends Component {
                 expanded: true,
                 activeTab: "overview",
                 data: null,
+                piiRevealed: false,
+                piiRevealSecondsLeft: 0,
+                piiFullData: null,
+                changeForm: {
+                    field_type: "work_phone",
+                    new_value: "",
+                    new_bank_name: "VIETCOMBANK",
+                    evidence_doc_ref: "PL02-HDLD-DGM-2026",
+                    legal_reason: "Cập nhật thông tin định danh / tài khoản nhận lương theo Phụ lục HĐLĐ",
+                },
+                approverNote: "Đã đối chiếu hồ sơ gốc & Phụ lục HĐLĐ hợp lệ.",
                 leavingForm: {
                     notice_date: "2026-10-15",
                     expected_last_day: "2026-11-15",
@@ -114,6 +125,7 @@ export class HomeMenu extends Component {
             },
         });
         this.pressTimer;
+        this._piiTimer = null;
 
         if (!this.ui.isSmall) {
             this._registerHotkeys();
@@ -413,8 +425,123 @@ export class HomeMenu extends Component {
         return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
 
+    _clearPiiTimer() {
+        if (this._piiTimer) {
+            clearInterval(this._piiTimer);
+            this._piiTimer = null;
+        }
+        this.state.empDashboard.piiRevealed = false;
+        this.state.empDashboard.piiRevealSecondsLeft = 0;
+        this.state.empDashboard.piiFullData = null;
+    }
+
+    getDisplayedCccd(emp) {
+        if (
+            this.state.empDashboard.piiRevealed &&
+            this.state.empDashboard.piiFullData?.employee_id === emp.id
+        ) {
+            return this.state.empDashboard.piiFullData.identification_id_full;
+        }
+        return emp.identification_id_masked || emp.identification_id || "Đã xác thực eKYC";
+    }
+
+    getDisplayedPhone(emp) {
+        if (
+            this.state.empDashboard.piiRevealed &&
+            this.state.empDashboard.piiFullData?.employee_id === emp.id
+        ) {
+            return this.state.empDashboard.piiFullData.work_phone_full;
+        }
+        return emp.work_phone_masked || emp.work_phone;
+    }
+
+    getDisplayedBankAcc(emp) {
+        if (
+            this.state.empDashboard.piiRevealed &&
+            this.state.empDashboard.piiFullData?.employee_id === emp.id
+        ) {
+            return this.state.empDashboard.piiFullData.bank_acc_number_full;
+        }
+        return emp.bank_acc_number_masked || emp.bank_acc_number;
+    }
+
+    async onToggleRevealPii() {
+        if (this.state.empDashboard.piiRevealed) {
+            this._clearPiiTimer();
+            return;
+        }
+        const emp = this.state.empDashboard.data?.current_employee;
+        if (!emp || !emp.id) {
+            return;
+        }
+        try {
+            const res = await rpc("/insilos/employee_dashboard/reveal_pii", {
+                employee_id: emp.id,
+            });
+            if (res && res.ok) {
+                this._clearPiiTimer();
+                this.state.empDashboard.piiFullData = res;
+                this.state.empDashboard.piiRevealed = true;
+                this.state.empDashboard.piiRevealSecondsLeft = res.expires_in_seconds || 30;
+                if (this.state.empDashboard.data && res.privacy_audit_log) {
+                    this.state.empDashboard.data.privacy_audit_log = res.privacy_audit_log;
+                }
+                this._piiTimer = setInterval(() => {
+                    if (this.state.empDashboard.piiRevealSecondsLeft > 1) {
+                        this.state.empDashboard.piiRevealSecondsLeft -= 1;
+                    } else {
+                        this._clearPiiTimer();
+                    }
+                }, 1000);
+            }
+        } catch {
+            // Fail-soft
+        }
+    }
+
+    async onSubmitChangeRequest() {
+        const emp = this.state.empDashboard.data?.current_employee;
+        if (!emp || !emp.id) {
+            return;
+        }
+        try {
+            const res = await rpc("/insilos/employee_dashboard/submit_change_request", {
+                employee_id: emp.id,
+                ...this.state.empDashboard.changeForm,
+            });
+            if (res && res.current_employee) {
+                this.state.empDashboard.data = res;
+                this.state.empDashboard.changeForm.new_value = "";
+            }
+        } catch {
+            // Fail-soft
+        }
+    }
+
+    async onDecideChangeRequest(requestId, decision) {
+        const emp = this.state.empDashboard.data?.current_employee;
+        if (!emp || !emp.id) {
+            return;
+        }
+        try {
+            const res = await rpc("/insilos/employee_dashboard/decide_change_request", {
+                request_id: requestId,
+                decision,
+                approver_note: this.state.empDashboard.approverNote,
+                employee_id: emp.id,
+            });
+            if (res && res.current_employee) {
+                this.state.empDashboard.data = res;
+                this._clearPiiTimer();
+            }
+        } catch {
+            // Fail-soft
+        }
+    }
+
     async _loadEmployeeDashboard(employeeId = null) {
         try {
+            this._clearPiiTimer();
             this.state.empDashboard.loading = true;
             const res = await rpc("/insilos/employee_dashboard/data", {
                 employee_id: employeeId,
@@ -451,6 +578,7 @@ export class HomeMenu extends Component {
     async onChangeDashboardEmployee(ev) {
         const empId = parseInt(ev.target.value, 10);
         if (empId) {
+            this._clearPiiTimer();
             await this._loadEmployeeDashboard(empId);
         }
     }

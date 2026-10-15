@@ -337,6 +337,21 @@ class DocumentsDocument(models.Model):
         (self - active_documents).user_folder_id = "TRASH"
         for document in active_documents.filtered(lambda d: d.user_permission != 'none'):
             if document.folder_id:
+                # Cycle-safe ancestor guard against recursive traversal loop
+                seen_ids = set()
+                curr = document.folder_id
+                is_cycle = False
+                while curr:
+                    if curr.id in seen_ids:
+                        is_cycle = True
+                        break
+                    seen_ids.add(curr.id)
+                    curr = curr.folder_id
+
+                if is_cycle:
+                    document.user_folder_id = 'CYCLIC_ERROR'
+                    continue
+
                 if document.folder_id.user_permission != 'none':
                     document.user_folder_id = str(document.folder_id.id)
                 else:
