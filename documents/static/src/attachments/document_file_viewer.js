@@ -6,6 +6,7 @@ import { onWillStart, onWillUpdateProps, reactive, useState } from "@odoo/owl";
 export class FileViewer extends WebFileViewer {
     static template = "documents.FileViewer";
     static components = {
+        ...WebFileViewer.components,
         DocumentsAction,
     };
 

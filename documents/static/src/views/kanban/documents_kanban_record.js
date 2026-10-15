@@ -113,9 +113,18 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         const isSelectionModeActive = selectionLength === 1 ? ev.shiftKey : selectionLength > 1;
         const selectionKeyActive = ev.altKey || ev.ctrlKey;
         if (
-            ev.target.closest("div[name='document_preview']") &&
+            ev.target.closest("div[name='document_preview'], .oe_kanban_previewer") &&
             !(selectionKeyActive || ev.shiftKey)
         ) {
+            if (!this.props.record.selected) {
+                if (typeof this.props.record.onRecordClick === "function") {
+                    this.props.record.onRecordClick(ev);
+                } else {
+                    this.props.getSelection().forEach((r) => r.toggleSelection(false));
+                    this.rootRef?.el?.focus();
+                    this.props.toggleSelection(this.props.record);
+                }
+            }
             this.props.record.onClickPreview(ev);
         } else if (selectionKeyActive || isSelectionModeActive) {
             this.rootRef?.el?.focus();

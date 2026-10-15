@@ -3,7 +3,7 @@
     <t t-name="documents.SelectAddDocumentCreateDialog"
         t-inherit="web.SelectCreateDialog" t-inherit-mode="primary">
 
-        <xpath expr="//t[@t-if='props.multiSelect']" position="replace"/>
+        <xpath expr="//t[@t-if='this.props.multiSelect' or @t-if='props.multiSelect']" position="replace"/>
         <xpath expr="//Dialog" position="attributes">
             <attribute name="size">"xl"</attribute>
         </xpath>

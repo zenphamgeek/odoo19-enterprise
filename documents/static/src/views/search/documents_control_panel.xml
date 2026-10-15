@@ -2,10 +2,23 @@
 <templates xml:space="preserve">
 
     <t t-name="documents.ControlPanel" t-inherit="web.ControlPanel" t-inherit-mode="primary">
+        <xpath expr="//div[hasclass('o_control_panel_breadcrumbs')]" position="attributes">
+            <attribute name="class" add="min-w-0 overflow-hidden" separator=" "/>
+        </xpath>
         <xpath expr="//t[@t-else='']/Breadcrumbs" position="replace">
-            <DocumentsBreadcrumbs breadcrumbs="pathBreadcrumbs"/>
+            <DocumentsBreadcrumbs breadcrumbs="pathBreadcrumbs">
+                <t t-set-slot="breadcrumb-status-indicator">
+                    <t t-call-slot="control-panel-status-indicator" />
+                </t>
+                <t t-set-slot="breadcrumb-additional-actions">
+                    <t t-call-slot="control-panel-additional-actions"/>
+                </t>
+            </DocumentsBreadcrumbs>
         </xpath>
 
+        <xpath expr="//div[hasclass('o_control_panel_actions')]" position="attributes">
+            <attribute name="class" add="flex-shrink-0 text-nowrap" separator=" "/>
+        </xpath>
         <xpath expr="//div[hasclass('o_control_panel_actions')]" position="inside">
             <DocumentsAction t-if="showActions" folderId="currentFolderId" targetRecords="this.env.model.root.selection"/>
         </xpath>

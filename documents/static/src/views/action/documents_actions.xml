@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="documents.DocumentsAction">
-        <div t-if="props.targetRecords.length" class="btn-group mt-1 mt-sm-0 d-empty-none">
+        <div t-if="props.targetRecords.length" class="btn-group mt-1 mt-sm-0 d-empty-none flex-nowrap">
             <ActionMenus t-if="props.isPreview and state.actionMenuProps" t-props="state.actionMenuProps"/>
-            <div t-if="!ui.isSmall and topbarActions.length" class="d-flex flex-row flex-wrap btn-group d-none d-md-inline">
+            <div t-if="!ui.isSmall and topbarActions.length" class="d-inline-flex flex-row flex-nowrap btn-group d-none d-md-inline-flex">
                 <t t-set="firstEmbeddedActions"
                    t-value="props.folderId === 'TRASH' ? topbarActions.slice(0, 1) : topbarActions.slice(0, ui.isSmall ? 0 : this.visibleTopbarActions)"/>
                 <t t-set="lastEmbeddedActions"
                    t-value="props.folderId === 'TRASH' ? [] : topbarActions.slice(ui.isSmall ? 0 : this.visibleTopbarActions)"/>
-                <button t-foreach="firstEmbeddedActions" t-as="action" t-key="action_index" class="btn btn-secondary"
+                <button t-foreach="firstEmbeddedActions" t-as="action" t-key="action_index" class="btn btn-secondary text-nowrap"
                     t-on-click="() => action.callback()" t-esc="action.description" />
                 <div class="dropdown btn-group" t-if="lastEmbeddedActions?.length">
                     <button class="btn btn-secondary o_dropdown_title dropdown-toggle" type="button"

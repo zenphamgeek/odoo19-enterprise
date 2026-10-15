@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="documents.FileViewer" t-inherit="web.FileViewer" t-inherit-mode="primary">
+        <xpath expr="//div[hasclass('d-flex')][hasclass('justify-content-center')]" position="attributes">
+            <attribute name="class" add="w-100 h-100" separator=" "/>
+        </xpath>
+        <xpath expr="//div[hasclass('o-FileViewer')]" position="attributes">
+            <attribute name="class" add="z-1" separator=" "/>
+        </xpath>
         <xpath expr="//div[hasclass('o-FileViewer-download')]" position="before">
             <div t-attf-class="d-flex align-items-center flex-shrink-0 {{env.isSmall ? 'pe-2' : 'pe-4'}}">
                 <DocumentsAction folderId="folderId" targetRecords="[previewed.document?.record]" isPreview="true"/>
@@ -13,21 +19,21 @@
         <xpath expr="//div[hasclass('o-FileViewer-navigation')][@aria-label='Next']" position="attributes">
             <attribute name="class" add="bg-dark" separator=" "/>
         </xpath>
-        <xpath expr="//span[hasclass('oi-chevron-left')]" position="attributes">
+        <xpath expr="//span[@data-icon='chevron_backward']" position="attributes">
             <attribute name="class" add="pe-1 text-white" separator=" "/>
         </xpath>
-        <xpath expr="//span[hasclass('oi-chevron-right')]" position="attributes">
+        <xpath expr="//span[@data-icon='chevron_forward']" position="attributes">
             <attribute name="class" add="ps-1 text-white" separator=" "/>
         </xpath>
         <xpath expr="//div[hasclass('o-FileViewer-main')]" position="inside">
-            <t t-if="state.file.documentEmailContent">
+            <t t-if="this.state.file.documentEmailContent">
                 <div class="position-absolute top-50 start-50 text-muted opacity-25 fs-1 o_documents_watermark_file_viewer">EMAIL</div>
-                <iframe class="o-FileViewer-view o-isText o_text w-75 h-100 border-0" t-att-srcdoc="state.file.documentEmailContent" sandbox=""/>
+                <iframe class="o-FileViewer-view o-isText o_text w-75 h-100 border-0" t-att-srcdoc="this.state.file.documentEmailContent" sandbox="" referrerpolicy="no-referrer"/>
             </t>
         </xpath>
-        <xpath expr="//iframe[@t-if='state.file.isText']" position="replace">
-            <iframe t-if="state.file.isJson || state.file.isHtml" class="o-FileViewer-view o-isText o_text w-75 h-100 border-0" t-att-src="state.file.defaultSource" sandbox=""/>
-            <iframe t-elif="state.file.isMimetypeTextual" class="o-FileViewer-view o-isText o_text w-75 h-100 border-0" t-att-srcdoc="state.file.documentTextContent" sandbox=""/>
+        <xpath expr="//iframe[@t-if='this.state.file.isText']" position="replace">
+            <iframe t-if="this.state.file.isJson || this.state.file.isHtml" class="o-FileViewer-view o-isText o_text w-75 h-100 border-0" t-att-src="this.state.file.defaultSource" sandbox="" referrerpolicy="no-referrer"/>
+            <iframe t-elif="this.state.file.isMimetypeTextual" class="o-FileViewer-view o-isText o_text w-75 h-100 border-0" t-att-srcdoc="this.state.file.documentTextContent" sandbox="" referrerpolicy="no-referrer"/>
         </xpath>
     </t>
 </templates>

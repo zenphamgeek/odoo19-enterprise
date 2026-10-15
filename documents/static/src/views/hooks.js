@@ -268,7 +268,9 @@ export function useDocumentView(helpers) {
                 await documentService.openSharingDialog([rec.resId]);
             } else {
                 const folder = env.searchModel.getSelectedFolder();
-                await documentService.openSharingDialog([folder.id]);
+                if (folder && typeof folder.id === "number" && Number.isInteger(folder.id) && folder.id > 0) {
+                    await documentService.openSharingDialog([folder.id]);
+                }
             }
         },
     };

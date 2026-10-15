@@ -1,12 +1,22 @@
 import { useCommand } from "@web/core/commands/command_hook";
 import { _t } from "@web/core/l10n/translation";
 import { useService, useBus } from "@web/core/utils/hooks";
-import { onWillRender, onWillUpdateProps, useComponent, useEffect, useState } from "@odoo/owl";
+import { onWillRender, onWillUpdateProps, useComponent, useEffect, useProps, useState } from "@odoo/owl";
 
 export const DocumentsRendererMixin = (component) =>
     class extends component {
         setup() {
             super.setup();
+            const extraProps = useProps(["previewStore"]);
+            const previewStoreDesc = Object.getOwnPropertyDescriptor(extraProps, "previewStore");
+            if (
+                previewStoreDesc &&
+                this.props &&
+                !Object.isFrozen(this.props) &&
+                Object.isExtensible(this.props)
+            ) {
+                Object.defineProperty(this.props, "previewStore", previewStoreDesc);
+            }
             this.documentService = useService("document.document");
 
             this.documentService.focusRecord(this.selection?.[0] || this.getContainerRecord(), true);

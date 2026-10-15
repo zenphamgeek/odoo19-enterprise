@@ -277,4 +277,51 @@ export const DocumentsControllerMixin = (component) =>
                 !!this.targetRecords.find((r) => r.id === this.rightPanelState.focusedRecord.id);
             return !previewing && (!focusing || focusedSelected);
         }
+
+        onClickDocumentsUpload() {
+            this.uploadFileInputRef?.el?.click();
+        }
+
+        async onShareFolder() {
+            const folder = this.env.searchModel.getSelectedFolder();
+            if (folder && typeof folder.id === "number" && Number.isInteger(folder.id) && folder.id > 0) {
+                return this.documentService.openSharingDialog([folder.id]);
+            }
+        }
+
+        async onClickShareDomain() {
+            if (this.targetRecords.length > 0) {
+                return this.model.onShare();
+            }
+            const folder = this.env.searchModel.getSelectedFolder();
+            if (folder && typeof folder.id === "number" && Number.isInteger(folder.id) && folder.id > 0) {
+                return this.onShareFolder();
+            }
+        }
+
+        async onDownloadSelected() {
+            if (this.targetRecords.length > 0) {
+                return this.model.onDownload();
+            }
+            const folder = this.env.searchModel.getSelectedFolder();
+            if (folder && typeof folder.id === "number" && folder.access_token) {
+                return this.actionService.doAction({
+                    type: "ir.actions.act_url",
+                    url: `/documents/content/${encodeURIComponent(folder.access_token)}`,
+                });
+            }
+            const records = (this.model.root.records || []).filter((r) => !r.isRequest());
+            if (records.length > 0) {
+                return this.documentService.downloadDocuments(records);
+            }
+        }
+
+        async onExportSelected() {
+            if (typeof this.onDirectExportData === "function") {
+                return this.onDirectExportData();
+            }
+            if (typeof this.exportRecords === "function") {
+                return this.exportRecords();
+            }
+        }
     };
