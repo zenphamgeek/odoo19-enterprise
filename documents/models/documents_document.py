@@ -927,16 +927,17 @@ class DocumentsDocument(models.Model):
         return super()._field_to_sql(alias_str, fname, query)
 
     def _order_field_to_sql(self, alias, field_name, direction, nulls, query=None):
+        alias_str = alias._alias if hasattr(alias, '_alias') else alias
         if field_name == 'last_access_date_group':
             sql_field = SQL(
                 "SELECT last_access_date FROM documents_access WHERE partner_id = %s AND document_id = %s",
                 self.env.user.partner_id.id,
-                SQL.identifier(alias, 'id')
+                SQL.identifier(alias_str, 'id')
             )
             return SQL("(%s) %s %s", sql_field, direction, nulls)
 
         if field_name == 'is_folder':
-            sql_field = SQL("%s != 'folder'", SQL.identifier(alias, 'type'))
+            sql_field = SQL("%s != 'folder'", SQL.identifier(alias_str, 'type'))
             return SQL("(%s) %s %s", sql_field, direction, nulls)
 
         return super()._order_field_to_sql(alias, field_name, direction, nulls)
