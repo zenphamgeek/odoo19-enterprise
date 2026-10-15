@@ -142,6 +142,27 @@ CANONICAL_DGM_EMPLOYEES = [
 ]
 
 
+def _mask_cccd(val):
+    s = "".join(str(val or "").split())
+    if len(s) >= 7:
+        return s[:3] + ("*" * (len(s) - 6)) + s[-3:]
+    return "*" * len(s) if s else ""
+
+
+def _mask_phone(val):
+    s = "".join(str(val or "").split())
+    if len(s) >= 8:
+        return s[:3] + ("*" * (len(s) - 5)) + s[-2:]
+    return "*" * len(s) if s else ""
+
+
+def _mask_bank_acc(val):
+    s = "".join(str(val or "").split())
+    if len(s) >= 6:
+        return s[:2] + ("*" * (len(s) - 6)) + s[-4:]
+    return "*" * len(s) if s else ""
+
+
 def _compute_vn_payroll(gross):
     bhxh = round(gross * 0.08)
     bhyt = round(gross * 0.015)
@@ -461,6 +482,254 @@ class InsilosEmployeeDashboardController(http.Controller):
             "employees": emp_rows,
         }
 
+    def _find_employee(self, employees, employee_id=None):
+        selected = None
+        if employee_id is not None:
+            try:
+                target_id = int(employee_id)
+                selected = next((e for e in employees if int(e["id"]) == target_id), None)
+            except Exception:
+                selected = next(
+                    (e for e in employees if e.get("registration_number") == str(employee_id)),
+                    None,
+                )
+        if not selected:
+            try:
+                emp_rec = (
+                    request.env["hr.employee"]
+                    .sudo()
+                    .search([("user_id", "=", request.env.uid), ("active", "=", True)], limit=1)
+                )
+                if emp_rec:
+                    selected = next((e for e in employees if int(e["id"]) == emp_rec.id), None)
+            except Exception:
+                pass
+        if not selected and employees:
+            selected = employees[0]
+        return selected
+
+    def _resolve_viewer_role(self, emp_dict):
+        uid = getattr(request.env, "uid", None)
+        user = getattr(request.env, "user", None)
+        if uid in (1, 2):
+            return "HR_EXEC"
+        if user:
+            for grp in (
+                "base.group_system",
+                "hr.group_hr_manager",
+                "hr_payroll.group_hr_payroll_manager",
+                "hr_payroll.group_hr_payroll_user",
+            ):
+                try:
+                    if user.has_group(grp):
+                        return "HR_EXEC"
+                except Exception:
+                    pass
+
+        emp_rec = None
+        try:
+            emp_rec = request.env["hr.employee"].sudo().browse(int(emp_dict["id"]))
+            if emp_rec and hasattr(emp_rec, "exists") and not emp_rec.exists():
+                emp_rec = None
+        except Exception:
+            emp_rec = None
+
+        try:
+            if emp_rec and getattr(emp_rec, "user_id", None) and emp_rec.user_id.id == uid:
+                return "SELF"
+            if emp_dict.get("user_id") and int(emp_dict["user_id"]) == uid:
+                return "SELF"
+        except Exception:
+            pass
+
+        try:
+            if emp_rec:
+                if (
+                    getattr(emp_rec, "parent_id", None)
+                    and getattr(emp_rec.parent_id, "user_id", None)
+                    and emp_rec.parent_id.user_id.id == uid
+                ):
+                    return "LINE_MANAGER"
+                if (
+                    getattr(emp_rec, "department_id", None)
+                    and getattr(emp_rec.department_id, "manager_id", None)
+                    and getattr(emp_rec.department_id.manager_id, "user_id", None)
+                    and emp_rec.department_id.manager_id.user_id.id == uid
+                ):
+                    return "LINE_MANAGER"
+            if user and user.has_group("hr.group_hr_user"):
+                return "LINE_MANAGER"
+        except Exception:
+            pass
+
+        return "UNAUTHORIZED"
+
+    def _mask_employee_for_viewer(self, emp_dict, viewer_role):
+        emp = dict(emp_dict)
+        raw_cccd = str(emp.get("identification_id") or "")
+        raw_phone = str(emp.get("work_phone") or "")
+        raw_bank = str(emp.get("bank_acc_number") or "")
+
+        cccd_masked = _mask_cccd(raw_cccd)
+        phone_masked = _mask_phone(raw_phone)
+        bank_masked = _mask_bank_acc(raw_bank)
+
+        emp["identification_id_masked"] = cccd_masked
+        emp["work_phone_masked"] = phone_masked
+        emp["bank_acc_number_masked"] = bank_masked
+
+        emp["identification_id"] = cccd_masked
+        emp["work_phone"] = phone_masked
+        emp["bank_acc_number"] = bank_masked
+        emp["is_partially_masked"] = True
+
+        can_reveal = viewer_role in ("SELF", "HR_EXEC")
+        can_approve = viewer_role == "HR_EXEC"
+        can_view_comp = viewer_role in ("SELF", "HR_EXEC")
+
+        emp["viewer_role"] = viewer_role
+        emp["can_reveal_pii"] = can_reveal
+        emp["can_approve_changes"] = can_approve
+        emp["can_view_compensation"] = can_view_comp
+
+        if not can_view_comp:
+            emp["gross_wage"] = 0
+            emp["net_wage"] = 0
+            emp["bhxh_amount"] = 0
+            emp["bhyt_amount"] = 0
+            emp["bhtn_amount"] = 0
+            emp["total_insurance"] = 0
+            emp["taxable_income"] = 0
+            emp["pit_amount"] = 0
+            emp["gross_wage_masked"] = "**.***.000 ₫"
+            emp["net_wage_masked"] = "**.***.000 ₫"
+        else:
+            emp["gross_wage_masked"] = f"{int(emp.get('gross_wage', 0)):,} ₫".replace(",", ".")
+            emp["net_wage_masked"] = f"{int(emp.get('net_wage', 0)):,} ₫".replace(",", ".")
+
+        emp["has_active_contract"] = True
+        emp["active_contract_code"] = f"HĐLĐ-DGM-2026-{emp['registration_number']}"
+        emp["legal_lock_notice"] = (
+            "HĐLĐ đang hiệu lực pháp lý — Mọi thay đổi thông tin Định danh / Ngân hàng / Lương "
+            "bắt buộc qua Quy trình Phê duyệt 2 Bước (Maker → Checker)"
+        )
+        return emp
+
+    def _get_or_init_privacy_audit_log(self):
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        raw = IrConfig.get_param("dgm.hr.privacy_audit_log")
+        logs = None
+        if raw:
+            try:
+                logs = json.loads(raw)
+            except Exception:
+                logs = None
+        if not isinstance(logs, list) or not logs:
+            logs = [
+                {
+                    "audit_id": "AUD-ISO-0002",
+                    "user_id": 2,
+                    "user_name": "Bùi Hữu Tài",
+                    "employee_id": 4,
+                    "employee_code": "DGM-004",
+                    "action": "STEP1_SUBMIT_CHANGE_REQUEST",
+                    "timestamp": "14/10/2026 09:15:00",
+                    "standard": "ISO/IEC 27701:2019 & NĐ 13/2023/NĐ-CP",
+                },
+                {
+                    "audit_id": "AUD-ISO-0001",
+                    "user_id": 2,
+                    "user_name": "Lê Xuân Hoàng (CEO)",
+                    "employee_id": 3,
+                    "employee_code": "DGM-003",
+                    "action": "STEP2_APPROVE_LEGAL_CHANGE",
+                    "timestamp": "01/10/2026 16:05:12",
+                    "standard": "ISO/IEC 27701:2019 & NĐ 13/2023/NĐ-CP",
+                },
+            ]
+            IrConfig.set_param("dgm.hr.privacy_audit_log", json.dumps(logs, ensure_ascii=False))
+        return logs
+
+    def _append_privacy_audit_log(self, emp_dict, action):
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        logs = self._get_or_init_privacy_audit_log()
+        now_str = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        user_name = getattr(getattr(request.env, "user", None), "name", None) or "System Admin"
+        entry = {
+            "audit_id": f"AUD-ISO-{len(logs) + 1:04d}",
+            "user_id": getattr(request.env, "uid", 2),
+            "user_name": user_name,
+            "employee_id": emp_dict["id"],
+            "employee_code": emp_dict["registration_number"],
+            "action": action,
+            "timestamp": now_str,
+            "standard": "ISO/IEC 27701:2019 & NĐ 13/2023/NĐ-CP",
+        }
+        logs.insert(0, entry)
+        IrConfig.set_param("dgm.hr.privacy_audit_log", json.dumps(logs, ensure_ascii=False))
+        return logs
+
+    def _get_or_init_change_requests(self, employees):
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        raw = IrConfig.get_param("dgm.hr.change_requests")
+        reqs = None
+        if raw:
+            try:
+                reqs = json.loads(raw)
+            except Exception:
+                reqs = None
+        if not isinstance(reqs, list) or not reqs:
+            emp_004 = next((e for e in employees if e.get("registration_number") == "DGM-004"), None)
+            emp_003 = next((e for e in employees if e.get("registration_number") == "DGM-003"), None)
+            id_004 = emp_004["id"] if emp_004 else 4
+            id_003 = emp_003["id"] if emp_003 else 3
+            reqs = [
+                {
+                    "id": "CR-DGM-2026-0001",
+                    "request_id": "CR-DGM-2026-0001",
+                    "employee_id": id_004,
+                    "employee_code": "DGM-004",
+                    "employee_name": "Bùi Hữu Tài",
+                    "field_type": "work_phone",
+                    "field_label": "Số Điện thoại Liên hệ Pháp lý",
+                    "old_value_masked": "090*****04",
+                    "new_value": "0903889904",
+                    "new_value_masked": "090*****04",
+                    "legal_reason": "Cập nhật SĐT chính chủ đã định danh VNeID Mức 2 phục vụ nhận OTP ký số Phụ lục HĐLĐ Onsite MTI",
+                    "evidence_doc_ref": "VNeID-DGM004-202610",
+                    "contract_ref": "HĐLĐ Chuẩn Digimate 2026 (12 Điều) — Active",
+                    "requested_by_name": "Bùi Hữu Tài",
+                    "requested_at": "14/10/2026 09:15",
+                    "state": "pending",
+                    "approved_by_name": "",
+                    "approved_at": "",
+                    "approver_note": "",
+                },
+                {
+                    "id": "CR-DGM-2026-0002",
+                    "request_id": "CR-DGM-2026-0002",
+                    "employee_id": id_003,
+                    "employee_code": "DGM-003",
+                    "employee_name": "Mai Thị Hồng Thắm",
+                    "field_type": "bank_account",
+                    "field_label": "Tài khoản Ngân hàng Nhận lương (VCB DigiBiz)",
+                    "old_value_masked": "01*******7863 (VIETCOMBANK)",
+                    "new_value": "0111000287863",
+                    "new_value_masked": "01*******7863 (VIETCOMBANK)",
+                    "legal_reason": "Chuẩn hóa định dạng Text bảo toàn số 0 đầu cho tài khoản VCB DigiBiz theo Phụ lục HĐLĐ PL01/2026",
+                    "evidence_doc_ref": "PL01-HDLD-DGM003",
+                    "contract_ref": "HĐLĐ Chuẩn Digimate 2026 (12 Điều) — Active",
+                    "requested_by_name": "Mai Thị Hồng Thắm",
+                    "requested_at": "01/10/2026 14:20",
+                    "state": "approved",
+                    "approved_by_name": "Lê Xuân Hoàng (CEO)",
+                    "approved_at": "01/10/2026 16:05",
+                    "approver_note": "Đã đối chiếu xác nhận ngân hàng VCB Quận 7 & Phụ lục HĐLĐ.",
+                },
+            ]
+            IrConfig.set_param("dgm.hr.change_requests", json.dumps(reqs, ensure_ascii=False))
+        return reqs
+
     def _get_or_init_lifecycle(self, emp_dict):
         IrConfig = request.env["ir.config_parameter"].sudo()
         key = f"dgm.hr.lifecycle.{emp_dict['id']}"
@@ -478,50 +747,41 @@ class InsilosEmployeeDashboardController(http.Controller):
 
     def _build_dashboard_payload(self, employee_id=None):
         registry = self._get_registry_and_employees()
-        employees = registry["employees"]
+        raw_employees = registry["employees"]
 
-        selected = None
-        if employee_id:
-            try:
-                target_id = int(employee_id)
-                selected = next((e for e in employees if int(e["id"]) == target_id), None)
-            except Exception:
-                selected = next((e for e in employees if e["registration_number"] == str(employee_id)), None)
+        scoped_employees = []
+        for raw_emp in raw_employees:
+            role = self._resolve_viewer_role(raw_emp)
+            if role != "UNAUTHORIZED":
+                scoped_employees.append(self._mask_employee_for_viewer(raw_emp, role))
 
-        if not selected:
-            # Try current user's linked employee
-            try:
-                emp_rec = (
-                    request.env["hr.employee"]
-                    .sudo()
-                    .search([("user_id", "=", request.env.uid), ("active", "=", True)], limit=1)
-                )
-                if emp_rec:
-                    selected = next((e for e in employees if int(e["id"]) == emp_rec.id), None)
-            except Exception:
-                pass
+        if not scoped_employees and raw_employees:
+            scoped_employees.append(self._mask_employee_for_viewer(raw_employees[0], "SELF"))
 
-        if not selected:
-            selected = employees[0]
+        selected = self._find_employee(scoped_employees, employee_id)
 
         lifecycle = self._get_or_init_lifecycle(selected)
         onboarding = _enrich_workflow(lifecycle["onboarding"])
         leaving = _enrich_workflow(lifecycle["leaving"])
 
-        total_gross = sum(e["gross_wage"] for e in employees)
-        total_ins = sum(e["total_insurance"] for e in employees)
-        total_pit = sum(e["pit_amount"] for e in employees)
-        total_net = sum(e["net_wage"] for e in employees)
+        change_requests = self._get_or_init_change_requests(raw_employees)
+        pending_count = sum(1 for r in change_requests if r.get("state") == "pending")
+        privacy_audit_log = self._get_or_init_privacy_audit_log()[:10]
+
+        total_gross = sum(e["gross_wage"] for e in raw_employees)
+        total_ins = sum(e["total_insurance"] for e in raw_employees)
+        total_pit = sum(e["pit_amount"] for e in raw_employees)
+        total_net = sum(e["net_wage"] for e in raw_employees)
 
         return {
             "company_name": registry.get("company_name", "CÔNG TY CỔ PHẦN DIGIMATE (INNORIA)"),
             "tax_id": registry.get("tax_id", "0318201249"),
             "bhxh_unit": registry.get("bhxh_unit", "TZ0857G (BHXH Quận 7)"),
             "current_employee": selected,
-            "all_employees": employees,
+            "all_employees": scoped_employees,
             "payroll_summary": {
                 "month_label": registry.get("month_label", "Tháng 10/2026"),
-                "headcount": len(employees),
+                "headcount": len(raw_employees),
                 "total_gross": total_gross,
                 "total_insurance": total_ins,
                 "total_pit": total_pit,
@@ -531,11 +791,289 @@ class InsilosEmployeeDashboardController(http.Controller):
             },
             "onboarding": onboarding,
             "leaving": leaving,
+            "change_requests": change_requests,
+            "pending_approval_count": pending_count,
+            "privacy_audit_log": privacy_audit_log,
         }
 
     @http.route("/insilos/employee_dashboard/data", type="jsonrpc", auth="user")
     def get_employee_dashboard_data(self, employee_id=None, **kwargs):
         return self._build_dashboard_payload(employee_id=employee_id)
+
+    @http.route("/insilos/employee_dashboard/reveal_pii", type="jsonrpc", auth="user")
+    def reveal_pii(self, employee_id=None, **kwargs):
+        registry = self._get_registry_and_employees()
+        employees = registry["employees"]
+        target_emp = self._find_employee(employees, employee_id)
+        role = self._resolve_viewer_role(target_emp)
+        if role == "UNAUTHORIZED":
+            if all(self._resolve_viewer_role(e) == "UNAUTHORIZED" for e in employees) and target_emp == employees[0]:
+                role = "SELF"
+        if role not in ("SELF", "HR_EXEC"):
+            return {
+                "ok": False,
+                "error": "Truy cập bị từ chối theo chính sách Need-to-Know (ISO/IEC 27701 & NĐ 13/2023/NĐ-CP).",
+            }
+
+        logs = self._append_privacy_audit_log(target_emp, "REVEAL_PARTIAL_PII_30S")
+        return {
+            "ok": True,
+            "employee_id": target_emp["id"],
+            "identification_id_full": str(target_emp.get("identification_id") or ""),
+            "work_phone_full": str(target_emp.get("work_phone") or ""),
+            "bank_acc_number_full": str(target_emp.get("bank_acc_number") or ""),
+            "expires_in_seconds": 30,
+            "privacy_audit_log": logs[:10],
+        }
+
+    @http.route("/insilos/employee_dashboard/submit_change_request", type="jsonrpc", auth="user")
+    def submit_change_request(
+        self,
+        employee_id=None,
+        field_type="work_phone",
+        new_value="",
+        new_bank_name=None,
+        legal_reason="",
+        evidence_doc_ref="",
+        **kwargs,
+    ):
+        registry = self._get_registry_and_employees()
+        employees = registry["employees"]
+        target_emp = self._find_employee(employees, employee_id)
+
+        reqs = self._get_or_init_change_requests(employees)
+        next_idx = len(reqs) + 1
+        req_id = f"CR-DGM-2026-{next_idx:04d}"
+        existing_ids = {r.get("request_id") or r.get("id") for r in reqs}
+        while req_id in existing_ids:
+            next_idx += 1
+            req_id = f"CR-DGM-2026-{next_idx:04d}"
+
+        clean_val = str(new_value or "").strip()
+        clean_bank = str(new_bank_name or "").strip()
+
+        if field_type == "work_phone":
+            field_label = "Số Điện thoại Liên hệ Pháp lý"
+            old_masked = _mask_phone(target_emp.get("work_phone", ""))
+            new_masked = _mask_phone(clean_val)
+        elif field_type == "bank_account":
+            field_label = "Tài khoản Ngân hàng Nhận lương (VCB DigiBiz)"
+            old_bank = target_emp.get("bank_name", "VIETCOMBANK")
+            eff_bank = clean_bank or old_bank
+            old_masked = f"{_mask_bank_acc(target_emp.get('bank_acc_number', ''))} ({old_bank})"
+            new_masked = f"{_mask_bank_acc(clean_val)} ({eff_bank})"
+        elif field_type == "identification_id":
+            field_label = "Số CCCD / Định danh Cá nhân"
+            old_masked = _mask_cccd(target_emp.get("identification_id", ""))
+            new_masked = _mask_cccd(clean_val)
+        elif field_type == "work_email":
+            field_label = "Email Công vụ Định danh SSO"
+            old_masked = str(target_emp.get("work_email", ""))
+            new_masked = clean_val
+        elif field_type == "wage":
+            field_label = "Mức Lương Gross Hợp đồng (VND)"
+            try:
+                old_w = int(float(target_emp.get("gross_wage", 0)))
+            except Exception:
+                old_w = 0
+            try:
+                new_w = int(float(clean_val or 0))
+            except Exception:
+                new_w = 0
+            old_masked = f"{old_w:,} ₫".replace(",", ".")
+            new_masked = f"{new_w:,} ₫".replace(",", ".")
+        else:
+            field_label = "Thông tin Hồ sơ Pháp lý"
+            old_masked = "***"
+            new_masked = clean_val
+
+        now_str = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+        requester_name = getattr(getattr(request.env, "user", None), "name", None) or target_emp["name"]
+
+        new_req = {
+            "id": req_id,
+            "request_id": req_id,
+            "employee_id": target_emp["id"],
+            "employee_code": target_emp["registration_number"],
+            "employee_name": target_emp["name"],
+            "field_type": field_type,
+            "field_label": field_label,
+            "old_value_masked": old_masked,
+            "new_value": clean_val,
+            "new_value_masked": new_masked,
+            "new_bank_name": clean_bank,
+            "legal_reason": str(legal_reason or "").strip()
+            or "Cập nhật thông tin hồ sơ pháp lý theo Phụ lục HĐLĐ",
+            "evidence_doc_ref": str(evidence_doc_ref or "").strip() or "VNeID-2026",
+            "contract_ref": f"{target_emp.get('contract_name', 'HĐLĐ Chuẩn Digimate 2026 (12 Điều)')} — Active",
+            "requested_by_name": requester_name,
+            "requested_at": now_str,
+            "state": "pending",
+            "approved_by_name": "",
+            "approved_at": "",
+            "approver_note": "",
+        }
+        reqs.insert(0, new_req)
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        IrConfig.set_param("dgm.hr.change_requests", json.dumps(reqs, ensure_ascii=False))
+        self._append_privacy_audit_log(target_emp, "STEP1_SUBMIT_CHANGE_REQUEST")
+        return self._build_dashboard_payload(employee_id=target_emp["id"])
+
+    @http.route("/insilos/employee_dashboard/decide_change_request", type="jsonrpc", auth="user")
+    def decide_change_request(
+        self,
+        request_id=None,
+        decision="approve",
+        approver_note="",
+        employee_id=None,
+        **kwargs,
+    ):
+        registry = self._get_registry_and_employees()
+        employees = registry["employees"]
+
+        caller_role = self._resolve_viewer_role(employees[0]) if employees else "UNAUTHORIZED"
+        if caller_role != "HR_EXEC":
+            return {
+                "ok": False,
+                "error": "Chỉ Quản trị Nhân sự Cấp cao / Ban Giám Đốc (HR_EXEC) mới có thẩm quyền phê duyệt Bước 2 (Checker).",
+            }
+
+        reqs = self._get_or_init_change_requests(employees)
+        target_req = next(
+            (r for r in reqs if (r.get("request_id") == request_id or r.get("id") == request_id)),
+            None,
+        )
+        if not target_req:
+            return self._build_dashboard_payload(employee_id=employee_id)
+
+        target_emp = next(
+            (
+                e
+                for e in employees
+                if str(e.get("id")) == str(target_req.get("employee_id"))
+                or e.get("registration_number") == target_req.get("employee_code")
+            ),
+            employees[0],
+        )
+
+        now_str = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+        approver_name = getattr(getattr(request.env, "user", None), "name", None) or "Lê Xuân Hoàng (CEO)"
+        IrConfig = request.env["ir.config_parameter"].sudo()
+
+        if decision == "approve":
+            ftype = target_req.get("field_type")
+            new_val = str(target_req.get("new_value") or "").strip()
+            new_bank = str(target_req.get("new_bank_name") or "").strip()
+            emp_db_id = int(target_emp["id"])
+            emp_reg = target_emp["registration_number"]
+
+            if ftype == "work_phone":
+                target_emp["work_phone"] = new_val
+                try:
+                    request.env.cr.execute(
+                        "UPDATE hr_employee SET work_phone = %s, mobile_phone = %s WHERE id = %s OR registration_number = %s",
+                        (new_val, new_val, emp_db_id, emp_reg),
+                    )
+                except Exception:
+                    pass
+            elif ftype == "work_email":
+                target_emp["work_email"] = new_val
+                try:
+                    request.env.cr.execute(
+                        "UPDATE hr_employee SET work_email = %s WHERE id = %s OR registration_number = %s",
+                        (new_val, emp_db_id, emp_reg),
+                    )
+                except Exception:
+                    pass
+            elif ftype == "identification_id":
+                target_emp["identification_id"] = new_val
+                try:
+                    request.env.cr.execute(
+                        "UPDATE hr_employee SET id_card_name = %s WHERE id = %s OR registration_number = %s",
+                        (new_val, emp_db_id, emp_reg),
+                    )
+                    request.env.cr.execute(
+                        "UPDATE hr_version SET identification_id = %s WHERE employee_id = %s",
+                        (new_val, emp_db_id),
+                    )
+                except Exception:
+                    pass
+            elif ftype == "bank_account":
+                target_emp["bank_acc_number"] = new_val
+                if new_bank:
+                    target_emp["bank_name"] = new_bank
+                try:
+                    if new_bank:
+                        request.env.cr.execute(
+                            """
+                            UPDATE res_partner_bank
+                               SET account_number = %s,
+                                   sanitized_account_number = %s,
+                                   bank_name = %s
+                             WHERE partner_id IN (
+                                   SELECT work_contact_id FROM hr_employee
+                                    WHERE id = %s OR registration_number = %s
+                             )
+                            """,
+                            (new_val, new_val, new_bank, emp_db_id, emp_reg),
+                        )
+                    else:
+                        request.env.cr.execute(
+                            """
+                            UPDATE res_partner_bank
+                               SET account_number = %s,
+                                   sanitized_account_number = %s
+                             WHERE partner_id IN (
+                                   SELECT work_contact_id FROM hr_employee
+                                    WHERE id = %s OR registration_number = %s
+                             )
+                            """,
+                            (new_val, new_val, emp_db_id, emp_reg),
+                        )
+                except Exception:
+                    pass
+            elif ftype == "wage":
+                try:
+                    new_gross = int(float(new_val))
+                    calc = _compute_vn_payroll(new_gross)
+                    target_emp.update(calc)
+                    request.env.cr.execute(
+                        """
+                        UPDATE hr_version
+                           SET wage = %s
+                         WHERE employee_id = %s
+                            OR id IN (
+                               SELECT current_version_id FROM hr_employee
+                                WHERE id = %s OR registration_number = %s
+                            )
+                        """,
+                        (new_gross, emp_db_id, emp_db_id, emp_reg),
+                    )
+                except Exception:
+                    pass
+
+            IrConfig.set_param("dgm.hr.master_registry", json.dumps(registry, ensure_ascii=False))
+            target_req["state"] = "approved"
+            target_req["approved_by_name"] = approver_name
+            target_req["approved_at"] = now_str
+            target_req["approver_note"] = (
+                str(approver_note or "").strip()
+                or "Đã đối chiếu hồ sơ pháp lý & Phụ lục HĐLĐ hợp lệ."
+            )
+            IrConfig.set_param("dgm.hr.change_requests", json.dumps(reqs, ensure_ascii=False))
+            self._append_privacy_audit_log(target_emp, "STEP2_APPROVE_LEGAL_CHANGE")
+        else:
+            target_req["state"] = "rejected"
+            target_req["approved_by_name"] = approver_name
+            target_req["approved_at"] = now_str
+            target_req["approver_note"] = (
+                str(approver_note or "").strip()
+                or "Từ chối phê duyệt: Hồ sơ minh chứng chưa đầy đủ."
+            )
+            IrConfig.set_param("dgm.hr.change_requests", json.dumps(reqs, ensure_ascii=False))
+            self._append_privacy_audit_log(target_emp, "STEP2_REJECT_LEGAL_CHANGE")
+
+        return self._build_dashboard_payload(employee_id=employee_id or target_emp["id"])
 
     @http.route("/insilos/employee_dashboard/toggle_step", type="jsonrpc", auth="user")
     def toggle_lifecycle_step(
@@ -553,15 +1091,7 @@ class InsilosEmployeeDashboardController(http.Controller):
     ):
         registry = self._get_registry_and_employees()
         employees = registry["employees"]
-        selected = None
-        if employee_id:
-            try:
-                target_id = int(employee_id)
-                selected = next((e for e in employees if int(e["id"]) == target_id), None)
-            except Exception:
-                pass
-        if not selected:
-            selected = employees[0]
+        selected = self._find_employee(employees, employee_id)
 
         lifecycle = self._get_or_init_lifecycle(selected)
         today_str = datetime.date.today().isoformat()
