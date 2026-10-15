@@ -331,6 +331,24 @@ def _enrich_workflow(wf_block):
     return out
 
 
+FORMULA_INJECTION_PREFIXES = ('=', '+', '-', '@', '\t', '\r')
+
+
+def sanitize_excel_cell(val):
+    """Prevents CSV/XLSX DDE Command Injection (CWE-1236).
+    Prepends a single quote if the value begins with formula invocation tokens.
+    """
+    if val is None:
+        return ""
+    if isinstance(val, (int, float)):
+        return val
+    raw_str = str(val)
+    str_val = raw_str.strip()
+    if raw_str.startswith(FORMULA_INJECTION_PREFIXES) or str_val.startswith(FORMULA_INJECTION_PREFIXES):
+        return f"'{str_val}"
+    return str_val
+
+
 def _build_minimal_xlsx(headers, rows):
     """Pure-Python OpenXML (.xlsx) generator that preserves all cells as inline strings (`t="inlineStr"`)."""
     try:
@@ -344,15 +362,16 @@ def _build_minimal_xlsx(headers, rows):
         num_fmt = workbook.add_format({"num_format": "#,##0", "border": 1})
 
         for col_idx, h in enumerate(headers):
-            ws.write_string(0, col_idx, str(h), hdr_fmt)
-            ws.set_column(col_idx, col_idx, max(16, len(str(h)) + 4))
+            clean_h = str(sanitize_excel_cell(h))
+            ws.write_string(0, col_idx, clean_h, hdr_fmt)
+            ws.set_column(col_idx, col_idx, max(16, len(clean_h) + 4))
 
         for row_idx, r in enumerate(rows, start=1):
             for col_idx, val in enumerate(r):
                 if isinstance(val, (int, float)) and col_idx == 2:
                     ws.write_number(row_idx, col_idx, val, num_fmt)
                 else:
-                    ws.write_string(row_idx, col_idx, str(val if val is not None else ""), txt_fmt)
+                    ws.write_string(row_idx, col_idx, str(sanitize_excel_cell(val if val is not None else "")), txt_fmt)
         workbook.close()
         return output.getvalue()
     except Exception:
@@ -371,7 +390,7 @@ def _build_minimal_xlsx(headers, rows):
         cells_xml = []
         for c_idx, val in enumerate(r):
             ref = f"{col_letter(c_idx)}{r_idx}"
-            text_val = escape(str(val if val is not None else ""))
+            text_val = escape(str(sanitize_excel_cell(val if val is not None else "")))
             cells_xml.append(f'<c r="{ref}" t="inlineStr"><is><t>{text_val}</t></is></c>')
         sheet_rows_xml.append(f'<row r="{r_idx}">{"".join(cells_xml)}</row>')
 
@@ -1127,6 +1146,13 @@ class InsilosEmployeeDashboardController(http.Controller):
     def export_vcb_digibiz(self, **kwargs):
         registry = self._get_registry_and_employees()
         employees = registry["employees"]
+
+        caller_role = self._resolve_viewer_role(employees[0]) if employees else "UNAUTHORIZED"
+        if caller_role != "HR_EXEC":
+            return request.make_response(
+                "Unauthorized: Exporting VCB DigiBiz payroll requires HR/Payroll Manager privileges.",
+                status=403,
+            )
 
         headers = [
             "STT",

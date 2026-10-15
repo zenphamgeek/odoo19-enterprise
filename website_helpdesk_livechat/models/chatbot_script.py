@@ -20,15 +20,30 @@ class ChatbotScript(models.Model):
                 raise ValidationError(_('An "Email" step type must exist before the "Create Ticket" step for a ticket to be created.'))
 
     def _compute_ticket_count(self):
-        tickets_data = self.env['helpdesk.ticket'].with_context(active_test=False).sudo()._read_group(
-            [('source_id', 'in', self.source_id.ids)], ['source_id'], ['__count'])
-        mapped_tickets = {source.id: count for source, count in tickets_data}
-        for script in self:
-            script.ticket_count = mapped_tickets.get(script.source_id.id, 0)
+        Ticket = self.env['helpdesk.ticket'].with_context(active_test=False).sudo()
+        if 'utm_reference' in Ticket._fields:
+            refs = [f'{script._name},{script.id}' for script in self]
+            tickets_data = Ticket._read_group([('utm_reference', 'in', refs)], ['utm_reference'], ['__count'])
+            mapped_tickets = dict(tickets_data)
+            for script in self:
+                script.ticket_count = mapped_tickets.get(f'{script._name},{script.id}', 0)
+        elif 'source_id' in self._fields and 'source_id' in Ticket._fields:
+            tickets_data = Ticket._read_group(
+                [('source_id', 'in', self.source_id.ids)], ['source_id'], ['__count'])
+            mapped_tickets = {source.id: count for source, count in tickets_data}
+            for script in self:
+                script.ticket_count = mapped_tickets.get(script.source_id.id, 0)
+        else:
+            for script in self:
+                script.ticket_count = 0
 
     def action_view_tickets(self):
         self.ensure_one()
         action = self.env['ir.actions.act_window']._for_xml_id('helpdesk.helpdesk_ticket_action_main_tree')
-        action['domain'] = [('source_id', '=', self.source_id.id)]
+        Ticket = self.env['helpdesk.ticket']
+        if 'utm_reference' in Ticket._fields:
+            action['domain'] = [('utm_reference', '=', f'{self._name},{self.id}')]
+        elif 'source_id' in self._fields:
+            action['domain'] = [('source_id', '=', self.source_id.id)]
         action['context'] = {'create': False}
         return action

@@ -33,6 +33,7 @@ export function sanitizeErrorPayload(input) {
             .replace(/\b(Digest)\s+[a-zA-Z0-9_]+=(?:"[^"]*"|[^\s,;'"]+)(?:,\s*[a-zA-Z0-9_]+=(?:"[^"]*"|[^\s,;'"]+))*/gi, "$1 [REDACTED]")
             .replace(/\b(Bearer|Basic)\s+(?:[A-Za-z0-9\-._~+/]+=*|"[^"]*")/gi, "$1 [REDACTED]")
             .replace(/\b(sk-ant-api\d{2}-[a-zA-Z0-9_\-]{20,}|sk-(?:ant-[a-zA-Z0-9\-_]{20,}|[a-zA-Z0-9\-_]{20,})|AIzaSy[A-Za-z0-9\-_]{33}|AIza[0-9A-Za-z\-_]{30,40}|A[SK]IA[0-9A-Z]{16}|ghp_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9_]{20,})\b/g, "[REDACTED_API_KEY]")
+            .replace(/\beyJ[a-zA-Z0-9_\-]{10,}\.eyJ[a-zA-Z0-9_\-]{10,}\.[a-zA-Z0-9_\-]{10,}\b/g, "[REDACTED_JWT]")
             .replace(/-----BEGIN[ A-Z0-9_-]+KEY-----[\s\S]+?-----END[ A-Z0-9_-]+KEY-----/g, "[REDACTED_PRIVATE_KEY]")
             .replace(/((?:postgresql|postgres|mysql|redis|amqp|mongodb(?:\+srv)?|mssql|clickhouse):\/\/[^:\s\/]+:)[^@\s\/]+(@)/gi, "$1[REDACTED]$2")
             .replace(
@@ -47,6 +48,7 @@ export function sanitizeErrorPayload(input) {
             .replace(/(session_id|sid)=[^;&\s]+/gi, "$1=[REDACTED]")
             .replace(/\b(0[35789]\d)(\d{5})(\d{2})\b/g, "$1*****$3")
             .replace(/(?:\+84|84)[\s.-]?([35789]\d)[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?(\d{2})\b/g, "+84 $1 ***** $2")
+            .replace(/\(0([35789]\d)\)[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?(\d{2})\b/g, "0$1 ***** $2")
             .replace(/\b(0[35789]\d)[\s.-]\d{3}[\s.-]\d{2}[\s.-]?(\d{2})\b/g, "$1 ***** $2")
             .replace(/(?:\+84|0)(?:[35789])(?:[\s.-]\d){8}\b/g, "[REDACTED_PHONE]")
             .replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, "[REDACTED_EMAIL]");
@@ -156,6 +158,12 @@ patch(ErrorDialog.prototype, {
         if (!this.state || this.state.sharingError || this.state.sharingSuccess) {
             return;
         }
+        if (typeof navigator !== "undefined" && !navigator.onLine) {
+            console.warn("[Insilos] Network offline; suppressing runtime error telemetry dispatch.");
+            this.state.incidentCode = "ERR-OFFLINE";
+            this.state.sharingError = false;
+            return;
+        }
         this.state.sharingError = true;
 
         const errorName = this.props.data?.name || this.props.exceptionName || this.props.name || "ClientRuntimeError";
@@ -209,20 +217,27 @@ patch(ErrorDialog.prototype, {
 
             // Attempt 2: Direct fallback to central report endpoint if local relay failed and opted-in
             if (!reported && allowExternal) {
-                const directRes = await browser.fetch("https://report.insilos.com/api/v1/runtime-report", {
-                    method: "POST",
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(payload),
-                });
-                if (directRes.ok) {
-                    const directData = await directRes.json();
-                    const code = directData?.incident_code || directData?.result?.incident_code || "INC-DIRECT";
-                    this.state.incidentCode = code;
-                    this.state.sharingSuccess = true;
-                    reported = true;
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 1500);
+                try {
+                    const directRes = await browser.fetch("https://report.insilos.com/api/v1/runtime-report", {
+                        method: "POST",
+                        mode: "cors",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(payload),
+                        signal: controller.signal,
+                    });
+                    if (directRes.ok) {
+                        const directData = await directRes.json();
+                        const code = directData?.incident_code || directData?.result?.incident_code || "INC-DIRECT";
+                        this.state.incidentCode = code;
+                        this.state.sharingSuccess = true;
+                        reported = true;
+                    }
+                } finally {
+                    clearTimeout(timeoutId);
                 }
             }
 

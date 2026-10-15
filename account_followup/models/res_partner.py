@@ -382,6 +382,8 @@ class ResPartner(models.Model):
         self.env['res.partner'].flush_model()
         self.env['account_followup.followup.line'].flush_model()
         ResPartner = self.env['res.partner']
+        partner_table = ResPartner._table
+        aml_table = self.env['account.move.line']._table
         return f"""
             SELECT partner.id as partner_id,
                    ful.id as followup_line_id,
@@ -394,8 +396,8 @@ class ResPartner(models.Model):
                  {self.env.cr.mogrify(ResPartner._field_to_sql('partner', 'followup_next_action_date')).decode(self.env.cr.connection.encoding)} AS followup_next_action_date,
                  MAX(COALESCE(next_ful.delay, ful.delay)) as followup_delay,
                  SUM(aml.balance) as balance
-            FROM res_partner partner
-            JOIN account_move_line aml ON aml.partner_id = partner.id
+            FROM {partner_table} partner
+            JOIN {aml_table} aml ON aml.partner_id = partner.id
             JOIN account_account account ON account.id = aml.account_id
        LEFT JOIN account_followup_followup_line ful ON ful.id = aml.followup_line_id
        LEFT JOIN account_followup_followup_line next_ful ON next_ful.id = (
@@ -412,13 +414,13 @@ class ResPartner(models.Model):
              AND aml.reconciled IS NOT TRUE
              AND aml.company_id = ANY(%(company_ids)s)
              {"" if partner_ids is None else "AND aml.partner_id IN %(partner_ids)s"}
-        GROUP BY partner.id
+        GROUP BY partner.id, partner.followup_next_action_date
             ) partner
             LEFT JOIN account_followup_followup_line ful ON ful.delay = partner.followup_delay AND ful.company_id = %(company_id)s
             -- Get the followup status data
             LEFT OUTER JOIN LATERAL (
                 SELECT line.id
-                  FROM account_move_line line
+                  FROM {aml_table} line
                   JOIN account_account account ON line.account_id = account.id
              LEFT JOIN account_followup_followup_line ful ON ful.id = line.followup_line_id
                  WHERE line.partner_id = partner.id
@@ -436,7 +438,7 @@ class ResPartner(models.Model):
             ) in_need_of_action_aml ON true
             LEFT OUTER JOIN LATERAL (
                 SELECT line.id
-                  FROM account_move_line line
+                  FROM {aml_table} line
                   JOIN account_account account ON line.account_id = account.id
                  WHERE line.partner_id = partner.id
                    AND account.account_type = 'asset_receivable'

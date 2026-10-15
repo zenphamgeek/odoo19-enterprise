@@ -1,4 +1,4 @@
-from odoo import fields, models, api, _
+from odoo import fields, models, api, _, Command
 from odoo.exceptions import AccessError, ValidationError
 
 
@@ -13,10 +13,10 @@ class PosPrepDisplay(models.Model):
     category_ids = fields.Many2many('pos.category', string="Product categories", help="Product categories that will be displayed on this screen.")
     order_count = fields.Integer("Order count", compute='_compute_order_count')
     average_time = fields.Integer("Order average time", compute='_compute_order_count', help="Average time of all order that not in a done stage.")
-    stage_ids = fields.One2many('pos.prep.stage', 'prep_display_id', string="Stages", default=[
-        {'name': 'To prepare', 'color': '#6C757D', 'alert_timer': 10},
-        {'name': 'Ready', 'color': '#4D89D1', 'alert_timer': 5},
-        {'name': 'Completed', 'color': '#4ea82a', 'alert_timer': 0}
+    stage_ids = fields.One2many('pos.prep.stage', 'prep_display_id', string="Stages", default=lambda self: [
+        Command.create({'name': 'To prepare', 'color': '#6C757D', 'alert_timer': 10}),
+        Command.create({'name': 'Ready', 'color': '#4D89D1', 'alert_timer': 5}),
+        Command.create({'name': 'Completed', 'color': '#4ea82a', 'alert_timer': 0}),
     ])
     contains_bar_restaurant = fields.Boolean("Is a Bar/Restaurant", compute='_compute_contains_bar_restaurant', store=True)
     access_token = fields.Char("Access Token", default=lambda self: self._ensure_access_token())
