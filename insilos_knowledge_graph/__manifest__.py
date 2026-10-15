@@ -1,8 +1,8 @@
 {
-    'name': 'Enterprise Knowledge Graph',
+    'name': 'Knowledge Graph',
     'version': '26.0.1.1.0',
     'category': 'Productivity/Knowledge',
-    'summary': 'Rebuildable enterprise relationship projection',
+    'summary': 'Enterprise Knowledge Graph & Rebuildable Cross-Domain Relationship Projection',
     'author': 'Insilos Core Team',
     'depends': ['base'],
     'data': [

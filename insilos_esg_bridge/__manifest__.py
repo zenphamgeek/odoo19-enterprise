@@ -2,10 +2,10 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Insilos ESG & Cross-App Sustainability Intelligence',
+    'name': 'ESG Intelligence',
     'version': '26.0.1.0.1',
     'category': 'ESG/Operations',
-    'summary': 'End-to-End ESG Integration: CEMS IoT Emissions, Freight Carbon (Scope 3 Cat 4), Chemical Environmental Footprint, CBAM Advisor & Knowledge Lineage',
+    'summary': 'Cross-App ESG & Sustainability Intelligence: CEMS IoT Emissions, Freight Carbon (Scope 3 Cat 4), Chemical Footprint & CBAM Advisor',
     'description': """
 Insilos ESG Cross-App Sustainability Intelligence
 =================================================

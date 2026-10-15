@@ -84,7 +84,7 @@ class IndustryShowcaseController(http.Controller):
         }
         return request.render('insilos_industry_showcase.saas_signup_template', values)
 
-    @http.route('/saas/signup/submit', type='http', auth="public", methods=['POST'], website=True, csrf=True)
+    @http.route('/saas/signup/submit', type='http', auth="public", methods=['POST'], website=True, csrf=True, readonly=False)
     def saas_signup_submit(self, **post):
         """Handles SaaS Tenant creation with 30-day Free Trial."""
         company_name = post.get('company_name', '').strip()
@@ -240,14 +240,14 @@ class IndustryShowcaseController(http.Controller):
         }
         return request.render('insilos_industry_showcase.saas_checkout_template', values)
 
-    @http.route('/saas/checkout/confirm', type='http', auth="public", methods=['POST'], website=True, csrf=True)
+    @http.route('/saas/checkout/confirm', type='http', auth="public", methods=['POST'], website=True, csrf=True, readonly=False)
     def saas_checkout_confirm(self, tenant_id, billing_cycle='annual', payment_method='vnpay', **post):
         tenant = request.env['insilos.tenant'].sudo().browse(int(tenant_id))
         if not tenant.exists() or billing_cycle not in ('annual', 'monthly') or payment_method not in ('vnpay', 'card', 'bank_transfer'):
             return request.not_found()
         return request.redirect(f"/saas/checkout/{tenant.id}?status=payment_pending")
 
-    @http.route('/saas/checkout/callback', type='http', auth="public", methods=['POST'], website=False, csrf=False)
+    @http.route('/saas/checkout/callback', type='http', auth="public", methods=['POST'], website=False, csrf=False, readonly=False)
     def saas_checkout_callback(self, tenant_id, provider_reference, status, signature, billing_cycle='annual', **post):
         tenant = request.env['insilos.tenant'].sudo().browse(int(tenant_id))
         if not tenant.exists() or billing_cycle not in ('annual', 'monthly'):

@@ -1836,6 +1836,7 @@ class InsilosWebsite(http.Controller):
         methods=["GET", "POST"],
         csrf=True,
         sitemap=True,
+        readonly=False,
     )
     def request_demo(self, **post):
         form_data = {
@@ -1991,7 +1992,7 @@ class InsilosWebsite(http.Controller):
         values = self._base_values()
         return request.render("insilos_website.insilos_interactive_3d_page", values)
 
-    @http.route("/insilos/lead-submit", type="http", auth="public", methods=["POST"], website=True, csrf=True)
+    @http.route("/insilos/lead-submit", type="http", auth="public", methods=["POST"], website=True, csrf=True, readonly=False)
     def lead_submit(self, **post):
         contact_name = (post.get("contact_name") or "").strip()
         email_from = (post.get("email_from") or "").strip()

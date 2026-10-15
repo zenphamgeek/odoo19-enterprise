@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 
 class InsilosHSWebhookController(http.Controller):
 
-    @http.route('/insilos/webhooks/hs-events', type='http', auth='public', methods=['POST'], csrf=False)
+    @http.route('/insilos/webhooks/hs-events', type='http', auth='public', methods=['POST'], csrf=False, readonly=False)
     def receive_hs_event(self, **kwargs):
         """
         Receives and processes signed HS knowledge events from Hermes Agent Webhook Hub.

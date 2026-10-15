@@ -1,9 +1,9 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'Capital Markets Decision Governance Accelerator',
+    'name': 'Capital Markets',
     'version': '1.0',
     'category': 'Services/Project',
-    'summary': 'Decision governance, portfolio monitoring and AI alerts for capital markets',
+    'summary': 'IBM Capital Markets Decision Governance Accelerator, Portfolio Monitoring & AI Alerts',
     'description': """
 Capital Markets Decision Governance Accelerator
 ===============================================

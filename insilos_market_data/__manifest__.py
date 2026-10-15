@@ -1,9 +1,9 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'Insilos Market Data',
+    'name': 'Market Data',
     'version': '1.0.0',
     'category': 'Accounting/Treasury',
-    'summary': 'Provider-agnostic market data access and instrument symbol mapping',
+    'summary': 'Provider-Agnostic Financial Market Data Access & Instrument Symbol Mapping',
     'description': """
 Market data foundation for the Combined Capital Markets + Treasury combo.
 

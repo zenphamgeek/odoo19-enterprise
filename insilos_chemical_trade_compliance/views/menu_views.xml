@@ -3,20 +3,20 @@
     <data>
         <!-- Root App Menu -->
         <menuitem id="menu_chemical_compliance_root"
-                  name="Chemical Trade Compliance"
+                  name="Chemical Trade"
                   web_icon="insilos_chemical_trade_compliance,static/description/icon.svg"
                   sequence="76"/>
 
         <!-- 0. Onboarding & Dashboard -->
         <menuitem id="menu_chemical_onboarding_hub_item"
-                  name="Dashboard &amp; Onboarding"
+                  name="Overview"
                   parent="menu_chemical_compliance_root"
                   action="action_is_chemical_onboarding_hub"
                   sequence="1"/>
 
         <!-- 1. Operations & Dossiers -->
         <menuitem id="menu_chemical_dossier_operations"
-                  name="Dossiers &amp; Declarations"
+                  name="Dossiers"
                   parent="menu_chemical_compliance_root"
                   sequence="10"/>
 
@@ -27,19 +27,19 @@
                   sequence="10"/>
 
         <menuitem id="menu_chemical_compliance_exception_item"
-                  name="Compliance Data Exceptions"
+                  name="Data Exceptions"
                   parent="menu_chemical_dossier_operations"
                   action="action_is_chemical_compliance_exception"
                   sequence="20"/>
 
         <!-- 2. Master Data & Mappings -->
         <menuitem id="menu_chemical_master_mappings"
-                  name="Master Data &amp; Mappings"
+                  name="Master Data"
                   parent="menu_chemical_compliance_root"
                   sequence="20"/>
 
         <menuitem id="menu_chemical_material_mapping_item"
-                  name="Material-Chemical Mapping"
+                  name="Material Mapping"
                   parent="menu_chemical_master_mappings"
                   action="action_is_chemical_material_mapping"
                   sequence="10"/>
@@ -52,36 +52,36 @@
 
         <!-- 3. Usage & Quotas -->
         <menuitem id="menu_chemical_quota_operations"
-                  name="Usage &amp; Quotas"
+                  name="Quotas"
                   parent="menu_chemical_compliance_root"
                   sequence="30"/>
 
         <menuitem id="menu_chemical_usage_tracking_item"
-                  name="Chemical Usage Tracking"
+                  name="Usage Tracking"
                   parent="menu_chemical_quota_operations"
                   action="action_is_chemical_usage_tracking"
                   sequence="10"/>
 
         <menuitem id="menu_chemical_permit_quota_item"
-                  name="Permit Quotas &amp; Burn-down"
+                  name="Permit Quotas"
                   parent="menu_chemical_quota_operations"
                   action="action_is_chemical_permit_quota"
                   sequence="20"/>
 
         <!-- 4. Rules & Regulatory Matrix -->
         <menuitem id="menu_chemical_rules_operations"
-                  name="Regulatory &amp; Simulation"
+                  name="Regulatory"
                   parent="menu_chemical_compliance_root"
                   sequence="40"/>
 
         <menuitem id="menu_chemical_obligation_simulator_item"
-                  name="Obligation Simulator (Tra cứu 2026)"
+                  name="Obligation Simulator"
                   parent="menu_chemical_rules_operations"
                   action="action_is_chemical_obligation_simulator"
                   sequence="5"/>
 
         <menuitem id="menu_chemical_regulatory_rule_item"
-                  name="Regulatory Obligation Rules (2026)"
+                  name="Obligation Rules"
                   parent="menu_chemical_rules_operations"
                   action="action_is_chemical_regulatory_rule"
                   sequence="10"/>

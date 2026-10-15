@@ -1,8 +1,8 @@
 {
-    'name': 'Insilos Tenant Control',
+    'name': 'Tenant Control',
     'version': '1.0',
     'category': 'Services',
-    'summary': 'Tenant provisioning control plane',
+    'summary': 'Multi-Tenant SaaS Provisioning & Template Release Control Plane',
     'author': 'Innoria',
     'depends': ['base', 'industry_templates', 'databases'],
     'data': [

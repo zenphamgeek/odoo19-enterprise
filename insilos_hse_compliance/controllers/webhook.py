@@ -37,7 +37,7 @@ class HSEWebhookController(http.Controller):
         """)
         return request.env.cr.fetchone()[0]
 
-    @http.route(['/webhooks/hse-events', '/insilos/hse/webhook'], type='http', auth='public', methods=['POST'], csrf=False)
+    @http.route(['/webhooks/hse-events', '/insilos/hse/webhook'], type='http', auth='public', methods=['POST'], csrf=False, readonly=False)
     def receive_hse_event(self, **kwargs):
         payload_bytes = request.httprequest.get_data()
         signature = request.httprequest.headers.get('X-HSE-Signature', '')
@@ -110,7 +110,7 @@ class HSEWebhookController(http.Controller):
     def _valid_cems_measurement(value):
         return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value >= 0
 
-    @http.route(['/api/v1/hse/cems/telemetry', '/webhooks/cems-telemetry'], type='http', auth='public', methods=['POST'], csrf=False)
+    @http.route(['/api/v1/hse/cems/telemetry', '/webhooks/cems-telemetry'], type='http', auth='public', methods=['POST'], csrf=False, readonly=False)
     def receive_cems_telemetry(self, **kwargs):
         payload_bytes = request.httprequest.get_data()
         signature = request.httprequest.headers.get('X-CEMS-Signature', '')

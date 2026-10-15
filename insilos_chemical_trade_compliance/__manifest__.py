@@ -2,10 +2,10 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Insilos Chemical Trade Compliance',
+    'name': 'Chemical Trade',
     'version': '26.0.1.0.2',
     'category': 'Logistics/Compliance',
-    'summary': 'Chemical Regulatory Determination, NSW Dossier & Permit Quota — Luật Hóa chất 69/2025/QH15',
+    'summary': 'Chemical Trade Compliance, Regulatory Determination, NSW Dossier & Permit Quota — Luật Hóa chất 69/2025/QH15',
     'description': """
 Insilos Chemical Trade Compliance
 =================================

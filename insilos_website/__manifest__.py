@@ -1,6 +1,6 @@
 {
-    "name": "Insilos Intelligent Operations Website",
-    "summary": "Production-ready QWeb and Owl website for Insilos",
+    "name": "Corporate Website",
+    "summary": "Intelligent Operations Corporate Website, QWeb/OWL Showcases & Demo Request Portal",
     "version": "26.0.3.0.0",
     "category": "Website/Website",
     "author": "Insilos",

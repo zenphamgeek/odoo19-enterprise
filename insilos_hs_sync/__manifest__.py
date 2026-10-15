@@ -2,10 +2,10 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'HS Knowledge Sync Connector',
+    'name': 'HS & Customs',
     'version': '26.0.1.0.0',
     'category': 'Customs/Logistics',
-    'summary': 'Bi-directional HS Code, Customs Advance Rulings & Tariff Synchronization with Hermes Agent',
+    'summary': 'HS Knowledge Sync Connector: Bi-Directional HS Code, Customs Advance Rulings & Tariff Synchronization with Hermes Agent',
     'description': """
 HS Knowledge Sync Connector
 ===========================

@@ -2,10 +2,10 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Insilos Pub/Sub Event Bridge',
+    'name': 'Pub/Sub Gateway',
     'version': '26.0.2.3.0',
     'category': 'Productivity/Integrations',
-    'summary': 'Google Cloud Pub/Sub & Hermes AI Bi-Directional Event Bus Gateway',
+    'summary': 'Google Cloud Pub/Sub & Hermes AI Bi-Directional Event Bus Bridge Gateway',
     'description': """
 Insilos Pub/Sub Event Bridge — EDA Control Center
 ===================================================

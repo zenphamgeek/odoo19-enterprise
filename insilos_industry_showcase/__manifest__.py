@@ -1,10 +1,10 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Insilos Industry Product Landing Pages',
+    'name': 'Industry Showcase',
     'version': '1.0',
     'category': 'Website/Website',
-    'summary': '101 Industry-specific product showcase & conversion landing pages on dev.insilos.com',
+    'summary': '101 Industry-Specific Product Landing Pages & Conversion Showcases',
     'description': """
 Insilos Industry Product Showcase
 ==================================

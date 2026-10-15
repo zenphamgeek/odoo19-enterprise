@@ -54,7 +54,7 @@ def _validate_envelope(data):
 
 class PubSubERPController(http.Controller):
 
-    @http.route(['/api/v1/pubsub/ingest', '/insilos/pubsub/ingest'], type='http', auth='public', methods=['POST'], csrf=False)
+    @http.route(['/api/v1/pubsub/ingest', '/insilos/pubsub/ingest'], type='http', auth='public', methods=['POST'], csrf=False, readonly=False)
     def ingest_pubsub_event(self, **kwargs):
         request_id = str(uuid.uuid4())
         raw_body = request.httprequest.get_data()

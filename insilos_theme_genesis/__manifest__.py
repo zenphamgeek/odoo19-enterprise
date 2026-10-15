@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Insilos Genesis Website Theme',
-    'summary': 'AI Generated Theme & Responsive Layout for Insilos Genesis',
+    'name': 'Genesis Theme',
+    'summary': 'Genesis Enterprise Website Theme & Responsive QWeb Layout System',
     'category': 'Theme/Corporate',
     'version': '26.0.1.0.0',
     'license': 'LGPL-3',

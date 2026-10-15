@@ -1,9 +1,9 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'Insilos Market Terminal',
+    'name': 'Market Terminal',
     'version': '1.0.0',
     'category': 'Accounting/Treasury',
-    'summary': 'Market Intelligence Terminal with ERP decision overlays',
+    'summary': 'Real-Time Market Intelligence Terminal with ERP Treasury Decision Overlays',
     'description': """
 Candlestick terminal (TradingView Lightweight Charts, Apache 2.0) fed by the
 market data provider, with ERP overlays: average cost, hedge triggers and

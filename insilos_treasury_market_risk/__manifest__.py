@@ -1,9 +1,9 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'Treasury & Market Risk',
+    'name': 'Treasury & Risk',
     'version': '1.0',
     'category': 'Accounting/Accounting',
-    'summary': 'FX exposure, liquidity ladder, portfolio risk and committee governance',
+    'summary': 'SAP TRM Treasury & Market Risk: FX Exposure, Liquidity Ladder, Portfolio Risk & Committee Governance',
     'description': """
 Treasury & Market Risk
 ======================

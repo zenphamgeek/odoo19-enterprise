@@ -55,7 +55,189 @@
         <field name="res_model">preferential.origin.working.paper</field>
         <field name="view_mode">list,form</field>
     </record>
-    <menuitem id="menu_preferential_origin_root" name="Preferential Origin" sequence="90" action="action_preferential_origin_scenarios" web_icon="insilos_preferential_origin,static/description/icon.svg"/>
+    <record id="view_preferential_origin_regime_list" model="ir.ui.view">
+        <field name="name">preferential.origin.regime.list</field>
+        <field name="model">preferential.origin.regime</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="version"/>
+                <field name="effective_from"/>
+                <field name="effective_to"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_preferential_origin_regime_form" model="ir.ui.view">
+        <field name="name">preferential.origin.regime.form</field>
+        <field name="model">preferential.origin.regime</field>
+        <field name="arch" type="xml">
+            <form string="FTA Regime">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="version"/>
+                        </group>
+                        <group>
+                            <field name="effective_from"/>
+                            <field name="effective_to"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_preferential_origin_regime_search" model="ir.ui.view">
+        <field name="name">preferential.origin.regime.search</field>
+        <field name="model">preferential.origin.regime</field>
+        <field name="arch" type="xml">
+            <search string="Search FTA Regimes">
+                <field name="code"/>
+                <field name="name"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved_internal')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_preferential_origin_regimes" model="ir.actions.act_window">
+        <field name="name">FTA Regimes</field>
+        <field name="res_model">preferential.origin.regime</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="view_preferential_origin_rule_list" model="ir.ui.view">
+        <field name="name">preferential.origin.rule.list</field>
+        <field name="model">preferential.origin.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="regime_id"/>
+                <field name="hs_heading"/>
+                <field name="criterion_type"/>
+                <field name="rvc_threshold"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_preferential_origin_rule_form" model="ir.ui.view">
+        <field name="name">preferential.origin.rule.form</field>
+        <field name="model">preferential.origin.rule</field>
+        <field name="arch" type="xml">
+            <form string="Product Specific Rule (PSR)">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="regime_id"/>
+                            <field name="hs_heading"/>
+                        </group>
+                        <group>
+                            <field name="criterion_type"/>
+                            <field name="rvc_threshold"/>
+                            <field name="rvc_formula"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_preferential_origin_rules" model="ir.actions.act_window">
+        <field name="name">Origin Rules (PSR)</field>
+        <field name="res_model">preferential.origin.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="view_preferential_origin_assessment_list" model="ir.ui.view">
+        <field name="name">preferential.origin.assessment.list</field>
+        <field name="model">preferential.origin.assessment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="production_id"/>
+                <field name="regime_id"/>
+                <field name="rule_id"/>
+                <field name="rvc_percent"/>
+                <field name="outcome"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_preferential_origin_assessment_form" model="ir.ui.view">
+        <field name="name">preferential.origin.assessment.form</field>
+        <field name="model">preferential.origin.assessment</field>
+        <field name="arch" type="xml">
+            <form string="Origin Assessment">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="production_id"/>
+                            <field name="regime_id"/>
+                            <field name="rule_id"/>
+                        </group>
+                        <group>
+                            <field name="outcome"/>
+                            <field name="reason_code"/>
+                            <field name="rvc_percent"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Traceability Lines" name="lines">
+                            <field name="line_ids">
+                                <list>
+                                    <field name="product_id"/>
+                                    <field name="lot_id"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_preferential_origin_assessments" model="ir.actions.act_window">
+        <field name="name">Origin Assessments</field>
+        <field name="res_model">preferential.origin.assessment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="view_preferential_origin_activation_list" model="ir.ui.view">
+        <field name="name">preferential.origin.activation.list</field>
+        <field name="model">preferential.origin.activation</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="maker_id"/>
+                <field name="checker_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_preferential_origin_activations" model="ir.actions.act_window">
+        <field name="name">Governance Activations</field>
+        <field name="res_model">preferential.origin.activation</field>
+        <field name="view_mode">list</field>
+    </record>
+    <menuitem id="menu_preferential_origin_root" name="FTA Origin" sequence="90" action="action_preferential_origin_scenarios" web_icon="insilos_preferential_origin,static/description/icon.svg"/>
     <menuitem id="menu_preferential_origin_scenarios" name="FTA Recommendations" parent="menu_preferential_origin_root" action="action_preferential_origin_scenarios"/>
-    <menuitem id="menu_preferential_origin_working_papers" name="FTA Working Papers" parent="menu_preferential_origin_root" action="action_preferential_origin_working_papers"/>
+    <menuitem id="menu_preferential_origin_working_papers" name="Working Papers" parent="menu_preferential_origin_root" action="action_preferential_origin_working_papers"/>
+    <menuitem id="menu_preferential_origin_assessments" name="Origin Assessments" parent="menu_preferential_origin_root" action="action_preferential_origin_assessments" sequence="30"/>
+    <menuitem id="menu_preferential_origin_regimes" name="FTA Regimes" parent="menu_preferential_origin_root" action="action_preferential_origin_regimes" sequence="40"/>
+    <menuitem id="menu_preferential_origin_rules" name="Origin Rules (PSR)" parent="menu_preferential_origin_root" action="action_preferential_origin_rules" sequence="50"/>
+    <menuitem id="menu_preferential_origin_activations" name="Governance Activations" parent="menu_preferential_origin_root" action="action_preferential_origin_activations" sequence="60"/>
 </odoo>

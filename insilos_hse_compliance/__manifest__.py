@@ -2,10 +2,10 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Insilos HSE Knowledge & Compliance Suite',
+    'name': 'HSE & Compliance',
     'version': '26.0.1.0.3',
     'category': 'Operations/HSE',
-    'summary': 'Health, Safety & Environment Compliance Management, Legal Register, Chemical SDS 16-Section, QCVN 05A:2020/BCT (TT 19/2024/TT-BCT) & Webhook Sync',
+    'summary': 'HSE Knowledge & Compliance Suite: Legal Register, Chemical SDS 16-Section, QCVN 05A:2020/BCT (TT 19/2024/TT-BCT) & Webhook Sync',
     'description': """
 Insilos HSE Knowledge & Compliance Suite
 ========================================
