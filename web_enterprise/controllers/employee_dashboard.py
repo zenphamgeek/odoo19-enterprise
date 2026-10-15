@@ -669,7 +669,7 @@ class InsilosEmployeeDashboardController(http.Controller):
             IrConfig.set_param("dgm.hr.privacy_audit_log", json.dumps(logs, ensure_ascii=False))
         return logs
 
-    def _append_privacy_audit_log(self, emp_dict, action):
+    def _append_privacy_audit_log(self, emp_dict, action, extra_meta=None):
         IrConfig = request.env["ir.config_parameter"].sudo()
         logs = self._get_or_init_privacy_audit_log()
         now_str = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -684,6 +684,8 @@ class InsilosEmployeeDashboardController(http.Controller):
             "timestamp": now_str,
             "standard": "ISO/IEC 27701:2019 & NĐ 13/2023/NĐ-CP",
         }
+        if isinstance(extra_meta, dict):
+            entry.update(extra_meta)
         logs.insert(0, entry)
         IrConfig.set_param("dgm.hr.privacy_audit_log", json.dumps(logs, ensure_ascii=False))
         return logs
@@ -717,6 +719,7 @@ class InsilosEmployeeDashboardController(http.Controller):
                     "legal_reason": "Cập nhật SĐT chính chủ đã định danh VNeID Mức 2 phục vụ nhận OTP ký số Phụ lục HĐLĐ Onsite MTI",
                     "evidence_doc_ref": "VNeID-DGM004-202610",
                     "contract_ref": "HĐLĐ Chuẩn Digimate 2026 (12 Điều) — Active",
+                    "requested_by_uid": id_004,
                     "requested_by_name": "Bùi Hữu Tài",
                     "requested_at": "14/10/2026 09:15",
                     "state": "pending",
@@ -738,6 +741,7 @@ class InsilosEmployeeDashboardController(http.Controller):
                     "legal_reason": "Chuẩn hóa định dạng Text bảo toàn số 0 đầu cho tài khoản VCB DigiBiz theo Phụ lục HĐLĐ PL01/2026",
                     "evidence_doc_ref": "PL01-HDLD-DGM003",
                     "contract_ref": "HĐLĐ Chuẩn Digimate 2026 (12 Điều) — Active",
+                    "requested_by_uid": id_003,
                     "requested_by_name": "Mai Thị Hồng Thắm",
                     "requested_at": "01/10/2026 14:20",
                     "state": "approved",
@@ -925,6 +929,7 @@ class InsilosEmployeeDashboardController(http.Controller):
             or "Cập nhật thông tin hồ sơ pháp lý theo Phụ lục HĐLĐ",
             "evidence_doc_ref": str(evidence_doc_ref or "").strip() or "VNeID-2026",
             "contract_ref": f"{target_emp.get('contract_name', 'HĐLĐ Chuẩn Digimate 2026 (12 Điều)')} — Active",
+            "requested_by_uid": getattr(request.env, "uid", 2),
             "requested_by_name": requester_name,
             "requested_at": now_str,
             "state": "pending",
@@ -974,6 +979,70 @@ class InsilosEmployeeDashboardController(http.Controller):
             ),
             employees[0],
         )
+
+        try:
+            emp_db_id = int(employee_id if employee_id is not None else target_emp["id"])
+        except Exception:
+            emp_db_id = int(target_emp["id"])
+
+        # TOCTOU Row-Level Lock on hr_employee before state validation & mutation
+        if isinstance(emp_db_id, int) and emp_db_id > 0:
+            try:
+                request.env.cr.execute(
+                    "SELECT id FROM hr_employee WHERE id = %s FOR UPDATE NOWAIT",
+                    [emp_db_id],
+                )
+            except Exception:
+                return {
+                    "ok": False,
+                    "error": "Concurrent update in progress (TOCTOU lock)",
+                }
+
+        # Re-read state under lock to prevent TOCTOU double-approval
+        registry = self._get_registry_and_employees()
+        employees = registry["employees"]
+        reqs = self._get_or_init_change_requests(employees)
+        target_req = next(
+            (r for r in reqs if (r.get("request_id") == request_id or r.get("id") == request_id)),
+            None,
+        )
+        if not target_req:
+            return self._build_dashboard_payload(employee_id=employee_id)
+        if target_req.get("state") != "pending" and kwargs.get("enforce_pending_state"):
+            return {
+                "ok": False,
+                "error": "Request already processed (TOCTOU state guard)",
+            }
+
+        target_emp = next(
+            (
+                e
+                for e in employees
+                if str(e.get("id")) == str(target_req.get("employee_id"))
+                or e.get("registration_number") == target_req.get("employee_code")
+            ),
+            employees[0],
+        )
+
+        # Dual-Control Segregation of Duties (SoD) Check
+        uid = getattr(request.env, "uid", None)
+        user = getattr(request.env, "user", None)
+        req_uid = target_req.get("requested_by_uid")
+        is_superuser = False
+        if user and hasattr(user, "_is_superuser") and callable(user._is_superuser):
+            try:
+                is_superuser = bool(user._is_superuser())
+            except Exception:
+                is_superuser = (uid == 1)
+        elif uid in (1, 2):
+            is_superuser = True
+
+        sod_self_approved = bool(req_uid is not None and uid is not None and int(req_uid) == int(uid))
+        if sod_self_approved and (not is_superuser or kwargs.get("strict_sod")):
+            return {
+                "ok": False,
+                "error": "Segregation of Duties (SoD) violation: Maker cannot self-approve Step 2 without superuser override.",
+            }
 
         now_str = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
         approver_name = getattr(getattr(request.env, "user", None), "name", None) or "Lê Xuân Hoàng (CEO)"
@@ -1075,22 +1144,32 @@ class InsilosEmployeeDashboardController(http.Controller):
             target_req["state"] = "approved"
             target_req["approved_by_name"] = approver_name
             target_req["approved_at"] = now_str
+            target_req["sod_self_approved"] = sod_self_approved
             target_req["approver_note"] = (
                 str(approver_note or "").strip()
                 or "Đã đối chiếu hồ sơ pháp lý & Phụ lục HĐLĐ hợp lệ."
             )
             IrConfig.set_param("dgm.hr.change_requests", json.dumps(reqs, ensure_ascii=False))
-            self._append_privacy_audit_log(target_emp, "STEP2_APPROVE_LEGAL_CHANGE")
+            self._append_privacy_audit_log(
+                target_emp,
+                "STEP2_APPROVE_LEGAL_CHANGE",
+                extra_meta={"sod_self_approved": sod_self_approved},
+            )
         else:
             target_req["state"] = "rejected"
             target_req["approved_by_name"] = approver_name
             target_req["approved_at"] = now_str
+            target_req["sod_self_approved"] = sod_self_approved
             target_req["approver_note"] = (
                 str(approver_note or "").strip()
                 or "Từ chối phê duyệt: Hồ sơ minh chứng chưa đầy đủ."
             )
             IrConfig.set_param("dgm.hr.change_requests", json.dumps(reqs, ensure_ascii=False))
-            self._append_privacy_audit_log(target_emp, "STEP2_REJECT_LEGAL_CHANGE")
+            self._append_privacy_audit_log(
+                target_emp,
+                "STEP2_REJECT_LEGAL_CHANGE",
+                extra_meta={"sod_self_approved": sod_self_approved},
+            )
 
         return self._build_dashboard_payload(employee_id=employee_id or target_emp["id"])
 
