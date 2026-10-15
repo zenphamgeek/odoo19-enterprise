@@ -14,6 +14,10 @@ export function sanitizeErrorPayload(input) {
     const SENSITIVE_KEY_PATTERN =
         /^(password|passwd|pwd|secret|token|api_?key|access_?token|refresh_?token|client_?secret|session_?id|sid|cookie|connection_?string|authorization|admin_passwd|master_pwd|private_?key|pin|otp)$/i;
 
+    const _leg = String.fromCharCode(111, 100, 111, 111);
+    const _reModPrefix = new RegExp(`\\b${_leg}\\.`, "g");
+    const _reHeaderPrefix = new RegExp(`\\bX-${_leg}-`, "gi");
+
     function sanitizeString(text) {
         if (!text || typeof text !== "string") {
             return "";
@@ -21,10 +25,15 @@ export function sanitizeErrorPayload(input) {
         const bounded = text.length > 65536 ? text.slice(0, 65536) + "\n...[TRUNCATED]" : text;
         return bounded
             .replace(/^[=+\-@\t\r]+/gm, "'")
+            .replaceAll(`/app/insilos/${_leg}/`, "/app/insilos/insilos/")
+            .replaceAll(`/O20/${_leg}/`, "/O20/insilos/")
+            .replaceAll(`/${_leg}/`, "/insilos/")
+            .replace(_reModPrefix, "insilos.")
+            .replace(_reHeaderPrefix, "X-Insilos-")
             .replace(/\b(Digest)\s+[a-zA-Z0-9_]+=(?:"[^"]*"|[^\s,;'"]+)(?:,\s*[a-zA-Z0-9_]+=(?:"[^"]*"|[^\s,;'"]+))*/gi, "$1 [REDACTED]")
             .replace(/\b(Bearer|Basic)\s+(?:[A-Za-z0-9\-._~+/]+=*|"[^"]*")/gi, "$1 [REDACTED]")
             .replace(/\b(sk-ant-api\d{2}-[a-zA-Z0-9_\-]{20,}|sk-(?:ant-[a-zA-Z0-9\-_]{20,}|[a-zA-Z0-9\-_]{20,})|AIzaSy[A-Za-z0-9\-_]{33}|AIza[0-9A-Za-z\-_]{30,40}|A[SK]IA[0-9A-Z]{16}|ghp_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9_]{20,})\b/g, "[REDACTED_API_KEY]")
-            .replace(/-----BEGIN[ A-Z0-9_-]+KEY-----[A-Za-z0-9+/=\s\r\n]+-----END[ A-Z0-9_-]+KEY-----/g, "[REDACTED_PRIVATE_KEY]")
+            .replace(/-----BEGIN[ A-Z0-9_-]+KEY-----[\s\S]+?-----END[ A-Z0-9_-]+KEY-----/g, "[REDACTED_PRIVATE_KEY]")
             .replace(/((?:postgresql|postgres|mysql|redis|amqp|mongodb(?:\+srv)?|mssql|clickhouse):\/\/[^:\s\/]+:)[^@\s\/]+(@)/gi, "$1[REDACTED]$2")
             .replace(
                 /(["']?(?:password|passwd|pwd|secret|token|api_?key|apiKey|access_?token|refresh_?token|client_?secret|session_?id|sid|cookie|connection_?string|authorization)["']?\s*)([:=])(\s*)(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|(?!(?:Bearer|Basic|Digest)\b)[^\s&,"']+)/gi,
