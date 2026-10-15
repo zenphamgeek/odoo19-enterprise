@@ -3,7 +3,11 @@
    High-density enterprise spatial grid, calibrated elevation, and semantic tokens
    ========================================================================== */
 
-:root {
+:root,
+html[data-theme="light"],
+html[data-bs-theme="light"],
+body:not(.o_dark_mode),
+body[data-theme="light"] {
   /* Spatial & Micro-Grid System (4px / 8px Base) */
   --insilos-spacing-2xs: 2px;
   --insilos-spacing-xs: 4px;
@@ -29,18 +33,19 @@
   --insilos-font-mono: 'JetBrains Mono', 'IBM Plex Mono', 'SF Mono', Menlo, Consolas, monospace;
 
   /* Surface & Background Layers (IBM Carbon Layering & SAP Horizon Canvas) */
-  --insilos-bg-canvas: #f4f6f8;
+  --insilos-bg-canvas: #f8fafc;
   --insilos-bg-surface: #ffffff;
   --insilos-bg-card: #ffffff;
   --insilos-bg-header: #ffffff;
   --insilos-bg-hover: #f1f5f9;
   --insilos-carbon-hover: #f1f5f9;
   --insilos-bg-active: #e2e8f0;
-  --insilos-bg-subtle: #f8fafc;
-  --insilos-bg-selected: rgba(15, 98, 254, 0.08);
+  --insilos-bg-subtle: #f1f5f9;
+  --insilos-bg-selected: #eff6ff;
   --insilos-surface-card: #ffffff;
 
   /* Hairline Architectural Borders */
+  --insilos-border-base: #cbd5e1;
   --insilos-border-subtle: #e2e8f0;
   --insilos-border-medium: #cbd5e1;
   --insilos-border-strong: #94a3b8;
@@ -49,10 +54,11 @@
 
   /* High-Contrast Typography */
   --insilos-text-primary: #0f172a;
-  --insilos-text-secondary: #475569;
+  --insilos-text-secondary: #334155;
   --insilos-text-tertiary: #64748b;
-  --insilos-text-muted: #94a3b8;
+  --insilos-text-muted: #64748b;
   --insilos-text-on-primary: #ffffff;
+  --insilos-text-inverse: #ffffff;
 
   /* Brand Accents (IBM Cobalt & Carbon Tech Blue) */
   --insilos-primary: #0b2e64;

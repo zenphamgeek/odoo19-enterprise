@@ -12,9 +12,13 @@ class Home(web_home.Home):
     def _web_client_readonly(self, rule, args):
         """ Force a read/write cursor for documents.access """
         path = request.httprequest.path
-        subpath = path.removeprefix('/odoo/documents').lstrip('/')
+        if path.startswith('/insilos/documents'):
+            subpath = path.removeprefix('/insilos/documents').lstrip('/')
+        else:
+            subpath = path.removeprefix('/odoo/documents').lstrip('/')
         if (
-            path.startswith('/odoo/documents/')
+            (path in ('/odoo/documents', '/insilos/documents')
+             or path.startswith(('/odoo/documents/', '/insilos/documents/')))
             and (request.httprequest.args.get('access_token') or subpath)
             and request.session.uid
         ):
@@ -47,7 +51,7 @@ class Home(web_home.Home):
         # lines restore the public behavior.
         ensure_db()
         request.update_env(user=request.session.uid)
-        request.env['ir.http']._authenticate_explicit('public')
+        request.env['ir.http']._authenticate_explicit({'auth': 'public'})
 
         # Public/Portal users use the /documents/<access_token> route
         if not request.env.user._is_internal():
@@ -56,7 +60,11 @@ class Home(web_home.Home):
                 HTTPStatus.TEMPORARY_REDIRECT,
             )
 
-        document_sudo = ShareRoute._from_access_token(access_token, follow_shortcut=False)
+        document_sudo = ShareRoute._from_access_token(
+            access_token,
+            skip_log=getattr(request.env.cr, 'readonly', False),
+            follow_shortcut=False,
+        )
 
         if not document_sudo:
             Redirect = request.env['documents.redirect'].sudo()

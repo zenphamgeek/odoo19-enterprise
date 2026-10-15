@@ -637,3 +637,21 @@ body.o_dark_mode,
   }
 }
 
+/* Explicit Light Mode SearchPanel Semantic Token Enforcement */
+body:not(.o_dark_mode) {
+  .o_search_panel,
+  .o_documents_kanban_view .o_search_panel,
+  .o_documents_list_view .o_search_panel,
+  .o_list_view .o_search_panel,
+  .o_kanban_view .o_search_panel {
+    background-color: var(--insilos-bg-surface) !important;
+    border-right: 1px solid var(--insilos-border-subtle) !important;
+    color: var(--insilos-text-primary) !important;
+
+    header.o_search_panel_section_header {
+      color: var(--insilos-text-secondary) !important;
+    }
+  }
+}
+
+

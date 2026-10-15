@@ -3,13 +3,25 @@
 // ============================================================================
 
 // Shared background with web client and login screen
-.o_home_menu_background, .o_web_client.o_home_menu_background {
+.o_home_menu_background:not(.o_web_client),
+body.o_dark_mode.o_home_menu_background,
+body.o_dark_mode .o_home_menu_background,
+body.o_dark_mode.o_web_client.o_home_menu_background {
     background: {
         size: cover;
         attachment: fixed;
         color: var(--homeMenu-bg-color, #070B14);
         image: var(--homeMenu-bg-image, radial-gradient(ellipse at 50% -10%, rgba(255, 128, 0, 0.12) 0%, rgba(15, 23, 42, 0.95) 55%, #070B14 100%));
     }
+}
+
+body:not(.o_dark_mode).o_web_client.o_home_menu_background,
+body:not(.o_dark_mode) .o_web_client.o_home_menu_background,
+html[data-theme="light"] body:not(.o_dark_mode).o_home_menu_background,
+html[data-theme="light"] body:not(.o_dark_mode) .o_home_menu_background {
+    background: var(--insilos-bg-canvas) !important;
+    background-color: var(--insilos-bg-canvas) !important;
+    background-image: none !important;
 }
 
 // ----------------------------------------------------------------------------

@@ -1840,3 +1840,15 @@ body.o_dark_mode {
   flex: 1 1 100% !important;
 }
 
+/* Explicit Light Mode Form Statusbar Semantic Token Enforcement */
+body:not(.o_dark_mode) {
+  .o_form_statusbar,
+  .o_form_view .o_form_statusbar,
+  .o_field_statusbar {
+    background-color: var(--insilos-bg-surface) !important;
+    border-bottom: 1px solid var(--insilos-border-subtle) !important;
+    color: var(--insilos-text-primary) !important;
+  }
+}
+
+

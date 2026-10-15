@@ -1282,3 +1282,27 @@ body.o_dark_mode,
   }
 }
 
+/* Explicit Light Mode Navbar & Systray Semantic Token Enforcement */
+body:not(.o_dark_mode) {
+  header.o_navbar,
+  .o_navbar {
+    background-color: var(--insilos-bg-header) !important;
+    border-bottom: 1px solid var(--insilos-border-subtle) !important;
+    color: var(--insilos-text-primary) !important;
+  }
+
+  .o_main_navbar,
+  .o_main_navbar .o_menu_systray,
+  .o_main_navbar .o_menu_sections {
+    background-color: transparent !important;
+    color: var(--insilos-text-primary) !important;
+  }
+
+  .o_main_navbar .o_menu_brand,
+  .o_main_navbar .dropdown-toggle,
+  .o_main_navbar .o_nav_entry {
+    color: var(--insilos-text-primary);
+  }
+}
+
+

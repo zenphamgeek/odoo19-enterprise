@@ -123,8 +123,50 @@ body,
   --insilos-carbon-hover: #1e293b;
 }
 
-/* Home Menu Launchpad app tiles remain transparent glassmorphic */
-body.o_home_menu_background,
-.o_home_menu_background {
+/* Home Menu Launchpad app tiles remain transparent glassmorphic in Dark Mode */
+body.o_dark_mode.o_home_menu_background,
+body.o_dark_mode .o_home_menu_background {
   --insilos-bg-card: rgba(255, 255, 255, 0.04);
 }
+
+/* Immediate Light Token Override when switching Dark -> Light before reload finishes */
+html[data-theme="light"] body:not(.o_dark_mode),
+html[data-bs-theme="light"] body:not(.o_dark_mode),
+body[data-theme="light"]:not(.o_dark_mode) {
+  --insilos-bg-canvas: #f8fafc;
+  --insilos-bg-surface: #ffffff;
+  --insilos-bg-card: #ffffff;
+  --insilos-bg-header: #ffffff;
+  --insilos-bg-hover: #f1f5f9;
+  --insilos-carbon-hover: #f1f5f9;
+  --insilos-bg-active: #e2e8f0;
+  --insilos-bg-subtle: #f1f5f9;
+  --insilos-bg-selected: #eff6ff;
+  --insilos-surface-card: #ffffff;
+
+  --insilos-border-base: #cbd5e1;
+  --insilos-border-subtle: #e2e8f0;
+  --insilos-border-medium: #cbd5e1;
+  --insilos-border-strong: #94a3b8;
+  --insilos-border-focus: #0f62fe;
+  --insilos-carbon-focus: #0f62fe;
+
+  --insilos-text-primary: #0f172a;
+  --insilos-text-secondary: #334155;
+  --insilos-text-tertiary: #64748b;
+  --insilos-text-muted: #64748b;
+  --insilos-text-on-primary: #ffffff;
+  --insilos-text-inverse: #ffffff;
+
+  --insilos-primary: #0b2e64;
+  --insilos-primary-hover: #082147;
+  --insilos-primary-subtle: rgba(11, 46, 100, 0.08);
+  --insilos-primary-border: rgba(11, 46, 100, 0.25);
+  --insilos-accent: #0f62fe;
+  --insilos-accent-hover: #0353e9;
+  --insilos-table-sticky-col-bg: #ffffff;
+
+  color: var(--insilos-text-primary) !important;
+  --bs-body-color: var(--insilos-text-primary) !important;
+}
+

@@ -970,3 +970,38 @@ body.o_dark_mode,
     }
   }
 }
+
+/* Explicit Light Mode Control Panel & SearchView Semantic Token Enforcement */
+body:not(.o_dark_mode) {
+  .o_control_panel {
+    background-color: var(--insilos-bg-surface) !important;
+    border-bottom: 1px solid var(--insilos-border-subtle) !important;
+    color: var(--insilos-text-primary) !important;
+  }
+
+  .o_control_panel_main,
+  .o_control_panel_breadcrumbs,
+  .o_control_panel_actions,
+  .o_control_panel_navigation {
+    background-color: transparent !important;
+    color: var(--insilos-text-primary) !important;
+  }
+
+  .o_searchview,
+  .o_cp_searchview .o_searchview,
+  .o_searchview_input_container {
+    background-color: var(--insilos-bg-surface) !important;
+    color: var(--insilos-text-primary) !important;
+  }
+
+  .o_control_panel .btn-secondary,
+  .o_control_panel .btn-light,
+  .o_control_panel .o_switch_view,
+  .o_cp_switch_buttons .btn,
+  .o_pager button {
+    background-color: var(--insilos-bg-subtle);
+    border-color: var(--insilos-border-base);
+    color: var(--insilos-text-primary);
+  }
+}
+

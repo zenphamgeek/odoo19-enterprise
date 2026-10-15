@@ -63,5 +63,32 @@
     }
 }
 
+html[data-theme="light"] body:not(.o_dark_mode) {
+    &.o_home_menu_background,
+    .o_home_menu_background {
+        background: var(--insilos-bg-canvas) !important;
+        background-color: var(--insilos-bg-canvas) !important;
+
+        .o_home_menu .o_app {
+            background-color: var(--insilos-bg-card) !important;
+            background: var(--insilos-bg-card) !important;
+            border: 1px solid var(--insilos-border-subtle) !important;
+            box-shadow: var(--insilos-shadow-sm) !important;
+
+            .o_caption {
+                color: var(--insilos-text-primary) !important;
+                text-shadow: none !important;
+            }
+        }
+
+        .o_home_menu .o_insilos_emp_dashboard {
+            background-color: var(--insilos-bg-card) !important;
+            border-color: var(--insilos-border-subtle) !important;
+            color: var(--insilos-text-primary) !important;
+        }
+    }
+}
+
+
 
 

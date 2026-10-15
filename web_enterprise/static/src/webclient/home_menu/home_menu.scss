@@ -86,12 +86,10 @@
         padding: 12px 10px 10px;
         box-sizing: border-box;
         border-radius: 12px;
-        background-color: rgba(255, 255, 255, 0.04) !important;
-        background: rgba(255, 255, 255, 0.04) !important;
-        backdrop-filter: blur(14px) !important;
-        -webkit-backdrop-filter: blur(14px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+        background-color: var(--insilos-bg-card) !important;
+        background: var(--insilos-bg-card) !important;
+        border: 1px solid var(--insilos-border-subtle) !important;
+        box-shadow: var(--insilos-shadow-sm) !important;
         transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 
         @include media-breakpoint-up(md) {
@@ -198,21 +196,21 @@
         
         &:hover {
             transform: translateY(-3px);
-            background-color: rgba(255, 255, 255, 0.08) !important;
-            background: rgba(255, 255, 255, 0.08) !important;
-            border-color: rgba(255, 128, 0, 0.5) !important;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(255, 128, 0, 0.18) !important;
+            background-color: var(--insilos-bg-hover) !important;
+            background: var(--insilos-bg-hover) !important;
+            border-color: var(--insilos-primary-border) !important;
+            box-shadow: var(--insilos-shadow-hover) !important;
 
             .o_app_icon {
                 transform: scale(1.05);
             }
 
             .o_caption {
-                color: #FF8000 !important;
+                color: var(--insilos-primary) !important;
             }
 
             .o_sap_domain_tag {
-                color: #cbd5e1 !important;
+                color: var(--insilos-text-primary) !important;
             }
         }
 
@@ -222,8 +220,8 @@
         }
 
         .o_caption {
-            color: var(--homeMenuCaption-color, #{$o-home-menu-caption-color});
-            text-shadow: $o-home-menu-caption-shadow;
+            color: var(--insilos-text-primary) !important;
+            text-shadow: none !important;
             font-size: 0.85rem;
             font-weight: 500;
             letter-spacing: 0.015em;
