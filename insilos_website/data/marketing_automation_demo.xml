@@ -243,5 +243,224 @@ for lead in records:
             <field name="description">Quan tâm: Cắt Laser CNC 12kW, Robot hàn Yaskawa và Quản lý OEE Shop Floor.</field>
         </record>
 
+        <!-- ============================================================ -->
+        <!-- 6. INNORIA SOFTWARE SERVICES & AI CONCIERGE MARKETING FUNNEL -->
+        <!-- ============================================================ -->
+        <record id="crm_tag_innoria_sw_services" model="crm.tag">
+            <field name="name">Innoria Software Services</field>
+            <field name="color">10</field>
+        </record>
+
+        <record id="crm_tag_ai_concierge_quote" model="crm.tag">
+            <field name="name">AI Concierge Interactive</field>
+            <field name="color">2</field>
+        </record>
+
+        <record id="crm_tag_co_engineering_squad" model="crm.tag">
+            <field name="name">Co-Engineering Squad (TT 13/2020)</field>
+            <field name="color">5</field>
+        </record>
+
+        <record id="crm_tag_turnkey_activate" model="crm.tag">
+            <field name="name">Turnkey Software (SAP Activate)</field>
+            <field name="color">3</field>
+        </record>
+
+        <!-- Template Tầng 1 Dịch Vụ Phần Mềm: Hồ Sơ Kiến Trúc & Dự Toán TCO/ROI -->
+        <record id="mailing_innoria_sw_tier1_dossier" model="mailing.mailing">
+            <field name="subject">[Innoria Enterprise] Hồ Sơ Kiến Trúc Dịch Vụ Phần Mềm &amp; Bảng Dự Toán TCO/ROI</field>
+            <field name="mailing_type">mail</field>
+            <field name="reply_to_mode">update</field>
+            <field name="mailing_model_id" ref="crm.model_crm_lead"/>
+            <field name="use_in_marketing_automation">True</field>
+            <field name="body_html"><![CDATA[
+<div style="background-color: #070B14; color: #E2E8F0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; padding: 40px 20px; line-height: 1.6;">
+    <div style="max-width: 660px; margin: 0 auto; background: #0B132B; border: 1px solid rgba(0,242,254,0.2); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
+        <div style="padding: 32px 32px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); background: linear-gradient(180deg, rgba(15,28,58,0.95) 0%, rgba(11,19,43,0.95) 100%);">
+            <span style="display: inline-block; padding: 4px 12px; background: rgba(0,242,254,0.15); border: 1px solid rgba(0,242,254,0.35); border-radius: 9999px; color: #00F2FE; font-size: 11px; font-weight: 600; font-family: monospace; letter-spacing: 1px;">
+                INNORIA SOFTWARE SERVICES // AL2C ARCHITECTURE DOSSIER
+            </span>
+            <h1 style="color: #FFFFFF; font-size: 23px; font-weight: 700; margin: 16px 0 8px; line-height: 1.35;">
+                Hồ Sơ Kiến Trúc Dịch Vụ Phần Mềm Cấp Chủ Quyền &amp; Bảng Dự Toán TCO/ROI
+            </h1>
+            <p style="color: #94A3B8; font-size: 14px; margin: 0;">
+                Chuẩn hóa theo IBM Carbon 11 · SAP Activate 5-Gate · Thông tư 13/2020/TT-BTTTT &amp; Nghị định 70/2025/NĐ-CP.
+            </p>
+        </div>
+
+        <div style="padding: 32px;">
+            <p style="font-size: 15px; color: #CBD5E1; margin-bottom: 18px;">
+                Kính gửi <strong>Quý Ban Lãnh đạo &amp; Hội đồng Công nghệ</strong>,
+            </p>
+            <p style="font-size: 14px; color: #94A3B8; margin-bottom: 24px;">
+                Hệ thống <strong>Innoria AI Concierge &amp; Deal Desk</strong> đã ghi nhận yêu cầu tư vấn dịch vụ phần mềm của Quý Doanh nghiệp. Dưới đây là 3 mô hình kỹ nghệ trọng tâm được thiết kế chuyên biệt để tối ưu 50% tổng chi phí sở hữu (TCO) và đảm bảo chủ quyền mã nguồn tuyệt đối:
+            </p>
+
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 22px; margin-bottom: 24px;">
+                <div style="margin-bottom: 16px; border-left: 3px solid #00F2FE; padding-left: 14px;">
+                    <strong style="color: #00F2FE; font-size: 14px;">1. Đội Ngũ Kỹ Sư Đồng Phát Triển Phần Mềm (Co-Engineering Squads — Chuẩn Thông tư 13/2020/TT-BTTTT):</strong>
+                    <div style="color: #94A3B8; font-size: 13px; margin-top: 4px;">
+                        Thực thi nghiêm ngặt quy trình 7 công đoạn sản xuất phần mềm (<em>Xác định yêu cầu -> Phân tích &amp; Thiết kế -> Lập trình -> Kiểm thử -> Đóng gói -> Cài đặt &amp; Bàn giao -> Phát hành</em>), đối soát Timesheet điện tử minh bạch và xuất Hóa đơn điện tử chuẩn ký hiệu <strong>1C26TAA</strong> theo Nghị định 70/2025/NĐ-CP.
+                    </div>
+                </div>
+                <div style="margin-bottom: 16px; border-left: 3px solid #42E6C3; padding-left: 14px;">
+                    <strong style="color: #42E6C3; font-size: 14px;">2. Giải Pháp Phần Mềm Trọn Gói Chìa Khóa Trao Tay (Turnkey Software Package — Chuẩn SAP Activate 5-Gate):</strong>
+                    <div style="color: #94A3B8; font-size: 13px; margin-top: 4px;">
+                        Cam kết nghiệm thu theo 5 cổng chất lượng (<em>Prepare, Explore, Realize, Deploy, Run</em>), kiến trúc Cloud-Native Kubernetes chịu tải cao và bàn giao 100% mã nguồn cùng quyền sở hữu trí tuệ (<em>Zero Vendor Lock-in</em>).
+                    </div>
+                </div>
+                <div style="border-left: 3px solid #F59E0B; padding-left: 14px;">
+                    <strong style="color: #F59E0B; font-size: 14px;">3. Hệ Sinh Thái Tứ Trụ Cấp Chủ Quyền:</strong>
+                    <div style="color: #94A3B8; font-size: 13px; margin-top: 4px;">
+                        • <strong>Insilos ERP:</strong> Tự động hóa kế toán VAS Thông tư 200 &amp; Hóa đơn điện tử Nghị định 70/2025/NĐ-CP.<br/>
+                        • <strong>Vertical Resilience:</strong> Quản trị rủi ro GRC, tuân thủ ISO/IEC 27001, ISO/IEC 27701 &amp; Nghị định 13/2023/NĐ-CP.<br/>
+                        • <strong>Mojo AI:</strong> Cụm tác tử tự chủ, Grounded RAG chống ảo giác 100% &amp; bóc tách chứng từ IDP.<br/>
+                        • <strong>Zencode Ent:</strong> Hiện đại hóa mã nguồn kế thừa (Legacy Modernization) với kỷ luật Swarm PDCA.
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://innoria.com/#innoria_engineering_services" style="display: inline-block; background: linear-gradient(135deg, #00F2FE 0%, #0284C7 100%); color: #070B14; font-size: 14px; font-weight: 700; padding: 14px 32px; border-radius: 9999px; text-decoration: none;">
+                    Mở Trạm Mô Phỏng Dịch Vụ Kỹ Nghệ &amp; Dự Toán Trực Tuyến
+                </a>
+            </div>
+        </div>
+
+        <div style="padding: 18px 32px; border-top: 1px solid rgba(255,255,255,0.08); background: #070B14; font-size: 12px; color: #64748B; text-align: center;">
+            INNORIA Corporation · 18+ Năm Di Sản Kỹ Nghệ Hệ Thống Doanh Nghiệp Cấp Chủ Quyền<br/>
+            Tuân thủ ISO/IEC 27001:2022 · ISO/IEC 27701 · Nghị định 13/2023/NĐ-CP · Nghị định 70/2025/NĐ-CP
+        </div>
+    </div>
+</div>
+            ]]></field>
+        </record>
+
+        <!-- Template Tầng 2 Dịch Vụ Phần Mềm: Bảo Chứng TCO & Tuân Thủ ISO 27001 / Nghị Định 13/2023 -->
+        <record id="mailing_innoria_sw_tier2_compliance" model="mailing.mailing">
+            <field name="subject">[Bảo Chứng Kỹ Nghệ Innoria] Tối Ưu 50% TCO Phần Mềm &amp; Tuân Thủ ISO 27001 / Nghị Định 13/2023</field>
+            <field name="mailing_type">mail</field>
+            <field name="reply_to_mode">update</field>
+            <field name="mailing_model_id" ref="crm.model_crm_lead"/>
+            <field name="use_in_marketing_automation">True</field>
+            <field name="body_html"><![CDATA[
+<div style="background-color: #070B14; color: #E2E8F0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; padding: 40px 20px; line-height: 1.6;">
+    <div style="max-width: 660px; margin: 0 auto; background: #0B132B; border: 1px solid rgba(66,230,195,0.25); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
+        <div style="padding: 32px 32px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); background: linear-gradient(180deg, rgba(16,40,55,0.95) 0%, rgba(11,19,43,0.95) 100%);">
+            <span style="display: inline-block; padding: 4px 12px; background: rgba(66,230,195,0.15); border: 1px solid rgba(66,230,195,0.35); border-radius: 9999px; color: #42E6C3; font-size: 11px; font-weight: 600; font-family: monospace; letter-spacing: 1px;">
+                VERIFIED BENCHMARKS // ZERO-DEFECT &amp; PRIVACY GUARD
+            </span>
+            <h1 style="color: #FFFFFF; font-size: 22px; font-weight: 700; margin: 16px 0 8px; line-height: 1.35;">
+                Bảo Chứng Kỹ Nghệ: Cắt Giảm 50% TCO Trọn Đời &amp; Kỷ Luật 13 Cổng Chất Lượng Tự Động
+            </h1>
+            <p style="color: #94A3B8; font-size: 14px; margin: 0;">
+                Báo cáo đối chiếu hiệu năng thực tế &amp; khung bảo vệ dữ liệu cá nhân Nghị định 13/2023/NĐ-CP.
+            </p>
+        </div>
+
+        <div style="padding: 32px;">
+            <p style="font-size: 14px; color: #CBD5E1; margin-bottom: 20px;">
+                Kính gửi <strong>Quý Lãnh đạo</strong>,
+            </p>
+            <p style="font-size: 14px; color: #94A3B8; margin-bottom: 24px;">
+                Tiếp nối Hồ sơ Kiến trúc Dịch vụ Phần mềm, Hội đồng Kỹ sư Trưởng Innoria gửi tới Quý vị các chỉ số kiểm định kỹ thuật và an toàn thông tin được xác thực trên môi trường vận hành thực tế:
+            </p>
+
+            <div style="border-left: 3px solid #00F2FE; padding-left: 16px; margin-bottom: 18px;">
+                <h3 style="color: #FFFFFF; font-size: 15px; margin: 0 0 6px;">1. Hiệu Năng Suy Luận Biên &lt; 11.4ms &amp; Cam Kết SLA 99.98%:</h3>
+                <p style="color: #94A3B8; font-size: 13px; margin: 0;">
+                    Cụm vi dịch vụ Kubernetes và AI Gateway chịu tải đỉnh 50,000 RPS không gián đoạn (Zero-Downtime Rolling Deploy), tiết kiệm 50% chi phí hạ tầng và bản quyền so với nền tảng ngoại nhập.
+                </p>
+            </div>
+
+            <div style="border-left: 3px solid #42E6C3; padding-left: 16px; margin-bottom: 18px;">
+                <h3 style="color: #FFFFFF; font-size: 15px; margin: 0 0 6px;">2. Kỷ Luật 13 Cổng Kiểm Soát Chất Lượng Tự Động (Zero-Defect):</h3>
+                <p style="color: #94A3B8; font-size: 13px; margin: 0;">
+                    Mọi bản phát hành đều vượt qua kiểm thử bảo mật đối kháng (Adversarial Security Gate), kiểm tra tĩnh SAST/DAST và niêm phong nhật ký kiểm toán mật mã SHA-256.
+                </p>
+            </div>
+
+            <div style="border-left: 3px solid #8B5CF6; padding-left: 16px; margin-bottom: 24px;">
+                <h3 style="color: #FFFFFF; font-size: 15px; margin: 0 0 6px;">3. Bảo Vệ Dữ Liệu Cá Nhân Theo Nghị Định 13/2023/NĐ-CP &amp; ISO/IEC 27701:</h3>
+                <p style="color: #94A3B8; font-size: 13px; margin: 0;">
+                    Cơ chế che khuất dữ liệu nhạy cảm mặc định (Partial Masking), kiểm soát truy cập theo nguyên tắc Need-to-Know và lưu vết bất biến toàn bộ thao tác truy xuất dữ liệu.
+                </p>
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://innoria.com/demo-request" style="display: inline-block; background: #10B981; color: #FFFFFF; font-size: 14px; font-weight: 700; padding: 14px 32px; border-radius: 9999px; text-decoration: none;">
+                    Đặt Lịch Thẩm Định Kiến Trúc &amp; Live POC 3 Giờ
+                </a>
+            </div>
+        </div>
+
+        <div style="padding: 18px 32px; border-top: 1px solid rgba(255,255,255,0.08); background: #070B14; font-size: 12px; color: #64748B; text-align: center;">
+            INNORIA Corporation · Sovereign Enterprise Engineering &amp; AI Solutions
+        </div>
+    </div>
+</div>
+            ]]></field>
+        </record>
+
+        <!-- Server Action Tầng 3: Tự Động Lên Lịch Phiên Thẩm Định Kiến Trúc 3 Giờ (AL2C Deal Desk) -->
+        <record id="action_innoria_sw_tier3_deal_desk" model="ir.actions.server">
+            <field name="name">Innoria: Lên Lịch Thẩm Định Kiến Trúc 3 Giờ &amp; Chuyển AL2C Deal Desk (Tầng 3)</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for lead in records:
+    lead.activity_schedule(
+        'mail.mail_activity_data_call',
+        summary='Phiên Thẩm Định Kiến Trúc Giải Pháp 3 Giờ (Solution Architecture Discovery Call)',
+        note='Khách hàng đã nhận Hồ sơ Kiến trúc Dịch vụ Phần mềm (TT 13/2020 & SAP Activate) và Báo cáo Bảo chứng TCO/ISO 27001. Đủ điều kiện bàn giao cho Hội đồng Kiến trúc sư Trưởng & AL2C Deal Desk.',
+        user_id=lead.user_id.id or env.uid,
+    )
+    lead.message_post(body="<p><strong>[Marketing Automation • AL2C Deal Desk]</strong> Đã hoàn tất chuỗi nuôi dưỡng tự động Dịch Vụ Phần Mềm &amp; AI Concierge (3 tầng). Hệ thống đã tự động lên lịch <em>Phiên Thẩm Định Kiến Trúc Giải Pháp 3 Giờ</em> cho Kiến trúc sư Trưởng phụ trách.</p>")
+            ]]></field>
+        </record>
+
+        <!-- Chiến Dịch Marketing Automation: Dịch Vụ Phần Mềm & AI Concierge -->
+        <record id="campaign_innoria_software_services_al2c" model="marketing.campaign">
+            <field name="name">Chiến Dịch Tự Động Hóa Dịch Vụ Phần Mềm &amp; AI Concierge (Innoria Software Services)</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="domain">[('tag_ids.name', 'in', ['Innoria Software Services', 'AI Concierge Interactive', 'Co-Engineering Squad (TT 13/2020)', 'Turnkey Software (SAP Activate)'])]</field>
+        </record>
+
+        <record id="activity_innoria_sw_tier1_instant" model="marketing.activity">
+            <field name="name">Tầng 1: Gửi Hồ Sơ Kiến Trúc Dịch Vụ Phần Mềm &amp; Bảng Dự Toán TCO/ROI (Tức thì)</field>
+            <field name="campaign_id" ref="campaign_innoria_software_services_al2c"/>
+            <field name="activity_type">email</field>
+            <field name="mass_mailing_id" ref="mailing_innoria_sw_tier1_dossier"/>
+            <field name="trigger_type">begin</field>
+            <field name="interval_number">0</field>
+            <field name="interval_type">hours</field>
+        </record>
+
+        <record id="activity_innoria_sw_tier2_compliance" model="marketing.activity">
+            <field name="name">Tầng 2: Gửi Bảo Chứng Tối Ưu 50% TCO &amp; Tuân Thủ ISO 27001 / NĐ 13/2023 (Sau 1 ngày)</field>
+            <field name="campaign_id" ref="campaign_innoria_software_services_al2c"/>
+            <field name="parent_id" ref="activity_innoria_sw_tier1_instant"/>
+            <field name="activity_type">email</field>
+            <field name="mass_mailing_id" ref="mailing_innoria_sw_tier2_compliance"/>
+            <field name="trigger_type">activity</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+        </record>
+
+        <record id="activity_innoria_sw_tier3_deal_desk" model="marketing.activity">
+            <field name="name">Tầng 3: Lên Lịch Thẩm Định Kiến Trúc 3 Giờ Tại AL2C Deal Desk (Sau 2 ngày)</field>
+            <field name="campaign_id" ref="campaign_innoria_software_services_al2c"/>
+            <field name="parent_id" ref="activity_innoria_sw_tier2_compliance"/>
+            <field name="activity_type">action</field>
+            <field name="server_action_id" ref="action_innoria_sw_tier3_deal_desk"/>
+            <field name="trigger_type">activity</field>
+            <field name="interval_number">2</field>
+            <field name="interval_type">days</field>
+        </record>
+
+        <function model="marketing.campaign" name="action_start_campaign">
+            <value eval="[ref('campaign_innoria_software_services_al2c')]"/>
+        </function>
+
     </data>
 </odoo>

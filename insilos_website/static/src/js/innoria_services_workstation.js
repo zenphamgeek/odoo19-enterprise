@@ -23,6 +23,7 @@
         var rails = section.querySelectorAll('.service-rail-item');
         var sandboxes = section.querySelectorAll('.service-sandbox-pane');
         var telemetryStatus = section.querySelector('#servicesTelemetryStatus');
+        var sandboxConciergeBtn = section.querySelector('#sandboxConciergeBtn');
 
         var currentMode = 0;
         var autoCycleTimer = null;
@@ -31,9 +32,17 @@
         // Telemetry status texts
         var statusTexts = [
             'MODE 01 // NEURAL AI GATEWAY ACTIVE (INFERENCE: 11.4ms)',
-            'MODE 02 // RPA AUTOMATION BUS SYNCHRONIZED (ERROR: 0.00%)',
-            'MODE 03 // CLOUD-NATIVE K8S CLUSTER RUNNING (PODS: 16/16)',
-            'MODE 04 // SOVEREIGN ODC SECURITY SHIELD ENGAGED (ISO 27001)'
+            'MODE 02 // CLEAN-CORE DX & VAS TT200 SYNCHRONIZED (ERROR: 0.00%)',
+            'MODE 03 // TURNKEY K8S CLUSTER RUNNING (SAP ACTIVATE 5-GATE)',
+            'MODE 04 // CO-ENGINEERING SQUAD ENGAGED (TT 13/2020 & ISO 27001)'
+        ];
+
+        var conciergeServices = ['ai', 'erp', 'sw_turnkey', 'sw_squad'];
+        var conciergePrompts = [
+            'Tư vấn tích hợp Dịch Vụ AI & Tác Tử Tự Chủ (Mojo AIaaS, Grounded RAG & IDP)?',
+            'Tư vấn Chuyển Đổi Số & Lõi ERP Tự Hành (VAS TT 200 & HĐĐT Nghị định 70/2025/NĐ-CP)?',
+            'Tư vấn và dự toán Phát Triển Phần Mềm Trọn Gói (Turnkey Software Package chuẩn SAP Activate 5-Gate)?',
+            'Tư vấn cử Đội Ngũ Kỹ Sư Đồng Phát Triển (Co-Engineering Squad chuẩn Thông tư 13/2020/TT-BTTTT)?'
         ];
 
         function switchMode(index, manual) {
@@ -72,6 +81,14 @@
                 void telemetryStatus.offsetWidth; // trigger reflow
                 telemetryStatus.style.animation = 'innoriaHudFadeIn 0.3s ease-out';
             }
+
+            // Update active AI Concierge button attributes
+            if (sandboxConciergeBtn) {
+                sandboxConciergeBtn.setAttribute('data-concierge-service', conciergeServices[index] || 'ai');
+                if (conciergePrompts[index]) {
+                    sandboxConciergeBtn.setAttribute('data-concierge-prompt', conciergePrompts[index]);
+                }
+            }
         }
 
         // Attach click listeners to rails
@@ -101,7 +118,7 @@
             ocr: {
                 latency: '11.8ms',
                 tokens: '4,680 tok/s',
-                json: '{\n  "service": "AIaaS_Vision_OCR",\n  "status": 200,\n  "confidence": 0.9984,\n  "matched_doc": "VAT_INVOICE_T78",\n  "fields_extracted": 28,\n  "validation": "PASS_3_WAY_MATCH"\n}'
+                json: '{\n  "service": "AIaaS_Vision_OCR",\n  "status": 200,\n  "confidence": 0.9984,\n  "matched_doc": "VAT_INVOICE_ND70_1C26TAA",\n  "fields_extracted": 28,\n  "validation": "PASS_3_WAY_MATCH"\n}'
             },
             cnc: {
                 latency: '14.2ms',
@@ -225,7 +242,7 @@
             },
             hcm: {
                 headcount: '55 Enterprise Solution & SAP Consultants',
-                focus: 'SAP/Odoo Core ERP, Circular 78 Financial Compliance',
+                focus: 'SAP/Odoo Core ERP, Nghị định 70/2025 (1C26TAA) & Thông tư 13/2020 Compliance',
                 lead: 'Chief Solutions Architect (18+ Years Enterprise)'
             }
         };
