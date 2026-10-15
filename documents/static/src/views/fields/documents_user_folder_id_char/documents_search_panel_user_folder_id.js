@@ -101,6 +101,9 @@ export class DocumentsSearchPanelUserFolderId extends Component {
     }
 
     onClickClear() {
+        if (!this.inputRef.el) {
+            return;
+        }
         this.inputRef.el.value = "";
         this.inputRef.el.dispatchEvent(new CustomEvent("change", { detail: { value: "" } }));
     }

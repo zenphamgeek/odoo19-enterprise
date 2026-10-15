@@ -250,14 +250,14 @@
     }
 
     .o_no_result {
-        color: #94A3B8;
+        color: var(--insilos-text-secondary);
         font-size: 1.1rem;
         text-align: center;
         margin-top: 3rem;
         padding: 2rem;
-        background: rgba(15, 23, 42, 0.5);
+        background: var(--insilos-bg-card);
         border-radius: 12px;
-        border: 1px dashed rgba(148, 163, 184, 0.25);
+        border: 1px dashed var(--insilos-border-medium);
     }
 
     // iOS iPhone list layout due to Apple AppStore review & mobile responsiveness
@@ -277,8 +277,8 @@
             .o_app {
                 flex-direction: row !important;
                 justify-content: initial !important;
-                background-color: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.06);
+                background-color: var(--insilos-bg-card);
+                border: 1px solid var(--insilos-border-subtle);
                 border-radius: 12px;
                 margin-bottom: map-get($spacers, 2);
                 padding: map-get($spacers, 3) map-get($spacers, 4) !important;

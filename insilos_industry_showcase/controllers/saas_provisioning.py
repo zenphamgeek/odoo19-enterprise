@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 
 class InsilosSaaSController(http.Controller):
 
-    @http.route('/workspace/create', type='json', auth='public', methods=['POST'], csrf=False)
+    @http.route('/workspace/create', type='jsonrpc', auth='public', methods=['POST'], csrf=False, readonly=False)
     def workspace_create(self, subdomain=None, tenant_id=None, idempotency_key=None, **kwargs):
         """
         Atomically provisions a SaaS workspace using DISM-TRL advisory locks.

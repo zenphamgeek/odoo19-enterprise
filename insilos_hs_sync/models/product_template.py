@@ -34,12 +34,15 @@ class ProductTemplate(models.Model):
     )
 
     def _compute_customs_ruling_count(self):
-        ruling_model = self.env['is.customs.ruling']
+        codes = [c for c in set(self.mapped('hs_code_customs')) if c]
+        counts = {}
+        if codes:
+            grouped = self.env['is.customs.ruling']._read_group(
+                [('hs_code', 'in', codes)], ['hs_code'], ['__count']
+            )
+            counts = {hs_code: count for hs_code, count in grouped}
         for rec in self:
-            if rec.hs_code_customs:
-                rec.customs_ruling_count = ruling_model.search_count([('hs_code', '=', rec.hs_code_customs)])
-            else:
-                rec.customs_ruling_count = 0
+            rec.customs_ruling_count = counts.get(rec.hs_code_customs, 0) if rec.hs_code_customs else 0
 
     def action_view_customs_rulings(self):
         self.ensure_one()

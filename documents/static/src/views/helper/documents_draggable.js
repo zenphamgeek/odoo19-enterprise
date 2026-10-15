@@ -347,13 +347,19 @@ export const useDraggableDocuments = makeDraggableHook({
     _setErrorMessage(dragMessage, errorMessage) {
         dragMessage.classList.remove("o_documents_dnd_info");
         dragMessage.classList.add("alert", "alert-warning");
-        dragMessage.querySelector(".o_documents_dnd_text").textContent = errorMessage;
+        const textEl = dragMessage.querySelector(".o_documents_dnd_text");
+        if (textEl) {
+            textEl.textContent = errorMessage;
+        }
     },
 
     _resetDragMessage(dragMessage, dragMessageText) {
         dragMessage.classList.remove("alert", "alert-warning");
         dragMessage.classList.add("o_documents_dnd_info");
-        dragMessage.querySelector(".o_documents_dnd_text").textContent = dragMessageText;
+        const textEl = dragMessage.querySelector(".o_documents_dnd_text");
+        if (textEl) {
+            textEl.textContent = dragMessageText;
+        }
     },
 
     _updateDragInfoPosition(ctx, addStyle) {

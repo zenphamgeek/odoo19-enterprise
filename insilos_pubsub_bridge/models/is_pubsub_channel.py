@@ -61,11 +61,11 @@ class PubSubChannel(models.Model):
                 rec.endpoint_url = f"{base_url}/api/v1/pubsub/ingest"
 
     def _compute_channel_stats(self):
-        EventLog = self.env['is.pubsub.event.log']
-        ForwardLog = self.env['is.pubsub.forward.log']
+        event_total = self.env['is.pubsub.event.log'].search_count([]) if self else 0
+        forward_total = self.env['is.pubsub.forward.log'].search_count([]) if self else 0
         for rec in self:
-            rec.event_count = EventLog.search_count([])
-            rec.forward_count = ForwardLog.search_count([])
+            rec.event_count = event_total
+            rec.forward_count = forward_total
 
     def action_test_ping(self):
         """Simulate a test ping / health check on the Pub/Sub channel."""

@@ -468,21 +468,25 @@ class InsilosEmployeeDashboardController(http.Controller):
             except Exception:
                 pass
 
-        # Fallback: build dynamically from CANONICAL_DGM_EMPLOYEES + hr.employee if present
+        # Fallback: build dynamically from CANONICAL_DGM_EMPLOYEES + hr.employee if present (single batch lookup)
+        reg_to_id = {}
+        try:
+            reg_numbers = [item["reg"] for item in CANONICAL_DGM_EMPLOYEES if item.get("reg")]
+            recs = (
+                request.env["hr.employee"]
+                .sudo()
+                .search([("registration_number", "in", reg_numbers)])
+            )
+            for rec in recs:
+                if getattr(rec, "registration_number", None) and rec.registration_number not in reg_to_id:
+                    reg_to_id[rec.registration_number] = rec.id
+        except Exception:
+            reg_to_id = {}
+
         emp_rows = []
         for idx, item in enumerate(CANONICAL_DGM_EMPLOYEES, start=1):
             calc = _compute_vn_payroll(item["gross_wage"])
-            emp_id = idx
-            try:
-                rec = (
-                    request.env["hr.employee"]
-                    .sudo()
-                    .search([("registration_number", "=", item["reg"])], limit=1)
-                )
-                if rec:
-                    emp_id = rec.id
-            except Exception:
-                pass
+            emp_id = reg_to_id.get(item["reg"], idx)
             emp_rows.append(
                 {
                     "id": emp_id,
@@ -543,12 +547,12 @@ class InsilosEmployeeDashboardController(http.Controller):
             selected = employees[0]
         return selected
 
-    def _resolve_viewer_role(self, emp_dict):
+    def _resolve_viewer_role(self, emp_dict, emp_map=None, is_hr_exec=None, is_hr_user=None):
         uid = getattr(request.env, "uid", None)
         user = getattr(request.env, "user", None)
-        if uid in (1, 2):
+        if uid in (1, 2) or is_hr_exec is True:
             return "HR_EXEC"
-        if user:
+        if is_hr_exec is None and user:
             for grp in (
                 "base.group_system",
                 "hr.group_hr_manager",
@@ -563,9 +567,13 @@ class InsilosEmployeeDashboardController(http.Controller):
 
         emp_rec = None
         try:
-            emp_rec = request.env["hr.employee"].sudo().browse(int(emp_dict["id"]))
-            if emp_rec and hasattr(emp_rec, "exists") and not emp_rec.exists():
-                emp_rec = None
+            emp_id_int = int(emp_dict["id"])
+            if emp_map is not None:
+                emp_rec = emp_map.get(emp_id_int)
+            else:
+                emp_rec = request.env["hr.employee"].sudo().browse(emp_id_int)
+                if emp_rec and hasattr(emp_rec, "exists") and not emp_rec.exists():
+                    emp_rec = None
         except Exception:
             emp_rec = None
 
@@ -592,7 +600,7 @@ class InsilosEmployeeDashboardController(http.Controller):
                     and emp_rec.department_id.manager_id.user_id.id == uid
                 ):
                     return "LINE_MANAGER"
-            if user and user.has_group("hr.group_hr_user"):
+            if is_hr_user is True or (is_hr_user is None and user and user.has_group("hr.group_hr_user")):
                 return "LINE_MANAGER"
         except Exception:
             pass
@@ -788,9 +796,46 @@ class InsilosEmployeeDashboardController(http.Controller):
         registry = self._get_registry_and_employees()
         raw_employees = registry["employees"]
 
+        uid = getattr(request.env, "uid", None)
+        user = getattr(request.env, "user", None)
+        is_hr_exec = uid in (1, 2)
+        is_hr_user = False
+        if not is_hr_exec and user:
+            for grp in (
+                "base.group_system",
+                "hr.group_hr_manager",
+                "hr_payroll.group_hr_payroll_manager",
+                "hr_payroll.group_hr_payroll_user",
+            ):
+                try:
+                    if user.has_group(grp):
+                        is_hr_exec = True
+                        break
+                except Exception:
+                    pass
+            if not is_hr_exec:
+                try:
+                    is_hr_user = bool(user.has_group("hr.group_hr_user"))
+                except Exception:
+                    is_hr_user = False
+
+        emp_map = {}
+        if not is_hr_exec:
+            try:
+                emp_ids = [int(e["id"]) for e in raw_employees if e.get("id") is not None]
+                for rec in request.env["hr.employee"].sudo().browse(emp_ids).exists():
+                    emp_map[rec.id] = rec
+            except Exception:
+                emp_map = None
+
         scoped_employees = []
         for raw_emp in raw_employees:
-            role = self._resolve_viewer_role(raw_emp)
+            role = self._resolve_viewer_role(
+                raw_emp,
+                emp_map=emp_map,
+                is_hr_exec=is_hr_exec,
+                is_hr_user=is_hr_user,
+            )
             if role != "UNAUTHORIZED":
                 scoped_employees.append(self._mask_employee_for_viewer(raw_emp, role))
 
@@ -835,11 +880,11 @@ class InsilosEmployeeDashboardController(http.Controller):
             "privacy_audit_log": privacy_audit_log,
         }
 
-    @http.route("/insilos/employee_dashboard/data", type="jsonrpc", auth="user")
+    @http.route("/insilos/employee_dashboard/data", type="jsonrpc", auth="user", readonly=False)
     def get_employee_dashboard_data(self, employee_id=None, **kwargs):
         return self._build_dashboard_payload(employee_id=employee_id)
 
-    @http.route("/insilos/employee_dashboard/reveal_pii", type="jsonrpc", auth="user")
+    @http.route("/insilos/employee_dashboard/reveal_pii", type="jsonrpc", auth="user", readonly=False)
     def reveal_pii(self, employee_id=None, **kwargs):
         registry = self._get_registry_and_employees()
         employees = registry["employees"]
@@ -865,7 +910,7 @@ class InsilosEmployeeDashboardController(http.Controller):
             "privacy_audit_log": logs[:10],
         }
 
-    @http.route("/insilos/employee_dashboard/submit_change_request", type="jsonrpc", auth="user")
+    @http.route("/insilos/employee_dashboard/submit_change_request", type="jsonrpc", auth="user", readonly=False)
     def submit_change_request(
         self,
         employee_id=None,
@@ -959,7 +1004,7 @@ class InsilosEmployeeDashboardController(http.Controller):
         self._append_privacy_audit_log(target_emp, "STEP1_SUBMIT_CHANGE_REQUEST")
         return self._build_dashboard_payload(employee_id=target_emp["id"])
 
-    @http.route("/insilos/employee_dashboard/decide_change_request", type="jsonrpc", auth="user")
+    @http.route("/insilos/employee_dashboard/decide_change_request", type="jsonrpc", auth="user", readonly=False)
     def decide_change_request(
         self,
         request_id=None,
@@ -1156,6 +1201,12 @@ class InsilosEmployeeDashboardController(http.Controller):
                 except Exception:
                     pass
 
+            try:
+                if hasattr(request.env, "invalidate_all"):
+                    request.env.invalidate_all()
+            except Exception:
+                pass
+
             IrConfig.set_param("dgm.hr.master_registry", json.dumps(registry, ensure_ascii=False))
             target_req["state"] = "approved"
             target_req["approved_by_name"] = approver_name
@@ -1189,7 +1240,7 @@ class InsilosEmployeeDashboardController(http.Controller):
 
         return self._build_dashboard_payload(employee_id=employee_id or target_emp["id"])
 
-    @http.route("/insilos/employee_dashboard/toggle_step", type="jsonrpc", auth="user")
+    @http.route("/insilos/employee_dashboard/toggle_step", type="jsonrpc", auth="user", readonly=False)
     def toggle_lifecycle_step(
         self,
         employee_id=None,
@@ -1237,7 +1288,7 @@ class InsilosEmployeeDashboardController(http.Controller):
         IrConfig.set_param(f"dgm.hr.lifecycle.{selected['id']}", json.dumps(lifecycle, ensure_ascii=False))
         return self._build_dashboard_payload(employee_id=selected["id"])
 
-    @http.route("/insilos/employee_dashboard/export_vcb_digibiz", type="http", auth="user", methods=["GET"])
+    @http.route("/insilos/employee_dashboard/export_vcb_digibiz", type="http", auth="user", methods=["GET"], readonly=False)
     def export_vcb_digibiz(self, **kwargs):
         registry = self._get_registry_and_employees()
         employees = registry["employees"]

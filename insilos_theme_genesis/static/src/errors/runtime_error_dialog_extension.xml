@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates id="template" xml:space="preserve">
     <t t-inherit="web.ErrorDialog" t-inherit-mode="extension">
-        <xpath expr="//t[@t-set-slot='footer']" position="inside">
+        <xpath expr="//t[@t-set-slot='footer']/button[hasclass('o_insilos_share_error_btn')]" position="replace">
             <button class="btn btn-outline-danger ms-2 o_insilos_share_error_btn"
                     t-on-click="() => this.onClickShareRuntimeError()"
                     t-att-disabled="this.state.sharingError || this.state.sharingSuccess"
@@ -9,7 +9,11 @@
                 <i t-if="!this.state.sharingError and !this.state.sharingSuccess" class="fa fa-paper-plane me-1"/>
                 <i t-if="this.state.sharingError" class="fa fa-spinner fa-spin me-1"/>
                 <i t-if="this.state.sharingSuccess" class="fa fa-check text-success me-1"/>
-                <span t-esc="this.state.sharingSuccess ? 'Đã báo cáo' : 'Gửi log lỗi'"/>
+                <span t-if="this.state.sharingSuccess" class="text-success fw-bold">
+                    <t t-esc="this.state.incidentCode ? `Đã gửi báo cáo (${this.state.incidentCode})` : 'Đã báo cáo'"/>
+                </span>
+                <span t-elif="this.state.sharingError">Đang gửi báo cáo sự cố...</span>
+                <span t-else="">⚡ Send Incident Report</span>
             </button>
         </xpath>
     </t>

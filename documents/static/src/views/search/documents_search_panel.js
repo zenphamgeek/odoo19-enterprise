@@ -145,6 +145,9 @@ export class DocumentsSearchPanel extends SearchPanel {
             onDrop: async ({ element, parent, next }) => {
                 const draggingFolderId = parseInt(element.dataset.valueId);
                 const draggingFolder = this.env.searchModel.getFolderById(draggingFolderId);
+                if (!draggingFolder) {
+                    return;
+                }
                 const draggingFolderRootId = draggingFolder.rootId;
                 let parentFolderId = parent ? parent.dataset.valueId : false;
                 const beforeFolderId = next ? parseInt(next.dataset.valueId) : false;
@@ -157,7 +160,7 @@ export class DocumentsSearchPanel extends SearchPanel {
                     return;
                 }
                 const parentFolderRootId =
-                    this.env.searchModel.getFolderById(parentFolderId).rootId;
+                    this.env.searchModel.getFolderById(parentFolderId)?.rootId;
                 if (
                     !this.documentService.userIsDocumentManager &&
                     (!parentFolderRootId || parentFolderRootId === "COMPANY")
@@ -178,6 +181,7 @@ export class DocumentsSearchPanel extends SearchPanel {
                 }
                 const parentFolder = this.env.searchModel.getFolderById(parentFolderId);
                 if (
+                    parentFolder &&
                     !DND_ALLOWED_SPECIAL_DESTINATIONS.includes(parentFolderId) &&
                     (draggingFolder.access_internal !== parentFolder.access_internal ||
                         draggingFolder.access_via_link !== parentFolder.access_via_link ||
@@ -226,7 +230,7 @@ export class DocumentsSearchPanel extends SearchPanel {
     async toggleCategory(category, value) {
         if (category.activeValueId !== value.id) {
             const folder = this.env.searchModel.getFolderById(value.id);
-            const isShortcut = !!folder.shortcut_document_id?.length;
+            const isShortcut = !!folder?.shortcut_document_id?.length;
             if (isShortcut && !this.env.searchModel.getFolderById(folder.shortcut_document_id[0])) {
                 // Unknown folders are in the Trash.
                 return this.env.searchModel.toggleCategoryValue(category.id, "TRASH");
@@ -286,13 +290,18 @@ export class DocumentsSearchPanel extends SearchPanel {
 
     _expandFolder({ folderId }) {
         let needRefresh = false;
-        const sectionId = this.sections[0].id;
-        const folders = this.env.searchModel.getFolderAndParents(
-            this.env.searchModel.getFolderById(folderId)
-        );
-        if (folders[0].id === "COMPANY" || this.state.expanded[sectionId][folders[0].rootId]) {
+        const sectionId = this.sections[0]?.id;
+        if (!sectionId) {
+            return;
+        }
+        const targetFolder = this.env.searchModel.getFolderById(folderId);
+        if (!targetFolder) {
+            return;
+        }
+        const folders = this.env.searchModel.getFolderAndParents(targetFolder);
+        if (folders[0] && (folders[0].id === "COMPANY" || this.state.expanded[sectionId]?.[folders[0].rootId])) {
             for (const folder of folders) {
-                if (!this.state.expanded[sectionId][folder.id]) {
+                if (folder && !this.state.expanded[sectionId][folder.id]) {
                     this.state.expanded[sectionId][folder.id] = true;
                     needRefresh = true;
                 }

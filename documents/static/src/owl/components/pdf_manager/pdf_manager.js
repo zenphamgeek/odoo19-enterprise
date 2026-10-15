@@ -921,7 +921,10 @@ export class PdfManager extends Component {
      * @private
      */
     _keepFocusedPageInScreen() {
-        const card = document.querySelector(`[data-id=${this.state.focusedPage}]`);
+        const card = document.querySelector(`[data-id="${this.state.focusedPage}"]`);
+        if (!card || !this.pageViewer.el) {
+            return;
+        }
         const focusedCardCoordinates = card.getBoundingClientRect();
         const pageViewerCoordinates = this.pageViewer.el.getBoundingClientRect();
         const bottomDifference = focusedCardCoordinates.bottom - pageViewerCoordinates.bottom;
@@ -1194,6 +1197,9 @@ export class PdfManager extends Component {
         this.state.selectionBoxArgs["height"] =
             Math.abs(y - (this._selectionY - scrollTopDiff)) + "px";
 
+        if (!this.selectionBox.el) {
+            return;
+        }
         const boxCoordinates = this.selectionBox.el.getBoundingClientRect();
         const boxTop = boxCoordinates.top;
         const boxBottom = boxTop + boxCoordinates.height;
@@ -1253,7 +1259,7 @@ export class PdfManager extends Component {
      * @public
      */
     onClickGlobalAdd() {
-        this.addFileInput.el.click();
+        this.addFileInput.el?.click();
     }
     /**
      * @public

@@ -3,6 +3,10 @@
    Standardizing 7 Enterprise Hub Views (IBM Carbon 11 & SAP Fiori Horizon Dark)
    ========================================================================== */
 
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
 .o_form_view.insilos_hub_form,
 .o_form_view.o_logistics_idp_onboarding_form {
   background: var(--insilos-bg-canvas) !important;
@@ -137,6 +141,19 @@
 
     .insilos_footer_desc {
       color: #94a3b8 !important;
+    }
+  }
+}
+}
+
+html[data-theme="light"] body:not(.o_dark_mode) {
+  .o_form_view.insilos_hub_form,
+  .o_form_view.o_logistics_idp_onboarding_form {
+    background: var(--insilos-bg-canvas) !important;
+    .insilos_hub_card,
+    .insilos_hub_footer_card {
+      background: var(--insilos-bg-card) !important;
+      border-color: var(--insilos-border-subtle) !important;
     }
   }
 }

@@ -43,8 +43,8 @@ export class PromoteStudioDialog extends Component {
      * Close the dialog on outside click.
      */
     onWindowMouseDown(ev) {
-        const dialogContent = this.modalRef.el.querySelector(".modal-content");
-        if (!this.disableClick && !dialogContent.contains(ev.target)) {
+        const dialogContent = this.modalRef.el?.querySelector(".modal-content");
+        if (!this.disableClick && dialogContent && !dialogContent.contains(ev.target)) {
             this.props.close();
         }
     }

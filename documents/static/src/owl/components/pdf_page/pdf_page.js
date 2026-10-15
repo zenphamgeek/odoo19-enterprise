@@ -51,7 +51,7 @@ export class PdfPage extends Component {
         if (this.props.toRender) {
             this.isRendered = false;
         }
-        if (!canvas || this.isRendered) {
+        if (!canvas || this.isRendered || !this.canvasWrapperRef.el) {
             return;
         }
         this.canvasWrapperRef.el.querySelector(".o_documents_pdf_canvas")?.remove();

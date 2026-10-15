@@ -1,5 +1,9 @@
 // Part of Insilos. See LICENSE file for full copyright and licensing details.
 
+:root,
+html,
+body,
+.o_web_client,
 body.o_dark_mode,
 .o_dark_mode,
 [data-bs-theme="dark"],
@@ -13,7 +17,12 @@ body.o_dark_mode,
     --insilos-text-secondary: #94a3b8;
     --insilos-text-muted: #94a3b8;
     --insilos-primary: #00f2fe;
+}
 
+body.o_dark_mode,
+.o_dark_mode,
+[data-bs-theme="dark"],
+[data-theme="dark"] {
     .w_market_terminal {
         background-color: #070b14 !important;
         color: #f8fafc !important;
@@ -109,4 +118,16 @@ body.o_dark_mode,
             color: #fca5a5 !important;
         }
     }
+}
+
+html[data-theme="light"] body:not(.o_dark_mode) {
+    --insilos-bg-canvas: #f4f6f8;
+    --insilos-bg-surface: #ffffff;
+    --insilos-bg-card: #ffffff;
+    --insilos-bg-hover: #f1f5f9;
+    --insilos-border-subtle: #e2e8f0;
+    --insilos-text-primary: #0f172a;
+    --insilos-text-secondary: #475569;
+    --insilos-text-muted: #64748b;
+    --insilos-primary: #0b2e64;
 }

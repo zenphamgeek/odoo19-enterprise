@@ -78,12 +78,17 @@ export function preSuperSetup() {
         component.modelState.sharedSelection = shared;
         try {
             if (!Object.isFrozen(props) && Object.isExtensible(props) && !props.state) {
-                Object.defineProperty(props, "state", {
-                    value: { modelState: { sharedSelection: shared } },
-                    writable: true,
-                    configurable: true,
-                    enumerable: true,
-                });
+                const desc = Object.getOwnPropertyDescriptor(props, "state");
+                if (desc && typeof desc.set === "function") {
+                    props.state = { modelState: { sharedSelection: shared } };
+                } else {
+                    Object.defineProperty(props, "state", {
+                        value: { modelState: { sharedSelection: shared } },
+                        writable: true,
+                        configurable: true,
+                        enumerable: true,
+                    });
+                }
             }
         } catch {
             // Ignore if props is frozen or non-configurable
@@ -403,7 +408,7 @@ function useDocumentsViewFilePreviewer({
                 if (component.root?.el) {
                     component.root.el
                         .querySelector(".o_documents_view")
-                        .classList.remove("overflow-hidden");
+                        ?.classList.remove("overflow-hidden");
                 }
 
                 setPreviewStore({});

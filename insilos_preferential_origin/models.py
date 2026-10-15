@@ -81,6 +81,9 @@ class OriginScenario(models.Model):
     explanation = fields.Char(compute='_compute_recommendation')
 
     def _compute_recommendation(self):
+        for record in self:
+            record.recommendation_rank = 0
+            record.explanation = False
         for company in self.mapped('company_id'):
             scenarios = self.search([('company_id', '=', company.id)])
             values = [{'id': scenario.id, 'state': scenario.state,

@@ -48,9 +48,9 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(DocumentsSecon
                 const focusedRecord = this.setDefaultFocus();
                 document
                     .querySelector(
-                        `.o_data_row[data-value-id="${focusedRecord.resId}"] .o_data_cell`
+                        `.o_data_row[data-value-id="${focusedRecord?.resId}"] .o_data_cell`
                     )
-                    .focus();
+                    ?.focus();
             },
             {
                 category: "smart_action",
@@ -112,13 +112,13 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(DocumentsSecon
 
     onKeyDown(ev) {
         if (ev.key === "Control") {
-            this.root.el.classList.add("o_documents_dnd_shortcut");
+            this.root.el?.classList.add("o_documents_dnd_shortcut");
         }
     }
 
     onKeyUp(ev) {
         if (ev.key === "Control") {
-            this.root.el.classList.remove("o_documents_dnd_shortcut");
+            this.root.el?.classList.remove("o_documents_dnd_shortcut");
         }
     }
 
@@ -182,7 +182,7 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(DocumentsSecon
     findFocusFutureCell(cell, cellIsInGroupRow, direction) {
         const futureCell = super.findFocusFutureCell(cell, cellIsInGroupRow, direction);
         if (futureCell) {
-            const dataPointId = futureCell.closest("tr").dataset.id;
+            const dataPointId = futureCell.closest("tr")?.dataset.id;
             const record = this.props.list.records.filter((x) => x.id === dataPointId)[0];
             if (record) {
                 this.documentService.focusRecord(record);

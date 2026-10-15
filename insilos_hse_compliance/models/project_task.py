@@ -46,17 +46,21 @@ class ProjectTask(models.Model):
             task.has_hazardous_materials = bool(chemicals)
 
     def _compute_permit_warning(self):
+        all_chem_ids = self.mapped('chemical_substance_ids').ids
+        permitted_chem_ids = set()
+        if all_chem_ids:
+            permits = self.env['is.hse.product.permit'].search([
+                ('chemical_substance_id', 'in', all_chem_ids),
+            ])
+            permitted_chem_ids = set(permits.mapped('chemical_substance_id').ids)
         for task in self:
             warning = False
             if task.chemical_substance_ids and task.hse_facility_id:
                 # ponytail: internal metadata only; use an approved legal dataset before external validity checks.
-                untracked_chems = []
-                for chem in task.chemical_substance_ids:
-                    permits = self.env['is.hse.product.permit'].search([
-                        ('chemical_substance_id', '=', chem.id),
-                    ])
-                    if not permits:
-                        untracked_chems.append(chem.name)
+                untracked_chems = [
+                    chem.name for chem in task.chemical_substance_ids
+                    if chem.id not in permitted_chem_ids
+                ]
                 if untracked_chems:
                     warning = _("YÊU CẦU RÀ SOÁT NỘI BỘ: Hóa chất [%s] chưa có bản ghi giấy phép/cấu hình nội bộ; không thể kết luận nghĩa vụ hoặc hiệu lực.") % (", ".join(untracked_chems))
             task.permit_warning = warning

@@ -29,13 +29,15 @@ export class PdfGroupName extends Component {
      * @public
      */
     onBlur() {
-        this.props.onEditName(this.props.groupId, this.nameInputRef.el.value);
+        if (this.nameInputRef.el) {
+            this.props.onEditName?.(this.props.groupId, this.nameInputRef.el.value);
+        }
     }
     /**
      * @public
      */
     onClickGroupName() {
-        this.props.onToggleEdit(this.props.groupId, true);
+        this.props.onToggleEdit?.(this.props.groupId, true);
     }
     /**
      * @public
@@ -46,7 +48,9 @@ export class PdfGroupName extends Component {
             return;
         }
         ev.stopPropagation();
-        this.props.onEditName(this.props.groupId, this.nameInputRef.el.value);
-        this.props.onToggleEdit(this.props.groupId, false);
+        if (this.nameInputRef.el) {
+            this.props.onEditName?.(this.props.groupId, this.nameInputRef.el.value);
+        }
+        this.props.onToggleEdit?.(this.props.groupId, false);
     }
 }

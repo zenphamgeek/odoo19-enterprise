@@ -11,18 +11,20 @@ export class DocumentsTypeIcon extends Component {
     }
 
     onClickDocumentsRequest() {
-        this.fileInput.el.click();
+        this.fileInput.el?.click();
     }
 
     async onReplaceDocument() {
-        if (!this.fileInput.el.files.length) {
+        if (!this.fileInput.el?.files?.length) {
             return;
         }
         await this.env.model.env.documentsView.bus.trigger("documents-upload-files", {
             files: this.fileInput.el.files,
             accessToken: this.props.record.data.access_token,
         });
-        this.fileInput.el.value = "";
+        if (this.fileInput.el) {
+            this.fileInput.el.value = "";
+        }
     }
 }
 

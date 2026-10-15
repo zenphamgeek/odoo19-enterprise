@@ -9,7 +9,7 @@ from .documents import ShareRoute
 
 
 class Home(web_home.Home):
-    def _web_client_readonly(self, rule, args):
+    def _web_client_readonly(self, rule=None, args=None, *a, **kw):
         """ Force a read/write cursor for documents.access """
         path = request.httprequest.path
         if path.startswith('/insilos/documents'):

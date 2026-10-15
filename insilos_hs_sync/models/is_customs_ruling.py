@@ -37,12 +37,15 @@ class IsCustomsRuling(models.Model):
             rec.display_name = " - ".join(name_parts) if name_parts else (rec.ruling_number or _("Customs Ruling"))
 
     def _compute_product_template_count(self):
-        product_template_model = self.env['product.template']
+        codes = [c for c in set(self.mapped('hs_code')) if c]
+        counts = {}
+        if codes:
+            grouped = self.env['product.template']._read_group(
+                [('hs_code_customs', 'in', codes)], ['hs_code_customs'], ['__count']
+            )
+            counts = {hs_code: count for hs_code, count in grouped}
         for rec in self:
-            if rec.hs_code:
-                rec.product_template_count = product_template_model.search_count([('hs_code_customs', '=', rec.hs_code)])
-            else:
-                rec.product_template_count = 0
+            rec.product_template_count = counts.get(rec.hs_code, 0) if rec.hs_code else 0
 
     def action_view_matching_products(self):
         self.ensure_one()

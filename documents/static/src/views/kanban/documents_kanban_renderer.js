@@ -44,7 +44,7 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
                     record.toggleSelection(!allSelected);
                 });
                 const focusedRecord = this.setDefaultFocus();
-                document.querySelector(`.o_kanban_record[data-value-id="${focusedRecord.resId}"]`).focus();
+                document.querySelector(`.o_kanban_record[data-value-id="${focusedRecord?.resId}"]`)?.focus();
             },
             {
                 category: "smart_action",
@@ -96,7 +96,7 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
         });
         onMounted(() => {
             if (this.isMobile && this.isRecentFolder) {
-                this.root.el.classList.add('o_documents_recent');
+                this.root.el?.classList.add('o_documents_recent');
             }
         });
     }
@@ -250,13 +250,13 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
 
     onKeyDown(ev) {
         if (ev.key === "Control") {
-            this.root.el.classList.add("o_documents_dnd_shortcut");
+            this.root.el?.classList.add("o_documents_dnd_shortcut");
         }
     }
 
     onKeyUp(ev) {
         if (ev.key === "Control") {
-            this.root.el.classList.remove("o_documents_dnd_shortcut");
+            this.root.el?.classList.remove("o_documents_dnd_shortcut");
         }
     }
 

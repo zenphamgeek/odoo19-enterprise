@@ -36,14 +36,26 @@ class IsHsTariff(models.Model):
             rec.display_name = f"[{rec.hs_code}] {desc}" if rec.hs_code else (rec.description_vi or _("HS Tariff"))
 
     def _compute_ruling_count(self):
-        ruling_model = self.env['is.customs.ruling']
+        codes = [c for c in set(self.mapped('hs_code')) if c]
+        counts = {}
+        if codes:
+            grouped = self.env['is.customs.ruling']._read_group(
+                [('hs_code', 'in', codes)], ['hs_code'], ['__count']
+            )
+            counts = {hs_code: count for hs_code, count in grouped}
         for rec in self:
-            rec.ruling_count = ruling_model.search_count([('hs_code', '=', rec.hs_code)]) if rec.hs_code else 0
+            rec.ruling_count = counts.get(rec.hs_code, 0) if rec.hs_code else 0
 
     def _compute_product_template_count(self):
-        product_template_model = self.env['product.template']
+        codes = [c for c in set(self.mapped('hs_code')) if c]
+        counts = {}
+        if codes:
+            grouped = self.env['product.template']._read_group(
+                [('hs_code_customs', 'in', codes)], ['hs_code_customs'], ['__count']
+            )
+            counts = {hs_code: count for hs_code, count in grouped}
         for rec in self:
-            rec.product_template_count = product_template_model.search_count([('hs_code_customs', '=', rec.hs_code)]) if rec.hs_code else 0
+            rec.product_template_count = counts.get(rec.hs_code, 0) if rec.hs_code else 0
 
     def action_view_rulings(self):
         self.ensure_one()

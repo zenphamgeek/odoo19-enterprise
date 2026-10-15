@@ -63,7 +63,7 @@ export class DocumentsManageVersions extends Component {
     }
 
     onUploadNewVersion() {
-        this.fileInputRef.el.click();
+        this.fileInputRef.el?.click();
     }
 
     async onReplace(ev) {
