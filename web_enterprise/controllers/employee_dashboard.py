@@ -139,6 +139,22 @@ CANONICAL_DGM_EMPLOYEES = [
         "gross_wage": 18000000,
         "join_date": "01/06/2024",
     },
+    {
+        "reg": "DGM-009",
+        "name": "Trần Văn Huỳnh Phố",
+        "id_card_name": "079098014567",
+        "job_title": "Kỹ sư Phần mềm Senior (AIfin Onsite)",
+        "department_name": "Khối Dịch Vụ Kỹ Sư Onsite B2B (Enterprise B2B & MTI Delivery)",
+        "manager_name": "Bùi Hữu Tài",
+        "work_email": "pho.tran@inno.ai.vn",
+        "work_phone": "0903881009",
+        "bank_name": "VIETCOMBANK",
+        "bank_bic": "BFTVVNVX",
+        "bank_branch": "CN Tân Bình",
+        "bank_acc_number": "1045289901",
+        "gross_wage": 30000000,
+        "join_date": "01/04/2024",
+    },
 ]
 
 
