@@ -122,6 +122,15 @@ export class HomeMenu extends Component {
                     handover_assignee: "Nguyễn Hoài Ân (CTO)",
                     reason: "Chuyển giao công tác / Kế hoạch cá nhân",
                 },
+                kpiForm: {
+                    kpi_delivery_score: 92.0,
+                    kpi_quality_score: 90.0,
+                    kpi_work_eval_score: 91.0,
+                    exam_score: 95.0,
+                    certificate_ref: "CERT-2026Q4-SWE",
+                    next_training_roadmap: "",
+                    manager_review_note: "",
+                },
             },
         });
         this.pressTimer;
@@ -558,6 +567,19 @@ export class HomeMenu extends Component {
                     this.state.empDashboard.leavingForm.reason =
                         res.leaving.reason || "Chuyển giao công tác / Kế hoạch cá nhân";
                 }
+                if (res.kpi_skill_hub) {
+                    const kh = res.kpi_skill_hub;
+                    this.state.empDashboard.kpiForm.kpi_delivery_score =
+                        kh.kpi_delivery_score ?? 90.0;
+                    this.state.empDashboard.kpiForm.kpi_quality_score =
+                        kh.kpi_quality_score ?? 90.0;
+                    this.state.empDashboard.kpiForm.kpi_work_eval_score =
+                        kh.kpi_work_eval_score ?? 90.0;
+                    this.state.empDashboard.kpiForm.next_training_roadmap =
+                        kh.next_training_roadmap || "";
+                    this.state.empDashboard.kpiForm.manager_review_note =
+                        kh.manager_review_note || "";
+                }
             }
         } catch {
             // Non-blocking fallback if offline
@@ -624,6 +646,70 @@ export class HomeMenu extends Component {
         } catch {
             // Fail-soft
         }
+    }
+
+    async onCompleteSkillUpgrade(skillCode) {
+        const empId = this.state.empDashboard.data?.current_employee?.id;
+        if (!empId || !skillCode) {
+            return;
+        }
+        const kf = this.state.empDashboard.kpiForm;
+        try {
+            const res = await rpc("/insilos/employee_dashboard/complete_skill_upgrade", {
+                employee_id: empId,
+                skill_code: skillCode,
+                exam_score: Number(kf.exam_score) || 95.0,
+                certificate_ref: kf.certificate_ref || `CERT-${skillCode}-2026`,
+            });
+            if (res && res.current_employee) {
+                this.state.empDashboard.data = res;
+                if (res.kpi_skill_hub) {
+                    this.state.empDashboard.kpiForm.next_training_roadmap =
+                        res.kpi_skill_hub.next_training_roadmap || "";
+                    this.state.empDashboard.kpiForm.manager_review_note =
+                        res.kpi_skill_hub.manager_review_note || "";
+                }
+            }
+        } catch {
+            // Fail-soft
+        }
+    }
+
+    async onSubmitWorkKpiReview(approve = false) {
+        const empId = this.state.empDashboard.data?.current_employee?.id;
+        if (!empId) {
+            return;
+        }
+        const kf = this.state.empDashboard.kpiForm;
+        try {
+            const res = await rpc("/insilos/employee_dashboard/submit_work_kpi_review", {
+                employee_id: empId,
+                kpi_delivery_score: Number(kf.kpi_delivery_score) || 90.0,
+                kpi_quality_score: Number(kf.kpi_quality_score) || 90.0,
+                kpi_work_eval_score: Number(kf.kpi_work_eval_score) || 90.0,
+                next_training_roadmap: kf.next_training_roadmap,
+                manager_review_note: kf.manager_review_note,
+                approve_evaluation: Boolean(approve),
+            });
+            if (res && res.current_employee) {
+                this.state.empDashboard.data = res;
+            }
+        } catch {
+            // Fail-soft
+        }
+    }
+
+    openKpiEvaluationApp() {
+        return this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Đánh giá KPI & Lộ trình Kỹ năng Kỹ sư Phần mềm",
+            res_model: "dgm.hr.kpi.evaluation",
+            views: [
+                [false, "list"],
+                [false, "form"],
+            ],
+            target: "current",
+        });
     }
 
     openHrApp() {

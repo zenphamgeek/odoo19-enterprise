@@ -21,6 +21,8 @@
                 <t t-set="summary" t-value="state.empDashboard.data.payroll_summary"/>
                 <t t-set="onb" t-value="state.empDashboard.data.onboarding"/>
                 <t t-set="lv" t-value="state.empDashboard.data.leaving"/>
+                <t t-set="kpi" t-value="state.empDashboard.data.kpi_skill_hub || {}"/>
+                <t t-set="kpiSum" t-value="state.empDashboard.data.kpi_summary || {}"/>
 
                 <!-- Top Executive Identity & Action Header -->
                 <div class="o_emp_dash_header d-flex flex-wrap align-items-center justify-content-between gap-3">
@@ -97,6 +99,10 @@
                         <button type="button" class="o_emp_tab_btn" t-att-class="{ active: state.empDashboard.activeTab === 'approval' }" t-on-click="() => this.selectDashboardTab('approval')">
                             <i class="fa fa-gavel me-2"/>Cập nhật 2 Bước &amp; Privacy ISO
                             <span class="o_emp_tab_pill ms-2" t-out="(state.empDashboard.data.pending_approval_count || 0) + ' chờ duyệt'"/>
+                        </button>
+                        <button type="button" class="o_emp_tab_btn" t-att-class="{ active: state.empDashboard.activeTab === 'kpi_skills' }" t-on-click="() => this.selectDashboardTab('kpi_skills')">
+                            <i class="fa fa-line-chart me-2"/>KPI Công việc &amp; Nâng cấp Kỹ năng SWE
+                            <span class="o_emp_tab_pill ms-2" t-out="(kpi.total_kpi_score || 0) + 'đ • ' + (kpi.mandatory_skill_certified || 0) + '/' + (kpi.mandatory_skill_total || 0) + ' Kỹ năng'"/>
                         </button>
                     </div>
 
@@ -581,6 +587,248 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 6: KPI EVALUATION, WORK APPRAISAL & MANDATORY SWE SKILL UPGRADE GATE -->
+                    <div t-if="state.empDashboard.activeTab === 'kpi_skills'" class="o_emp_tab_panel">
+                        <div class="row g-3">
+                            <!-- Left Column: 4-Pillar Weighted KPI Scorecard + Interactive Work Review Form -->
+                            <div class="col-12 col-lg-5 d-flex flex-column gap-3">
+                                <div class="o_emp_card">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <div class="o_emp_card_title mb-0">
+                                            <i class="fa fa-trophy me-2"/>Đánh giá KPI &amp; Hiệu suất Công việc (<span t-out="kpi.evaluation_period || 'Q4/2026'"/>)
+                                        </div>
+                                        <span class="o_emp_badge" t-att-class="{
+                                            'o_emp_badge_emerald': kpi.rank_grade === 'tier_s' or kpi.rank_grade === 'tier_a',
+                                            'o_emp_badge_amber': kpi.rank_grade === 'tier_b' or kpi.rank_grade === 'tier_c'
+                                        }" t-out="kpi.evaluation_code || 'KPI-2026Q4'"/>
+                                    </div>
+
+                                    <!-- Mandatory Skill Gate Enforcement Banner -->
+                                    <div t-if="kpi.skill_gate_capped" class="o_emp_skill_gate_banner o_emp_skill_gate_locked mb-3">
+                                        <div class="fw-bold mb-1">
+                                            <i class="fa fa-lock me-1"/>Cổng Kỹ năng Bắt buộc (Skill Upgrade Gate): Đang Giới hạn Xếp hạng ở Hạng B
+                                        </div>
+                                        <div>
+                                            Kỹ sư phần mềm có điểm thành phần công việc cao nhưng còn
+                                            <strong t-out="kpi.mandatory_skill_pending"/>/<strong t-out="kpi.mandatory_skill_total"/>
+                                            kỹ năng bắt buộc chưa hoàn thành chứng chỉ nâng cấp. Theo quy chế Kỹ thuật Digimate, xếp hạng tổng thể bị khóa tối đa ở
+                                            <strong>Hạng B (Chưa đủ điều kiện xét nâng bậc/thưởng Hạng A/S)</strong> cho đến khi hoàn thành 100% kỹ năng bắt buộc.
+                                        </div>
+                                    </div>
+                                    <div t-else="" class="o_emp_skill_gate_banner o_emp_skill_gate_unlocked mb-3">
+                                        <div class="fw-bold mb-1">
+                                            <i class="fa fa-unlock-alt me-1"/>Đã Hoàn thành 100% Cổng Nâng cấp Kỹ năng Bắt buộc (<span t-out="kpi.mandatory_skill_certified"/>/<span t-out="kpi.mandatory_skill_total"/> Chứng chỉ)
+                                        </div>
+                                        <div>
+                                            Đủ điều kiện công nhận toàn bộ điểm KPI (<strong t-out="kpi.total_kpi_score"/>/100) và mở khóa xét nâng bậc Kỹ sư / Thưởng hiệu suất Quý.
+                                        </div>
+                                    </div>
+
+                                    <div class="o_emp_kv_list mb-3">
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Điểm KPI Tổng hợp (4 Trụ cột):</span>
+                                            <span class="o_emp_kv_val fw-bold o_emp_text_emerald" t-out="(kpi.total_kpi_score || 0) + ' / 100 điểm'"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Xếp hạng Hiệu lực Chính thức:</span>
+                                            <span class="o_emp_kv_val fw-bold" t-out="kpi.rank_label"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Mục tiêu OKR Đạt được:</span>
+                                            <span class="o_emp_kv_val fw-semibold" t-out="kpi.okr_key_results_met"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Sprint Velocity / Code Review Pass:</span>
+                                            <span class="o_emp_kv_val font-monospace" t-out="(kpi.sprint_velocity_pct || 0) + '% • CR Pass ' + (kpi.code_review_pass_rate || 0) + '%'"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Cam kết SLA Dự án B2B / Lỗi lọt Prod:</span>
+                                            <span class="o_emp_kv_val font-monospace" t-out="'SLA ' + (kpi.b2b_sla_compliance_pct || 0) + '% • Defect ' + (kpi.prod_defect_escape_rate || 0) + '%'"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Đánh giá Đồng nghiệp (360° Peer Review):</span>
+                                            <span class="o_emp_kv_val fw-semibold" t-out="(kpi.peer_feedback_score || 0) + ' / 5.0 ★ (' + (kpi.reviewer_name || 'CTO') + ')'"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- 4-Pillar Weighted Breakdown Table -->
+                                    <div class="table-responsive">
+                                        <table class="table table-sm o_emp_table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Trụ cột Đánh giá KPI</th>
+                                                    <th class="text-end">Trọng số</th>
+                                                    <th class="text-end">Điểm gốc</th>
+                                                    <th class="text-end">Quy đổi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr t-foreach="kpi.pillars || []" t-as="pil" t-key="pil.code">
+                                                    <td>
+                                                        <div class="fw-semibold" t-out="pil.name"/>
+                                                        <div class="o_emp_step_meta" t-out="pil.target"/>
+                                                    </td>
+                                                    <td class="text-end font-monospace" t-out="pil.weight_pct + '%'"/>
+                                                    <td class="text-end font-monospace fw-semibold" t-out="pil.score"/>
+                                                    <td class="text-end font-monospace fw-bold o_emp_text_emerald" t-out="pil.weighted_score"/>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Interactive Work KPI & Training Roadmap Evaluation Form -->
+                                <div class="o_emp_card">
+                                    <div class="o_emp_card_title mb-2">
+                                        <i class="fa fa-sliders me-2"/>Cập nhật Đánh giá Công việc &amp; Định hướng Đào tạo Kỹ sư
+                                    </div>
+                                    <div class="row g-2">
+                                        <div class="col-4">
+                                            <label class="form-label o_emp_form_label">Delivery (35%)</label>
+                                            <input type="number" step="0.5" min="0" max="100" class="form-control form-control-sm" t-model="state.empDashboard.kpiForm.kpi_delivery_score"/>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label o_emp_form_label">Code Quality (25%)</label>
+                                            <input type="number" step="0.5" min="0" max="100" class="form-control form-control-sm" t-model="state.empDashboard.kpiForm.kpi_quality_score"/>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label o_emp_form_label">Work Eval (20%)</label>
+                                            <input type="number" step="0.5" min="0" max="100" class="form-control form-control-sm" t-model="state.empDashboard.kpiForm.kpi_work_eval_score"/>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label o_emp_form_label">Định hướng Đào tạo &amp; Lộ trình Nâng cấp Kỹ năng Bắt buộc:</label>
+                                            <input type="text" class="form-control form-control-sm" t-model="state.empDashboard.kpiForm.next_training_roadmap"/>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label o_emp_form_label">Nhận xét Đánh giá Công việc của CTO / Quản lý Trực tiếp:</label>
+                                            <input type="text" class="form-control form-control-sm" t-model="state.empDashboard.kpiForm.manager_review_note"/>
+                                        </div>
+                                        <div class="col-12 mt-2 d-flex flex-wrap gap-2">
+                                            <button type="button" class="btn btn-sm o_emp_action_btn o_emp_action_btn_accent" t-on-click="() => this.onSubmitWorkKpiReview(true)">
+                                                <i class="fa fa-check-circle me-1"/>Lưu &amp; Phê duyệt Đánh giá KPI Công việc
+                                            </button>
+                                            <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="openKpiEvaluationApp">
+                                                <i class="fa fa-external-link me-1"/>Mở Phân hệ Quản trị KPI &amp; Kỹ năng
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Mandatory Software Engineer Skill Upgrade Matrix & Training Orientation -->
+                            <div class="col-12 col-lg-7 d-flex flex-column gap-3">
+                                <div class="o_emp_card">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                        <div class="o_emp_card_title mb-0">
+                                            <i class="fa fa-graduation-cap me-2"/>Lộ trình Đào tạo &amp; Cổng Nâng cấp Kỹ năng Bắt buộc Kỹ sư Phần mềm
+                                        </div>
+                                        <span class="o_emp_badge" t-att-class="{
+                                            'o_emp_badge_emerald': (kpi.skill_completion_pct || 0) === 100,
+                                            'o_emp_badge_amber': (kpi.skill_completion_pct || 0) &lt; 100
+                                        }" t-out="'Hoàn thành: ' + (kpi.mandatory_skill_certified || 0) + '/' + (kpi.mandatory_skill_total || 0) + ' (' + (kpi.skill_completion_pct || 0) + '%)'"/>
+                                    </div>
+
+                                    <div class="o_emp_progress_track mb-3">
+                                        <div class="o_emp_progress_fill" t-attf-style="width: {{kpi.skill_completion_pct || 0}}%;"/>
+                                    </div>
+
+                                    <div class="o_emp_legal_notice mb-3">
+                                        <i class="fa fa-compass me-1"/>
+                                        <strong>Định hướng Đào tạo Quý 4/2026:</strong>
+                                        <span class="ms-1" t-out="kpi.next_training_roadmap"/>
+                                        <div class="mt-1">
+                                            <i class="fa fa-commenting-o me-1"/>
+                                            <strong>Đánh giá của CTO / Quản lý:</strong>
+                                            <span class="ms-1" t-out="kpi.manager_review_note"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Skill Upgrade Gates List -->
+                                    <div class="o_emp_steps_list">
+                                        <t t-foreach="kpi.skill_gates || []" t-as="gate" t-key="gate.gate_id or gate.skill_code">
+                                            <div class="o_emp_step_item" t-att-class="{ o_emp_step_done: gate.status === 'certified' }">
+                                                <div class="d-flex flex-wrap align-items-start justify-content-between gap-2">
+                                                    <div class="flex-grow-1">
+                                                        <div class="d-flex flex-wrap align-items-center gap-2">
+                                                            <i t-attf-class="fa {{gate.status === 'certified' ? 'fa-check-circle o_emp_icon_done' : 'fa-exclamation-circle o_emp_icon_todo'}}"/>
+                                                            <span class="o_emp_badge o_emp_badge_primary font-monospace" t-out="gate.skill_code"/>
+                                                            <span class="o_emp_step_title fw-bold" t-out="gate.skill_name"/>
+                                                            <span class="o_emp_badge" t-att-class="{
+                                                                'o_emp_badge_emerald': gate.status === 'certified',
+                                                                'o_emp_badge_amber': gate.status !== 'certified'
+                                                            }" t-out="gate.current_level + ' → ' + gate.target_level"/>
+                                                        </div>
+                                                        <div class="o_emp_step_desc mt-1" t-out="gate.description"/>
+                                                        <div class="o_emp_step_meta mt-1">
+                                                            <span t-out="gate.domain_label"/>
+                                                            <span class="mx-1">•</span>
+                                                            <span>Thời lượng: <strong t-out="gate.training_hours"/>h</span>
+                                                            <span class="mx-1">•</span>
+                                                            <span>Hạn hoàn thành: <strong t-out="gate.deadline"/></span>
+                                                            <t t-if="gate.status === 'certified'">
+                                                                <span class="mx-1">•</span>
+                                                                <span class="o_emp_text_emerald fw-semibold">
+                                                                    Điểm sát hạch: <t t-out="gate.exam_score"/>/100 (<t t-out="gate.certificate_ref"/>)
+                                                                </span>
+                                                            </t>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="d-flex flex-column align-items-end gap-2 flex-shrink-0">
+                                                        <span t-if="gate.status === 'certified'" class="o_emp_badge o_emp_badge_emerald">
+                                                            <i class="fa fa-certificate me-1"/>Đã Cấp Chứng chỉ (<span t-out="gate.certified_date"/>)
+                                                        </span>
+                                                        <t t-else="">
+                                                            <span class="o_emp_badge o_emp_badge_amber">
+                                                                <i class="fa fa-hourglass-half me-1"/>Đang học (<span t-out="gate.progress_pct"/>%) — Bắt buộc Nâng cấp
+                                                            </span>
+                                                            <button type="button" class="btn btn-sm o_emp_action_btn o_emp_action_btn_accent" t-on-click="() => this.onCompleteSkillUpgrade(gate.skill_code)">
+                                                                <i class="fa fa-graduation-cap me-1"/>Hoàn thành &amp; Cấp Chứng chỉ Kỹ năng
+                                                            </button>
+                                                        </t>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+
+                                <!-- Company-Wide Engineering KPI & Skill Matrix Summary -->
+                                <div class="o_emp_card">
+                                    <div class="o_emp_card_title mb-2">
+                                        <i class="fa fa-bar-chart me-2"/>Tổng quan Ma trận KPI &amp; Chuẩn hóa Kỹ năng Toàn Công ty (<span t-out="kpiSum.period || 'Q4/2026'"/>)
+                                    </div>
+                                    <div class="row g-2 text-center">
+                                        <div class="col-6 col-md-3">
+                                            <div class="o_emp_cr_item">
+                                                <div class="o_emp_step_meta">Điểm KPI TB Toàn Công ty</div>
+                                                <div class="fw-bold fs-6 o_emp_text_emerald" t-out="(kpiSum.avg_company_kpi || 0) + ' / 100'"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="o_emp_cr_item">
+                                                <div class="o_emp_step_meta">Tỷ lệ Đạt Kỹ năng Bắt buộc</div>
+                                                <div class="fw-bold fs-6" t-out="(kpiSum.avg_skill_completion_pct || 0) + '%'"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="o_emp_cr_item">
+                                                <div class="o_emp_step_meta">Đủ Điều kiện Thăng cấp (Hạng S/A)</div>
+                                                <div class="fw-bold fs-6 o_emp_text_emerald" t-out="(kpiSum.promotion_ready_count || 0) + ' nhân sự'"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="o_emp_cr_item">
+                                                <div class="o_emp_step_meta">Đang Khóa Hạng B chờ Kỹ năng</div>
+                                                <div class="fw-bold fs-6" t-out="(kpiSum.capped_by_skill_gate_count || 0) + ' kỹ sư'"/>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
