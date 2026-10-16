@@ -347,6 +347,435 @@ def _enrich_workflow(wf_block):
     return out
 
 
+CANONICAL_SKILL_TRACKS = [
+    {
+        "code": "SKL-ERP-OWL3",
+        "name": "Odoo 20 & OWL 3 Reactive Architecture",
+        "domain": "erp_owl",
+        "domain_label": "Odoo 20 & OWL 3 Architecture",
+        "target_level": "L4",
+        "mandatory_for_swe": True,
+        "training_hours": 40,
+        "exam_ref": "CERT-OWL3-2026",
+        "description": "Làm chủ kiến trúc Reactive Props/Signals OWL 3, Sovereign Compatibility Views và Dual-Bundle SCSS.",
+    },
+    {
+        "code": "SKL-AI-MOJO",
+        "name": "AI Agentic Fleet, LLM RAG & Mojo Kernel",
+        "domain": "ai_llm",
+        "domain_label": "AI Agentic Fleet & Mojo/LLM Engineering",
+        "target_level": "L4",
+        "mandatory_for_swe": True,
+        "training_hours": 48,
+        "exam_ref": "CERT-AIFLEET-2026",
+        "description": "Thiết kế hệ thống Multi-Agent điều phối song song, tối ưu hóa ngữ cảnh RAG và SIMD/Mojo.",
+    },
+    {
+        "code": "SKL-K8S-PG",
+        "name": "Cloud-Native K8s, PgBouncer & High-Availability DB",
+        "domain": "cloud_k8s",
+        "domain_label": "Cloud-Native K8s, PgBouncer & PostgreSQL",
+        "target_level": "L3",
+        "mandatory_for_swe": True,
+        "training_hours": 36,
+        "exam_ref": "CERT-K8SPG-2026",
+        "description": "Vận hành Kubernetes Production, tối ưu hóa chỉ mục PostgreSQL 16 và chống tranh chấp khóa TOCTOU.",
+    },
+    {
+        "code": "SKL-SEC-ISO27001",
+        "name": "ISO/IEC 27001 & 27701 Zero-Leak Security Engineering",
+        "domain": "security_iso",
+        "domain_label": "ISO/IEC 27001 & 27701 Security & Privacy",
+        "target_level": "L3",
+        "mandatory_for_swe": True,
+        "training_hours": 24,
+        "exam_ref": "CERT-ISO27701-2026",
+        "description": "Thực thi che giấu dữ liệu định danh (Partial Masking), kiểm soát RBAC đa tầng và chống rò rỉ khóa bí mật.",
+    },
+    {
+        "code": "SKL-B2B-ACTIVATE",
+        "name": "SAP Activate & B2B Enterprise Solution Delivery",
+        "domain": "b2b_consulting",
+        "domain_label": "B2B Enterprise Consulting & SAP Activate",
+        "target_level": "L3",
+        "mandatory_for_swe": False,
+        "training_hours": 32,
+        "exam_ref": "CERT-B2BSAP-2026",
+        "description": "Tư vấn chuyển đổi số B2B, chuẩn hóa quy trình nghiệp vụ tài chính - nhân sự - chuỗi cung ứng theo SAP Activate.",
+    },
+    {
+        "code": "SKL-QA-PLAYWRIGHT",
+        "name": "Automated Playwright E2E & Adversarial Security Testing",
+        "domain": "qa_automation",
+        "domain_label": "Automated Playwright E2E & Adversarial QA",
+        "target_level": "L3",
+        "mandatory_for_swe": True,
+        "training_hours": 28,
+        "exam_ref": "CERT-PWQA-2026",
+        "description": "Xây dựng bộ kiểm thử tự động E2E đa giao diện (Light/Dark) và kiểm thử xâm nhập bảo mật tự động.",
+    },
+]
+
+SKILL_TRACK_BY_CODE = {t["code"]: t for t in CANONICAL_SKILL_TRACKS}
+
+CANONICAL_EMPLOYEE_KPI_PROFILES = {
+    "DGM-001": {
+        "kpi_delivery_score": 98.0,
+        "kpi_quality_score": 97.0,
+        "kpi_work_eval_score": 98.0,
+        "okr_key_results_met": "6/6 KR Chiến lược Tập đoàn & Tăng trưởng Doanh thu B2B",
+        "sprint_velocity_pct": 99.0,
+        "code_review_pass_rate": 98.5,
+        "prod_defect_escape_rate": 0.0,
+        "b2b_sla_compliance_pct": 100.0,
+        "peer_feedback_score": 4.95,
+        "state": "approved",
+        "next_training_roadmap": "Định hướng Quản trị AI Sovereign Enterprise & Mở rộng Thị trường B2B Quốc tế 2027.",
+        "manager_review_note": "Hoàn thành xuất sắc mục tiêu tăng trưởng doanh thu B2B và chuẩn hóa quản trị ISO 27701.",
+        "skills": [
+            ("SKL-SEC-ISO27001", "L3", "L4", "certified", 100, 98.0, "CERT-ISO27701-DGM001", True),
+            ("SKL-B2B-ACTIVATE", "L4", "L4", "certified", 100, 99.0, "CERT-B2BSAP-DGM001", True),
+            ("SKL-AI-MOJO", "L3", "L4", "certified", 100, 95.0, "CERT-AIFLEET-DGM001", True),
+        ],
+    },
+    "DGM-002": {
+        "kpi_delivery_score": 97.5,
+        "kpi_quality_score": 99.0,
+        "kpi_work_eval_score": 96.5,
+        "okr_key_results_met": "6/6 KR Kiến trúc Lõi Odoo 20, OWL 3 & AI Fleet",
+        "sprint_velocity_pct": 98.5,
+        "code_review_pass_rate": 99.2,
+        "prod_defect_escape_rate": 0.1,
+        "b2b_sla_compliance_pct": 99.9,
+        "peer_feedback_score": 4.92,
+        "state": "approved",
+        "next_training_roadmap": "Kiến trúc sư trưởng Hệ thống Tự hành Đa Tác tử (Autonomous Sovereign Fleet L4) & Mojo SIMD.",
+        "manager_review_note": "Dẫn dắt toàn bộ kiến trúc kỹ thuật lõi, bảo mật Zero-Leak và tự động hóa kiểm thử 6 lớp.",
+        "skills": [
+            ("SKL-ERP-OWL3", "L4", "L4", "certified", 100, 99.5, "CERT-OWL3-DGM002", True),
+            ("SKL-AI-MOJO", "L4", "L4", "certified", 100, 99.0, "CERT-AIFLEET-DGM002", True),
+            ("SKL-K8S-PG", "L4", "L4", "certified", 100, 98.0, "CERT-K8SPG-DGM002", True),
+            ("SKL-SEC-ISO27001", "L4", "L4", "certified", 100, 98.5, "CERT-ISO27701-DGM002", True),
+            ("SKL-QA-PLAYWRIGHT", "L4", "L4", "certified", 100, 97.5, "CERT-PWQA-DGM002", True),
+        ],
+    },
+    "DGM-003": {
+        "kpi_delivery_score": 95.0,
+        "kpi_quality_score": 96.0,
+        "kpi_work_eval_score": 97.0,
+        "okr_key_results_met": "5/5 KR Chuẩn hóa Pháp lý HĐLĐ, Lương VCB DigiBiz & Data Room",
+        "sprint_velocity_pct": 96.0,
+        "code_review_pass_rate": 97.0,
+        "prod_defect_escape_rate": 0.0,
+        "b2b_sla_compliance_pct": 100.0,
+        "peer_feedback_score": 4.90,
+        "state": "approved",
+        "next_training_roadmap": "Nâng cấp chứng chỉ Quản trị Quyền riêng tư Quốc tế ISO/IEC 27701 Lead Auditor.",
+        "manager_review_note": "Vận hành chuẩn xác 100% kỳ lương BHXH TZ0857G, thuế TNCN và phân quyền Kho Tài liệu Số.",
+        "skills": [
+            ("SKL-SEC-ISO27001", "L3", "L3", "certified", 100, 97.0, "CERT-ISO27701-DGM003", True),
+            ("SKL-B2B-ACTIVATE", "L3", "L3", "certified", 100, 96.0, "CERT-B2BSAP-DGM003", True),
+        ],
+    },
+    "DGM-004": {
+        "kpi_delivery_score": 93.0,
+        "kpi_quality_score": 91.5,
+        "kpi_work_eval_score": 94.0,
+        "okr_key_results_met": "5/5 KR Triển khai Dự án Onsite B2B (MTI, Canva, MobiFone MDS)",
+        "sprint_velocity_pct": 94.0,
+        "code_review_pass_rate": 92.5,
+        "prod_defect_escape_rate": 0.4,
+        "b2b_sla_compliance_pct": 99.6,
+        "peer_feedback_score": 4.82,
+        "state": "approved",
+        "next_training_roadmap": "Hoàn thành chuyên sâu Cloud-Native K8s L4 cho các cụm triển khai khách hàng Enterprise.",
+        "manager_review_note": "Đảm bảo SLA 99.6% cho các khách hàng trọng điểm MTI và MobiFone MDS.",
+        "skills": [
+            ("SKL-ERP-OWL3", "L3", "L3", "certified", 100, 93.0, "CERT-OWL3-DGM004", True),
+            ("SKL-B2B-ACTIVATE", "L4", "L4", "certified", 100, 95.5, "CERT-B2BSAP-DGM004", True),
+            ("SKL-SEC-ISO27001", "L3", "L3", "certified", 100, 92.0, "CERT-ISO27701-DGM004", True),
+            ("SKL-K8S-PG", "L3", "L3", "certified", 100, 91.0, "CERT-K8SPG-DGM004", True),
+        ],
+    },
+    "DGM-005": {
+        "kpi_delivery_score": 92.0,
+        "kpi_quality_score": 90.0,
+        "kpi_work_eval_score": 91.0,
+        "okr_key_results_met": "5/6 KR Dẫn dắt Kỹ thuật Nhóm Phần mềm & Tối ưu ORM",
+        "sprint_velocity_pct": 93.0,
+        "code_review_pass_rate": 94.0,
+        "prod_defect_escape_rate": 0.5,
+        "b2b_sla_compliance_pct": 99.2,
+        "peer_feedback_score": 4.75,
+        "state": "submitted",
+        "next_training_roadmap": "BẮT BUỘC: Hoàn thành khóa 'AI Agentic Fleet, LLM RAG & Mojo Kernel' (SKL-AI-MOJO) đạt chuẩn L4 trước 30/11/2026 để mở khóa xếp hạng A/S.",
+        "manager_review_note": "Năng lực code và dẫn dắt nhóm tốt (Điểm thành phần >90), nhưng đang bị giới hạn ở Hạng B do chưa hoàn thành chứng chỉ bắt buộc SKL-AI-MOJO.",
+        "skills": [
+            ("SKL-ERP-OWL3", "L4", "L4", "certified", 100, 94.0, "CERT-OWL3-DGM005", True),
+            ("SKL-K8S-PG", "L3", "L3", "certified", 100, 92.0, "CERT-K8SPG-DGM005", True),
+            ("SKL-SEC-ISO27001", "L3", "L3", "certified", 100, 91.0, "CERT-ISO27701-DGM005", True),
+            ("SKL-QA-PLAYWRIGHT", "L3", "L3", "certified", 100, 90.5, "CERT-PWQA-DGM005", True),
+            ("SKL-AI-MOJO", "L2", "L4", "in_progress", 70, 0.0, "", True),
+        ],
+    },
+    "DGM-006": {
+        "kpi_delivery_score": 88.5,
+        "kpi_quality_score": 87.0,
+        "kpi_work_eval_score": 89.0,
+        "okr_key_results_met": "4/5 KR Phát triển Module B2B & Tích hợp Cổng Thanh toán",
+        "sprint_velocity_pct": 89.5,
+        "code_review_pass_rate": 88.0,
+        "prod_defect_escape_rate": 0.8,
+        "b2b_sla_compliance_pct": 98.8,
+        "peer_feedback_score": 4.65,
+        "state": "submitted",
+        "next_training_roadmap": "BẮT BUỘC: Hoàn thành nâng cấp kỹ năng 'Cloud-Native K8s, PgBouncer & High-Availability DB' (SKL-K8S-PG) để đủ điều kiện xét nâng bậc Kỹ sư.",
+        "manager_review_note": "Tiến độ dự án Onsite ổn định. Yêu cầu hoàn tất bài thi thực hành K8s & PostgreSQL High-Availability trong Quý 4/2026.",
+        "skills": [
+            ("SKL-ERP-OWL3", "L3", "L3", "certified", 100, 89.0, "CERT-OWL3-DGM006", True),
+            ("SKL-SEC-ISO27001", "L3", "L3", "certified", 100, 90.0, "CERT-ISO27701-DGM006", True),
+            ("SKL-QA-PLAYWRIGHT", "L3", "L3", "certified", 100, 88.5, "CERT-PWQA-DGM006", True),
+            ("SKL-K8S-PG", "L2", "L3", "in_progress", 60, 0.0, "", True),
+        ],
+    },
+    "DGM-007": {
+        "kpi_delivery_score": 89.0,
+        "kpi_quality_score": 88.0,
+        "kpi_work_eval_score": 90.0,
+        "okr_key_results_met": "4/5 KR Phát triển Giao diện OWL 3 & Tối ưu Trải nghiệm Người dùng",
+        "sprint_velocity_pct": 91.0,
+        "code_review_pass_rate": 90.0,
+        "prod_defect_escape_rate": 0.6,
+        "b2b_sla_compliance_pct": 99.1,
+        "peer_feedback_score": 4.70,
+        "state": "submitted",
+        "next_training_roadmap": "BẮT BUỘC: Hoàn thành 2 chứng chỉ kỹ thuật 'AI Agentic Fleet & LLM RAG' (SKL-AI-MOJO) và 'Automated Playwright E2E' (SKL-QA-PLAYWRIGHT).",
+        "manager_review_note": "Kỹ năng Frontend OWL 3 & Dual-Theme SCSS rất tốt. Cần bổ sung ngay kỹ năng kiểm thử tự động Playwright E2E và tích hợp AI.",
+        "skills": [
+            ("SKL-ERP-OWL3", "L3", "L3", "certified", 100, 92.0, "CERT-OWL3-DGM007", True),
+            ("SKL-SEC-ISO27001", "L3", "L3", "certified", 100, 91.0, "CERT-ISO27701-DGM007", True),
+            ("SKL-AI-MOJO", "L2", "L3", "in_progress", 65, 0.0, "", True),
+            ("SKL-QA-PLAYWRIGHT", "L2", "L3", "in_progress", 80, 0.0, "", True),
+        ],
+    },
+    "DGM-008": {
+        "kpi_delivery_score": 84.0,
+        "kpi_quality_score": 82.0,
+        "kpi_work_eval_score": 85.0,
+        "okr_key_results_met": "3/4 KR Hoàn thành Đào tạo Hội nhập Kỹ sư & Sửa lỗi Module ERP",
+        "sprint_velocity_pct": 85.0,
+        "code_review_pass_rate": 84.0,
+        "prod_defect_escape_rate": 1.2,
+        "b2b_sla_compliance_pct": 98.0,
+        "peer_feedback_score": 4.55,
+        "state": "submitted",
+        "next_training_roadmap": "LỘ TRÌNH BẮT BUỘC KỸ SƯ PHẦN MỀM: Hoàn thành nâng cấp 3 kỹ năng lõi (SKL-ERP-OWL3, SKL-AI-MOJO, SKL-K8S-PG) dưới sự hướng dẫn của CTO Nguyễn Hoài Ân.",
+        "manager_review_note": "Kỹ sư trẻ có tinh thần học hỏi cao. Bắt buộc hoàn thành 100% cổng nâng cấp kỹ năng (Skill Upgrade Gates) trước khi xét lên chính thức L2/L3.",
+        "skills": [
+            ("SKL-SEC-ISO27001", "L2", "L2", "certified", 100, 88.0, "CERT-ISO27701-DGM008", True),
+            ("SKL-QA-PLAYWRIGHT", "L2", "L2", "certified", 100, 86.0, "CERT-PWQA-DGM008", True),
+            ("SKL-ERP-OWL3", "L1", "L3", "in_progress", 75, 0.0, "", True),
+            ("SKL-AI-MOJO", "L1", "L3", "in_progress", 50, 0.0, "", True),
+            ("SKL-K8S-PG", "L1", "L2", "in_progress", 40, 0.0, "", True),
+        ],
+    },
+    "DGM-009": {
+        "kpi_delivery_score": 94.0,
+        "kpi_quality_score": 93.0,
+        "kpi_work_eval_score": 94.5,
+        "okr_key_results_met": "5/5 KR Tư vấn & Triển khai Giải pháp B2B Onsite Khách hàng Chiến lược",
+        "sprint_velocity_pct": 95.0,
+        "code_review_pass_rate": 93.5,
+        "prod_defect_escape_rate": 0.3,
+        "b2b_sla_compliance_pct": 99.7,
+        "peer_feedback_score": 4.85,
+        "state": "approved",
+        "next_training_roadmap": "Định hướng nâng cấp chứng chỉ Kiến trúc AI Agentic B2B L4 cho các dự án chuyển đổi số quy mô lớn.",
+        "manager_review_note": "Kỹ sư Senior Onsite hoàn thành đầy đủ các chứng chỉ kỹ năng bắt buộc và đạt điểm hài lòng khách hàng B2B rất cao.",
+        "skills": [
+            ("SKL-ERP-OWL3", "L3", "L3", "certified", 100, 94.0, "CERT-OWL3-DGM009", True),
+            ("SKL-B2B-ACTIVATE", "L4", "L4", "certified", 100, 96.0, "CERT-B2BSAP-DGM009", True),
+            ("SKL-SEC-ISO27001", "L3", "L3", "certified", 100, 93.0, "CERT-ISO27701-DGM009", True),
+            ("SKL-QA-PLAYWRIGHT", "L3", "L3", "certified", 100, 92.0, "CERT-PWQA-DGM009", True),
+        ],
+    },
+}
+
+RANK_GRADE_LABELS = {
+    "tier_s": "Hạng S — Xuất sắc (Outstanding ≥ 90 & Đạt 100% Kỹ năng Bắt buộc)",
+    "tier_a": "Hạng A — Giỏi (Exceeds Expectations 80–89 & Đạt 100% Kỹ năng)",
+    "tier_b": "Hạng B — Đạt chuẩn / Chờ Mở khóa Kỹ năng (70–79 hoặc Chưa hoàn tất Kỹ năng Bắt buộc)",
+    "tier_c": "Hạng C — Cần Đào tạo Nâng cấp Kỹ năng (< 70)",
+}
+
+
+def _recompute_kpi_hub_dict(hub):
+    """Deterministically computes 4-pillar weighted KPI score and enforces the Mandatory SWE Skill Gate."""
+    gates = hub.get("skill_gates", [])
+    mandatory_gates = [g for g in gates if g.get("is_mandatory", True)]
+    mandatory_total = len(mandatory_gates)
+    mandatory_certified = sum(1 for g in mandatory_gates if g.get("status") == "certified")
+    mandatory_pending = max(0, mandatory_total - mandatory_certified)
+
+    if mandatory_total > 0:
+        skill_completion_pct = int(round((mandatory_certified / mandatory_total) * 100))
+        pts = 0.0
+        for g in mandatory_gates:
+            if g.get("status") == "certified":
+                pts += 100.0
+            else:
+                pts += min(90.0, float(g.get("progress_pct") or 0)) * 0.5
+        skill_upgrade_score = round(pts / mandatory_total, 2)
+    else:
+        skill_completion_pct = 100
+        skill_upgrade_score = 100.0
+
+    delivery = round(float(hub.get("kpi_delivery_score") or 0.0), 2)
+    quality = round(float(hub.get("kpi_quality_score") or 0.0), 2)
+    work_eval = round(float(hub.get("kpi_work_eval_score") or 0.0), 2)
+
+    total_score = round(
+        0.35 * delivery + 0.25 * quality + 0.20 * work_eval + 0.20 * skill_upgrade_score,
+        2,
+    )
+
+    if total_score >= 90.0:
+        raw_grade = "tier_s"
+    elif total_score >= 80.0:
+        raw_grade = "tier_a"
+    elif total_score >= 70.0:
+        raw_grade = "tier_b"
+    else:
+        raw_grade = "tier_c"
+
+    if mandatory_pending > 0:
+        skill_gate_capped = True
+        promotion_eligible = False
+        effective_grade = "tier_b" if raw_grade in ("tier_s", "tier_a") else raw_grade
+    else:
+        skill_gate_capped = False
+        effective_grade = raw_grade
+        promotion_eligible = effective_grade in ("tier_s", "tier_a")
+
+    hub["kpi_delivery_score"] = delivery
+    hub["kpi_quality_score"] = quality
+    hub["kpi_work_eval_score"] = work_eval
+    hub["kpi_skill_upgrade_score"] = skill_upgrade_score
+    hub["total_kpi_score"] = total_score
+    hub["mandatory_skill_total"] = mandatory_total
+    hub["mandatory_skill_certified"] = mandatory_certified
+    hub["mandatory_skill_pending"] = mandatory_pending
+    hub["skill_completion_pct"] = skill_completion_pct
+    hub["raw_rank_grade"] = raw_grade
+    hub["raw_rank_label"] = RANK_GRADE_LABELS.get(raw_grade, raw_grade)
+    hub["rank_grade"] = effective_grade
+    hub["rank_label"] = RANK_GRADE_LABELS.get(effective_grade, effective_grade)
+    hub["skill_gate_capped"] = skill_gate_capped
+    hub["promotion_eligible"] = promotion_eligible
+    hub["state_label"] = (
+        "Đã Phê duyệt Chính thức"
+        if hub.get("state") == "approved"
+        else ("Đang Chờ Mở khóa Kỹ năng / Duyệt KPI" if hub.get("state") == "submitted" else "Bản nháp")
+    )
+    hub["pillars"] = [
+        {
+            "code": "delivery",
+            "name": "Hiệu suất Bàn giao Dự án & OKR (Delivery)",
+            "weight_pct": 35,
+            "score": delivery,
+            "weighted_score": round(0.35 * delivery, 2),
+            "target": "≥ 85.0 điểm (Sprint Velocity & On-Time Delivery)",
+        },
+        {
+            "code": "quality",
+            "name": "Chất lượng Mã nguồn & Kiến trúc (Code Quality)",
+            "weight_pct": 25,
+            "score": quality,
+            "weighted_score": round(0.25 * quality, 2),
+            "target": "≥ 85.0 điểm (Code Review Pass ≥ 90%, Defect Escape < 1%)",
+        },
+        {
+            "code": "work_eval",
+            "name": "Đánh giá Công việc, SLA B2B & Phối hợp (Work Eval)",
+            "weight_pct": 20,
+            "score": work_eval,
+            "weighted_score": round(0.20 * work_eval, 2),
+            "target": "≥ 85.0 điểm (B2B SLA ≥ 99%, Peer Review ≥ 4.5/5.0)",
+        },
+        {
+            "code": "skill_upgrade",
+            "name": "Hoàn thành Nâng cấp Kỹ năng Bắt buộc (Skill Gate)",
+            "weight_pct": 20,
+            "score": skill_upgrade_score,
+            "weighted_score": round(0.20 * skill_upgrade_score, 2),
+            "target": "BẮT BUỘC đạt 100% chứng chỉ kỹ năng để mở khóa Hạng A/S",
+        },
+    ]
+    return hub
+
+
+def _default_kpi_skill_hub(emp_dict):
+    reg = emp_dict.get("registration_number", "DGM-001")
+    prof = CANONICAL_EMPLOYEE_KPI_PROFILES.get(reg, CANONICAL_EMPLOYEE_KPI_PROFILES["DGM-005"])
+    gates = []
+    for idx, (s_code, cur_lvl, tgt_lvl, st, prog, ex_score, cert_ref, is_mand) in enumerate(
+        prof.get("skills", []), start=1
+    ):
+        track = SKILL_TRACK_BY_CODE.get(s_code, CANONICAL_SKILL_TRACKS[0])
+        gates.append(
+            {
+                "gate_id": f"GATE-{reg}-{idx:02d}",
+                "skill_code": s_code,
+                "skill_name": track["name"],
+                "domain": track["domain"],
+                "domain_label": track["domain_label"],
+                "training_hours": track["training_hours"],
+                "exam_ref": track["exam_ref"],
+                "description": track["description"],
+                "current_level": cur_lvl,
+                "target_level": tgt_lvl,
+                "is_mandatory": bool(is_mand),
+                "status": st,
+                "status_label": "Đã Đạt Chứng chỉ (Certified)" if st == "certified" else "Đang Đào tạo Nâng cấp (Bắt buộc)",
+                "progress_pct": int(prog),
+                "exam_score": float(ex_score),
+                "certificate_ref": cert_ref or (f"{track['exam_ref']}-{reg}" if st == "certified" else ""),
+                "deadline": "2026-10-15" if st == "certified" else "2026-11-30",
+                "certified_date": "2026-10-10" if st == "certified" else "",
+                "mentor_notes": (
+                    "Đã vượt qua kỳ sát hạch thực chiến & Code Review kiến trúc."
+                    if st == "certified"
+                    else "Bắt buộc hoàn thành bài thi thực hành & đồ án nâng cấp kỹ năng trước hạn."
+                ),
+            }
+        )
+
+    hub = {
+        "evaluation_code": f"KPI-2026Q4-{reg}",
+        "employee_id": emp_dict.get("id", 1),
+        "employee_code": reg,
+        "employee_name": emp_dict.get("name", ""),
+        "job_title": emp_dict.get("job_title", ""),
+        "department_name": emp_dict.get("department_name", ""),
+        "evaluation_period": "Q4/2026",
+        "reviewer_name": "Nguyễn Hoài Ân (CTO)" if reg != "DGM-001" else "Hội đồng Quản trị Digimate",
+        "kpi_delivery_score": prof["kpi_delivery_score"],
+        "kpi_quality_score": prof["kpi_quality_score"],
+        "kpi_work_eval_score": prof["kpi_work_eval_score"],
+        "okr_key_results_met": prof["okr_key_results_met"],
+        "sprint_velocity_pct": prof["sprint_velocity_pct"],
+        "code_review_pass_rate": prof["code_review_pass_rate"],
+        "prod_defect_escape_rate": prof["prod_defect_escape_rate"],
+        "b2b_sla_compliance_pct": prof["b2b_sla_compliance_pct"],
+        "peer_feedback_score": prof["peer_feedback_score"],
+        "state": prof["state"],
+        "next_training_roadmap": prof["next_training_roadmap"],
+        "manager_review_note": prof["manager_review_note"],
+        "skill_gates": gates,
+    }
+    return _recompute_kpi_hub_dict(hub)
+
+
 FORMULA_INJECTION_PREFIXES = ('=', '+', '-', '@', '\t', '\r')
 
 
@@ -792,6 +1221,29 @@ class InsilosEmployeeDashboardController(http.Controller):
             IrConfig.set_param(key, json.dumps(state, ensure_ascii=False))
         return state
 
+    def _get_or_init_kpi_skill_hub(self, emp_dict):
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        reg = emp_dict.get("registration_number", f"DGM-00{emp_dict.get('id', 1)}")
+        key = f"dgm.hr.kpi_skill_hub.{reg}"
+        raw = IrConfig.get_param(key)
+        hub = None
+        if raw:
+            try:
+                hub = json.loads(raw)
+            except Exception:
+                hub = None
+        if not hub or "skill_gates" not in hub:
+            hub = _default_kpi_skill_hub(emp_dict)
+            IrConfig.set_param(key, json.dumps(hub, ensure_ascii=False))
+        else:
+            hub["employee_id"] = emp_dict.get("id", hub.get("employee_id", 1))
+            hub["employee_code"] = reg
+            hub["employee_name"] = emp_dict.get("name", hub.get("employee_name", ""))
+            hub["job_title"] = emp_dict.get("job_title", hub.get("job_title", ""))
+            hub["department_name"] = emp_dict.get("department_name", hub.get("department_name", ""))
+            hub = _recompute_kpi_hub_dict(hub)
+        return hub
+
     def _build_dashboard_payload(self, employee_id=None):
         registry = self._get_registry_and_employees()
         raw_employees = registry["employees"]
@@ -848,6 +1300,30 @@ class InsilosEmployeeDashboardController(http.Controller):
         onboarding = _enrich_workflow(lifecycle["onboarding"])
         leaving = _enrich_workflow(lifecycle["leaving"])
 
+        kpi_skill_hub = self._get_or_init_kpi_skill_hub(selected)
+        all_kpi_hubs = [self._get_or_init_kpi_skill_hub(e) for e in raw_employees]
+        avg_company_kpi = (
+            round(sum(h["total_kpi_score"] for h in all_kpi_hubs) / len(all_kpi_hubs), 2)
+            if all_kpi_hubs
+            else 0.0
+        )
+        avg_skill_pct = (
+            int(round(sum(h["skill_completion_pct"] for h in all_kpi_hubs) / len(all_kpi_hubs)))
+            if all_kpi_hubs
+            else 100
+        )
+        kpi_summary = {
+            "period": "Q4/2026",
+            "avg_company_kpi": avg_company_kpi,
+            "avg_skill_completion_pct": avg_skill_pct,
+            "tier_s_count": sum(1 for h in all_kpi_hubs if h["rank_grade"] == "tier_s"),
+            "tier_a_count": sum(1 for h in all_kpi_hubs if h["rank_grade"] == "tier_a"),
+            "tier_b_count": sum(1 for h in all_kpi_hubs if h["rank_grade"] == "tier_b"),
+            "capped_by_skill_gate_count": sum(1 for h in all_kpi_hubs if h["skill_gate_capped"]),
+            "promotion_ready_count": sum(1 for h in all_kpi_hubs if h["promotion_eligible"]),
+            "canonical_skill_tracks": CANONICAL_SKILL_TRACKS,
+        }
+
         change_requests = self._get_or_init_change_requests(raw_employees)
         pending_count = sum(1 for r in change_requests if r.get("state") == "pending")
         privacy_audit_log = self._get_or_init_privacy_audit_log()[:10]
@@ -875,6 +1351,8 @@ class InsilosEmployeeDashboardController(http.Controller):
             },
             "onboarding": onboarding,
             "leaving": leaving,
+            "kpi_skill_hub": kpi_skill_hub,
+            "kpi_summary": kpi_summary,
             "change_requests": change_requests,
             "pending_approval_count": pending_count,
             "privacy_audit_log": privacy_audit_log,
@@ -1287,6 +1765,201 @@ class InsilosEmployeeDashboardController(http.Controller):
         IrConfig = request.env["ir.config_parameter"].sudo()
         IrConfig.set_param(f"dgm.hr.lifecycle.{selected['id']}", json.dumps(lifecycle, ensure_ascii=False))
         return self._build_dashboard_payload(employee_id=selected["id"])
+
+    @http.route("/insilos/employee_dashboard/complete_skill_upgrade", type="jsonrpc", auth="user", readonly=False)
+    def complete_skill_upgrade(
+        self,
+        employee_id=None,
+        skill_code=None,
+        exam_score=95.0,
+        certificate_ref=None,
+        mentor_notes=None,
+        **kwargs,
+    ):
+        registry = self._get_registry_and_employees()
+        employees = registry["employees"]
+        target_emp = self._find_employee(employees, employee_id)
+        hub = self._get_or_init_kpi_skill_hub(target_emp)
+        reg = target_emp.get("registration_number", "DGM-001")
+        today_str = datetime.date.today().isoformat()
+
+        clean_code = str(skill_code or "").strip()
+        try:
+            score_val = max(0.0, min(100.0, float(exam_score if exam_score is not None else 95.0)))
+        except Exception:
+            score_val = 95.0
+
+        updated = False
+        for gate in hub.get("skill_gates", []):
+            if gate.get("skill_code") == clean_code or gate.get("gate_id") == clean_code:
+                gate["status"] = "certified"
+                gate["status_label"] = "Đã Đạt Chứng chỉ (Certified)"
+                gate["progress_pct"] = 100
+                gate["current_level"] = gate.get("target_level") or "L3"
+                gate["exam_score"] = round(score_val, 2)
+                gate["certificate_ref"] = (
+                    str(certificate_ref or "").strip()
+                    or f"{gate.get('exam_ref', 'CERT-2026')}-{reg}"
+                )
+                gate["certified_date"] = today_str
+                gate["mentor_notes"] = (
+                    str(mentor_notes or "").strip()
+                    or f"Đã hoàn thành nâng cấp kỹ năng bắt buộc & vượt qua kỳ thi sát hạch ({round(score_val, 1)}/100)."
+                )
+                updated = True
+                break
+
+        if not updated and clean_code in SKILL_TRACK_BY_CODE:
+            track = SKILL_TRACK_BY_CODE[clean_code]
+            hub.setdefault("skill_gates", []).append(
+                {
+                    "gate_id": f"GATE-{reg}-{len(hub.get('skill_gates', [])) + 1:02d}",
+                    "skill_code": clean_code,
+                    "skill_name": track["name"],
+                    "domain": track["domain"],
+                    "domain_label": track["domain_label"],
+                    "training_hours": track["training_hours"],
+                    "exam_ref": track["exam_ref"],
+                    "description": track["description"],
+                    "current_level": track["target_level"],
+                    "target_level": track["target_level"],
+                    "is_mandatory": track["mandatory_for_swe"],
+                    "status": "certified",
+                    "status_label": "Đã Đạt Chứng chỉ (Certified)",
+                    "progress_pct": 100,
+                    "exam_score": round(score_val, 2),
+                    "certificate_ref": str(certificate_ref or "").strip() or f"{track['exam_ref']}-{reg}",
+                    "deadline": "2026-11-30",
+                    "certified_date": today_str,
+                    "mentor_notes": str(mentor_notes or "").strip() or "Đã hoàn thành nâng cấp kỹ năng bắt buộc.",
+                }
+            )
+
+        hub = _recompute_kpi_hub_dict(hub)
+        if hub["mandatory_skill_pending"] == 0 and hub.get("state") == "submitted":
+            hub["state"] = "approved"
+            hub = _recompute_kpi_hub_dict(hub)
+
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        IrConfig.set_param(f"dgm.hr.kpi_skill_hub.{reg}", json.dumps(hub, ensure_ascii=False))
+
+        # Synchronize with declarative ORM models (`dgm.hr.employee.skill.gate` & `dgm.hr.kpi.evaluation`) when present
+        try:
+            GateModel = request.env["dgm.hr.employee.skill.gate"].sudo()
+            gate_recs = GateModel.search(
+                [
+                    ("employee_id.registration_number", "=", reg),
+                    ("skill_track_id.code", "=", clean_code),
+                ]
+            )
+            if gate_recs:
+                gate_recs.write(
+                    {
+                        "status": "certified",
+                        "progress_pct": 100,
+                        "exam_score": round(score_val, 2),
+                        "certificate_ref": str(certificate_ref or "").strip() or f"CERT-{clean_code}-{reg}",
+                        "certified_date": today_str,
+                    }
+                )
+        except Exception:
+            pass
+
+        self._append_privacy_audit_log(
+            target_emp,
+            "COMPLETE_MANDATORY_SKILL_UPGRADE",
+            extra_meta={
+                "skill_code": clean_code,
+                "exam_score": round(score_val, 2),
+                "new_rank_grade": hub["rank_grade"],
+                "skill_gate_capped": hub["skill_gate_capped"],
+            },
+        )
+        return self._build_dashboard_payload(employee_id=target_emp["id"])
+
+    @http.route("/insilos/employee_dashboard/submit_work_kpi_review", type="jsonrpc", auth="user", readonly=False)
+    def submit_work_kpi_review(
+        self,
+        employee_id=None,
+        kpi_delivery_score=None,
+        kpi_quality_score=None,
+        kpi_work_eval_score=None,
+        okr_key_results_met=None,
+        sprint_velocity_pct=None,
+        code_review_pass_rate=None,
+        prod_defect_escape_rate=None,
+        b2b_sla_compliance_pct=None,
+        peer_feedback_score=None,
+        next_training_roadmap=None,
+        manager_review_note=None,
+        approve_evaluation=False,
+        **kwargs,
+    ):
+        registry = self._get_registry_and_employees()
+        employees = registry["employees"]
+        target_emp = self._find_employee(employees, employee_id)
+        hub = self._get_or_init_kpi_skill_hub(target_emp)
+        reg = target_emp.get("registration_number", "DGM-001")
+
+        for k, raw_val in (
+            ("kpi_delivery_score", kpi_delivery_score),
+            ("kpi_quality_score", kpi_quality_score),
+            ("kpi_work_eval_score", kpi_work_eval_score),
+            ("sprint_velocity_pct", sprint_velocity_pct),
+            ("code_review_pass_rate", code_review_pass_rate),
+            ("prod_defect_escape_rate", prod_defect_escape_rate),
+            ("b2b_sla_compliance_pct", b2b_sla_compliance_pct),
+            ("peer_feedback_score", peer_feedback_score),
+        ):
+            if raw_val is not None and str(raw_val).strip() != "":
+                try:
+                    hub[k] = round(float(raw_val), 2)
+                except Exception:
+                    pass
+
+        if okr_key_results_met is not None and str(okr_key_results_met).strip():
+            hub["okr_key_results_met"] = str(okr_key_results_met).strip()
+        if next_training_roadmap is not None and str(next_training_roadmap).strip():
+            hub["next_training_roadmap"] = str(next_training_roadmap).strip()
+        if manager_review_note is not None and str(manager_review_note).strip():
+            hub["manager_review_note"] = str(manager_review_note).strip()
+
+        if approve_evaluation:
+            hub["state"] = "approved"
+        elif hub.get("state") == "draft":
+            hub["state"] = "submitted"
+
+        hub = _recompute_kpi_hub_dict(hub)
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        IrConfig.set_param(f"dgm.hr.kpi_skill_hub.{reg}", json.dumps(hub, ensure_ascii=False))
+
+        try:
+            EvalModel = request.env["dgm.hr.kpi.evaluation"].sudo()
+            eval_recs = EvalModel.search([("employee_id.registration_number", "=", reg)], limit=1)
+            if eval_recs:
+                eval_recs.write(
+                    {
+                        "kpi_delivery_score": hub["kpi_delivery_score"],
+                        "kpi_quality_score": hub["kpi_quality_score"],
+                        "kpi_work_eval_score": hub["kpi_work_eval_score"],
+                        "next_training_roadmap": hub["next_training_roadmap"],
+                        "manager_review_note": hub["manager_review_note"],
+                        "state": hub["state"],
+                    }
+                )
+        except Exception:
+            pass
+
+        self._append_privacy_audit_log(
+            target_emp,
+            "SUBMIT_WORK_KPI_EVALUATION",
+            extra_meta={
+                "total_kpi_score": hub["total_kpi_score"],
+                "rank_grade": hub["rank_grade"],
+                "skill_gate_capped": hub["skill_gate_capped"],
+            },
+        )
+        return self._build_dashboard_payload(employee_id=target_emp["id"])
 
     @http.route("/insilos/employee_dashboard/export_vcb_digibiz", type="http", auth="user", methods=["GET"], readonly=False)
     def export_vcb_digibiz(self, **kwargs):
