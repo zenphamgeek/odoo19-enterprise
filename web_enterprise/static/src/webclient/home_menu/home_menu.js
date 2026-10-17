@@ -153,6 +153,8 @@ export class HomeMenu extends Component {
                     loading: false,
                     lastResult: null,
                 },
+                marketingScanLoading: false,
+                lastMarketingScanResult: null,
             },
         });
         this.pressTimer;
@@ -905,6 +907,50 @@ export class HomeMenu extends Component {
             type: "ir.actions.act_window",
             name: "Quản trị Tri thức & Chỉ mục SOP-RAG (SOP-DGM-12)",
             res_model: "dgm.knowledge.sop.workflow",
+            views: [
+                [false, "list"],
+                [false, "form"],
+            ],
+            target: "current",
+        });
+    }
+
+    async onRunAutonomousMarketingScan() {
+        const empId = this.state.empDashboard.data?.current_employee?.id;
+        this.state.empDashboard.marketingScanLoading = true;
+        try {
+            const res = await rpc("/insilos/employee_dashboard/run_autonomous_marketing_scan", {
+                employee_id: empId,
+            });
+            if (res && res.current_employee) {
+                this.state.empDashboard.data = res;
+                this.state.empDashboard.lastMarketingScanResult = res.marketing_scan_result || null;
+            }
+        } catch {
+            // Fail-soft
+        } finally {
+            this.state.empDashboard.marketingScanLoading = false;
+        }
+    }
+
+    openMarketResearchRadarApp() {
+        return this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Radar Nghiên cứu Thị trường B2B & Battlecard Đối thủ (SOP-DGM-13)",
+            res_model: "dgm.market.research.radar",
+            views: [
+                [false, "list"],
+                [false, "form"],
+            ],
+            target: "current",
+        });
+    }
+
+    openAutonomousMarketingCampaignApp() {
+        return this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Chiến dịch Marketing Tự hành 24/7 & Phễu 4-Touch ABM (SOP-DGM-13)",
+            res_model: "dgm.marketing.automation.campaign",
             views: [
                 [false, "list"],
                 [false, "form"],

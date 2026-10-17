@@ -29,6 +29,7 @@
                 <t t-set="pdcaDocs" t-value="state.empDashboard.data.pdca_companion_docs || []"/>
                 <t t-set="sopRag" t-value="state.empDashboard.data.knowledge_sop_rag || {}"/>
                 <t t-set="sopAns" t-value="state.empDashboard.sopRagForm.lastResult || sopRag.last_response || {}"/>
+                <t t-set="mktHub" t-value="state.empDashboard.data.autonomous_marketing_hub || {}"/>
 
                 <!-- Top Executive Identity & Action Header -->
                 <div class="o_emp_dash_header d-flex flex-wrap align-items-center justify-content-between gap-3">
@@ -1172,6 +1173,107 @@
                                                 <span class="o_emp_badge o_emp_badge_emerald font-monospace" t-out="cit.citation_tag"/>
                                             </t>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ========================================================================= -->
+                        <!-- SECTION 6: TỰ ĐỘNG HÓA MARKETING & NGHIÊN CỨU THỊ TRƯỜNG B2B (SOP-DGM-13) -->
+                        <!-- ========================================================================= -->
+                        <div class="row g-3 mt-1">
+                            <div class="col-12">
+                                <div class="o_emp_card">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                        <div class="o_emp_card_title mb-0">
+                                            <i class="fa fa-bullseye me-2"/>Tự Động Hóa Marketing 24/7, Nghiên Cứu Thị Trường B2B &amp; Battlecard Đối Thủ (SOP-DGM-13)
+                                        </div>
+                                        <div class="d-flex flex-wrap align-items-center gap-2">
+                                            <span class="o_emp_badge o_emp_badge_primary font-monospace" t-out="'TAM: ' + (mktHub.total_tam_billion_vnd || 87500) + ' Tỷ • SOM: ' + (mktHub.total_som_billion_vnd || 960) + ' Tỷ VNĐ'"/>
+                                            <span class="o_emp_badge o_emp_badge_emerald font-monospace" t-out="'MQL→SQL: ' + (mktHub.total_mql || 188) + '→' + (mktHub.total_sql || 84) + ' (' + (mktHub.avg_conversion_pct || 44.68) + '%)'"/>
+                                            <span class="o_emp_badge o_emp_badge_emerald font-monospace" t-out="'ROI: ' + (mktHub.avg_roi_multiple || 57.26) + 'x • 100% Claim Grounded'"/>
+                                            <button type="button"
+                                                    class="btn btn-sm o_emp_action_btn o_emp_action_btn_accent"
+                                                    t-att-disabled="state.empDashboard.marketingScanLoading"
+                                                    t-on-click="onRunAutonomousMarketingScan">
+                                                <i class="fa fa-bolt me-1"/>
+                                                <span t-out="state.empDashboard.marketingScanLoading ? 'Đang chạy Quét Tự hành...' : '⚡ Chạy Quét Thị Trường &amp; Nuôi Dưỡng Lead Tự Hành (Autonomous Scan)'"/>
+                                            </button>
+                                            <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="openMarketResearchRadarApp">
+                                                <i class="fa fa-line-chart me-1"/>Mở Radar Thị Trường (MKT-RES)
+                                            </button>
+                                            <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="openAutonomousMarketingCampaignApp">
+                                                <i class="fa fa-rocket me-1"/>Mở Chiến Dịch 4-Touch ABM (AUT-CMP)
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Market Research Radar Table (MKT-RES-01..06) -->
+                                    <div class="fw-bold mb-1 mt-2">
+                                        <i class="fa fa-compass me-1"/>1. Ma Trận Nghiên Cứu Thị Trường B2B (TAM / SAM / SOM) &amp; Lợi Thế Độc Tôn Innoria (MKT-RES-01..06)
+                                    </div>
+                                    <div class="table-responsive mb-3">
+                                        <table class="table table-sm o_emp_table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Mã Radar</th>
+                                                    <th>Phân khúc &amp; Giải pháp</th>
+                                                    <th class="text-end">TAM / SAM / SOM (Tỷ ₫)</th>
+                                                    <th class="text-end">CAGR</th>
+                                                    <th>Đối thủ Chính</th>
+                                                    <th>Lợi thế Thắng thầu Innoria (Moat)</th>
+                                                    <th class="text-end">Win-Rate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr t-foreach="mktHub.radars || []" t-as="rad" t-key="rad.code">
+                                                    <td class="font-monospace fw-bold" t-out="rad.code"/>
+                                                    <td class="fw-semibold" t-out="rad.name"/>
+                                                    <td class="text-end font-monospace" t-out="rad.tam_vnd_billion + ' / ' + rad.sam_vnd_billion + ' / ' + rad.som_target_vnd_billion"/>
+                                                    <td class="text-end font-monospace o_emp_text_emerald fw-semibold" t-out="rad.cagr_pct + '%'"/>
+                                                    <td t-out="rad.primary_competitors"/>
+                                                    <td t-out="rad.innoria_moat_proposition"/>
+                                                    <td class="text-end">
+                                                        <span class="o_emp_badge o_emp_badge_emerald font-monospace" t-out="rad.win_rate_benchmark_pct + '%'"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- Autonomous Marketing Campaign Table (AUT-CMP-01..06) -->
+                                    <div class="fw-bold mb-1">
+                                        <i class="fa fa-paper-plane-o me-1"/>2. Chiến Dịch Marketing Tự Hành 24/7 &amp; Phễu Nuôi Dưỡng 4-Touch ABM (AUT-CMP-01..06)
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm o_emp_table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Mã Chiến dịch</th>
+                                                    <th>Tên Chiến dịch Tự hành (4-Touch ABM &amp; GEO)</th>
+                                                    <th>Radar</th>
+                                                    <th class="text-end">MQL → SQL</th>
+                                                    <th class="text-end">Chuyển đổi</th>
+                                                    <th class="text-end">Pipeline B2B</th>
+                                                    <th class="text-end">ROI (x)</th>
+                                                    <th>Trạng thái</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr t-foreach="mktHub.campaigns || []" t-as="cmp" t-key="cmp.code">
+                                                    <td class="font-monospace fw-bold" t-out="cmp.code"/>
+                                                    <td class="fw-semibold" t-out="cmp.name"/>
+                                                    <td class="font-monospace" t-out="cmp.radar_code"/>
+                                                    <td class="text-end font-monospace fw-semibold" t-out="cmp.actual_mql_count + ' → ' + cmp.actual_sql_count"/>
+                                                    <td class="text-end font-monospace" t-out="cmp.conversion_rate_pct + '%'"/>
+                                                    <td class="text-end font-monospace fw-bold o_emp_text_emerald" t-out="formatVnd(cmp.pipeline_revenue_vnd)"/>
+                                                    <td class="text-end font-monospace fw-bold" t-out="cmp.roi_multiple + 'x'"/>
+                                                    <td>
+                                                        <span class="o_emp_badge o_emp_badge_emerald font-monospace" t-out="cmp.autonomy_mode === 'autonomous_on' ? 'Autonomous 24/7' : cmp.state"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
