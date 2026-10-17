@@ -69,7 +69,7 @@
         </div>
     </template>
 
-    <!-- Preconnect, High-Performance Vietnamese Typography Stack, Brand SEO & Metadata -->
+    <!-- Preconnect, High-Performance Vietnamese Typography Stack, Brand SEO &amp; Metadata -->
     <template id="insilos_vietnamese_fonts" inherit_id="website.layout" priority="1">
         <xpath expr="//head/*[1]" position="before">
             <t t-set="curr_path" t-value="request.httprequest.path if request and request.httprequest else '/'"/>
@@ -158,7 +158,7 @@
             </t>
 
 
-            <!-- Local High-Priority Font & Media Preloads for Zero FOIT/FOUT and Sub-Second LCP -->
+            <!-- Local High-Priority Font &amp; Media Preloads for Zero FOIT/FOUT and Sub-Second LCP -->
             <link rel="preload" href="/insilos_website/static/src/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
             <link rel="preload" href="/insilos_website/static/src/fonts/inter-vietnamese.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
             <link rel="preload" href="/insilos_website/static/src/fonts/jetbrainsmono-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
@@ -631,7 +631,7 @@
                             "@type": "Organization",
                             "@id": "https://insilos.com/#organization",
                             "name": "Insilos Sovereign AI",
-                            "legalName": "UNG DUNG SANG TAO LLC",
+                            "legalName": "INNORIA GROUP",
                             "url": "https://insilos.com",
                             "logo": {
                                 "@type": "ImageObject",
@@ -639,7 +639,7 @@
                             },
                             "description": "Sovereign Industrial AI Operating System uniting Vertical IDP, Enterprise Knowledge Graph, Trade Compliance, and Field Service Management for APAC enterprises.",
                             "foundingDate": "2018",
-                            "taxID": "0313683499",
+                            "taxID": "INNORIA-GROUP",
                             "address": {
                                 "@type": "PostalAddress",
                                 "streetAddress": "45 street 3, Trung Son Resident, Binh Hung ward",
@@ -1158,14 +1158,14 @@
             <attribute name="t-valuef">container-fluid</attribute>
         </xpath>
         <xpath expr="//header" position="attributes">
-            <attribute name="t-attf-class" add="ins-glass-header #{'innoria-navbar' if (is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))) else ''}" separator=" "/>
+            <attribute name="t-attf-class" add="ins-glass-header #{'innoria-navbar' if (not ((website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower()))) else ''}" separator=" "/>
         </xpath>
     </template>
 
     <!-- Executive Brand Logo Switching (Innoria SVG vs Insilos Brand, Editable in Website Builder) -->
     <template id="option_header_brand_logo" inherit_id="website.placeholder_header_brand" priority="25">
         <xpath expr="//*[@id='o_fake_navbar_brand']" position="replace">
-            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <t t-set="is_innoria" t-value="not ((website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <t t-set="base_options" t-value="{'widget': 'image'}"/>
             <a data-name="Navbar Logo" href="/" t-attf-class="navbar-brand logo py-0 d-flex align-items-center me-xl-4 me-3 #{_link_class}">
                 <t t-if="is_innoria and not editable">
@@ -1188,7 +1188,7 @@
         <template id="insilos_megamenu_desktop" inherit_id="website.template_header_default" priority="25">
         <!-- 1. Dynamic Menu Loop inside website.navbar_nav (preserves native nav and alignment options) -->
         <xpath expr="//t[@t-call='website.navbar_nav']//t[@t-foreach='website.menu_id.child_id']" position="replace">
-            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <t t-set="is_innoria" t-value="not ((website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <li class="ins-nav-indicator" id="ins_nav_indicator"/>
             <t t-if="is_innoria">
                         <t t-if="website.menu_id and len(website.menu_id.child_id) &gt; 1">
@@ -1351,7 +1351,7 @@
 
         <!-- 2. Attach Mega-Menu Dropdown Panels directly after website.navbar_nav -->
         <xpath expr="//t[@t-call='website.navbar_nav']" position="after">
-            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <t t-set="is_innoria" t-value="not ((website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <t t-if="is_innoria">
                 <t t-call="insilos_website.innoria_navbar_megamenus"/>
             </t>
@@ -1453,7 +1453,7 @@
                                 </a>
                             </div>
                         </div>
-                        <!-- Col 2: Operations & Optimization -->
+                        <!-- Col 2: Operations &amp; Optimization -->
                         <div class="col-lg-3">
                             <div class="ins-megamenu-col-header mb-3">
                                 <span class="ins-col-eyebrow text-uppercase text-cyan fw-semibold small">Operations &amp; Optimization</span>
@@ -1546,7 +1546,7 @@
                                 </a>
                             </div>
                         </div>
-                        <!-- Col 3: Industrial GRC & Resilience -->
+                        <!-- Col 3: Industrial GRC &amp; Resilience -->
                         <div class="col-lg-3">
                             <div class="ins-megamenu-col-header mb-3">
                                 <span class="ins-col-eyebrow text-uppercase text-orange fw-semibold small">Industrial GRC &amp; Resilience</span>
@@ -1574,7 +1574,7 @@
                                         <p class="ins-menu-item-desc text-secondary small mb-0">Hội tụ rủi ro L0-L4, hoàn vốn 4.6 tháng, brochure B2B</p>
                                     </div>
                                 </a>
-                                <!-- Item 10: e-PTW & SIMOPS Field Interlocks -->
+                                <!-- Item 10: e-PTW &amp; SIMOPS Field Interlocks -->
                                 <a href="/solutions" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
                                    data-badge="CH4 &lt; 10% LEL · SIMOPS"
                                    data-title="e-PTW &amp; SIMOPS Field Interlocks"
@@ -1616,7 +1616,7 @@
                                         <p class="ins-menu-item-desc text-secondary small mb-0">Định lượng suy giảm rào cản BHI, ngắt công tác tự động</p>
                                     </div>
                                 </a>
-                                <!-- Item 12: Sovereign Data & Model Risk Governance -->
+                                <!-- Item 12: Sovereign Data &amp; Model Risk Governance -->
                                 <a href="/trust" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
                                    data-badge="Nghị Định 13 · EU AI Act"
                                    data-title="Sovereign Data &amp; Model Risk Governance"
@@ -1695,10 +1695,10 @@
                                 <h5 class="text-white fw-bold mb-0">5 Ngành Trọng Điểm GRC</h5>
                             </div>
                             <div class="d-flex flex-column gap-2">
-                                <!-- Ind 1: Petrochemical & Fertilizer (PVFCCo Phu My) -->
+                                <!-- Ind 1: Petrochemical &amp; Fertilizer (Tổ Hợp Hóa Chất Quốc Gia Phu My) -->
                                 <a href="/industries/petrochem" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3 is-active"
-                                   data-badge="PVFCCo Phú Mỹ · Syngas"
-                                   data-title="Hóa Chất &amp; Phân Bón (PVFCCo)"
+                                   data-badge="Tổ Hợp Hóa Chất Quốc Gia Phú Mỹ · Syngas"
+                                   data-title="Hóa Chất &amp; Phân Bón (Tổ Hợp Hóa Chất Quốc Gia)"
                                    data-icon="ph-flask"
                                    data-m1-val="$1.2M/ngày" data-m1-lbl="Tránh Dừng Lò"
                                    data-m2-val="&lt; 10% LEL" data-m2-lbl="Khóa Khí Độc CH4"
@@ -1711,12 +1711,12 @@
                                     <div class="flex-grow-1 min-w-0">
                                         <div class="d-flex align-items-center justify-content-between mb-1">
                                             <span class="ins-menu-item-title fw-semibold text-white">Hóa Chất &amp; Phân Bón</span>
-                                            <span class="ins-label-lux ins-label-lux-cyan">PVFCCo</span>
+                                            <span class="ins-label-lux ins-label-lux-cyan">Tổ Hợp Hóa Chất Quốc Gia</span>
                                         </div>
                                         <p class="ins-menu-item-desc text-secondary small mb-0">Syngas reformer, e-PTW khóa khí CH4/H2, tránh dừng lò $1.2M</p>
                                     </div>
                                 </a>
-                                <!-- Ind 2: Gas Midstream & Pipeline (Nam Con Son NCSP) -->
+                                <!-- Ind 2: Gas Midstream &amp; Pipeline (Nam Con Son NCSP) -->
                                 <a href="/industries/gas-pipeline" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
                                    data-badge="Nam Côn Sơn · ESD-201"
                                    data-title="Khí Đốt &amp; Đường Ống (NCSP)"
@@ -1737,10 +1737,10 @@
                                         <p class="ins-menu-item-desc text-secondary small mb-0">Van ngắt SCADA ESD-201, áp suất 85 bar trạm Dinh Cố</p>
                                     </div>
                                 </a>
-                                <!-- Ind 3: Metallurgy & Mining (Hoa Phat Dung Quat) -->
+                                <!-- Ind 3: Metallurgy &amp; Mining (Hoa Phat Dung Quat) -->
                                 <a href="/industries/metallurgy" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
-                                   data-badge="Hòa Phát · 1,500°C"
-                                   data-title="Luyện Kim &amp; Khai Khoáng (Hòa Phát)"
+                                   data-badge="Tập Đoàn Luyện Kim Trọng Điểm · 1,500°C"
+                                   data-title="Luyện Kim &amp; Khai Khoáng (Tập Đoàn Luyện Kim Trọng Điểm)"
                                    data-icon="ph-fire"
                                    data-m1-val="1,500°C" data-m1-lbl="Nhiệt Lò Cao"
                                    data-m2-val="CO &gt; 25%" data-m2-lbl="Cảnh Báo Khí BFG"
@@ -1753,15 +1753,15 @@
                                     <div class="flex-grow-1 min-w-0">
                                         <div class="d-flex align-items-center justify-content-between mb-1">
                                             <span class="ins-menu-item-title fw-semibold text-white">Luyện Kim &amp; Khai Khoáng</span>
-                                            <span class="ins-label-lux ins-label-lux-amber">Hòa Phát</span>
+                                            <span class="ins-label-lux ins-label-lux-amber">Tập Đoàn Luyện Kim Trọng Điểm</span>
                                         </div>
                                         <p class="ins-menu-item-desc text-secondary small mb-0">Lò cao gang lỏng 1,500°C, khí CO trạm BFG, ổn định đập thải</p>
                                     </div>
                                 </a>
-                                <!-- Ind 4: Thermal Power Generation (AES Mong Duong 500kV) -->
+                                <!-- Ind 4: Thermal Power Generation (Tập Đoàn Năng Lượng Quốc Tế Mong Duong 500kV) -->
                                 <a href="/industries/thermal-power" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
-                                   data-badge="AES Mông Dương · 500kV"
-                                   data-title="Nhiệt Điện &amp; Lưới Điện (AES)"
+                                   data-badge="Nhà Máy Nhiệt Điện Công Suất Lớn · 500kV"
+                                   data-title="Nhiệt Điện &amp; Lưới Điện (Tập Đoàn Năng Lượng Quốc Tế)"
                                    data-icon="ph-lightning"
                                    data-m1-val="500 kV" data-m1-lbl="Ngắt Dao Tiếp Địa"
                                    data-m2-val="Dual-Key" data-m2-lbl="Lockbox LBX-571"
@@ -1779,10 +1779,10 @@
                                         <p class="ins-menu-item-desc text-secondary small mb-0">Máy cắt 571, dao tiếp địa ES-571, hộp khóa số kép LOTO</p>
                                     </div>
                                 </a>
-                                <!-- Ind 5: Pharma GxP & Cleanroom (DHG Pharma) -->
+                                <!-- Ind 5: Pharma GxP &amp; Cleanroom (Tập Đoàn Dược Phẩm Chuẩn GMP) -->
                                 <a href="/industries/pharma" class="ins-menu-link-item d-flex align-items-start gap-3 p-2 rounded-3"
-                                   data-badge="DHG Pharma · Cleanroom"
-                                   data-title="Dược Phẩm GxP &amp; Phòng Sạch (DHG)"
+                                   data-badge="Tập Đoàn Dược Phẩm Chuẩn GMP · Cleanroom"
+                                   data-title="Dược Phẩm GxP &amp; Phòng Sạch (Tập Đoàn Dược Phẩm GMP)"
                                    data-icon="ph-pill"
                                    data-m1-val="≥ 15 Pa" data-m1-lbl="Chênh Áp Phòng Sạch"
                                    data-m2-val="$1.8M" data-m2-lbl="Cứu Mẻ Vô Trùng"
@@ -1795,7 +1795,7 @@
                                     <div class="flex-grow-1 min-w-0">
                                         <div class="d-flex align-items-center justify-content-between mb-1">
                                             <span class="ins-menu-item-title fw-semibold text-white">Dược Phẩm GxP &amp; Phòng Sạch</span>
-                                            <span class="ins-label-lux ins-label-lux-mint">DHG Pharma</span>
+                                            <span class="ins-label-lux ins-label-lux-mint">Tập Đoàn Dược Phẩm Chuẩn GMP</span>
                                         </div>
                                         <p class="ins-menu-item-desc text-secondary small mb-0">Chênh áp HEPA ≥ 15 Pa, đóng băng e-PTW, hồ sơ lô 21 CFR 11</p>
                                     </div>
@@ -1990,7 +1990,7 @@
                     </t>
         </xpath>
         <xpath expr="//t[@t-call='website.placeholder_header_call_to_action']" position="before">
-            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <t t-set="is_innoria" t-value="not ((website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <t t-if="is_innoria">
                 <!-- Executive Language Switcher (VN / EN) -->
                 <li class="nav-item d-flex align-items-center me-2" id="innoria_lang_switcher">
@@ -2013,7 +2013,7 @@
             <attribute name="class" add="nav-item ms-1" separator=" "/>
         </xpath>
         <xpath expr="//a[hasclass('btn_cta')]" position="replace">
-            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <t t-set="is_innoria" t-value="not ((website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <a t-if="is_innoria" href="/contactus" class="oe_unremovable btn btn_cta ins-btn-lux ins-btn-lux-primary btn-innoria-nav rounded-1 px-3 py-2 d-inline-flex align-items-center gap-2">
                 <span class="nav-cta-text">Tham Vấn Kiến Trúc 3 Giờ</span>
                 <svg class="ph-duotone ph-arrow-right ph-sm" width="16" height="16"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
@@ -2029,7 +2029,7 @@
         <!-- Executive Mobile Drawer Navigation (< 992px) with Accordion Collapse -->
     <template id="insilos_megamenu_mobile" inherit_id="website.template_header_mobile" priority="25">
         <xpath expr="//div[@id='top_menu_collapse_mobile']//t[@t-call='website.navbar_nav']/.." position="replace">
-            <t t-set="is_innoria" t-value="is_innoria_page or ((website or getattr(request, 'website', None)) and ('innoria' in ((website or getattr(request, 'website', None)).domain or '') or 'innoria' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
+            <t t-set="is_innoria" t-value="not ((website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <li class="w-100 px-3 py-2">
                 <t t-if="is_innoria">
                     <div class="accordion accordion-flush ins-mobile-accordion" id="innoriaMobileAccordion">
@@ -2119,7 +2119,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Dynamic & Direct Nav Links for Innoria Mobile Drawer -->
+                    <!-- Dynamic &amp; Direct Nav Links for Innoria Mobile Drawer -->
                     <div class="d-flex flex-column gap-2 border-top border-secondary border-opacity-25 pt-3" t-if="website.menu_id and len(website.menu_id.child_id) &gt; 1">
                         <t t-foreach="website.menu_id.child_id" t-as="submenu">
                             <t t-set="menu_url" t-value="submenu._clean_url()"/>
@@ -2251,7 +2251,7 @@
         </xpath>
     </template>
 
-    <!-- Insilos Institutional Transparency & Enterprise Footer (Decree 52/2013/ND-CP & Decree 13/2023/ND-CP) -->
+    <!-- Insilos Institutional Transparency &amp; Enterprise Footer (Decree 52/2013/ND-CP &amp; Decree 13/2023/ND-CP) -->
     <template id="insilos_footer_custom" inherit_id="website.footer_custom" priority="50">
         <xpath expr="//div[@id='footer']" position="replace">
             <div id="footer" class="oe_structure oe_structure_solo text-break" t-ignore="true" t-if="not no_footer">
@@ -2259,15 +2259,15 @@
                     <div class="container">
                         <!-- Top Row: Symmetrical 5-Column Fortune 500 Enterprise Grid -->
                         <div class="row g-4 pb-5 border-bottom border-secondary border-opacity-25">
-                            <!-- Col 1 (3 cols): Corporate Legal Entity & Sovereign OS -->
+                            <!-- Col 1 (3 cols): Corporate Legal Entity &amp; Sovereign OS -->
                             <div class="col-lg-3 col-md-6">
                                 <div class="d-flex align-items-center gap-2 mb-3">
-                                    <span class="text-orange fw-bold fs-4 tracking-tight">INSILOS</span>
+                                    <img src="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA" width="128" height="35" class="me-1"/><span class="text-orange fw-bold fs-5 tracking-tight">INNORIA</span>
                                     <span class="badge bg-secondary bg-opacity-25 text-mint border border-secondary border-opacity-30 font-monospace small">Sovereign AI OS</span>
                                 </div>
-                                <h6 class="text-white fw-bold mb-2 small text-uppercase tracking-wider">UNG DUNG SANG TAO LLC</h6>
+                                <h6 class="text-white fw-bold mb-2 small text-uppercase tracking-wider">INNORIA GROUP</h6>
                                 <p class="text-secondary small mb-2 lh-sm">
-                                    <strong class="text-light">Mã số DN (Tax ID):</strong> 0313683499 do Sở KH&amp;ĐT TP.HCM cấp.
+                                    <strong class="text-light">Đơn vị Chủ quản:</strong> INNORIA GROUP · Enterprise AI &amp; Digital Transformation.
                                 </p>
                                 <p class="text-secondary small mb-3 lh-sm">
                                     Hệ điều hành AI Công nghiệp có Chủ quyền tiên phong tại Việt Nam, kết nối trực tiếp cảm biến SCADA/IoT hiện trường với sổ cái ERP VAS 200.
@@ -2284,7 +2284,7 @@
                                 </div>
                             </div>
 
-                            <!-- Col 2 (2 cols): Platform & Sandbox Spotlight -->
+                            <!-- Col 2 (2 cols): Platform &amp; Sandbox Spotlight -->
                             <div class="col-lg-2 col-md-6 col-6">
                                 <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider d-flex align-items-center gap-2">
                                     <span class="p-1 rounded bg-info bg-opacity-10 text-cyan"><svg class="ph-duotone ph-cpu ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-cpu"/></svg></span>
@@ -2324,7 +2324,7 @@
                                 </ul>
                             </div>
 
-                            <!-- Col 4 (2 cols): Institutional Governance & Resources -->
+                            <!-- Col 4 (2 cols): Institutional Governance &amp; Resources -->
                             <div class="col-lg-2 col-md-6 col-6">
                                 <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider d-flex align-items-center gap-2">
                                     <span class="p-1 rounded bg-warning bg-opacity-10 text-warning"><svg class="ph-duotone ph-shield-check ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg></span>
@@ -2347,7 +2347,7 @@
                                 </ul>
                             </div>
 
-                            <!-- Col 5 (3 cols): 24/7 Hotline & Emergency SOC -->
+                            <!-- Col 5 (3 cols): 24/7 Hotline &amp; Emergency SOC -->
                             <div class="col-lg-3 col-md-6">
                                 <h6 class="text-white fw-bold mb-3 small text-uppercase tracking-wider d-flex align-items-center gap-2">
                                     <span class="p-1 rounded bg-danger bg-opacity-10 text-danger"><svg class="ph-duotone ph-phone-call ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-phone-call"/></svg></span>
@@ -2407,10 +2407,10 @@
                             </div>
                         </div>
 
-                        <!-- Bottom Row: Copyright & Statutory Badges -->
+                        <!-- Bottom Row: Copyright &amp; Statutory Badges -->
                         <div class="row align-items-center pt-3 small text-secondary">
                             <div class="col-md-7 text-center text-md-start mb-2 mb-md-0">
-                                <span>© 2026 UNG DUNG SANG TAO LLC · INSILOS SOVEREIGN ENTERPRISE OS. Bản quyền đã được bảo hộ. Tuân thủ tuyệt đối Nghị định 13/2023/NĐ-CP &amp; Nghị định 52/2013/NĐ-CP.</span>
+                                <span>© 2026 INNORIA GROUP · INNORIA SOVEREIGN ENTERPRISE OS. Bản quyền đã được bảo hộ. Tuân thủ tuyệt đối Nghị định 13/2023/NĐ-CP &amp; Nghị định 52/2013/NĐ-CP.</span>
                             </div>
                             <div class="col-md-5 text-center text-md-end">
                                 <span class="ins-footer-badge me-2">Bộ TT&amp;TT · Tier 3 Data Center</span>
