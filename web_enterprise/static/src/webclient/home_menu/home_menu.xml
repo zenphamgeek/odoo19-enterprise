@@ -23,6 +23,10 @@
                 <t t-set="lv" t-value="state.empDashboard.data.leaving"/>
                 <t t-set="kpi" t-value="state.empDashboard.data.kpi_skill_hub || {}"/>
                 <t t-set="kpiSum" t-value="state.empDashboard.data.kpi_summary || {}"/>
+                <t t-set="okr" t-value="state.empDashboard.data.okr_hub || {}"/>
+                <t t-set="apr" t-value="state.empDashboard.data.appraisal_hub || {}"/>
+                <t t-set="pdcaTpls" t-value="state.empDashboard.data.project_pdca_templates || []"/>
+                <t t-set="pdcaDocs" t-value="state.empDashboard.data.pdca_companion_docs || []"/>
 
                 <!-- Top Executive Identity & Action Header -->
                 <div class="o_emp_dash_header d-flex flex-wrap align-items-center justify-content-between gap-3">
@@ -101,8 +105,8 @@
                             <span class="o_emp_tab_pill ms-2" t-out="(state.empDashboard.data.pending_approval_count || 0) + ' chờ duyệt'"/>
                         </button>
                         <button type="button" class="o_emp_tab_btn" t-att-class="{ active: state.empDashboard.activeTab === 'kpi_skills' }" t-on-click="() => this.selectDashboardTab('kpi_skills')">
-                            <i class="fa fa-line-chart me-2"/>KPI Công việc &amp; Nâng cấp Kỹ năng SWE
-                            <span class="o_emp_tab_pill ms-2" t-out="(kpi.total_kpi_score || 0) + 'đ • ' + (kpi.mandatory_skill_certified || 0) + '/' + (kpi.mandatory_skill_total || 0) + ' Kỹ năng'"/>
+                            <i class="fa fa-line-chart me-2"/>KPI, OKRs, 360° Appraisal &amp; Kỹ năng SWE
+                            <span class="o_emp_tab_pill ms-2" t-out="(kpi.total_kpi_score || 0) + 'đ • OKR ' + (okr.okr_score || 0.9) + ' • ' + (kpi.mandatory_skill_certified || 0) + '/' + (kpi.mandatory_skill_total || 0) + ' Kỹ năng'"/>
                         </button>
                     </div>
 
@@ -829,6 +833,255 @@
                                                 <div class="fw-bold fs-6" t-out="(kpiSum.capped_by_skill_gate_count || 0) + ' kỹ sư'"/>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ========================================================================= -->
+                        <!-- SECTION 2: SOFTWARE ENTERPRISE OKRs & PDCA LOOP CHECK-IN (`okr_hub`)     -->
+                        <!-- ========================================================================= -->
+                        <div class="row g-3 mt-1">
+                            <div class="col-12 col-lg-7">
+                                <div class="o_emp_card h-100">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                        <div class="o_emp_card_title mb-0">
+                                            <i class="fa fa-bullseye me-2"/>Khung OKRs Doanh nghiệp Phần mềm &amp; Check-in Chu trình PDCA (<span t-out="okr.period_code || '2026-Q4'"/>)
+                                        </div>
+                                        <div class="d-flex flex-wrap align-items-center gap-2">
+                                            <span class="o_emp_badge o_emp_badge_primary font-monospace" t-out="'PDCA: ' + (okr.pdca_stage || 'C - Check')"/>
+                                            <span class="o_emp_badge o_emp_badge_emerald font-monospace" t-out="'OKR Score: ' + (okr.okr_score || 0.9) + ' (' + (okr.progress_pct || 90) + '%)'"/>
+                                        </div>
+                                    </div>
+
+                                    <t t-foreach="okr.employee_okrs || []" t-as="obj" t-key="obj.code">
+                                        <div class="o_emp_legal_notice mb-2">
+                                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                                                <div>
+                                                    <span class="o_emp_badge o_emp_badge_primary font-monospace me-2" t-out="obj.code"/>
+                                                    <strong t-out="obj.name"/>
+                                                </div>
+                                                <span class="o_emp_badge font-monospace" t-out="'Liên kết: ' + (obj.aligned_company_okr || 'OKR-2026-Q4-C02')"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="table-responsive">
+                                            <table class="table table-sm o_emp_table mb-2">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Key Result (KR) Đo lường Định lượng</th>
+                                                        <th class="text-center">Chu trình PDCA</th>
+                                                        <th class="text-end">Tiến độ / Mục tiêu</th>
+                                                        <th class="text-end">Điểm KR</th>
+                                                        <th class="text-end">Thao tác Check-in</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr t-foreach="obj.key_results || []" t-as="kr" t-key="kr.code">
+                                                        <td>
+                                                            <div class="fw-semibold">
+                                                                <span class="font-monospace me-1" t-out="kr.code"/>— <span t-out="kr.name"/>
+                                                            </div>
+                                                            <div class="o_emp_step_meta font-monospace" t-out="'Minh chứng: ' + (kr.evidence_ref || 'PDCA-2026Q4')"/>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span class="o_emp_badge o_emp_badge_primary font-monospace" t-out="kr.pdca_stage_label || kr.pdca_stage"/>
+                                                        </td>
+                                                        <td class="text-end font-monospace">
+                                                            <span class="fw-bold" t-out="kr.current_value"/> / <span t-out="kr.target_value"/> <span t-out="kr.unit"/>
+                                                            <div class="o_emp_progress_track mt-1">
+                                                                <div class="o_emp_progress_fill" t-attf-style="width: {{kr.progress_pct || 0}}%;"/>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-end font-monospace fw-bold o_emp_text_emerald" t-out="kr.kr_score"/>
+                                                        <td class="text-end">
+                                                            <button type="button" class="btn btn-sm o_emp_action_btn o_emp_action_btn_accent" t-on-click="() => this.onCheckinOkrKr(kr.code, kr.target_value)">
+                                                                <i class="fa fa-bolt me-1"/>⚡ Check-in KR (PDCA)
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </t>
+
+                                    <div class="d-flex flex-wrap gap-2 mt-2">
+                                        <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="openOkrApp">
+                                            <i class="fa fa-external-link me-1"/>Mở Phân hệ Quản trị OKRs (SOP-DGM-11)
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Company Strategic OKRs Alignment Card -->
+                            <div class="col-12 col-lg-5">
+                                <div class="o_emp_card h-100">
+                                    <div class="o_emp_card_title mb-2">
+                                        <i class="fa fa-sitemap me-2"/>Mục tiêu Chiến lược OKRs Cấp Công ty (Digimate 2026-Q4)
+                                    </div>
+                                    <div class="o_emp_steps_list">
+                                        <t t-foreach="okr.company_okrs || []" t-as="cokr" t-key="cokr.code">
+                                            <div class="o_emp_cr_item mb-2">
+                                                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-1">
+                                                    <span class="o_emp_badge o_emp_badge_primary font-monospace" t-out="cokr.code"/>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="o_emp_badge font-monospace" t-out="cokr.pdca_stage"/>
+                                                        <span class="o_emp_badge o_emp_badge_emerald font-monospace" t-out="'Score: ' + cokr.okr_score + ' (' + cokr.progress_pct + '%)'"/>
+                                                    </div>
+                                                </div>
+                                                <div class="fw-semibold" t-out="cokr.name"/>
+                                                <div class="o_emp_step_meta mt-1">
+                                                    Chủ sở hữu: <strong t-out="cokr.owner_name"/> • Trạng thái: <strong t-out="cokr.confidence_level === 'on_track' ? 'On Track' : 'At Risk'"/>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ========================================================================= -->
+                        <!-- SECTION 3: 360° HR APPRAISAL & 9-BOX TALENT CALIBRATION (`appraisal_hub`) -->
+                        <!-- ========================================================================= -->
+                        <div class="row g-3 mt-1">
+                            <div class="col-12 col-lg-6">
+                                <div class="o_emp_card h-100">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                        <div class="o_emp_card_title mb-0">
+                                            <i class="fa fa-users me-2"/>Đánh giá Nhân sự 360° (HR Appraisal) &amp; Hiệu chuẩn Nhân tài 9-Box
+                                        </div>
+                                        <span class="o_emp_badge font-monospace" t-att-class="{
+                                            'o_emp_badge_emerald': !apr.skill_gate_capped,
+                                            'o_emp_badge_amber': apr.skill_gate_capped
+                                        }" t-out="apr.code || 'APR-2026-Q4'"/>
+                                    </div>
+
+                                    <!-- 9-Box Talent Calibration Badge & Skill Gate Notice -->
+                                    <div class="o_emp_skill_gate_banner mb-3" t-att-class="{
+                                        'o_emp_skill_gate_locked': apr.skill_gate_capped,
+                                        'o_emp_skill_gate_unlocked': !apr.skill_gate_capped
+                                    }">
+                                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-1">
+                                            <span class="fw-bold">
+                                                <i t-attf-class="fa {{apr.skill_gate_capped ? 'fa-lock' : 'fa-diamond'}} me-1"/>
+                                                Ô Hiệu chuẩn Nhân tài 9-Box:
+                                            </span>
+                                            <span class="o_emp_badge" t-att-class="{
+                                                'o_emp_badge_amber': apr.skill_gate_capped,
+                                                'o_emp_badge_emerald': !apr.skill_gate_capped
+                                            }" t-out="apr.calibration_box || '9-Box [9] Top Talent / Future Leader'"/>
+                                        </div>
+                                        <div t-if="apr.skill_gate_capped">
+                                            Điểm 360° gốc đạt <strong t-out="apr.raw_total_score"/>/100 nhưng đang bị trần hiệu chuẩn ở
+                                            <strong><t t-out="apr.calibrated_total_score"/>/100 (Ô 6 — Emerging Potential)</strong>
+                                            do còn <strong t-out="apr.mandatory_skill_pending"/> chứng chỉ kỹ năng bắt buộc chưa hoàn tất.
+                                        </div>
+                                        <div t-else="">
+                                            Đã hoàn thành 100% Cổng Kỹ năng Bắt buộc — Công nhận toàn bộ điểm hiệu chuẩn 360°
+                                            (<strong><t t-out="apr.calibrated_total_score"/>/100</strong>) và xếp hạng
+                                            <strong t-out="apr.calibration_box"/>.
+                                        </div>
+                                    </div>
+
+                                    <div class="o_emp_kv_list mb-3">
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">Trạng thái Hồ sơ 360° Appraisal:</span>
+                                            <span class="o_emp_kv_val fw-semibold" t-out="apr.state_label"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">1. Tự Đánh giá Cá nhân (Self-Review — 20%):</span>
+                                            <span class="o_emp_kv_val font-monospace fw-semibold" t-out="(apr.self_assessment_score || 0) + ' / 100'"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">2. Phản hồi 360° Đồng nghiệp &amp; Khách hàng B2B (25%):</span>
+                                            <span class="o_emp_kv_val font-monospace fw-semibold" t-out="(apr.peer_client_360_score || 0) + ' / 100'"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">3. Đánh giá Kỹ thuật từ CTO / Tech Lead (30%):</span>
+                                            <span class="o_emp_kv_val font-monospace fw-semibold" t-out="(apr.manager_technical_score || 0) + ' / 100'"/>
+                                        </div>
+                                        <div class="o_emp_kv_row">
+                                            <span class="o_emp_kv_label">4. Tỷ lệ Hoàn thành Mục tiêu OKRs (25%):</span>
+                                            <span class="o_emp_kv_val font-monospace fw-semibold" t-out="(apr.okr_achievement_pct || 0) + '%'"/>
+                                        </div>
+                                        <div class="o_emp_kv_row o_emp_kv_row_net">
+                                            <span class="o_emp_kv_label fw-bold">Điểm Hiệu chuẩn 360° Chính thức:</span>
+                                            <span class="o_emp_kv_val font-monospace fw-bold o_emp_text_emerald" t-out="(apr.calibrated_total_score || 0) + ' / 100'"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-2">
+                                        <div class="col-4">
+                                            <label class="form-label o_emp_form_label">Self-Review (20%)</label>
+                                            <input type="number" step="0.5" min="0" max="100" class="form-control form-control-sm" t-model="state.empDashboard.appraisalForm.self_assessment_score"/>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label o_emp_form_label">360° Peer/B2B (25%)</label>
+                                            <input type="number" step="0.5" min="0" max="100" class="form-control form-control-sm" t-model="state.empDashboard.appraisalForm.peer_client_360_score"/>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label o_emp_form_label">Tech Lead (30%)</label>
+                                            <input type="number" step="0.5" min="0" max="100" class="form-control form-control-sm" t-model="state.empDashboard.appraisalForm.manager_technical_score"/>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label o_emp_form_label">Kế hoạch Hành động Chu trình PDCA Quý tiếp theo:</label>
+                                            <input type="text" class="form-control form-control-sm" t-model="state.empDashboard.appraisalForm.pdca_next_quarter_plan"/>
+                                        </div>
+                                        <div class="col-12 mt-2 d-flex flex-wrap gap-2">
+                                            <button type="button" class="btn btn-sm o_emp_action_btn o_emp_action_btn_accent" t-on-click="() => this.onSubmitHrAppraisal(true)">
+                                                <i class="fa fa-check-square-o me-1"/>Lưu &amp; Ký duyệt Đánh giá 360° (Hiệu chuẩn 9-Box)
+                                            </button>
+                                            <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="openHrAppraisalApp">
+                                                <i class="fa fa-external-link me-1"/>Mở Phân hệ HR Appraisal 360°
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ========================================================================= -->
+                            <!-- SECTION 4: SOFTWARE PROJECT PDCA TEMPLATES (`project_pdca_templates`)    -->
+                            <!-- ========================================================================= -->
+                            <div class="col-12 col-lg-6">
+                                <div class="o_emp_card h-100">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                        <div class="o_emp_card_title mb-0">
+                                            <i class="fa fa-cubes me-2"/>Thư viện Dự án Mẫu Chuẩn PDCA (SAP Activate &amp; Agile Onsite)
+                                        </div>
+                                        <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="openProjectPdcaApp">
+                                            <i class="fa fa-external-link me-1"/>Mở Thư viện Dự án Mẫu
+                                        </button>
+                                    </div>
+
+                                    <div class="o_emp_steps_list">
+                                        <t t-foreach="pdcaTpls" t-as="ptpl" t-key="ptpl.code">
+                                            <div class="o_emp_cr_item mb-2">
+                                                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-1">
+                                                    <div>
+                                                        <span class="o_emp_badge o_emp_badge_primary font-monospace me-2" t-out="ptpl.code"/>
+                                                        <strong t-out="ptpl.name"/>
+                                                    </div>
+                                                    <span class="o_emp_badge o_emp_badge_emerald font-monospace" t-out="'Margin mục tiêu: ' + ptpl.target_margin_pct + '%'"/>
+                                                </div>
+                                                <div class="o_emp_step_meta mb-2">
+                                                    <span t-out="ptpl.methodology"/> • <strong t-out="ptpl.sla_commitment"/>
+                                                </div>
+                                                <div class="row g-1">
+                                                    <div t-foreach="ptpl.pdca_gates || []" t-as="pg" t-key="pg.phase" class="col-12 col-sm-6">
+                                                        <div class="o_emp_pdca_gate_box">
+                                                            <div class="fw-bold font-monospace o_emp_text_emerald" t-out="pg.phase + ': ' + pg.gate_name"/>
+                                                            <div class="o_emp_step_meta" t-out="pg.deliverable"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-wrap align-items-center gap-1 mt-2">
+                                                    <span class="o_emp_step_meta me-1">Biểu mẫu chuẩn:</span>
+                                                    <t t-foreach="ptpl.template_docs || []" t-as="tdoc" t-key="tdoc">
+                                                        <span class="o_emp_badge font-monospace" t-out="tdoc"/>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </t>
                                     </div>
                                 </div>
                             </div>

@@ -776,7 +776,556 @@ def _default_kpi_skill_hub(emp_dict):
     return _recompute_kpi_hub_dict(hub)
 
 
+PDCA_STAGE_MAP = {
+    "plan": "P - Plan",
+    "do": "D - Do",
+    "check": "C - Check",
+    "act": "A - Act",
+    "P - Plan": "P - Plan",
+    "D - Do": "D - Do",
+    "C - Check": "C - Check",
+    "A - Act": "A - Act",
+}
+
+PDCA_STAGE_CODE_MAP = {
+    "plan": "plan",
+    "do": "do",
+    "check": "check",
+    "act": "act",
+    "P - Plan": "plan",
+    "D - Do": "do",
+    "C - Check": "check",
+    "A - Act": "act",
+}
+
+CANONICAL_COMPANY_OKRS = [
+    {
+        "code": "OKR-2026-Q4-C01",
+        "name": "Tăng trưởng Doanh thu Phần mềm B2B, Triển khai SAP Activate & Tuân thủ Hóa đơn Điện tử 1C26TAA (NĐ 70/2025/NĐ-CP)",
+        "owner_name": "Lê Xuân Hoàng (CEO)",
+        "pdca_stage": "C - Check",
+        "pdca_stage_code": "check",
+        "okr_score": 0.92,
+        "progress_pct": 92,
+        "confidence_level": "on_track",
+        "key_results": [
+            {
+                "code": "KR-C01-01",
+                "name": "Hoàn thành 100% nghiệm thu hợp đồng phần mềm B2B (MTI, KTT, AIfin) và phát hành HĐĐT 1C26TAA đúng hạn",
+                "target_value": 100.0,
+                "current_value": 95.0,
+                "unit": "%",
+                "progress_pct": 95,
+                "kr_score": 0.95,
+                "pdca_stage": "check",
+                "pdca_stage_label": "C - Check",
+            },
+            {
+                "code": "KR-C01-02",
+                "name": "Đạt tỷ lệ đúng hạn thanh toán Net 40 & đối soát công nợ tự động ≥ 98%",
+                "target_value": 98.0,
+                "current_value": 94.0,
+                "unit": "%",
+                "progress_pct": 96,
+                "kr_score": 0.96,
+                "pdca_stage": "do",
+                "pdca_stage_label": "D - Do",
+            },
+            {
+                "code": "KR-C01-03",
+                "name": "Mở rộng 4 gói giải pháp mẫu SAP Activate Turnkey & B2B Staff Augmentation",
+                "target_value": 4.0,
+                "current_value": 3.5,
+                "unit": "gói giải pháp",
+                "progress_pct": 88,
+                "kr_score": 0.85,
+                "pdca_stage": "act",
+                "pdca_stage_label": "A - Act",
+            },
+        ],
+    },
+    {
+        "code": "OKR-2026-Q4-C02",
+        "name": "Chuẩn hóa Năng lực Kỹ thuật OWL 3, AI Agentic Swarm & Vận hành B2B Onsite SLA 140–180h (Zero Defect Escape)",
+        "owner_name": "Nguyễn Hoài Ân (CTO)",
+        "pdca_stage": "D - Do",
+        "pdca_stage_code": "do",
+        "okr_score": 0.89,
+        "progress_pct": 89,
+        "confidence_level": "on_track",
+        "key_results": [
+            {
+                "code": "KR-C02-01",
+                "name": "Đảm bảo 100% dự án B2B Onsite đạt SLA 140–180h/tháng và tỷ lệ lỗi lọt Production < 0.5%",
+                "target_value": 100.0,
+                "current_value": 96.0,
+                "unit": "%",
+                "progress_pct": 96,
+                "kr_score": 0.96,
+                "pdca_stage": "check",
+                "pdca_stage_label": "C - Check",
+            },
+            {
+                "code": "KR-C02-02",
+                "name": "Đạt ≥ 90% kỹ sư phần mềm hoàn thành chứng chỉ Kỹ năng Bắt buộc (Skill Upgrade Gate)",
+                "target_value": 90.0,
+                "current_value": 78.0,
+                "unit": "%",
+                "progress_pct": 87,
+                "kr_score": 0.87,
+                "pdca_stage": "do",
+                "pdca_stage_label": "D - Do",
+            },
+            {
+                "code": "KR-C02-03",
+                "name": "Triển khai 100% Dual-Theme E2E & Adversarial Security Gate tự động trước khi đẩy K8s Production",
+                "target_value": 100.0,
+                "current_value": 85.0,
+                "unit": "%",
+                "progress_pct": 85,
+                "kr_score": 0.85,
+                "pdca_stage": "act",
+                "pdca_stage_label": "A - Act",
+            },
+        ],
+    },
+    {
+        "code": "OKR-2026-Q4-C03",
+        "name": "Hoàn thiện Hệ thống Quản trị Nhân sự 360° Appraisal, 9-Box Calibration, BHXH TZ0857G & Bảo mật ISO/IEC 27701",
+        "owner_name": "Mai Thị Hồng Thắm (CFO / HR Director)",
+        "pdca_stage": "A - Act",
+        "pdca_stage_code": "act",
+        "okr_score": 0.95,
+        "progress_pct": 95,
+        "confidence_level": "on_track",
+        "key_results": [
+            {
+                "code": "KR-C03-01",
+                "name": "100% nhân sự hoàn thành Đánh giá 360° (Self, Peer/Client, Tech Lead) và Hiệu chuẩn 9-Box Quý 4/2026",
+                "target_value": 100.0,
+                "current_value": 96.0,
+                "unit": "%",
+                "progress_pct": 96,
+                "kr_score": 0.96,
+                "pdca_stage": "act",
+                "pdca_stage_label": "A - Act",
+            },
+            {
+                "code": "KR-C03-02",
+                "name": "Đạt 100% chính xác chi lương VCB DigiBiz 11 cột, trích nộp BHXH Quận 7 (TZ0857G) & Thuế TNCN",
+                "target_value": 100.0,
+                "current_value": 100.0,
+                "unit": "%",
+                "progress_pct": 100,
+                "kr_score": 1.00,
+                "pdca_stage": "act",
+                "pdca_stage_label": "A - Act",
+            },
+            {
+                "code": "KR-C03-03",
+                "name": "Duy trì 0 sự cố rò rỉ PII với cơ chế Partial Masking, 30s Reveal & Maker-Checker 2 bước",
+                "target_value": 100.0,
+                "current_value": 90.0,
+                "unit": "%",
+                "progress_pct": 90,
+                "kr_score": 0.90,
+                "pdca_stage": "check",
+                "pdca_stage_label": "C - Check",
+            },
+        ],
+    },
+]
+
+CANONICAL_PROJECT_PDCA_TEMPLATES = [
+    {
+        "code": "PRJ-TPL-PDCA-01",
+        "name": "Dự án Triển khai ERP Chuẩn SAP Activate Turnkey (Fit-to-Standard)",
+        "category": "sap_activate_erp",
+        "methodology": "SAP Activate + Loop PDCA (Discover → Prepare → Explore → Realize → Deploy → Run)",
+        "sla_commitment": "Go-Live đúng hạn ≥ 98% • Zero P1 Blocker • 100% Fit-to-Standard Blueprint",
+        "target_margin_pct": 42.0,
+        "template_docs": ["TPL-PRJ-05", "SOP-DGM-11", "TPL-OKR-01"],
+        "pdca_gates": [
+            {
+                "phase": "P - Plan",
+                "gate_name": "Khởi tạo Dự án, Fit-to-Standard Blueprint & Ma trận Phân quyền (RBAC)",
+                "deliverable": "Project Charter (TPL-PRJ-05), WBS & Backlog Chuẩn",
+            },
+            {
+                "phase": "D - Do",
+                "gate_name": "Cấu hình Phân hệ, Tích hợp API/HĐĐT 1C26TAA & Sprint Delivery",
+                "deliverable": "Increment Build, Code Review Pass ≥ 90%, Unit Test",
+            },
+            {
+                "phase": "C - Check",
+                "gate_name": "Kiểm thử E2E Playwright, UAT Khách hàng & Kiểm toán Bảo mật",
+                "deliverable": "Biên bản UAT Sign-off, Zero Leak / Zero Bare Hex Audit",
+            },
+            {
+                "phase": "A - Act",
+                "gate_name": "Cutover Go-Live, Bàn giao Vận hành & Chuẩn hóa Thư viện Tri thức",
+                "deliverable": "Nghiệm thu Go-Live, Bài học Kinh nghiệm (Retrospective PDCA)",
+            },
+        ],
+    },
+    {
+        "code": "PRJ-TPL-PDCA-02",
+        "name": "Dự án B2B Staff Augmentation & Agile Onsite SLA (140–180h/tháng)",
+        "category": "b2b_onsite_sla",
+        "methodology": "Agile Scrum + PDCA SLA (SOP-DGM-07 & SOP-DGM-08)",
+        "sla_commitment": "Định mức 140–180h/tháng • OT 100%/150% • Bảo hành thay thế 5 ngày • Net 40",
+        "target_margin_pct": 38.0,
+        "template_docs": ["TPL-PRJ-06", "TPL-HR-07", "SOP-DGM-11"],
+        "pdca_gates": [
+            {
+                "phase": "P - Plan",
+                "gate_name": "Thẩm định Kỹ năng Kỹ sư Onsite (Skill Gate) & Cam kết SLA 5 Ngày Dùng thử",
+                "deliverable": "Hồ sơ Kỹ sư chuẩn hóa, Phụ lục SLA Onsite (TPL-PRJ-06)",
+            },
+            {
+                "phase": "D - Do",
+                "gate_name": "Thực thi Sprint tại Khách hàng (MTI / KTT / AIfin) & Log Timesheet Hàng ngày",
+                "deliverable": "Sprint Burndown, PR/MR được Tech Lead khách hàng duyệt",
+            },
+            {
+                "phase": "C - Check",
+                "gate_name": "Đối soát Timesheet 140–180h, Đánh giá 360° từ Khách hàng & Kiểm tra OT",
+                "deliverable": "Bảng chấm công B2B có chữ ký xác nhận & Điểm 360° ≥ 4.5/5.0",
+            },
+            {
+                "phase": "A - Act",
+                "gate_name": "Niêm phong HMAC-SHA256, Xuất HĐĐT 1C26TAA & Đào tạo Bù đắp Kỹ năng",
+                "deliverable": "Hóa đơn 1C26TAA hợp lệ, Kế hoạch nâng cấp kỹ năng Quý tiếp theo",
+            },
+        ],
+    },
+    {
+        "code": "PRJ-TPL-PDCA-03",
+        "name": "Dự án Nghiên cứu & Phát triển AI Agentic Swarm / Mojo High-Frequency",
+        "category": "ai_agentic_rnd",
+        "methodology": "Dual-Track Agile R&D + Benchmark PDCA Loop",
+        "sla_commitment": "Sub-50ms P99 Latency • Pass@1 ≥ 92% • Ưu đãi Thuế Phần mềm (SOP-DGM-09)",
+        "target_margin_pct": 55.0,
+        "template_docs": ["TPL-OKR-01", "TPL-PRJ-05", "SOP-DGM-11"],
+        "pdca_gates": [
+            {
+                "phase": "P - Plan",
+                "gate_name": "Giả thuyết Kiến trúc (Hypothesis), Thiết kế Eval Harness & Tập dữ liệu Chuẩn",
+                "deliverable": "Đặc tả R&D (ADR), Baseline Benchmark & Bộ tiêu chí OKR (TPL-OKR-01)",
+            },
+            {
+                "phase": "D - Do",
+                "gate_name": "Huấn luyện / Tối ưu hóa Kernel Mojo, Multi-Agent Orchestration & RAG",
+                "deliverable": "Source Code, Thực nghiệm song song trên Pro Swarm Nodes",
+            },
+            {
+                "phase": "C - Check",
+                "gate_name": "Đo kiểm Hiệu năng (Throughput/Latency), Red-Team Prompt Injection & SoD",
+                "deliverable": "Báo cáo Benchmark định lượng, 0 lỗ hổng Prompt/Secret Leak",
+            },
+            {
+                "phase": "A - Act",
+                "gate_name": "Đóng gói Production Container, Đăng ký Sở hữu Trí tuệ & Nhân rộng Toàn hệ thống",
+                "deliverable": "Release Tag, Hồ sơ minh chứng R&D hưởng ưu đãi thuế CIT",
+            },
+        ],
+    },
+    {
+        "code": "PRJ-TPL-PDCA-04",
+        "name": "Dự án Kiểm toán An toàn Thông tin ISO/IEC 27001 & Bảo vệ Dữ liệu Cá nhân ISO 27701",
+        "category": "iso_security_privacy",
+        "methodology": "ISO/IEC 27001:2022 & 27701:2019 Continual PDCA Cycle",
+        "sla_commitment": "100% Need-to-Know Masking • 30s Audited Reveal • 0 Critical/High Vulnerability",
+        "target_margin_pct": 45.0,
+        "template_docs": ["TPL-HR-08", "TPL-HR-07", "SOP-DGM-11"],
+        "pdca_gates": [
+            {
+                "phase": "P - Plan",
+                "gate_name": "Đánh giá Rủi ro Dữ liệu Cá nhân (DPIA) & Thiết lập Ma trận Kiểm soát Truy cập",
+                "deliverable": "Hồ sơ DPIA Nghị định 13/2023/NĐ-CP & Chính sách Masking",
+            },
+            {
+                "phase": "D - Do",
+                "gate_name": "Áp dụng Khóa Giao dịch Bipartite Advisory Lock, Savepoint & Sanitizer",
+                "deliverable": "34 Bản vá Bảo mật Adversarial, Quy trình Maker-Checker 2 Bước",
+            },
+            {
+                "phase": "C - Check",
+                "gate_name": "Chạy Kiểm thử Tự động Adversarial Security & Rà soát Nhật ký Audit ISO",
+                "deliverable": "Báo cáo Kiểm toán nội bộ 100% Pass (Exit Code 0)",
+            },
+            {
+                "phase": "A - Act",
+                "gate_name": "Hiệu chuẩn Định kỳ Hàng quý, Đào tạo Nhận thức Bảo mật & Cải tiến Liên tục",
+                "deliverable": "Biên bản Hiệu chuẩn 9-Box & Chứng nhận Tuân thủ An toàn Thông tin (TPL-HR-08)",
+            },
+        ],
+    },
+]
+
+CANONICAL_PDCA_COMPANION_DOCS = [
+    {"code": "TPL-PRJ-05", "name": "Mẫu Khởi tạo & Quản trị Dự án Chuẩn PDCA / SAP Activate"},
+    {"code": "TPL-PRJ-06", "name": "Mẫu Kiểm soát Chất lượng Sprint, SLA B2B Onsite & Nghiệm thu PDCA"},
+    {"code": "TPL-HR-07", "name": "Mẫu Đánh giá Nhân sự 360° (Self, Peer/Client, Tech Lead)"},
+    {"code": "TPL-HR-08", "name": "Mẫu Ma trận Hiệu chuẩn Nhân tài 9-Box & Lộ trình Thăng tiến"},
+    {"code": "TPL-OKR-01", "name": "Mẫu Thiết lập & Theo dõi OKRs Doanh nghiệp Phần mềm (Chu trình PDCA)"},
+    {"code": "SOP-DGM-11", "name": "Quy trình Quản trị Dự án PDCA, Đánh giá Nhân sự 360° & Triển khai OKRs 2026"},
+]
+
+
+def _recompute_okr_hub_dict(okr_hub):
+    """Deterministically recomputes Key Result scores (0.00 - 1.00), progress %, and Objective OKR scores."""
+    emp_okrs = okr_hub.get("employee_okrs", [])
+    flat_krs = []
+    obj_scores = []
+
+    for obj in emp_okrs:
+        krs = obj.get("key_results", [])
+        kr_scores = []
+        for kr in krs:
+            target = float(kr.get("target_value") or 100.0)
+            current = float(kr.get("current_value") or 0.0)
+            ratio = (current / target) if target > 0 else 1.0
+            score = round(min(1.0, max(0.0, ratio)), 2)
+            pct = int(round(score * 100))
+            raw_stage = str(kr.get("pdca_stage") or "do").strip()
+            stage_code = PDCA_STAGE_CODE_MAP.get(raw_stage, "do")
+            stage_label = PDCA_STAGE_MAP.get(raw_stage, "D - Do")
+
+            kr["target_value"] = round(target, 2)
+            kr["current_value"] = round(current, 2)
+            kr["kr_score"] = score
+            kr["progress_pct"] = pct
+            kr["pdca_stage"] = stage_code
+            kr["pdca_stage_label"] = stage_label
+            kr_scores.append(score)
+            flat_krs.append(kr)
+
+        obj_score = round(sum(kr_scores) / len(kr_scores), 2) if kr_scores else 0.90
+        obj["okr_score"] = obj_score
+        obj["progress_pct"] = int(round(obj_score * 100))
+        raw_obj_stage = str(obj.get("pdca_stage") or "check").strip()
+        obj["pdca_stage_code"] = PDCA_STAGE_CODE_MAP.get(raw_obj_stage, "check")
+        obj["pdca_stage"] = PDCA_STAGE_MAP.get(raw_obj_stage, "C - Check")
+        obj["confidence_level"] = "on_track" if obj_score >= 0.75 else "at_risk"
+        obj_scores.append(obj_score)
+
+    overall_score = round(sum(obj_scores) / len(obj_scores), 2) if obj_scores else 0.90
+    okr_hub["okr_score"] = overall_score
+    okr_hub["progress_pct"] = int(round(overall_score * 100))
+    okr_hub["confidence_level"] = "on_track" if overall_score >= 0.75 else "at_risk"
+    okr_hub["pdca_stage"] = emp_okrs[0]["pdca_stage"] if emp_okrs else "C - Check"
+    okr_hub["key_results"] = flat_krs
+    okr_hub["company_okrs"] = CANONICAL_COMPANY_OKRS
+    return okr_hub
+
+
+def _default_okr_hub(emp_dict, kpi_skill_hub=None):
+    reg = emp_dict.get("registration_number", "DGM-001")
+    emp_name = emp_dict.get("name", "")
+    job_title = emp_dict.get("job_title", "")
+    dept_name = emp_dict.get("department_name", "")
+
+    if reg in ("DGM-001", "DGM-003", "DGM-008"):
+        aligned_code = "OKR-2026-Q4-C01" if reg == "DGM-001" else "OKR-2026-Q4-C03"
+        obj_title = f"Điều hành Chiến lược, Tài chính – Nhân sự 360° & Tuân thủ Pháp lý Quý 4/2026 ({emp_name})"
+        krs = [
+            {
+                "code": f"KR-{reg}-01",
+                "name": "Hoàn thành 100% chỉ tiêu Doanh thu / Đối soát Công nợ Net 40 & Hóa đơn 1C26TAA đúng hạn",
+                "target_value": 100.0,
+                "current_value": 96.0,
+                "unit": "%",
+                "pdca_stage": "check",
+                "evidence_ref": f"FIN-1C26TAA-{reg}-2026Q4",
+            },
+            {
+                "code": f"KR-{reg}-02",
+                "name": "Đạt 100% tuân thủ Chi lương VCB DigiBiz 11 cột, BHXH TZ0857G & Bảo mật PII ISO 27701",
+                "target_value": 100.0,
+                "current_value": 100.0,
+                "unit": "%",
+                "pdca_stage": "act",
+                "evidence_ref": f"ISO27701-VCB-{reg}-2026Q4",
+            },
+            {
+                "code": f"KR-{reg}-03",
+                "name": "Hoàn tất 100% chu kỳ Đánh giá 360° Appraisal & Hiệu chuẩn 9-Box cho toàn bộ 9 nhân sự",
+                "target_value": 9.0,
+                "current_value": 9.0,
+                "unit": "nhân sự",
+                "pdca_stage": "act",
+                "evidence_ref": f"HR-9BOX-{reg}-2026Q4",
+            },
+        ]
+    else:
+        aligned_code = "OKR-2026-Q4-C02"
+        obj_title = f"Xuất sắc Kỹ thuật Phần mềm, Bàn giao Sprint B2B Onsite & Nâng cấp Kỹ năng ({emp_name})"
+        pending_skills = int((kpi_skill_hub or {}).get("mandatory_skill_pending", 0))
+        cert_skills = int((kpi_skill_hub or {}).get("mandatory_skill_certified", 4))
+        total_skills = max(1, int((kpi_skill_hub or {}).get("mandatory_skill_total", 4)))
+        krs = [
+            {
+                "code": f"KR-{reg}-01",
+                "name": "Đạt Sprint Velocity & Cam kết SLA B2B Onsite (140–180h/tháng) tại dự án khách hàng",
+                "target_value": 160.0,
+                "current_value": 156.0 if pending_skills == 0 else 148.0,
+                "unit": "giờ SLA",
+                "pdca_stage": "check" if pending_skills == 0 else "do",
+                "evidence_ref": f"SLA-ONSITE-{reg}-2026Q4",
+            },
+            {
+                "code": f"KR-{reg}-02",
+                "name": "Duy trì tỷ lệ Code Review Pass ≥ 92% và Zero Critical Security / Regression Bug",
+                "target_value": 95.0,
+                "current_value": 93.0 if pending_skills == 0 else 88.0,
+                "unit": "% CR Pass",
+                "pdca_stage": "check",
+                "evidence_ref": f"GIT-CR-{reg}-2026Q4",
+            },
+            {
+                "code": f"KR-{reg}-03",
+                "name": "Hoàn thành 100% Chứng chỉ Nâng cấp Kỹ năng Bắt buộc Kỹ sư Phần mềm (SWE Skill Gate)",
+                "target_value": float(total_skills),
+                "current_value": float(cert_skills),
+                "unit": "chứng chỉ",
+                "pdca_stage": "act" if pending_skills == 0 else "do",
+                "evidence_ref": f"CERT-GATE-{reg}-2026Q4",
+            },
+        ]
+
+    hub = {
+        "period_code": "2026-Q4",
+        "employee_id": emp_dict.get("id", 1),
+        "employee_code": reg,
+        "employee_name": emp_name,
+        "job_title": job_title,
+        "department_name": dept_name,
+        "company_okrs": CANONICAL_COMPANY_OKRS,
+        "employee_okrs": [
+            {
+                "code": f"OKR-2026-Q4-{reg}",
+                "name": obj_title,
+                "aligned_company_okr": aligned_code,
+                "period_code": "2026-Q4",
+                "pdca_stage": "C - Check" if (kpi_skill_hub or {}).get("mandatory_skill_pending", 0) == 0 else "D - Do",
+                "confidence_level": "on_track",
+                "key_results": krs,
+            }
+        ],
+    }
+    return _recompute_okr_hub_dict(hub)
+
+
+APPRAISAL_STATE_LABELS = {
+    "self_review": "Bước 1: Nhân sự Tự Đánh giá (Self-Review)",
+    "360_feedback": "Bước 2: Thu thập Phản hồi 360° (Peer & Khách hàng B2B)",
+    "manager_calibration": "Bước 3: Quản lý Kỹ thuật Hiệu chuẩn 9-Box",
+    "signed_off": "Bước 4: Đã Ký duyệt Hiệu chuẩn Nhân tài (Signed-off)",
+}
+
+
+def _recompute_appraisal_hub_dict(appraisal, kpi_skill_hub=None, okr_hub=None):
+    """Computes 360° Appraisal weighted score and enforces the Mandatory SWE Skill Gate on 9-Box Calibration."""
+    self_score = round(float(appraisal.get("self_assessment_score") or 90.0), 2)
+    peer_score = round(float(appraisal.get("peer_client_360_score") or 91.0), 2)
+    mgr_score = round(float(appraisal.get("manager_technical_score") or 92.0), 2)
+
+    if okr_hub and okr_hub.get("okr_score") is not None:
+        okr_pct = round(float(okr_hub["okr_score"]) * 100.0, 2)
+    else:
+        okr_pct = round(float(appraisal.get("okr_achievement_pct") or 90.0), 2)
+
+    raw_total = round(
+        0.20 * self_score + 0.25 * peer_score + 0.30 * mgr_score + 0.25 * okr_pct,
+        2,
+    )
+
+    mandatory_pending = int((kpi_skill_hub or {}).get("mandatory_skill_pending", 0))
+    if mandatory_pending > 0:
+        skill_gate_capped = True
+        calibrated_total = round(min(raw_total, 84.90), 2)
+        calibration_box_code = "box_6_emerging"
+        calibration_box = "9-Box [6] Emerging Potential (Capped by Skill Gate)"
+    else:
+        skill_gate_capped = False
+        calibrated_total = raw_total
+        if calibrated_total >= 90.0:
+            calibration_box_code = "box_9_top_talent"
+            calibration_box = "9-Box [9] Top Talent / Future Leader"
+        elif calibrated_total >= 80.0:
+            calibration_box_code = "box_8_high_performer"
+            calibration_box = "9-Box [8] High Performer / Core Pillar"
+        else:
+            calibration_box_code = "box_5_core_player"
+            calibration_box = "9-Box [5] Solid Core Player"
+
+    st = str(appraisal.get("state") or "signed_off").strip()
+    if st not in APPRAISAL_STATE_LABELS:
+        st = "signed_off"
+    if mandatory_pending > 0 and st == "signed_off":
+        st = "manager_calibration"
+
+    appraisal["self_assessment_score"] = self_score
+    appraisal["peer_client_360_score"] = peer_score
+    appraisal["manager_technical_score"] = mgr_score
+    appraisal["okr_achievement_pct"] = okr_pct
+    appraisal["raw_total_score"] = raw_total
+    appraisal["calibrated_total_score"] = calibrated_total
+    appraisal["skill_gate_capped"] = skill_gate_capped
+    appraisal["mandatory_skill_pending"] = mandatory_pending
+    appraisal["calibration_box_code"] = calibration_box_code
+    appraisal["calibration_box"] = calibration_box
+    appraisal["state"] = st
+    appraisal["state_label"] = APPRAISAL_STATE_LABELS.get(st, st)
+    return appraisal
+
+
+def _default_appraisal_hub(emp_dict, kpi_skill_hub=None, okr_hub=None):
+    reg = emp_dict.get("registration_number", "DGM-001")
+    reg_compact = reg.replace("-", "")
+    kh = kpi_skill_hub or {}
+    pending = int(kh.get("mandatory_skill_pending", 0))
+
+    base_delivery = float(kh.get("kpi_delivery_score") or 92.0)
+    base_quality = float(kh.get("kpi_quality_score") or 91.0)
+    base_work = float(kh.get("kpi_work_eval_score") or 92.0)
+
+    appraisal = {
+        "code": f"APR-2026-Q4-{reg_compact}",
+        "sheet_code": f"APR-2026-Q4-{reg}",
+        "period_code": "2026-Q4",
+        "employee_id": emp_dict.get("id", 1),
+        "employee_code": reg,
+        "employee_name": emp_dict.get("name", ""),
+        "job_title": emp_dict.get("job_title", ""),
+        "department_name": emp_dict.get("department_name", ""),
+        "reviewer_name": kh.get("reviewer_name", "Nguyễn Hoài Ân (CTO)"),
+        "state": "manager_calibration" if pending > 0 else "signed_off",
+        "self_assessment_score": round(min(98.0, base_delivery + 0.5), 2),
+        "peer_client_360_score": round(min(98.0, base_work + 1.0), 2),
+        "manager_technical_score": round(min(98.0, base_quality + 1.0), 2),
+        "okr_achievement_pct": round(float((okr_hub or {}).get("okr_score", 0.92)) * 100.0, 2),
+        "self_reflection_text": (
+            f"Hoàn thành tốt các mục tiêu OKR Quý 4/2026, đảm bảo cam kết chất lượng bàn giao dự án và tuân thủ quy trình PDCA ({reg})."
+        ),
+        "peer_client_feedback_text": (
+            "Phối hợp chặt chẽ với đội ngũ dự án và khách hàng B2B, phản hồi kỹ thuật nhanh, tuân thủ nghiêm ngặt SLA 140–180h và tiêu chuẩn bảo mật ISO 27701."
+        ),
+        "manager_appraisal_text": kh.get(
+            "manager_review_note",
+            "Đánh giá cao năng lực kỹ thuật, tư duy giải quyết vấn đề và tinh thần chủ động cải tiến theo chu trình PDCA.",
+        ),
+        "pdca_next_quarter_plan": kh.get(
+            "next_training_roadmap",
+            "Plan: Xác định mục tiêu kỹ năng mới → Do: Thực hành dự án thực chiến → Check: Sát hạch chứng chỉ → Act: Chuẩn hóa tài liệu.",
+        ),
+    }
+    return _recompute_appraisal_hub_dict(appraisal, kpi_skill_hub=kh, okr_hub=okr_hub)
+
+
 FORMULA_INJECTION_PREFIXES = ('=', '+', '-', '@', '\t', '\r')
+
 
 
 def sanitize_excel_cell(val):
@@ -1244,6 +1793,60 @@ class InsilosEmployeeDashboardController(http.Controller):
             hub = _recompute_kpi_hub_dict(hub)
         return hub
 
+    def _get_or_init_okr_hub(self, emp_dict, kpi_skill_hub=None):
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        reg = emp_dict.get("registration_number", f"DGM-00{emp_dict.get('id', 1)}")
+        key = f"dgm.hr.okr_hub.{reg}"
+        raw = IrConfig.get_param(key)
+        hub = None
+        if raw:
+            try:
+                hub = json.loads(raw)
+            except Exception:
+                hub = None
+        if not hub or "employee_okrs" not in hub:
+            hub = _default_okr_hub(emp_dict, kpi_skill_hub=kpi_skill_hub)
+            IrConfig.set_param(key, json.dumps(hub, ensure_ascii=False))
+        else:
+            hub["employee_id"] = emp_dict.get("id", hub.get("employee_id", 1))
+            hub["employee_code"] = reg
+            hub["employee_name"] = emp_dict.get("name", hub.get("employee_name", ""))
+            hub["job_title"] = emp_dict.get("job_title", hub.get("job_title", ""))
+            hub["department_name"] = emp_dict.get("department_name", hub.get("department_name", ""))
+            hub = _recompute_okr_hub_dict(hub)
+        return hub
+
+    def _get_or_init_appraisal_hub(self, emp_dict, kpi_skill_hub=None, okr_hub=None):
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        reg = emp_dict.get("registration_number", f"DGM-00{emp_dict.get('id', 1)}")
+        key = f"dgm.hr.appraisal_hub.{reg}"
+        raw = IrConfig.get_param(key)
+        appraisal = None
+        if raw:
+            try:
+                appraisal = json.loads(raw)
+            except Exception:
+                appraisal = None
+        if not appraisal or "code" not in appraisal:
+            appraisal = _default_appraisal_hub(emp_dict, kpi_skill_hub=kpi_skill_hub, okr_hub=okr_hub)
+            IrConfig.set_param(key, json.dumps(appraisal, ensure_ascii=False))
+        else:
+            appraisal["employee_id"] = emp_dict.get("id", appraisal.get("employee_id", 1))
+            appraisal["employee_code"] = reg
+            appraisal["employee_name"] = emp_dict.get("name", appraisal.get("employee_name", ""))
+            appraisal["job_title"] = emp_dict.get("job_title", appraisal.get("job_title", ""))
+            appraisal["department_name"] = emp_dict.get("department_name", appraisal.get("department_name", ""))
+            appraisal = _recompute_appraisal_hub_dict(
+                appraisal,
+                kpi_skill_hub=kpi_skill_hub,
+                okr_hub=okr_hub,
+            )
+            IrConfig.set_param(key, json.dumps(appraisal, ensure_ascii=False))
+        return appraisal
+
+    def _get_project_pdca_templates(self):
+        return [dict(tpl) for tpl in CANONICAL_PROJECT_PDCA_TEMPLATES]
+
     def _build_dashboard_payload(self, employee_id=None):
         registry = self._get_registry_and_employees()
         raw_employees = registry["employees"]
@@ -1301,6 +1904,14 @@ class InsilosEmployeeDashboardController(http.Controller):
         leaving = _enrich_workflow(lifecycle["leaving"])
 
         kpi_skill_hub = self._get_or_init_kpi_skill_hub(selected)
+        okr_hub = self._get_or_init_okr_hub(selected, kpi_skill_hub=kpi_skill_hub)
+        appraisal_hub = self._get_or_init_appraisal_hub(
+            selected,
+            kpi_skill_hub=kpi_skill_hub,
+            okr_hub=okr_hub,
+        )
+        project_pdca_templates = self._get_project_pdca_templates()
+
         all_kpi_hubs = [self._get_or_init_kpi_skill_hub(e) for e in raw_employees]
         avg_company_kpi = (
             round(sum(h["total_kpi_score"] for h in all_kpi_hubs) / len(all_kpi_hubs), 2)
@@ -1353,6 +1964,10 @@ class InsilosEmployeeDashboardController(http.Controller):
             "leaving": leaving,
             "kpi_skill_hub": kpi_skill_hub,
             "kpi_summary": kpi_summary,
+            "okr_hub": okr_hub,
+            "appraisal_hub": appraisal_hub,
+            "project_pdca_templates": project_pdca_templates,
+            "pdca_companion_docs": CANONICAL_PDCA_COMPANION_DOCS,
             "change_requests": change_requests,
             "pending_approval_count": pending_count,
             "privacy_audit_log": privacy_audit_log,
@@ -1843,6 +2458,26 @@ class InsilosEmployeeDashboardController(http.Controller):
         IrConfig = request.env["ir.config_parameter"].sudo()
         IrConfig.set_param(f"dgm.hr.kpi_skill_hub.{reg}", json.dumps(hub, ensure_ascii=False))
 
+        # Also synchronize OKR Skill KR & 360° Appraisal 9-Box Calibration when mandatory skills unlock
+        okr_hub = self._get_or_init_okr_hub(target_emp, kpi_skill_hub=hub)
+        for obj in okr_hub.get("employee_okrs", []):
+            for kr in obj.get("key_results", []):
+                if kr.get("code") == f"KR-{reg}-03":
+                    kr["current_value"] = float(hub["mandatory_skill_certified"])
+                    kr["target_value"] = float(max(1, hub["mandatory_skill_total"]))
+                    if hub["mandatory_skill_pending"] == 0:
+                        kr["pdca_stage"] = "act"
+            if hub["mandatory_skill_pending"] == 0:
+                obj["pdca_stage"] = "C - Check"
+        okr_hub = _recompute_okr_hub_dict(okr_hub)
+        IrConfig.set_param(f"dgm.hr.okr_hub.{reg}", json.dumps(okr_hub, ensure_ascii=False))
+
+        appraisal_hub = self._get_or_init_appraisal_hub(target_emp, kpi_skill_hub=hub, okr_hub=okr_hub)
+        if hub["mandatory_skill_pending"] == 0 and appraisal_hub.get("state") == "manager_calibration":
+            appraisal_hub["state"] = "signed_off"
+            appraisal_hub = _recompute_appraisal_hub_dict(appraisal_hub, kpi_skill_hub=hub, okr_hub=okr_hub)
+            IrConfig.set_param(f"dgm.hr.appraisal_hub.{reg}", json.dumps(appraisal_hub, ensure_ascii=False))
+
         # Synchronize with declarative ORM models (`dgm.hr.employee.skill.gate` & `dgm.hr.kpi.evaluation`) when present
         try:
             GateModel = request.env["dgm.hr.employee.skill.gate"].sudo()
@@ -1957,6 +2592,178 @@ class InsilosEmployeeDashboardController(http.Controller):
                 "total_kpi_score": hub["total_kpi_score"],
                 "rank_grade": hub["rank_grade"],
                 "skill_gate_capped": hub["skill_gate_capped"],
+            },
+        )
+        return self._build_dashboard_payload(employee_id=target_emp["id"])
+
+    @http.route("/insilos/employee_dashboard/checkin_okr_kr", type="jsonrpc", auth="user", readonly=False)
+    def checkin_okr_kr(
+        self,
+        employee_id=None,
+        kr_code=None,
+        current_value=None,
+        pdca_stage=None,
+        evidence_ref=None,
+        confidence_level=None,
+        **kwargs,
+    ):
+        registry = self._get_registry_and_employees()
+        employees = registry["employees"]
+        target_emp = self._find_employee(employees, employee_id)
+        kpi_hub = self._get_or_init_kpi_skill_hub(target_emp)
+        okr_hub = self._get_or_init_okr_hub(target_emp, kpi_skill_hub=kpi_hub)
+        reg = target_emp.get("registration_number", "DGM-001")
+
+        clean_kr_code = str(kr_code or "").strip()
+        matched_kr = None
+        for obj in okr_hub.get("employee_okrs", []):
+            for kr in obj.get("key_results", []):
+                if not clean_kr_code or kr.get("code") == clean_kr_code:
+                    matched_kr = kr
+                    break
+            if matched_kr:
+                break
+
+        if matched_kr:
+            if current_value is not None and str(current_value).strip() != "":
+                try:
+                    matched_kr["current_value"] = round(float(current_value), 2)
+                except Exception:
+                    pass
+            else:
+                matched_kr["current_value"] = float(matched_kr.get("target_value") or 100.0)
+            if pdca_stage is not None and str(pdca_stage).strip():
+                matched_kr["pdca_stage"] = PDCA_STAGE_CODE_MAP.get(str(pdca_stage).strip(), "check")
+            else:
+                matched_kr["pdca_stage"] = "act"
+            if evidence_ref is not None and str(evidence_ref).strip():
+                matched_kr["evidence_ref"] = str(evidence_ref).strip()
+
+        if confidence_level in ("on_track", "at_risk"):
+            for obj in okr_hub.get("employee_okrs", []):
+                obj["confidence_level"] = confidence_level
+
+        okr_hub = _recompute_okr_hub_dict(okr_hub)
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        IrConfig.set_param(f"dgm.hr.okr_hub.{reg}", json.dumps(okr_hub, ensure_ascii=False))
+
+        # Recompute linked 360° Appraisal OKR achievement
+        appraisal_hub = self._get_or_init_appraisal_hub(target_emp, kpi_skill_hub=kpi_hub, okr_hub=okr_hub)
+        appraisal_hub = _recompute_appraisal_hub_dict(appraisal_hub, kpi_skill_hub=kpi_hub, okr_hub=okr_hub)
+        IrConfig.set_param(f"dgm.hr.appraisal_hub.{reg}", json.dumps(appraisal_hub, ensure_ascii=False))
+
+        # Sync with declarative ORM model `dgm.okr.key.result` when installed
+        try:
+            if matched_kr and "dgm.okr.key.result" in request.env:
+                KrModel = request.env["dgm.okr.key.result"].sudo()
+                kr_recs = KrModel.search([("code", "=", matched_kr["code"])], limit=1)
+                if kr_recs:
+                    kr_recs.write(
+                        {
+                            "current_value": matched_kr["current_value"],
+                            "pdca_stage": matched_kr["pdca_stage"],
+                            "evidence_ref": matched_kr.get("evidence_ref") or "",
+                        }
+                    )
+        except Exception:
+            pass
+
+        self._append_privacy_audit_log(
+            target_emp,
+            "OKR_PDCA_CHECKIN",
+            extra_meta={
+                "kr_code": matched_kr["code"] if matched_kr else clean_kr_code,
+                "kr_score": matched_kr["kr_score"] if matched_kr else okr_hub["okr_score"],
+                "okr_score": okr_hub["okr_score"],
+                "pdca_stage": matched_kr["pdca_stage"] if matched_kr else okr_hub["pdca_stage"],
+            },
+        )
+        return self._build_dashboard_payload(employee_id=target_emp["id"])
+
+    @http.route("/insilos/employee_dashboard/submit_hr_appraisal", type="jsonrpc", auth="user", readonly=False)
+    def submit_hr_appraisal(
+        self,
+        employee_id=None,
+        self_assessment_score=None,
+        peer_client_360_score=None,
+        manager_technical_score=None,
+        okr_achievement_pct=None,
+        self_reflection_text=None,
+        peer_client_feedback_text=None,
+        manager_appraisal_text=None,
+        pdca_next_quarter_plan=None,
+        state=None,
+        sign_off=False,
+        **kwargs,
+    ):
+        registry = self._get_registry_and_employees()
+        employees = registry["employees"]
+        target_emp = self._find_employee(employees, employee_id)
+        kpi_hub = self._get_or_init_kpi_skill_hub(target_emp)
+        okr_hub = self._get_or_init_okr_hub(target_emp, kpi_skill_hub=kpi_hub)
+        appraisal = self._get_or_init_appraisal_hub(target_emp, kpi_skill_hub=kpi_hub, okr_hub=okr_hub)
+        reg = target_emp.get("registration_number", "DGM-001")
+
+        for k, raw_val in (
+            ("self_assessment_score", self_assessment_score),
+            ("peer_client_360_score", peer_client_360_score),
+            ("manager_technical_score", manager_technical_score),
+            ("okr_achievement_pct", okr_achievement_pct),
+        ):
+            if raw_val is not None and str(raw_val).strip() != "":
+                try:
+                    appraisal[k] = round(max(0.0, min(100.0, float(raw_val))), 2)
+                except Exception:
+                    pass
+
+        for txt_key, raw_txt in (
+            ("self_reflection_text", self_reflection_text),
+            ("peer_client_feedback_text", peer_client_feedback_text),
+            ("manager_appraisal_text", manager_appraisal_text),
+            ("pdca_next_quarter_plan", pdca_next_quarter_plan),
+        ):
+            if raw_txt is not None and str(raw_txt).strip():
+                appraisal[txt_key] = str(raw_txt).strip()
+
+        if sign_off or state == "signed_off":
+            appraisal["state"] = "signed_off"
+        elif state in APPRAISAL_STATE_LABELS:
+            appraisal["state"] = state
+
+        appraisal = _recompute_appraisal_hub_dict(appraisal, kpi_skill_hub=kpi_hub, okr_hub=okr_hub)
+        IrConfig = request.env["ir.config_parameter"].sudo()
+        IrConfig.set_param(f"dgm.hr.appraisal_hub.{reg}", json.dumps(appraisal, ensure_ascii=False))
+
+        # Sync with declarative ORM model `dgm.hr.appraisal.sheet` when installed
+        try:
+            if "dgm.hr.appraisal.sheet" in request.env:
+                SheetModel = request.env["dgm.hr.appraisal.sheet"].sudo()
+                sheet_recs = SheetModel.search([("employee_id.registration_number", "=", reg)], limit=1)
+                if sheet_recs:
+                    sheet_recs.write(
+                        {
+                            "self_assessment_score": appraisal["self_assessment_score"],
+                            "peer_client_360_score": appraisal["peer_client_360_score"],
+                            "manager_technical_score": appraisal["manager_technical_score"],
+                            "self_reflection_text": appraisal["self_reflection_text"],
+                            "peer_client_feedback_text": appraisal["peer_client_feedback_text"],
+                            "manager_appraisal_text": appraisal["manager_appraisal_text"],
+                            "pdca_next_quarter_plan": appraisal["pdca_next_quarter_plan"],
+                            "state": appraisal["state"],
+                        }
+                    )
+        except Exception:
+            pass
+
+        self._append_privacy_audit_log(
+            target_emp,
+            "SUBMIT_360_HR_APPRAISAL",
+            extra_meta={
+                "code": appraisal["code"],
+                "calibrated_total_score": appraisal["calibrated_total_score"],
+                "calibration_box": appraisal["calibration_box"],
+                "calibration_box_code": appraisal["calibration_box_code"],
+                "skill_gate_capped": appraisal["skill_gate_capped"],
             },
         )
         return self._build_dashboard_payload(employee_id=target_emp["id"])

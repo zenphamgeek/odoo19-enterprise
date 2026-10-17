@@ -131,6 +131,21 @@ export class HomeMenu extends Component {
                     next_training_roadmap: "",
                     manager_review_note: "",
                 },
+                okrForm: {
+                    kr_code: "",
+                    current_value: 100.0,
+                    pdca_stage: "act",
+                    evidence_ref: "GIT-PR-PDCA-2026Q4",
+                },
+                appraisalForm: {
+                    self_assessment_score: 92.0,
+                    peer_client_360_score: 93.0,
+                    manager_technical_score: 92.0,
+                    self_reflection_text: "",
+                    peer_client_feedback_text: "",
+                    manager_appraisal_text: "",
+                    pdca_next_quarter_plan: "",
+                },
             },
         });
         this.pressTimer;
@@ -580,6 +595,35 @@ export class HomeMenu extends Component {
                     this.state.empDashboard.kpiForm.manager_review_note =
                         kh.manager_review_note || "";
                 }
+                if (res.okr_hub) {
+                    const firstKr = res.okr_hub.key_results?.[0];
+                    if (firstKr) {
+                        this.state.empDashboard.okrForm.kr_code = firstKr.code || "";
+                        this.state.empDashboard.okrForm.current_value =
+                            firstKr.target_value ?? 100.0;
+                        this.state.empDashboard.okrForm.pdca_stage =
+                            firstKr.pdca_stage || "act";
+                        this.state.empDashboard.okrForm.evidence_ref =
+                            firstKr.evidence_ref || "GIT-PR-PDCA-2026Q4";
+                    }
+                }
+                if (res.appraisal_hub) {
+                    const ap = res.appraisal_hub;
+                    this.state.empDashboard.appraisalForm.self_assessment_score =
+                        ap.self_assessment_score ?? 92.0;
+                    this.state.empDashboard.appraisalForm.peer_client_360_score =
+                        ap.peer_client_360_score ?? 93.0;
+                    this.state.empDashboard.appraisalForm.manager_technical_score =
+                        ap.manager_technical_score ?? 92.0;
+                    this.state.empDashboard.appraisalForm.self_reflection_text =
+                        ap.self_reflection_text || "";
+                    this.state.empDashboard.appraisalForm.peer_client_feedback_text =
+                        ap.peer_client_feedback_text || "";
+                    this.state.empDashboard.appraisalForm.manager_appraisal_text =
+                        ap.manager_appraisal_text || "";
+                    this.state.empDashboard.appraisalForm.pdca_next_quarter_plan =
+                        ap.pdca_next_quarter_plan || "";
+                }
             }
         } catch {
             // Non-blocking fallback if offline
@@ -699,11 +743,101 @@ export class HomeMenu extends Component {
         }
     }
 
+    async onCheckinOkrKr(krCode, targetValue = null) {
+        const empId = this.state.empDashboard.data?.current_employee?.id;
+        if (!empId) {
+            return;
+        }
+        const of = this.state.empDashboard.okrForm;
+        try {
+            const res = await rpc("/insilos/employee_dashboard/checkin_okr_kr", {
+                employee_id: empId,
+                kr_code: krCode || of.kr_code,
+                current_value:
+                    targetValue !== null && targetValue !== undefined
+                        ? Number(targetValue)
+                        : Number(of.current_value) || 100.0,
+                pdca_stage: of.pdca_stage || "act",
+                evidence_ref: of.evidence_ref || `PDCA-KR-${krCode || "2026Q4"}`,
+            });
+            if (res && res.current_employee) {
+                this.state.empDashboard.data = res;
+            }
+        } catch {
+            // Fail-soft
+        }
+    }
+
+    async onSubmitHrAppraisal(signOff = true) {
+        const empId = this.state.empDashboard.data?.current_employee?.id;
+        if (!empId) {
+            return;
+        }
+        const af = this.state.empDashboard.appraisalForm;
+        try {
+            const res = await rpc("/insilos/employee_dashboard/submit_hr_appraisal", {
+                employee_id: empId,
+                self_assessment_score: Number(af.self_assessment_score) || 92.0,
+                peer_client_360_score: Number(af.peer_client_360_score) || 93.0,
+                manager_technical_score: Number(af.manager_technical_score) || 92.0,
+                self_reflection_text: af.self_reflection_text,
+                peer_client_feedback_text: af.peer_client_feedback_text,
+                manager_appraisal_text: af.manager_appraisal_text,
+                pdca_next_quarter_plan: af.pdca_next_quarter_plan,
+                sign_off: Boolean(signOff),
+            });
+            if (res && res.current_employee) {
+                this.state.empDashboard.data = res;
+            }
+        } catch {
+            // Fail-soft
+        }
+    }
+
     openKpiEvaluationApp() {
         return this.action.doAction({
             type: "ir.actions.act_window",
             name: "Đánh giá KPI & Lộ trình Kỹ năng Kỹ sư Phần mềm",
             res_model: "dgm.hr.kpi.evaluation",
+            views: [
+                [false, "list"],
+                [false, "form"],
+            ],
+            target: "current",
+        });
+    }
+
+    openOkrApp() {
+        return this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Mục tiêu Chiến lược OKRs Doanh nghiệp Phần mềm (Chu trình PDCA)",
+            res_model: "dgm.okr.objective",
+            views: [
+                [false, "list"],
+                [false, "form"],
+            ],
+            target: "current",
+        });
+    }
+
+    openHrAppraisalApp() {
+        return this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Đánh giá Nhân sự 360° & Hiệu chuẩn Nhân tài 9-Box",
+            res_model: "dgm.hr.appraisal.sheet",
+            views: [
+                [false, "list"],
+                [false, "form"],
+            ],
+            target: "current",
+        });
+    }
+
+    openProjectPdcaApp() {
+        return this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Thư viện Dự án Mẫu Chuẩn PDCA (SAP Activate & Agile Onsite)",
+            res_model: "dgm.project.pdca.template",
             views: [
                 [false, "list"],
                 [false, "form"],
