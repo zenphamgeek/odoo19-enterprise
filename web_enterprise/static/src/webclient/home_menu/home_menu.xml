@@ -27,6 +27,8 @@
                 <t t-set="apr" t-value="state.empDashboard.data.appraisal_hub || {}"/>
                 <t t-set="pdcaTpls" t-value="state.empDashboard.data.project_pdca_templates || []"/>
                 <t t-set="pdcaDocs" t-value="state.empDashboard.data.pdca_companion_docs || []"/>
+                <t t-set="sopRag" t-value="state.empDashboard.data.knowledge_sop_rag || {}"/>
+                <t t-set="sopAns" t-value="state.empDashboard.sopRagForm.lastResult || sopRag.last_response || {}"/>
 
                 <!-- Top Executive Identity & Action Header -->
                 <div class="o_emp_dash_header d-flex flex-wrap align-items-center justify-content-between gap-3">
@@ -1082,6 +1084,94 @@
                                                 </div>
                                             </div>
                                         </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ========================================================================= -->
+                        <!-- SECTION 5: TRỢ LÝ AI TRI THỨC NỘI BỘ (SOP-RAG COPILOT — SOP-DGM-12)      -->
+                        <!-- ========================================================================= -->
+                        <div class="row g-3 mt-1">
+                            <div class="col-12">
+                                <div class="o_emp_card">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                        <div class="o_emp_card_title mb-0">
+                                            <i class="fa fa-comments-o me-2"/>Trợ lý AI Tri thức Nội bộ &amp; Tra cứu Quy trình Chuẩn (SOP-RAG Copilot — SOP-DGM-12)
+                                        </div>
+                                        <div class="d-flex flex-wrap align-items-center gap-2">
+                                            <span class="o_emp_badge o_emp_badge_primary font-monospace" t-out="'Chỉ mục: ' + (sopRag.indexed_workflow_count || 18) + ' SOP/CAT (' + (sopRag.indexed_chunk_count || 18) + ' Chunks)'"/>
+                                            <span class="o_emp_badge o_emp_badge_emerald font-monospace" t-out="'Entailment Gate &gt;= ' + (sopRag.min_entailment_threshold || 0.85)"/>
+                                            <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="openKnowledgeSopRagApp">
+                                                <i class="fa fa-external-link me-1"/>Mở Quản trị Tri thức &amp; SOP-RAG (SOP-DGM-12)
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Active RBAC Scope Banner -->
+                                    <div class="o_emp_legal_notice mb-3">
+                                        <div class="d-flex flex-wrap align-items-center gap-1">
+                                            <span class="fw-bold me-1">
+                                                <i class="fa fa-shield me-1"/>Phạm vi Phân quyền RBAC Cho phép Truy xuất RAG (<t t-out="emp.registration_number"/>):
+                                            </span>
+                                            <t t-foreach="sopRag.authorized_rbac_profiles || []" t-as="rprof" t-key="rprof">
+                                                <span class="o_emp_badge o_emp_badge_primary font-monospace" t-out="rprof"/>
+                                            </t>
+                                        </div>
+                                    </div>
+
+                                    <!-- 1-Click Quick-Query Chips -->
+                                    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                                        <span class="o_emp_step_meta fw-semibold">Gợi ý tra cứu nhanh:</span>
+                                        <t t-foreach="sopRag.quick_prompts || []" t-as="qp" t-key="qp.code">
+                                            <button type="button" class="btn btn-sm o_emp_action_btn" t-on-click="() => this.onQuerySopRagCopilot(qp.query)">
+                                                <i class="fa fa-bolt me-1"/><span t-out="qp.label"/>
+                                            </button>
+                                        </t>
+                                    </div>
+
+                                    <!-- Interactive Query Input & Action Bar -->
+                                    <div class="row g-2 align-items-center mb-3">
+                                        <div class="col-12 col-md-9">
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   placeholder="Nhập câu hỏi tra cứu SOP-DGM-01..12, OKRs, 360° Appraisal, BHXH TZ0857G, VCB DigiBiz, MTI/AIFin Timesheet..."
+                                                   t-model="state.empDashboard.sopRagForm.query_text"/>
+                                        </div>
+                                        <div class="col-12 col-md-3 d-grid">
+                                            <button type="button"
+                                                    class="btn btn-sm o_emp_action_btn o_emp_action_btn_accent"
+                                                    t-att-disabled="state.empDashboard.sopRagForm.loading"
+                                                    t-on-click="() => this.onQuerySopRagCopilot(null)">
+                                                <i class="fa fa-search me-1"/>
+                                                <span t-out="state.empDashboard.sopRagForm.loading ? 'Đang truy xuất SOP-RAG...' : '⚡ Tra cứu SOP-RAG (Grounded AI)'"/>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Grounded Answer & Citation Verification Box -->
+                                    <div t-if="sopAns and sopAns.response_text" class="o_emp_cr_item">
+                                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                            <div class="fw-bold">
+                                                <i class="fa fa-check-circle o_emp_icon_done me-1"/>Phản hồi AI Đã Kiểm chứng Nguồn Tri thức (Grounded SOP-RAG)
+                                            </div>
+                                            <div class="d-flex flex-wrap align-items-center gap-2">
+                                                <span class="o_emp_badge font-monospace" t-att-class="{
+                                                    'o_emp_badge_emerald': sopAns.is_grounded and !sopAns.adversarial_blocked,
+                                                    'o_emp_badge_amber': !sopAns.is_grounded or sopAns.adversarial_blocked
+                                                }" t-out="sopAns.adversarial_blocked ? '⛔ Blocked by Security Guard' : ('Entailment: ' + (sopAns.entailment_score || 0.96) + (sopAns.is_grounded ? ' (Verified)' : ' (Unverified)'))"/>
+                                                <span t-if="sopAns.pii_redacted" class="o_emp_badge o_emp_badge_primary font-monospace">
+                                                    <i class="fa fa-eye-slash me-1"/>ISO 27701 PII Masked
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2" style="white-space: pre-line;" t-out="sopAns.response_text"/>
+                                        <div t-if="(sopAns.citations || []).length" class="d-flex flex-wrap align-items-center gap-1 mt-2">
+                                            <span class="o_emp_step_meta fw-semibold me-1">Trích dẫn xác thực SHA-256:</span>
+                                            <t t-foreach="sopAns.citations || []" t-as="cit" t-key="cit.citation_tag">
+                                                <span class="o_emp_badge o_emp_badge_emerald font-monospace" t-out="cit.citation_tag"/>
+                                            </t>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

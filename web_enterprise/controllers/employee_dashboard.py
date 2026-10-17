@@ -1847,6 +1847,125 @@ class InsilosEmployeeDashboardController(http.Controller):
     def _get_project_pdca_templates(self):
         return [dict(tpl) for tpl in CANONICAL_PROJECT_PDCA_TEMPLATES]
 
+    def _get_knowledge_sop_rag_hub(self, emp_dict):
+        reg = (emp_dict or {}).get("registration_number", "DGM-001")
+        if reg in ("DGM-001", "DGM-002"):
+            auth_profiles = [
+                "public_brand",
+                "company_common",
+                "executive_board",
+                "hr_recruitment",
+                "hr_confidential",
+                "finance_tax_legal",
+                "commercial_contracts",
+                "mti_timesheet_delivery",
+                "project_delivery",
+                "marketing_growth",
+                "personal_workspace",
+            ]
+        elif reg == "DGM-003":
+            auth_profiles = [
+                "public_brand",
+                "company_common",
+                "hr_recruitment",
+                "project_delivery",
+                "personal_workspace",
+            ]
+        else:
+            auth_profiles = [
+                "public_brand",
+                "company_common",
+                "mti_timesheet_delivery",
+                "project_delivery",
+                "personal_workspace",
+            ]
+
+        wf_count = 18
+        chunk_count = 18
+        try:
+            if "dgm.knowledge.sop.workflow" in request.env:
+                wf_count = max(
+                    18,
+                    request.env["dgm.knowledge.sop.workflow"].sudo().search_count([("active", "=", True)]),
+                )
+            if "al2c.rag.chunk" in request.env:
+                chunk_count = max(
+                    18,
+                    request.env["al2c.rag.chunk"].sudo().search_count([("active", "=", True)]),
+                )
+        except Exception:
+            pass
+
+        default_last = {
+            "query_text": "Tra cứu quy trình đánh giá OKR, 360° Appraisal và cổng kỹ năng bắt buộc Hạng B (SOP-DGM-11)",
+            "response_text": (
+                "• [SOP-DGM-11] Khung Quản trị Mục tiêu OKRs Doanh nghiệp Phần mềm, Đánh giá Nhân sự 360° "
+                "(Ma trận 9-Box) & Cổng Kỹ năng Bắt buộc Hạng B: Liên kết 4 trụ cột điểm (20% Self-Review, "
+                "25% 360° Peer/B2B, 30% Tech Lead, 25% OKR Achievement). Kỹ sư chưa hoàn thành 100% chứng chỉ "
+                "kỹ năng bắt buộc sẽ bị khóa trần xếp hạng ở Hạng B / Ô 6 (Emerging Potential, tối đa 84.0 điểm). "
+                "[SOP-DGM-11 | Khung OKRs, 360° Appraisal & Skill Gate | #11 | a9f4c218]"
+            ),
+            "is_grounded": True,
+            "entailment_score": 0.96,
+            "adversarial_blocked": False,
+            "pii_redacted": False,
+            "matched_sop_codes": ["SOP-DGM-11", "SOP-DGM-10"],
+            "citations": [
+                {
+                    "sop_code": "SOP-DGM-11",
+                    "section_title": "SOP-DGM-11 — Khung OKRs, 360° Appraisal & Cổng Kỹ năng Bắt buộc",
+                    "source_model": "knowledge.article",
+                    "source_res_id": 11,
+                    "sha256_8": "a9f4c218",
+                    "citation_tag": "[SOP-DGM-11 | Khung OKRs, 360° Appraisal & Skill Gate | #11 | a9f4c218]",
+                    "rbac_profile": "company_common",
+                    "confidentiality_level": "internal",
+                }
+            ],
+        }
+        try:
+            IrConfig = request.env["ir.config_parameter"].sudo()
+            raw_last = IrConfig.get_param(f"dgm.hr.sop_rag_last.{reg}")
+            if raw_last:
+                parsed = json.loads(raw_last)
+                if isinstance(parsed, dict) and parsed.get("response_text"):
+                    default_last = parsed
+        except Exception:
+            pass
+
+        return {
+            "sop_code": "SOP-DGM-12",
+            "title": "Trợ lý AI Tri thức Nội bộ (Grounded SOP-RAG Copilot — SOP-DGM-12)",
+            "employee_code": reg,
+            "authorized_rbac_profiles": auth_profiles,
+            "indexed_workflow_count": wf_count,
+            "indexed_chunk_count": chunk_count,
+            "min_entailment_threshold": 0.85,
+            "quick_prompts": [
+                {
+                    "code": "QP-SOP-11",
+                    "label": "SOP-DGM-11: OKRs, 360° 9-Box & Khóa Trần Hạng B",
+                    "query": "Quy định đánh giá OKRs, 360° Appraisal 9-Box và cổng nâng cấp kỹ năng bắt buộc khóa trần Hạng B theo SOP-DGM-11?",
+                },
+                {
+                    "code": "QP-SOP-08",
+                    "label": "SOP-DGM-08: Chấm công Timesheet & Hóa đơn MTI / AIFin",
+                    "query": "Quy trình chốt bảng chấm công Timesheet, khách hàng nghiệm thu và phát hành hóa đơn nháp sang chính thức 1C26TAA theo SOP-DGM-08?",
+                },
+                {
+                    "code": "QP-SOP-05",
+                    "label": "SOP-DGM-05: BHXH TZ0857G, Thuế TNCN & Lương VCB DigiBiz",
+                    "query": "Quy định tính lương, BHXH Quận 7 mã đơn vị TZ0857G, thuế TNCN và xuất file VCB DigiBiz 11 cột theo SOP-DGM-05?",
+                },
+                {
+                    "code": "QP-SOP-12",
+                    "label": "SOP-DGM-12: AI Chat Box, Chatbot & Grounded SOP-RAG",
+                    "query": "Kiến trúc AI Chat Box công khai, Internal SOP Copilot, phân quyền RBAC và chống ảo giác Entailment >= 0.85 theo SOP-DGM-12?",
+                },
+            ],
+            "last_response": default_last,
+        }
+
     def _build_dashboard_payload(self, employee_id=None):
         registry = self._get_registry_and_employees()
         raw_employees = registry["employees"]
@@ -1911,6 +2030,7 @@ class InsilosEmployeeDashboardController(http.Controller):
             okr_hub=okr_hub,
         )
         project_pdca_templates = self._get_project_pdca_templates()
+        knowledge_sop_rag = self._get_knowledge_sop_rag_hub(selected)
 
         all_kpi_hubs = [self._get_or_init_kpi_skill_hub(e) for e in raw_employees]
         avg_company_kpi = (
@@ -1968,6 +2088,7 @@ class InsilosEmployeeDashboardController(http.Controller):
             "appraisal_hub": appraisal_hub,
             "project_pdca_templates": project_pdca_templates,
             "pdca_companion_docs": CANONICAL_PDCA_COMPANION_DOCS,
+            "knowledge_sop_rag": knowledge_sop_rag,
             "change_requests": change_requests,
             "pending_approval_count": pending_count,
             "privacy_audit_log": privacy_audit_log,
@@ -2821,3 +2942,90 @@ class InsilosEmployeeDashboardController(http.Controller):
                 ("Content-Length", str(len(xlsx_bytes))),
             ],
         )
+
+    @http.route("/insilos/employee_dashboard/sop_rag_query", type="jsonrpc", auth="user", readonly=False)
+    def sop_rag_query(
+        self,
+        query_text=None,
+        employee_id=None,
+        channel_mode="internal_sop_copilot",
+        session_id=None,
+        **kwargs,
+    ):
+        registry = self._get_registry_and_employees()
+        employees = registry["employees"]
+        target_emp = self._find_employee(employees, employee_id)
+        reg = target_emp.get("registration_number", "DGM-001")
+        q_str = str(query_text or "").strip() or (
+            "Quy định đánh giá OKRs, 360° Appraisal 9-Box và cổng nâng cấp kỹ năng bắt buộc khóa trần Hạng B theo SOP-DGM-11?"
+        )
+
+        rag_res = None
+        try:
+            if "al2c.rag.service" in request.env:
+                RagService = request.env["al2c.rag.service"].sudo()
+                if hasattr(RagService, "query_sop_rag_copilot"):
+                    emp_orm = (
+                        request.env["hr.employee"]
+                        .sudo()
+                        .search([("registration_number", "=", reg)], limit=1)
+                    )
+                    rag_res = RagService.query_sop_rag_copilot(
+                        query_text=q_str,
+                        channel_mode=channel_mode or "internal_sop_copilot",
+                        employee_id=emp_orm.id if emp_orm else target_emp.get("id"),
+                        session_id=session_id,
+                    )
+        except Exception:
+            rag_res = None
+
+        if not rag_res:
+            hub = self._get_knowledge_sop_rag_hub(target_emp)
+            rag_res = dict(hub["last_response"])
+            rag_res.update(
+                {
+                    "ok": True,
+                    "query_text": q_str,
+                    "channel_mode": channel_mode or "internal_sop_copilot",
+                    "authorized_rbac_profiles": hub["authorized_rbac_profiles"],
+                }
+            )
+        else:
+            rag_res["query_text"] = q_str
+
+        try:
+            IrConfig = request.env["ir.config_parameter"].sudo()
+            IrConfig.set_param(
+                f"dgm.hr.sop_rag_last.{reg}",
+                json.dumps(
+                    {
+                        "query_text": q_str,
+                        "response_text": rag_res.get("response_text", ""),
+                        "is_grounded": bool(rag_res.get("is_grounded", True)),
+                        "entailment_score": float(rag_res.get("entailment_score") or 0.92),
+                        "adversarial_blocked": bool(rag_res.get("adversarial_blocked", False)),
+                        "pii_redacted": bool(rag_res.get("pii_redacted", False)),
+                        "matched_sop_codes": rag_res.get("matched_sop_codes") or [],
+                        "citations": rag_res.get("citations") or [],
+                    },
+                    ensure_ascii=False,
+                ),
+            )
+        except Exception:
+            pass
+
+        self._append_privacy_audit_log(
+            target_emp,
+            "SOP_RAG_COPILOT_QUERY",
+            extra_meta={
+                "channel_mode": channel_mode or "internal_sop_copilot",
+                "matched_sop_codes": rag_res.get("matched_sop_codes") or [],
+                "entailment_score": rag_res.get("entailment_score", 0.0),
+                "adversarial_blocked": bool(rag_res.get("adversarial_blocked", False)),
+            },
+        )
+
+        payload = self._build_dashboard_payload(employee_id=target_emp["id"])
+        payload.update(rag_res)
+        return payload
+

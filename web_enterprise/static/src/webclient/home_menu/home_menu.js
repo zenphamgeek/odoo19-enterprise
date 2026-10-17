@@ -146,6 +146,13 @@ export class HomeMenu extends Component {
                     manager_appraisal_text: "",
                     pdca_next_quarter_plan: "",
                 },
+                sopRagForm: {
+                    query_text:
+                        "Quy định đánh giá OKRs, 360° Appraisal 9-Box và cổng nâng cấp kỹ năng bắt buộc khóa trần Hạng B theo SOP-DGM-11?",
+                    channel_mode: "internal_sop_copilot",
+                    loading: false,
+                    lastResult: null,
+                },
             },
         });
         this.pressTimer;
@@ -624,6 +631,16 @@ export class HomeMenu extends Component {
                     this.state.empDashboard.appraisalForm.pdca_next_quarter_plan =
                         ap.pdca_next_quarter_plan || "";
                 }
+                if (res.knowledge_sop_rag) {
+                    const sr = res.knowledge_sop_rag;
+                    if (sr.last_response) {
+                        this.state.empDashboard.sopRagForm.lastResult = sr.last_response;
+                        if (sr.last_response.query_text) {
+                            this.state.empDashboard.sopRagForm.query_text =
+                                sr.last_response.query_text;
+                        }
+                    }
+                }
             }
         } catch {
             // Non-blocking fallback if offline
@@ -794,6 +811,43 @@ export class HomeMenu extends Component {
         }
     }
 
+    async onQuerySopRagCopilot(presetQuery = null) {
+        const empId = this.state.empDashboard.data?.current_employee?.id;
+        const sf = this.state.empDashboard.sopRagForm;
+        const qText = (presetQuery !== null ? presetQuery : sf.query_text || "").trim();
+        if (!qText) {
+            return;
+        }
+        sf.query_text = qText;
+        sf.loading = true;
+        try {
+            const res = await rpc("/insilos/employee_dashboard/sop_rag_query", {
+                employee_id: empId,
+                query_text: qText,
+                channel_mode: sf.channel_mode || "internal_sop_copilot",
+            });
+            if (res) {
+                if (res.current_employee) {
+                    this.state.empDashboard.data = res;
+                }
+                sf.lastResult = {
+                    query_text: qText,
+                    response_text: res.response_text || "",
+                    is_grounded: Boolean(res.is_grounded),
+                    entailment_score: res.entailment_score ?? 0.92,
+                    adversarial_blocked: Boolean(res.adversarial_blocked),
+                    pii_redacted: Boolean(res.pii_redacted),
+                    matched_sop_codes: res.matched_sop_codes || [],
+                    citations: res.citations || [],
+                };
+            }
+        } catch {
+            // Fail-soft
+        } finally {
+            sf.loading = false;
+        }
+    }
+
     openKpiEvaluationApp() {
         return this.action.doAction({
             type: "ir.actions.act_window",
@@ -838,6 +892,19 @@ export class HomeMenu extends Component {
             type: "ir.actions.act_window",
             name: "Thư viện Dự án Mẫu Chuẩn PDCA (SAP Activate & Agile Onsite)",
             res_model: "dgm.project.pdca.template",
+            views: [
+                [false, "list"],
+                [false, "form"],
+            ],
+            target: "current",
+        });
+    }
+
+    openKnowledgeSopRagApp() {
+        return this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Quản trị Tri thức & Chỉ mục SOP-RAG (SOP-DGM-12)",
+            res_model: "dgm.knowledge.sop.workflow",
             views: [
                 [false, "list"],
                 [false, "form"],
