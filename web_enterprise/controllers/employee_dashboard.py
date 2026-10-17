@@ -3337,7 +3337,24 @@ class InsilosEmployeeDashboardController(http.Controller):
         return payload
 
     @http.route("/insilos/employee_dashboard/run_autonomous_marketing_scan", type="jsonrpc", auth="user", readonly=False)
-    def run_autonomous_marketing_scan(self, employee_id=None, **kwargs):
+    def run_autonomous_marketing_scan(self, employee_id=None, domain=None, **kwargs):
+        from odoo.addons.insilos_al2c.controllers.radar_security import (
+            MerkleWitnessGate,
+            SafeDomainASTValidator,
+            TenantSecurityBarrier,
+            sanitize_telemetry_payload,
+        )
+
+        company = request.env.company
+        company_id = company.id if company else 1
+        allowed_cids = request.env.companies.ids if request.env.companies else [company_id]
+        TenantSecurityBarrier.validate_tenant_boundary(
+            company_id,
+            allowed_company_ids=allowed_cids,
+            current_company_id=company_id,
+        )
+        validated_domain = SafeDomainASTValidator.sanitize_and_validate(domain)
+
         registry = self._get_registry_and_employees()
         employees = registry["employees"]
         target_emp = self._find_employee(employees, employee_id)
@@ -3349,24 +3366,37 @@ class InsilosEmployeeDashboardController(http.Controller):
             "leads_routed": 12,
             "total_pipeline_vnd": 6305000000.0,
             "claim_grounding_pct": 100.0,
+            "tenant_barrier_verified": True,
+            "validated_domain": validated_domain,
         }
         try:
             if "dgm.marketing.automation.campaign" in request.env:
-                CampaignModel = request.env["dgm.marketing.automation.campaign"].sudo()
+                CampaignModel = request.env["dgm.marketing.automation.campaign"].sudo().with_company(company)
                 if hasattr(CampaignModel, "cron_dgm_autonomous_marketing_and_research"):
                     res = CampaignModel.cron_dgm_autonomous_marketing_and_research()
                     if isinstance(res, dict):
-                        scan_res = res
+                        scan_res = dict(res)
+                        scan_res["validated_domain"] = validated_domain
         except Exception:
             pass
 
+        if "merkle_witness" not in scan_res:
+            scan_res["merkle_witness"] = MerkleWitnessGate.mint_witness(
+                tenant_id=company_id,
+                model_name="dgm.marketing.automation.campaign",
+                pre_state_dict={"company_id": company_id, "domain": validated_domain},
+                post_state_dict=scan_res,
+            )
+
+        clean_scan_res = sanitize_telemetry_payload(scan_res)
         self._append_privacy_audit_log(
             target_emp,
             "RUN_AUTONOMOUS_MARKETING_SCAN_SOP13",
-            extra_meta=scan_res,
+            extra_meta=clean_scan_res,
         )
         payload = self._build_dashboard_payload(employee_id=target_emp["id"])
-        payload["marketing_scan_result"] = scan_res
+        payload["marketing_scan_result"] = clean_scan_res
         return payload
+
 
 
