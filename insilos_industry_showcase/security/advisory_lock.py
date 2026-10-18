@@ -4760,3 +4760,230 @@ class EnterpriseSalesStateMachine:
         self.current_state = event.to_state
         self.ledger.append(new_entry)
         return new_entry
+
+
+# ==============================================================================
+# PUBGRUB-GOVERNED CONTENT-ADDRESSED SALES POLICY RESOLUTION (PG-CASPR)
+# ==============================================================================
+
+
+class PolicySalesStage(str, Enum):
+    """Defines the validated lifecycle stages of an enterprise deal."""
+    LEAD = "LEAD"
+    QUALIFIED = "QUALIFIED"
+    PROPOSAL = "PROPOSAL"
+    NEGOTIATION = "NEGOTIATION"
+    CLOSED_WON = "CLOSED_WON"
+    CLOSED_LOST = "CLOSED_LOST"
+
+
+class PolicyConstraintUnsatError(Exception):
+    """Raised when deal policy requirements are unsatisfiable."""
+
+
+class ResourceExhaustionError(Exception):
+    """Raised when the bounded active lease limit is reached."""
+
+
+@dataclass(frozen=True)
+class SalesTransactionEvent:
+    """Immutable audit record representing a verified state transition."""
+    event_id: str
+    tenant_id: str
+    deal_id: str
+    from_stage: PolicySalesStage
+    to_stage: PolicySalesStage
+    payload_hash: str
+    timestamp: float
+    prev_hash: str
+    current_hash: str
+
+
+@dataclass(frozen=True)
+class DealPolicyRequirement:
+    """Governance constraints required before stage advancement."""
+    max_discount_pct: float
+    min_contract_value: float
+    requires_executive_signoff: bool
+    requires_security_review: bool
+
+
+class PubGrubPolicyStateMachine:
+    """High-assurance state machine for AI-driven enterprise sales policy SAT and stage progression."""
+
+    LEGAL_TRANSITIONS: Dict[PolicySalesStage, Set[PolicySalesStage]] = {
+        PolicySalesStage.LEAD: {PolicySalesStage.QUALIFIED, PolicySalesStage.CLOSED_LOST},
+        PolicySalesStage.QUALIFIED: {PolicySalesStage.PROPOSAL, PolicySalesStage.CLOSED_LOST},
+        PolicySalesStage.PROPOSAL: {PolicySalesStage.NEGOTIATION, PolicySalesStage.CLOSED_LOST},
+        PolicySalesStage.NEGOTIATION: {PolicySalesStage.CLOSED_WON, PolicySalesStage.CLOSED_LOST},
+        PolicySalesStage.CLOSED_WON: set(),
+        PolicySalesStage.CLOSED_LOST: {PolicySalesStage.LEAD},
+    }
+
+    def __init__(self, tenant_id: str, max_concurrent_leases: int = 16) -> None:
+        if not tenant_id or not isinstance(tenant_id, str):
+            raise TenantSecurityViolationError("Invalid tenant identifier.")
+        self.tenant_id: str = tenant_id
+        self.max_concurrent_leases: int = max_concurrent_leases
+        self._active_leases: int = 0
+        self._ledger: List[SalesTransactionEvent] = []
+        self._deal_states: Dict[str, PolicySalesStage] = {}
+
+    def verify_invariant(self) -> bool:
+        if not self._ledger:
+            return True
+
+        previous_hash = "0" * 64
+        for event in self._ledger:
+            if event.prev_hash != previous_hash:
+                return False
+            expected_hash = self._compute_event_hash(
+                event_id=event.event_id,
+                tenant_id=event.tenant_id,
+                deal_id=event.deal_id,
+                from_stage=event.from_stage,
+                to_stage=event.to_stage,
+                payload_hash=event.payload_hash,
+                timestamp=event.timestamp,
+                prev_hash=event.prev_hash,
+            )
+            if event.current_hash != expected_hash:
+                return False
+            previous_hash = event.current_hash
+        return True
+
+    def apply_odoo_odoo_pattern(self, request_tenant_id: str) -> bool:
+        if request_tenant_id != self.tenant_id:
+            raise TenantSecurityViolationError(
+                f"Cross-tenant access rejected: actor={request_tenant_id}, context={self.tenant_id}"
+            )
+        return True
+
+    def apply_astral_sh_uv_pattern(self) -> bool:
+        return 0 <= self._active_leases <= self.max_concurrent_leases
+
+    def acquire_lease(self) -> int:
+        if self._active_leases >= self.max_concurrent_leases:
+            raise ResourceExhaustionError(
+                f"Capacity limit exceeded: {self._active_leases}/{self.max_concurrent_leases}"
+            )
+        self._active_leases += 1
+        return self._active_leases
+
+    def release_lease(self) -> int:
+        if self._active_leases <= 0:
+            raise ResourceExhaustionError("Attempted to release nonexistent lease slot.")
+        self._active_leases -= 1
+        return self._active_leases
+
+    def _compute_payload_hash(self, payload: Dict[str, Any]) -> str:
+        canonical_json = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(canonical_json.encode("utf-8")).hexdigest()
+
+    def _compute_event_hash(
+        self,
+        event_id: str,
+        tenant_id: str,
+        deal_id: str,
+        from_stage: PolicySalesStage,
+        to_stage: PolicySalesStage,
+        payload_hash: str,
+        timestamp: float,
+        prev_hash: str,
+    ) -> str:
+        raw_block = f"{event_id}|{tenant_id}|{deal_id}|{from_stage.value}|{to_stage.value}|{payload_hash}|{timestamp:.6f}|{prev_hash}"
+        return hashlib.sha256(raw_block.encode("utf-8")).hexdigest()
+
+    def solve_policy_constraints(
+        self,
+        target_stage: PolicySalesStage,
+        payload: Dict[str, Any],
+        policy: DealPolicyRequirement,
+    ) -> bool:
+        discount = float(payload.get("discount_pct", 0.0))
+        value = float(payload.get("contract_value", 0.0))
+        has_exec_signoff = bool(payload.get("executive_signoff", False))
+        has_sec_review = bool(payload.get("security_review_completed", False))
+
+        if target_stage in (
+            PolicySalesStage.QUALIFIED,
+            PolicySalesStage.PROPOSAL,
+            PolicySalesStage.NEGOTIATION,
+            PolicySalesStage.CLOSED_WON,
+        ):
+            if discount > policy.max_discount_pct and not has_exec_signoff:
+                raise PolicyConstraintUnsatError(
+                    f"Policy Unsatisfiable: Discount {discount}% exceeds limit {policy.max_discount_pct}% without executive signoff."
+                )
+            if value < policy.min_contract_value:
+                raise PolicyConstraintUnsatError(
+                    f"Policy Unsatisfiable: Contract value {value} below minimum threshold {policy.min_contract_value}."
+                )
+
+        if target_stage == PolicySalesStage.CLOSED_WON:
+            if policy.requires_security_review and not has_sec_review:
+                raise PolicyConstraintUnsatError(
+                    "Policy Unsatisfiable: Security review must be completed prior to CLOSED_WON."
+                )
+            if policy.requires_executive_signoff and not has_exec_signoff:
+                raise PolicyConstraintUnsatError(
+                    "Policy Unsatisfiable: Executive signoff mandatory for CLOSED_WON."
+                )
+
+        return True
+
+    def transition_stage(
+        self,
+        request_tenant_id: str,
+        deal_id: str,
+        target_stage: PolicySalesStage,
+        payload: Dict[str, Any],
+        policy: DealPolicyRequirement,
+    ) -> SalesTransactionEvent:
+        self.apply_odoo_odoo_pattern(request_tenant_id)
+        self.acquire_lease()
+        try:
+            current_stage = self._deal_states.get(deal_id, PolicySalesStage.LEAD)
+            allowed_targets = self.LEGAL_TRANSITIONS.get(current_stage, set())
+            if target_stage not in allowed_targets:
+                raise InvalidStateTransitionError(
+                    f"Illegal transition from {current_stage.value} to {target_stage.value} for deal {deal_id}."
+                )
+
+            self.solve_policy_constraints(target_stage, payload, policy)
+
+            timestamp = time.time()
+            payload_hash = self._compute_payload_hash(payload)
+            event_id = f"evt_{deal_id}_{int(timestamp * 1000)}"
+            prev_hash = self._ledger[-1].current_hash if self._ledger else "0" * 64
+            current_hash = self._compute_event_hash(
+                event_id=event_id,
+                tenant_id=self.tenant_id,
+                deal_id=deal_id,
+                from_stage=current_stage,
+                to_stage=target_stage,
+                payload_hash=payload_hash,
+                timestamp=timestamp,
+                prev_hash=prev_hash,
+            )
+
+            event = SalesTransactionEvent(
+                event_id=event_id,
+                tenant_id=self.tenant_id,
+                deal_id=deal_id,
+                from_stage=current_stage,
+                to_stage=target_stage,
+                payload_hash=payload_hash,
+                timestamp=timestamp,
+                prev_hash=prev_hash,
+                current_hash=current_hash,
+            )
+
+            self._ledger.append(event)
+            self._deal_states[deal_id] = target_stage
+            return event
+        finally:
+            self.release_lease()
+
+    def get_ledger(self) -> List[SalesTransactionEvent]:
+        return list(self._ledger)
