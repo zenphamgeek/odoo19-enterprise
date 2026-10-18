@@ -1896,6 +1896,82 @@ _TENANT_CONTEXT_VAR: contextvars.ContextVar[Optional[TenantSecurityContext]] = c
 )
 
 
+def to_signed_int4(value: int) -> int:
+    """
+    Deterministically folds any integer into a PostgreSQL-compatible signed 32-bit integer (-2^31 to 2^31 - 1).
+    Guarantees zero 'integer out of range' SQL errors when passed to pg_advisory_xact_lock(int4, int4).
+    """
+    unsigned_val = int(value) & 0xFFFFFFFF
+    if unsigned_val >= 0x80000000:
+        return unsigned_val - 0x100000000
+    return unsigned_val
+
+
+def canonical_advisory_key(namespace: str, record_id: int) -> Tuple[int, int]:
+    """
+    Computes a deterministic, collision-resistant (int4, int4) pair for PostgreSQL.
+    Part 1: Signed 32-bit integer hash of the namespace identifier.
+    Part 2: Signed 32-bit integer of the record ID.
+    """
+    if not isinstance(namespace, str) or not namespace.strip():
+        raise ValueError("namespace must be a non-empty string.")
+    ns_hash_bytes = hashlib.sha256(namespace.encode("utf-8")).digest()
+    (ns_int_raw,) = struct.unpack(">I", ns_hash_bytes[:4])
+    key_part1 = to_signed_int4(ns_int_raw)
+    key_part2 = to_signed_int4(record_id)
+    return (key_part1, key_part2)
+
+
+LockTimeoutSecurityException = LockAcquisitionTimeoutError
+
+
+class BoundedAdvisoryLockGuard:
+    """
+    Bounded Flat Advisory Lock with Reversible Diagnostic Metadata (Synthesis 4.4).
+    Enforces 1 deterministic (company_id, journal_id) advisory lock per transaction with 2500ms lock_timeout.
+    """
+
+    diagnostic_registry: Dict[Tuple[int, int], Dict[str, Any]] = {}
+    _registry_lock: threading.Lock = threading.Lock()
+
+    @classmethod
+    @contextmanager
+    def acquire(
+        cls,
+        cursor: Any,
+        company_id: int,
+        journal_id: int,
+        model_name: str = "account.journal",
+        timeout_ms: int = 2500,
+    ):
+        if company_id <= 0 or journal_id <= 0:
+            raise ValueError("company_id and journal_id must be positive integers.")
+        namespace = f"{model_name}:{company_id}"
+        key_pair = canonical_advisory_key(namespace, journal_id)
+        try:
+            cursor.execute(f"SET LOCAL lock_timeout = '{int(timeout_ms)}ms';")
+            cursor.execute("SELECT pg_advisory_xact_lock(%s, %s);", key_pair)
+        except Exception as exc:
+            raise LockTimeoutSecurityException(
+                f"Failed to acquire bounded advisory lock for {namespace}#{journal_id} within {timeout_ms}ms: {exc}"
+            ) from exc
+
+        with cls._registry_lock:
+            cls.diagnostic_registry[key_pair] = {
+                "int4_key1": key_pair[0],
+                "int4_key2": key_pair[1],
+                "model_name": model_name,
+                "company_id": company_id,
+                "target_id": journal_id,
+                "acquired_at": time.time(),
+            }
+        try:
+            yield key_pair
+        finally:
+            with cls._registry_lock:
+                cls.diagnostic_registry.pop(key_pair, None)
+
+
 class _DualActivateDescriptor:
     """Allows ScopedTenantEnvironmentGuard.activate to be called as either a 0-arg instance method or a 3-arg classmethod."""
 
@@ -1906,7 +1982,7 @@ class _DualActivateDescriptor:
 
 
 class ScopedTenantEnvironmentGuard:
-    """Enforces strict multi-tenant context isolation using ContextVars (supports scope_tenant, HMAC TenantContextToken, and timing-safe activate())."""
+    """Enforces strict multi-tenant context isolation using ContextVars and fail-closed Odoo Environment context restoration."""
 
     _current_token: contextvars.ContextVar[Optional[TenantContextToken]] = contextvars.ContextVar(
         "current_scoped_tenant_token", default=None
@@ -1914,15 +1990,39 @@ class ScopedTenantEnvironmentGuard:
 
     def __init__(
         self,
-        token: Optional[Union[TenantContextToken, str]] = None,
-        secret_key: Union[bytes, str] = b"",
-        expected_token_hash: Optional[str] = None,
+        token: Optional[Union[TenantContextToken, str, Any]] = None,
+        secret_key: Union[bytes, str, int] = b"",
+        expected_token_hash: Optional[Union[str, int]] = None,
+        *,
+        env: Optional[Any] = None,
+        target_company_id: Optional[int] = None,
+        target_user_id: Optional[int] = None,
     ) -> None:
-        if expected_token_hash is not None or isinstance(token, str):
+        resolved_env = env if env is not None else token
+        if resolved_env is not None and hasattr(resolved_env, "context") and hasattr(resolved_env, "uid"):
+            self.env = resolved_env
+            comp_val = target_company_id if target_company_id is not None else secret_key
+            user_val = target_user_id if target_user_id is not None else expected_token_hash
+            self.target_company_id = int(comp_val)  # type: ignore[arg-type]
+            self.target_user_id = int(user_val)  # type: ignore[arg-type]
+            self.original_context: Optional[Dict[str, Any]] = None
+            self.original_uid: Optional[int] = None
+            self.tenant_id = str(self.target_company_id)
+            self.secret_token = ""
+            self.expected_token_hash = ""
+            self.token = None
+            self.secret_key = b""
+            self._mode = "env"
+        elif expected_token_hash is not None or isinstance(token, str):
             if not token or not secret_key or not expected_token_hash:
                 raise TenantSecurityException(
                     "Tenant ID, secret token, and expected token must be provided."
                 )
+            self.env = None
+            self.target_company_id = 0
+            self.target_user_id = 0
+            self.original_context = None
+            self.original_uid = None
             self.tenant_id = str(token).strip()
             self.secret_token = str(secret_key)
             self.expected_token_hash = str(expected_token_hash)
@@ -1930,8 +2030,13 @@ class ScopedTenantEnvironmentGuard:
             self.secret_key = b""
             self._mode = "activate"
         else:
+            self.env = None
+            self.target_company_id = 0
+            self.target_user_id = 0
+            self.original_context = None
+            self.original_uid = None
             self.token = token
-            self.secret_key = secret_key if isinstance(secret_key, bytes) else secret_key.encode("utf-8")
+            self.secret_key = secret_key if isinstance(secret_key, bytes) else str(secret_key).encode("utf-8")
             self.tenant_id = ""
             self.secret_token = ""
             self.expected_token_hash = ""
@@ -1985,7 +2090,16 @@ class ScopedTenantEnvironmentGuard:
             )
         return ctx
 
-    def __enter__(self) -> "ScopedTenantEnvironmentGuard":
+    def __enter__(self) -> Any:
+        if self._mode == "env":
+            self.original_context = dict(self.env.context)
+            self.original_uid = self.env.uid
+            new_context = dict(self.original_context)
+            new_context["allowed_company_ids"] = [self.target_company_id]
+            new_context["company_id"] = self.target_company_id
+            self.env.context = new_context
+            self.env.uid = self.target_user_id
+            return self.env
         if self._mode == "activate":
             if not self.verify_token():
                 raise TenantSecurityException(
@@ -2001,6 +2115,16 @@ class ScopedTenantEnvironmentGuard:
         return self
 
     def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        if self._mode == "env" and self.env is not None:
+            try:
+                if self.original_context is not None:
+                    self.env.context = self.original_context
+                if self.original_uid is not None:
+                    self.env.uid = self.original_uid
+            finally:
+                if hasattr(self.env, "invalidate_all"):
+                    self.env.invalidate_all()
+            return
         if self._cv_token is not None:
             if self._mode == "activate":
                 _ACTIVE_SCOPED_TENANT_STR_ID.reset(self._cv_token)
