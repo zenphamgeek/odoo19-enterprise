@@ -8,6 +8,7 @@ import re
 import time
 import unicodedata
 import uuid
+from contextlib import contextmanager
 from datetime import timedelta
 from psycopg2 import IntegrityError
 
@@ -26,20 +27,23 @@ RESERVED_SLUGS = frozenset({
     'assets', 'auth', 'autoconfig', 'autodiscover', 'billing', 'blog', 'caddy',
     'cdn', 'consul', 'core', 'cpanel', 'dashboard', 'database', 'dev', 'dns',
     'docker', 'elastic', 'elasticsearch', 'envoy', 'event', 'forum', 'ftp',
-    'git', 'github', 'gitlab', 'grafana', 'health', 'healthz', 'idp', 'im_livechat',
-    'imap', 'internal', 'jaeger', 'jsonrpc', 'k8s', 'keycloak', 'kibana',
-    'kubernetes', 'ldap', 'login', 'logout', 'loki', 'longpolling', 'mail',
-    'metrics', 'mx', 'nginx', 'none', 'ns1', 'ns2', 'null', 'oauth', 'onboarding',
-    'pop3', 'portal', 'postmaster', 'prefect', 'prometheus', 'registry', 'root',
-    'router', 'saml', 'secure', 'shop', 'signin', 'signup', 'sso', 'ssl',
-    'staging', 'static', 'status', 'system', 'tempo', 'test', 'traefik',
-    'undefined', 'vault', 'vpn', 'web', 'websocket', 'wpad', 'www', 'xmlrpc',
+    'git', 'github', 'gitlab', 'grafana', 'health', 'healthz', 'healthcheck',
+    'idp', 'im_livechat', 'imap', 'installer', 'internal', 'jaeger', 'jsonrpc',
+    'k8s', 'keycloak', 'kibana', 'kubernetes', 'ldap', 'login', 'logout', 'loki',
+    'longpolling', 'mail', 'metrics', 'mx', 'my', 'nginx', 'none', 'ns1', 'ns2',
+    'null', 'oauth', 'onboarding', 'payment', 'pop3', 'portal', 'postmaster',
+    'prefect', 'prometheus', 'registry', 'report', 'root', 'router', 'saml',
+    'secure', 'setup', 'shop', 'signin', 'signup', 'sso', 'ssl', 'staging',
+    'static', 'status', 'system', 'tempo', 'test', 'traefik', 'undefined',
+    'vault', 'vpn', 'web', 'webclient', 'websocket', 'wpad', 'www', 'xmlrpc',
 })
 
 SIGNUP_TOKEN_TTL_SECONDS = 1800          # 30-minute validation window for tenant onboarding
 MAX_ALLOWED_CLOCK_SKEW_SECONDS = 300     # 5-minute tolerance for distributed fleet clock drift
 HMAC_ONBOARDING_CONTEXT = b"insilos:tenant:onboarding:hmac-sha256:v1"
 HMAC_LEASE_CONTEXT = b"insilos:sovereign:lease:hmac-sha256:v1"
+KANBAN_LOCK_BASE_KEY = 0x494E534900000000  # "INSI" prefix for PostgreSQL advisory lock WIP slots
+DEFAULT_MAX_WIP_SLOTS = 3                  # Strict Kanban WIP limit: max 3 concurrent heavy migrations
 _CONSUMED_ONBOARDING_NONCES = set()
 _CONSUMED_ONBOARDING_NONCE_EXPIRY = {}
 MAX_IN_MEMORY_NONCE_ENTRIES = 4096
@@ -68,13 +72,16 @@ def sanitize_and_validate_slug(raw_slug: str) -> str:
 
 
 def _resolve_onboarding_hmac_secret(env) -> str:
-    """Retrieve the platform signing secret from ir.config_parameter without static key literals."""
+    """Retrieve the platform signing secret from ir.config_parameter without static key literals.
+    Prefers dedicated 'insilos.onboarding.secret' before falling back to 'database.secret'.
+    """
     secret = None
     try:
         if env is not None:
-            secret = env['ir.config_parameter'].sudo().get_param('database.secret')
+            param_obj = env['ir.config_parameter'].sudo()
+            secret = param_obj.get_param('insilos.onboarding.secret') or param_obj.get_param('database.secret')
     except Exception as exc:
-        _logger.warning("Failed to read database.secret from ir.config_parameter: %s", exc)
+        _logger.warning("Failed to read signing secret from ir.config_parameter: %s", exc)
     if not secret or not isinstance(secret, str) or not secret.strip():
         raise ValidationError("Missing database.secret configuration parameter for HMAC token signing.")
     return secret.strip()
@@ -90,6 +97,147 @@ def _derive_domain_hmac_secret(env, domain_context: bytes) -> bytes:
         bytes(domain_context),
         hashlib.sha256,
     ).digest()
+
+
+def consume_nonce_atomic(registry, db_name: str, nonce: str, tenant_id: int, slug: str, expiry_ts: int) -> bool:
+    """Atomically records the nonce in the persistent PostgreSQL ledger using an isolated
+    database cursor that commits immediately, preventing downstream transaction rollbacks
+    from resurrecting consumed nonces (CWE-367).
+    """
+    if not nonce or not isinstance(nonce, str) or len(nonce) > 64:
+        _logger.warning("Rejected invalid nonce format: %r", nonce)
+        return False
+
+    with registry.cursor() as autonomous_cr:
+        try:
+            autonomous_cr.execute(
+                """
+                INSERT INTO insilos_consumed_nonce (nonce, tenant_id, slug, expiry_ts)
+                VALUES (%s, %s, %s, %s)
+                ON CONFLICT (nonce) DO NOTHING
+                RETURNING nonce;
+                """,
+                (nonce, tenant_id, slug, expiry_ts),
+            )
+            result = autonomous_cr.fetchone()
+            autonomous_cr.commit()
+            return bool(result and result[0] == nonce)
+        except Exception as exc:
+            autonomous_cr.rollback()
+            _logger.error("Failed to record nonce consumption in PostgreSQL ledger: %s", exc)
+            return False
+
+
+def verify_and_consume_onboarding_token(
+    env,
+    token: str,
+    expected_slug: str,
+    expected_tenant_id: int,
+) -> bool:
+    """Verifies a 6-part v1 HMAC onboarding token and atomically consumes its nonce.
+    Token Format: v1.<tenant_id>.<slug>.<expiry_ts>.<nonce>.<signature>
+    """
+    if not token or not isinstance(token, str):
+        _logger.warning("Rejected empty or non-string onboarding token.")
+        return False
+
+    parts = token.split('.')
+    if len(parts) != 6:
+        _logger.warning("Malformed onboarding token: expected 6 parts, got %d", len(parts))
+        return False
+
+    version, token_tenant_str, token_slug, expiry_str, nonce, signature = parts
+
+    if version != 'v1':
+        _logger.warning("Unsupported token version: %s", version)
+        return False
+
+    try:
+        token_tenant_id = int(token_tenant_str)
+        expiry_ts = int(expiry_str)
+    except ValueError:
+        _logger.warning("Malformed integers in onboarding token.")
+        return False
+
+    if token_tenant_id != expected_tenant_id:
+        _logger.warning("Token tenant ID mismatch: got %d, expected %d", token_tenant_id, expected_tenant_id)
+        return False
+
+    if token_slug != expected_slug:
+        _logger.warning("Token slug mismatch: got %s, expected %s", token_slug, expected_slug)
+        return False
+
+    current_ts = int(time.time())
+
+    if current_ts > expiry_ts + MAX_ALLOWED_CLOCK_SKEW_SECONDS:
+        _logger.warning("Token has expired: expiry_ts=%d, current_ts=%d", expiry_ts, current_ts)
+        return False
+
+    if expiry_ts > current_ts + SIGNUP_TOKEN_TTL_SECONDS + MAX_ALLOWED_CLOCK_SKEW_SECONDS:
+        _logger.warning("Token expiry timestamp is too far in future: expiry_ts=%d", expiry_ts)
+        return False
+
+    derived_key = _derive_domain_hmac_secret(env, HMAC_ONBOARDING_CONTEXT)
+    payload_to_verify = f"{version}.{token_tenant_id}.{token_slug}.{expiry_ts}.{nonce}".encode('utf-8')
+    expected_sig = hmac.new(derived_key, payload_to_verify, hashlib.sha256).hexdigest()
+
+    if not hmac.compare_digest(expected_sig, signature):
+        _logger.warning("Cryptographic signature mismatch for tenant slug: %s", token_slug)
+        return False
+
+    is_fresh_nonce = consume_nonce_atomic(
+        env.registry,
+        env.cr.dbname,
+        nonce=nonce,
+        tenant_id=token_tenant_id,
+        slug=token_slug,
+        expiry_ts=expiry_ts,
+    )
+
+    if not is_fresh_nonce:
+        _logger.error("Anti-replay violation: Nonce %s already consumed for tenant %d", nonce, token_tenant_id)
+        return False
+
+    return True
+
+
+@contextmanager
+def acquire_onboarding_wip_slot(env, max_wip_slots: int = DEFAULT_MAX_WIP_SLOTS):
+    """Manufacturing Kanban WIP Limiter for Tenant Provisioning.
+    Attempts to acquire one of the finite transaction-level advisory lock slots
+    (pg_try_advisory_xact_lock). If all slots are occupied, raises UserError backpressure.
+    """
+    wip_limiter_enabled = str(
+        env['ir.config_parameter'].sudo().get_param('insilos.onboarding.wip_limiter_enabled', 'True') or 'True'
+    ).lower() in ('true', '1', 'yes')
+
+    if not wip_limiter_enabled:
+        yield None
+        return
+
+    acquired_slot = None
+    cr = env.cr
+
+    for slot_idx in range(1, max_wip_slots + 1):
+        lock_id = KANBAN_LOCK_BASE_KEY + slot_idx
+        cr.execute("SELECT pg_try_advisory_xact_lock(%s);", (lock_id,))
+        row = cr.fetchone()
+        if row and row[0]:
+            acquired_slot = slot_idx
+            _logger.info("Acquired Kanban Onboarding WIP Slot [%d/%d]", acquired_slot, max_wip_slots)
+            break
+
+    if acquired_slot is None:
+        _logger.warning("Kanban Onboarding WIP limit reached (%d concurrent operations). Backpressure tripped.", max_wip_slots)
+        raise UserError(
+            "The platform is currently processing maximum onboarding capacity. "
+            "Please retry in a few moments (WIP_BACKPRESSURE_ACTIVE)."
+        )
+
+    try:
+        yield acquired_slot
+    finally:
+        _logger.info("Released Kanban Onboarding WIP Slot [%d/%d]", acquired_slot, max_wip_slots)
 
 
 def _ensure_nonce_ledger_table(cr):
