@@ -177,12 +177,20 @@ class MultiTenantSecurityError(SecurityIntegrityError):
     """Raised when a multi-tenant boundary is violated or an invalid context token is presented."""
 
 
+class MultiTenantIsolationViolationError(MultiTenantSecurityError):
+    """Raised when tenant context integrity or company membership is violated."""
+
+
 class ConcurrencyLockTimeoutError(Exception):
     """Raised when acquiring locks in the canonical hierarchy exceeds the monotonic timeout."""
 
 
 class LockHierarchyError(Exception):
     """Raised when lock acquisition violates the strict canonical hierarchy."""
+
+
+class LockHierarchyViolationError(LockHierarchyError):
+    """Raised when an attempt is made to acquire locks in violation of canonical hierarchy."""
 
 
 class LockTimeoutError(ConcurrencyLockTimeoutError):
@@ -257,32 +265,118 @@ _ACTIVE_TENANT_TOKEN: contextvars.ContextVar[Optional[TenantContextToken]] = con
 
 
 class AtomicMultiTenantGuard:
-    """Context manager for fail-closed multi-tenant scoping using ContextVar."""
+    """Context manager for fail-closed multi-tenant scoping (supports both TenantContextToken and Odoo env modes)."""
 
-    def __init__(self, token: TenantContextToken, secret_key: bytes):
-        self.token = token
-        self.secret_key = secret_key
+    def __init__(
+        self,
+        token_or_env: Any,
+        secret_key_or_company_id: Any = None,
+        *,
+        target_company_id: Optional[int] = None,
+        enforce_strict_membership: bool = True,
+    ):
+        if isinstance(token_or_env, TenantContextToken):
+            self._mode = "token"
+            self.token: Optional[TenantContextToken] = token_or_env
+            self.secret_key: bytes = secret_key_or_company_id
+            self.env = None
+            self.target_company_id = token_or_env.tenant_id
+            self.enforce_strict_membership = enforce_strict_membership
+        else:
+            self._mode = "env"
+            self.token = None
+            self.secret_key = b""
+            self.env = token_or_env
+            resolved_cid = (
+                target_company_id
+                if target_company_id is not None
+                else secret_key_or_company_id
+            )
+            if not isinstance(resolved_cid, int) or isinstance(resolved_cid, bool) or resolved_cid <= 0:
+                raise ValueError(
+                    f"Invalid target_company_id: {resolved_cid}. Must be a positive integer."
+                )
+            self.target_company_id = resolved_cid
+            self.enforce_strict_membership = enforce_strict_membership
         self._reset_token: Optional[contextvars.Token] = None
+        self._original_context: Dict[str, Any] = {}
+        self._original_company_id: Optional[int] = None
+        self._is_active: bool = False
 
-    def __enter__(self) -> "AtomicMultiTenantGuard":
-        if not self.token.verify(self.secret_key):
-            raise MultiTenantSecurityError(
-                "Cryptographic verification failed for TenantContextToken."
+    def __enter__(self) -> Any:
+        if self._mode == "token":
+            assert self.token is not None
+            if not self.token.verify(self.secret_key):
+                raise MultiTenantSecurityError(
+                    "Cryptographic verification failed for TenantContextToken."
+                )
+
+            current = _ACTIVE_TENANT_TOKEN.get()
+            if current is not None and current.tenant_id != self.token.tenant_id:
+                raise MultiTenantSecurityError(
+                    f"Illegal nested tenant switch from tenant {current.tenant_id} to {self.token.tenant_id}."
+                )
+
+            self._reset_token = _ACTIVE_TENANT_TOKEN.set(self.token)
+            self._is_active = True
+            return self
+
+        # Env mode: snapshot context, verify user company membership, invalidate ORM cache
+        self._original_context = dict(getattr(self.env, "context", None) or {})
+        current_company = getattr(self.env, "company", None)
+        self._original_company_id = current_company.id if current_company else None
+
+        if self.enforce_strict_membership and not getattr(self.env, "su", False):
+            user = getattr(self.env, "user", None)
+            user_company_ids = (
+                user.company_ids.ids
+                if user is not None and hasattr(user, "company_ids")
+                else []
             )
+            if self.target_company_id not in user_company_ids:
+                raise MultiTenantIsolationViolationError(
+                    f"Access Denied: User {getattr(user, 'id', 'UNKNOWN')} does not belong to Company {self.target_company_id}"
+                )
 
-        current = _ACTIVE_TENANT_TOKEN.get()
-        if current is not None and current.tenant_id != self.token.tenant_id:
-            raise MultiTenantSecurityError(
-                f"Illegal nested tenant switch from tenant {current.tenant_id} to {self.token.tenant_id}."
-            )
+        if hasattr(self.env, "invalidate_all"):
+            self.env.invalidate_all()
 
-        self._reset_token = _ACTIVE_TENANT_TOKEN.set(self.token)
-        return self
+        new_allowed = [self.target_company_id]
+        if "allowed_company_ids" in self._original_context:
+            existing = [
+                cid
+                for cid in self._original_context["allowed_company_ids"]
+                if cid != self.target_company_id
+            ]
+            new_allowed = [self.target_company_id] + existing
 
-    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
-        if self._reset_token is not None:
-            _ACTIVE_TENANT_TOKEN.reset(self._reset_token)
-            self._reset_token = None
+        modified_context = dict(self._original_context)
+        modified_context.update(
+            {
+                "company_id": self.target_company_id,
+                "allowed_company_ids": new_allowed,
+                "force_company": self.target_company_id,
+            }
+        )
+        self.env.context = modified_context
+        self._is_active = True
+        return self.env
+
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> bool:
+        if self._mode == "token":
+            if self._reset_token is not None:
+                _ACTIVE_TENANT_TOKEN.reset(self._reset_token)
+                self._reset_token = None
+            self._is_active = False
+            return False
+
+        try:
+            if hasattr(self.env, "invalidate_all"):
+                self.env.invalidate_all()
+        finally:
+            self.env.context = self._original_context
+            self._is_active = False
+        return False
 
     @staticmethod
     def get_active_tenant_id() -> int:
@@ -336,11 +430,58 @@ _THREAD_HELD_LOCKS: contextvars.ContextVar[Tuple[ResourceLockKey, ...]] = contex
 
 
 class CanonicalLockHierarchyManager:
-    """Manages acquisition and release of synchronized resource locks with strict total order & monotonic timeouts."""
+    """Manages acquisition and release of synchronized resource locks (both in-memory LockLevel and DB row-level tiers)."""
 
-    def __init__(self) -> None:
+    MODEL_LOCK_TIERS: Dict[str, int] = {
+        "res.company": 10,
+        "res.partner": 20,
+        "sale.order": 30,
+        "account.move": 40,
+    }
+
+    def __init__(self, cr: Any = None) -> None:
+        self.cr = cr
+        self._current_max_tier_acquired: int = 0
         self._mutex_pool: Dict[ResourceLockKey, threading.Lock] = {}
         self._pool_lock = threading.Lock()
+
+    def reset_transaction_state(self) -> None:
+        self._current_max_tier_acquired = 0
+
+    def acquire_locks(
+        self,
+        model_name: str,
+        record_ids: List[int],
+        nowait: bool = False,
+    ) -> List[int]:
+        if model_name not in self.MODEL_LOCK_TIERS:
+            raise ValueError(f"Model '{model_name}' is not registered in the Canonical Lock Hierarchy.")
+
+        tier = self.MODEL_LOCK_TIERS[model_name]
+        if tier < self._current_max_tier_acquired:
+            raise LockHierarchyViolationError(
+                f"Deadlock Hazard: Cannot acquire lock on '{model_name}' (Tier {tier}) after "
+                f"acquiring locks on Tier {self._current_max_tier_acquired}."
+            )
+
+        if not record_ids:
+            return []
+
+        valid_ids: List[int] = []
+        for rid in record_ids:
+            if not isinstance(rid, int) or isinstance(rid, bool) or rid <= 0:
+                raise ValueError(f"Invalid record ID for locking: {rid}")
+            valid_ids.append(rid)
+
+        sorted_ids = sorted(set(valid_ids))
+        table_name = model_name.replace(".", "_")
+        lock_mode = "FOR UPDATE NOWAIT" if nowait else "FOR UPDATE"
+        query = f"SELECT id FROM {table_name} WHERE id = ANY(%s) ORDER BY id ASC {lock_mode}"
+
+        self.cr.execute(query, (sorted_ids,))
+        locked_ids = [row[0] for row in self.cr.fetchall()]
+        self._current_max_tier_acquired = tier
+        return locked_ids
 
     def _get_mutex(self, key: ResourceLockKey) -> threading.Lock:
         with self._pool_lock:
@@ -522,9 +663,12 @@ class MultiTenantContextGuard:
 class HardenedFormulaSanitizer:
     """Neutralizes CSV/TSV/ODS/Markdown formula injection, control-char cloaking & DDE execution (CWE-1236)."""
 
-    DANGEROUS_PREFIXES = frozenset({"=", "+", "-", "@", "|", "%", "\t", "\r", "\n"})
-    RISKY_PREFIXES: Tuple[str, ...] = ("=", "+", "-", "@", "|", "%", "\t", "\r", "\n")
+    DANGEROUS_PREFIXES = frozenset({"=", "+", "-", "@", "|", "%", "\t", "\r", "\n", "\uff1d", "\uff0b", "\uff0d", "\uff20"})
+    RISKY_PREFIXES: Tuple[str, ...] = ("=", "+", "-", "@", "|", "%", "\t", "\r", "\n", "\uff1d", "\uff0b", "\uff0d", "\uff20")
     CONTROL_CHAR_REGEX = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+    DANGEROUS_TRIGGER_PATTERN = re.compile(
+        r"^[\s\x00-\x1f\x7f\u200b\ufeff]*([=+\-@|\t\r\n%]|(\uff1d)|(\uff0b)|(\uff0d)|(\uff20))"
+    )
 
     @classmethod
     def sanitize_field(cls, value: Any) -> str:
@@ -547,6 +691,39 @@ class HardenedFormulaSanitizer:
     @classmethod
     def sanitize_row(cls, row: List[Any]) -> List[str]:
         return [cls.sanitize_field(item) for item in row]
+
+    @classmethod
+    def sanitize_scalar(cls, value: Any) -> Any:
+        if value is None:
+            return ""
+        if isinstance(value, (int, float, bool)):
+            return value
+        str_val = str(value)
+        if not str_val:
+            return ""
+        if cls.DANGEROUS_TRIGGER_PATTERN.search(str_val):
+            return f"'\t{str_val}"
+        return str_val
+
+    @classmethod
+    def sanitize_record(cls, record: Dict[str, Any]) -> Dict[str, Any]:
+        sanitized: Dict[str, Any] = {}
+        for key, val in record.items():
+            safe_key = cls.sanitize_scalar(key)
+            if isinstance(val, dict):
+                sanitized[str(safe_key)] = cls.sanitize_record(val)
+            elif isinstance(val, list):
+                sanitized[str(safe_key)] = [
+                    cls.sanitize_record(item) if isinstance(item, dict) else cls.sanitize_scalar(item)
+                    for item in val
+                ]
+            else:
+                sanitized[str(safe_key)] = cls.sanitize_scalar(val)
+        return sanitized
+
+    @classmethod
+    def sanitize_table(cls, rows: List[List[Any]]) -> List[List[Any]]:
+        return [[cls.sanitize_scalar(cell) for cell in row] for row in rows]
 
 
 FormulaInjectionSanitizer = HardenedFormulaSanitizer
