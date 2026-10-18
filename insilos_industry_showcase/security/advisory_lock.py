@@ -193,6 +193,10 @@ class LockHierarchyViolationError(LockHierarchyError):
     """Raised when an attempt is made to acquire locks in violation of canonical hierarchy."""
 
 
+class LockTierViolationError(LockHierarchyViolationError, RuntimeError):
+    """Raised when locks are requested out of deterministic tier order."""
+
+
 class LockTimeoutError(ConcurrencyLockTimeoutError):
     """Raised when acquiring a canonical lock exceeds the specified monotonic timeout."""
 
@@ -378,6 +382,47 @@ class AtomicMultiTenantGuard:
             self._is_active = False
         return False
 
+    @classmethod
+    @contextmanager
+    def isolate_tenant(cls, env: Any, tenant_company_id: int):
+        """Executes a block within an isolated tenant company context, flushing caches pre and post execution."""
+        if not isinstance(tenant_company_id, int) or isinstance(tenant_company_id, bool) or tenant_company_id <= 0:
+            raise MultiTenantIsolationViolationError("Invalid tenant company ID specified for isolation.")
+
+        previous_company_id = getattr(getattr(env, "company", None), "id", None)
+        previous_allowed = dict(getattr(env, "context", None) or {}).get("allowed_company_ids", [])
+
+        if hasattr(env, "cache") and hasattr(env.cache, "invalidate"):
+            env.cache.invalidate()
+        if hasattr(env, "clear"):
+            env.clear()
+
+        isolated_env = env(
+            context=dict(
+                getattr(env, "context", None) or {},
+                company_id=tenant_company_id,
+                allowed_company_ids=[tenant_company_id],
+            )
+        )
+
+        try:
+            if getattr(getattr(isolated_env, "company", None), "id", None) != tenant_company_id:
+                raise MultiTenantIsolationViolationError(
+                    f"Tenant isolation mismatch: Expected {tenant_company_id}, "
+                    f"resolved {getattr(getattr(isolated_env, 'company', None), 'id', None)}."
+                )
+            yield isolated_env
+        finally:
+            if hasattr(env, "cache") and hasattr(env.cache, "invalidate"):
+                env.cache.invalidate()
+            if hasattr(env, "clear"):
+                env.clear()
+            env.context = dict(
+                getattr(env, "context", None) or {},
+                company_id=previous_company_id,
+                allowed_company_ids=previous_allowed,
+            )
+
     @staticmethod
     def get_active_tenant_id() -> int:
         token = _ACTIVE_TENANT_TOKEN.get()
@@ -439,6 +484,16 @@ class CanonicalLockHierarchyManager:
         "account.move": 40,
     }
 
+    LOCK_TIERS: Dict[str, int] = {
+        "res.company": 1,
+        "crm.team": 1,
+        "crm.lead": 2,
+        "sale.order": 2,
+        "sale.order.line": 3,
+        "account.move": 2,
+        "account.move.line": 3,
+    }
+
     def __init__(self, cr: Any = None) -> None:
         self.cr = cr
         self._current_max_tier_acquired: int = 0
@@ -447,6 +502,30 @@ class CanonicalLockHierarchyManager:
 
     def reset_transaction_state(self) -> None:
         self._current_max_tier_acquired = 0
+
+    @classmethod
+    def acquire_deterministic_locks(
+        cls,
+        cursor: Any,
+        model_name: str,
+        record_ids: List[int],
+        current_highest_tier: int = 0,
+    ) -> int:
+        if not record_ids:
+            return current_highest_tier
+
+        requested_tier = cls.LOCK_TIERS.get(model_name, 99)
+        if requested_tier < current_highest_tier:
+            raise LockTierViolationError(
+                f"Deadlock hazard: Attempted to acquire tier {requested_tier} ({model_name}) "
+                f"while holding tier {current_highest_tier} locks."
+            )
+
+        sorted_ids = sorted(list(set(record_ids)))
+        table_name = model_name.replace(".", "_")
+        query = f"SELECT id FROM {table_name} WHERE id = ANY(%s) ORDER BY id ASC FOR UPDATE"
+        cursor.execute(query, [sorted_ids])
+        return max(current_highest_tier, requested_tier)
 
     def acquire_locks(
         self,
@@ -666,8 +745,11 @@ class HardenedFormulaSanitizer:
     DANGEROUS_PREFIXES = frozenset({"=", "+", "-", "@", "|", "%", "\t", "\r", "\n", "\uff1d", "\uff0b", "\uff0d", "\uff20"})
     RISKY_PREFIXES: Tuple[str, ...] = ("=", "+", "-", "@", "|", "%", "\t", "\r", "\n", "\uff1d", "\uff0b", "\uff0d", "\uff20")
     CONTROL_CHAR_REGEX = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+    STRIP_LEADING_REGEX = re.compile(
+        r"^[\s\u0000-\u001f\u007f-\u009f\u200b-\u200d\ufeff\u3000]+"
+    )
     DANGEROUS_TRIGGER_PATTERN = re.compile(
-        r"^[\s\x00-\x1f\x7f\u200b\ufeff]*([=+\-@|\t\r\n%]|(\uff1d)|(\uff0b)|(\uff0d)|(\uff20))"
+        r"^[\s\x00-\x1f\x7f\u200b\ufeff\u3000]*([=+\-@|\t\r\n%]|(\uff1d)|(\uff0b)|(\uff0d)|(\uff20))"
     )
 
     @classmethod
@@ -679,7 +761,7 @@ class HardenedFormulaSanitizer:
         cleaned = cls.CONTROL_CHAR_REGEX.sub("", normalized)
         if not cleaned:
             return ""
-        stripped = cleaned.lstrip()
+        stripped = cls.STRIP_LEADING_REGEX.sub("", cleaned)
         if not stripped:
             return cleaned
         if stripped[0] in cls.DANGEROUS_PREFIXES or cleaned[0] in cls.DANGEROUS_PREFIXES:
@@ -691,6 +773,38 @@ class HardenedFormulaSanitizer:
     @classmethod
     def sanitize_row(cls, row: List[Any]) -> List[str]:
         return [cls.sanitize_field(item) for item in row]
+
+    @classmethod
+    def sanitize_cell_value(cls, value: Any) -> Any:
+        if not isinstance(value, str):
+            return value
+        if not value:
+            return ""
+        normalized = unicodedata.normalize("NFKC", value)
+        cleaned = cls.STRIP_LEADING_REGEX.sub("", normalized)
+        if cleaned.startswith(cls.RISKY_PREFIXES):
+            return "'" + value
+        raw_stripped = cls.STRIP_LEADING_REGEX.sub("", value)
+        if raw_stripped.startswith(cls.RISKY_PREFIXES):
+            return "'" + value
+        return value
+
+    @classmethod
+    def sanitize_record_dict(cls, record_dict: Dict[str, Any]) -> Dict[str, Any]:
+        sanitized: Dict[str, Any] = {}
+        for key, val in record_dict.items():
+            if isinstance(val, dict):
+                sanitized[key] = cls.sanitize_record_dict(val)
+            elif isinstance(val, list):
+                sanitized[key] = [
+                    cls.sanitize_record_dict(item)
+                    if isinstance(item, dict)
+                    else (cls.sanitize_cell_value(item) if isinstance(item, str) else item)
+                    for item in val
+                ]
+            else:
+                sanitized[key] = cls.sanitize_cell_value(val)
+        return sanitized
 
     @classmethod
     def sanitize_scalar(cls, value: Any) -> Any:
@@ -727,4 +841,5 @@ class HardenedFormulaSanitizer:
 
 
 FormulaInjectionSanitizer = HardenedFormulaSanitizer
+FullwidthFormulaSanitizer = HardenedFormulaSanitizer
 
