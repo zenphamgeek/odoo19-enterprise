@@ -3862,3 +3862,280 @@ class EnterpriseSalesPipeline:
                 deal_metrics=merged_metrics,
                 event_log=state.event_log + (event,),
             )
+
+
+# ==============================================================================
+# ENTERPRISE SALES RESILIENT ORCHESTRATION ENGINE (just.ask.mr.zen)
+# ==============================================================================
+
+from datetime import datetime, timezone
+from typing import Coroutine
+
+
+class CircuitState(str, Enum):
+    CLOSED = "CLOSED"
+    OPEN = "OPEN"
+    HALF_OPEN = "HALF_OPEN"
+
+
+class SalesStage(str, Enum):
+    P0_CLOSING = "P0_CLOSING"
+    P1_QUOTATION = "P1_QUOTATION"
+    P2_ENRICHMENT = "P2_ENRICHMENT"
+
+
+class EnterpriseResilienceError(Exception):
+    """Base exception for enterprise resilience boundaries."""
+
+
+class CircuitBreakerOpenError(EnterpriseResilienceError):
+    """Raised when an operation is attempted while the circuit breaker is OPEN."""
+
+
+class BulkheadCapacityExceededError(EnterpriseResilienceError):
+    """Raised when a bulkhead compartment exceeds its concurrency capacity."""
+
+
+@dataclass(frozen=True)
+class SalesEvent:
+    event_id: str
+    tenant_id: str
+    stage: SalesStage
+    action: str
+    payload: Dict[str, Any]
+    timestamp: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
+
+    def to_canonical_json(self) -> str:
+        return json.dumps(
+            {
+                "event_id": self.event_id,
+                "tenant_id": self.tenant_id,
+                "stage": self.stage.value,
+                "action": self.action,
+                "payload": self.payload,
+                "timestamp": self.timestamp,
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+
+
+@dataclass
+class TransactionBlock:
+    block_index: int
+    prev_hash: str
+    event: SalesEvent
+    state_after: Dict[str, Any]
+    block_hash: str = field(init=False)
+
+    def __post_init__(self) -> None:
+        self.block_hash = self.compute_hash()
+
+    def compute_hash(self) -> str:
+        serialized = json.dumps(
+            {
+                "block_index": self.block_index,
+                "prev_hash": self.prev_hash,
+                "event_hash": hashlib.sha256(
+                    self.event.to_canonical_json().encode("utf-8")
+                ).hexdigest(),
+                "state_after": self.state_after,
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+        return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+
+class CircuitBreaker:
+    def __init__(
+        self,
+        failure_threshold: int = 3,
+        recovery_time_seconds: float = 5.0,
+        success_threshold: int = 2,
+    ) -> None:
+        self.failure_threshold = max(1, failure_threshold)
+        self.recovery_time_seconds = max(0.1, recovery_time_seconds)
+        self.success_threshold = max(1, success_threshold)
+
+        self._state = CircuitState.CLOSED
+        self._consecutive_failures = 0
+        self._consecutive_successes = 0
+        self._last_state_change = datetime.now(timezone.utc).timestamp()
+        self._lock = asyncio.Lock()
+
+    @property
+    def state(self) -> CircuitState:
+        return self._state
+
+    async def can_execute(self) -> bool:
+        async with self._lock:
+            now = datetime.now(timezone.utc).timestamp()
+            if self._state == CircuitState.OPEN:
+                if now - self._last_state_change >= self.recovery_time_seconds:
+                    self._state = CircuitState.HALF_OPEN
+                    self._consecutive_successes = 0
+                    self._last_state_change = now
+                    return True
+                return False
+            return True
+
+    async def record_result(self, success: bool) -> None:
+        async with self._lock:
+            now = datetime.now(timezone.utc).timestamp()
+            if success:
+                if self._state == CircuitState.HALF_OPEN:
+                    self._consecutive_successes += 1
+                    if self._consecutive_successes >= self.success_threshold:
+                        self._state = CircuitState.CLOSED
+                        self._consecutive_failures = 0
+                        self._consecutive_successes = 0
+                        self._last_state_change = now
+                elif self._state == CircuitState.CLOSED:
+                    self._consecutive_failures = 0
+            else:
+                self._consecutive_failures += 1
+                if (
+                    self._state == CircuitState.CLOSED
+                    and self._consecutive_failures >= self.failure_threshold
+                ) or self._state == CircuitState.HALF_OPEN:
+                    self._state = CircuitState.OPEN
+                    self._consecutive_successes = 0
+                    self._last_state_change = now
+
+
+class BulkheadPool:
+    def __init__(self, limits: Dict[SalesStage, int]) -> None:
+        self._semaphores: Dict[SalesStage, asyncio.Semaphore] = {
+            stage: asyncio.Semaphore(limit) for stage, limit in limits.items()
+        }
+        self._limits = limits
+
+    async def execute_in_bulkhead(
+        self,
+        stage: SalesStage,
+        coro_func: Callable[..., Coroutine[Any, Any, Any]],
+        *args: Any,
+        **kwargs: Any,
+    ) -> Any:
+        sem = self._semaphores.get(stage)
+        if sem is None:
+            raise BulkheadCapacityExceededError(f"No bulkhead defined for stage: {stage}")
+
+        if sem.locked():
+            raise BulkheadCapacityExceededError(
+                f"Bulkhead for {stage.value} reached max capacity {self._limits[stage]}"
+            )
+
+        async with sem:
+            return await coro_func(*args, **kwargs)
+
+
+class ResilientSalesEngine:
+    def __init__(self) -> None:
+        self.circuit_breaker = CircuitBreaker(
+            failure_threshold=3, recovery_time_seconds=1.0, success_threshold=2
+        )
+        self.bulkhead = BulkheadPool(
+            {
+                SalesStage.P0_CLOSING: 10,
+                SalesStage.P1_QUOTATION: 5,
+                SalesStage.P2_ENRICHMENT: 2,
+            }
+        )
+        self.state_ledger: List[TransactionBlock] = []
+        self._current_state: Dict[str, Any] = {
+            "total_deals": 0,
+            "pipeline_revenue": 0.0,
+            "tenant_deals": {},
+        }
+        self._genesis_hash = "0" * 64
+        self._ledger_lock = asyncio.Lock()
+
+    def verify_invariant(self) -> bool:
+        if not self.state_ledger:
+            return True
+
+        current_prev = self._genesis_hash
+        for i, block in enumerate(self.state_ledger):
+            if block.block_index != i:
+                return False
+            if block.prev_hash != current_prev:
+                return False
+            recomputed = block.compute_hash()
+            if block.block_hash != recomputed:
+                return False
+            current_prev = block.block_hash
+
+        return True
+
+    def apply_odoo_odoo_pattern(self) -> bool:
+        tenant_counts = self._current_state.get("tenant_deals", {})
+        total_recorded = sum(tenant_counts.values())
+        return total_recorded == self._current_state.get("total_deals", 0)
+
+    def apply_astral_sh_uv_pattern(self) -> bool:
+        return self.verify_invariant()
+
+    async def execute_sales_step(
+        self,
+        event: SalesEvent,
+        remote_agent_call: Callable[[SalesEvent], Coroutine[Any, Any, Dict[str, Any]]],
+        fallback_call: Callable[[SalesEvent], Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        if not await self.circuit_breaker.can_execute():
+            result = fallback_call(event)
+            await self._record_transaction(event, result, fallback_used=True)
+            return result
+
+        try:
+            result = await self.bulkhead.execute_in_bulkhead(
+                event.stage, remote_agent_call, event
+            )
+            await self.circuit_breaker.record_result(success=True)
+            await self._record_transaction(event, result, fallback_used=False)
+            return result
+        except BulkheadCapacityExceededError:
+            result = fallback_call(event)
+            await self._record_transaction(event, result, fallback_used=True)
+            return result
+        except Exception:
+            await self.circuit_breaker.record_result(success=False)
+            result = fallback_call(event)
+            await self._record_transaction(event, result, fallback_used=True)
+            return result
+
+    async def _record_transaction(
+        self, event: SalesEvent, result: Dict[str, Any], fallback_used: bool
+    ) -> None:
+        async with self._ledger_lock:
+            amount = float(result.get("amount", 0.0))
+            new_deals = self._current_state["total_deals"] + 1
+            new_revenue = self._current_state["pipeline_revenue"] + amount
+
+            tenant_map = dict(self._current_state["tenant_deals"])
+            tenant_map[event.tenant_id] = tenant_map.get(event.tenant_id, 0) + 1
+
+            new_state = {
+                "total_deals": new_deals,
+                "pipeline_revenue": round(new_revenue, 2),
+                "tenant_deals": tenant_map,
+                "last_action": event.action,
+                "fallback_used": fallback_used,
+            }
+
+            prev_hash = (
+                self.state_ledger[-1].block_hash
+                if self.state_ledger
+                else self._genesis_hash
+            )
+            block = TransactionBlock(
+                block_index=len(self.state_ledger),
+                prev_hash=prev_hash,
+                event=event,
+                state_after=new_state,
+            )
+            self.state_ledger.append(block)
+            self._current_state = new_state
