@@ -5502,6 +5502,9 @@ class MerkleTransparencyLog:
     ) -> bool:
         return cls.verify_inclusion_proof(leaf_hash, proof, expected_root)
 
+    def append_entry(self, entry: Dict[str, Any]) -> Tuple[int, str]:
+        return self.record_approval_event(entry)
+
 
 
 class PubGrubQuotationSolver:
@@ -7099,3 +7102,237 @@ class SalesQuoteCRDTHarness:
             v.get("sku") for v in lines.values() if isinstance(v, dict) and "sku" in v
         ]
         return len(sku_list) == len(set(sku_list))
+
+
+class CRDTSalesDocument:
+    """Conflict-Free Replicated JSON Document for concurrent sales proposal mutations (arXiv:1608.03960)."""
+
+    def __init__(self, doc_id: str, actor_id: str) -> None:
+        self.doc_id: str = doc_id
+        self.actor_id: str = actor_id
+        self._fields: Dict[str, CRDTRegister] = {}
+        self._items: Dict[str, Dict[str, CRDTRegister]] = {}
+
+    def set_field(
+        self, key: str, value: Any, timestamp: Optional[float] = None
+    ) -> None:
+        ts = timestamp if timestamp is not None else time.time()
+        self._fields[key] = CRDTRegister(
+            value=value, timestamp=ts, actor_id=self.actor_id
+        )
+
+    def set_line_item(
+        self,
+        item_id: str,
+        field_name: str,
+        value: Any,
+        timestamp: Optional[float] = None,
+    ) -> None:
+        ts = timestamp if timestamp is not None else time.time()
+        if item_id not in self._items:
+            self._items[item_id] = {}
+        self._items[item_id][field_name] = CRDTRegister(
+            value=value, timestamp=ts, actor_id=self.actor_id
+        )
+
+    def to_dict(self) -> Dict[str, Any]:
+        result: Dict[str, Any] = {k: reg.value for k, reg in self._fields.items()}
+        items_dict: Dict[str, Dict[str, Any]] = {}
+        for item_id, item_fields in sorted(self._items.items()):
+            items_dict[item_id] = {k: reg.value for k, reg in item_fields.items()}
+        result["items"] = items_dict
+        return result
+
+    def merge(self, other: "CRDTSalesDocument") -> "CRDTSalesDocument":
+        merged = CRDTSalesDocument(
+            doc_id=self.doc_id, actor_id=f"merged_{self.actor_id}_{other.actor_id}"
+        )
+        all_field_keys: Set[str] = set(self._fields.keys()).union(
+            set(other._fields.keys())
+        )
+        for key in all_field_keys:
+            if key in self._fields and key in other._fields:
+                merged._fields[key] = self._fields[key].merge(other._fields[key])
+            elif key in self._fields:
+                merged._fields[key] = self._fields[key]
+            else:
+                merged._fields[key] = other._fields[key]
+
+        all_item_keys: Set[str] = set(self._items.keys()).union(
+            set(other._items.keys())
+        )
+        for item_id in all_item_keys:
+            merged._items[item_id] = {}
+            fields_self = self._items.get(item_id, {})
+            fields_other = other._items.get(item_id, {})
+            item_field_keys: Set[str] = set(fields_self.keys()).union(
+                set(fields_other.keys())
+            )
+            for fk in item_field_keys:
+                if fk in fields_self and fk in fields_other:
+                    merged._items[item_id][fk] = fields_self[fk].merge(fields_other[fk])
+                elif fk in fields_self:
+                    merged._items[item_id][fk] = fields_self[fk]
+                else:
+                    merged._items[item_id][fk] = fields_other[fk]
+
+        return merged
+
+
+@dataclass
+class OdooSalesOrder:
+    order_id: str
+    company_id: int
+    customer_id: str
+    total_amount: float
+    state: str = "draft"
+
+
+class OdooMultiTenantGuard:
+    """Enforces multi-company record rules and double-entry reconciliation integrity."""
+
+    def __init__(self) -> None:
+        self.orders: Dict[str, OdooSalesOrder] = {}
+        self.ledger_entries: List[Dict[str, Any]] = []
+
+    def record_order(self, order: OdooSalesOrder, user_company_id: int) -> bool:
+        if order.company_id != user_company_id:
+            raise PermissionError(
+                f"Multi-Company Violation: User company {user_company_id} cannot access order of company {order.company_id}"
+            )
+        self.orders[order.order_id] = order
+        return True
+
+    def post_double_entry_invoice(
+        self, order_id: str, debit_acc: str, credit_acc: str, amount: float
+    ) -> bool:
+        order = self.orders.get(order_id)
+        if not order:
+            raise ValueError(f"Order {order_id} does not exist")
+        if order.state == "posted":
+            raise ValueError(f"Order {order_id} already posted")
+
+        entry = {
+            "order_id": order_id,
+            "company_id": order.company_id,
+            "debit": {debit_acc: amount},
+            "credit": {credit_acc: amount},
+            "balanced": True,
+            "timestamp": time.time(),
+        }
+        self.ledger_entries.append(entry)
+        order.state = "posted"
+        return True
+
+    def verify_ledger_equilibrium(self) -> bool:
+        total_debits = sum(sum(e["debit"].values()) for e in self.ledger_entries)
+        total_credits = sum(sum(e["credit"].values()) for e in self.ledger_entries)
+        return abs(total_debits - total_credits) < 1e-6
+
+
+class SalesRuleConstraintSolver:
+    """Simulates PubGrub dependency and constraint resolution for complex pricing rules."""
+
+    def __init__(self, max_memory_slots: int = 100) -> None:
+        self.max_memory_slots = max_memory_slots
+        self.cache: Dict[str, Any] = {}
+
+    def resolve_bundle_eligibility(
+        self, product_ids: List[str], rules: Dict[str, List[str]]
+    ) -> Set[str]:
+        if len(self.cache) >= self.max_memory_slots:
+            oldest_key = next(iter(self.cache))
+            self.cache.pop(oldest_key)
+
+        cache_key = ":".join(sorted(product_ids))
+        if cache_key in self.cache:
+            return self.cache[cache_key]
+
+        selected: Set[str] = set(product_ids)
+        satisfied_rules: Set[str] = set()
+
+        for rule_name, required_prereqs in rules.items():
+            if all(req in selected for req in required_prereqs):
+                satisfied_rules.add(rule_name)
+
+        self.cache[cache_key] = satisfied_rules
+        return satisfied_rules
+
+
+class FlowState(str, Enum):
+    PENDING = "PENDING"
+    RUNNING = "RUNNING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    RETRYING = "RETRYING"
+
+
+@dataclass
+class FlowRunContext:
+    flow_id: str
+    idempotency_key: str
+    state: FlowState = FlowState.PENDING
+    retry_count: int = 0
+    max_retries: int = 3
+    result: Optional[Any] = None
+    error_message: Optional[str] = None
+
+
+class PrefectSalesFlowOrchestrator:
+    """Asynchronous, observable state machine managing resilient multi-step sales workflows."""
+
+    def __init__(self) -> None:
+        self.completed_keys: Dict[str, FlowRunContext] = {}
+
+    def execute_flow(
+        self,
+        flow_id: str,
+        idempotency_key: str,
+        task_payload: Dict[str, Any],
+        simulate_failure_once: bool = False,
+    ) -> FlowRunContext:
+        if idempotency_key in self.completed_keys:
+            existing = self.completed_keys[idempotency_key]
+            if existing.state == FlowState.COMPLETED:
+                return existing
+
+        ctx = FlowRunContext(
+            flow_id=flow_id, idempotency_key=idempotency_key, state=FlowState.RUNNING
+        )
+
+        try:
+            if "target_discount" not in task_payload:
+                raise ValueError("Payload missing required key: 'target_discount'")
+
+            discount = float(task_payload["target_discount"])
+            if discount < 0.0 or discount > 1.0:
+                raise ValueError(
+                    f"Invalid discount {discount}: must be between 0.0 and 1.0"
+                )
+
+            if simulate_failure_once and ctx.retry_count == 0:
+                ctx.state = FlowState.RETRYING
+                ctx.retry_count += 1
+                if discount > 0.40:
+                    raise PermissionError(
+                        "Discounts over 40% require Executive Council approval"
+                    )
+                ctx.result = {
+                    "approved_discount": discount,
+                    "status": "APPROVED_ON_RETRY",
+                }
+                ctx.state = FlowState.COMPLETED
+            else:
+                if discount > 0.40:
+                    raise PermissionError(
+                        "Discounts over 40% require Executive Council approval"
+                    )
+                ctx.result = {"approved_discount": discount, "status": "APPROVED"}
+                ctx.state = FlowState.COMPLETED
+
+        except Exception as exc:
+            ctx.state = FlowState.FAILED
+            ctx.error_message = str(exc)
+
+        self.completed_keys[idempotency_key] = ctx
+        return ctx
