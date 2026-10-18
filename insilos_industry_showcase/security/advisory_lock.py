@@ -4277,3 +4277,271 @@ class EnterpriseSalesState:
             return new_state_hash
         finally:
             self.active_memory_slots -= 1
+
+
+# ==============================================================================
+# ASYNCHRONOUS DOUBLE-ENTRY SALES PIPELINE ORCHESTRATOR (immoon0009-gmail-com)
+# ==============================================================================
+
+
+class OrchestratorSalesStage(str, Enum):
+    LEAD = "LEAD"
+    QUALIFICATION = "QUALIFICATION"
+    PROPOSAL = "PROPOSAL"
+    NEGOTIATION = "NEGOTIATION"
+    COMMITTED = "COMMITTED"
+    CLOSED_WON = "CLOSED_WON"
+    CLOSED_LOST = "CLOSED_LOST"
+
+
+class ExecutionState(str, Enum):
+    PENDING = "PENDING"
+    RUNNING = "RUNNING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    RETRIED = "RETRIED"
+
+
+class SalesOrchestratorException(Exception):
+    """Base exception for sovereign sales process orchestration."""
+
+
+class InvariantViolationError(SalesOrchestratorException):
+    """Raised when formal state machine or double-entry invariants fail."""
+
+
+class TenantSecurityViolationError(SalesOrchestratorException):
+    """Raised when multi-company tenant partitioning rules are breached."""
+
+
+class ConcurrencyResourceExhaustedError(SalesOrchestratorException):
+    """Raised when memory or task slots exceed bounded upper limit M_max."""
+
+
+@dataclass(frozen=True)
+class OrchestratorTenantContext:
+    company_id: int
+    allowed_company_ids: Tuple[int, ...]
+    user_id: int
+    is_system_admin: bool = False
+
+    def validate_access(self, target_company_id: int) -> bool:
+        if self.is_system_admin:
+            return True
+        return target_company_id in self.allowed_company_ids
+
+
+@dataclass(frozen=True)
+class OrchestratorSalesEvent:
+    event_id: str
+    opportunity_id: str
+    company_id: int
+    source_stage: OrchestratorSalesStage
+    target_stage: OrchestratorSalesStage
+    deal_value: float
+    probability: float
+    payload: Dict[str, Any]
+    timestamp: float = field(default_factory=time.time)
+
+
+@dataclass(frozen=True)
+class LedgerEntry:
+    index: int
+    event_id: str
+    opportunity_id: str
+    company_id: int
+    from_stage: OrchestratorSalesStage
+    to_stage: OrchestratorSalesStage
+    delta_weighted_value: float
+    prev_hash: str
+    current_hash: str
+    timestamp: float
+
+
+class BoundedResourcePool:
+    """PubGrub / Astral-uv inspired deterministic slot manager enforcing M(t) <= M_max."""
+    def __init__(self, max_concurrent_slots: int = 100):
+        if max_concurrent_slots <= 0:
+            raise InvariantViolationError("max_concurrent_slots must be greater than zero.")
+        self.max_slots = max_concurrent_slots
+        self._active_slots: Set[str] = set()
+
+    @property
+    def current_utilization(self) -> int:
+        return len(self._active_slots)
+
+    def acquire(self, task_id: str) -> None:
+        if len(self._active_slots) >= self.max_slots:
+            raise ConcurrencyResourceExhaustedError(
+                f"Resource quota exhausted: {len(self._active_slots)}/{self.max_slots} slots active."
+            )
+        self._active_slots.add(task_id)
+
+    def release(self, task_id: str) -> None:
+        self._active_slots.discard(task_id)
+
+
+class EnterpriseSalesOrchestrator:
+    """
+    Sovereign Orchestration Core combining Prefect reactive task flows
+    with Odoo multi-tenant RLS and FinRobot cryptographically chained ledger invariants.
+    """
+    VALID_TRANSITIONS: Mapping[OrchestratorSalesStage, Set[OrchestratorSalesStage]] = {
+        OrchestratorSalesStage.LEAD: {OrchestratorSalesStage.QUALIFICATION, OrchestratorSalesStage.CLOSED_LOST},
+        OrchestratorSalesStage.QUALIFICATION: {OrchestratorSalesStage.PROPOSAL, OrchestratorSalesStage.CLOSED_LOST},
+        OrchestratorSalesStage.PROPOSAL: {
+            OrchestratorSalesStage.NEGOTIATION,
+            OrchestratorSalesStage.QUALIFICATION,
+            OrchestratorSalesStage.CLOSED_LOST,
+        },
+        OrchestratorSalesStage.NEGOTIATION: {
+            OrchestratorSalesStage.COMMITTED,
+            OrchestratorSalesStage.PROPOSAL,
+            OrchestratorSalesStage.CLOSED_LOST,
+        },
+        OrchestratorSalesStage.COMMITTED: {
+            OrchestratorSalesStage.CLOSED_WON,
+            OrchestratorSalesStage.CLOSED_LOST,
+            OrchestratorSalesStage.NEGOTIATION,
+        },
+        OrchestratorSalesStage.CLOSED_WON: set(),
+        OrchestratorSalesStage.CLOSED_LOST: {OrchestratorSalesStage.LEAD},
+    }
+
+    GENESIS_HASH = "0" * 64
+
+    def __init__(self, max_concurrent_slots: int = 64):
+        self.resource_pool = BoundedResourcePool(max_concurrent_slots=max_concurrent_slots)
+        self.ledger: List[LedgerEntry] = []
+        self._opportunities: Dict[str, Dict[str, Any]] = {}
+
+    def _compute_entry_hash(
+        self,
+        index: int,
+        prev_hash: str,
+        event: OrchestratorSalesEvent,
+        delta_val: float,
+        ts: float,
+    ) -> str:
+        serialized_payload = json.dumps(event.payload, sort_keys=True)
+        raw_token = (
+            f"{index}|{prev_hash}|{event.event_id}|{event.opportunity_id}|"
+            f"{event.company_id}|{event.source_stage.value}|{event.target_stage.value}|"
+            f"{delta_val:.4f}|{serialized_payload}|{ts:.4f}"
+        )
+        return hashlib.sha256(raw_token.encode("utf-8")).hexdigest()
+
+    def apply_odoo_odoo_pattern(
+        self,
+        tenant_context: OrchestratorTenantContext,
+        target_company_id: int,
+    ) -> bool:
+        if not tenant_context.validate_access(target_company_id):
+            raise TenantSecurityViolationError(
+                f"Tenant Security Violation: User {tenant_context.user_id} in company "
+                f"{tenant_context.company_id} forbidden from accessing company {target_company_id}."
+            )
+        return True
+
+    def apply_astral_sh_uv_pattern(self) -> bool:
+        invariant_satisfied = self.resource_pool.current_utilization <= self.resource_pool.max_slots
+        if not invariant_satisfied:
+            raise InvariantViolationError("Resource utilization violated M(t) <= M_max invariant.")
+        return True
+
+    def verify_invariant(self) -> bool:
+        if not self.ledger:
+            return True
+
+        for i, entry in enumerate(self.ledger):
+            expected_prev = self.GENESIS_HASH if i == 0 else self.ledger[i - 1].current_hash
+            if entry.prev_hash != expected_prev:
+                return False
+            if len(entry.current_hash) != 64:
+                return False
+
+        return True
+
+    def register_opportunity(
+        self,
+        tenant_context: OrchestratorTenantContext,
+        opportunity_id: str,
+        company_id: int,
+        initial_value: float,
+    ) -> None:
+        self.apply_odoo_odoo_pattern(tenant_context, company_id)
+        if opportunity_id in self._opportunities:
+            raise InvariantViolationError(f"Opportunity {opportunity_id} already registered.")
+        if initial_value < 0.0:
+            raise InvariantViolationError("Initial deal value cannot be negative.")
+
+        self._opportunities[opportunity_id] = {
+            "opportunity_id": opportunity_id,
+            "company_id": company_id,
+            "stage": OrchestratorSalesStage.LEAD,
+            "deal_value": initial_value,
+            "probability": 0.10,
+            "weighted_value": initial_value * 0.10,
+        }
+
+    def execute_transition_flow(
+        self,
+        tenant_context: OrchestratorTenantContext,
+        event: OrchestratorSalesEvent,
+    ) -> LedgerEntry:
+        self.apply_odoo_odoo_pattern(tenant_context, event.company_id)
+        task_id = f"flow_transition_{event.event_id}"
+        self.resource_pool.acquire(task_id)
+
+        try:
+            if event.opportunity_id not in self._opportunities:
+                raise InvariantViolationError(f"Opportunity {event.opportunity_id} does not exist.")
+
+            opp = self._opportunities[event.opportunity_id]
+            current_stage: OrchestratorSalesStage = opp["stage"]
+
+            allowed = self.VALID_TRANSITIONS.get(current_stage, set())
+            if event.target_stage not in allowed:
+                raise InvariantViolationError(
+                    f"Illegal stage transition from {current_stage.value} to {event.target_stage.value}. "
+                    f"Allowed targets: {[s.value for s in allowed]}"
+                )
+
+            if not (0.0 <= event.probability <= 1.0):
+                raise InvariantViolationError(f"Probability {event.probability} out of valid bounds [0.0, 1.0].")
+            if event.deal_value < 0.0:
+                raise InvariantViolationError(f"Deal value {event.deal_value} cannot be negative.")
+
+            old_weighted = opp["weighted_value"]
+            new_weighted = event.deal_value * event.probability
+            delta_weighted = new_weighted - old_weighted
+
+            entry_idx = len(self.ledger)
+            prev_hash = self.ledger[-1].current_hash if self.ledger else self.GENESIS_HASH
+            now_ts = time.time()
+            current_hash = self._compute_entry_hash(entry_idx, prev_hash, event, delta_weighted, now_ts)
+
+            entry = LedgerEntry(
+                index=entry_idx,
+                event_id=event.event_id,
+                opportunity_id=event.opportunity_id,
+                company_id=event.company_id,
+                from_stage=current_stage,
+                to_stage=event.target_stage,
+                delta_weighted_value=delta_weighted,
+                prev_hash=prev_hash,
+                current_hash=current_hash,
+                timestamp=now_ts,
+            )
+
+            opp["stage"] = event.target_stage
+            opp["deal_value"] = event.deal_value
+            opp["probability"] = event.probability
+            opp["weighted_value"] = new_weighted
+
+            self.ledger.append(entry)
+            return entry
+
+        finally:
+            self.resource_pool.release(task_id)
+            self.apply_astral_sh_uv_pattern()
