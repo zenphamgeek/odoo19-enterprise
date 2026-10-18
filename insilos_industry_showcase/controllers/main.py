@@ -20,6 +20,7 @@ _logger = logging.getLogger(__name__)
 
 # RFC 1123 Hostname Label regex: lowercase ASCII alphanumeric with single internal hyphens, length 3 to 32
 SLUG_REGEX = re.compile(r'^[a-z0-9](?:[a-z0-9]|-(?!-)){1,30}[a-z0-9]$', re.ASCII)
+SLUG_HAS_ALPHA_REGEX = re.compile(r'[a-z]', re.ASCII)
 
 # Hardened reserved directory: infrastructure, cloud orchestrators, cloud metadata, and core Odoo HTTP routing endpoints
 RESERVED_SLUGS = frozenset({
@@ -29,13 +30,13 @@ RESERVED_SLUGS = frozenset({
     'docker', 'docs', 'elastic', 'elasticsearch', 'envoy', 'event', 'favicon', 'forum', 'ftp',
     'git', 'github', 'gitlab', 'grafana', 'health', 'healthz', 'healthcheck', 'help',
     'idp', 'im_livechat', 'imap', 'installer', 'internal', 'jaeger', 'jsonrpc',
-    'k8s', 'keycloak', 'kibana', 'kubernetes', 'ldap', 'localhost', 'login', 'logout', 'loki',
+    'k8s', 'keycloak', 'kibana', 'kubernetes', 'ldap', 'livez', 'localhost', 'login', 'logout', 'loki',
     'longpolling', 'mail', 'media', 'metadata', 'metrics', 'mx', 'my', 'nginx', 'none', 'ns1', 'ns2',
     'null', 'oauth', 'odoo', 'onboarding', 'payment', 'pop3', 'portal', 'postmaster',
-    'prefect', 'prometheus', 'public', 'registry', 'report', 'robots', 'root', 'router', 'rpc', 'saml',
+    'prefect', 'prometheus', 'public', 'readyz', 'registry', 'report', 'robots', 'root', 'router', 'rpc', 'saml',
     'secure', 'setup', 'shop', 'signin', 'signup', 'sitemap', 'sso', 'ssl', 'staging',
     'static', 'status', 'stripe', 'support', 'system', 'tempo', 'terms', 'test', 'traefik', 'undefined',
-    'vault', 'vpn', 'web', 'webclient', 'webhook', 'websocket', 'wpad', 'www', 'xmlrpc',
+    'vault', 'vpn', 'web', 'webclient', 'webhook', 'websocket', 'well-known', 'wpad', 'www', 'xmlrpc',
 })
 
 SIGNUP_TOKEN_TTL_SECONDS = 1800          # 30-minute validation window for tenant onboarding
@@ -44,6 +45,7 @@ HMAC_ONBOARDING_CONTEXT = b"insilos:tenant:onboarding:hmac-sha256:v1"
 HMAC_LEASE_CONTEXT = b"insilos:sovereign:lease:hmac-sha256:v1"
 KANBAN_LOCK_BASE_KEY = 0x494E534900000000 & 0x7FFFFFFFFFFFFFFF  # "INSI" prefix for PostgreSQL advisory lock WIP slots
 DEFAULT_MAX_WIP_SLOTS = 3                  # Strict Kanban WIP limit: max 3 concurrent heavy migrations
+MINIMUM_MASTER_SECRET_ENTROPY_BYTES = 32   # 256 bits minimum master entropy
 _CONSUMED_ONBOARDING_NONCES = set()
 _CONSUMED_ONBOARDING_NONCE_EXPIRY = {}
 MAX_IN_MEMORY_NONCE_ENTRIES = 4096
@@ -72,10 +74,13 @@ def derive_hkdf_subkey(master_secret: str, context_info: bytes, salt: bytes = No
     """Derive an isolated 256-bit subkey with strict domain separation and minimum entropy check."""
     if not master_secret or not isinstance(master_secret, str):
         raise ValidationError("Master secret must be a non-empty string.")
-    if len(master_secret.strip()) < 16:
-        raise ValidationError("Master secret possesses insufficient entropy (minimum 16 characters).")
+    clean_secret = master_secret.strip()
+    if len(clean_secret.encode('utf-8')) < MINIMUM_MASTER_SECRET_ENTROPY_BYTES:
+        raise ValidationError(
+            f"Master secret possesses insufficient entropy (minimum {MINIMUM_MASTER_SECRET_ENTROPY_BYTES} bytes required)."
+        )
     extract_salt = salt if salt is not None else bytes(context_info)
-    master_bytes = master_secret.encode('utf-8')
+    master_bytes = clean_secret.encode('utf-8')
     prk = hkdf_extract(salt=extract_salt, ikm=master_bytes)
     return hkdf_expand(prk=prk, info=bytes(context_info), length=32)
 
@@ -89,20 +94,26 @@ def sanitize_and_validate_slug(raw_slug: str) -> str:
 
     normalized = unicodedata.normalize('NFKC', raw_slug).strip().lower()
     if normalized in RESERVED_SLUGS:
-        raise ValidationError(f"Tenant identifier '{normalized}' is reserved by the platform.")
+        raise ValidationError(
+            f"Tenant identifier '{normalized}' is reserved by the platform (reserved infrastructure identifier)."
+        )
 
     if len(normalized) < 3 or len(normalized) > 32:
-        raise ValidationError("Tenant identifier length must be between 3 and 32 characters.")
+        raise ValidationError(
+            f"Tenant identifier length must be between 3 and 32 characters, got {len(normalized)}."
+        )
 
     if not SLUG_REGEX.match(normalized):
         raise ValidationError(
             "Tenant identifier contains invalid characters (violates RFC 1123 format). "
+            "Must consist only of lowercase alphanumeric characters and non-consecutive internal hyphens. "
             "Use lowercase letters, digits, and non-consecutive hyphens."
         )
 
-    if normalized.replace('-', '').isdigit():
+    if not SLUG_HAS_ALPHA_REGEX.search(normalized) or normalized.replace('-', '').isdigit():
         raise ValidationError(
-            f"Tenant identifier '{normalized}' cannot be purely numeric and cannot consist exclusively of numbers and hyphens."
+            f"Tenant identifier '{normalized}' cannot be purely numeric to prevent host and routing collisions "
+            "and cannot consist exclusively of numbers and hyphens."
         )
 
     return normalized
@@ -319,7 +330,7 @@ def acquire_kanban_wip_slot(env_or_cr, max_slots: int = DEFAULT_MAX_WIP_SLOTS, m
 
     if acquired_slot is None:
         raise UserError(
-            f"System is currently running at maximum migration capacity ({effective_max} concurrent slots, high load). "
+            f"System is under peak onboarding concurrency load and currently running at maximum migration capacity ({effective_max} concurrent slots, high load). "
             "Please retry in a few moments."
         )
 
@@ -328,6 +339,65 @@ def acquire_kanban_wip_slot(env_or_cr, max_slots: int = DEFAULT_MAX_WIP_SLOTS, m
         yield acquired_slot
     finally:
         _logger.info("Releasing Kanban WIP slot context %d (deferred to xact commit/abort).", acquired_slot)
+
+
+def init_nonce_journal_table(cr) -> None:
+    """Ensure the transactional nonce deduplication journal exists."""
+    _ensure_nonce_journal_schema(cr)
+
+
+def record_transactional_nonce(cr, nonce: str, context_label: str, expires_at_timestamp: float) -> bool:
+    """Atomically record and validate a single-use nonce within the current PostgreSQL transaction.
+    Returns True if successfully inserted.
+    Raises ValidationError if the nonce has already been consumed or has expired.
+    """
+    from datetime import datetime, timezone
+    import psycopg2
+
+    if not nonce or not isinstance(nonce, str) or len(nonce) < 16:
+        raise ValidationError("Invalid nonce specification: must be a string of at least 16 characters.")
+
+    now_utc = datetime.now(timezone.utc).replace(tzinfo=None)
+    expires_at = datetime.fromtimestamp(float(expires_at_timestamp), tz=timezone.utc).replace(tzinfo=None)
+
+    if expires_at <= now_utc:
+        raise ValidationError("Nonce has already expired according to system clock.")
+
+    init_nonce_journal_table(cr)
+
+    if int(time.time() * 1000) % 100 == 0:
+        cr.execute(
+            "DELETE FROM insilos_onboarding_nonce_journal WHERE expires_at < %s",
+            (now_utc,)
+        )
+
+    try:
+        cr.execute(
+            """
+            INSERT INTO insilos_onboarding_nonce_journal (nonce, context, consumed_at, expires_at)
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT (nonce) DO NOTHING
+            RETURNING nonce;
+            """,
+            (nonce, context_label, now_utc, expires_at)
+        )
+        row = cr.fetchone()
+        if not row:
+            raise ValidationError("Replay detected: nonce has already been consumed.")
+        return True
+    except psycopg2.Error as db_err:
+        _logger.error("Transactional nonce journal insertion failed: %s", str(db_err))
+        raise ValidationError("Security journal database error during nonce verification.")
+
+
+def compute_crypto_shredded_audit_identity(dek_bytes: bytes, slug: str) -> str:
+    """Compute a Dual-Key Crypto-Shredding pseudo-identity HMAC(DEK, slug) for WORM audit ledgers.
+    Allows 72-hour GDPR Art. 17 / Decree 13 erasure by zeroing DEK without breaking WORM hash chains.
+    """
+    if not dek_bytes or not isinstance(dek_bytes, (bytes, bytearray)) or len(dek_bytes) < 32:
+        raise ValidationError("Tenant DEK must be at least 32 bytes for crypto-shredding envelope.")
+    clean_slug = sanitize_and_validate_slug(slug)
+    return hmac.new(bytes(dek_bytes), clean_slug.encode('utf-8'), hashlib.sha256).hexdigest()
 
 
 def _ensure_nonce_journal_schema(cr):
