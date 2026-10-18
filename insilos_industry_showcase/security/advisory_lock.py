@@ -220,13 +220,33 @@ class LockTimeoutError(ConcurrencyLockTimeoutError):
 
 @dataclass(frozen=True)
 class TenantContextToken:
-    tenant_id: int
-    allowed_company_ids: Any
+    tenant_id: Any
+    allowed_company_ids: Any = frozenset()
     lease_signature: str = ""
     created_at_mono: float = 0.0
     epoch_timestamp: float = 0.0
     nonce: str = ""
     signature: str = ""
+    company_id: str = ""
+    user_id: str = ""
+
+    @classmethod
+    def generate(
+        cls,
+        tenant_id: str,
+        company_id: str,
+        user_id: str,
+        secret_key: bytes,
+    ) -> "TenantContextToken":
+        payload = f"{tenant_id}:{company_id}:{user_id}".encode("utf-8")
+        sig = hmac.new(secret_key, payload, hashlib.sha256).hexdigest()
+        return cls(
+            tenant_id=tenant_id,
+            company_id=company_id,
+            user_id=user_id,
+            signature=sig,
+            lease_signature=sig,
+        )
 
     @classmethod
     def create(
@@ -267,6 +287,12 @@ class TenantContextToken:
         )
 
     def verify(self, secret_key: bytes, max_age_seconds: float = 300.0) -> bool:
+        if self.company_id or self.user_id:
+            payload = f"{self.tenant_id}:{self.company_id}:{self.user_id}".encode("utf-8")
+            expected_sig = hmac.new(secret_key, payload, hashlib.sha256).hexdigest()
+            active_sig = self.signature or self.lease_signature
+            return hmac.compare_digest(active_sig, expected_sig)
+
         if (time.time() - self.epoch_timestamp) > max_age_seconds:
             _logger.error(
                 "TenantContextToken expired. Age: %.2fs",
@@ -1254,37 +1280,96 @@ class DeadlockPreventionError(RuntimeError, LockHierarchyViolationError):
     """Raised when lock acquisition violates canonical global tier ordering."""
 
 
-class LockAcquisitionTimeoutError(TimeoutError, ConcurrencyLockTimeoutError):
+class ConcurrencyLockError(ConcurrencyLockTimeoutError):
+    """Base exception for lock acquisition and lifecycle management errors."""
+
+
+class LockAcquisitionTimeoutError(TimeoutError, ConcurrencyLockError):
     """Raised when a lock cannot be acquired within the bounded timeout."""
 
 
-class TenantSecurityError(PermissionError, TenantBoundaryViolation):
+LockTimeoutError = LockAcquisitionTimeoutError
+
+
+class SecurityViolationError(SecurityException):
+    """Raised when an unauthorized access, malformed input, or sandbox escape is detected."""
+
+
+class ASTFormulaSandboxError(FormulaSanitizationError, SecurityViolationError):
+    """Raised when an expression violates AST mathematical sandboxing rules."""
+
+
+class TenantSecurityError(PermissionError, TenantBoundaryViolation, SecurityViolationError):
     """Raised when cross-tenant data access or context leakage is detected."""
+
+
+class TenantIsolationError(TenantSecurityError):
+    """Raised when multi-company tenant context drift or tampering is identified."""
 
 
 class HeterogeneousLockKey:
     """Immutable composite key guaranteeing global monotonic lock ordering across Redis, PG Advisory, PG Row, and Logical LockTiers."""
 
-    __slots__ = ("tier", "tenant_id", "resource_id", "record_id", "_mode")
+    __slots__ = (
+        "tier",
+        "tenant_id",
+        "resource_id",
+        "record_id",
+        "tier_precedence",
+        "tier_name",
+        "_mode",
+    )
+
+    _PRECEDENCE_MAP: Dict[str, int] = {
+        "system": 10,
+        "company": 20,
+        "journal": 30,
+        "partner": 40,
+        "order": 50,
+    }
 
     def __init__(
         self,
-        tier: Union[LockTier, LockSystemTier, int],
-        tenant_or_resource: Union[int, str],
-        resource_id: Optional[int] = None,
+        tier: Union[LockTier, LockSystemTier, int, None] = None,
+        tenant_or_resource: Union[int, str, None] = None,
+        resource_id: Optional[Union[int, str]] = None,
         record_id: Optional[int] = None,
+        *,
+        tier_precedence: Optional[int] = None,
+        tier_name: Optional[str] = None,
     ) -> None:
-        if resource_id is None and record_id is None:
+        if tier_precedence is not None and tier_name is not None:
+            # Named dataclass-compatible mode: (tier_precedence, tier_name, resource_id)
+            res_str = str(resource_id if resource_id is not None else (tenant_or_resource or ""))
+            self.tier_precedence = int(tier_precedence)
+            self.tier_name = str(tier_name).lower()
+            self.tier = self.tier_precedence
+            self.resource_id = res_str
+            self.tenant_id = 0
+            self.record_id = 0
+            self._mode = "named"
+        elif isinstance(tier, int) and not isinstance(tier, (LockTier, LockSystemTier)) and isinstance(tenant_or_resource, str) and isinstance(resource_id, str) and record_id is None:
+            # Positional 3-arg mode: (tier_precedence: int, tier_name: str, resource_id: str)
+            self.tier_precedence = int(tier)
+            self.tier_name = tenant_or_resource.lower()
+            self.tier = self.tier_precedence
+            self.resource_id = resource_id
+            self.tenant_id = 0
+            self.record_id = 0
+            self._mode = "named"
+        elif resource_id is None and record_id is None:
             # 2-arg mode: (tier: LockTier, resource_id: str)
             if not isinstance(tier, (LockTier, LockSystemTier)):
                 try:
-                    tier = LockTier(tier)
-                except ValueError as exc:
+                    tier = LockTier(int(tier))  # type: ignore[arg-type]
+                except (ValueError, TypeError) as exc:
                     raise TypeError(f"Invalid lock tier: {tier!r}") from exc
             if not isinstance(tenant_or_resource, str) or not tenant_or_resource.strip():
                 raise ValueError("Resource identifier must be a non-empty string.")
             self.tier = tier
-            self.resource_id: Union[int, str] = tenant_or_resource.strip()
+            self.tier_precedence = int(tier)
+            self.tier_name = tier.name.lower()
+            self.resource_id = tenant_or_resource.strip()
             self.tenant_id = 0
             self.record_id = 0
             self._mode = "2arg"
@@ -1297,13 +1382,26 @@ class HeterogeneousLockKey:
                 raise ValueError(f"resource_id must be a non-negative integer, got: {resource_id!r}")
             if not isinstance(record_id, int) or isinstance(record_id, bool) or record_id < 0:
                 raise ValueError(f"record_id must be a non-negative integer, got: {record_id!r}")
-            self.tier = LockSystemTier(tier)
+            self.tier = LockSystemTier(int(tier))  # type: ignore[arg-type]
+            self.tier_precedence = int(self.tier)
+            self.tier_name = self.tier.name.lower()
             self.tenant_id = tenant_id
             self.resource_id = resource_id
             self.record_id = record_id
             self._mode = "4arg"
 
+    @classmethod
+    def create(cls, tier_name: str, resource_id: str) -> "HeterogeneousLockKey":
+        precedence = cls._PRECEDENCE_MAP.get(tier_name.lower(), 100)
+        return cls(
+            tier_precedence=precedence,
+            tier_name=tier_name.lower(),
+            resource_id=str(resource_id),
+        )
+
     def as_tuple(self) -> Tuple[Any, ...]:
+        if self._mode == "named":
+            return (self.tier_precedence, self.tier_name, str(self.resource_id))
         if self._mode == "2arg":
             return (int(self.tier), str(self.resource_id))
         return (int(self.tier), self.tenant_id, int(self.resource_id), self.record_id)
@@ -1327,6 +1425,8 @@ class HeterogeneousLockKey:
         return hash(self.as_tuple())
 
     def __repr__(self) -> str:
+        if self._mode == "named":
+            return f"HeterogeneousLockKey(tier_precedence={self.tier_precedence}, tier_name={self.tier_name!r}, resource_id={self.resource_id!r})"
         if self._mode == "2arg":
             return f"LockKey({self.tier.name}:{self.resource_id})"
         return (
@@ -1364,35 +1464,46 @@ class _AcquiredLockList(list):
 class _HeterogeneousCrossTierLockManager(CanonicalLockHierarchyManager):
     """Acquires heterogeneous locks in strictly sorted order with timeout rollback and thread-local escalation guard."""
 
+    _global_registry_lock: threading.Lock = threading.Lock()
+    _active_locks: Dict[HeterogeneousLockKey, threading.RLock] = {}
+    _lock_holders: Dict[HeterogeneousLockKey, int] = {}
+
     def __init__(
         self,
         cr: Any = None,
         redis_client: Optional[Any] = None,
         default_timeout_seconds: float = 3.0,
+        timeout_seconds: Optional[float] = None,
     ) -> None:
         super().__init__(cr=cr)
         self.redis_client = redis_client
-        self._default_timeout = default_timeout_seconds
+        resolved_timeout = timeout_seconds if timeout_seconds is not None else default_timeout_seconds
+        self._default_timeout = max(0.05, float(resolved_timeout))
+        self.timeout_seconds = self._default_timeout
         self._acquired_locks: List[HeterogeneousLockKey] = []
-        self._local_lock_registry: Dict[HeterogeneousLockKey, threading.RLock] = {}
-        self._registry_mutex = threading.Lock()
+        self._acquired_keys_lifo: List[HeterogeneousLockKey] = []
+        self._local_lock_registry: Dict[HeterogeneousLockKey, threading.RLock] = self._active_locks
+        self._registry_mutex = self._global_registry_lock
         self._thread_held_locks: contextvars.ContextVar[Tuple[HeterogeneousLockKey, ...]] = (
             contextvars.ContextVar("thread_held_locks", default=())
         )
 
+    def _get_or_create_lock(self, key: HeterogeneousLockKey) -> threading.RLock:
+        with self._global_registry_lock:
+            if key not in self._active_locks:
+                self._active_locks[key] = threading.RLock()
+            return self._active_locks[key]
+
     def _get_or_create_primitive(self, key: HeterogeneousLockKey) -> threading.RLock:
-        with self._registry_mutex:
-            if key not in self._local_lock_registry:
-                self._local_lock_registry[key] = threading.RLock()
-            return self._local_lock_registry[key]
+        return self._get_or_create_lock(key)
 
     def _acquire_single_lock(self, key: HeterogeneousLockKey, timeout: float) -> bool:
         primitive = self._get_or_create_primitive(key)
         return primitive.acquire(blocking=True, timeout=timeout)
 
     def _release_single_lock(self, key: HeterogeneousLockKey) -> None:
-        with self._registry_mutex:
-            primitive = self._local_lock_registry.get(key)
+        with self._global_registry_lock:
+            primitive = self._active_locks.get(key)
         if primitive is not None:
             try:
                 primitive.release()
@@ -1402,6 +1513,62 @@ class _HeterogeneousCrossTierLockManager(CanonicalLockHierarchyManager):
     def _rollback_batch(self, acquired_batch: List[HeterogeneousLockKey]) -> None:
         for key in reversed(acquired_batch):
             self._release_single_lock(key)
+
+    def acquire_all(
+        self, keys: List[HeterogeneousLockKey]
+    ) -> "_HeterogeneousCrossTierLockManager":
+        sorted_keys = sorted(list(set(keys)))
+        deadline = time.monotonic() + self.timeout_seconds
+        acquired_so_far: List[HeterogeneousLockKey] = []
+
+        for key in sorted_keys:
+            remaining_time = deadline - time.monotonic()
+            if remaining_time <= 0:
+                self._rollback(acquired_so_far)
+                raise LockTimeoutError(
+                    f"Lock acquisition timed out while attempting to acquire {key}. "
+                    f"Deadlock prevented. Acquired: {acquired_so_far}"
+                )
+
+            lock = self._get_or_create_lock(key)
+            acquired = lock.acquire(timeout=remaining_time)
+
+            if not acquired:
+                self._rollback(acquired_so_far)
+                raise LockTimeoutError(
+                    f"Lock acquisition timed out: Failed to acquire lock {key} within allotted timeout."
+                )
+
+            acquired_so_far.append(key)
+
+        self._acquired_keys_lifo = acquired_so_far
+        return self
+
+    def _rollback(self, keys_to_release: List[HeterogeneousLockKey]) -> None:
+        release_errors: List[str] = []
+        for key in reversed(keys_to_release):
+            with self._global_registry_lock:
+                lock = self._active_locks.get(key)
+            if lock is not None:
+                try:
+                    lock.release()
+                except RuntimeError as ex:
+                    release_errors.append(f"Error releasing {key}: {str(ex)}")
+
+        if release_errors:
+            _logger.error("Critical error during lock rollback: %s", " | ".join(release_errors))
+            raise ConcurrencyLockError(f"Partial lock rollback failure: {release_errors}")
+
+    def release_all(self) -> None:
+        keys_to_release = list(self._acquired_keys_lifo)
+        self._acquired_keys_lifo.clear()
+        self._rollback(keys_to_release)
+
+    def __enter__(self) -> "_HeterogeneousCrossTierLockManager":
+        return self
+
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        self.release_all()
 
     def _acquire_postgres_advisory(self, key: HeterogeneousLockKey, timeout_sec: float) -> bool:
         lock_id_64 = (
@@ -1551,7 +1718,55 @@ _ALLOWED_COMPANY_IDS: contextvars.ContextVar[FrozenSet[int]] = contextvars.Conte
 
 
 class ScopedTenantEnvironmentGuard:
-    """Enforces strict multi-tenant context isolation using ContextVars."""
+    """Enforces strict multi-tenant context isolation using ContextVars (supports both scope_tenant and HMAC TenantContextToken)."""
+
+    _current_token: contextvars.ContextVar[Optional[TenantContextToken]] = contextvars.ContextVar(
+        "current_scoped_tenant_token", default=None
+    )
+
+    def __init__(
+        self,
+        token: Optional[TenantContextToken] = None,
+        secret_key: bytes = b"",
+    ) -> None:
+        self.token = token
+        self.secret_key = secret_key
+        self._cv_token: Optional[contextvars.Token] = None
+
+    def __enter__(self) -> "ScopedTenantEnvironmentGuard":
+        if self.token is None or not self.token.verify(self.secret_key):
+            raise TenantIsolationError(
+                "Cryptographic verification failed for TenantContextToken."
+            )
+        self._cv_token = self._current_token.set(self.token)
+        return self
+
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        if self._cv_token is not None:
+            self._current_token.reset(self._cv_token)
+            self._cv_token = None
+
+    @classmethod
+    def get_current_tenant_id(cls, secret_key: bytes) -> str:
+        active_token = cls._current_token.get()
+        if active_token is None:
+            raise TenantIsolationError(
+                "Unauthenticated operation: No active TenantContextToken found in context."
+            )
+        if not active_token.verify(secret_key):
+            raise TenantIsolationError("Active TenantContextToken signature is invalid.")
+        return str(active_token.tenant_id)
+
+    @classmethod
+    def get_current_company_id(cls, secret_key: bytes) -> str:
+        active_token = cls._current_token.get()
+        if active_token is None:
+            raise TenantIsolationError(
+                "Unauthenticated operation: No active TenantContextToken found in context."
+            )
+        if not active_token.verify(secret_key):
+            raise TenantIsolationError("Active TenantContextToken signature is invalid.")
+        return str(active_token.company_id)
 
     @staticmethod
     def get_current_tenant() -> Optional[int]:
@@ -1592,6 +1807,163 @@ import ast
 import math
 import operator
 from typing import Callable
+
+
+class ScopedEnterpriseFormulaGuard:
+    """Evaluates enterprise pricing and sales commission formulas safely via strict AST whitelisting."""
+
+    _ALLOWED_OPERATORS: Dict[type, Callable[..., Any]] = {
+        ast.Add: operator.add,
+        ast.Sub: operator.sub,
+        ast.Mult: operator.mul,
+        ast.Div: operator.truediv,
+        ast.FloorDiv: operator.floordiv,
+        ast.Mod: operator.mod,
+        ast.Pow: operator.pow,
+        ast.USub: operator.neg,
+        ast.UAdd: operator.pos,
+    }
+
+    _ALLOWED_FUNCTIONS: Dict[str, Callable[..., Any]] = {
+        "min": min,
+        "max": max,
+        "round": round,
+        "abs": abs,
+        "ceil": math.ceil,
+        "floor": math.floor,
+        "sqrt": math.sqrt,
+    }
+
+    _MAX_EXPRESSION_LENGTH: int = 512
+    _MAX_EXPONENT_VALUE: float = 10.0
+    _MAX_COMPUTED_NUMBER: float = 1e12
+
+    @classmethod
+    def sanitize_raw_input(cls, formula_str: str) -> str:
+        if not isinstance(formula_str, str):
+            raise ASTFormulaSandboxError("Formula input must be a valid string.")
+        if len(formula_str) > cls._MAX_EXPRESSION_LENGTH:
+            raise ASTFormulaSandboxError(
+                f"Formula exceeds max allowed length ({cls._MAX_EXPRESSION_LENGTH} characters)."
+            )
+
+        normalized = unicodedata.normalize("NFKD", formula_str)
+        for char in normalized:
+            category = unicodedata.category(char)
+            if category.startswith("C"):
+                raise ASTFormulaSandboxError(f"Illegal control character detected: {char!r}")
+
+        if "__" in normalized or "import" in normalized or "exec" in normalized:
+            raise ASTFormulaSandboxError("Illegal token detected in formula string.")
+
+        return normalized
+
+    @classmethod
+    def evaluate(cls, formula_str: str, context_variables: Dict[str, float]) -> float:
+        clean_formula = cls.sanitize_raw_input(formula_str)
+
+        sanitized_context: Dict[str, float] = {}
+        for k, v in context_variables.items():
+            if not isinstance(k, str) or k.startswith("__"):
+                raise ASTFormulaSandboxError(f"Invalid context variable name: {k}")
+            try:
+                numeric_val = float(v)
+                if math.isnan(numeric_val) or math.isinf(numeric_val):
+                    raise ASTFormulaSandboxError(
+                        f"Context variable '{k}' has invalid numeric value: {v}"
+                    )
+                sanitized_context[k] = numeric_val
+            except (ValueError, TypeError) as err:
+                raise ASTFormulaSandboxError(
+                    f"Context variable '{k}' cannot be converted to float: {err}"
+                ) from err
+
+        try:
+            parsed_ast = ast.parse(clean_formula, mode="eval")
+        except SyntaxError as err:
+            raise ASTFormulaSandboxError(f"Formula syntax is invalid: {err.msg}") from err
+
+        return cls._eval_node(parsed_ast.body, sanitized_context)
+
+    @classmethod
+    def _eval_node(cls, node: ast.AST, context: Dict[str, float]) -> float:
+        if isinstance(node, ast.Constant):
+            if isinstance(node.value, (int, float)) and not isinstance(node.value, bool):
+                if abs(node.value) > cls._MAX_COMPUTED_NUMBER:
+                    raise ASTFormulaSandboxError(
+                        f"Constant exceeds numerical boundary limit: {node.value}"
+                    )
+                return float(node.value)
+            raise ASTFormulaSandboxError(
+                f"Literal constant type not allowed: {type(node.value).__name__}"
+            )
+
+        if isinstance(node, ast.Name):
+            if node.id in context:
+                return context[node.id]
+            raise ASTFormulaSandboxError(f"Undefined variable in formula: {node.id}")
+
+        if isinstance(node, ast.UnaryOp):
+            op_type = type(node.op)
+            if op_type in cls._ALLOWED_OPERATORS:
+                operand_val = cls._eval_node(node.operand, context)
+                return float(cls._ALLOWED_OPERATORS[op_type](operand_val))
+            raise ASTFormulaSandboxError(f"Unary operator not permitted: {op_type.__name__}")
+
+        if isinstance(node, ast.BinOp):
+            op_type = type(node.op)
+            if op_type not in cls._ALLOWED_OPERATORS:
+                raise ASTFormulaSandboxError(f"Binary operator not permitted: {op_type.__name__}")
+
+            left_val = cls._eval_node(node.left, context)
+            right_val = cls._eval_node(node.right, context)
+
+            if op_type is ast.Pow:
+                if abs(right_val) > cls._MAX_EXPONENT_VALUE:
+                    raise ASTFormulaSandboxError(
+                        f"Exponent exceeds safe threshold: {right_val}"
+                    )
+                if abs(left_val) > 1000.0 and right_val > 4.0:
+                    raise ASTFormulaSandboxError(
+                        "Computation exceeds maximum allowable density."
+                    )
+
+            if op_type in (ast.Div, ast.FloorDiv, ast.Mod):
+                if right_val == 0.0:
+                    raise ASTFormulaSandboxError("Division by zero in formula evaluation.")
+
+            computed = float(cls._ALLOWED_OPERATORS[op_type](left_val, right_val))
+            if (
+                math.isnan(computed)
+                or math.isinf(computed)
+                or abs(computed) > cls._MAX_COMPUTED_NUMBER
+            ):
+                raise ASTFormulaSandboxError("Formula result overflow or illegal numerical state.")
+            return computed
+
+        if isinstance(node, ast.Call):
+            if not isinstance(node.func, ast.Name):
+                raise ASTFormulaSandboxError(
+                    "Indirect or dynamic function calls are strictly forbidden."
+                )
+
+            func_name = node.func.id
+            if func_name not in cls._ALLOWED_FUNCTIONS:
+                raise ASTFormulaSandboxError(f"Function call not in allowlist: {func_name}")
+
+            evaluated_args = [cls._eval_node(arg, context) for arg in node.args]
+            target_func = cls._ALLOWED_FUNCTIONS[func_name]
+            if func_name == "round" and len(evaluated_args) == 2:
+                from decimal import ROUND_HALF_UP
+                ndigits = int(evaluated_args[1])
+                quant = Decimal("10") ** (-ndigits)
+                return float(Decimal(str(evaluated_args[0])).quantize(quant, rounding=ROUND_HALF_UP))
+            return float(target_func(*evaluated_args))
+
+        raise ASTFormulaSandboxError(
+            f"Disallowed AST expression element: {type(node).__name__}"
+        )
+
 
 
 class NFKDStrongRefFormulaSanitizer:
