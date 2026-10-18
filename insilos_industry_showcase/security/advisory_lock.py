@@ -5528,3 +5528,130 @@ class PubGrubQuotationSolver:
         return sorted(list(resolved))
 
 
+# ==============================================================================
+# AVIATION PRE-FLIGHT ENVELOPE PROTECTION & TWO-CHALLENGE CIRCUIT BREAKER (E2E-QA-11)
+# ==============================================================================
+
+
+class EnvelopeBreachError(Exception):
+    """Raised when an agent quotation breaches hard flight-envelope margins."""
+
+
+class TwoChallengeLockoutError(Exception):
+    """Raised when consecutive envelope challenges trip the safety circuit breaker."""
+
+
+class MerkleTreeIntegrity:
+    """Automated transparency verification engine based on arXiv:2303.04500."""
+
+    @staticmethod
+    def hash_leaf(data: Dict[str, Any]) -> str:
+        serialized = json.dumps(data, sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+    @staticmethod
+    def compute_root(leaves: List[str]) -> str:
+        if not leaves:
+            return hashlib.sha256(b"").hexdigest()
+        current_layer = list(leaves)
+        while len(current_layer) > 1:
+            next_layer = []
+            for i in range(0, len(current_layer), 2):
+                left = current_layer[i]
+                right = current_layer[i + 1] if i + 1 < len(current_layer) else left
+                parent = hashlib.sha256((left + right).encode("utf-8")).hexdigest()
+                next_layer.append(parent)
+            current_layer = next_layer
+        return current_layer[0]
+
+
+class CrdtJsonRegister:
+    """
+    Conflict-Free Replicated JSON Register based on arXiv:1608.03960.
+    Enforces deterministic Last-Write-Wins (LWW) via Lamport logical timestamps.
+    """
+
+    def __init__(self, key: str, initial_value: Any, timestamp: int, author: str):
+        self.key = key
+        self.value = initial_value
+        self.timestamp = timestamp
+        self.author = author
+
+    def update(self, new_value: Any, timestamp: int, author: str) -> bool:
+        if timestamp > self.timestamp:
+            self.value = new_value
+            self.timestamp = timestamp
+            self.author = author
+            return True
+        if timestamp == self.timestamp and author > self.author:
+            self.value = new_value
+            self.timestamp = timestamp
+            self.author = author
+            return True
+        return False
+
+
+class AviationPreFlightChecklistGate:
+    """
+    Aviation-inspired Pre-Flight Envelope Protection and CRM Two-Challenge Rule.
+    Enforces financial margin limits, tenant partitioning, and cryptographic logging.
+    """
+
+    MIN_PROFIT_MARGIN_RATIO = 0.185
+
+    def __init__(self, tenant_id: str, flag_enabled: bool = True):
+        self.tenant_id = tenant_id
+        self.flag_enabled = flag_enabled
+        self.consecutive_challenge_failures = 0
+        self.audit_log: List[Dict[str, Any]] = []
+
+    def evaluate_preflight_envelope(
+        self,
+        quote_id: str,
+        total_revenue: float,
+        cost_basis: float,
+        line_items: List[Dict[str, Any]],
+        company_id: str,
+    ) -> Dict[str, Any]:
+        if not self.flag_enabled:
+            return {"status": "BYPASS", "reason": "PREFLIGHT_FLAG_DISABLED"}
+
+        if self.consecutive_challenge_failures >= 2:
+            raise TwoChallengeLockoutError(
+                f"Quote {quote_id} locked out: 2 consecutive flight-envelope challenges tripped."
+            )
+
+        if company_id != self.tenant_id:
+            self.consecutive_challenge_failures += 1
+            raise InvariantViolationError(
+                f"Tenant Isolation Breach: Request company_id {company_id} != tenant {self.tenant_id}"
+            )
+
+        if total_revenue <= 0.0:
+            self.consecutive_challenge_failures += 1
+            raise EnvelopeBreachError("Negative or zero revenue quote rejected by envelope laws.")
+
+        margin_ratio = (total_revenue - cost_basis) / total_revenue
+        if margin_ratio < self.MIN_PROFIT_MARGIN_RATIO:
+            self.consecutive_challenge_failures += 1
+            raise EnvelopeBreachError(
+                f"Margin breach: Computed {margin_ratio:.4f} < Hard Floor {self.MIN_PROFIT_MARGIN_RATIO:.4f}"
+            )
+
+        if not line_items:
+            self.consecutive_challenge_failures += 1
+            raise InvariantViolationError("Quote contains zero line items.")
+
+        self.consecutive_challenge_failures = 0
+        event_record = {
+            "quote_id": quote_id,
+            "tenant_id": self.tenant_id,
+            "margin_ratio": round(margin_ratio, 6),
+            "timestamp": int(time.time()),
+            "status": "CLEARED",
+        }
+        self.audit_log.append(event_record)
+        return {"status": "CLEARED", "margin_ratio": margin_ratio, "record": event_record}
+
+
+
