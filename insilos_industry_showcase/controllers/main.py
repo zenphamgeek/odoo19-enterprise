@@ -107,17 +107,26 @@ def _hkdf_extract_and_expand(salt: bytes, ikm: bytes, info: bytes, length: int =
     return okm[:length]
 
 
+def _derive_hkdf_key(master_secret: str, context: bytes, length: int = 32) -> bytes:
+    """RFC 5869 HKDF-Expand-SHA256 key derivation.
+    Derives cryptographically isolated subkeys for specific operational domains.
+    """
+    if not master_secret or not isinstance(master_secret, str):
+        raise ValidationError("Master signing secret must be a non-empty string.")
+    return _hkdf_extract_and_expand(
+        salt=b"insilos-sovereign-hkdf-salt-v1",
+        ikm=master_secret.encode('utf-8'),
+        info=bytes(context),
+        length=length,
+    )
+
+
 def _derive_domain_hmac_secret(env, domain_context: bytes) -> bytes:
     """Derive an isolated, purpose-specific HMAC subkey from the platform root secret
     using RFC 5869 HKDF context extraction and expansion to prevent cross-protocol signature forgery.
     """
-    raw_root_secret = _resolve_onboarding_hmac_secret(env).encode('utf-8')
-    return _hkdf_extract_and_expand(
-        salt=b"insilos-sovereign-hkdf-salt-v1",
-        ikm=raw_root_secret,
-        info=bytes(domain_context),
-        length=32,
-    )
+    raw_root_secret = _resolve_onboarding_hmac_secret(env)
+    return _derive_hkdf_key(raw_root_secret, bytes(domain_context), 32)
 
 
 def consume_nonce_atomic(registry, db_name: str, nonce: str, tenant_id: int, slug: str, expiry_ts: int) -> bool:
@@ -264,18 +273,20 @@ def acquire_onboarding_wip_slot(env, max_wip_slots: int = DEFAULT_MAX_WIP_SLOTS)
 
 
 @contextmanager
-def acquire_kanban_wip_slot(env, max_slots: int = DEFAULT_MAX_WIP_SLOTS):
+def acquire_kanban_wip_slot(env, max_slots: int = DEFAULT_MAX_WIP_SLOTS, max_wip_slots: int = None):
     """Acquire a Kanban migration slot using PostgreSQL transaction-level advisory locks
     with signed 64-bit bigint boundary normalization.
     """
+    import struct
+
+    effective_max = max_wip_slots if max_wip_slots is not None else max_slots
     cr = env.cr
     acquired_slot = None
-    for slot_idx in range(max_slots):
+    for slot_idx in range(effective_max):
         lock_key = KANBAN_LOCK_BASE_KEY + slot_idx
-        if lock_key > 0x7FFFFFFFFFFFFFFF:
-            lock_key -= 0x10000000000000000
+        signed_lock_key = struct.unpack("!q", struct.pack("!Q", lock_key & 0xFFFFFFFFFFFFFFFF))[0]
 
-        cr.execute("SELECT pg_try_advisory_xact_lock(%s);", (lock_key,))
+        cr.execute("SELECT pg_try_advisory_xact_lock(%s);", (signed_lock_key,))
         row = cr.fetchone()
         if row and row[0]:
             acquired_slot = slot_idx
@@ -283,7 +294,7 @@ def acquire_kanban_wip_slot(env, max_slots: int = DEFAULT_MAX_WIP_SLOTS):
 
     if acquired_slot is None:
         raise UserError(
-            f"System is currently running at maximum migration capacity ({max_slots} concurrent slots). "
+            f"System is currently running at maximum migration capacity ({effective_max} concurrent slots, high load). "
             "Please retry in a few moments."
         )
 
@@ -292,6 +303,54 @@ def acquire_kanban_wip_slot(env, max_slots: int = DEFAULT_MAX_WIP_SLOTS):
         yield acquired_slot
     finally:
         _logger.info("Releasing Kanban WIP slot context %d (deferred to xact commit/abort).", acquired_slot)
+
+
+def verify_and_claim_onboarding_token(env, token_str: str) -> dict:
+    """Verify onboarding token authenticity, time envelope, and anti-replay integrity.
+    Employs transaction-level distributed advisory locking across the nonce hash
+    (0x4E4F4E4300000000 | (nonce_hash_int & 0xFFFFFFFF)) to prevent multi-worker race conditions.
+    Format: <slug>.<timestamp_str>.<nonce>.<signature>
+    """
+    import struct
+
+    if not token_str or not isinstance(token_str, str):
+        raise ValidationError("Invalid or empty onboarding token.")
+
+    parts = token_str.strip().split('.')
+    if len(parts) != 4:
+        raise ValidationError("Malformed onboarding token format.")
+
+    slug_part, timestamp_str, nonce, signature = parts
+    slug = sanitize_and_validate_slug(slug_part)
+
+    try:
+        issue_time = int(timestamp_str)
+    except ValueError:
+        raise ValidationError("Invalid timestamp in onboarding token.")
+
+    current_time = int(time.time())
+    if issue_time < (current_time - SIGNUP_TOKEN_TTL_SECONDS):
+        raise ValidationError("Onboarding token has expired.")
+    if issue_time > (current_time + MAX_ALLOWED_CLOCK_SKEW_SECONDS):
+        raise ValidationError("Onboarding token timestamp is in the future.")
+
+    key = _derive_domain_hmac_secret(env, HMAC_ONBOARDING_CONTEXT)
+    payload = f"{slug}.{timestamp_str}.{nonce}".encode('utf-8')
+    expected_signature = hmac.new(key, payload, hashlib.sha256).hexdigest()
+
+    if not hmac.compare_digest(signature, expected_signature):
+        raise AccessError("Onboarding token signature verification failed.")
+
+    nonce_hash_int = int(hashlib.sha256(nonce.encode('utf-8')).hexdigest()[:15], 16)
+    signed_nonce_key = struct.unpack(
+        "!q", struct.pack("!Q", 0x4E4F4E4300000000 | (nonce_hash_int & 0xFFFFFFFF))
+    )[0]
+    env.cr.execute("SELECT pg_try_advisory_xact_lock(%s);", (signed_nonce_key,))
+    lock_res = env.cr.fetchone()
+    if not lock_res or not lock_res[0]:
+        raise ValidationError("Onboarding token nonce collision or replay detected.")
+
+    return {"slug": slug, "timestamp": issue_time, "nonce": nonce}
 
 
 def consume_onboarding_nonce(env, nonce: str, slug: str, expires_at_timestamp: int) -> bool:
