@@ -4,12 +4,13 @@
 import hashlib
 import hmac
 import logging
+import math
 import re
 import time
 import unicodedata
 import uuid
 from contextlib import contextmanager
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 from psycopg2 import IntegrityError
 
 from odoo import fields, http
@@ -21,6 +22,7 @@ _logger = logging.getLogger(__name__)
 # RFC 1123 Hostname Label regex: lowercase ASCII alphanumeric with single internal hyphens, length 3 to 32
 SLUG_REGEX = re.compile(r'^[a-z0-9](?:[a-z0-9]|-(?!-)){1,30}[a-z0-9]$', re.ASCII)
 SLUG_HAS_ALPHA_REGEX = re.compile(r'[a-z]', re.ASCII)
+ZERO_WIDTH_REGEX = re.compile(r'[\u200B-\u200D\uFEFF]', re.UNICODE)
 
 # Hardened reserved directory: infrastructure, cloud orchestrators, cloud metadata, and core Odoo HTTP routing endpoints
 RESERVED_SLUGS = frozenset({
@@ -42,13 +44,68 @@ RESERVED_SLUGS = frozenset({
 SIGNUP_TOKEN_TTL_SECONDS = 1800          # 30-minute validation window for tenant onboarding
 MAX_ALLOWED_CLOCK_SKEW_SECONDS = 300     # 5-minute tolerance for distributed fleet clock drift
 HMAC_ONBOARDING_CONTEXT = b"insilos:tenant:onboarding:hmac-sha256:v1"
+HMAC_HKDF_SYSTEM_SALT = b"insilos:crypto:system-salt:v1"
 HMAC_LEASE_CONTEXT = b"insilos:sovereign:lease:hmac-sha256:v1"
 KANBAN_LOCK_BASE_KEY = 0x494E534900000000 & 0x7FFFFFFFFFFFFFFF  # "INSI" prefix for PostgreSQL advisory lock WIP slots
 DEFAULT_MAX_WIP_SLOTS = 3                  # Strict Kanban WIP limit: max 3 concurrent heavy migrations
 MINIMUM_MASTER_SECRET_ENTROPY_BYTES = 32   # 256 bits minimum master entropy
+MINIMUM_SHANNON_ENTROPY_BITS_PER_BYTE = 3.2  # Reject low-entropy uniform inputs
+NONCE_TABLE_DDL = """
+CREATE TABLE IF NOT EXISTS insilos_nonce_journal (
+    nonce VARCHAR(128) NOT NULL,
+    context VARCHAR(64) NOT NULL,
+    consumed_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc'),
+    expires_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    PRIMARY KEY (nonce, context)
+);
+CREATE INDEX IF NOT EXISTS idx_insilos_nonce_journal_expires_at
+    ON insilos_nonce_journal (expires_at);
+"""
 _CONSUMED_ONBOARDING_NONCES = set()
 _CONSUMED_ONBOARDING_NONCE_EXPIRY = {}
 MAX_IN_MEMORY_NONCE_ENTRIES = 4096
+
+
+def ensure_nonce_journal_table(cr):
+    """Idempotently ensure database-backed nonce journal exists."""
+    cr.execute(NONCE_TABLE_DDL)
+
+
+def calculate_shannon_entropy(data: bytes) -> float:
+    """Calculate empirical Shannon entropy in bits per byte (0.0 to 8.0)."""
+    if not data:
+        return 0.0
+    frequency = {}
+    for byte_val in data:
+        frequency[byte_val] = frequency.get(byte_val, 0) + 1
+    total_bytes = len(data)
+    entropy = 0.0
+    for count in frequency.values():
+        p_x = count / total_bytes
+        entropy -= p_x * math.log2(p_x)
+    return entropy
+
+
+def record_and_verify_nonce_transactional(cr, nonce: str, context_label: str, ttl_seconds: int = SIGNUP_TOKEN_TTL_SECONDS) -> bool:
+    """Atomic database-backed replay prevention.
+    Returns True if nonce was successfully reserved; False if already consumed or expired.
+    """
+    ensure_nonce_journal_table(cr)
+    now_utc = datetime.now(timezone.utc)
+    expires_at = now_utc + timedelta(seconds=ttl_seconds)
+
+    if (int(now_utc.timestamp() * 1000) % 100) == 0:
+        cr.execute("DELETE FROM insilos_nonce_journal WHERE expires_at < (NOW() AT TIME ZONE 'utc');")
+
+    query = """
+        INSERT INTO insilos_nonce_journal (nonce, context, consumed_at, expires_at)
+        VALUES (%s, %s, (NOW() AT TIME ZONE 'utc'), %s)
+        ON CONFLICT (nonce, context) DO NOTHING
+        RETURNING 1;
+    """
+    cr.execute(query, (nonce, context_label, expires_at.strftime('%Y-%m-%d %H:%M:%S')))
+    result = cr.fetchone()
+    return bool(result and result[0] == 1)
 
 
 def hkdf_extract(salt: bytes, ikm: bytes) -> bytes:
@@ -75,28 +132,38 @@ def derive_hkdf_subkey(master_secret: str, context_info: bytes, salt: bytes = No
     if not master_secret or not isinstance(master_secret, str):
         raise ValidationError("Master secret must be a non-empty string.")
     clean_secret = master_secret.strip()
-    if len(clean_secret.encode('utf-8')) < MINIMUM_MASTER_SECRET_ENTROPY_BYTES:
+    secret_bytes = clean_secret.encode('utf-8')
+    if len(secret_bytes) < MINIMUM_MASTER_SECRET_ENTROPY_BYTES:
         raise ValidationError(
             f"Master secret possesses insufficient entropy (minimum {MINIMUM_MASTER_SECRET_ENTROPY_BYTES} bytes required)."
         )
+    entropy = calculate_shannon_entropy(secret_bytes)
+    if entropy < MINIMUM_SHANNON_ENTROPY_BITS_PER_BYTE:
+        raise ValidationError(
+            f"Master secret lacks sufficient Shannon entropy ({entropy:.2f} bits/byte < {MINIMUM_SHANNON_ENTROPY_BITS_PER_BYTE})."
+        )
     extract_salt = salt if salt is not None else bytes(context_info)
-    master_bytes = clean_secret.encode('utf-8')
-    prk = hkdf_extract(salt=extract_salt, ikm=master_bytes)
+    prk = hkdf_extract(salt=extract_salt, ikm=secret_bytes)
     return hkdf_expand(prk=prk, info=bytes(context_info), length=32)
 
 
 def sanitize_and_validate_slug(raw_slug: str) -> str:
     """Validate tenant slug against RFC 1123 specifications and security allowlists.
-    Enforces NFKC normalization, ASCII constraints, numeric-only block, and reserved slug protection.
+    Enforces zero-width stripping, NFKC normalization, Punycode rejection, ASCII constraints,
+    numeric-only block, and reserved slug protection.
     """
     if not raw_slug or not isinstance(raw_slug, str):
         raise ValidationError("Tenant identifier cannot be empty.")
 
-    normalized = unicodedata.normalize('NFKC', raw_slug).strip().lower()
+    stripped = ZERO_WIDTH_REGEX.sub('', raw_slug)
+    normalized = unicodedata.normalize('NFKC', stripped).strip().lower()
     if normalized in RESERVED_SLUGS:
         raise ValidationError(
             f"Tenant identifier '{normalized}' is reserved by the platform (reserved infrastructure identifier)."
         )
+
+    if normalized.startswith('xn--'):
+        raise ValidationError("IDN Punycode tenant slugs are prohibited (violates RFC 1123 format).")
 
     if len(normalized) < 3 or len(normalized) > 32:
         raise ValidationError(
