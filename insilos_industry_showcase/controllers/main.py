@@ -32,7 +32,11 @@ RESERVED_SLUGS = frozenset({
     'vpn', 'web', 'websocket', 'www', 'xmlrpc',
 })
 
-SIGNUP_TOKEN_TTL_SECONDS = 1800  # 30-minute validation window for tenant onboarding
+SIGNUP_TOKEN_TTL_SECONDS = 1800          # 30-minute validation window for tenant onboarding
+MAX_ALLOWED_CLOCK_SKEW_SECONDS = 300     # 5-minute tolerance for distributed fleet clock drift
+HMAC_ONBOARDING_CONTEXT = b"insilos:tenant:onboarding:hmac-sha256:v1"
+HMAC_LEASE_CONTEXT = b"insilos:sovereign:lease:hmac-sha256:v1"
+_CONSUMED_ONBOARDING_NONCES = set()
 
 
 def sanitize_and_validate_slug(raw_slug: str) -> str:
@@ -70,45 +74,144 @@ def _resolve_onboarding_hmac_secret(env) -> str:
     return secret.strip()
 
 
+def _derive_domain_hmac_secret(env, domain_context: bytes) -> bytes:
+    """Derive an isolated, purpose-specific HMAC subkey from the platform root secret
+    using HKDF-style context extraction to prevent cross-protocol signature forgery.
+    """
+    raw_root_secret = _resolve_onboarding_hmac_secret(env)
+    return hmac.new(
+        raw_root_secret.encode('utf-8'),
+        bytes(domain_context),
+        hashlib.sha256,
+    ).digest()
+
+
 def generate_signup_token(env, tenant_id: int, slug: str) -> str:
-    """Generate an HMAC-SHA256 signature for secure unauthenticated confirmation routing."""
-    secret = _resolve_onboarding_hmac_secret(env)
-    expiry = int(time.time()) + SIGNUP_TOKEN_TTL_SECONDS
-    message = f"{tenant_id}:{slug}:{expiry}".encode('utf-8')
-    signature = hmac.new(secret.encode('utf-8'), message, hashlib.sha256).hexdigest()
-    return f"{expiry}.{signature}"
+    """Generate a domain-separated HMAC-SHA256 signature for secure unauthenticated confirmation routing.
+    Includes a unique cryptographically secure 128-bit nonce to prevent replay attacks.
+    Format: <expiry>.<nonce>.<signature>
+    """
+    if isinstance(tenant_id, bool) or not isinstance(tenant_id, int) or tenant_id <= 0:
+        raise ValidationError("Tenant ID must be a positive integer.")
+
+    clean_slug = sanitize_and_validate_slug(slug)
+    signing_key = _derive_domain_hmac_secret(env, HMAC_ONBOARDING_CONTEXT)
+    now_ts = int(time.time())
+    expiry = now_ts + SIGNUP_TOKEN_TTL_SECONDS
+    nonce = uuid.uuid4().hex  # 32-char cryptographic nonce
+
+    message = f"{tenant_id}:{clean_slug}:{expiry}:{nonce}".encode('utf-8')
+    signature = hmac.new(signing_key, message, hashlib.sha256).hexdigest()
+    return f"{expiry}.{nonce}.{signature}"
 
 
-def verify_signup_token(env, tenant_id: int, slug: str, token: str) -> bool:
-    """Verify onboarding token validity and tamper resistance."""
-    if not token or not isinstance(token, str) or '.' not in token:
+def verify_signup_token(env, tenant_id: int, slug: str, token: str, consume: bool = False) -> bool:
+    """Verify onboarding token validity, clock drift tolerance, and cryptographic tamper resistance.
+    If consume=True, records the token nonce to enforce strictly-once consumption semantics.
+    """
+    if not token or not isinstance(token, str) or token.count('.') != 2:
+        _logger.warning("Rejected token with invalid envelope format for tenant_id=%s", tenant_id)
         return False
+
+    if isinstance(tenant_id, bool) or not isinstance(tenant_id, int) or tenant_id <= 0:
+        _logger.warning("Rejected token verification with non-positive or non-integer tenant_id=%s", tenant_id)
+        return False
+
     try:
-        expiry_str, signature = token.split('.', 1)
+        clean_slug = sanitize_and_validate_slug(slug)
+        expiry_str, nonce, signature = token.split('.', 2)
         expiry = int(expiry_str)
-        if time.time() > expiry:
-            _logger.warning("Expired onboarding token for tenant_id=%s, slug=%s", tenant_id, slug)
+
+        if len(nonce) != 32 or not re.fullmatch(r'^[a-f0-9]{32}$', nonce):
+            _logger.warning("Rejected onboarding token with malformed nonce for tenant_id=%s", tenant_id)
             return False
-        secret = _resolve_onboarding_hmac_secret(env)
-        message = f"{tenant_id}:{slug}:{expiry}".encode('utf-8')
-        expected_signature = hmac.new(secret.encode('utf-8'), message, hashlib.sha256).hexdigest()
-        return hmac.compare_digest(signature, expected_signature)
+
+        if len(signature) != 64 or not re.fullmatch(r'^[a-f0-9]{64}$', signature):
+            _logger.warning("Rejected onboarding token with malformed signature for tenant_id=%s", tenant_id)
+            return False
+
+        now_ts = int(time.time())
+        if now_ts > expiry:
+            _logger.warning("Expired onboarding token for tenant_id=%s (now=%s, expiry=%s)", tenant_id, now_ts, expiry)
+            return False
+
+        if expiry > now_ts + SIGNUP_TOKEN_TTL_SECONDS + MAX_ALLOWED_CLOCK_SKEW_SECONDS:
+            _logger.warning("Onboarding token expiry post-dated beyond maximum window: tenant_id=%s", tenant_id)
+            return False
+
+        signing_key = _derive_domain_hmac_secret(env, HMAC_ONBOARDING_CONTEXT)
+        message = f"{tenant_id}:{clean_slug}:{expiry}:{nonce}".encode('utf-8')
+        expected_signature = hmac.new(signing_key, message, hashlib.sha256).hexdigest()
+
+        if not hmac.compare_digest(signature, expected_signature):
+            _logger.warning("Signature verification mismatch for tenant_id=%s, slug=%s", tenant_id, clean_slug)
+            return False
+
+        if consume:
+            nonce_key = f"onboarding.nonce.consumed.{nonce}"
+            already_used = nonce in _CONSUMED_ONBOARDING_NONCES
+            if not already_used and env is not None:
+                try:
+                    cp = env['ir.config_parameter'].sudo()
+                    if cp.get_param(nonce_key):
+                        already_used = True
+                    elif hasattr(cp, 'set_param'):
+                        cp.set_param(nonce_key, str(now_ts))
+                except Exception as exc:
+                    _logger.debug("In-memory nonce fallback used: %s", exc)
+            if already_used:
+                _logger.error("Replay attack detected: token nonce %s has already been consumed.", nonce)
+                return False
+            _CONSUMED_ONBOARDING_NONCES.add(nonce)
+
+        return True
+
     except (ValueError, TypeError, ValidationError) as exc:
-        _logger.warning("Malformed onboarding token received: %s", exc)
+        _logger.warning("Exception during onboarding token verification: %s", exc)
         return False
 
 
 class OfflineLeaseToken:
-    """Cryptographic lease envelope for 168-hour air-gapped sovereign node execution."""
+    """Cryptographic lease envelope for 168-hour air-gapped sovereign node execution.
+    Supports both monotonic epoch ratchets (.issue / .verify / .serialize / .deserialize)
+    and direct air-gapped secret-key validation (.is_valid_at).
+    """
 
-    def __init__(self, tenant_id: str, issued_at: int, ttl_seconds: int, secret_key: str):
-        if not secret_key or len(secret_key) < 16:
-            raise ValueError("OfflineLeaseToken secret_key must be at least 16 characters.")
-        self.tenant_id = str(tenant_id)
-        self.issued_at = int(issued_at)
-        self.ttl_seconds = int(ttl_seconds)
-        self.expires_at = self.issued_at + self.ttl_seconds
-        self.signature = self._sign(secret_key)
+    MAX_LEASE_DURATION_SECONDS = 168 * 3600  # Exactly 168 hours (7 days)
+
+    def __init__(self, tenant_id, arg2, arg3, arg4, signature: str = None):
+        if signature is None:
+            # 4-arg mode: (tenant_id, issued_at, ttl_seconds, secret_key)
+            issued_at = int(arg2)
+            ttl_seconds = int(arg3)
+            secret_key = str(arg4)
+            if not secret_key or len(secret_key) < 16:
+                raise ValueError("OfflineLeaseToken secret_key must be at least 16 characters.")
+            self.tenant_id = tenant_id
+            self.lease_epoch = 0
+            self.issued_at = issued_at
+            self.ttl_seconds = ttl_seconds
+            self.expires_at = self.issued_at + self.ttl_seconds
+            self.signature = self._sign(secret_key)
+        else:
+            # 5-arg mode: (tenant_id, lease_epoch, issued_at, expires_at, signature)
+            lease_epoch = arg2
+            issued_at = arg3
+            expires_at = arg4
+            if isinstance(tenant_id, bool) or not isinstance(tenant_id, int) or tenant_id <= 0:
+                raise ValidationError("Tenant ID must be a positive integer.")
+            if isinstance(lease_epoch, bool) or not isinstance(lease_epoch, int) or lease_epoch < 0:
+                raise ValidationError("Lease epoch must be a non-negative integer.")
+            if expires_at <= issued_at:
+                raise ValidationError("Lease expiration must occur strictly after issuance timestamp.")
+            if (expires_at - issued_at) > self.MAX_LEASE_DURATION_SECONDS:
+                raise ValidationError("Lease duration exceeds maximum permitted 168-hour window.")
+            self.tenant_id = tenant_id
+            self.lease_epoch = lease_epoch
+            self.issued_at = int(issued_at)
+            self.expires_at = int(expires_at)
+            self.ttl_seconds = self.expires_at - self.issued_at
+            self.signature = str(signature)
 
     def _sign(self, secret: str) -> str:
         payload = f"{self.tenant_id}:{self.issued_at}:{self.expires_at}".encode('utf-8')
@@ -119,6 +222,76 @@ class OfflineLeaseToken:
             return False
         expected = self._sign(secret_key)
         return hmac.compare_digest(self.signature, expected)
+
+    @classmethod
+    def issue(cls, env, tenant_id: int, lease_epoch: int) -> 'OfflineLeaseToken':
+        """Issue a verified 168-hour sovereign lease token with domain-separated signing key."""
+        if isinstance(tenant_id, bool) or not isinstance(tenant_id, int) or tenant_id <= 0:
+            raise ValidationError("Tenant ID must be a positive integer.")
+        if isinstance(lease_epoch, bool) or not isinstance(lease_epoch, int) or lease_epoch < 0:
+            raise ValidationError("Lease epoch must be a non-negative integer.")
+
+        now_ts = int(time.time())
+        expires_at = now_ts + cls.MAX_LEASE_DURATION_SECONDS
+        signing_key = _derive_domain_hmac_secret(env, HMAC_LEASE_CONTEXT)
+
+        payload = f"{tenant_id}:{lease_epoch}:{now_ts}:{expires_at}".encode('utf-8')
+        signature = hmac.new(signing_key, payload, hashlib.sha256).hexdigest()
+
+        return cls(
+            tenant_id,
+            lease_epoch,
+            now_ts,
+            expires_at,
+            signature=signature,
+        )
+
+    def verify(self, env, minimum_admissible_epoch: int = 0) -> bool:
+        """Validate lease integrity, chronological validity, and epoch revocation status."""
+        try:
+            now_ts = int(time.time())
+            if self.lease_epoch < minimum_admissible_epoch:
+                _logger.warning(
+                    "Revoked lease token: epoch %s is below minimum admissible %s for tenant %s",
+                    self.lease_epoch, minimum_admissible_epoch, self.tenant_id,
+                )
+                return False
+
+            if now_ts > self.expires_at + MAX_ALLOWED_CLOCK_SKEW_SECONDS:
+                _logger.warning("Expired lease token encountered for tenant %s", self.tenant_id)
+                return False
+
+            if self.issued_at > now_ts + MAX_ALLOWED_CLOCK_SKEW_SECONDS:
+                _logger.warning("Lease token issued timestamp is in the future for tenant %s", self.tenant_id)
+                return False
+
+            signing_key = _derive_domain_hmac_secret(env, HMAC_LEASE_CONTEXT)
+            payload = f"{self.tenant_id}:{self.lease_epoch}:{self.issued_at}:{self.expires_at}".encode('utf-8')
+            expected_signature = hmac.new(signing_key, payload, hashlib.sha256).hexdigest()
+
+            return hmac.compare_digest(self.signature, expected_signature)
+        except Exception as exc:
+            _logger.error("Error evaluating OfflineLeaseToken verification: %s", exc)
+            return False
+
+    def serialize(self) -> str:
+        """Serialize lease into a compact, transport-ready string format."""
+        return f"{self.tenant_id}:{self.lease_epoch}:{self.issued_at}:{self.expires_at}:{self.signature}"
+
+    @classmethod
+    def deserialize(cls, raw_envelope: str) -> 'OfflineLeaseToken':
+        """Parse and construct an OfflineLeaseToken instance from a serialized envelope."""
+        if not raw_envelope or not isinstance(raw_envelope, str) or raw_envelope.count(':') != 4:
+            raise ValidationError("Malformed offline lease envelope string format.")
+
+        parts = raw_envelope.split(':')
+        return cls(
+            int(parts[0]),
+            int(parts[1]),
+            int(parts[2]),
+            int(parts[3]),
+            signature=parts[4],
+        )
 
 
 class VectorClockJournalSequence:
