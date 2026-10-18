@@ -1301,6 +1301,7 @@ class ASTFormulaSandboxError(FormulaSanitizationError, SecurityViolationError):
 
 
 FormulaSecurityViolation = ASTFormulaSandboxError
+SecurityFormulaEvaluationError = ASTFormulaSandboxError
 
 
 class TenantSecurityError(PermissionError, TenantBoundaryViolation, SecurityViolationError):
@@ -1325,7 +1326,9 @@ class HeterogeneousLockKey:
         "tier_precedence",
         "tier_name",
         "resource_type",
+        "namespace",
         "canonical_key",
+        "_hash_pair",
         "_mode",
     )
 
@@ -1357,8 +1360,10 @@ class HeterogeneousLockKey:
             self.tier_name = str(tier_name).lower()
             self.tier = self.tier_precedence
             self.resource_type = self.tier_name
+            self.namespace = self.resource_type
             self.resource_id = res_str
             self.canonical_key = f"{self.resource_type}:{res_str.lower()}"
+            self._hash_pair = self._compute_canonical_hash_pair(self.namespace, self.resource_id)
             self.tenant_id = 0
             self.record_id = 0
             self._mode = "named"
@@ -1368,8 +1373,10 @@ class HeterogeneousLockKey:
             self.tier_name = tenant_or_resource.lower()
             self.tier = self.tier_precedence
             self.resource_type = self.tier_name
+            self.namespace = self.resource_type
             self.resource_id = resource_id
             self.canonical_key = f"{self.resource_type}:{resource_id.lower()}"
+            self._hash_pair = self._compute_canonical_hash_pair(self.namespace, self.resource_id)
             self.tenant_id = 0
             self.record_id = 0
             self._mode = "named"
@@ -1378,8 +1385,10 @@ class HeterogeneousLockKey:
             if not tier.strip() or not isinstance(tenant_or_resource, str) or not tenant_or_resource.strip():
                 raise ValueError("resource_type and resource_id must be non-empty strings.")
             self.resource_type = tier.strip().lower()
+            self.namespace = self.resource_type
             self.resource_id = tenant_or_resource.strip()
             self.canonical_key = f"{self.resource_type}:{self.resource_id.lower()}"
+            self._hash_pair = self._compute_canonical_hash_pair(self.namespace, self.resource_id)
             self.tier_name = self.resource_type
             self.tier_precedence = self._PRECEDENCE_MAP.get(self.resource_type, 100)
             self.tier = self.tier_precedence
@@ -1399,8 +1408,10 @@ class HeterogeneousLockKey:
             self.tier_precedence = int(tier)
             self.tier_name = tier.name.lower()
             self.resource_type = self.tier_name
+            self.namespace = self.resource_type
             self.resource_id = tenant_or_resource.strip()
             self.canonical_key = f"{self.resource_type}:{self.resource_id.lower()}"
+            self._hash_pair = self._compute_canonical_hash_pair(self.namespace, self.resource_id)
             self.tenant_id = 0
             self.record_id = 0
             self._mode = "2arg"
@@ -1417,11 +1428,25 @@ class HeterogeneousLockKey:
             self.tier_precedence = int(self.tier)
             self.tier_name = self.tier.name.lower()
             self.resource_type = self.tier_name
+            self.namespace = self.resource_type
             self.tenant_id = tenant_id
             self.resource_id = resource_id
             self.record_id = record_id
             self.canonical_key = f"{self.resource_type}:{tenant_id}:{resource_id}:{record_id}"
+            self._hash_pair = self._compute_canonical_hash_pair(
+                self.namespace, f"{tenant_id}:{resource_id}:{record_id}"
+            )
             self._mode = "4arg"
+
+    @staticmethod
+    def _compute_canonical_hash_pair(ns: str, res: str) -> Tuple[int, int]:
+        digest = hashlib.sha256(f"{ns}:{res}".encode("utf-8")).digest()
+        k1, k2 = struct.unpack(">ii", digest[:8])
+        return (k1, k2)
+
+    @property
+    def canonical_tuple(self) -> Tuple[int, int]:
+        return self._hash_pair
 
     @classmethod
     def create(cls, tier_name: str, resource_id: str) -> "HeterogeneousLockKey":
@@ -1443,9 +1468,33 @@ class HeterogeneousLockKey:
     @contextmanager
     def acquire_all(
         cls,
-        keys: List["HeterogeneousLockKey"],
+        cursor_or_keys: Any,
+        keys_or_timeout: Optional[Any] = None,
         timeout_seconds: float = 5.0,
     ):
+        if hasattr(cursor_or_keys, "execute"):
+            cursor = cursor_or_keys
+            seq_keys = list(keys_or_timeout) if keys_or_timeout else []
+            if not seq_keys:
+                yield []
+                return
+            sorted_db_keys: List[HeterogeneousLockKey] = sorted(
+                seq_keys, key=lambda k: (k.canonical_tuple[0], k.canonical_tuple[1])
+            )
+            acquired_db_locks: List[Tuple[int, int]] = []
+            for lk in sorted_db_keys:
+                k1, k2 = lk.canonical_tuple
+                cursor.execute("SELECT pg_advisory_xact_lock(%s, %s);", (k1, k2))
+                acquired_db_locks.append((k1, k2))
+            yield acquired_db_locks
+            return
+
+        keys: List[HeterogeneousLockKey] = list(cursor_or_keys) if cursor_or_keys else []
+        eff_timeout = (
+            float(keys_or_timeout)
+            if isinstance(keys_or_timeout, (int, float))
+            else float(timeout_seconds)
+        )
         if not keys:
             yield []
             return
@@ -1455,11 +1504,11 @@ class HeterogeneousLockKey:
         try:
             for lock_key in unique_sorted_keys:
                 raw_lock = cls.get_or_create_lock(lock_key.canonical_key)
-                acquired = raw_lock.acquire(timeout=timeout_seconds)
+                acquired = raw_lock.acquire(timeout=eff_timeout)
                 if not acquired:
                     raise LockTimeoutOrConflict(
                         f"Failed to acquire lock '{lock_key.canonical_key}' "
-                        f"within {timeout_seconds}s timeout."
+                        f"within {eff_timeout}s timeout."
                     )
                 acquired_locks.append((lock_key.canonical_key, raw_lock))
 
@@ -1497,7 +1546,7 @@ class HeterogeneousLockKey:
 
     def __repr__(self) -> str:
         if self._mode == "str2arg":
-            return f"HeterogeneousLockKey({self.canonical_key!r})"
+            return f"HeterogeneousLockKey({self.namespace!r}, {self.resource_id!r} -> {self._hash_pair})"
         if self._mode == "named":
             return f"HeterogeneousLockKey(tier_precedence={self.tier_precedence}, tier_name={self.tier_name!r}, resource_id={self.resource_id!r})"
         if self._mode == "2arg":
@@ -1782,6 +1831,16 @@ class _HeterogeneousCrossTierLockManager(CanonicalLockHierarchyManager):
 DeterministicHeterogeneousLockManager = _HeterogeneousCrossTierLockManager
 
 
+from typing import Callable, NamedTuple
+
+
+class TenantSecurityContext(NamedTuple):
+    tenant_id: str
+    user_id: str
+    company_id: str
+    is_active: bool = True
+
+
 _ACTIVE_SCOPED_TENANT_ID: contextvars.ContextVar[Optional[int]] = contextvars.ContextVar(
     "active_scoped_tenant_id", default=None
 )
@@ -1791,6 +1850,18 @@ _ACTIVE_SCOPED_TENANT_STR_ID: contextvars.ContextVar[Optional[str]] = contextvar
 _ALLOWED_COMPANY_IDS: contextvars.ContextVar[FrozenSet[int]] = contextvars.ContextVar(
     "allowed_company_ids", default=frozenset()
 )
+_TENANT_CONTEXT_VAR: contextvars.ContextVar[Optional[TenantSecurityContext]] = contextvars.ContextVar(
+    "enterprise_tenant_context", default=None
+)
+
+
+class _DualActivateDescriptor:
+    """Allows ScopedTenantEnvironmentGuard.activate to be called as either a 0-arg instance method or a 3-arg classmethod."""
+
+    def __get__(self, instance: Optional["ScopedTenantEnvironmentGuard"], owner: type) -> Callable[..., Any]:
+        if instance is not None:
+            return instance._activate_instance
+        return owner._activate_class
 
 
 class ScopedTenantEnvironmentGuard:
@@ -1832,7 +1903,7 @@ class ScopedTenantEnvironmentGuard:
         return hmac.compare_digest(token_bytes, expected_bytes)
 
     @contextmanager
-    def activate(self):
+    def _activate_instance(self):
         if not self.verify_token():
             raise TenantSecurityException(
                 f"Unauthorized access: Invalid security token for tenant '{self.tenant_id}'."
@@ -1842,6 +1913,36 @@ class ScopedTenantEnvironmentGuard:
             yield self.tenant_id
         finally:
             _ACTIVE_SCOPED_TENANT_STR_ID.reset(tok)
+
+    @classmethod
+    @contextmanager
+    def _activate_class(cls, tenant_id: str, user_id: str, company_id: str):
+        if not all(isinstance(arg, str) and arg.strip() for arg in (tenant_id, user_id, company_id)):
+            raise ValueError("Tenant activation arguments must be non-empty strings")
+        new_context = TenantSecurityContext(
+            tenant_id=tenant_id.strip(),
+            user_id=user_id.strip(),
+            company_id=company_id.strip(),
+            is_active=True,
+        )
+        token_ctx = _TENANT_CONTEXT_VAR.set(new_context)
+        token_str = _ACTIVE_SCOPED_TENANT_STR_ID.set(new_context.tenant_id)
+        try:
+            yield new_context
+        finally:
+            _TENANT_CONTEXT_VAR.reset(token_ctx)
+            _ACTIVE_SCOPED_TENANT_STR_ID.reset(token_str)
+
+    activate = _DualActivateDescriptor()
+
+    @classmethod
+    def get_current_context(cls) -> TenantSecurityContext:
+        ctx = _TENANT_CONTEXT_VAR.get()
+        if ctx is None or not ctx.is_active:
+            raise TenantSecurityException(
+                "Access denied: No active ScopedTenantEnvironmentGuard context"
+            )
+        return ctx
 
     def __enter__(self) -> "ScopedTenantEnvironmentGuard":
         if self._mode == "activate":
@@ -1954,6 +2055,15 @@ class ScopedEnterpriseFormulaGuard:
         ast.UAdd: operator.pos,
     }
 
+    _ALLOWED_COMPARATORS: Dict[type, Callable[..., Any]] = {
+        ast.Eq: operator.eq,
+        ast.NotEq: operator.ne,
+        ast.Lt: operator.lt,
+        ast.LtE: operator.le,
+        ast.Gt: operator.gt,
+        ast.GtE: operator.ge,
+    }
+
     _ALLOWED_FUNCTIONS: Dict[str, Callable[..., Any]] = {
         "min": min,
         "max": max,
@@ -2016,7 +2126,7 @@ class ScopedEnterpriseFormulaGuard:
         return cls._eval_node(parsed_ast.body, sanitized_context)
 
     @classmethod
-    def _eval_node(cls, node: ast.AST, context: Dict[str, float]) -> float:
+    def _eval_node(cls, node: ast.AST, context: Dict[str, float]) -> Any:
         if isinstance(node, ast.Constant):
             if isinstance(node.value, (int, float)) and not isinstance(node.value, bool):
                 if abs(node.value) > cls._MAX_COMPUTED_NUMBER:
@@ -2071,6 +2181,18 @@ class ScopedEnterpriseFormulaGuard:
                 raise ASTFormulaSandboxError("Formula result overflow or illegal numerical state.")
             return computed
 
+        if isinstance(node, ast.Compare):
+            left_val = cls._eval_node(node.left, context)
+            for op, comp in zip(node.ops, node.comparators):
+                op_type = type(op)
+                if op_type not in cls._ALLOWED_COMPARATORS:
+                    raise ASTFormulaSandboxError(f"Comparator not permitted: {op_type.__name__}")
+                right_val = cls._eval_node(comp, context)
+                if not cls._ALLOWED_COMPARATORS[op_type](left_val, right_val):
+                    return False
+                left_val = right_val
+            return True
+
         if isinstance(node, ast.Call):
             if not isinstance(node.func, ast.Name):
                 raise ASTFormulaSandboxError(
@@ -2096,9 +2218,11 @@ class ScopedEnterpriseFormulaGuard:
 
 
 class HardenedEnterpriseFormulaGuard(ScopedEnterpriseFormulaGuard):
-    """Enforces fail-closed AST sandboxing with explicit node allowlist, recursion limits, and NFKD->NFC canonicalization."""
+    """Enforces fail-closed AST sandboxing with explicit node allowlist, recursion limits, MAX_NODES bound, and NFKD->NFC canonicalization."""
 
     MAX_EXPR_LENGTH: int = 2048
+    MAX_NODES: int = 40
+    MAX_DEPTH: int = 5
     MAX_AST_DEPTH: int = 15
     MAX_EXPONENT: int = 100
 
@@ -2142,8 +2266,8 @@ class HardenedEnterpriseFormulaGuard(ScopedEnterpriseFormulaGuard):
 
     @classmethod
     def sanitize_raw_expression(cls, raw_formula: str) -> str:
-        if not isinstance(raw_formula, str):
-            raise FormulaSecurityViolation("Formula input must be a string.")
+        if not isinstance(raw_formula, str) or not raw_formula.strip():
+            raise FormulaSecurityViolation("Formula input must be a non-empty string.")
         if len(raw_formula) > cls.MAX_EXPR_LENGTH:
             raise FormulaSecurityViolation(
                 f"Formula exceeds maximum length of {cls.MAX_EXPR_LENGTH} characters."
@@ -2160,6 +2284,12 @@ class HardenedEnterpriseFormulaGuard(ScopedEnterpriseFormulaGuard):
 
     @classmethod
     def validate_ast(cls, node: ast.AST, current_depth: int = 0) -> None:
+        if current_depth == 0:
+            node_count = sum(1 for _ in ast.walk(node))
+            if node_count > cls.MAX_NODES:
+                raise FormulaSecurityViolation(
+                    f"AST complexity limit exceeded (>{cls.MAX_NODES} nodes)"
+                )
         if current_depth > cls.MAX_AST_DEPTH:
             raise FormulaSecurityViolation(
                 f"Formula AST exceeds maximum recursion depth of {cls.MAX_AST_DEPTH}."
@@ -2187,7 +2317,7 @@ class HardenedEnterpriseFormulaGuard(ScopedEnterpriseFormulaGuard):
             cls.validate_ast(child, current_depth + 1)
 
     @classmethod
-    def evaluate(cls, raw_formula: str, context: Dict[str, float]) -> float:
+    def evaluate(cls, raw_formula: str, context: Dict[str, float]) -> Any:
         cleaned_formula = cls.sanitize_raw_expression(raw_formula)
         try:
             parsed_ast = ast.parse(cleaned_formula, mode="eval")
