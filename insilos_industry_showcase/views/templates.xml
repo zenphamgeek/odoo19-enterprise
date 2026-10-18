@@ -225,7 +225,7 @@
             <main id="wrap" class="oe_structure bg-100">
                 <section class="py-5 bg-view border-bottom">
                     <div class="container text-center">
-                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-1 fs-6 mb-3">
+                        <span class="badge bg-transparent text-primary border border-primary px-3 py-1 rounded-1 fs-6 mb-3">
                             <i class="ph-duotone ph-sparkle me-1"/> 30-DAY FREE TRIAL • KHÔNG RỦI RO
                         </span>
                         <h1 class="display-5 fw-bold text-dark mb-3">Khởi tạo SaaS Tenant Doanh nghiệp của Bạn</h1>
@@ -238,7 +238,7 @@
                 <section class="py-5">
                     <div class="container">
                         <t t-if="error == 'subdomain_taken'">
-                            <div class="d-flex align-items-center p-3 mb-4 rounded-3 border-0 bg-danger-subtle text-danger" role="alert">
+                            <div class="d-flex align-items-center p-3 mb-4 rounded-3 border border-danger bg-danger-subtle text-danger" role="alert">
                                 <i class="ph-duotone ph-warning-octagon fs-4 me-3 flex-shrink-0"/>
                                 <div>
                                     <div class="fw-semibold">Tên miền con (Subdomain) này đã có người sử dụng</div>
@@ -247,7 +247,7 @@
                             </div>
                         </t>
                         <t t-elif="error == 'system_busy'">
-                            <div class="d-flex align-items-center p-3 mb-4 rounded-3 border border-warning-subtle bg-warning-subtle text-warning" role="alert">
+                            <div class="d-flex align-items-center p-3 mb-4 rounded-3 border border-warning bg-warning-subtle text-warning" role="alert">
                                 <i class="ph-duotone ph-clock-countdown fs-4 me-3 flex-shrink-0"/>
                                 <div>
                                     <div class="fw-semibold">Hệ thống đang quá tải tạm thời</div>
@@ -256,7 +256,7 @@
                             </div>
                         </t>
                         <t t-elif="error == 'subdomain_invalid'">
-                            <div class="d-flex align-items-center p-3 mb-4 rounded-3 border-0 bg-warning-subtle text-warning" role="alert">
+                            <div class="d-flex align-items-center p-3 mb-4 rounded-3 border border-warning bg-warning-subtle text-warning" role="alert">
                                 <i class="ph-duotone ph-warning fs-4 me-3 flex-shrink-0"/>
                                 <div>
                                     <div class="fw-semibold">Tên miền con không hợp lệ</div>
@@ -265,7 +265,7 @@
                             </div>
                         </t>
 
-                        <div class="card shadow-sm border-0 rounded-1 overflow-hidden">
+                        <div class="card border border-subtle rounded-1 overflow-hidden bg-view">
                             <div class="card-body p-4 p-md-5">
                                 <form action="/saas/signup/submit" method="post" class="js_saas_signup_form">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -275,7 +275,7 @@
                                         <!-- Step 1: Industry Template -->
                                         <div class="col-12">
                                             <h4 class="fw-bold text-primary mb-3 d-flex align-items-center">
-                                                <span class="badge bg-primary text-white rounded-circle me-2 px-2 py-1">1</span>
+                                                <span class="badge bg-primary text-white rounded-1 me-2 px-2 py-1">1</span>
                                                 Chọn Bộ Mẫu Giải Pháp Ngành Nghề (Industry Template)
                                             </h4>
                                             <div class="mb-3">
@@ -293,7 +293,7 @@
                                         <!-- Step 2: Subdomain -->
                                         <div class="col-12">
                                             <h4 class="fw-bold text-primary mb-3 d-flex align-items-center">
-                                                <span class="badge bg-primary text-white rounded-circle me-2 px-2 py-1">2</span>
+                                                <span class="badge bg-primary text-white rounded-1 me-2 px-2 py-1">2</span>
                                                 Đặt Tên Miền Con Truy Cập (Subdomain)
                                             </h4>
                                             <div class="input-group input-group-lg mb-2">
@@ -306,7 +306,7 @@
                                         <!-- Step 3: Company & Contact -->
                                         <div class="col-12">
                                             <h4 class="fw-bold text-primary mb-3 d-flex align-items-center">
-                                                <span class="badge bg-primary text-white rounded-circle me-2 px-2 py-1">3</span>
+                                                <span class="badge bg-primary text-white rounded-1 me-2 px-2 py-1">3</span>
                                                 Thông Tin Doanh Nghiệp &amp; Người Quản Trị
                                             </h4>
                                             <div class="row g-3">
@@ -341,12 +341,12 @@
                                         <!-- Step 4: Plan Tier -->
                                         <div class="col-12">
                                             <h4 class="fw-bold text-primary mb-3 d-flex align-items-center">
-                                                <span class="badge bg-primary text-white rounded-circle me-2 px-2 py-1">4</span>
+                                                <span class="badge bg-primary text-white rounded-1 me-2 px-2 py-1">4</span>
                                                 Gói Tính Năng Trải Nghiệm (Free 30 Days)
                                             </h4>
                                             <div class="row g-3">
                                                 <div class="col-md-4">
-                                                    <div class="border rounded-3 p-3 text-center h-100 position-relative">
+                                                    <div class="border rounded-1 p-3 text-center h-100 position-relative">
                                                         <input class="form-check-input position-absolute top-0 end-0 m-3" type="radio" name="plan_tier" id="plan_starter" value="starter" t-att-checked="'checked' if selected_plan == 'starter' else None"/>
                                                         <h5 class="fw-bold mb-1">Starter</h5>
                                                         <div class="text-primary fw-bold fs-5 mb-2">490.000đ<span class="text-muted fs-6 fw-normal">/tháng</span></div>
@@ -354,7 +354,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <div class="border border-primary border-2 rounded-3 p-3 text-center h-100 bg-primary-subtle position-relative">
+                                                    <div class="border border-primary border-2 rounded-1 p-3 text-center h-100 bg-primary-subtle position-relative">
                                                         <span class="badge bg-primary position-absolute top-0 start-50 translate-middle">PHỔ BIẾN NHẤT</span>
                                                         <input class="form-check-input position-absolute top-0 end-0 m-3" type="radio" name="plan_tier" id="plan_standard" value="standard" t-att-checked="'checked' if selected_plan in ('standard', None, '') else None"/>
                                                         <h5 class="fw-bold mb-1 text-primary">Standard</h5>
@@ -363,7 +363,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <div class="border rounded-3 p-3 text-center h-100 position-relative">
+                                                    <div class="border rounded-1 p-3 text-center h-100 position-relative">
                                                         <input class="form-check-input position-absolute top-0 end-0 m-3" type="radio" name="plan_tier" id="plan_enterprise" value="enterprise" t-att-checked="'checked' if selected_plan == 'enterprise' else None"/>
                                                         <h5 class="fw-bold mb-1">Enterprise</h5>
                                                         <div class="text-primary fw-bold fs-5 mb-2">2.490.000đ<span class="text-muted fs-6 fw-normal">/tháng</span></div>
@@ -374,7 +374,7 @@
                                         </div>
 
                                         <div class="col-12 mt-4 text-center">
-                                            <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-1 fw-bold shadow-lg">
+                                            <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-1 fw-bold">
                                                 <i class="ph-duotone ph-rocket-launch me-2"/> BẮT ĐẦU 30 NGÀY DÙNG THỬ MIỄN PHÍ TỨC THÌ
                                             </button>
                                             <p class="text-muted small mt-3 mb-0">
@@ -397,7 +397,7 @@
             <t t-set="additional_title">Khởi tạo Không gian Làm việc Thành công! | Insilos SaaS</t>
             <main id="wrap" class="oe_structure bg-100 py-5">
                 <div class="container text-center py-5">
-                    <div class="card shadow border-0 rounded-1 p-4 p-md-5 bg-transparent borderless-obsidian-stage">
+                    <div class="card border border-subtle rounded-1 p-4 p-md-5 bg-view bg-transparent borderless-obsidian-stage">
                         <div class="mb-4">
                             <i class="ph-duotone ph-check-circle text-success" style="font-size: 72px;"/>
                         </div>
@@ -406,11 +406,11 @@
                             Tổ hợp ứng dụng cho <strong><t t-esc="tenant.name if tenant else 'Doanh nghiệp của Bạn'"/></strong> đã được khởi tạo thành công với gói dùng thử miễn phí 30 ngày.
                         </p>
 
-                        <div class="p-3 bg-light rounded-3 border mb-4 text-start">
+                        <div class="p-3 bg-light rounded-1 border mb-4 text-start">
                             <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
                                 <span class="text-muted">Địa chỉ Tenant (Subdomain):</span>
-                                <a t-attf-href="http://#{slug}.insilos.com:18069" target="_blank" class="fw-bold text-primary">
-                                    http://<t t-esc="slug"/>.insilos.com:18069
+                                <a t-att-href="tenant_base_url or ('https://' + slug + '.insilos.com')" target="_blank" rel="noopener noreferrer" class="fw-bold text-primary">
+                                    https://<t t-esc="slug"/>.insilos.com
                                 </a>
                             </div>
                             <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
@@ -428,7 +428,7 @@
                         </div>
 
                         <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-                            <a t-attf-href="http://#{slug}.insilos.com:18069/insilos" target="_blank" class="btn btn-primary btn-lg px-4 py-2 rounded-1 fw-bold">
+                            <a t-att-href="tenant_workspace_url" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg px-4 py-2 rounded-1 fw-bold">
                                 <i class="ph-duotone ph-arrow-square-out me-2"/> TRUY CẬP WORKSPACE NGAY
                             </a>
                             <a href="/industry" class="btn btn-outline-secondary btn-lg px-4 py-2 rounded-1">
@@ -448,14 +448,14 @@
             <main id="wrap" class="oe_structure bg-100 py-5">
                 <div class="container">
                     <div class="text-center mb-4">
-                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2 rounded-1 fs-6 mb-2">
+                        <span class="badge bg-transparent text-warning border border-warning px-3 py-1 rounded-1 fs-6 mb-2">
                             <i class="ph-duotone ph-crown me-1"/> CHUYỂN ĐỔI BẢN QUYỀN CHÍNH THỨC
                         </span>
                         <h2 class="fw-bold text-dark">Nâng Cấp Bản Quyền: <t t-esc="tenant.name"/></h2>
                         <p class="text-muted">Đảm bảo hệ thống vận hành liên tục không gián đoạn sau khi kết thúc 30 ngày dùng thử.</p>
                     </div>
 
-                    <div class="card shadow-sm border-0 rounded-1 overflow-hidden mb-4 bg-view">
+                    <div class="card border border-subtle rounded-1 overflow-hidden mb-4 bg-view">
                         <div class="card-body p-4 p-md-5">
                             <form action="/saas/checkout/confirm" method="post">
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -464,7 +464,7 @@
                                 <h4 class="fw-bold text-primary mb-3">1. Chọn Chu Kỳ Thanh Toán</h4>
                                 <div class="row g-3 mb-4">
                                     <div class="col-md-6">
-                                        <div class="border border-primary border-2 rounded-3 p-3 bg-primary-subtle position-relative">
+                                        <div class="border border-primary border-2 rounded-1 p-3 bg-primary-subtle position-relative">
                                             <span class="badge bg-danger position-absolute top-0 end-0 m-2">TIẾT KIỆM 20%</span>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="billing_cycle" id="cycle_annual" value="annual" checked="checked"/>
@@ -480,7 +480,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="border rounded-3 p-3">
+                                        <div class="border rounded-1 p-3">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="billing_cycle" id="cycle_monthly" value="monthly"/>
                                                 <label class="form-check-label fw-bold text-dark" for="cycle_monthly">
@@ -499,7 +499,7 @@
                                 <h4 class="fw-bold text-primary mb-3">2. Chọn Phương Thức Thanh Toán</h4>
                                 <div class="row g-3 mb-4">
                                     <div class="col-md-4">
-                                        <div class="border rounded-3 p-3 text-center">
+                                        <div class="border rounded-1 p-3 text-center">
                                             <input class="form-check-input mb-2" type="radio" name="payment_method" id="pay_vnpay" value="vnpay" checked="checked"/>
                                             <label class="d-block fw-semibold" for="pay_vnpay">
                                                 <i class="ph-duotone ph-qr-code text-primary fs-3 d-block mb-1"/>
@@ -508,7 +508,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="border rounded-3 p-3 text-center">
+                                        <div class="border rounded-1 p-3 text-center">
                                             <input class="form-check-input mb-2" type="radio" name="payment_method" id="pay_card" value="card"/>
                                             <label class="d-block fw-semibold" for="pay_card">
                                                 <i class="ph-duotone ph-credit-card text-success fs-3 d-block mb-1"/>
@@ -517,7 +517,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="border rounded-3 p-3 text-center">
+                                        <div class="border rounded-1 p-3 text-center">
                                             <input class="form-check-input mb-2" type="radio" name="payment_method" id="pay_bank" value="bank_transfer"/>
                                             <label class="d-block fw-semibold" for="pay_bank">
                                                 <i class="ph-duotone ph-bank text-secondary fs-3 d-block mb-1"/>
@@ -528,7 +528,7 @@
                                 </div>
 
                                 <div class="text-center pt-3 border-top">
-                                    <button type="submit" class="btn btn-success btn-lg px-5 py-3 rounded-1 fw-bold shadow">
+                                    <button type="submit" class="btn btn-success btn-lg px-5 py-3 rounded-1 fw-bold">
                                         <i class="ph-duotone ph-check-fat me-2"/> XÁC NHẬN THANH TOÁN &amp; KÍCH HOẠT BẢN QUYỀN
                                     </button>
                                     <p class="text-muted small mt-2 mb-0">Hóa đơn điện tử VAT sẽ được tự động xuất và gửi tới email quản trị của quý khách.</p>
@@ -547,7 +547,7 @@
             <t t-set="additional_title">Bản Quyền Đã Kích Hoạt Thành Công! | Insilos SaaS</t>
             <main id="wrap" class="oe_structure bg-100 py-5">
                 <div class="container text-center py-5">
-                    <div class="card shadow border-0 rounded-1 p-4 p-md-5 bg-view">
+                    <div class="card border border-subtle rounded-1 p-4 p-md-5 bg-view">
                         <div class="mb-3">
                             <i class="ph-duotone ph-seal-check text-success" style="font-size: 80px;"/>
                         </div>
@@ -556,7 +556,7 @@
                             Tenant <strong><t t-esc="tenant.name if tenant else 'Doanh nghiệp'"/></strong> đã được chuyển sang trạng thái <strong>Bản quyền Chính thức (Paid Active)</strong>.
                         </p>
 
-                        <div class="p-3 bg-light rounded-3 border mb-4 text-start">
+                        <div class="p-3 bg-light rounded-1 border mb-4 text-start">
                             <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
                                 <span class="text-muted">Trạng thái:</span>
                                 <span class="badge bg-success text-white">Đang Hoạt Động (Paid Active)</span>
@@ -567,14 +567,14 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <span class="text-muted">Subdomain làm việc:</span>
-                                <a t-attf-href="http://#{tenant.slug}.insilos.com:18069" target="_blank" class="fw-bold text-primary">
-                                    http://<t t-esc="tenant.slug if tenant else ''"/>.insilos.com:18069
+                                <a t-att-href="tenant_base_url or ('https://' + (slug or (tenant.slug if tenant else 'workspace')) + '.insilos.com')" target="_blank" rel="noopener noreferrer" class="fw-bold text-primary">
+                                    https://<t t-esc="slug or (tenant.slug if tenant else '')"/>.insilos.com
                                 </a>
                             </div>
                         </div>
 
                         <div>
-                            <a t-attf-href="http://#{tenant.slug if tenant else ''}.insilos.com:18069/insilos" target="_blank" class="btn btn-primary btn-lg px-5 py-3 rounded-1 fw-bold">
+                            <a t-att-href="tenant_workspace_url" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg px-5 py-3 rounded-1 fw-bold">
                                 <i class="ph-duotone ph-sign-in me-2"/> VÀO WORKSPACE DOANH NGHIỆP
                             </a>
                         </div>

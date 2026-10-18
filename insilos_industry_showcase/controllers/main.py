@@ -14,6 +14,52 @@ from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
+# RFC 1123 Hostname Label regex: lowercase alphanumeric with single internal hyphens, length 3 to 32
+SLUG_REGEX = re.compile(r'^[a-z0-9](?:[a-z0-9]|-(?!-)){1,30}[a-z0-9]$')
+RESERVED_SLUGS = frozenset({
+    'admin', 'administrator', 'api', 'app', 'assets', 'billing', 'cdn',
+    'core', 'dashboard', 'database', 'dev', 'internal', 'mail', 'portal',
+    'root', 'router', 'secure', 'ssl', 'staging', 'static', 'system', 'vpn', 'www',
+})
+
+
+def sanitize_and_validate_slug(raw_slug: str) -> str:
+    """Validate tenant slug against RFC 1123 specifications and security allowlists.
+    Raises ValidationError on any invalid characters, double hyphens, or reserved names.
+    """
+    if not raw_slug or not isinstance(raw_slug, str):
+        raise ValidationError("Tenant identifier cannot be empty.")
+
+    normalized = raw_slug.strip().lower()
+    if len(normalized) < 3 or len(normalized) > 32:
+        raise ValidationError("Tenant identifier length must be between 3 and 32 characters.")
+
+    if not SLUG_REGEX.match(normalized):
+        raise ValidationError(
+            "Tenant identifier contains invalid characters. Use lowercase letters, digits, and non-consecutive hyphens."
+        )
+
+    if normalized in RESERVED_SLUGS:
+        raise ValidationError(f"Tenant identifier '{normalized}' is reserved by the platform.")
+
+    return normalized
+
+
+def compute_tenant_workspace_url(slug: str) -> str:
+    """Build a canonical HTTPS workspace access URL without cleartext or internal debug ports."""
+    valid_slug = sanitize_and_validate_slug(slug)
+    base_domain = 'insilos.com'
+    try:
+        if request and getattr(request, 'env', None):
+            base_domain = request.env['ir.config_parameter'].sudo().get_param(
+                'insilos.saas.base_domain', 'insilos.com'
+            ) or 'insilos.com'
+    except Exception as exc:
+        _logger.debug("Fallback to default base_domain insilos.com: %s", exc)
+    clean_domain = base_domain.split('://')[-1].split('/')[0].split(':')[0].strip().lower() or 'insilos.com'
+    return f"https://{valid_slug}.{clean_domain}/insilos"
+
+
 
 class IndustryShowcaseController(http.Controller):
 
@@ -99,8 +145,9 @@ class IndustryShowcaseController(http.Controller):
 
         if not re.fullmatch(r'[a-z0-9](?:[a-z0-9_-]{1,62}[a-z0-9])?', template_slug):
             return request.redirect(f"/saas/signup?error=template_invalid&plan={plan_tier}")
-        slug = subdomain
-        if not re.fullmatch(r'[a-z0-9](?:[a-z0-9-]{1,28}[a-z0-9])?', slug):
+        try:
+            slug = sanitize_and_validate_slug(subdomain)
+        except ValidationError:
             return request.redirect(f"/saas/signup?error=subdomain_invalid&plan={plan_tier}")
 
         # DISM-TRL: Collision-resistant deterministic 64-bit signed advisory lock via SHA-256 (CWE-328 / CWE-400)
@@ -213,18 +260,34 @@ class IndustryShowcaseController(http.Controller):
 
         return request.redirect(f"/saas/signup/success?tenant_id={tenant.id}&slug={slug}&status=requested&operation_id={operation.id}")
 
-    @http.route('/saas/signup/success', type='http', auth="public", website=True)
+    @http.route('/saas/signup/success', type='http', auth="public", website=True, sitemap=False)
     def saas_signup_success(self, tenant_id=None, slug=None, **kwargs):
         """Confirmation and onboarding instruction page for the newly created tenant."""
         tenant = None
         if tenant_id:
-            tenant = request.env['insilos.tenant'].sudo().browse(int(tenant_id))
-        elif slug:
-            tenant = request.env['insilos.tenant'].sudo().search([('slug', '=', slug)], limit=1)
+            try:
+                tenant = request.env['insilos.tenant'].sudo().browse(int(tenant_id))
+                if not tenant.exists():
+                    tenant = None
+            except (ValueError, TypeError):
+                tenant = None
+
+        raw_slug = slug or (tenant.slug if tenant else None)
+        try:
+            valid_slug = sanitize_and_validate_slug(raw_slug) if raw_slug else 'workspace'
+            workspace_url = compute_tenant_workspace_url(valid_slug)
+        except ValidationError as exc:
+            _logger.warning("Invalid slug '%s' passed to signup success page: %s", slug, exc)
+            return request.redirect('/industry?error=invalid_tenant_slug')
+
+        if not tenant and valid_slug:
+            tenant = request.env['insilos.tenant'].sudo().search([('slug', '=', valid_slug)], limit=1)
 
         values = {
             'tenant': tenant,
-            'slug': slug or (tenant.slug if tenant else 'workspace'),
+            'slug': valid_slug,
+            'tenant_workspace_url': workspace_url,
+            'tenant_base_url': workspace_url.rsplit('/insilos', 1)[0],
         }
         return request.render('insilos_industry_showcase.saas_signup_success_template', values)
 
@@ -242,14 +305,22 @@ class IndustryShowcaseController(http.Controller):
 
     @http.route('/saas/checkout/confirm', type='http', auth="public", methods=['POST'], website=True, csrf=True, readonly=False)
     def saas_checkout_confirm(self, tenant_id, billing_cycle='annual', payment_method='vnpay', **post):
-        tenant = request.env['insilos.tenant'].sudo().browse(int(tenant_id))
+        try:
+            tid = int(tenant_id)
+        except (ValueError, TypeError):
+            return request.not_found()
+        tenant = request.env['insilos.tenant'].sudo().browse(tid)
         if not tenant.exists() or billing_cycle not in ('annual', 'monthly') or payment_method not in ('vnpay', 'card', 'bank_transfer'):
             return request.not_found()
         return request.redirect(f"/saas/checkout/{tenant.id}?status=payment_pending")
 
     @http.route('/saas/checkout/callback', type='http', auth="public", methods=['POST'], website=False, csrf=False, readonly=False)
     def saas_checkout_callback(self, tenant_id, provider_reference, status, signature, billing_cycle='annual', **post):
-        tenant = request.env['insilos.tenant'].sudo().browse(int(tenant_id))
+        try:
+            tid = int(tenant_id)
+        except (ValueError, TypeError):
+            return request.make_response('invalid', status=400)
+        tenant = request.env['insilos.tenant'].sudo().browse(tid)
         if not tenant.exists() or billing_cycle not in ('annual', 'monthly'):
             return request.make_response('invalid', status=400)
         try:
@@ -258,11 +329,28 @@ class IndustryShowcaseController(http.Controller):
             return request.make_response('invalid', status=400)
         return request.make_response('ok')
 
-    @http.route('/saas/checkout/success', type='http', auth="public", website=True)
+    @http.route('/saas/checkout/success', type='http', auth="public", website=True, sitemap=False)
     def saas_checkout_success(self, tenant_id=None, **kwargs):
         """Success confirmation for paid subscription activation."""
-        tenant = request.env['insilos.tenant'].sudo().browse(int(tenant_id)) if tenant_id else None
+        tenant = None
+        if tenant_id:
+            try:
+                tenant = request.env['insilos.tenant'].sudo().browse(int(tenant_id))
+                if not tenant.exists():
+                    tenant = None
+            except (ValueError, TypeError):
+                tenant = None
+        raw_slug = tenant.slug if tenant and tenant.slug else 'workspace'
+        try:
+            valid_slug = sanitize_and_validate_slug(raw_slug)
+            workspace_url = compute_tenant_workspace_url(valid_slug)
+        except ValidationError:
+            valid_slug = 'workspace'
+            workspace_url = 'https://workspace.insilos.com/insilos'
         values = {
             'tenant': tenant,
+            'slug': valid_slug,
+            'tenant_workspace_url': workspace_url,
+            'tenant_base_url': workspace_url.rsplit('/insilos', 1)[0],
         }
         return request.render('insilos_industry_showcase.saas_checkout_success_template', values)
