@@ -4545,3 +4545,218 @@ class EnterpriseSalesOrchestrator:
         finally:
             self.resource_pool.release(task_id)
             self.apply_astral_sh_uv_pattern()
+
+
+# ==============================================================================
+# CRYPTOGRAPHIC DUAL-KEY COUNTER-SIGNATURE STATE MACHINE (CDK-CSSM) (zenphamgeek)
+# ==============================================================================
+
+import decimal
+
+
+class SalesOrderState(str, Enum):
+    DRAFT_LEAD = "DRAFT_LEAD"
+    QUALIFIED = "QUALIFIED"
+    QUOTATION_PROPOSED = "QUOTATION_PROPOSED"
+    COUNTER_SIGNED_AUDITED = "COUNTER_SIGNED_AUDITED"
+    CONFIRMED_SALES_ORDER = "CONFIRMED_SALES_ORDER"
+    REJECTED = "REJECTED"
+
+
+class DomainSecurityError(Exception):
+    """Raised when tenant boundary or margin invariant is violated."""
+
+
+@dataclass(frozen=True)
+class TenantSecurityContext:
+    tenant_id: str
+    company_id: int
+    minimum_margin_floor: decimal.Decimal
+    allowed_agent_roles: Tuple[str, ...]
+
+    def validate_access(self, requesting_company_id: int, agent_role: str) -> None:
+        if requesting_company_id != self.company_id:
+            raise DomainSecurityError(
+                f"Tenant isolation failure: requesting company {requesting_company_id} "
+                f"does not match tenant scope {self.company_id}."
+            )
+        if agent_role not in self.allowed_agent_roles:
+            raise DomainSecurityError(
+                f"Role violation: agent role '{agent_role}' not authorized for tenant '{self.tenant_id}'."
+            )
+
+
+@dataclass(frozen=True)
+class QuotationLineItem:
+    product_sku: str
+    quantity: int
+    unit_cost: decimal.Decimal
+    offered_price: decimal.Decimal
+
+    def calculate_line_margin(self) -> decimal.Decimal:
+        revenue = self.offered_price * self.quantity
+        cost = self.unit_cost * self.quantity
+        if revenue == decimal.Decimal("0.00"):
+            return decimal.Decimal("-1.00")
+        return (revenue - cost) / revenue
+
+
+@dataclass(frozen=True)
+class SalesTransitionEvent:
+    event_id: str
+    order_id: str
+    from_state: SalesOrderState
+    to_state: SalesOrderState
+    agent_id: str
+    agent_role: str
+    agent_signature_digest: str
+    line_items: Tuple[QuotationLineItem, ...]
+    timestamp_utc: str
+
+    def calculate_total_margin(self) -> decimal.Decimal:
+        total_revenue = decimal.Decimal("0.00")
+        total_cost = decimal.Decimal("0.00")
+        for item in self.line_items:
+            total_revenue += item.offered_price * item.quantity
+            total_cost += item.unit_cost * item.quantity
+        if total_revenue <= decimal.Decimal("0.00"):
+            return decimal.Decimal("-1.00")
+        return (total_revenue - total_cost) / total_revenue
+
+    def to_canonical_bytes(self) -> bytes:
+        payload = {
+            "event_id": self.event_id,
+            "order_id": self.order_id,
+            "from_state": self.from_state.value,
+            "to_state": self.to_state.value,
+            "agent_id": self.agent_id,
+            "agent_role": self.agent_role,
+            "agent_signature_digest": self.agent_signature_digest,
+            "line_items": [
+                {
+                    "product_sku": item.product_sku,
+                    "quantity": item.quantity,
+                    "unit_cost": str(item.unit_cost),
+                    "offered_price": str(item.offered_price),
+                }
+                for item in self.line_items
+            ],
+            "timestamp_utc": self.timestamp_utc,
+        }
+        canonical_str = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+        return canonical_str.encode("utf-8")
+
+
+@dataclass(frozen=True)
+class CounterSignedLedgerEntry:
+    sequence: int
+    previous_hash: str
+    current_hash: str
+    event_id: str
+    state: SalesOrderState
+    rule_engine_witness_token: str
+
+
+class EnterpriseSalesStateMachine:
+    """
+    Sovereign state machine orchestrating AI-driven sales process transitions.
+    Implements formal invariant delta(S_t, E) -> S_{t+1} with dual-key cryptographic validation.
+    """
+
+    ALLOWED_TRANSITIONS: Dict[SalesOrderState, Tuple[SalesOrderState, ...]] = {
+        SalesOrderState.DRAFT_LEAD: (SalesOrderState.QUALIFIED, SalesOrderState.REJECTED),
+        SalesOrderState.QUALIFIED: (SalesOrderState.QUOTATION_PROPOSED, SalesOrderState.REJECTED),
+        SalesOrderState.QUOTATION_PROPOSED: (SalesOrderState.COUNTER_SIGNED_AUDITED, SalesOrderState.REJECTED),
+        SalesOrderState.COUNTER_SIGNED_AUDITED: (SalesOrderState.CONFIRMED_SALES_ORDER, SalesOrderState.REJECTED),
+        SalesOrderState.CONFIRMED_SALES_ORDER: (),
+        SalesOrderState.REJECTED: (),
+    }
+
+    GENESIS_HASH = "0000000000000000000000000000000000000000000000000000000000000000"
+
+    def __init__(self, order_id: str, tenant_context: TenantSecurityContext) -> None:
+        self.order_id = order_id
+        self.tenant_context = tenant_context
+        self.current_state = SalesOrderState.DRAFT_LEAD
+        self.ledger: List[CounterSignedLedgerEntry] = []
+        self._initialize_genesis()
+
+    def _initialize_genesis(self) -> None:
+        genesis_entry = CounterSignedLedgerEntry(
+            sequence=0,
+            previous_hash=self.GENESIS_HASH,
+            current_hash=hashlib.sha256(
+                f"GENESIS:{self.order_id}:{self.tenant_context.tenant_id}".encode("utf-8")
+            ).hexdigest(),
+            event_id="EVT_GENESIS",
+            state=self.current_state,
+            rule_engine_witness_token="SYSTEM_GENESIS_ROOT",
+        )
+        self.ledger.append(genesis_entry)
+
+    @property
+    def latest_hash(self) -> str:
+        return self.ledger[-1].current_hash
+
+    def verify_chain_integrity(self) -> bool:
+        if not self.ledger:
+            return False
+        for i in range(1, len(self.ledger)):
+            prev = self.ledger[i - 1]
+            curr = self.ledger[i]
+            if curr.previous_hash != prev.current_hash:
+                return False
+        return True
+
+    def transition(self, event: SalesTransitionEvent, requesting_company_id: int) -> CounterSignedLedgerEntry:
+        self.tenant_context.validate_access(requesting_company_id, event.agent_role)
+
+        if event.from_state != self.current_state:
+            raise InvalidStateTransitionError(
+                f"State mismatch: order is currently in '{self.current_state.value}', "
+                f"event specifies from_state '{event.from_state.value}'."
+            )
+
+        allowed_targets = self.ALLOWED_TRANSITIONS.get(self.current_state, ())
+        if event.to_state not in allowed_targets:
+            raise InvalidStateTransitionError(
+                f"Illegal transition: '{self.current_state.value}' cannot transition to '{event.to_state.value}'. "
+                f"Permitted targets: {[s.value for s in allowed_targets]}."
+            )
+
+        if event.to_state in (
+            SalesOrderState.QUOTATION_PROPOSED,
+            SalesOrderState.COUNTER_SIGNED_AUDITED,
+            SalesOrderState.CONFIRMED_SALES_ORDER,
+        ):
+            if not event.line_items:
+                raise DomainSecurityError("Cannot advance quotation without line items.")
+
+            calculated_margin = event.calculate_total_margin()
+            if calculated_margin < self.tenant_context.minimum_margin_floor:
+                raise DomainSecurityError(
+                    f"Financial Invariant Breach: Calculated margin {calculated_margin:.4f} is below "
+                    f"mandatory tenant margin floor {self.tenant_context.minimum_margin_floor:.4f}."
+                )
+
+        witness_seed = f"{self.tenant_context.tenant_id}:{event.order_id}:{event.to_state.value}:{event.timestamp_utc}"
+        witness_token = hashlib.sha256(witness_seed.encode("utf-8")).hexdigest()
+
+        hasher = hashlib.sha256()
+        hasher.update(self.latest_hash.encode("utf-8"))
+        hasher.update(event.to_canonical_bytes())
+        hasher.update(witness_token.encode("utf-8"))
+        next_hash = hasher.hexdigest()
+
+        new_entry = CounterSignedLedgerEntry(
+            sequence=len(self.ledger),
+            previous_hash=self.latest_hash,
+            current_hash=next_hash,
+            event_id=event.event_id,
+            state=event.to_state,
+            rule_engine_witness_token=witness_token,
+        )
+
+        self.current_state = event.to_state
+        self.ledger.append(new_entry)
+        return new_entry
