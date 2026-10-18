@@ -51,7 +51,7 @@ MAX_IN_MEMORY_NONCE_ENTRIES = 4096
 
 def sanitize_and_validate_slug(raw_slug: str) -> str:
     """Validate tenant slug against RFC 1123 specifications and security allowlists.
-    Enforces NFKC normalization, ASCII constraints, and reserved slug protection.
+    Enforces NFKC normalization, ASCII constraints, numeric-only block, and reserved slug protection.
     """
     if not raw_slug or not isinstance(raw_slug, str):
         raise ValidationError("Tenant identifier cannot be empty.")
@@ -68,12 +68,16 @@ def sanitize_and_validate_slug(raw_slug: str) -> str:
     if normalized in RESERVED_SLUGS:
         raise ValidationError(f"Tenant identifier '{normalized}' is reserved by the platform.")
 
+    if normalized.replace('-', '').isdigit():
+        raise ValidationError("Tenant identifier cannot consist exclusively of numbers and hyphens.")
+
     return normalized
 
 
 def _resolve_onboarding_hmac_secret(env) -> str:
     """Retrieve the platform signing secret from ir.config_parameter without static key literals.
     Prefers dedicated 'insilos.onboarding.secret' before falling back to 'database.secret'.
+    Sanitizes external exception messages to prevent internal parameter name disclosure (CWE-209).
     """
     secret = None
     try:
@@ -81,22 +85,39 @@ def _resolve_onboarding_hmac_secret(env) -> str:
             param_obj = env['ir.config_parameter'].sudo()
             secret = param_obj.get_param('insilos.onboarding.secret') or param_obj.get_param('database.secret')
     except Exception as exc:
-        _logger.warning("Failed to read signing secret from ir.config_parameter: %s", exc)
+        _logger.error("Failed to read signing secret from ir.config_parameter: %s", exc)
     if not secret or not isinstance(secret, str) or not secret.strip():
-        raise ValidationError("Missing database.secret configuration parameter for HMAC token signing.")
+        _logger.critical("Missing onboarding HMAC signing secret in system configuration.")
+        raise ValidationError("Tenant onboarding authentication is misconfigured.")
     return secret.strip()
+
+
+def _hkdf_extract_and_expand(salt: bytes, ikm: bytes, info: bytes, length: int = 32) -> bytes:
+    """RFC 5869 compliant HKDF extract-and-expand key derivation using HMAC-SHA256."""
+    if not salt:
+        salt = b"\x00" * 32
+    prk = hmac.new(salt, ikm, hashlib.sha256).digest()
+    t = b""
+    okm = b""
+    i = 1
+    while len(okm) < length:
+        t = hmac.new(prk, t + info + bytes([i]), hashlib.sha256).digest()
+        okm += t
+        i += 1
+    return okm[:length]
 
 
 def _derive_domain_hmac_secret(env, domain_context: bytes) -> bytes:
     """Derive an isolated, purpose-specific HMAC subkey from the platform root secret
-    using HKDF-style context extraction to prevent cross-protocol signature forgery.
+    using RFC 5869 HKDF context extraction and expansion to prevent cross-protocol signature forgery.
     """
-    raw_root_secret = _resolve_onboarding_hmac_secret(env)
-    return hmac.new(
-        raw_root_secret.encode('utf-8'),
-        bytes(domain_context),
-        hashlib.sha256,
-    ).digest()
+    raw_root_secret = _resolve_onboarding_hmac_secret(env).encode('utf-8')
+    return _hkdf_extract_and_expand(
+        salt=b"insilos-sovereign-hkdf-salt-v1",
+        ikm=raw_root_secret,
+        info=bytes(domain_context),
+        length=32,
+    )
 
 
 def consume_nonce_atomic(registry, db_name: str, nonce: str, tenant_id: int, slug: str, expiry_ts: int) -> bool:
@@ -220,6 +241,8 @@ def acquire_onboarding_wip_slot(env, max_wip_slots: int = DEFAULT_MAX_WIP_SLOTS)
 
     for slot_idx in range(1, max_wip_slots + 1):
         lock_id = KANBAN_LOCK_BASE_KEY + slot_idx
+        if lock_id > 0x7FFFFFFFFFFFFFFF:
+            lock_id -= 0x10000000000000000
         cr.execute("SELECT pg_try_advisory_xact_lock(%s);", (lock_id,))
         row = cr.fetchone()
         if row and row[0]:
@@ -238,6 +261,131 @@ def acquire_onboarding_wip_slot(env, max_wip_slots: int = DEFAULT_MAX_WIP_SLOTS)
         yield acquired_slot
     finally:
         _logger.info("Released Kanban Onboarding WIP Slot [%d/%d]", acquired_slot, max_wip_slots)
+
+
+@contextmanager
+def acquire_kanban_wip_slot(env, max_slots: int = DEFAULT_MAX_WIP_SLOTS):
+    """Acquire a Kanban migration slot using PostgreSQL transaction-level advisory locks
+    with signed 64-bit bigint boundary normalization.
+    """
+    cr = env.cr
+    acquired_slot = None
+    for slot_idx in range(max_slots):
+        lock_key = KANBAN_LOCK_BASE_KEY + slot_idx
+        if lock_key > 0x7FFFFFFFFFFFFFFF:
+            lock_key -= 0x10000000000000000
+
+        cr.execute("SELECT pg_try_advisory_xact_lock(%s);", (lock_key,))
+        row = cr.fetchone()
+        if row and row[0]:
+            acquired_slot = slot_idx
+            break
+
+    if acquired_slot is None:
+        raise UserError(
+            f"System is currently running at maximum migration capacity ({max_slots} concurrent slots). "
+            "Please retry in a few moments."
+        )
+
+    try:
+        _logger.info("Acquired Kanban WIP migration slot %d under transactional lock.", acquired_slot)
+        yield acquired_slot
+    finally:
+        _logger.info("Releasing Kanban WIP slot context %d (deferred to xact commit/abort).", acquired_slot)
+
+
+def consume_onboarding_nonce(env, nonce: str, slug: str, expires_at_timestamp: int) -> bool:
+    """Atomically consume an onboarding nonce in PostgreSQL across all worker processes."""
+    if not nonce or not isinstance(nonce, str) or len(nonce) < 16 or len(nonce) > 64:
+        return False
+
+    cr = env.cr
+    cr.execute("""
+        CREATE TABLE IF NOT EXISTS insilos_onboarding_nonce_ledger (
+            nonce VARCHAR(64) PRIMARY KEY,
+            tenant_slug VARCHAR(64) NOT NULL,
+            consumed_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC') NOT NULL,
+            expires_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+        );
+        CREATE INDEX IF NOT EXISTS idx_insilos_nonce_expiry
+        ON insilos_onboarding_nonce_ledger (expires_at);
+    """)
+
+    try:
+        cr.execute("""
+            DELETE FROM insilos_onboarding_nonce_ledger
+            WHERE expires_at < (NOW() AT TIME ZONE 'UTC') - INTERVAL '1 hour'
+        """)
+    except Exception as exc:
+        _logger.warning("Nonce cleanup encountered non-fatal error: %s", exc)
+
+    try:
+        cr.execute("""
+            INSERT INTO insilos_onboarding_nonce_ledger (nonce, tenant_slug, expires_at)
+            VALUES (%s, %s, TO_TIMESTAMP(%s) AT TIME ZONE 'UTC')
+            ON CONFLICT (nonce) DO NOTHING
+            RETURNING nonce;
+        """, (nonce, slug, expires_at_timestamp))
+        inserted = cr.fetchone()
+        return bool(inserted)
+    except Exception as exc:
+        _logger.error("Failed to commit nonce to persistent ledger: %s", exc)
+        return False
+
+
+def verify_onboarding_token_v1(env, token: str) -> dict:
+    """Parse and verify 6-part canonical onboarding token with fixed-width SHA-256 segment hashes.
+    Format: v1.<slug>.<issued_ts>.<expiry_ts>.<nonce>.<hmac_hex>
+    """
+    if not token or not isinstance(token, str):
+        raise AccessError("Invalid token format.")
+
+    parts = token.strip().split('.')
+    if len(parts) != 6 or parts[0] != 'v1':
+        raise AccessError("Malformed or unsupported token version.")
+
+    _, slug_raw, issued_str, expiry_str, nonce, signature_hex = parts
+
+    slug = sanitize_and_validate_slug(slug_raw)
+    try:
+        issued_ts = int(issued_str)
+        expiry_ts = int(expiry_str)
+    except ValueError:
+        raise AccessError("Token contains non-integer timestamps.")
+
+    now = int(time.time())
+    if issued_ts > now + MAX_ALLOWED_CLOCK_SKEW_SECONDS:
+        raise AccessError("Token issued in the future. Check system clock synchronization.")
+
+    if now > expiry_ts:
+        raise AccessError("Onboarding token has expired.")
+
+    if expiry_ts - issued_ts > SIGNUP_TOKEN_TTL_SECONDS + MAX_ALLOWED_CLOCK_SKEW_SECONDS:
+        raise AccessError("Token validity window exceeds permitted TTL.")
+
+    derived_key = _derive_domain_hmac_secret(env, HMAC_ONBOARDING_CONTEXT)
+
+    canonical_payload = (
+        hashlib.sha256(b"v1").hexdigest() + ":" +
+        hashlib.sha256(slug.encode('utf-8')).hexdigest() + ":" +
+        hashlib.sha256(str(issued_ts).encode('ascii')).hexdigest() + ":" +
+        hashlib.sha256(str(expiry_ts).encode('ascii')).hexdigest() + ":" +
+        hashlib.sha256(nonce.encode('utf-8')).hexdigest()
+    ).encode('ascii')
+
+    expected_signature = hmac.new(derived_key, canonical_payload, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(expected_signature, signature_hex):
+        raise AccessError("Invalid cryptographic token signature.")
+
+    if not consume_onboarding_nonce(env, nonce, slug, expiry_ts):
+        raise AccessError("Onboarding token has already been consumed.")
+
+    return {
+        'slug': slug,
+        'issued_ts': issued_ts,
+        'expiry_ts': expiry_ts,
+        'nonce': nonce,
+    }
 
 
 def _ensure_nonce_ledger_table(cr):
