@@ -5473,13 +5473,35 @@ class MerkleTransparencyLog:
     ) -> bool:
         current = leaf_hash
         for sibling, direction in proof:
-            if direction == "right":
+            if direction in ("right", "R"):
                 current = hashlib.sha256((current + sibling).encode("utf-8")).hexdigest()
-            elif direction == "left":
+            elif direction in ("left", "L"):
                 current = hashlib.sha256((sibling + current).encode("utf-8")).hexdigest()
             else:
                 raise IntegrityViolationError(f"Invalid proof direction: {direction}")
         return current == expected_root
+
+    def append_event(self, state_hash: str) -> int:
+        """Appends a new state hash leaf and updates the Merkle tree."""
+        self.entries.append(state_hash.encode("utf-8"))
+        self._recompute_tree()
+        return len(self.entries) - 1
+
+    def get_root(self) -> str:
+        return self.get_root_hash()
+
+    def get_inclusion_proof(self, leaf_index: int) -> List[Tuple[str, str]]:
+        if leaf_index < 0 or leaf_index >= len(self.entries):
+            raise IndexError("Leaf index out of bounds")
+        raw_proof = self.generate_inclusion_proof(leaf_index)
+        return [(sib, "L" if d == "left" else "R") for sib, d in raw_proof]
+
+    @classmethod
+    def verify_inclusion(
+        cls, leaf_hash: str, proof: List[Tuple[str, str]], expected_root: str
+    ) -> bool:
+        return cls.verify_inclusion_proof(leaf_hash, proof, expected_root)
+
 
 
 class PubGrubQuotationSolver:
@@ -6143,10 +6165,21 @@ class ReplicatedSalesLeadCRDT:
 class CRDTRegister:
     """Multi-Value Register with Last-Write-Wins and Replica ID tie-breaking."""
 
-    def __init__(self, value: Any, timestamp: float, replica_id: str) -> None:
+    def __init__(
+        self,
+        value: Any = None,
+        timestamp: float = 0,
+        replica_id: str = "",
+        *,
+        actor_id: Optional[str] = None,
+    ) -> None:
         self.value = value
         self.timestamp = timestamp
-        self.replica_id = replica_id
+        self.replica_id = actor_id if actor_id is not None else replica_id
+
+    @property
+    def actor_id(self) -> str:
+        return self.replica_id
 
     def update(self, value: Any, timestamp: float, replica_id: str) -> bool:
         if (timestamp, replica_id) > (self.timestamp, self.replica_id):
@@ -6155,6 +6188,11 @@ class CRDTRegister:
             self.replica_id = replica_id
             return True
         return False
+
+    def merge(self, other: "CRDTRegister") -> "CRDTRegister":
+        if (other.timestamp, other.replica_id) > (self.timestamp, self.replica_id):
+            return CRDTRegister(other.value, other.timestamp, other.replica_id)
+        return self
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -6698,9 +6736,260 @@ class UvPubGrubCacheManager:
         return env_dir
 
 
+class MemoryLimitExceededError(Exception):
+    """Raised when memory consumption exceeds the strict upper bound M_max."""
 
 
+class CRDTMap:
+    """
+    Conflict-Free Replicated JSON Object Map supporting commutative concurrent edits (arXiv:1608.03960).
+    """
+
+    def __init__(self, map_id: str) -> None:
+        self.map_id = map_id
+        self.entries: Dict[str, CRDTRegister] = {}
+
+    def set_field(self, key: str, value: Any, timestamp: int, replica_id: str) -> None:
+        new_register = CRDTRegister(value, timestamp, replica_id)
+        if key in self.entries:
+            self.entries[key] = self.entries[key].merge(new_register)
+        else:
+            self.entries[key] = new_register
+
+    def get_field(self, key: str) -> Optional[Any]:
+        reg = self.entries.get(key)
+        return reg.value if reg is not None else None
+
+    def merge(self, other: "CRDTMap") -> "CRDTMap":
+        """Commutative, associative, idempotent merge of two CRDT maps."""
+        merged = CRDTMap(self.map_id)
+        all_keys: Set[str] = set(self.entries.keys()).union(other.entries.keys())
+        for k in all_keys:
+            if k in self.entries and k in other.entries:
+                merged.entries[k] = self.entries[k].merge(other.entries[k])
+            elif k in self.entries:
+                merged.entries[k] = self.entries[k]
+            else:
+                merged.entries[k] = other.entries[k]
+        return merged
+
+    def compute_state_hash(self) -> str:
+        """Generates deterministic SHA-256 hash of sorted key-value state."""
+        canonical_repr = {
+            k: self.entries[k].to_dict() for k in sorted(self.entries.keys())
+        }
+        raw = json.dumps(canonical_repr, sort_keys=True)
+        return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
+class PubGrubDealRuleSolver:
+    """
+    Constraint solver adapted from astral-sh/uv PubGrub principles.
+    Enforces bounded memory constraint: M(t) <= M_max with O(1) slot recycling.
+    """
+
+    def __init__(self, max_memory_slots: int = 128) -> None:
+        self.max_memory_slots = max_memory_slots
+        self.active_slots: Dict[str, Any] = {}
+        self.rules: Dict[str, List[Tuple[str, str]]] = {}
+
+    def register_incompatibility(self, item_a: str, item_b: str, reason: str) -> None:
+        self.rules.setdefault(item_a, []).append((item_b, reason))
+        self.rules.setdefault(item_b, []).append((item_a, reason))
+
+    def allocate_slot(self, slot_id: str, payload: Any) -> None:
+        """Strict bounding check: M(t) <= M_max."""
+        if len(self.active_slots) >= self.max_memory_slots:
+            raise MemoryLimitExceededError(
+                f"Memory invariant violated: {len(self.active_slots)} >= {self.max_memory_slots}"
+            )
+        self.active_slots[slot_id] = payload
+
+    def release_slot(self, slot_id: str) -> None:
+        """O(1) slot recycling."""
+        if slot_id in self.active_slots:
+            del self.active_slots[slot_id]
+
+    def solve_feasibility(self, selected_items: List[str]) -> Tuple[bool, Optional[str]]:
+        selected_set = set(selected_items)
+        for item in selected_items:
+            incompatibilities = self.rules.get(item, [])
+            for incompatible_item, reason in incompatibilities:
+                if incompatible_item in selected_set:
+                    return (
+                        False,
+                        f"Conflict between '{item}' and '{incompatible_item}': {reason}",
+                    )
+        return True, None
 
 
+class MultiTenantRecordRuleEngine:
+    """
+    Row-Level Security & Multi-Company Domain Engine adapted from odoo/odoo.
+    """
+
+    def __init__(self) -> None:
+        self.company_hierarchy: Dict[int, Optional[int]] = {}
+        self.records: List[Dict[str, Any]] = []
+
+    def register_company(self, company_id: int, parent_id: Optional[int] = None) -> None:
+        self.company_hierarchy[company_id] = parent_id
+
+    def add_record(self, record_id: str, company_id: int, data: Dict[str, Any]) -> None:
+        self.records.append(
+            {
+                "id": record_id,
+                "company_id": company_id,
+                "data": data,
+            }
+        )
+
+    def filter_records(self, allowed_company_ids: List[int]) -> List[Dict[str, Any]]:
+        allowed_set = set(allowed_company_ids)
+        effective_set = set(allowed_set)
+        for child_id, parent_id in self.company_hierarchy.items():
+            if parent_id in allowed_set:
+                effective_set.add(child_id)
+
+        return [r for r in self.records if r["company_id"] in effective_set]
+
+
+class DealDeskSalesQuoteCRDT:
+    """
+    Conflict-Free Replicated JSON Document for Enterprise Sales Quotations.
+    Implements arXiv:1608.03960 lattice convergence for concurrent deal-desk edits.
+    """
+
+    def __init__(self, quote_id: str) -> None:
+        self.quote_id = quote_id
+        self._fields: Dict[str, CRDTRegister] = {}
+        self._items: Dict[str, Dict[str, CRDTRegister]] = {}
+
+    def update_field(
+        self, field_name: str, value: Any, timestamp: int, actor_id: str
+    ) -> None:
+        new_reg = CRDTRegister(timestamp=timestamp, actor_id=actor_id, value=value)
+        if field_name in self._fields:
+            self._fields[field_name] = self._fields[field_name].merge(new_reg)
+        else:
+            self._fields[field_name] = new_reg
+
+    def update_item(
+        self, sku: str, property_name: str, value: Any, timestamp: int, actor_id: str
+    ) -> None:
+        if sku not in self._items:
+            self._items[sku] = {}
+        new_reg = CRDTRegister(timestamp=timestamp, actor_id=actor_id, value=value)
+        if property_name in self._items[sku]:
+            self._items[sku][property_name] = self._items[sku][property_name].merge(
+                new_reg
+            )
+        else:
+            self._items[sku][property_name] = new_reg
+
+    def merge_remote(self, remote: "DealDeskSalesQuoteCRDT") -> "DealDeskSalesQuoteCRDT":
+        merged = DealDeskSalesQuoteCRDT(quote_id=self.quote_id)
+        all_keys = set(self._fields.keys()).union(remote._fields.keys())
+        for k in all_keys:
+            if k in self._fields and k in remote._fields:
+                merged._fields[k] = self._fields[k].merge(remote._fields[k])
+            elif k in self._fields:
+                merged._fields[k] = self._fields[k]
+            else:
+                merged._fields[k] = remote._fields[k]
+
+        all_skus = set(self._items.keys()).union(remote._items.keys())
+        for sku in all_skus:
+            merged._items[sku] = {}
+            props = set(self._items.get(sku, {}).keys()).union(
+                remote._items.get(sku, {}).keys()
+            )
+            for p in props:
+                in_self = self._items.get(sku, {}).get(p)
+                in_remote = remote._items.get(sku, {}).get(p)
+                if in_self is not None and in_remote is not None:
+                    merged._items[sku][p] = in_self.merge(in_remote)
+                elif in_self is not None:
+                    merged._items[sku][p] = in_self
+                elif in_remote is not None:
+                    merged._items[sku][p] = in_remote
+        return merged
+
+    def to_canonical_dict(self) -> Dict[str, Any]:
+        return {
+            "quote_id": self.quote_id,
+            "fields": {k: self._fields[k].value for k in sorted(self._fields.keys())},
+            "items": {
+                sku: {
+                    p: self._items[sku][p].value for p in sorted(self._items[sku].keys())
+                }
+                for sku in sorted(self._items.keys())
+            },
+        }
+
+
+class TransparencyTreeVerifier:
+    """
+    Merkle Tree Cryptographic Verifier for Sales Concession Audits.
+    Implements formal transparency protocol invariants (arXiv:2303.04500).
+    """
+
+    @staticmethod
+    def hash_leaf(data: Dict[str, Any]) -> str:
+        serialized = json.dumps(data, sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+    @staticmethod
+    def combine_hashes(left: str, right: str) -> str:
+        payload = f"{left}:{right}".encode("utf-8")
+        return hashlib.sha256(payload).hexdigest()
+
+    def build_audit_root(self, records: List[Dict[str, Any]]) -> str:
+        if not records:
+            raise ValueError("Audit log cannot be empty for root calculation.")
+        current_level = [self.hash_leaf(r) for r in records]
+        while len(current_level) > 1:
+            if len(current_level) % 2 != 0:
+                current_level.append(current_level[-1])
+            next_level = []
+            for i in range(0, len(current_level), 2):
+                next_level.append(
+                    self.combine_hashes(current_level[i], current_level[i + 1])
+                )
+            current_level = next_level
+        return current_level[0]
+
+
+class PubGrubCPQValidator:
+    """
+    CPQ Constraint Solver inspired by astral-sh/uv PubGrub solver.
+    Validates product dependency closures and incompatibilities.
+    """
+
+    def __init__(self) -> None:
+        self.dependencies: Dict[str, Set[str]] = {}
+        self.incompatibilities: Dict[str, Set[str]] = {}
+
+    def add_dependency(self, sku: str, requires_sku: str) -> None:
+        self.dependencies.setdefault(sku, set()).add(requires_sku)
+
+    def add_incompatibility(self, sku: str, conflicts_with: str) -> None:
+        self.incompatibilities.setdefault(sku, set()).add(conflicts_with)
+        self.incompatibilities.setdefault(conflicts_with, set()).add(sku)
+
+    def validate_cart(self, selected_skus: Set[str]) -> Tuple[bool, List[str]]:
+        errors: List[str] = []
+        for sku in selected_skus:
+            reqs = self.dependencies.get(sku, set())
+            missing = reqs - selected_skus
+            if missing:
+                errors.append(
+                    f"SKU '{sku}' requires missing dependency: {sorted(list(missing))}"
+                )
+            conflicts = self.incompatibilities.get(sku, set())
+            active_conflicts = conflicts.intersection(selected_skus)
+            if active_conflicts:
+                errors.append(
+                    f"SKU '{sku}' is incompatible with present items: {sorted(list(active_conflicts))}"
+                )
+        return len(errors) == 0, errors
