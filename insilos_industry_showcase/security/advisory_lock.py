@@ -1302,6 +1302,7 @@ class ASTFormulaSandboxError(FormulaSanitizationError, SecurityViolationError):
 
 FormulaSecurityViolation = ASTFormulaSandboxError
 SecurityFormulaEvaluationError = ASTFormulaSandboxError
+FormulaSecurityError = ASTFormulaSandboxError
 
 
 class TenantSecurityError(PermissionError, TenantBoundaryViolation, SecurityViolationError):
@@ -1315,8 +1316,30 @@ class TenantIsolationError(TenantSecurityError):
 TenantSecurityException = TenantIsolationError
 
 
+class _DualCanonicalTupleDescriptor:
+    """Allows HeterogeneousLockKey.canonical_tuple to act as an instance property -> Tuple[int, int] and a classmethod canonical_tuple(class_id, object_id) -> Tuple[int, int]."""
+
+    def __get__(self, instance: Optional["HeterogeneousLockKey"], owner: type) -> Any:
+        if instance is not None:
+            return instance._hash_pair
+        return owner._canonical_tuple_from_ints
+
+
+class _HybridAcquireAllList(list):
+    """List of acquired (int4, int4) lock pairs that also acts as a context manager for with-statement compatibility."""
+
+    def __enter__(self) -> "_HybridAcquireAllList":
+        return self
+
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        return None
+
+
 class HeterogeneousLockKey:
     """Immutable composite key guaranteeing global monotonic lock ordering across Redis, PG Advisory, PG Row, and Logical LockTiers."""
+
+    INT4_MIN: int = -2147483648
+    INT4_MAX: int = 2147483647
 
     __slots__ = (
         "tier",
@@ -1438,15 +1461,24 @@ class HeterogeneousLockKey:
             )
             self._mode = "4arg"
 
+    @classmethod
+    def to_signed_int4(cls, val: int) -> int:
+        normalized = int(val) & 0xFFFFFFFF
+        if normalized > cls.INT4_MAX:
+            return normalized - 0x100000000
+        return normalized
+
+    @classmethod
+    def _canonical_tuple_from_ints(cls, class_id: int, object_id: int) -> Tuple[int, int]:
+        return (cls.to_signed_int4(class_id), cls.to_signed_int4(object_id))
+
     @staticmethod
     def _compute_canonical_hash_pair(ns: str, res: str) -> Tuple[int, int]:
         digest = hashlib.sha256(f"{ns}:{res}".encode("utf-8")).digest()
         k1, k2 = struct.unpack(">ii", digest[:8])
         return (k1, k2)
 
-    @property
-    def canonical_tuple(self) -> Tuple[int, int]:
-        return self._hash_pair
+    canonical_tuple = _DualCanonicalTupleDescriptor()
 
     @classmethod
     def create(cls, tier_name: str, resource_id: str) -> "HeterogeneousLockKey":
@@ -1466,35 +1498,11 @@ class HeterogeneousLockKey:
 
     @classmethod
     @contextmanager
-    def acquire_all(
+    def _acquire_all_thread_locks(
         cls,
-        cursor_or_keys: Any,
-        keys_or_timeout: Optional[Any] = None,
-        timeout_seconds: float = 5.0,
+        keys: List["HeterogeneousLockKey"],
+        eff_timeout: float,
     ):
-        if hasattr(cursor_or_keys, "execute"):
-            cursor = cursor_or_keys
-            seq_keys = list(keys_or_timeout) if keys_or_timeout else []
-            if not seq_keys:
-                yield []
-                return
-            sorted_db_keys: List[HeterogeneousLockKey] = sorted(
-                seq_keys, key=lambda k: (k.canonical_tuple[0], k.canonical_tuple[1])
-            )
-            acquired_db_locks: List[Tuple[int, int]] = []
-            for lk in sorted_db_keys:
-                k1, k2 = lk.canonical_tuple
-                cursor.execute("SELECT pg_advisory_xact_lock(%s, %s);", (k1, k2))
-                acquired_db_locks.append((k1, k2))
-            yield acquired_db_locks
-            return
-
-        keys: List[HeterogeneousLockKey] = list(cursor_or_keys) if cursor_or_keys else []
-        eff_timeout = (
-            float(keys_or_timeout)
-            if isinstance(keys_or_timeout, (int, float))
-            else float(timeout_seconds)
-        )
         if not keys:
             yield []
             return
@@ -1516,6 +1524,39 @@ class HeterogeneousLockKey:
         finally:
             for _, lock_instance in reversed(acquired_locks):
                 lock_instance.release()
+
+    @classmethod
+    def acquire_all(
+        cls,
+        cursor_or_keys: Any,
+        keys_or_timeout: Optional[Any] = None,
+        timeout_seconds: float = 5.0,
+    ) -> Any:
+        if hasattr(cursor_or_keys, "execute"):
+            cursor = cursor_or_keys
+            seq_keys = list(keys_or_timeout) if keys_or_timeout else []
+            if not seq_keys:
+                return _HybridAcquireAllList([])
+            normalized_pairs = set()
+            for item in seq_keys:
+                if isinstance(item, HeterogeneousLockKey):
+                    normalized_pairs.add(item._hash_pair)
+                elif isinstance(item, (tuple, list)) and len(item) == 2:
+                    normalized_pairs.add(cls._canonical_tuple_from_ints(int(item[0]), int(item[1])))
+                else:
+                    raise TypeError(f"Unsupported lock key element: {item!r}")
+            sorted_pairs = sorted(normalized_pairs, key=lambda x: (x[0], x[1]))
+            for c_id, o_id in sorted_pairs:
+                cursor.execute("SELECT pg_advisory_xact_lock(%s, %s);", (c_id, o_id))
+            return _HybridAcquireAllList(sorted_pairs)
+
+        keys: List[HeterogeneousLockKey] = list(cursor_or_keys) if cursor_or_keys else []
+        eff_timeout = (
+            float(keys_or_timeout)
+            if isinstance(keys_or_timeout, (int, float))
+            else float(timeout_seconds)
+        )
+        return cls._acquire_all_thread_locks(keys, eff_timeout)
 
     def as_tuple(self) -> Tuple[Any, ...]:
         if self._mode == "str2arg":
@@ -2221,6 +2262,8 @@ class HardenedEnterpriseFormulaGuard(ScopedEnterpriseFormulaGuard):
     """Enforces fail-closed AST sandboxing with explicit node allowlist, recursion limits, MAX_NODES bound, and NFKD->NFC canonicalization."""
 
     MAX_EXPR_LENGTH: int = 2048
+    MAX_INPUT_LENGTH: int = 2048
+    MAX_PARENTHESIS_DEPTH: int = 32
     MAX_NODES: int = 40
     MAX_DEPTH: int = 5
     MAX_AST_DEPTH: int = 15
@@ -2267,20 +2310,43 @@ class HardenedEnterpriseFormulaGuard(ScopedEnterpriseFormulaGuard):
     @classmethod
     def sanitize_raw_expression(cls, raw_formula: str) -> str:
         if not isinstance(raw_formula, str) or not raw_formula.strip():
-            raise FormulaSecurityViolation("Formula input must be a non-empty string.")
+            raise FormulaSecurityViolation("Length violation: Formula input must be a non-empty string.")
         if len(raw_formula) > cls.MAX_EXPR_LENGTH:
             raise FormulaSecurityViolation(
-                f"Formula exceeds maximum length of {cls.MAX_EXPR_LENGTH} characters."
+                f"Length violation: Formula exceeds maximum length of {cls.MAX_EXPR_LENGTH} characters."
             )
         normalized = unicodedata.normalize("NFKD", raw_formula)
         canonical = unicodedata.normalize("NFC", normalized)
+        depth = 0
         for char in canonical:
             category = unicodedata.category(char)
             if category.startswith("C") or category.startswith("Zl") or category.startswith("Zp"):
                 raise FormulaSecurityViolation(
                     f"Forbidden unicode control character detected: U+{ord(char):04X}"
                 )
+            if char in "([{":
+                depth += 1
+                if depth > cls.MAX_PARENTHESIS_DEPTH:
+                    raise FormulaSecurityViolation(
+                        "Recursion bomb defense: Nesting depth exceeds maximum allowed limit (CWE-400)"
+                    )
+            elif char in ")]}":
+                depth = max(0, depth - 1)
         return canonical
+
+    @classmethod
+    def validate(cls, formula_str: str) -> ast.AST:
+        canonical = cls.sanitize_raw_expression(formula_str)
+        try:
+            tree = ast.parse(canonical, mode="eval")
+        except SyntaxError as exc:
+            raise FormulaSecurityError(f"Syntax error: {exc}") from exc
+        node_count = sum(1 for _ in ast.walk(tree))
+        if node_count > cls.MAX_NODES:
+            raise FormulaSecurityError(
+                f"Node count violation: Formula AST nodes ({node_count}) exceed MAX_NODES ({cls.MAX_NODES})"
+            )
+        return tree
 
     @classmethod
     def validate_ast(cls, node: ast.AST, current_depth: int = 0) -> None:
@@ -2288,7 +2354,7 @@ class HardenedEnterpriseFormulaGuard(ScopedEnterpriseFormulaGuard):
             node_count = sum(1 for _ in ast.walk(node))
             if node_count > cls.MAX_NODES:
                 raise FormulaSecurityViolation(
-                    f"AST complexity limit exceeded (>{cls.MAX_NODES} nodes)"
+                    f"Node count violation: AST complexity limit exceeded (>{cls.MAX_NODES} nodes)"
                 )
         if current_depth > cls.MAX_AST_DEPTH:
             raise FormulaSecurityViolation(
