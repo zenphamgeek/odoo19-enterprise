@@ -106,12 +106,13 @@ def record_and_verify_nonce_transactional(cr, nonce: str, context_label: str, tt
     """Atomic, zero-DDL database-backed replay prevention.
     Returns True if nonce was successfully reserved; False if already consumed or expired.
     Uses INSERT ... ON CONFLICT DO NOTHING without runtime DDL to prevent catalog lock contention.
+    Extends retention by MAX_ALLOWED_CLOCK_SKEW_SECONDS to defeat Reverse Clock Drift Nonce Resurrection.
     """
     if not nonce or not context_label:
         return False
 
     now_utc = datetime.now(timezone.utc)
-    expires_at = now_utc + timedelta(seconds=ttl_seconds)
+    expires_at = now_utc + timedelta(seconds=ttl_seconds + MAX_ALLOWED_CLOCK_SKEW_SECONDS)
 
     query = """
         INSERT INTO insilos_nonce_journal (nonce, context, consumed_at, expires_at)
