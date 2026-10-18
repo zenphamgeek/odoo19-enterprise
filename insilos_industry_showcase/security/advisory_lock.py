@@ -4987,3 +4987,105 @@ class PubGrubPolicyStateMachine:
 
     def get_ledger(self) -> List[SalesTransactionEvent]:
         return list(self._ledger)
+
+
+# ==============================================================================
+# CRDT-BASED OFFLINE-FIRST SALES QUOTATION ENGINE (sunward)
+# ==============================================================================
+
+
+@dataclass(frozen=True)
+class QuoteItemTag:
+    item_id: str
+    client_id: str
+    timestamp_ns: int
+
+
+@dataclass
+class QuoteLineItem:
+    product_sku: str
+    quantity: int
+    unit_price_cents: int
+    discount_pct: float
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "product_sku": self.product_sku,
+            "quantity": self.quantity,
+            "unit_price_cents": self.unit_price_cents,
+            "discount_pct": self.discount_pct,
+        }
+
+
+class SalesQuoteCRDT:
+    """
+    Observed-Remove Set (OR-Set) with LWW-Register attributes for
+    Conflict-Free Concurrent Sales Proposal Generation.
+    """
+
+    def __init__(self, quote_id: str, client_id: str):
+        self.quote_id: str = quote_id
+        self.client_id: str = client_id
+        self._add_set: Dict[QuoteItemTag, Tuple[QuoteLineItem, int]] = {}
+        self._remove_set: Set[QuoteItemTag] = set()
+        self._audit_chain: List[str] = []
+
+    def add_line_item(
+        self, product_sku: str, quantity: int, unit_price_cents: int, discount_pct: float = 0.0
+    ) -> QuoteItemTag:
+        if quantity <= 0:
+            raise ValueError(f"Quantity must be positive, got {quantity}")
+        if discount_pct < 0.0 or discount_pct > 100.0:
+            raise ValueError(f"Invalid discount percentage: {discount_pct}")
+
+        tag = QuoteItemTag(
+            item_id=hashlib.sha256(f"{product_sku}:{time.time_ns()}".encode()).hexdigest()[:12],
+            client_id=self.client_id,
+            timestamp_ns=time.time_ns(),
+        )
+        item = QuoteLineItem(product_sku, quantity, unit_price_cents, discount_pct)
+        self._add_set[tag] = (item, tag.timestamp_ns)
+        self._record_transition("ADD_LINE_ITEM", tag.item_id)
+        return tag
+
+    def remove_line_item(self, tag: QuoteItemTag) -> None:
+        if tag in self._add_set:
+            self._remove_set.add(tag)
+            self._record_transition("REMOVE_LINE_ITEM", tag.item_id)
+
+    def merge(self, incoming: "SalesQuoteCRDT") -> "SalesQuoteCRDT":
+        for tag, (item, ts) in incoming._add_set.items():
+            if tag not in self._add_set or self._add_set[tag][1] < ts:
+                self._add_set[tag] = (item, ts)
+
+        self._remove_set.update(incoming._remove_set)
+        self._record_transition("MERGE_CRDT", incoming.client_id)
+        return self
+
+    def active_items(self) -> List[QuoteLineItem]:
+        return [
+            item
+            for tag, (item, _) in self._add_set.items()
+            if tag not in self._remove_set
+        ]
+
+    def calculate_total_cents(self) -> int:
+        total = 0
+        for item in self.active_items():
+            discount_factor = 1.0 - (item.discount_pct / 100.0)
+            item_total = int(item.quantity * item.unit_price_cents * discount_factor)
+            total += item_total
+        return total
+
+    def _record_transition(self, action: str, reference: str) -> None:
+        prev_hash = self._audit_chain[-1] if self._audit_chain else "GENESIS_0000000000000000"
+        payload = f"{prev_hash}:{action}:{reference}:{time.time_ns()}"
+        curr_hash = hashlib.sha256(payload.encode()).hexdigest()
+        self._audit_chain.append(curr_hash)
+
+    def verify_invariant(self) -> bool:
+        if self.calculate_total_cents() < 0:
+            return False
+        if not self._audit_chain:
+            return True
+        return len(self._audit_chain) > 0
