@@ -166,7 +166,7 @@ import hmac
 import re
 import unicodedata
 from dataclasses import dataclass
-from typing import Any, Dict, FrozenSet, List, Optional, Set, Tuple
+from typing import Any, Dict, FrozenSet, List, Optional, Sequence, Set, Tuple
 
 
 class SecurityIntegrityError(Exception):
@@ -266,16 +266,20 @@ class TenantContextToken:
 _ACTIVE_TENANT_TOKEN: contextvars.ContextVar[Optional[TenantContextToken]] = contextvars.ContextVar(
     "_ACTIVE_TENANT_TOKEN", default=None
 )
+_ACTIVE_TENANT_ID: contextvars.ContextVar[Optional[int]] = contextvars.ContextVar(
+    "insilos_active_tenant_id", default=None
+)
 
 
 class AtomicMultiTenantGuard:
-    """Context manager for fail-closed multi-tenant scoping (supports both TenantContextToken and Odoo env modes)."""
+    """Context manager for fail-closed multi-tenant scoping (supports TenantContextToken, Odoo env, and integer tenant_id modes)."""
 
     def __init__(
         self,
-        token_or_env: Any,
+        token_or_env: Any = None,
         secret_key_or_company_id: Any = None,
         *,
+        tenant_id: Optional[int] = None,
         target_company_id: Optional[int] = None,
         enforce_strict_membership: bool = True,
     ):
@@ -284,7 +288,31 @@ class AtomicMultiTenantGuard:
             self.token: Optional[TenantContextToken] = token_or_env
             self.secret_key: bytes = secret_key_or_company_id
             self.env = None
+            self.tenant_id = token_or_env.tenant_id
             self.target_company_id = token_or_env.tenant_id
+            self.enforce_strict_membership = enforce_strict_membership
+        elif (
+            tenant_id is not None
+            or (
+                isinstance(token_or_env, (int, bool))
+                and secret_key_or_company_id is None
+                and target_company_id is None
+            )
+            or (
+                token_or_env is None
+                and secret_key_or_company_id is None
+                and target_company_id is None
+            )
+        ):
+            resolved_tid = tenant_id if tenant_id is not None else token_or_env
+            if not isinstance(resolved_tid, int) or isinstance(resolved_tid, bool) or resolved_tid <= 0:
+                raise ValueError("Invalid tenant_id: must be a positive integer.")
+            self._mode = "tenant_id"
+            self.token = None
+            self.secret_key = b""
+            self.env = None
+            self.tenant_id = resolved_tid
+            self.target_company_id = resolved_tid
             self.enforce_strict_membership = enforce_strict_membership
         else:
             self._mode = "env"
@@ -300,9 +328,11 @@ class AtomicMultiTenantGuard:
                 raise ValueError(
                     f"Invalid target_company_id: {resolved_cid}. Must be a positive integer."
                 )
+            self.tenant_id = resolved_cid
             self.target_company_id = resolved_cid
             self.enforce_strict_membership = enforce_strict_membership
         self._reset_token: Optional[contextvars.Token] = None
+        self._reset_tid_token: Optional[contextvars.Token] = None
         self._original_context: Dict[str, Any] = {}
         self._original_company_id: Optional[int] = None
         self._is_active: bool = False
@@ -322,6 +352,12 @@ class AtomicMultiTenantGuard:
                 )
 
             self._reset_token = _ACTIVE_TENANT_TOKEN.set(self.token)
+            self._reset_tid_token = _ACTIVE_TENANT_ID.set(self.token.tenant_id)
+            self._is_active = True
+            return self
+
+        if self._mode == "tenant_id":
+            self._reset_tid_token = _ACTIVE_TENANT_ID.set(self.tenant_id)
             self._is_active = True
             return self
 
@@ -363,6 +399,7 @@ class AtomicMultiTenantGuard:
             }
         )
         self.env.context = modified_context
+        self._reset_tid_token = _ACTIVE_TENANT_ID.set(self.target_company_id)
         self._is_active = True
         return self.env
 
@@ -371,6 +408,16 @@ class AtomicMultiTenantGuard:
             if self._reset_token is not None:
                 _ACTIVE_TENANT_TOKEN.reset(self._reset_token)
                 self._reset_token = None
+            if self._reset_tid_token is not None:
+                _ACTIVE_TENANT_ID.reset(self._reset_tid_token)
+                self._reset_tid_token = None
+            self._is_active = False
+            return False
+
+        if self._mode == "tenant_id":
+            if self._reset_tid_token is not None:
+                _ACTIVE_TENANT_ID.reset(self._reset_tid_token)
+                self._reset_tid_token = None
             self._is_active = False
             return False
 
@@ -378,6 +425,9 @@ class AtomicMultiTenantGuard:
             if hasattr(self.env, "invalidate_all"):
                 self.env.invalidate_all()
         finally:
+            if self._reset_tid_token is not None:
+                _ACTIVE_TENANT_ID.reset(self._reset_tid_token)
+                self._reset_tid_token = None
             self.env.context = self._original_context
             self._is_active = False
         return False
@@ -424,13 +474,11 @@ class AtomicMultiTenantGuard:
             )
 
     @staticmethod
-    def get_active_tenant_id() -> int:
+    def get_active_tenant_id() -> Optional[int]:
         token = _ACTIVE_TENANT_TOKEN.get()
-        if token is None:
-            raise MultiTenantSecurityError(
-                "Execution attempted outside of an active TenantContextToken scope."
-            )
-        return token.tenant_id
+        if token is not None:
+            return token.tenant_id
+        return _ACTIVE_TENANT_ID.get()
 
     @staticmethod
     def assert_record_access(record_company_id: int) -> None:
@@ -479,9 +527,12 @@ class CanonicalLockHierarchyManager:
 
     MODEL_LOCK_TIERS: Dict[str, int] = {
         "res.company": 10,
-        "res.partner": 20,
-        "sale.order": 30,
-        "account.move": 40,
+        "res.users": 20,
+        "res.partner": 30,
+        "sale.order": 40,
+        "sale.order.line": 50,
+        "account.move": 60,
+        "account.move.line": 70,
     }
 
     LOCK_TIERS: Dict[str, int] = {
@@ -502,6 +553,27 @@ class CanonicalLockHierarchyManager:
 
     def reset_transaction_state(self) -> None:
         self._current_max_tier_acquired = 0
+
+    @classmethod
+    def get_canonical_lock_order(
+        cls, records_spec: Sequence[Tuple[str, int]]
+    ) -> List[Tuple[str, int]]:
+        """Sort heterogeneous (model_name, record_id) pairs into a deterministic global lock order."""
+        validated: List[Tuple[int, str, int]] = []
+        seen: Set[Tuple[str, int]] = set()
+        for model_name, record_id in records_spec:
+            if not isinstance(model_name, str) or not model_name.strip():
+                raise ValueError("Invalid model_name in lock specification.")
+            if not isinstance(record_id, int) or isinstance(record_id, bool) or record_id <= 0:
+                raise ValueError(f"Invalid record_id {record_id} for model {model_name}.")
+            key = (model_name, record_id)
+            if key not in seen:
+                seen.add(key)
+                tier = cls.MODEL_LOCK_TIERS.get(model_name, 999)
+                validated.append((tier, model_name, record_id))
+
+        validated.sort(key=lambda item: (item[0], item[1], item[2]))
+        return [(item[1], item[2]) for item in validated]
 
     @classmethod
     def acquire_deterministic_locks(
@@ -742,15 +814,112 @@ class MultiTenantContextGuard:
 class HardenedFormulaSanitizer:
     """Neutralizes CSV/TSV/ODS/Markdown formula injection, control-char cloaking & DDE execution (CWE-1236)."""
 
-    DANGEROUS_PREFIXES = frozenset({"=", "+", "-", "@", "|", "%", "\t", "\r", "\n", "\uff1d", "\uff0b", "\uff0d", "\uff20"})
-    RISKY_PREFIXES: Tuple[str, ...] = ("=", "+", "-", "@", "|", "%", "\t", "\r", "\n", "\uff1d", "\uff0b", "\uff0d", "\uff20")
+    MAX_RECURSION_DEPTH: int = 16
+    DANGEROUS_PREFIXES = frozenset(
+        {
+            "=",
+            "+",
+            "-",
+            "@",
+            "|",
+            "%",
+            "\t",
+            "\r",
+            "\n",
+            "\uff1d",
+            "\uff0b",
+            "\uff0d",
+            "\uff20",
+            "\uff5c",
+            "\ufe62",
+            "\ufe63",
+            "\ufe66",
+        }
+    )
+    RISKY_PREFIXES: Tuple[str, ...] = (
+        "=",
+        "+",
+        "-",
+        "@",
+        "|",
+        "%",
+        "\t",
+        "\r",
+        "\n",
+        "\uff1d",
+        "\uff0b",
+        "\uff0d",
+        "\uff20",
+        "\uff5c",
+        "\ufe62",
+        "\ufe63",
+        "\ufe66",
+    )
     CONTROL_CHAR_REGEX = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
     STRIP_LEADING_REGEX = re.compile(
         r"^[\s\u0000-\u001f\u007f-\u009f\u200b-\u200d\ufeff\u3000]+"
     )
     DANGEROUS_TRIGGER_PATTERN = re.compile(
-        r"^[\s\x00-\x1f\x7f\u200b\ufeff\u3000]*([=+\-@|\t\r\n%]|(\uff1d)|(\uff0b)|(\uff0d)|(\uff20))"
+        r"^[\s\x00-\x1f\x7f\u200b\ufeff\u3000]*([=+\-@|\t\r\n%]|(\uff1d)|(\uff0b)|(\uff0d)|(\uff20)|(\uff5c)|(\ufe62)|(\ufe63)|(\ufe66))"
     )
+
+    @classmethod
+    def sanitize_cell(cls, value: Any) -> Any:
+        if not isinstance(value, str):
+            return value
+        if not value:
+            return value
+        clean_val = value.replace("\x00", "")
+        normalized = unicodedata.normalize("NFKC", clean_val)
+        stripped_norm = cls.STRIP_LEADING_REGEX.sub("", normalized)
+        stripped_raw = cls.STRIP_LEADING_REGEX.sub("", clean_val)
+        if (
+            (stripped_norm and stripped_norm[0] in cls.DANGEROUS_PREFIXES)
+            or (stripped_raw and stripped_raw[0] in cls.DANGEROUS_PREFIXES)
+            or (normalized and normalized[0] in cls.DANGEROUS_PREFIXES)
+            or (clean_val and clean_val[0] in cls.DANGEROUS_PREFIXES)
+        ):
+            return f"'{clean_val}"
+        return clean_val
+
+    @classmethod
+    def sanitize_dict_structure(
+        cls,
+        data: Any,
+        seen_ids: Optional[Set[int]] = None,
+        depth: int = 0,
+    ) -> Any:
+        if depth > cls.MAX_RECURSION_DEPTH:
+            raise ValueError(f"Max sanitization depth exceeded ({cls.MAX_RECURSION_DEPTH})")
+        if seen_ids is None:
+            seen_ids = set()
+
+        if isinstance(data, str):
+            return cls.sanitize_cell(data)
+
+        if isinstance(data, dict):
+            obj_id = id(data)
+            if obj_id in seen_ids:
+                raise ValueError("Cyclic reference detected during payload sanitization")
+            next_seen = seen_ids | {obj_id}
+            return {
+                cls.sanitize_cell(k) if isinstance(k, str) else k: cls.sanitize_dict_structure(
+                    v, next_seen, depth + 1
+                )
+                for k, v in data.items()
+            }
+
+        if isinstance(data, (list, tuple)):
+            obj_id = id(data)
+            if obj_id in seen_ids:
+                raise ValueError("Cyclic reference detected during payload sanitization")
+            next_seen = seen_ids | {obj_id}
+            sanitized_items = [
+                cls.sanitize_dict_structure(item, next_seen, depth + 1) for item in data
+            ]
+            return tuple(sanitized_items) if isinstance(data, tuple) else sanitized_items
+
+        return data
 
     @classmethod
     def sanitize_field(cls, value: Any) -> str:
@@ -842,4 +1011,5 @@ class HardenedFormulaSanitizer:
 
 FormulaInjectionSanitizer = HardenedFormulaSanitizer
 FullwidthFormulaSanitizer = HardenedFormulaSanitizer
+
 
