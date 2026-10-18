@@ -21,32 +21,60 @@ _logger = logging.getLogger(__name__)
 # RFC 1123 Hostname Label regex: lowercase ASCII alphanumeric with single internal hyphens, length 3 to 32
 SLUG_REGEX = re.compile(r'^[a-z0-9](?:[a-z0-9]|-(?!-)){1,30}[a-z0-9]$', re.ASCII)
 
-# Hardened reserved directory: infrastructure, cloud orchestrators, observability, and core Odoo HTTP routing endpoints
+# Hardened reserved directory: infrastructure, cloud orchestrators, cloud metadata, and core Odoo HTTP routing endpoints
 RESERVED_SLUGS = frozenset({
     'admin', 'administrator', 'airflow', 'alertmanager', 'api', 'app', 'argocd',
     'assets', 'auth', 'autoconfig', 'autodiscover', 'billing', 'blog', 'caddy',
-    'cdn', 'consul', 'core', 'cpanel', 'dashboard', 'database', 'dev', 'dns',
-    'docker', 'elastic', 'elasticsearch', 'envoy', 'event', 'forum', 'ftp',
+    'callback', 'cdn', 'consul', 'core', 'cpanel', 'dashboard', 'database', 'dev', 'dns',
+    'docker', 'elastic', 'elasticsearch', 'envoy', 'event', 'favicon', 'forum', 'ftp',
     'git', 'github', 'gitlab', 'grafana', 'health', 'healthz', 'healthcheck',
     'idp', 'im_livechat', 'imap', 'installer', 'internal', 'jaeger', 'jsonrpc',
     'k8s', 'keycloak', 'kibana', 'kubernetes', 'ldap', 'login', 'logout', 'loki',
-    'longpolling', 'mail', 'metrics', 'mx', 'my', 'nginx', 'none', 'ns1', 'ns2',
+    'longpolling', 'mail', 'metadata', 'metrics', 'mx', 'my', 'nginx', 'none', 'ns1', 'ns2',
     'null', 'oauth', 'onboarding', 'payment', 'pop3', 'portal', 'postmaster',
-    'prefect', 'prometheus', 'registry', 'report', 'root', 'router', 'saml',
-    'secure', 'setup', 'shop', 'signin', 'signup', 'sso', 'ssl', 'staging',
-    'static', 'status', 'system', 'tempo', 'test', 'traefik', 'undefined',
-    'vault', 'vpn', 'web', 'webclient', 'websocket', 'wpad', 'www', 'xmlrpc',
+    'prefect', 'prometheus', 'registry', 'report', 'robots', 'root', 'router', 'saml',
+    'secure', 'setup', 'shop', 'signin', 'signup', 'sitemap', 'sso', 'ssl', 'staging',
+    'static', 'status', 'stripe', 'system', 'tempo', 'test', 'traefik', 'undefined',
+    'vault', 'vpn', 'web', 'webclient', 'webhook', 'websocket', 'wpad', 'www', 'xmlrpc',
 })
 
 SIGNUP_TOKEN_TTL_SECONDS = 1800          # 30-minute validation window for tenant onboarding
 MAX_ALLOWED_CLOCK_SKEW_SECONDS = 300     # 5-minute tolerance for distributed fleet clock drift
 HMAC_ONBOARDING_CONTEXT = b"insilos:tenant:onboarding:hmac-sha256:v1"
 HMAC_LEASE_CONTEXT = b"insilos:sovereign:lease:hmac-sha256:v1"
-KANBAN_LOCK_BASE_KEY = 0x494E534900000000  # "INSI" prefix for PostgreSQL advisory lock WIP slots
+KANBAN_LOCK_BASE_KEY = 0x494E534900000000 & 0x7FFFFFFFFFFFFFFF  # "INSI" prefix for PostgreSQL advisory lock WIP slots
 DEFAULT_MAX_WIP_SLOTS = 3                  # Strict Kanban WIP limit: max 3 concurrent heavy migrations
 _CONSUMED_ONBOARDING_NONCES = set()
 _CONSUMED_ONBOARDING_NONCE_EXPIRY = {}
 MAX_IN_MEMORY_NONCE_ENTRIES = 4096
+
+
+def hkdf_extract(salt: bytes, ikm: bytes) -> bytes:
+    """RFC 5869 HKDF-Extract(salt, IKM) -> PRK (32 bytes)."""
+    if not salt:
+        salt = b"\x00" * 32
+    return hmac.new(salt, ikm, hashlib.sha256).digest()
+
+
+def hkdf_expand(prk: bytes, info: bytes, length: int = 32) -> bytes:
+    """RFC 5869 HKDF-Expand(PRK, info, L) -> OKM."""
+    if length > 255 * 32:
+        raise ValueError("Cannot expand to more than 255 * 32 bytes.")
+    okm = b""
+    t = b""
+    for counter in range(1, (length + 31) // 32 + 1):
+        t = hmac.new(prk, t + info + bytes([counter]), hashlib.sha256).digest()
+        okm += t
+    return okm[:length]
+
+
+def derive_hkdf_subkey(master_secret: str, context_info: bytes) -> bytes:
+    """Derive an isolated 256-bit subkey from the platform master secret."""
+    if not master_secret or not isinstance(master_secret, str):
+        raise ValidationError("Master secret must be a non-empty string.")
+    master_bytes = master_secret.encode('utf-8')
+    prk = hkdf_extract(salt=HMAC_ONBOARDING_CONTEXT, ikm=master_bytes)
+    return hkdf_expand(prk=prk, info=bytes(context_info), length=32)
 
 
 def sanitize_and_validate_slug(raw_slug: str) -> str:
@@ -94,17 +122,8 @@ def _resolve_onboarding_hmac_secret(env) -> str:
 
 def _hkdf_extract_and_expand(salt: bytes, ikm: bytes, info: bytes, length: int = 32) -> bytes:
     """RFC 5869 compliant HKDF extract-and-expand key derivation using HMAC-SHA256."""
-    if not salt:
-        salt = b"\x00" * 32
-    prk = hmac.new(salt, ikm, hashlib.sha256).digest()
-    t = b""
-    okm = b""
-    i = 1
-    while len(okm) < length:
-        t = hmac.new(prk, t + info + bytes([i]), hashlib.sha256).digest()
-        okm += t
-        i += 1
-    return okm[:length]
+    prk = hkdf_extract(salt, ikm)
+    return hkdf_expand(prk, info, length)
 
 
 def _derive_hkdf_key(master_secret: str, context: bytes, length: int = 32) -> bytes:
@@ -273,17 +292,17 @@ def acquire_onboarding_wip_slot(env, max_wip_slots: int = DEFAULT_MAX_WIP_SLOTS)
 
 
 @contextmanager
-def acquire_kanban_wip_slot(env, max_slots: int = DEFAULT_MAX_WIP_SLOTS, max_wip_slots: int = None):
+def acquire_kanban_wip_slot(env_or_cr, max_slots: int = DEFAULT_MAX_WIP_SLOTS, max_wip_slots: int = None):
     """Acquire a Kanban migration slot using PostgreSQL transaction-level advisory locks
     with signed 64-bit bigint boundary normalization.
     """
     import struct
 
     effective_max = max_wip_slots if max_wip_slots is not None else max_slots
-    cr = env.cr
+    cr = getattr(env_or_cr, 'cr', env_or_cr)
     acquired_slot = None
     for slot_idx in range(effective_max):
-        lock_key = KANBAN_LOCK_BASE_KEY + slot_idx
+        lock_key = (KANBAN_LOCK_BASE_KEY + slot_idx) & 0x7FFFFFFFFFFFFFFF
         signed_lock_key = struct.unpack("!q", struct.pack("!Q", lock_key & 0xFFFFFFFFFFFFFFFF))[0]
 
         cr.execute("SELECT pg_try_advisory_xact_lock(%s);", (signed_lock_key,))
@@ -303,6 +322,80 @@ def acquire_kanban_wip_slot(env, max_slots: int = DEFAULT_MAX_WIP_SLOTS, max_wip
         yield acquired_slot
     finally:
         _logger.info("Releasing Kanban WIP slot context %d (deferred to xact commit/abort).", acquired_slot)
+
+
+def _ensure_nonce_journal_schema(cr):
+    """Ensure the transactional nonce journal table exists (fail-closed idempotent DDL)."""
+    cr.execute("""
+        CREATE TABLE IF NOT EXISTS insilos_onboarding_nonce_journal (
+            nonce VARCHAR(64) PRIMARY KEY,
+            tenant_slug VARCHAR(64) NOT NULL,
+            created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT (NOW() AT TIME ZONE 'UTC'),
+            expires_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+        );
+        CREATE INDEX IF NOT EXISTS idx_insilos_nonce_journal_expires_at
+        ON insilos_onboarding_nonce_journal (expires_at);
+    """)
+
+
+def consume_onboarding_nonce_transactional(cr, nonce: str, tenant_slug: str, ttl_seconds: int = SIGNUP_TOKEN_TTL_SECONDS) -> bool:
+    """Consume a single-use onboarding nonce in the active PostgreSQL transaction.
+    Returns True if successfully registered. Raises ValidationError if replayed or invalid.
+    """
+    if not nonce or not isinstance(nonce, str) or len(nonce) < 16 or len(nonce) > 64:
+        raise ValidationError("Invalid nonce specification.")
+
+    _ensure_nonce_journal_schema(cr)
+
+    cr.execute("""
+        DELETE FROM insilos_onboarding_nonce_journal
+        WHERE expires_at < (NOW() AT TIME ZONE 'UTC')
+    """)
+
+    cr.execute("""
+        INSERT INTO insilos_onboarding_nonce_journal (nonce, tenant_slug, expires_at)
+        VALUES (%s, %s, (NOW() AT TIME ZONE 'UTC') + (%s || ' second')::INTERVAL)
+        ON CONFLICT (nonce) DO NOTHING
+        RETURNING nonce;
+    """, (nonce, tenant_slug, str(int(ttl_seconds))))
+    row = cr.fetchone()
+    if not row:
+        _logger.warning("Replay attack detected or duplicate nonce: %s for slug %s", nonce, tenant_slug)
+        raise ValidationError("Security token has already been consumed or is invalid.")
+    return True
+
+
+def compute_onboarding_signature(derived_key: bytes, slug: str, nonce: str, timestamp: int) -> str:
+    """Generate a canonical hex-encoded HMAC-SHA256 signature for onboarding verification."""
+    message = f"{slug}:{nonce}:{timestamp}".encode('utf-8')
+    return hmac.new(derived_key, message, hashlib.sha256).hexdigest()
+
+
+def verify_onboarding_request(env, slug: str, nonce: str, timestamp_str: str, signature: str) -> str:
+    """Verify an onboarding token against HKDF subkeys, clock skew, and transactional nonces."""
+    clean_slug = sanitize_and_validate_slug(slug)
+
+    try:
+        req_timestamp = int(timestamp_str)
+    except (ValueError, TypeError):
+        raise ValidationError("Malformed timestamp in onboarding token.")
+
+    current_time = int(time.time())
+    if req_timestamp < (current_time - SIGNUP_TOKEN_TTL_SECONDS - MAX_ALLOWED_CLOCK_SKEW_SECONDS):
+        raise ValidationError("Onboarding token has expired.")
+    if req_timestamp > (current_time + MAX_ALLOWED_CLOCK_SKEW_SECONDS):
+        raise ValidationError("Onboarding token timestamp is in the future beyond acceptable clock drift.")
+
+    master_secret = _resolve_onboarding_hmac_secret(env)
+    derived_key = derive_hkdf_subkey(master_secret, HMAC_ONBOARDING_CONTEXT)
+
+    expected_sig = compute_onboarding_signature(derived_key, clean_slug, nonce, req_timestamp)
+    if not hmac.compare_digest(expected_sig, signature):
+        _logger.warning("Invalid HMAC signature received for tenant onboarding: slug=%s", clean_slug)
+        raise AccessError("Invalid or forged onboarding signature.")
+
+    consume_onboarding_nonce_transactional(env.cr, nonce, clean_slug, SIGNUP_TOKEN_TTL_SECONDS)
+    return clean_slug
 
 
 def verify_and_claim_onboarding_token(env, token_str: str) -> dict:
