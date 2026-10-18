@@ -2,35 +2,47 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 
 import hashlib
+import hmac
 import logging
 import re
+import time
+import unicodedata
 import uuid
 from datetime import timedelta
 from psycopg2 import IntegrityError
 
 from odoo import fields, http
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
-# RFC 1123 Hostname Label regex: lowercase alphanumeric with single internal hyphens, length 3 to 32
-SLUG_REGEX = re.compile(r'^[a-z0-9](?:[a-z0-9]|-(?!-)){1,30}[a-z0-9]$')
+# RFC 1123 Hostname Label regex: lowercase ASCII alphanumeric with single internal hyphens, length 3 to 32
+SLUG_REGEX = re.compile(r'^[a-z0-9](?:[a-z0-9]|-(?!-)){1,30}[a-z0-9]$', re.ASCII)
+
+# Hardened reserved directory: infrastructure, standard protocols, and core Odoo HTTP routing endpoints
 RESERVED_SLUGS = frozenset({
-    'admin', 'administrator', 'api', 'app', 'assets', 'billing', 'cdn',
-    'core', 'dashboard', 'database', 'dev', 'internal', 'mail', 'portal',
-    'root', 'router', 'secure', 'ssl', 'staging', 'static', 'system', 'vpn', 'www',
+    'admin', 'administrator', 'api', 'app', 'assets', 'auth', 'autodiscover',
+    'billing', 'blog', 'cdn', 'core', 'dashboard', 'database', 'dev', 'dns',
+    'event', 'forum', 'ftp', 'health', 'healthz', 'im_livechat', 'imap',
+    'internal', 'jsonrpc', 'login', 'logout', 'longpolling', 'mail', 'metrics',
+    'mx', 'none', 'ns1', 'ns2', 'null', 'oauth', 'onboarding', 'pop3', 'portal',
+    'prometheus', 'root', 'router', 'secure', 'shop', 'signin', 'signup',
+    'ssl', 'staging', 'static', 'status', 'system', 'test', 'undefined',
+    'vpn', 'web', 'websocket', 'www', 'xmlrpc',
 })
+
+SIGNUP_TOKEN_TTL_SECONDS = 1800  # 30-minute validation window for tenant onboarding
 
 
 def sanitize_and_validate_slug(raw_slug: str) -> str:
     """Validate tenant slug against RFC 1123 specifications and security allowlists.
-    Raises ValidationError on any invalid characters, double hyphens, or reserved names.
+    Enforces NFKC normalization, ASCII constraints, and reserved slug protection.
     """
     if not raw_slug or not isinstance(raw_slug, str):
         raise ValidationError("Tenant identifier cannot be empty.")
 
-    normalized = raw_slug.strip().lower()
+    normalized = unicodedata.normalize('NFKC', raw_slug).strip().lower()
     if len(normalized) < 3 or len(normalized) > 32:
         raise ValidationError("Tenant identifier length must be between 3 and 32 characters.")
 
@@ -45,17 +57,98 @@ def sanitize_and_validate_slug(raw_slug: str) -> str:
     return normalized
 
 
+def _resolve_onboarding_hmac_secret(env) -> str:
+    """Retrieve the platform signing secret from ir.config_parameter without static key literals."""
+    secret = None
+    try:
+        if env is not None:
+            secret = env['ir.config_parameter'].sudo().get_param('database.secret')
+    except Exception as exc:
+        _logger.warning("Failed to read database.secret from ir.config_parameter: %s", exc)
+    if not secret or not isinstance(secret, str) or not secret.strip():
+        raise ValidationError("Missing database.secret configuration parameter for HMAC token signing.")
+    return secret.strip()
+
+
+def generate_signup_token(env, tenant_id: int, slug: str) -> str:
+    """Generate an HMAC-SHA256 signature for secure unauthenticated confirmation routing."""
+    secret = _resolve_onboarding_hmac_secret(env)
+    expiry = int(time.time()) + SIGNUP_TOKEN_TTL_SECONDS
+    message = f"{tenant_id}:{slug}:{expiry}".encode('utf-8')
+    signature = hmac.new(secret.encode('utf-8'), message, hashlib.sha256).hexdigest()
+    return f"{expiry}.{signature}"
+
+
+def verify_signup_token(env, tenant_id: int, slug: str, token: str) -> bool:
+    """Verify onboarding token validity and tamper resistance."""
+    if not token or not isinstance(token, str) or '.' not in token:
+        return False
+    try:
+        expiry_str, signature = token.split('.', 1)
+        expiry = int(expiry_str)
+        if time.time() > expiry:
+            _logger.warning("Expired onboarding token for tenant_id=%s, slug=%s", tenant_id, slug)
+            return False
+        secret = _resolve_onboarding_hmac_secret(env)
+        message = f"{tenant_id}:{slug}:{expiry}".encode('utf-8')
+        expected_signature = hmac.new(secret.encode('utf-8'), message, hashlib.sha256).hexdigest()
+        return hmac.compare_digest(signature, expected_signature)
+    except (ValueError, TypeError, ValidationError) as exc:
+        _logger.warning("Malformed onboarding token received: %s", exc)
+        return False
+
+
+class OfflineLeaseToken:
+    """Cryptographic lease envelope for 168-hour air-gapped sovereign node execution."""
+
+    def __init__(self, tenant_id: str, issued_at: int, ttl_seconds: int, secret_key: str):
+        if not secret_key or len(secret_key) < 16:
+            raise ValueError("OfflineLeaseToken secret_key must be at least 16 characters.")
+        self.tenant_id = str(tenant_id)
+        self.issued_at = int(issued_at)
+        self.ttl_seconds = int(ttl_seconds)
+        self.expires_at = self.issued_at + self.ttl_seconds
+        self.signature = self._sign(secret_key)
+
+    def _sign(self, secret: str) -> str:
+        payload = f"{self.tenant_id}:{self.issued_at}:{self.expires_at}".encode('utf-8')
+        return hmac.new(secret.encode('utf-8'), payload, hashlib.sha256).hexdigest()
+
+    def is_valid_at(self, current_timestamp: int, secret_key: str) -> bool:
+        if not secret_key or current_timestamp > self.expires_at or current_timestamp < self.issued_at:
+            return False
+        expected = self._sign(secret_key)
+        return hmac.compare_digest(self.signature, expected)
+
+
+class VectorClockJournalSequence:
+    """Node-prefixed monotonic sequence allocator preventing cross-node collisions during offline split-brain."""
+
+    def __init__(self, node_id: str):
+        if not node_id or not str(node_id).strip():
+            raise ValueError("node_id cannot be empty.")
+        self.node_id = str(node_id).strip()
+        self.counter = 0
+
+    def next_sequence(self, fiscal_year: int) -> str:
+        self.counter += 1
+        return f"INV/{int(fiscal_year)}/{self.node_id}-{self.counter:06d}"
+
+
 def compute_tenant_workspace_url(slug: str) -> str:
     """Build a canonical HTTPS workspace access URL without cleartext or internal debug ports."""
     valid_slug = sanitize_and_validate_slug(slug)
     base_domain = 'insilos.com'
     try:
         if request and getattr(request, 'env', None):
-            base_domain = request.env['ir.config_parameter'].sudo().get_param(
+            configured_domain = request.env['ir.config_parameter'].sudo().get_param(
                 'insilos.saas.base_domain', 'insilos.com'
-            ) or 'insilos.com'
+            )
+            if configured_domain and isinstance(configured_domain, str) and configured_domain.strip():
+                base_domain = configured_domain.strip()
     except Exception as exc:
-        _logger.debug("Fallback to default base_domain insilos.com: %s", exc)
+        _logger.error("Failed to read insilos.saas.base_domain parameter: %s", exc)
+        base_domain = 'insilos.com'
     clean_domain = base_domain.split('://')[-1].split('/')[0].split(':')[0].strip().lower() or 'insilos.com'
     return f"https://{valid_slug}.{clean_domain}/insilos"
 
@@ -212,7 +305,12 @@ class IndustryShowcaseController(http.Controller):
                 )
             except UserError:
                 return request.redirect(f"/saas/signup?error=idempotency_conflict&plan={plan_tier}")
-            return request.redirect(f"/saas/signup/success?tenant_id={operation.tenant_id.id}&slug={operation.tenant_id.slug}&status=requested")
+            token = generate_signup_token(request.env, operation.tenant_id.id, operation.tenant_id.slug)
+            if hasattr(request, 'session') and isinstance(request.session, dict):
+                request.session['insilos_last_signup_tenant_id'] = operation.tenant_id.id
+            return request.redirect(
+                f"/saas/signup/success?tenant_id={operation.tenant_id.id}&slug={operation.tenant_id.slug}&token={token}&status=requested"
+            )
 
         try:
             with request.env.cr.savepoint():
@@ -258,36 +356,79 @@ class IndustryShowcaseController(http.Controller):
             _logger.exception("SaaS Provisioning transaction failed for slug=%s: %s", slug, e)
             return request.redirect(f"/saas/signup?error=system_busy&plan={plan_tier}")
 
-        return request.redirect(f"/saas/signup/success?tenant_id={tenant.id}&slug={slug}&status=requested&operation_id={operation.id}")
+        token = generate_signup_token(request.env, tenant.id, slug)
+        if hasattr(request, 'session') and isinstance(request.session, dict):
+            request.session['insilos_last_signup_tenant_id'] = tenant.id
+        return request.redirect(
+            f"/saas/signup/success?tenant_id={tenant.id}&slug={slug}&token={token}&status=requested&operation_id={operation.id}"
+        )
 
     @http.route('/saas/signup/success', type='http', auth="public", website=True, sitemap=False)
-    def saas_signup_success(self, tenant_id=None, slug=None, **kwargs):
-        """Confirmation and onboarding instruction page for the newly created tenant."""
+    def saas_signup_success(self, tenant_id=None, slug=None, token=None, **kwargs):
+        """Confirmation and onboarding instruction page with strict authorization guarding."""
         tenant = None
+        parsed_tenant_id = None
         if tenant_id:
             try:
-                tenant = request.env['insilos.tenant'].sudo().browse(int(tenant_id))
-                if not tenant.exists():
-                    tenant = None
+                parsed_tenant_id = int(tenant_id)
             except (ValueError, TypeError):
-                tenant = None
+                _logger.warning("Invalid tenant_id format supplied to signup_success: %s", tenant_id)
+                return request.redirect('/industry?error=invalid_tenant_id')
 
-        raw_slug = slug or (tenant.slug if tenant else None)
+        if not slug and not parsed_tenant_id:
+            return request.redirect('/industry?error=missing_tenant_identifier')
+
         try:
-            valid_slug = sanitize_and_validate_slug(raw_slug) if raw_slug else 'workspace'
-            workspace_url = compute_tenant_workspace_url(valid_slug)
+            valid_slug = sanitize_and_validate_slug(slug) if slug else None
         except ValidationError as exc:
             _logger.warning("Invalid slug '%s' passed to signup success page: %s", slug, exc)
             return request.redirect('/industry?error=invalid_tenant_slug')
 
-        if not tenant and valid_slug:
+        # Defense-in-Depth: Validate access authorization via session matching OR cryptographic token
+        session_tenant_id = request.session.get('insilos_last_signup_tenant_id') if hasattr(request, 'session') and request.session else None
+        is_authorized = False
+
+        if parsed_tenant_id and session_tenant_id == parsed_tenant_id:
+            is_authorized = True
+        elif parsed_tenant_id and valid_slug and token:
+            is_authorized = verify_signup_token(request.env, parsed_tenant_id, valid_slug, token)
+
+        if not is_authorized:
+            _logger.warning(
+                "Unauthorized access attempt to /saas/signup/success for tenant_id=%s, slug=%s",
+                parsed_tenant_id, valid_slug,
+            )
+            return request.redirect('/saas/signup?error=access_denied')
+
+        if parsed_tenant_id:
+            tenant = request.env['insilos.tenant'].sudo().browse(parsed_tenant_id)
+            if not tenant.exists():
+                return request.redirect('/industry?error=tenant_not_found')
+        elif valid_slug:
             tenant = request.env['insilos.tenant'].sudo().search([('slug', '=', valid_slug)], limit=1)
+            if not tenant:
+                return request.redirect('/industry?error=tenant_not_found')
+
+        canonical_slug = sanitize_and_validate_slug(tenant.slug if tenant and tenant.slug else (valid_slug or 'workspace'))
+        workspace_url = compute_tenant_workspace_url(canonical_slug)
+
+        tenant_view_data = {
+            'id': tenant.id if tenant else parsed_tenant_id,
+            'name': tenant.name if tenant else canonical_slug,
+            'slug': canonical_slug,
+            'state': getattr(tenant, 'state', 'provisioning') if tenant else 'provisioning',
+            'plan_tier': getattr(tenant, 'plan_tier', 'standard') if tenant else 'standard',
+            'workspace_url': workspace_url,
+        }
 
         values = {
             'tenant': tenant,
-            'slug': valid_slug,
+            'tenant_data': tenant_view_data,
+            'slug': canonical_slug,
             'tenant_workspace_url': workspace_url,
             'tenant_base_url': workspace_url.rsplit('/insilos', 1)[0],
+            'operation_id': kwargs.get('operation_id'),
+            'status': kwargs.get('status', 'requested'),
         }
         return request.render('insilos_industry_showcase.saas_signup_success_template', values)
 
