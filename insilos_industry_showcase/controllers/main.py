@@ -23,18 +23,18 @@ SLUG_REGEX = re.compile(r'^[a-z0-9](?:[a-z0-9]|-(?!-)){1,30}[a-z0-9]$', re.ASCII
 
 # Hardened reserved directory: infrastructure, cloud orchestrators, cloud metadata, and core Odoo HTTP routing endpoints
 RESERVED_SLUGS = frozenset({
-    'admin', 'administrator', 'airflow', 'alertmanager', 'api', 'app', 'argocd',
-    'assets', 'auth', 'autoconfig', 'autodiscover', 'billing', 'blog', 'caddy',
-    'callback', 'cdn', 'consul', 'core', 'cpanel', 'dashboard', 'database', 'dev', 'dns',
-    'docker', 'elastic', 'elasticsearch', 'envoy', 'event', 'favicon', 'forum', 'ftp',
-    'git', 'github', 'gitlab', 'grafana', 'health', 'healthz', 'healthcheck',
+    'admin', 'administrator', 'airflow', 'alertmanager', 'api', 'app', 'apps', 'argocd',
+    'assets', 'auth', 'autoconfig', 'autodiscover', 'billing', 'blog', 'broadcast', 'caddy',
+    'callback', 'cdn', 'consul', 'core', 'cpanel', 'dashboard', 'database', 'default', 'dev', 'dns',
+    'docker', 'docs', 'elastic', 'elasticsearch', 'envoy', 'event', 'favicon', 'forum', 'ftp',
+    'git', 'github', 'gitlab', 'grafana', 'health', 'healthz', 'healthcheck', 'help',
     'idp', 'im_livechat', 'imap', 'installer', 'internal', 'jaeger', 'jsonrpc',
-    'k8s', 'keycloak', 'kibana', 'kubernetes', 'ldap', 'login', 'logout', 'loki',
-    'longpolling', 'mail', 'metadata', 'metrics', 'mx', 'my', 'nginx', 'none', 'ns1', 'ns2',
-    'null', 'oauth', 'onboarding', 'payment', 'pop3', 'portal', 'postmaster',
-    'prefect', 'prometheus', 'registry', 'report', 'robots', 'root', 'router', 'saml',
+    'k8s', 'keycloak', 'kibana', 'kubernetes', 'ldap', 'localhost', 'login', 'logout', 'loki',
+    'longpolling', 'mail', 'media', 'metadata', 'metrics', 'mx', 'my', 'nginx', 'none', 'ns1', 'ns2',
+    'null', 'oauth', 'odoo', 'onboarding', 'payment', 'pop3', 'portal', 'postmaster',
+    'prefect', 'prometheus', 'public', 'registry', 'report', 'robots', 'root', 'router', 'rpc', 'saml',
     'secure', 'setup', 'shop', 'signin', 'signup', 'sitemap', 'sso', 'ssl', 'staging',
-    'static', 'status', 'stripe', 'system', 'tempo', 'test', 'traefik', 'undefined',
+    'static', 'status', 'stripe', 'support', 'system', 'tempo', 'terms', 'test', 'traefik', 'undefined',
     'vault', 'vpn', 'web', 'webclient', 'webhook', 'websocket', 'wpad', 'www', 'xmlrpc',
 })
 
@@ -68,12 +68,15 @@ def hkdf_expand(prk: bytes, info: bytes, length: int = 32) -> bytes:
     return okm[:length]
 
 
-def derive_hkdf_subkey(master_secret: str, context_info: bytes) -> bytes:
-    """Derive an isolated 256-bit subkey from the platform master secret."""
+def derive_hkdf_subkey(master_secret: str, context_info: bytes, salt: bytes = None) -> bytes:
+    """Derive an isolated 256-bit subkey with strict domain separation and minimum entropy check."""
     if not master_secret or not isinstance(master_secret, str):
         raise ValidationError("Master secret must be a non-empty string.")
+    if len(master_secret.strip()) < 16:
+        raise ValidationError("Master secret possesses insufficient entropy (minimum 16 characters).")
+    extract_salt = salt if salt is not None else bytes(context_info)
     master_bytes = master_secret.encode('utf-8')
-    prk = hkdf_extract(salt=HMAC_ONBOARDING_CONTEXT, ikm=master_bytes)
+    prk = hkdf_extract(salt=extract_salt, ikm=master_bytes)
     return hkdf_expand(prk=prk, info=bytes(context_info), length=32)
 
 
@@ -93,11 +96,14 @@ def sanitize_and_validate_slug(raw_slug: str) -> str:
 
     if not SLUG_REGEX.match(normalized):
         raise ValidationError(
-            "Tenant identifier contains invalid characters. Use lowercase letters, digits, and non-consecutive hyphens."
+            "Tenant identifier contains invalid characters (violates RFC 1123 format). "
+            "Use lowercase letters, digits, and non-consecutive hyphens."
         )
 
     if normalized.replace('-', '').isdigit():
-        raise ValidationError("Tenant identifier cannot consist exclusively of numbers and hyphens.")
+        raise ValidationError(
+            f"Tenant identifier '{normalized}' cannot be purely numeric and cannot consist exclusively of numbers and hyphens."
+        )
 
     return normalized
 
@@ -363,6 +369,40 @@ def consume_onboarding_nonce_transactional(cr, nonce: str, tenant_slug: str, ttl
         _logger.warning("Replay attack detected or duplicate nonce: %s for slug %s", nonce, tenant_slug)
         raise ValidationError("Security token has already been consumed or is invalid.")
     return True
+
+
+def validate_and_consume_nonce_transactional(cr, nonce: str, context: bytes, ttl_seconds: int = SIGNUP_TOKEN_TTL_SECONDS) -> None:
+    """Atomic, cluster-safe replay protection via PostgreSQL nonce journaling.
+    Eliminates in-memory process-local state and race conditions across multi-worker clusters.
+    """
+    if not nonce or not isinstance(nonce, str) or len(nonce) < 16:
+        raise ValidationError("Invalid or truncated nonce value.")
+
+    from datetime import datetime, timezone
+
+    context_str = context.decode('utf-8', errors='replace') if isinstance(context, bytes) else str(context)
+    now = fields.Datetime.now() or datetime.now(timezone.utc).replace(tzinfo=None)
+    threshold = now - timedelta(seconds=ttl_seconds)
+
+    cr.execute(
+        """
+        DELETE FROM insilos_onboarding_nonce_journal
+        WHERE context = %s AND create_date < %s
+        """,
+        (context_str, threshold)
+    )
+
+    try:
+        cr.execute(
+            """
+            INSERT INTO insilos_onboarding_nonce_journal (nonce, context, create_date)
+            VALUES (%s, %s, %s)
+            """,
+            (nonce, context_str, now)
+        )
+    except IntegrityError:
+        _logger.warning("Replay attack detected: Nonce %s already consumed for context %s", nonce, context_str)
+        raise AccessError("Cryptographic nonce has already been consumed or replayed.")
 
 
 def compute_onboarding_signature(derived_key: bytes, slug: str, nonce: str, timestamp: int) -> str:
