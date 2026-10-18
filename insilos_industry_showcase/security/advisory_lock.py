@@ -5089,3 +5089,197 @@ class SalesQuoteCRDT:
         if not self._audit_chain:
             return True
         return len(self._audit_chain) > 0
+
+
+# ==============================================================================
+# BANT-TO-CLOSED-WON SEMANTIC GATE STATE MACHINE (E2E-QA-11)
+# ==============================================================================
+
+
+class GateSalesStage(str, Enum):
+    LEAD_DISCOVERY = "LEAD_DISCOVERY"
+    QUALIFICATION_BANT = "QUALIFICATION_BANT"
+    TECHNICAL_VALIDATION = "TECHNICAL_VALIDATION"
+    COMMERCIAL_PROPOSAL = "COMMERCIAL_PROPOSAL"
+    LEGAL_SECURITY_REVIEW = "LEGAL_SECURITY_REVIEW"
+    CLOSED_WON = "CLOSED_WON"
+    CLOSED_LOST = "CLOSED_LOST"
+
+
+@dataclass(frozen=True)
+class GateSalesEvent:
+    event_id: str
+    tenant_id: str
+    target_stage: GateSalesStage
+    payload: Dict[str, Any]
+    timestamp_utc: str
+    actor_id: str
+
+
+@dataclass(frozen=True)
+class StateAuditBlock:
+    index: int
+    prev_hash: str
+    state_digest: str
+    event_id: str
+    timestamp_utc: str
+    block_hash: str
+
+
+class BantGateSalesStateMachine:
+    """
+    Deterministic Finite State Machine (FSM) enforcing BANT-to-Closed-Won
+    semantic stage gates and append-only cryptographic provenance.
+    """
+
+    ALLOWED_TRANSITIONS: Dict[GateSalesStage, List[GateSalesStage]] = {
+        GateSalesStage.LEAD_DISCOVERY: [
+            GateSalesStage.QUALIFICATION_BANT,
+            GateSalesStage.CLOSED_LOST,
+        ],
+        GateSalesStage.QUALIFICATION_BANT: [
+            GateSalesStage.TECHNICAL_VALIDATION,
+            GateSalesStage.CLOSED_LOST,
+        ],
+        GateSalesStage.TECHNICAL_VALIDATION: [
+            GateSalesStage.COMMERCIAL_PROPOSAL,
+            GateSalesStage.CLOSED_LOST,
+        ],
+        GateSalesStage.COMMERCIAL_PROPOSAL: [
+            GateSalesStage.LEGAL_SECURITY_REVIEW,
+            GateSalesStage.CLOSED_LOST,
+        ],
+        GateSalesStage.LEGAL_SECURITY_REVIEW: [
+            GateSalesStage.CLOSED_WON,
+            GateSalesStage.CLOSED_LOST,
+        ],
+        GateSalesStage.CLOSED_WON: [],
+        GateSalesStage.CLOSED_LOST: [GateSalesStage.LEAD_DISCOVERY],
+    }
+
+    def __init__(self, tenant_id: str, opportunity_id: str) -> None:
+        if not tenant_id or not opportunity_id:
+            raise ValueError("tenant_id and opportunity_id must be non-empty strings.")
+        self.tenant_id: str = tenant_id
+        self.opportunity_id: str = opportunity_id
+        self.current_stage: GateSalesStage = GateSalesStage.LEAD_DISCOVERY
+        self.metadata: Dict[str, Any] = {}
+        self.audit_chain: List[StateAuditBlock] = []
+        self._genesis_hash: str = "0" * 64
+        self._init_genesis_block()
+
+    def _init_genesis_block(self) -> None:
+        initial_state_repr = json.dumps(
+            {"stage": self.current_stage.value, "opportunity_id": self.opportunity_id},
+            sort_keys=True,
+        )
+        state_digest = hashlib.sha256(initial_state_repr.encode("utf-8")).hexdigest()
+        timestamp = datetime.now(timezone.utc).isoformat()
+        raw_block = f"0:{self._genesis_hash}:{state_digest}:GENESIS:{timestamp}"
+        block_hash = hashlib.sha256(raw_block.encode("utf-8")).hexdigest()
+        genesis_block = StateAuditBlock(
+            index=0,
+            prev_hash=self._genesis_hash,
+            state_digest=state_digest,
+            event_id="GENESIS",
+            timestamp_utc=timestamp,
+            block_hash=block_hash,
+        )
+        self.audit_chain.append(genesis_block)
+
+    def transition(self, event: GateSalesEvent) -> StateAuditBlock:
+        if event.tenant_id != self.tenant_id:
+            raise PermissionError(f"Access Denied: Tenant mismatch for {event.tenant_id}")
+
+        allowed = self.ALLOWED_TRANSITIONS.get(self.current_stage, [])
+        if event.target_stage not in allowed:
+            raise ValueError(
+                f"Invalid transition: Cannot advance from {self.current_stage.value} "
+                f"to {event.target_stage.value}."
+            )
+
+        self._validate_stage_gate(event.target_stage, event.payload)
+
+        self.current_stage = event.target_stage
+        self.metadata.update(event.payload)
+
+        prev_block = self.audit_chain[-1]
+        state_repr = json.dumps(
+            {
+                "stage": self.current_stage.value,
+                "opportunity_id": self.opportunity_id,
+                "metadata": self.metadata,
+            },
+            sort_keys=True,
+        )
+        state_digest = hashlib.sha256(state_repr.encode("utf-8")).hexdigest()
+        next_index = prev_block.index + 1
+        raw_block = (
+            f"{next_index}:{prev_block.block_hash}:{state_digest}:"
+            f"{event.event_id}:{event.timestamp_utc}"
+        )
+        new_block_hash = hashlib.sha256(raw_block.encode("utf-8")).hexdigest()
+
+        new_block = StateAuditBlock(
+            index=next_index,
+            prev_hash=prev_block.block_hash,
+            state_digest=state_digest,
+            event_id=event.event_id,
+            timestamp_utc=event.timestamp_utc,
+            block_hash=new_block_hash,
+        )
+        self.audit_chain.append(new_block)
+        return new_block
+
+    def _validate_stage_gate(self, target: GateSalesStage, payload: Dict[str, Any]) -> None:
+        if target == GateSalesStage.QUALIFICATION_BANT:
+            required_keys = {"budget", "authority", "need", "timeline"}
+            missing = required_keys - set(payload.keys())
+            if missing:
+                raise ValueError(f"BANT qualification failed. Missing keys: {missing}")
+            if not isinstance(payload["budget"], (int, float)) or payload["budget"] <= 0:
+                raise ValueError("BANT qualification failed: 'budget' must be positive.")
+
+        elif target == GateSalesStage.TECHNICAL_VALIDATION:
+            if not payload.get("architecture_approved"):
+                raise ValueError("Technical validation gate requires 'architecture_approved' = True.")
+
+        elif target == GateSalesStage.COMMERCIAL_PROPOSAL:
+            if not payload.get("pricing_schedule_id"):
+                raise ValueError("Commercial proposal requires a valid 'pricing_schedule_id'.")
+
+        elif target == GateSalesStage.LEGAL_SECURITY_REVIEW:
+            if not payload.get("dpa_signed"):
+                raise ValueError("Legal review gate requires Data Processing Agreement ('dpa_signed' = True).")
+
+        elif target == GateSalesStage.CLOSED_WON:
+            if not payload.get("contract_signature_ref"):
+                raise ValueError("Closed-Won status requires valid 'contract_signature_ref'.")
+
+    def verify_invariant(self) -> bool:
+        if not self.audit_chain:
+            return False
+
+        genesis = self.audit_chain[0]
+        if genesis.prev_hash != self._genesis_hash or genesis.index != 0:
+            return False
+
+        for i in range(1, len(self.audit_chain)):
+            curr = self.audit_chain[i]
+            prev = self.audit_chain[i - 1]
+
+            if curr.index != prev.index + 1:
+                return False
+            if curr.prev_hash != prev.block_hash:
+                return False
+
+            raw_block = (
+                f"{curr.index}:{prev.block_hash}:{curr.state_digest}:"
+                f"{curr.event_id}:{curr.timestamp_utc}"
+            )
+            recomputed = hashlib.sha256(raw_block.encode("utf-8")).hexdigest()
+            if curr.block_hash != recomputed:
+                return False
+
+        return True
+
