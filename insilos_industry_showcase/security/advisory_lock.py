@@ -5654,4 +5654,308 @@ class AviationPreFlightChecklistGate:
         return {"status": "CLEARED", "margin_ratio": margin_ratio, "record": event_record}
 
 
+# ==============================================================================
+# STATEFUL CRDT-PREFECT ORCHESTRATION ENGINE (SCPOE) & MERKLE CHAINS (E2E-QA-11)
+# ==============================================================================
+
+
+@dataclass
+class CRDTSalesItem:
+    item_id: str
+    product_code: str
+    unit_price: float
+    quantity: int
+    discount_pct: float
+    timestamp: float
+    actor_id: str
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "item_id": self.item_id,
+            "product_code": self.product_code,
+            "unit_price": self.unit_price,
+            "quantity": self.quantity,
+            "discount_pct": self.discount_pct,
+            "timestamp": self.timestamp,
+            "actor_id": self.actor_id,
+        }
+
+
+class JSONCRDTSalesDoc:
+    """
+    State-based Last-Write-Wins (LWW) and Observed-Remove CRDT for sales quote items.
+    Guarantees strong eventual consistency under arbitrary message reordering.
+    """
+
+    def __init__(self, doc_id: str):
+        self.doc_id = doc_id
+        self._items: Dict[str, CRDTSalesItem] = {}
+        self._tombstones: Dict[str, float] = {}
+
+    def set_item(
+        self,
+        item_id: str,
+        product_code: str,
+        unit_price: float,
+        quantity: int,
+        discount_pct: float,
+        actor_id: str,
+        timestamp: Optional[float] = None,
+    ) -> None:
+        ts = timestamp if timestamp is not None else time.time()
+        if item_id in self._tombstones and self._tombstones[item_id] >= ts:
+            return
+        if item_id in self._items and self._items[item_id].timestamp >= ts:
+            return
+
+        self._items[item_id] = CRDTSalesItem(
+            item_id=item_id,
+            product_code=product_code,
+            unit_price=unit_price,
+            quantity=quantity,
+            discount_pct=discount_pct,
+            timestamp=ts,
+            actor_id=actor_id,
+        )
+
+    def remove_item(self, item_id: str, actor_id: str, timestamp: Optional[float] = None) -> None:
+        ts = timestamp if timestamp is not None else time.time()
+        if item_id in self._items and self._items[item_id].timestamp <= ts:
+            del self._items[item_id]
+        if self._tombstones.get(item_id, 0.0) < ts:
+            self._tombstones[item_id] = ts
+
+    def merge(self, other: "JSONCRDTSalesDoc") -> "JSONCRDTSalesDoc":
+        merged = JSONCRDTSalesDoc(self.doc_id)
+
+        all_tomb_keys = set(self._tombstones.keys()).union(other._tombstones.keys())
+        for k in all_tomb_keys:
+            merged._tombstones[k] = max(
+                self._tombstones.get(k, 0.0),
+                other._tombstones.get(k, 0.0),
+            )
+
+        all_item_keys = set(self._items.keys()).union(other._items.keys())
+        for k in all_item_keys:
+            tomb_ts = merged._tombstones.get(k, -1.0)
+            item_self = self._items.get(k)
+            item_other = other._items.get(k)
+
+            candidate: Optional[CRDTSalesItem] = None
+            if item_self and item_other:
+                if item_self.timestamp > item_other.timestamp:
+                    candidate = item_self
+                elif item_other.timestamp > item_self.timestamp:
+                    candidate = item_other
+                else:
+                    candidate = (
+                        item_self if item_self.actor_id >= item_other.actor_id else item_other
+                    )
+            elif item_self:
+                candidate = item_self
+            elif item_other:
+                candidate = item_other
+
+            if candidate and candidate.timestamp > tomb_ts:
+                merged._items[k] = candidate
+
+        return merged
+
+    def compute_total(self) -> float:
+        total = 0.0
+        for item in self._items.values():
+            subtotal = item.unit_price * item.quantity
+            net = subtotal * (1.0 - (item.discount_pct / 100.0))
+            total += net
+        return round(total, 2)
+
+
+class MerkleTransparencyTree:
+    """
+    Append-only Merkle tree providing formal audit trail verification
+    for high-stakes quote and discount approvals.
+    """
+
+    def __init__(self):
+        self.leaves: List[str] = []
+        self._levels: List[List[str]] = []
+
+    @staticmethod
+    def _hash(data: str) -> str:
+        return hashlib.sha256(data.encode("utf-8")).hexdigest()
+
+    def append_entry(self, entry: Dict[str, Any]) -> str:
+        canonical_json = json.dumps(entry, sort_keys=True)
+        leaf_hash = self._hash(canonical_json)
+        self.leaves.append(leaf_hash)
+        self._rebuild_tree()
+        return leaf_hash
+
+    def _rebuild_tree(self) -> None:
+        if not self.leaves:
+            self._levels = []
+            return
+
+        current_level = list(self.leaves)
+        self._levels = [current_level]
+
+        while len(current_level) > 1:
+            next_level = []
+            for i in range(0, len(current_level), 2):
+                left = current_level[i]
+                right = current_level[i + 1] if i + 1 < len(current_level) else left
+                combined = self._hash(left + right)
+                next_level.append(combined)
+            current_level = next_level
+            self._levels.append(current_level)
+
+    def get_root(self) -> str:
+        if not self._levels or not self._levels[-1]:
+            return self._hash("")
+        return self._levels[-1][0]
+
+    def get_audit_proof(self, leaf_index: int) -> List[Tuple[str, str]]:
+        if leaf_index < 0 or leaf_index >= len(self.leaves):
+            raise IndexError("Leaf index out of bounds")
+
+        proof: List[Tuple[str, str]] = []
+        idx = leaf_index
+
+        for level in self._levels[:-1]:
+            is_right_child = idx % 2 == 1
+            sibling_idx = idx - 1 if is_right_child else idx + 1
+            sibling_hash = level[sibling_idx] if sibling_idx < len(level) else level[idx]
+            direction = "left" if is_right_child else "right"
+            proof.append((sibling_hash, direction))
+            idx = idx // 2
+
+        return proof
+
+    @classmethod
+    def verify_proof(cls, leaf_hash: str, proof: List[Tuple[str, str]], expected_root: str) -> bool:
+        current = leaf_hash
+        for sibling_hash, direction in proof:
+            if direction == "left":
+                current = cls._hash(sibling_hash + current)
+            else:
+                current = cls._hash(current + sibling_hash)
+        return current == expected_root
+
+
+@dataclass
+class OdooContext:
+    active_company_id: int
+    allowed_company_ids: List[int]
+    user_id: int
+
+
+class OdooModelRegistry:
+    """Simulates Odoo dynamic model inheritance and record-rule security filters."""
+
+    def __init__(self):
+        self._records: Dict[str, List[Dict[str, Any]]] = {}
+
+    def register_record(self, model_name: str, record: Dict[str, Any]) -> None:
+        if model_name not in self._records:
+            self._records[model_name] = []
+        self._records[model_name].append(record)
+
+    def search_records(
+        self,
+        model_name: str,
+        domain: List[Tuple[str, str, Any]],
+        context: OdooContext,
+    ) -> List[Dict[str, Any]]:
+        raw_list = self._records.get(model_name, [])
+        filtered = []
+
+        for rec in raw_list:
+            rec_comp = rec.get("company_id")
+            if rec_comp is not None and rec_comp not in context.allowed_company_ids:
+                continue
+
+            match = True
+            for field_name, op, val in domain:
+                rec_val = rec.get(field_name)
+                if op == "=" and rec_val != val:
+                    match = False
+                    break
+                if op == ">" and not (rec_val is not None and rec_val > val):
+                    match = False
+                    break
+                if op == "in" and rec_val not in val:
+                    match = False
+                    break
+            if match:
+                filtered.append(rec)
+
+        return filtered
+
+
+class TaskState(Enum):
+    PENDING = "PENDING"
+    RUNNING = "RUNNING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    RETRYING = "RETRYING"
+
+
+@dataclass
+class PrefectTaskResult:
+    task_name: str
+    state: TaskState
+    return_value: Any
+    retry_count: int
+    error_message: Optional[str] = None
+
+
+class PrefectSalesFlowRunner:
+    """Executes DAG tasks with state-machine tracking, failure backoff, and caching."""
+
+    def __init__(self):
+        self.memoized_cache: Dict[str, Any] = {}
+
+    def execute_task(
+        self,
+        name: str,
+        fn: Callable[..., Any],
+        args: Tuple[Any, ...],
+        max_retries: int = 2,
+    ) -> PrefectTaskResult:
+        cache_key = hashlib.sha256(f"{name}:{json.dumps(args, default=str)}".encode()).hexdigest()
+        if cache_key in self.memoized_cache:
+            return PrefectTaskResult(
+                task_name=name,
+                state=TaskState.COMPLETED,
+                return_value=self.memoized_cache[cache_key],
+                retry_count=0,
+            )
+
+        attempts = 0
+        last_error = None
+
+        while attempts <= max_retries:
+            try:
+                val = fn(*args)
+                self.memoized_cache[cache_key] = val
+                return PrefectTaskResult(
+                    task_name=name,
+                    state=TaskState.COMPLETED,
+                    return_value=val,
+                    retry_count=attempts,
+                )
+            except Exception as exc:
+                last_error = str(exc)
+                attempts += 1
+
+        return PrefectTaskResult(
+            task_name=name,
+            state=TaskState.FAILED,
+            return_value=None,
+            retry_count=attempts - 1,
+            error_message=last_error,
+        )
+
+
+
 
