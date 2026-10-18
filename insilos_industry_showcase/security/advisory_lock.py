@@ -169,7 +169,11 @@ from dataclasses import dataclass
 from typing import Any, Dict, FrozenSet, List, Optional, Sequence, Set, Tuple
 
 
-class SecurityIntegrityError(Exception):
+class SecurityException(Exception):
+    """Base security exception for all policy violations."""
+
+
+class SecurityIntegrityError(SecurityException):
     """Raised when a tenant isolation invariant or security boundary is violated."""
 
 
@@ -181,16 +185,28 @@ class MultiTenantIsolationViolationError(MultiTenantSecurityError):
     """Raised when tenant context integrity or company membership is violated."""
 
 
-class ConcurrencyLockTimeoutError(Exception):
+class TenantBoundaryViolation(MultiTenantIsolationViolationError):
+    """Raised when an operation attempts to access data outside authorized tenant scope."""
+
+
+class CyclicStructureDetected(ValueError, SecurityException):
+    """Raised when an unhandled cyclic structure or excessive recursion depth is detected."""
+
+
+class ConcurrencyLockTimeoutError(SecurityException):
     """Raised when acquiring locks in the canonical hierarchy exceeds the monotonic timeout."""
 
 
-class LockHierarchyError(Exception):
+class LockHierarchyError(SecurityException):
     """Raised when lock acquisition violates the strict canonical hierarchy."""
 
 
 class LockHierarchyViolationError(LockHierarchyError):
     """Raised when an attempt is made to acquire locks in violation of canonical hierarchy."""
+
+
+class DeadlockHazardException(LockHierarchyViolationError):
+    """Raised when lock acquisition order violates the canonical total-order hierarchy."""
 
 
 class LockTierViolationError(LockHierarchyViolationError, RuntimeError):
@@ -199,6 +215,7 @@ class LockTierViolationError(LockHierarchyViolationError, RuntimeError):
 
 class LockTimeoutError(ConcurrencyLockTimeoutError):
     """Raised when acquiring a canonical lock exceeds the specified monotonic timeout."""
+
 
 
 @dataclass(frozen=True)
@@ -493,6 +510,29 @@ class AtomicMultiTenantGuard:
                 f"{list(token.allowed_company_ids)}"
             )
 
+    @staticmethod
+    def validate_tenant_access(requested_tenant_id: Any, allowed_tenant_ids: List[int]) -> int:
+        if not isinstance(requested_tenant_id, int) or isinstance(requested_tenant_id, bool):
+            raise TenantBoundaryViolation(
+                f"Tenant ID must be an integer. Received type: {type(requested_tenant_id).__name__}"
+            )
+        if requested_tenant_id <= 0:
+            raise TenantBoundaryViolation(
+                f"Tenant ID must be a strictly positive integer. Received: {requested_tenant_id}"
+            )
+        if not allowed_tenant_ids or not all(
+            isinstance(tid, int) and not isinstance(tid, bool) and tid > 0
+            for tid in allowed_tenant_ids
+        ):
+            raise TenantBoundaryViolation(
+                "Allowed tenant context contains invalid or unauthenticated entries."
+            )
+        if requested_tenant_id not in allowed_tenant_ids:
+            raise TenantBoundaryViolation(
+                f"Access Denied: Tenant ID {requested_tenant_id} is not within authorized scope {allowed_tenant_ids}."
+            )
+        return requested_tenant_id
+
 
 @enum.unique
 class LockLevel(enum.IntEnum):
@@ -533,6 +573,21 @@ class CanonicalLockHierarchyManager:
         "sale.order.line": 50,
         "account.move": 60,
         "account.move.line": 70,
+        "stock.picking": 80,
+        "stock.move": 90,
+        "stock.quant": 100,
+    }
+
+    MODEL_TIER_HIERARCHY: Dict[str, int] = {
+        "res.company": 10,
+        "res.partner": 20,
+        "account.journal": 30,
+        "account.move": 40,
+        "sale.order": 50,
+        "sale.order.line": 60,
+        "stock.picking": 70,
+        "stock.move": 80,
+        "stock.quant": 90,
     }
 
     LOCK_TIERS: Dict[str, int] = {
@@ -553,6 +608,18 @@ class CanonicalLockHierarchyManager:
 
     def reset_transaction_state(self) -> None:
         self._current_max_tier_acquired = 0
+
+    @classmethod
+    def get_canonical_sort_key(cls, model_name: str, record_id: int) -> Tuple[int, str, int]:
+        if not isinstance(record_id, int) or isinstance(record_id, bool) or record_id <= 0:
+            raise ValueError(f"Invalid record_id for locking: {record_id}. Must be positive integer.")
+        tier = cls.MODEL_TIER_HIERARCHY.get(model_name, 999)
+        return (tier, model_name, record_id)
+
+    @classmethod
+    def order_lock_requests(cls, requests: List[Tuple[str, int]]) -> List[Tuple[str, int]]:
+        unique_requests = list(set(requests))
+        return sorted(unique_requests, key=lambda req: cls.get_canonical_sort_key(req[0], req[1]))
 
     @classmethod
     def get_canonical_lock_order(
@@ -699,6 +766,10 @@ class CanonicalLockHierarchyManager:
         _THREAD_HELD_LOCKS.set(())
 
 
+class DeterministicHeterogeneousLockManager(CanonicalLockHierarchyManager):
+    """Guarantees global linear lock acquisition ordering across heterogeneous Odoo models."""
+
+
 class CanonicalLockHierarchy:
     """Enforces strict lexicographical resource locking with monotonic timeouts to prevent
     circular wait deadlocks and worker starvation (CWE-821).
@@ -815,6 +886,8 @@ class HardenedFormulaSanitizer:
     """Neutralizes CSV/TSV/ODS/Markdown formula injection, control-char cloaking & DDE execution (CWE-1236)."""
 
     MAX_RECURSION_DEPTH: int = 16
+    FORMULA_TRIGGERS: Tuple[str, ...] = ("=", "+", "-", "@", "|", "%")
+    CONTROL_CHAR_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\u200b-\u200f\u2028-\u202e\ufeff]")
     DANGEROUS_PREFIXES = frozenset(
         {
             "=",
@@ -864,6 +937,85 @@ class HardenedFormulaSanitizer:
     )
 
     @classmethod
+    def sanitize_string(cls, value: str) -> str:
+        if not value:
+            return value
+        cleaned = cls.CONTROL_CHAR_RE.sub("", value)
+        if not cleaned:
+            return ""
+        normalized = unicodedata.normalize("NFKD", cleaned)
+        stripped = normalized.lstrip(" \t\r\n")
+        if not stripped:
+            return cleaned
+        if stripped[0] in cls.FORMULA_TRIGGERS:
+            return "'" + stripped
+        return normalized
+
+    @classmethod
+    def sanitize_payload(
+        cls,
+        data: Any,
+        max_depth: int = 16,
+        current_depth: int = 0,
+        seen_refs: Optional[Set[int]] = None,
+        ref_retention: Optional[List[Any]] = None,
+    ) -> Any:
+        if current_depth > max_depth:
+            raise CyclicStructureDetected(f"Traversal exceeded maximum allowable depth: {max_depth}")
+        if seen_refs is None:
+            seen_refs = set()
+        if ref_retention is None:
+            ref_retention = []
+
+        if isinstance(data, dict):
+            obj_id = id(data)
+            if obj_id in seen_refs:
+                raise CyclicStructureDetected(f"Cyclic dictionary reference detected at depth {current_depth}")
+            seen_refs.add(obj_id)
+            ref_retention.append(data)
+            sanitized_dict: Dict[str, Any] = {}
+            for k, v in data.items():
+                sanitized_key = cls.sanitize_string(str(k))
+                sanitized_val = cls.sanitize_payload(
+                    v,
+                    max_depth=max_depth,
+                    current_depth=current_depth + 1,
+                    seen_refs=seen_refs,
+                    ref_retention=ref_retention,
+                )
+                sanitized_dict[sanitized_key] = sanitized_val
+            seen_refs.remove(obj_id)
+            return sanitized_dict
+
+        if isinstance(data, (list, tuple, set)):
+            obj_id = id(data)
+            if obj_id in seen_refs:
+                raise CyclicStructureDetected(f"Cyclic iterable reference detected at depth {current_depth}")
+            seen_refs.add(obj_id)
+            ref_retention.append(data)
+            sanitized_items = [
+                cls.sanitize_payload(
+                    item,
+                    max_depth=max_depth,
+                    current_depth=current_depth + 1,
+                    seen_refs=seen_refs,
+                    ref_retention=ref_retention,
+                )
+                for item in data
+            ]
+            seen_refs.remove(obj_id)
+            if isinstance(data, tuple):
+                return tuple(sanitized_items)
+            if isinstance(data, set):
+                return set(sanitized_items)
+            return sanitized_items
+
+        if isinstance(data, str):
+            return cls.sanitize_string(data)
+
+        return data
+
+    @classmethod
     def sanitize_cell(cls, value: Any) -> Any:
         if not isinstance(value, str):
             return value
@@ -890,7 +1042,7 @@ class HardenedFormulaSanitizer:
         depth: int = 0,
     ) -> Any:
         if depth > cls.MAX_RECURSION_DEPTH:
-            raise ValueError(f"Max sanitization depth exceeded ({cls.MAX_RECURSION_DEPTH})")
+            raise CyclicStructureDetected(f"Max sanitization depth exceeded ({cls.MAX_RECURSION_DEPTH})")
         if seen_ids is None:
             seen_ids = set()
 
@@ -900,7 +1052,7 @@ class HardenedFormulaSanitizer:
         if isinstance(data, dict):
             obj_id = id(data)
             if obj_id in seen_ids:
-                raise ValueError("Cyclic reference detected during payload sanitization")
+                raise CyclicStructureDetected("Cyclic reference detected during payload sanitization")
             next_seen = seen_ids | {obj_id}
             return {
                 cls.sanitize_cell(k) if isinstance(k, str) else k: cls.sanitize_dict_structure(
@@ -912,7 +1064,7 @@ class HardenedFormulaSanitizer:
         if isinstance(data, (list, tuple)):
             obj_id = id(data)
             if obj_id in seen_ids:
-                raise ValueError("Cyclic reference detected during payload sanitization")
+                raise CyclicStructureDetected("Cyclic reference detected during payload sanitization")
             next_seen = seen_ids | {obj_id}
             sanitized_items = [
                 cls.sanitize_dict_structure(item, next_seen, depth + 1) for item in data
@@ -1011,5 +1163,6 @@ class HardenedFormulaSanitizer:
 
 FormulaInjectionSanitizer = HardenedFormulaSanitizer
 FullwidthFormulaSanitizer = HardenedFormulaSanitizer
+
 
 
