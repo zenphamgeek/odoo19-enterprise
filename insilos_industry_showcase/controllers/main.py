@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 
+import binascii
 import hashlib
 import hmac
 import logging
@@ -67,18 +68,33 @@ MAX_IN_MEMORY_NONCE_ENTRIES = 4096
 
 
 def ensure_nonce_journal_table(cr):
-    """Idempotently ensure database-backed nonce journal exists."""
+    """Idempotently ensure database-backed nonce journal exists (for schema migration/init only)."""
     cr.execute(NONCE_TABLE_DDL)
 
 
-def calculate_shannon_entropy(data: bytes) -> float:
+def normalize_and_decode_entropy_bytes(raw_input: bytes) -> bytes:
+    """Normalize input secret to raw binary bytes before entropy calculation.
+    Detects and decodes hex representations to prevent entropy distortion on ASCII hex keys.
+    """
+    if not raw_input:
+        return b""
+    if len(raw_input) % 2 == 0 and re.fullmatch(b'[0-9a-fA-F]+', raw_input):
+        try:
+            return binascii.unhexlify(raw_input)
+        except (binascii.Error, ValueError):
+            pass
+    return raw_input
+
+
+def calculate_shannon_entropy(data: bytes, decode_hex: bool = False) -> float:
     """Calculate empirical Shannon entropy in bits per byte (0.0 to 8.0)."""
-    if not data:
+    target = normalize_and_decode_entropy_bytes(data) if decode_hex else data
+    if not target:
         return 0.0
     frequency = {}
-    for byte_val in data:
+    for byte_val in target:
         frequency[byte_val] = frequency.get(byte_val, 0) + 1
-    total_bytes = len(data)
+    total_bytes = len(target)
     entropy = 0.0
     for count in frequency.values():
         p_x = count / total_bytes
@@ -87,15 +103,15 @@ def calculate_shannon_entropy(data: bytes) -> float:
 
 
 def record_and_verify_nonce_transactional(cr, nonce: str, context_label: str, ttl_seconds: int = SIGNUP_TOKEN_TTL_SECONDS) -> bool:
-    """Atomic database-backed replay prevention.
+    """Atomic, zero-DDL database-backed replay prevention.
     Returns True if nonce was successfully reserved; False if already consumed or expired.
+    Uses INSERT ... ON CONFLICT DO NOTHING without runtime DDL to prevent catalog lock contention.
     """
-    ensure_nonce_journal_table(cr)
+    if not nonce or not context_label:
+        return False
+
     now_utc = datetime.now(timezone.utc)
     expires_at = now_utc + timedelta(seconds=ttl_seconds)
-
-    if (int(now_utc.timestamp() * 1000) % 100) == 0:
-        cr.execute("DELETE FROM insilos_nonce_journal WHERE expires_at < (NOW() AT TIME ZONE 'utc');")
 
     query = """
         INSERT INTO insilos_nonce_journal (nonce, context, consumed_at, expires_at)
@@ -103,9 +119,13 @@ def record_and_verify_nonce_transactional(cr, nonce: str, context_label: str, tt
         ON CONFLICT (nonce, context) DO NOTHING
         RETURNING 1;
     """
-    cr.execute(query, (nonce, context_label, expires_at.strftime('%Y-%m-%d %H:%M:%S')))
-    result = cr.fetchone()
-    return bool(result and result[0] == 1)
+    try:
+        cr.execute(query, (nonce, context_label, expires_at.strftime('%Y-%m-%d %H:%M:%S')))
+        result = cr.fetchone()
+        return bool(result and result[0] == 1)
+    except Exception as exc:
+        _logger.error("Database error verifying nonce '%s' for context '%s': %s", nonce, context_label, str(exc))
+        raise AccessError("Security validation failed during token verification.")
 
 
 def hkdf_extract(salt: bytes, ikm: bytes) -> bytes:
@@ -137,7 +157,8 @@ def derive_hkdf_subkey(master_secret: str, context_info: bytes, salt: bytes = No
         raise ValidationError(
             f"Master secret possesses insufficient entropy (minimum {MINIMUM_MASTER_SECRET_ENTROPY_BYTES} bytes required)."
         )
-    entropy = calculate_shannon_entropy(secret_bytes)
+    decoded_bytes = normalize_and_decode_entropy_bytes(secret_bytes)
+    entropy = max(calculate_shannon_entropy(secret_bytes), calculate_shannon_entropy(decoded_bytes))
     if entropy < MINIMUM_SHANNON_ENTROPY_BITS_PER_BYTE:
         raise ValidationError(
             f"Master secret lacks sufficient Shannon entropy ({entropy:.2f} bits/byte < {MINIMUM_SHANNON_ENTROPY_BITS_PER_BYTE})."
