@@ -138,3 +138,24 @@ def execute_with_detached_rpc(
         timeout_sec=timeout_sec,
     ) as lock_key:
         return db_callable(rpc_res)
+
+
+def acquire_canonical_ordered_locks(cr, table_name: str, record_ids: list) -> list:
+    """Acquire row-level FOR UPDATE locks in deterministic ascending canonical order.
+    Mathematically eliminates circular wait conditions (Coffman Invariant #4).
+    """
+    import re
+
+    if not table_name or not re.fullmatch(r"[a-z_][a-z0-9_]{1,62}", table_name):
+        raise ValueError(f"Invalid SQL table identifier for canonical lock: {table_name!r}")
+
+    canonical_ids = sorted({int(rid) for rid in (record_ids or []) if rid is not None and int(rid) > 0})
+    if not canonical_ids:
+        return []
+
+    cr.execute(
+        f"SELECT id FROM {table_name} WHERE id IN %s ORDER BY id ASC FOR UPDATE;",
+        (tuple(canonical_ids),),
+    )
+    return canonical_ids
+
