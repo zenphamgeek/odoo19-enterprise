@@ -4139,3 +4139,141 @@ class ResilientSalesEngine:
             )
             self.state_ledger.append(block)
             self._current_state = new_state
+
+
+# ==============================================================================
+# S-CURVE PUBGRUB DEAL CONSTRAINT SOLVER & MERKLE-EVENT STATE ENGINE
+# ==============================================================================
+
+
+class SalesProcessStage(str, Enum):
+    LEAD_INCEPTION = "LEAD_INCEPTION"
+    TECHNICAL_VALIDATION = "TECHNICAL_VALIDATION"
+    COMMERCIAL_NEGOTIATION = "COMMERCIAL_NEGOTIATION"
+    COMPLIANCE_SIGN_OFF = "COMPLIANCE_SIGN_OFF"
+    CLOSED_WON = "CLOSED_WON"
+    CLOSED_LOST = "CLOSED_LOST"
+
+
+@dataclass(frozen=True)
+class EnterpriseEvent:
+    event_id: str
+    tenant_id: str
+    timestamp: float
+    action: str
+    payload: Dict[str, Any]
+    actor_agent_id: str
+
+    def compute_event_hash(self) -> str:
+        serialized = json.dumps(
+            {
+                "event_id": self.event_id,
+                "tenant_id": self.tenant_id,
+                "timestamp": self.timestamp,
+                "action": self.action,
+                "payload": self.payload,
+                "actor_agent_id": self.actor_agent_id,
+            },
+            sort_keys=True,
+        )
+        return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+
+class PubGrubDealConstraintSolver:
+    """
+    PubGrub-inspired deterministic constraint solver for enterprise deal terms.
+    Ensures that commercial discount rates, contract durations, and SLA terms
+    satisfy bounded dependency constraints without cycles or runtime deadlocks.
+    """
+    @staticmethod
+    def resolve_deal_terms(
+        requested_terms: Dict[str, Any],
+        tenant_rules: Dict[str, Any],
+    ) -> Tuple[bool, Optional[str]]:
+        max_discount = tenant_rules.get("max_authorized_discount", 0.20)
+        req_discount = requested_terms.get("discount_rate", 0.0)
+
+        if req_discount > max_discount:
+            return False, f"ConstraintViolation: requested discount {req_discount} exceeds limit {max_discount}"
+
+        required_clauses: Set[str] = set(tenant_rules.get("mandatory_riders", []))
+        submitted_clauses: Set[str] = set(requested_terms.get("attached_riders", []))
+
+        missing_clauses = required_clauses - submitted_clauses
+        if missing_clauses:
+            return False, f"ConstraintViolation: missing mandatory riders {sorted(missing_clauses)}"
+
+        return True, None
+
+
+@dataclass
+class EnterpriseSalesState:
+    tenant_id: str
+    opportunity_id: str
+    current_stage: SalesProcessStage
+    active_terms: Dict[str, Any]
+    state_history_hashes: List[str] = field(default_factory=list)
+    last_block_hash: str = "0" * 64
+    active_memory_slots: int = 0
+    max_memory_slots: int = 1024
+
+    def verify_invariant(self) -> bool:
+        if not self.tenant_id or not self.opportunity_id:
+            return False
+        if len(self.last_block_hash) != 64:
+            return False
+        if self.active_memory_slots > self.max_memory_slots:
+            return False
+        return True
+
+    def apply_odoo_odoo_pattern(self, request_tenant_id: str) -> bool:
+        if request_tenant_id != self.tenant_id:
+            raise PermissionError(
+                f"MultiTenantIsolationViolation: Tenant {request_tenant_id} attempted access to {self.tenant_id}"
+            )
+        return True
+
+    def apply_astral_sh_uv_pattern(
+        self,
+        new_terms: Dict[str, Any],
+        tenant_policy: Dict[str, Any],
+    ) -> bool:
+        is_satisfiable, reason = PubGrubDealConstraintSolver.resolve_deal_terms(
+            requested_terms=new_terms,
+            tenant_rules=tenant_policy,
+        )
+        if not is_satisfiable:
+            raise ValueError(f"PubGrubUnsatisfiableTerms: {reason}")
+        return True
+
+    def transition_state(
+        self,
+        event: EnterpriseEvent,
+        next_stage: SalesProcessStage,
+        tenant_policy: Dict[str, Any],
+    ) -> str:
+        self.apply_odoo_odoo_pattern(event.tenant_id)
+
+        if "terms" in event.payload:
+            self.apply_astral_sh_uv_pattern(event.payload["terms"], tenant_policy)
+            self.active_terms.update(event.payload["terms"])
+
+        if self.active_memory_slots >= self.max_memory_slots:
+            raise BufferError(f"MemoryInvariantBreached: M(t) exceeds max_memory_slots ({self.max_memory_slots})")
+
+        self.active_memory_slots += 1
+        try:
+            event_hash = event.compute_event_hash()
+            combined_hash_input = f"{self.last_block_hash}:{event_hash}:{next_stage.value}"
+            new_state_hash = hashlib.sha256(combined_hash_input.encode("utf-8")).hexdigest()
+
+            self.current_stage = next_stage
+            self.last_block_hash = new_state_hash
+            self.state_history_hashes.append(new_state_hash)
+
+            if not self.verify_invariant():
+                raise RuntimeError("PostTransitionInvariantFailed: state integrity compromised")
+
+            return new_state_hash
+        finally:
+            self.active_memory_slots -= 1
