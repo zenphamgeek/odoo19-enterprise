@@ -57,6 +57,9 @@ def sanitize_and_validate_slug(raw_slug: str) -> str:
         raise ValidationError("Tenant identifier cannot be empty.")
 
     normalized = unicodedata.normalize('NFKC', raw_slug).strip().lower()
+    if normalized in RESERVED_SLUGS:
+        raise ValidationError(f"Tenant identifier '{normalized}' is reserved by the platform.")
+
     if len(normalized) < 3 or len(normalized) > 32:
         raise ValidationError("Tenant identifier length must be between 3 and 32 characters.")
 
@@ -64,9 +67,6 @@ def sanitize_and_validate_slug(raw_slug: str) -> str:
         raise ValidationError(
             "Tenant identifier contains invalid characters. Use lowercase letters, digits, and non-consecutive hyphens."
         )
-
-    if normalized in RESERVED_SLUGS:
-        raise ValidationError(f"Tenant identifier '{normalized}' is reserved by the platform.")
 
     if normalized.replace('-', '').isdigit():
         raise ValidationError("Tenant identifier cannot consist exclusively of numbers and hyphens.")
