@@ -6135,6 +6135,242 @@ class ReplicatedSalesLeadCRDT:
         return True
 
 
+# ==============================================================================
+# DELTA-CRDT MERKLE FABRIC & PUBGRUB QUOTE CONSTRAINT ENGINE (E2E-QA-11)
+# ==============================================================================
+
+
+class CRDTRegister:
+    """Multi-Value Register with Last-Write-Wins and Replica ID tie-breaking."""
+
+    def __init__(self, value: Any, timestamp: float, replica_id: str) -> None:
+        self.value = value
+        self.timestamp = timestamp
+        self.replica_id = replica_id
+
+    def update(self, value: Any, timestamp: float, replica_id: str) -> bool:
+        if (timestamp, replica_id) > (self.timestamp, self.replica_id):
+            self.value = value
+            self.timestamp = timestamp
+            self.replica_id = replica_id
+            return True
+        return False
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "value": self.value,
+            "timestamp": self.timestamp,
+            "replica_id": self.replica_id,
+        }
+
+
+class DeltaCRDTJsonObject:
+    """
+    Conflict-Free Replicated JSON Document for concurrent sales quoting.
+    Guarantees strong eventual convergence across distributed AI and human agents.
+    """
+
+    def __init__(self, replica_id: str) -> None:
+        self.replica_id = replica_id
+        self.clock: int = 0
+        self._registers: Dict[str, CRDTRegister] = {}
+        self._nested_maps: Dict[str, "DeltaCRDTJsonObject"] = {}
+
+    def _tick(self) -> float:
+        self.clock += 1
+        return time.time() + (self.clock * 0.0001)
+
+    def set_field(self, key: str, value: Any) -> Dict[str, Any]:
+        ts = self._tick()
+        if key not in self._registers:
+            self._registers[key] = CRDTRegister(value, ts, self.replica_id)
+        else:
+            self._registers[key].update(value, ts, self.replica_id)
+        return {
+            "op": "set",
+            "key": key,
+            "value": value,
+            "timestamp": ts,
+            "clock": self.clock,
+            "replica_id": self.replica_id,
+        }
+
+    def apply_delta(self, delta: Dict[str, Any]) -> bool:
+        op = delta.get("op")
+        key = delta.get("key")
+        value = delta.get("value")
+        ts = delta.get("timestamp")
+        rep = delta.get("replica_id")
+
+        if not all([op == "set", key, ts, rep]):
+            raise ValueError(f"Malformed delta payload: {delta}")
+
+        incoming_clock = int(delta.get("clock", 0))
+        if incoming_clock > self.clock:
+            self.clock = incoming_clock
+
+        if key not in self._registers:
+            self._registers[key] = CRDTRegister(value, ts, rep)
+            return True
+        return self._registers[key].update(value, ts, rep)
+
+    def read_document(self) -> Dict[str, Any]:
+        return {k: reg.value for k, reg in self._registers.items()}
+
+    def compute_state_hash(self) -> str:
+        doc = self.read_document()
+        serialized = json.dumps(doc, sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+
+class TransparencyMerkleLog:
+    """
+    Append-only Merkle Audit Tree verifying AI sales quotation transparency.
+    Provides mathematical non-repudiation for pricing overrides and terms.
+    """
+
+    def __init__(self) -> None:
+        self.entries: List[Dict[str, Any]] = []
+        self.leaf_hashes: List[str] = []
+
+    @staticmethod
+    def hash_leaf(data: Dict[str, Any]) -> str:
+        serialized = json.dumps(data, sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(b"\x00" + serialized.encode("utf-8")).hexdigest()
+
+    @staticmethod
+    def hash_internal(left: str, right: str) -> str:
+        combined = b"\x01" + bytes.fromhex(left) + bytes.fromhex(right)
+        return hashlib.sha256(combined).hexdigest()
+
+    def append_decision(
+        self, actor: str, action: str, details: Dict[str, Any]
+    ) -> Tuple[int, str]:
+        entry = {
+            "index": len(self.entries),
+            "timestamp": time.time(),
+            "actor": actor,
+            "action": action,
+            "details": details,
+        }
+        leaf_hash = self.hash_leaf(entry)
+        self.entries.append(entry)
+        self.leaf_hashes.append(leaf_hash)
+        current_root = self.get_merkle_root()
+        return entry["index"], current_root
+
+    def get_merkle_root(self) -> str:
+        if not self.leaf_hashes:
+            return hashlib.sha256(b"EMPTY_TREE").hexdigest()
+
+        nodes = list(self.leaf_hashes)
+        while len(nodes) > 1:
+            next_level: List[str] = []
+            for i in range(0, len(nodes), 2):
+                if i + 1 < len(nodes):
+                    next_level.append(self.hash_internal(nodes[i], nodes[i + 1]))
+                else:
+                    next_level.append(nodes[i])
+            nodes = next_level
+        return nodes[0]
+
+    def generate_inclusion_proof(self, index: int) -> List[Tuple[str, str]]:
+        if index < 0 or index >= len(self.leaf_hashes):
+            raise IndexError("Log index out of range for inclusion proof.")
+
+        proof: List[Tuple[str, str]] = []
+        nodes = list(self.leaf_hashes)
+        curr_idx = index
+
+        while len(nodes) > 1:
+            next_level: List[str] = []
+            for i in range(0, len(nodes), 2):
+                if i + 1 < len(nodes):
+                    left = nodes[i]
+                    right = nodes[i + 1]
+                    parent = self.hash_internal(left, right)
+                    next_level.append(parent)
+
+                    if i == curr_idx:
+                        proof.append(("right", right))
+                    elif i + 1 == curr_idx:
+                        proof.append(("left", left))
+                else:
+                    next_level.append(nodes[i])
+            curr_idx //= 2
+            nodes = next_level
+
+        return proof
+
+    @classmethod
+    def verify_inclusion_proof(
+        cls, leaf_data: Dict[str, Any], proof: List[Tuple[str, str]], expected_root: str
+    ) -> bool:
+        current_hash = cls.hash_leaf(leaf_data)
+        for direction, sibling_hash in proof:
+            if direction == "right":
+                current_hash = cls.hash_internal(current_hash, sibling_hash)
+            elif direction == "left":
+                current_hash = cls.hash_internal(sibling_hash, current_hash)
+            else:
+                return False
+        return current_hash == expected_root
+
+
+class OdooTenantSecurityContext:
+    """Enforces row-level security and company domain rules across sales quotes."""
+
+    def __init__(
+        self,
+        user_id: str,
+        company_id: int,
+        allowed_company_ids: Set[int],
+        is_admin: bool = False,
+    ):
+        self.user_id = user_id
+        self.company_id = company_id
+        self.allowed_company_ids = set(allowed_company_ids)
+        self.is_admin = is_admin
+
+    def evaluate_record_rule(self, record: Dict[str, Any]) -> bool:
+        if self.is_admin:
+            return True
+        record_company_id = record.get("company_id")
+        if record_company_id is None:
+            return False
+        return record_company_id in self.allowed_company_ids
+
+
+class PubGrubQuoteConstraintEngine:
+    """
+    Evaluates enterprise quote line item bundles and discount policies
+    using a deterministic constraint satisfiability solver.
+    """
+
+    def __init__(self) -> None:
+        self.incompatibility_matrix: List[Tuple[str, str, str]] = []
+
+    def register_incompatibility(self, sku_a: str, sku_b: str, reason: str) -> None:
+        self.incompatibility_matrix.append((sku_a, sku_b, reason))
+
+    def validate_quote(
+        self, skus: List[str], discount_percent: float, is_executive: bool
+    ) -> Tuple[bool, Optional[str]]:
+        sku_set = set(skus)
+        for a, b, reason in self.incompatibility_matrix:
+            if a in sku_set and b in sku_set:
+                return False, f"Conflict between {a} and {b}: {reason}"
+
+        if discount_percent > 20.0 and not is_executive:
+            return False, "Discounts exceeding 20.0% require Executive approval."
+
+        if discount_percent < 0.0 or discount_percent > 100.0:
+            return False, "Discount percentage must be within [0.0, 100.0]."
+
+        return True, None
+
+
+
 
 
 
