@@ -159,3 +159,149 @@ def acquire_canonical_ordered_locks(cr, table_name: str, record_ids: list) -> li
     )
     return canonical_ids
 
+
+import contextvars
+import hmac
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple
+
+
+class SecurityIntegrityError(Exception):
+    """Raised when a tenant isolation invariant or security boundary is violated."""
+
+
+class ConcurrencyLockTimeoutError(Exception):
+    """Raised when acquiring locks in the canonical hierarchy exceeds the monotonic timeout."""
+
+
+@dataclass(frozen=True)
+class TenantContextToken:
+    tenant_id: int
+    allowed_company_ids: Tuple[int, ...]
+    lease_signature: str
+    created_at_mono: float
+
+
+class CanonicalLockHierarchy:
+    """Enforces strict lexicographical resource locking with monotonic timeouts to prevent
+    circular wait deadlocks and worker starvation (CWE-821).
+    """
+
+    def __init__(self, secret_key: bytes = b""):
+        self._locks: Dict[str, threading.Lock] = {}
+        self._meta_lock = threading.Lock()
+        self._secret_key = secret_key
+
+    def _get_lock(self, resource_id: str) -> threading.Lock:
+        with self._meta_lock:
+            if resource_id not in self._locks:
+                self._locks[resource_id] = threading.Lock()
+            return self._locks[resource_id]
+
+    def acquire_ordered_locks(
+        self, resource_ids: List[str], timeout_seconds: float = 5.0
+    ) -> List[threading.Lock]:
+        sorted_ids = sorted(list(set(resource_ids)))
+        acquired_locks: List[threading.Lock] = []
+        deadline = time.monotonic() + max(0.05, timeout_seconds)
+
+        for res_id in sorted_ids:
+            lock = self._get_lock(res_id)
+            remaining_time = deadline - time.monotonic()
+            if remaining_time <= 0:
+                self._release_partial_locks(acquired_locks)
+                raise ConcurrencyLockTimeoutError(
+                    f"Monotonic deadline expired while waiting to lock resource: {res_id}"
+                )
+
+            acquired = lock.acquire(timeout=remaining_time)
+            if not acquired:
+                self._release_partial_locks(acquired_locks)
+                raise ConcurrencyLockTimeoutError(
+                    f"Lock acquisition timed out for resource: {res_id} (timeout={timeout_seconds}s)"
+                )
+            acquired_locks.append(lock)
+
+        return acquired_locks
+
+    def _release_partial_locks(self, locks: List[threading.Lock]) -> None:
+        for lock in reversed(locks):
+            try:
+                lock.release()
+            except RuntimeError as exc:
+                _logger.debug("Lock already released during partial cleanup: %s", exc)
+
+    def release_locks(self, locks: List[threading.Lock]) -> None:
+        self._release_partial_locks(locks)
+
+
+class MultiTenantContextGuard:
+    """Guarantees thread-local and coroutine multi-tenant isolation against savepoint poisoning (CWE-284)."""
+
+    def __init__(self, secret_salt: bytes):
+        self._secret_salt = secret_salt
+        self._current_token_var: contextvars.ContextVar[Optional[TenantContextToken]] = (
+            contextvars.ContextVar("current_tenant_token", default=None)
+        )
+
+    def _compute_signature(self, tenant_id: int, allowed_ids: Tuple[int, ...]) -> str:
+        payload = f"{tenant_id}:{','.join(str(x) for x in allowed_ids)}".encode("utf-8")
+        return hmac.new(self._secret_salt, payload, hashlib.sha256).hexdigest()
+
+    def create_lease_token(self, tenant_id: int, allowed_company_ids: List[int]) -> TenantContextToken:
+        if tenant_id <= 0:
+            raise SecurityIntegrityError(f"Invalid primary tenant_id: {tenant_id}. Must be positive integer.")
+        clean_allowed = tuple(sorted(list(set(x for x in allowed_company_ids if x > 0))))
+        if tenant_id not in clean_allowed:
+            clean_allowed = tuple(sorted(clean_allowed + (tenant_id,)))
+
+        signature = self._compute_signature(tenant_id, clean_allowed)
+        return TenantContextToken(
+            tenant_id=tenant_id,
+            allowed_company_ids=clean_allowed,
+            lease_signature=signature,
+            created_at_mono=time.monotonic(),
+        )
+
+    def bind_context(self, token: TenantContextToken) -> contextvars.Token:
+        expected_sig = self._compute_signature(token.tenant_id, token.allowed_company_ids)
+        if not hmac.compare_digest(token.lease_signature, expected_sig):
+            raise SecurityIntegrityError("Tampered or invalid tenant context signature detected.")
+        return self._current_token_var.set(token)
+
+    def restore_context(self, prev_token: contextvars.Token) -> None:
+        self._current_token_var.reset(prev_token)
+
+    def assert_tenant_access(self, record_company_id: int) -> None:
+        active_token = self._current_token_var.get()
+        if active_token is None:
+            raise SecurityIntegrityError("Unauthorized operation: No active tenant context bound.")
+
+        expected_sig = self._compute_signature(
+            active_token.tenant_id, active_token.allowed_company_ids
+        )
+        if not hmac.compare_digest(active_token.lease_signature, expected_sig):
+            raise SecurityIntegrityError("Active tenant context token failed cryptographic verification.")
+
+        if record_company_id not in active_token.allowed_company_ids:
+            raise SecurityIntegrityError(
+                f"Tenant boundary violation: Context tenant {active_token.tenant_id} with "
+                f"companies {active_token.allowed_company_ids} attempted to access "
+                f"unauthorized company record: {record_company_id}"
+            )
+
+
+class FormulaInjectionSanitizer:
+    """Neutralizes CSV/TSV/Markdown formula injection (CWE-1236)."""
+
+    RISKY_PREFIXES: Tuple[str, ...] = ("=", "+", "-", "@", "\t", "\r")
+
+    @classmethod
+    def sanitize_field(cls, value: Any) -> str:
+        if value is None:
+            return ""
+        str_val = str(value)
+        stripped = str_val.lstrip()
+        if any(stripped.startswith(prefix) for prefix in cls.RISKY_PREFIXES):
+            return f"'{str_val}"
+        return str_val
