@@ -3594,3 +3594,271 @@ class EnterpriseStateInvariantEngine:
                         f"{snapshot.previous_hash} != {prior.current_hash}"
                     )
         return True
+
+
+# ==============================================================================
+# ENTERPRISE SALES KANBAN PULL SYSTEM WITH EXPLICIT WIP LIMITS (coderedgen)
+# ==============================================================================
+
+import asyncio
+from contextlib import asynccontextmanager
+from typing import AsyncIterator, Awaitable
+
+
+class PipelineStage(str, Enum):
+    """Formal state transitions for the autonomous sales pipeline."""
+    LEAD_TRIAGE = "LEAD_TRIAGE"
+    DEAL_QUALIFICATION = "DEAL_QUALIFICATION"
+    PROPOSAL_SYNTHESIS = "PROPOSAL_SYNTHESIS"
+    EXECUTIVE_CLOSING = "EXECUTIVE_CLOSING"
+    COMPLETED = "COMPLETED"
+    ABORTED = "ABORTED"
+
+
+class KanbanCapacityExceededError(RuntimeError):
+    """Raised when a non-blocking CONWIP pull request is rejected due to strict WIP limits."""
+
+
+class TokenLeaseTimeoutError(TimeoutError):
+    """Raised when waiting for an upstream CONWIP token exceeds the SLA bound."""
+
+
+@dataclass(frozen=True)
+class PipelineEvent:
+    """Immutable domain event representing a single verified action in the sales funnel."""
+    stage: PipelineStage
+    timestamp: float
+    payload: Mapping[str, Any]
+    previous_hash: str
+    event_hash: str
+
+    @classmethod
+    def create(
+        cls,
+        stage: PipelineStage,
+        payload: Mapping[str, Any],
+        previous_hash: str,
+        timestamp: Optional[float] = None,
+    ) -> "PipelineEvent":
+        ts = timestamp if timestamp is not None else time.time()
+        canonical_payload = json.dumps(dict(payload), sort_keys=True, separators=(",", ":"))
+        raw_content = f"{stage.value}|{ts:.6f}|{canonical_payload}|{previous_hash}"
+        digest = hashlib.sha256(raw_content.encode("utf-8")).hexdigest()
+        return cls(
+            stage=stage,
+            timestamp=ts,
+            payload=dict(payload),
+            previous_hash=previous_hash,
+            event_hash=digest,
+        )
+
+
+@dataclass(frozen=True)
+class SalesLeadState:
+    """Strictly immutable state container for an enterprise deal."""
+    lead_id: str
+    tenant_id: str
+    current_stage: PipelineStage
+    deal_metrics: Mapping[str, Any]
+    event_log: Tuple[PipelineEvent, ...] = field(default_factory=tuple)
+
+    @property
+    def latest_hash(self) -> str:
+        if not self.event_log:
+            return hashlib.sha256(f"GENESIS|{self.lead_id}|{self.tenant_id}".encode("utf-8")).hexdigest()
+        return self.event_log[-1].event_hash
+
+    def verify_audit_chain(self) -> bool:
+        expected_prev = hashlib.sha256(f"GENESIS|{self.lead_id}|{self.tenant_id}".encode("utf-8")).hexdigest()
+        for ev in self.event_log:
+            if ev.previous_hash != expected_prev:
+                return False
+            canonical_payload = json.dumps(dict(ev.payload), sort_keys=True, separators=(",", ":"))
+            raw_content = f"{ev.stage.value}|{ev.timestamp:.6f}|{canonical_payload}|{ev.previous_hash}"
+            recomputed = hashlib.sha256(raw_content.encode("utf-8")).hexdigest()
+            if recomputed != ev.event_hash:
+                return False
+            expected_prev = ev.event_hash
+        return True
+
+
+@dataclass(frozen=True)
+class ConwipToken:
+    """Cryptographically verifiable lease token granting right-of-execution in a stage."""
+    token_id: str
+    stage: PipelineStage
+    lead_id: str
+    acquired_at: float
+
+
+class KanbanPullController:
+    """Enforces Little's Law (L = lambda * W) across multi-agent stages via CONWIP pull queues."""
+
+    def __init__(self, wip_limits: Mapping[PipelineStage, int]) -> None:
+        self._wip_limits: Dict[PipelineStage, int] = dict(wip_limits)
+        self._token_pools: Dict[PipelineStage, asyncio.Queue[str]] = {}
+        self._active_leases: Dict[str, ConwipToken] = {}
+
+        for stage, limit in self._wip_limits.items():
+            if limit <= 0:
+                raise ValueError(f"WIP limit for {stage.value} must be strictly positive, got {limit}")
+            q: asyncio.Queue[str] = asyncio.Queue(maxsize=limit)
+            for idx in range(limit):
+                q.put_nowait(f"KANBAN-{stage.value}-{idx:04d}")
+            self._token_pools[stage] = q
+
+    def get_active_wip(self, stage: PipelineStage) -> int:
+        if stage not in self._wip_limits:
+            return 0
+        limit = self._wip_limits[stage]
+        available = self._token_pools[stage].qsize()
+        return limit - available
+
+    def get_available_tokens(self, stage: PipelineStage) -> int:
+        if stage not in self._token_pools:
+            return 0
+        return self._token_pools[stage].qsize()
+
+    @asynccontextmanager
+    async def pull_slot(
+        self,
+        stage: PipelineStage,
+        lead_id: str,
+        *,
+        block: bool = True,
+        timeout: float = 5.0,
+    ) -> AsyncIterator[ConwipToken]:
+        if stage not in self._token_pools:
+            raise ValueError(f"Stage {stage} is not governed by WIP controller.")
+
+        pool = self._token_pools[stage]
+        raw_token_id: Optional[str] = None
+
+        try:
+            if not block:
+                try:
+                    raw_token_id = pool.get_nowait()
+                except asyncio.QueueEmpty as exc:
+                    raise KanbanCapacityExceededError(
+                        f"CONWIP capacity exhausted for {stage.value} (Max WIP={self._wip_limits[stage]}). "
+                        f"Upstream pull denied for lead '{lead_id}'."
+                    ) from exc
+            else:
+                try:
+                    raw_token_id = await asyncio.wait_for(pool.get(), timeout=timeout)
+                except asyncio.TimeoutError as exc:
+                    raise TokenLeaseTimeoutError(
+                        f"Timed out after {timeout}s waiting for downstream pull signal on {stage.value}."
+                    ) from exc
+
+            lease = ConwipToken(
+                token_id=raw_token_id,
+                stage=stage,
+                lead_id=lead_id,
+                acquired_at=time.monotonic(),
+            )
+            self._active_leases[raw_token_id] = lease
+            yield lease
+        finally:
+            if raw_token_id is not None:
+                self._active_leases.pop(raw_token_id, None)
+                pool.put_nowait(raw_token_id)
+
+
+class EnterpriseSalesPipeline:
+    """Deterministic Kanban Pull Pipeline orchestrating autonomous sales deals."""
+
+    ALLOWED_TRANSITIONS: Mapping[PipelineStage, FrozenSet[PipelineStage]] = {
+        PipelineStage.LEAD_TRIAGE: frozenset({PipelineStage.DEAL_QUALIFICATION, PipelineStage.ABORTED}),
+        PipelineStage.DEAL_QUALIFICATION: frozenset({PipelineStage.PROPOSAL_SYNTHESIS, PipelineStage.ABORTED}),
+        PipelineStage.PROPOSAL_SYNTHESIS: frozenset({PipelineStage.EXECUTIVE_CLOSING, PipelineStage.ABORTED}),
+        PipelineStage.EXECUTIVE_CLOSING: frozenset({PipelineStage.COMPLETED, PipelineStage.ABORTED}),
+        PipelineStage.COMPLETED: frozenset(),
+        PipelineStage.ABORTED: frozenset(),
+    }
+
+    def __init__(self, controller: KanbanPullController) -> None:
+        self._controller = controller
+
+    @staticmethod
+    def initialize_lead(
+        lead_id: str,
+        tenant_id: str,
+        initial_metrics: Mapping[str, Any],
+    ) -> SalesLeadState:
+        genesis_state = SalesLeadState(
+            lead_id=lead_id,
+            tenant_id=tenant_id,
+            current_stage=PipelineStage.LEAD_TRIAGE,
+            deal_metrics=dict(initial_metrics),
+            event_log=(),
+        )
+        genesis_event = PipelineEvent.create(
+            stage=PipelineStage.LEAD_TRIAGE,
+            payload=initial_metrics,
+            previous_hash=genesis_state.latest_hash,
+        )
+        return SalesLeadState(
+            lead_id=lead_id,
+            tenant_id=tenant_id,
+            current_stage=PipelineStage.LEAD_TRIAGE,
+            deal_metrics=dict(initial_metrics),
+            event_log=(genesis_event,),
+        )
+
+    async def execute_stage_pull(
+        self,
+        state: SalesLeadState,
+        target_stage: PipelineStage,
+        agent_transform: Callable[[SalesLeadState], Awaitable[Mapping[str, Any]]],
+        *,
+        block: bool = True,
+        timeout: float = 5.0,
+    ) -> SalesLeadState:
+        allowed = self.ALLOWED_TRANSITIONS.get(state.current_stage, frozenset())
+        if target_stage not in allowed:
+            raise InvalidStateTransitionError(
+                f"Illegal transition for lead '{state.lead_id}': "
+                f"{state.current_stage.value} -> {target_stage.value}"
+            )
+
+        if target_stage in (PipelineStage.COMPLETED, PipelineStage.ABORTED):
+            delta_metrics = await agent_transform(state)
+            merged_metrics = {**state.deal_metrics, **delta_metrics}
+            event = PipelineEvent.create(
+                stage=target_stage,
+                payload=delta_metrics,
+                previous_hash=state.latest_hash,
+            )
+            return SalesLeadState(
+                lead_id=state.lead_id,
+                tenant_id=state.tenant_id,
+                current_stage=target_stage,
+                deal_metrics=merged_metrics,
+                event_log=state.event_log + (event,),
+            )
+
+        async with self._controller.pull_slot(
+            target_stage,
+            state.lead_id,
+            block=block,
+            timeout=timeout,
+        ) as lease_token:
+            delta_metrics = await agent_transform(state)
+            enriched_delta = {
+                **delta_metrics,
+                "_conwip_token": lease_token.token_id,
+            }
+            merged_metrics = {**state.deal_metrics, **enriched_delta}
+            event = PipelineEvent.create(
+                stage=target_stage,
+                payload=enriched_delta,
+                previous_hash=state.latest_hash,
+            )
+            return SalesLeadState(
+                lead_id=state.lead_id,
+                tenant_id=state.tenant_id,
+                current_stage=target_stage,
+                deal_metrics=merged_metrics,
+                event_log=state.event_log + (event,),
+            )
