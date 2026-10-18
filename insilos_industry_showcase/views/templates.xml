@@ -225,7 +225,7 @@
             <main id="wrap" class="oe_structure bg-100">
                 <section class="py-5 bg-view border-bottom">
                     <div class="container text-center">
-                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill fs-6 mb-3">
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-1 fs-6 mb-3">
                             <i class="ph-duotone ph-sparkle me-1"/> 30-DAY FREE TRIAL • KHÔNG RỦI RO
                         </span>
                         <h1 class="display-5 fw-bold text-dark mb-3">Khởi tạo SaaS Tenant Doanh nghiệp của Bạn</h1>
@@ -265,7 +265,7 @@
                             </div>
                         </t>
 
-                        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                        <div class="card shadow-sm border-0 rounded-1 overflow-hidden">
                             <div class="card-body p-4 p-md-5">
                                 <form action="/saas/signup/submit" method="post" class="js_saas_signup_form">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -374,7 +374,7 @@
                                         </div>
 
                                         <div class="col-12 mt-4 text-center">
-                                            <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold shadow-lg">
+                                            <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-1 fw-bold shadow-lg">
                                                 <i class="ph-duotone ph-rocket-launch me-2"/> BẮT ĐẦU 30 NGÀY DÙNG THỬ MIỄN PHÍ TỨC THÌ
                                             </button>
                                             <p class="text-muted small mt-3 mb-0">
@@ -397,7 +397,7 @@
             <t t-set="additional_title">Khởi tạo Không gian Làm việc Thành công! | Insilos SaaS</t>
             <main id="wrap" class="oe_structure bg-100 py-5">
                 <div class="container text-center py-5">
-                    <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-transparent borderless-obsidian-stage">
+                    <div class="card shadow border-0 rounded-1 p-4 p-md-5 bg-transparent borderless-obsidian-stage">
                         <div class="mb-4">
                             <i class="ph-duotone ph-check-circle text-success" style="font-size: 72px;"/>
                         </div>
@@ -428,10 +428,10 @@
                         </div>
 
                         <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-                            <a t-attf-href="http://#{slug}.insilos.com:18069/insilos" target="_blank" class="btn btn-primary btn-lg px-4 py-2 rounded-pill fw-bold">
+                            <a t-attf-href="http://#{slug}.insilos.com:18069/insilos" target="_blank" class="btn btn-primary btn-lg px-4 py-2 rounded-1 fw-bold">
                                 <i class="ph-duotone ph-arrow-square-out me-2"/> TRUY CẬP WORKSPACE NGAY
                             </a>
-                            <a href="/industry" class="btn btn-outline-secondary btn-lg px-4 py-2 rounded-pill">
+                            <a href="/industry" class="btn btn-outline-secondary btn-lg px-4 py-2 rounded-1">
                                 Khám phá Thêm Giải Pháp
                             </a>
                         </div>
@@ -448,14 +448,14 @@
             <main id="wrap" class="oe_structure bg-100 py-5">
                 <div class="container">
                     <div class="text-center mb-4">
-                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2 rounded-pill fs-6 mb-2">
+                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2 rounded-1 fs-6 mb-2">
                             <i class="ph-duotone ph-crown me-1"/> CHUYỂN ĐỔI BẢN QUYỀN CHÍNH THỨC
                         </span>
                         <h2 class="fw-bold text-dark">Nâng Cấp Bản Quyền: <t t-esc="tenant.name"/></h2>
                         <p class="text-muted">Đảm bảo hệ thống vận hành liên tục không gián đoạn sau khi kết thúc 30 ngày dùng thử.</p>
                     </div>
 
-                    <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-4 bg-view">
+                    <div class="card shadow-sm border-0 rounded-1 overflow-hidden mb-4 bg-view">
                         <div class="card-body p-4 p-md-5">
                             <form action="/saas/checkout/confirm" method="post">
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -528,7 +528,7 @@
                                 </div>
 
                                 <div class="text-center pt-3 border-top">
-                                    <button type="submit" class="btn btn-success btn-lg px-5 py-3 rounded-pill fw-bold shadow">
+                                    <button type="submit" class="btn btn-success btn-lg px-5 py-3 rounded-1 fw-bold shadow">
                                         <i class="ph-duotone ph-check-fat me-2"/> XÁC NHẬN THANH TOÁN &amp; KÍCH HOẠT BẢN QUYỀN
                                     </button>
                                     <p class="text-muted small mt-2 mb-0">Hóa đơn điện tử VAT sẽ được tự động xuất và gửi tới email quản trị của quý khách.</p>
@@ -547,7 +547,7 @@
             <t t-set="additional_title">Bản Quyền Đã Kích Hoạt Thành Công! | Insilos SaaS</t>
             <main id="wrap" class="oe_structure bg-100 py-5">
                 <div class="container text-center py-5">
-                    <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-view">
+                    <div class="card shadow border-0 rounded-1 p-4 p-md-5 bg-view">
                         <div class="mb-3">
                             <i class="ph-duotone ph-seal-check text-success" style="font-size: 80px;"/>
                         </div>
@@ -574,7 +574,7 @@
                         </div>
 
                         <div>
-                            <a t-attf-href="http://#{tenant.slug if tenant else ''}.insilos.com:18069/insilos" target="_blank" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold">
+                            <a t-attf-href="http://#{tenant.slug if tenant else ''}.insilos.com:18069/insilos" target="_blank" class="btn btn-primary btn-lg px-5 py-3 rounded-1 fw-bold">
                                 <i class="ph-duotone ph-sign-in me-2"/> VÀO WORKSPACE DOANH NGHIỆP
                             </a>
                         </div>

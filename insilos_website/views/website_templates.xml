@@ -35,11 +35,11 @@
                     </div>
                     <div class="col-lg-4 text-lg-end">
                         <div class="d-flex flex-column flex-sm-row justify-content-lg-end gap-3">
-                            <a href="/request-demo" class="btn btn-primary rounded-pill px-4 py-2">
+                            <a href="/request-demo" class="btn btn-primary rounded-1 px-4 py-2">
                                 <span>Yêu Cầu Live Demo</span>
                                 <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                             </a>
-                            <a href="/pricing" class="btn btn-outline-secondary rounded-pill px-4 py-2">Bảng Giá</a>
+                            <a href="/pricing" class="btn btn-outline-secondary rounded-1 px-4 py-2">Bảng Giá</a>
                         </div>
                     </div>
                 </div>
@@ -159,9 +159,11 @@
 
 
             <!-- Local High-Priority Font &amp; Media Preloads for Zero FOIT/FOUT and Sub-Second LCP -->
-            <link rel="preload" href="/insilos_website/static/src/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-            <link rel="preload" href="/insilos_website/static/src/fonts/inter-vietnamese.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-            <link rel="preload" href="/insilos_website/static/src/fonts/jetbrainsmono-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+            <link rel="preload" href="/insilos_website/static/src/fonts/poppins-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+            <link rel="preload" href="/insilos_website/static/src/fonts/poppins-vietnamese.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
             <style>
                 <t t-if="curr_path == '/'">
                     .ins-hero-video-viewport, .ins-hero-poster-fallback {
@@ -204,23 +206,16 @@
                 }
 
                 @font-face {
-                    font-family: 'Inter';
+                    font-family: 'Poppins';
                     font-style: normal;
-                    font-weight: 100 900;
+                    font-weight: 300 700;
                     font-display: swap;
-                    src: local('Inter'), local('Inter Regular'), local('Inter-Regular'), local('Inter-VariableFont'),
-                         url('/insilos_website/static/src/fonts/inter-vietnamese.woff2') format('woff2'),
-                         url('/insilos_website/static/src/fonts/inter-latin.woff2') format('woff2');
-                }
-                @font-face {
-                    font-family: 'JetBrains Mono';
-                    font-style: normal;
-                    font-weight: 100 900;
-                    font-display: swap;
-                    src: local('JetBrains Mono'), local('JetBrainsMono-Regular'),
-                         url('/insilos_website/static/src/fonts/jetbrainsmono-latin.woff2') format('woff2');
+                    src: local('Poppins'), local('Poppins Regular'), local('Poppins-Regular'),
+                         url('/insilos_website/static/src/fonts/poppins-vietnamese.woff2') format('woff2'),
+                         url('/insilos_website/static/src/fonts/poppins-latin.woff2') format('woff2');
                 }
                 html, body, #wrapwrap {
+                    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
                     scrollbar-gutter: stable;
                     scroll-behavior: auto !important;
                 }
@@ -521,7 +516,7 @@
                     width: 100% !important;
                     aspect-ratio: 16 / 9;
                     background-color: #030712 !important;
-                    border-radius: 1rem !important;
+                    border-radius: 2px !important;
                     overflow: hidden !important;
                 }
                 .s_insilos_cctv_ai_camera .ins-cctv-overlay-layer {
@@ -544,7 +539,7 @@
                     position: absolute !important;
                     top: -24px !important;
                     left: -2px !important;
-                    font-family: var(--bs-font-monospace, monospace) !important;
+                    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif) !important;
                     font-size: 0.68rem !important;
                     font-weight: 700 !important;
                     padding: 2px 7px !important;
@@ -552,7 +547,7 @@
                     white-space: nowrap !important;
                     text-transform: uppercase !important;
                     letter-spacing: 0.04em !important;
-                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+                    box-shadow: none;
                 }
                 .s_insilos_cctv_ai_camera .ins-bbox-helmet {
                     border: 2px solid #10b981 !important;
@@ -606,7 +601,7 @@
                     border: 1px solid rgba(255, 255, 255, 0.12) !important;
                     border-radius: 8px !important;
                     z-index: 6 !important;
-                    font-family: var(--bs-font-monospace, monospace) !important;
+                    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif) !important;
                     font-size: 0.72rem !important;
                     color: #94a3b8 !important;
                     pointer-events: none !important;
@@ -1292,7 +1287,7 @@
                                 <t t-elif="is_ins_video">
                                     <li role="presentation" class="nav-item ins-nav-item">
                                         <a role="menuitem" t-att-href="menu_url" class="nav-link d-inline-flex align-items-center gap-1">
-                                            <span class="badge bg-danger bg-opacity-75 text-white font-monospace ins-badge-micro-tag">HSE VIDEO</span>
+                                            <span class="badge bg-danger bg-opacity-75 text-white ins-badge-micro-tag">HSE VIDEO</span>
                                             <span t-field="submenu.name"/>
                                         </a>
                                     </li>
@@ -1331,7 +1326,7 @@
                             </li>
                             <li role="presentation" class="nav-item ins-nav-item">
                                 <a role="menuitem" href="/showcase-3d" class="nav-link d-inline-flex align-items-center gap-1">
-                                    <span class="badge bg-danger bg-opacity-75 text-white font-monospace ins-badge-micro-tag">HSE VIDEO</span>
+                                    <span class="badge bg-danger bg-opacity-75 text-white ins-badge-micro-tag">HSE VIDEO</span>
                                     <span>Video &amp; 3D</span>
                                 </a>
                             </li>
@@ -1674,7 +1669,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-auto pt-3 border-top border-secondary border-opacity-25">
-                                    <a href="/solutions/vertical-idp" class="btn btn-primary rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 ins-sol-preview-btn">
+                                    <a href="/solutions/vertical-idp" class="btn btn-primary rounded-1 w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 ins-sol-preview-btn">
                                         <span>Khám Phá Giải Pháp</span>
                                         <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                     </a>
@@ -1977,7 +1972,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-auto pt-3 border-top border-secondary border-opacity-25">
-                                    <a href="/industries/logistics" class="btn btn-primary rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 ins-ind-preview-btn">
+                                    <a href="/industries/logistics" class="btn btn-primary rounded-1 w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 ins-ind-preview-btn">
                                         <span>Khám Phá Hồ Sơ Ngành</span>
                                         <svg class="ph-duotone ph-arrow-right ph-sm"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                     </a>
@@ -2233,7 +2228,7 @@
                         <a href="/platform" class="text-white text-decoration-none py-2 fw-medium">Platform</a>
                         <a href="/showcase-3d" class="text-white text-decoration-none py-2 fw-medium d-flex align-items-center justify-content-between">
                             <span>Video &amp; 3D Showcase</span>
-                            <span class="badge bg-danger font-monospace">HSE VIDEO</span>
+                            <span class="badge bg-danger">HSE VIDEO</span>
                         </a>
                         <a href="/resources" class="text-white text-decoration-none py-2 fw-medium">Resources</a>
                         <a href="/pricing" class="text-white text-decoration-none py-2 fw-medium">Pricing</a>
@@ -2263,7 +2258,7 @@
                             <div class="col-lg-3 col-md-6">
                                 <div class="d-flex align-items-center gap-2 mb-3">
                                     <img src="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA" width="128" height="35" class="me-1"/><span class="text-orange fw-bold fs-5 tracking-tight">INNORIA</span>
-                                    <span class="badge bg-secondary bg-opacity-25 text-mint border border-secondary border-opacity-30 font-monospace small">Sovereign AI OS</span>
+                                    <span class="badge bg-secondary bg-opacity-25 text-mint border border-secondary border-opacity-30 small">Sovereign AI OS</span>
                                 </div>
                                 <h6 class="text-white fw-bold mb-2 small text-uppercase tracking-wider">INNORIA GROUP</h6>
                                 <p class="text-secondary small mb-2 lh-sm">
@@ -2355,10 +2350,10 @@
                                 </h6>
                                 <div class="ins-footer-hotline-card p-3 rounded-3 mb-3 border border-secondary border-opacity-25">
                                     <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
-                                        <span class="text-secondary small font-monospace">HOTLINE TOÀN QUỐC:</span>
-                                        <span class="badge bg-success bg-opacity-20 text-mint font-monospace small px-2 py-0">24/7 ACTIVE</span>
+                                        <span class="text-secondary small">HOTLINE TOÀN QUỐC:</span>
+                                        <span class="badge bg-success bg-opacity-20 text-mint small px-2 py-0">24/7 ACTIVE</span>
                                     </div>
-                                    <a href="tel:1900882026" class="ins-hotline-number d-block fs-4 fw-bold text-orange text-decoration-none font-monospace mb-1">1900 88 2026</a>
+                                    <a href="tel:1900882026" class="ins-hotline-number d-block fs-4 fw-bold text-orange text-decoration-none mb-1">1900 88 2026</a>
                                     <div class="text-secondary small lh-sm">Cam kết phản hồi sự cố kỹ thuật P1 &lt; 15 phút.</div>
                                 </div>
                                 <div class="d-flex flex-column gap-2 small text-secondary mb-3">
@@ -2371,7 +2366,7 @@
                                         <a href="mailto:legal@insilos.com" class="text-light text-decoration-none">legal@insilos.com</a>
                                     </div>
                                 </div>
-                                <a href="/request-demo" class="btn btn-primary ins-footer-btn-cta rounded-pill w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 fw-bold shadow">
+                                <a href="/request-demo" class="btn btn-primary ins-footer-btn-cta rounded-1 w-100 py-2 d-inline-flex justify-content-center align-items-center gap-2 fw-bold shadow">
                                     <span>Đăng Ký Khảo Sát Demo</span>
                                     <svg class="ph-duotone ph-arrow-right ph-xs"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                 </a>
@@ -2380,7 +2375,7 @@
 
                         <!-- Enterprise Compliance Certification Ribbon -->
                         <div class="py-3 border-bottom border-secondary border-opacity-25">
-                            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between gap-3 text-secondary font-monospace small">
+                            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between gap-3 text-secondary small">
                                 <span class="d-inline-flex align-items-center gap-1">
                                     <svg class="ph-duotone ph-shield-check ph-sm text-cyan"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-shield-check"/></svg>
                                     <strong class="text-white">ISO 27001:2022</strong> ISMS
