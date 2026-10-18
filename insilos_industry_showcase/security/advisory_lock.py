@@ -1896,6 +1896,10 @@ _TENANT_CONTEXT_VAR: contextvars.ContextVar[Optional[TenantSecurityContext]] = c
 )
 
 
+_ACTIVE_TENANT_DEPTH: contextvars.ContextVar[int] = contextvars.ContextVar(
+    "active_tenant_depth", default=0
+)
+
 INT4_MIN: int = -2147483648
 INT4_MAX: int = 2147483647
 INT4_RANGE: int = 4294967296  # 2^32
@@ -1938,14 +1942,31 @@ def canonical_advisory_key(namespace: str, resource_id: Union[int, str]) -> Tupl
     return (key_part1, key_part2)
 
 
+def canonical_advisory_key_64(domain_tag: str, tenant_id: int, resource_id: int) -> int:
+    """
+    Derives a collision-resistant 64-bit signed integer (-2^63 to 2^63 - 1) for pg_advisory_xact_lock(bigint).
+    Uses BLAKE2b 8-byte digest to avoid 32-bit birthday-paradox collisions across multi-company workloads.
+    """
+    if not isinstance(domain_tag, str) or not domain_tag.strip():
+        raise ValueError("domain_tag must be a non-empty string.")
+    if isinstance(tenant_id, bool) or isinstance(resource_id, bool) or tenant_id < 0 or resource_id < 0:
+        raise ValueError("Tenant and resource identifiers must be non-negative.")
+    raw_payload = f"V2:{domain_tag}:{tenant_id}:{resource_id}".encode("utf-8")
+    digest = hashlib.blake2b(raw_payload, digest_size=8).digest()
+    (val,) = struct.unpack(">q", digest)
+    return val
+
+
 LockTimeoutSecurityException = LockAcquisitionTimeoutError
 
 
 class BoundedAdvisoryLockGuard:
     """
-    Bounded Flat Advisory Lock with Reversible Diagnostic Metadata and Lexicographical Sorting (Synthesis 4.4 / Patch 71).
-    Supports both instance context-manager mode `with BoundedAdvisoryLockGuard(cr, keys, timeout_seconds):`
-    and classmethod mode `with BoundedAdvisoryLockGuard.acquire(cursor, company_id, journal_id):`.
+    Bounded Flat Advisory Lock with Reversible Diagnostic Metadata and Lexicographical Sorting (Synthesis 4.4 / Patches 70-72).
+    Supports:
+    - 32-bit tuple instance mode: `with BoundedAdvisoryLockGuard(cr, keys=[(k1, k2), ...], timeout_seconds=2.5):`
+    - 64-bit bigint instance mode: `with BoundedAdvisoryLockGuard(cr, lock_keys=[k64, ...], timeout_sec=3.0):`
+    - Classmethod mode: `with BoundedAdvisoryLockGuard.acquire(cursor, company_id, journal_id):`
     """
 
     diagnostic_registry: Dict[Tuple[int, int], Dict[str, Any]] = {}
@@ -1954,17 +1975,46 @@ class BoundedAdvisoryLockGuard:
     def __init__(
         self,
         cr: Any,
-        keys: Iterable[Tuple[int, int]],
+        keys: Optional[Iterable[Any]] = None,
         timeout_seconds: float = 5.0,
+        *,
+        lock_keys: Optional[Sequence[int]] = None,
+        timeout_sec: Optional[float] = None,
     ) -> None:
-        if timeout_seconds <= 0.0:
+        raw_items = list(lock_keys) if lock_keys is not None else (list(keys) if keys is not None else [])
+        resolved_timeout = timeout_sec if timeout_sec is not None else timeout_seconds
+        if resolved_timeout <= 0.0:
             raise ValueError("Lock timeout must be strictly positive.")
         self.cr = cr
-        self.keys: List[Tuple[int, int]] = sorted(set((int(k1), int(k2)) for k1, k2 in keys))
-        self.timeout_seconds: float = float(timeout_seconds)
         self._acquired: bool = False
 
+        if lock_keys is not None or (raw_items and isinstance(raw_items[0], int) and not isinstance(raw_items[0], bool)):
+            self._is_64bit_mode = True
+            self.lock_keys: List[int] = sorted(set(int(k) for k in raw_items))
+            self.keys: List[Tuple[int, int]] = []
+            self.timeout_sec: float = max(0.1, min(float(resolved_timeout), 30.0))
+            self.timeout_seconds: float = self.timeout_sec
+        else:
+            self._is_64bit_mode = False
+            self.lock_keys = []
+            self.keys = sorted(set((int(k1), int(k2)) for k1, k2 in raw_items))
+            self.timeout_seconds = float(resolved_timeout)
+            self.timeout_sec = self.timeout_seconds
+
     def __enter__(self) -> "BoundedAdvisoryLockGuard":
+        if self._is_64bit_mode:
+            self.cr.execute("SET LOCAL lock_timeout = %s;", (f"{int(self.timeout_sec * 1000)}ms",))
+            for key in self.lock_keys:
+                try:
+                    self.cr.execute("SELECT pg_advisory_xact_lock(%s);", (key,))
+                except Exception as exc:
+                    _logger.error("Advisory lock acquisition failed for key %d: %s", key, exc)
+                    raise LockTimeoutSecurityException(
+                        f"Resource lock unavailable for key {key}. Transaction aborted to prevent deadlock."
+                    ) from exc
+            self._acquired = True
+            return self
+
         timeout_ms = int(self.timeout_seconds * 1000)
         self.cr.execute("SET LOCAL lock_timeout = %s;", (f"{timeout_ms}ms",))
         for k1, k2 in self.keys:
@@ -1976,7 +2026,10 @@ class BoundedAdvisoryLockGuard:
 
     def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> bool:
         try:
-            self.cr.execute("RESET lock_timeout;")
+            if self._is_64bit_mode:
+                self.cr.execute("SET LOCAL lock_timeout = DEFAULT;")
+            else:
+                self.cr.execute("RESET lock_timeout;")
         except Exception as reset_exc:
             _logger.warning("Failed to reset lock_timeout on BoundedAdvisoryLockGuard exit: %s", reset_exc)
         self._acquired = False
@@ -2040,24 +2093,29 @@ class ScopedTenantEnvironmentGuard:
         self,
         token: Optional[Union[TenantContextToken, str, Any]] = None,
         secret_key: Union[bytes, str, int] = b"",
-        expected_token_hash: Optional[Union[str, int, List[int]]] = None,
+        expected_token_hash: Optional[Union[str, int, bool, List[int]]] = None,
         *,
         env: Optional[Any] = None,
         target_company_id: Optional[int] = None,
         target_user_id: Optional[int] = None,
         allowed_company_ids: Optional[List[int]] = None,
+        strict_acl: Optional[bool] = None,
     ) -> None:
         resolved_env = env if env is not None else token
         if resolved_env is not None and hasattr(resolved_env, "context"):
             comp_val = target_company_id if target_company_id is not None else secret_key
             if isinstance(comp_val, bool) or not isinstance(comp_val, int) or comp_val <= 0:
-                raise ValueError(f"Invalid target_company_id: {comp_val}")
+                raise TenantSecurityException(f"Invalid target_company_id: {comp_val}")
             self.env = resolved_env
             self.target_company_id = int(comp_val)
             user_val = (
                 target_user_id
                 if target_user_id is not None
-                else (expected_token_hash if isinstance(expected_token_hash, int) else None)
+                else (
+                    expected_token_hash
+                    if isinstance(expected_token_hash, int) and not isinstance(expected_token_hash, bool)
+                    else None
+                )
             )
             self.target_user_id: Optional[int] = int(user_val) if user_val is not None else None
             resolved_allowed = (
@@ -2068,9 +2126,15 @@ class ScopedTenantEnvironmentGuard:
             self.allowed_company_ids: List[int] = (
                 list(resolved_allowed) if resolved_allowed else [self.target_company_id]
             )
-            self.original_context: Optional[Dict[str, Any]] = None
-            self._original_context: Optional[Dict[str, Any]] = None
+            self.strict_acl: bool = (
+                strict_acl
+                if strict_acl is not None
+                else (expected_token_hash if isinstance(expected_token_hash, bool) else False)
+            )
+            self.original_context: Optional[Dict[str, Any]] = dict(resolved_env.context)
+            self._original_context: Optional[Dict[str, Any]] = dict(resolved_env.context)
             self.original_uid: Optional[int] = None
+            self._depth_token: Optional[contextvars.Token] = None
             self._restored: bool = False
             self.tenant_id = str(self.target_company_id)
             self.secret_token = ""
@@ -2087,9 +2151,11 @@ class ScopedTenantEnvironmentGuard:
             self.target_company_id = 0
             self.target_user_id = None
             self.allowed_company_ids = []
+            self.strict_acl = False
             self.original_context = None
             self._original_context = None
             self.original_uid = None
+            self._depth_token = None
             self._restored = False
             self.tenant_id = str(token).strip()
             self.secret_token = str(secret_key)
@@ -2102,9 +2168,11 @@ class ScopedTenantEnvironmentGuard:
             self.target_company_id = 0
             self.target_user_id = None
             self.allowed_company_ids = []
+            self.strict_acl = False
             self.original_context = None
             self._original_context = None
             self.original_uid = None
+            self._depth_token = None
             self._restored = False
             self.token = token
             self.secret_key = secret_key if isinstance(secret_key, bytes) else str(secret_key).encode("utf-8")
@@ -2113,6 +2181,10 @@ class ScopedTenantEnvironmentGuard:
             self.expected_token_hash = ""
             self._mode = "token"
         self._cv_token: Optional[contextvars.Token] = None
+
+    @classmethod
+    def get_active_depth(cls) -> int:
+        return _ACTIVE_TENANT_DEPTH.get()
 
     def verify_token(self) -> bool:
         token_bytes = self.secret_token.encode("utf-8")
@@ -2163,18 +2235,33 @@ class ScopedTenantEnvironmentGuard:
 
     def __enter__(self) -> Any:
         if self._mode == "env":
-            self.original_context = dict(self.env.context)
-            self._original_context = self.original_context
-            new_context = dict(self.original_context)
-            new_context["allowed_company_ids"] = list(self.allowed_company_ids)
-            new_context["company_id"] = self.target_company_id
-            if callable(self.env) and self.target_user_id is None:
-                return self.env(context=new_context)
-            self.original_uid = getattr(self.env, "uid", None)
-            self.env.context = new_context
-            if self.target_user_id is not None:
-                self.env.uid = self.target_user_id
-            return self.env
+            depth = _ACTIVE_TENANT_DEPTH.get()
+            self._depth_token = _ACTIVE_TENANT_DEPTH.set(depth + 1)
+            try:
+                if self.strict_acl and hasattr(self.env, "user") and hasattr(self.env.user, "company_ids"):
+                    permitted_ids = getattr(self.env.user.company_ids, "ids", self.env.user.company_ids)
+                    if self.target_company_id not in permitted_ids:
+                        raise TenantSecurityException(
+                            f"Access to tenant {self.target_company_id} rejected for UID {getattr(self.env, 'uid', None)}"
+                        )
+                self.original_context = dict(self.env.context)
+                self._original_context = self.original_context
+                new_context = dict(self.original_context)
+                new_context["allowed_company_ids"] = list(self.allowed_company_ids)
+                new_context["company_id"] = self.target_company_id
+                new_context["current_company_id"] = self.target_company_id
+                if callable(self.env) and self.target_user_id is None:
+                    return self.env(context=new_context)
+                self.original_uid = getattr(self.env, "uid", None)
+                self.env.context = new_context
+                if self.target_user_id is not None:
+                    self.env.uid = self.target_user_id
+                return self.env
+            except BaseException:
+                if self._depth_token is not None:
+                    _ACTIVE_TENANT_DEPTH.reset(self._depth_token)
+                    self._depth_token = None
+                raise
         if self._mode == "activate":
             if not self.verify_token():
                 raise TenantSecurityException(
@@ -2198,6 +2285,9 @@ class ScopedTenantEnvironmentGuard:
                 if self.original_uid is not None:
                     self.env.uid = self.original_uid
             finally:
+                if self._depth_token is not None:
+                    _ACTIVE_TENANT_DEPTH.reset(self._depth_token)
+                    self._depth_token = None
                 if hasattr(self.env, "invalidate_all"):
                     self.env.invalidate_all()
             return False
@@ -2208,6 +2298,10 @@ class ScopedTenantEnvironmentGuard:
                 self._current_token.reset(self._cv_token)
             self._cv_token = None
         return False
+
+    def __call__(self, fn: Callable[..., Any], *args: Any, **kwargs: Any) -> Any:
+        with self:
+            return fn(*args, **kwargs)
 
     @classmethod
     def get_current_tenant_id(cls, secret_key: Optional[bytes] = None) -> str:
