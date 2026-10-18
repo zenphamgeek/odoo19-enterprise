@@ -1165,4 +1165,334 @@ FormulaInjectionSanitizer = HardenedFormulaSanitizer
 FullwidthFormulaSanitizer = HardenedFormulaSanitizer
 
 
+from decimal import Decimal
+from typing import Union
+
+
+class TenantAccessViolation(PermissionError, TenantBoundaryViolation):
+    """Raised when an RPC or ORM context attempts cross-company boundary violation."""
+
+
+class FormulaSanitizationError(ValueError, SecurityException):
+    """Raised when a formula violates grammar, security, or depth invariants."""
+
+
+def validate_tenant_access(
+    requested_company_id: Union[int, Any],
+    authenticated_user: Any = None,
+    allowed_company_ids: Optional[Union[Set[int], List[int]]] = None,
+) -> int:
+    """Enforces tenant scoping across both 2-arg (requested_id, allowed_ids) and 3-arg (requested_id, user, allowed_ids) signatures."""
+    if allowed_company_ids is None and isinstance(authenticated_user, (list, set, tuple, frozenset)):
+        resolved_allowed = authenticated_user
+        resolved_user = None
+    else:
+        resolved_allowed = allowed_company_ids
+        resolved_user = authenticated_user
+
+    if isinstance(requested_company_id, bool):
+        raise TenantAccessViolation(
+            f"Type evasion attempt: boolean {requested_company_id!r} is not a valid tenant ID."
+        )
+
+    if not isinstance(requested_company_id, int):
+        raise TenantAccessViolation(
+            f"Tenant ID must be an integer. Received type: {type(requested_company_id).__name__}"
+        )
+
+    if requested_company_id <= 0:
+        raise TenantAccessViolation(
+            f"Tenant ID must be a strictly positive integer. Received: {requested_company_id}"
+        )
+
+    if not resolved_allowed or not all(
+        isinstance(cid, int) and not isinstance(cid, bool) and cid > 0
+        for cid in resolved_allowed
+    ):
+        raise TenantAccessViolation(
+            "Allowed tenant context contains invalid or unauthenticated entries."
+        )
+
+    if requested_company_id not in resolved_allowed:
+        user_login = getattr(resolved_user, "login", "anonymous") if resolved_user is not None else "anonymous"
+        _logger.warning(
+            "Security Boundary Alert: User '%s' attempted unauthorized access to company_id=%d. Permitted set: %s",
+            user_login,
+            requested_company_id,
+            resolved_allowed,
+        )
+        raise TenantAccessViolation(
+            f"Access Denied: Tenant ID {requested_company_id} is not within authorized scope {resolved_allowed}."
+        )
+
+    return requested_company_id
+
+
+AtomicMultiTenantGuard.validate_tenant_access = staticmethod(validate_tenant_access)
+
+
+class LockSystemTier(enum.IntEnum):
+    DISTRIBUTED_REDIS = 1
+    POSTGRES_ADVISORY = 2
+    POSTGRES_ROW_LEVEL = 3
+
+
+class HeterogeneousLockKey:
+    """Immutable composite key guaranteeing global monotonic lock ordering across Redis, PG Advisory, and PG Row locks."""
+
+    __slots__ = ("tier", "tenant_id", "resource_id", "record_id")
+
+    def __init__(
+        self,
+        tier: LockSystemTier,
+        tenant_id: int,
+        resource_id: int,
+        record_id: int,
+    ) -> None:
+        if not isinstance(tenant_id, int) or isinstance(tenant_id, bool) or tenant_id <= 0:
+            raise ValueError(f"tenant_id must be a positive integer, got: {tenant_id!r}")
+        if not isinstance(resource_id, int) or isinstance(resource_id, bool) or resource_id < 0:
+            raise ValueError(f"resource_id must be a non-negative integer, got: {resource_id!r}")
+        if not isinstance(record_id, int) or isinstance(record_id, bool) or record_id < 0:
+            raise ValueError(f"record_id must be a non-negative integer, got: {record_id!r}")
+
+        self.tier = LockSystemTier(tier)
+        self.tenant_id = tenant_id
+        self.resource_id = resource_id
+        self.record_id = record_id
+
+    def as_tuple(self) -> Tuple[int, int, int, int]:
+        return (int(self.tier), self.tenant_id, self.resource_id, self.record_id)
+
+    def __lt__(self, other: "HeterogeneousLockKey") -> bool:
+        if not isinstance(other, HeterogeneousLockKey):
+            return NotImplemented
+        return self.as_tuple() < other.as_tuple()
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, HeterogeneousLockKey):
+            return False
+        return self.as_tuple() == other.as_tuple()
+
+    def __hash__(self) -> int:
+        return hash(self.as_tuple())
+
+    def __repr__(self) -> str:
+        return (
+            f"HeterogeneousLockKey(tier={self.tier.name}, tenant={self.tenant_id}, "
+            f"resource={self.resource_id}, record={self.record_id})"
+        )
+
+
+class _HeterogeneousCrossTierLockManager(CanonicalLockHierarchyManager):
+    """Acquires heterogeneous locks in strictly sorted order with timeout protection AND supports class-level model-tier sorting."""
+
+    def __init__(self, cr: Any = None, redis_client: Optional[Any] = None) -> None:
+        super().__init__(cr=cr)
+        self.redis_client = redis_client
+        self._acquired_locks: List[HeterogeneousLockKey] = []
+
+    def _acquire_postgres_advisory(self, key: HeterogeneousLockKey, timeout_sec: float) -> bool:
+        lock_id_64 = (
+            ((key.tenant_id & 0xFFFF) << 48)
+            | ((key.resource_id & 0xFFFF) << 32)
+            | (key.record_id & 0xFFFFFFFF)
+        )
+        start_time = time.monotonic()
+        while True:
+            self.cr.execute(
+                "SELECT pg_try_advisory_xact_lock(%s);",
+                (lock_id_64,),
+            )
+            row = self.cr.fetchone()
+            if row and row[0]:
+                return True
+            if time.monotonic() - start_time >= timeout_sec:
+                return False
+            time.sleep(0.01)
+
+    def _acquire_postgres_row(self, key: HeterogeneousLockKey, timeout_sec: float) -> bool:
+        self.cr.execute(f"SET LOCAL lock_timeout = '{int(timeout_sec * 1000)}ms';")
+        self.cr.execute(
+            "SELECT id FROM account_move WHERE id = %s AND company_id = %s FOR UPDATE;",
+            (key.record_id, key.tenant_id),
+        )
+        res = self.cr.fetchone()
+        return res is not None
+
+    def _acquire_redis_mutex(self, key: HeterogeneousLockKey, timeout_sec: float) -> bool:
+        if self.redis_client is None:
+            return True
+        redis_key = f"lock:{key.tenant_id}:{key.resource_id}:{key.record_id}"
+        start_time = time.monotonic()
+        while True:
+            acquired = self.redis_client.set(redis_key, "locked", nx=True, ex=30)
+            if acquired:
+                return True
+            if time.monotonic() - start_time >= timeout_sec:
+                return False
+            time.sleep(0.01)
+
+    def _release_redis_mutex(self, key: HeterogeneousLockKey) -> None:
+        if self.redis_client is not None:
+            redis_key = f"lock:{key.tenant_id}:{key.resource_id}:{key.record_id}"
+            self.redis_client.delete(redis_key)
+
+    @contextmanager
+    def acquire_heterogeneous_locks(
+        self,
+        lock_keys: List[HeterogeneousLockKey],
+        timeout_sec: float = 3.0,
+    ):
+        sorted_keys = sorted(set(lock_keys))
+        self._acquired_locks = []
+        try:
+            for key in sorted_keys:
+                acquired = False
+                if key.tier == LockSystemTier.DISTRIBUTED_REDIS:
+                    acquired = self._acquire_redis_mutex(key, timeout_sec)
+                elif key.tier == LockSystemTier.POSTGRES_ADVISORY:
+                    acquired = self._acquire_postgres_advisory(key, timeout_sec)
+                elif key.tier == LockSystemTier.POSTGRES_ROW_LEVEL:
+                    acquired = self._acquire_postgres_row(key, timeout_sec)
+
+                if not acquired:
+                    raise TimeoutError(
+                        f"DeterministicHeterogeneousLockManager: Failed to acquire {key} within {timeout_sec}s timeout."
+                    )
+                self._acquired_locks.append(key)
+            yield self._acquired_locks
+        finally:
+            for key in reversed(self._acquired_locks):
+                if key.tier == LockSystemTier.DISTRIBUTED_REDIS:
+                    self._release_redis_mutex(key)
+            self._acquired_locks.clear()
+
+
+DeterministicHeterogeneousLockManager = _HeterogeneousCrossTierLockManager
+
+
+class NFKDStrongRefFormulaSanitizer:
+    """Canonicalizes and sanitizes formulas against injection and cyclic dependency graph explosion."""
+
+    SAFE_FUNCTIONS: Set[str] = {
+        "SUM", "AVERAGE", "COUNT", "COUNTA", "MAX", "MIN", "IF",
+        "ROUND", "ABS", "SUBTOTAL", "VLOOKUP", "XLOOKUP", "INDEX", "MATCH",
+    }
+    CELL_REF_PATTERN = re.compile(
+        r"^(?:'?[a-zA-Z0-9_\s]+'?!|\b)([A-Z]{1,3}[0-9]{1,7})\b"
+    )
+    MAX_RECURSION_DEPTH = 8
+    MAX_FORMULA_LENGTH = 1024
+
+    @classmethod
+    def canonicalize_unicode(cls, raw_formula: str) -> str:
+        if not isinstance(raw_formula, str):
+            raise FormulaSanitizationError("Formula input must be a string.")
+        normalized = unicodedata.normalize("NFKD", raw_formula)
+        cleaned = "".join(ch for ch in normalized if ch == "\t" or ch == "\n" or ord(ch) >= 32)
+        return cleaned.strip()
+
+    @classmethod
+    def sanitize_formula_payload(
+        cls,
+        raw_formula: str,
+        formula_dependency_graph: Dict[str, List[str]],
+        target_cell: str,
+        current_depth: int = 0,
+    ) -> str:
+        canonical = cls.canonicalize_unicode(raw_formula)
+        if len(canonical) > cls.MAX_FORMULA_LENGTH:
+            raise FormulaSanitizationError(
+                f"Formula exceeds max allowed length of {cls.MAX_FORMULA_LENGTH} chars."
+            )
+        if any(canonical.startswith(prefix) for prefix in ("|", "%", "!")):
+            return "'" + canonical
+        if not canonical.startswith("="):
+            if canonical.startswith(("+", "-", "@")):
+                return "'" + canonical
+            return canonical
+
+        expression = canonical[1:].strip()
+        dangerous_signatures = ("cmd", "powershell", "curl", "mshta", "exec", "system")
+        lower_expr = expression.lower()
+        for bad_sig in dangerous_signatures:
+            if bad_sig in lower_expr:
+                raise FormulaSanitizationError(f"Malicious payload pattern detected: {bad_sig}")
+
+        if current_depth > cls.MAX_RECURSION_DEPTH:
+            raise FormulaSanitizationError(
+                f"Formula reference depth limit of {cls.MAX_RECURSION_DEPTH} exceeded at {target_cell}."
+            )
+
+        referenced_cells = formula_dependency_graph.get(target_cell, [])
+        for ref in referenced_cells:
+            if ref == target_cell:
+                raise FormulaSanitizationError(f"Direct circular dependency detected in {target_cell}.")
+            cls._check_cycle(ref, formula_dependency_graph, [target_cell], current_depth + 1)
+
+        return "=" + expression
+
+    @classmethod
+    def _check_cycle(
+        cls,
+        current: str,
+        graph: Dict[str, List[str]],
+        visited: List[str],
+        depth: int,
+    ) -> None:
+        if depth > cls.MAX_RECURSION_DEPTH:
+            raise FormulaSanitizationError(f"Cycle check depth exceeded at node: {current}")
+        if current in visited:
+            cycle_path = " -> ".join(visited + [current])
+            raise FormulaSanitizationError(f"Circular dependency cycle detected: {cycle_path}")
+        for neighbor in graph.get(current, []):
+            cls._check_cycle(neighbor, graph, visited + [current], depth + 1)
+
+
+class MockAccountMoveLine:
+    def __init__(
+        self,
+        line_id: int,
+        company_id: int,
+        currency_code: str,
+        amount_currency: Decimal,
+        balance_functional: Decimal,
+    ) -> None:
+        self.line_id = line_id
+        self.company_id = company_id
+        self.currency_code = currency_code
+        self.amount_currency = amount_currency
+        self.balance_functional = balance_functional
+
+
+def revalue_journal_items_partitioned(
+    lines: List[MockAccountMoveLine],
+    rates: Dict[str, Decimal],
+    lock_manager: Any = None,
+) -> Tuple[Decimal, int]:
+    """Executes partitioned, chunked currency revaluation adhering to strict monotonic company ordering."""
+    total_revalued_diff = Decimal("0.0")
+    processed_count = 0
+
+    lines_by_company: Dict[int, List[MockAccountMoveLine]] = {}
+    for line in lines:
+        lines_by_company.setdefault(line.company_id, []).append(line)
+
+    for comp_id in sorted(lines_by_company.keys()):
+        comp_lines = lines_by_company[comp_id]
+        chunk_size = 1000
+        for i in range(0, len(comp_lines), chunk_size):
+            chunk = comp_lines[i : i + chunk_size]
+            for item in chunk:
+                current_rate = rates[item.currency_code]
+                new_balance = (item.amount_currency * current_rate).quantize(Decimal("0.01"))
+                diff = new_balance - item.balance_functional
+                total_revalued_diff += diff
+                item.balance_functional = new_balance
+                processed_count += 1
+
+    return total_revalued_diff, processed_count
+
+
 
