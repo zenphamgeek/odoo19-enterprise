@@ -3294,3 +3294,303 @@ class EnterpriseSalesProcessEngine:
             return False
 
         return True
+
+
+from dataclasses import asdict
+from typing import Mapping, Sequence
+
+
+class DomainInvariantViolationError(Exception):
+    """Raised when a formal business process state invariant is violated."""
+
+
+class TenantIsolationViolationError(Exception):
+    """Raised when cross-company record boundaries are breached without authorization."""
+
+
+class LedgerIntegrityError(Exception):
+    """Raised when the cryptographic hash chain or double-entry balance fails."""
+
+
+class DealState(str, Enum):
+    """Lifecycle states for autonomous A2A enterprise sales negotiations."""
+
+    DRAFT = "DRAFT"
+    PROPOSED = "PROPOSED"
+    NEGOTIATING = "NEGOTIATING"
+    COMMITTED = "COMMITTED"
+    SETTLED = "SETTLED"
+    TERMINATED = "TERMINATED"
+
+
+@dataclass(frozen=True)
+class AccountingLeg:
+    """Represents one leg of a double-entry transaction commitment."""
+
+    account_id: str
+    debit_cents: int
+    credit_cents: int
+
+    def __post_init__(self) -> None:
+        if self.debit_cents < 0 or self.credit_cents < 0:
+            raise DomainInvariantViolationError(
+                f"Negative monetary values rejected: debit={self.debit_cents}, credit={self.credit_cents}"
+            )
+        if self.debit_cents > 0 and self.credit_cents > 0:
+            raise DomainInvariantViolationError(
+                f"Accounting leg cannot have both debit and credit active simultaneously: {self}"
+            )
+        if self.debit_cents == 0 and self.credit_cents == 0:
+            raise DomainInvariantViolationError("Accounting leg cannot have zero debit and zero credit")
+
+
+@dataclass(frozen=True)
+class LedgerEvent:
+    """Discrete, immutable event driving the state machine."""
+
+    event_id: str
+    event_type: str
+    company_id: str
+    payload: Dict[str, Any]
+    timestamp_utc: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
+
+
+@dataclass(frozen=True)
+class DealSnapshot:
+    """State snapshot of an enterprise sales transaction at sequence t."""
+
+    deal_id: str
+    initiating_company_id: str
+    counterparty_company_id: str
+    state: DealState
+    sku_manifest: Sequence[str]
+    total_value_cents: int
+    accounting_legs: Sequence[AccountingLeg]
+    sequence_number: int
+    previous_hash: str
+    current_hash: str
+
+
+class EnterpriseStateInvariantEngine:
+    """
+    Formal State Transition Engine implementing FinRobot (arXiv:2506.01423)
+    and Odoo multi-company double-entry isolation invariants.
+    """
+
+    GENESIS_HASH = "0000000000000000000000000000000000000000000000000000000000000000"
+
+    def __init__(self, allowed_companies: Sequence[str]) -> None:
+        self._allowed_companies = frozenset(allowed_companies)
+        self._deal_history: Dict[str, List[DealSnapshot]] = {}
+
+    def _compute_canonical_hash(
+        self,
+        deal_id: str,
+        initiator: str,
+        counterparty: str,
+        state: DealState,
+        total_cents: int,
+        legs: Sequence[AccountingLeg],
+        sequence: int,
+        prev_hash: str,
+        event: LedgerEvent,
+    ) -> str:
+        payload = {
+            "deal_id": deal_id,
+            "initiating_company_id": initiator,
+            "counterparty_company_id": counterparty,
+            "state": state.value,
+            "total_value_cents": total_cents,
+            "accounting_legs": [asdict(leg) for leg in legs],
+            "sequence_number": sequence,
+            "previous_hash": prev_hash,
+            "trigger_event": {
+                "event_id": event.event_id,
+                "event_type": event.event_type,
+                "company_id": event.company_id,
+                "timestamp_utc": event.timestamp_utc,
+                "payload": event.payload,
+            },
+        }
+        serialized = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+    def enforce_tenant_isolation(
+        self,
+        requesting_company_id: str,
+        target_deal: DealSnapshot,
+    ) -> None:
+        if requesting_company_id not in self._allowed_companies:
+            _logger.error("Unauthorized company access attempt: %s", requesting_company_id)
+            raise TenantIsolationViolationError(
+                f"Company {requesting_company_id} is not registered in sovereign fleet tenancy"
+            )
+
+        if requesting_company_id not in (
+            target_deal.initiating_company_id,
+            target_deal.counterparty_company_id,
+        ):
+            _logger.warning(
+                "Cross-company tenant breach attempted by %s on deal %s",
+                requesting_company_id,
+                target_deal.deal_id,
+            )
+            raise TenantIsolationViolationError(
+                f"Company {requesting_company_id} has no record clearance for Deal {target_deal.deal_id}"
+            )
+
+    def verify_double_entry_invariants(self, legs: Sequence[AccountingLeg]) -> bool:
+        total_debit = sum(leg.debit_cents for leg in legs)
+        total_credit = sum(leg.credit_cents for leg in legs)
+        if total_debit != total_credit:
+            raise LedgerIntegrityError(
+                f"Double-entry balance check violated: Debits ({total_debit}) != Credits ({total_credit})"
+            )
+        return True
+
+    def create_genesis_deal(
+        self,
+        deal_id: str,
+        initiator_id: str,
+        counterparty_id: str,
+        sku_manifest: Sequence[str],
+        total_value_cents: int,
+        initial_legs: Sequence[AccountingLeg],
+    ) -> DealSnapshot:
+        if deal_id in self._deal_history:
+            raise DomainInvariantViolationError(f"Deal {deal_id} already exists in ledger")
+
+        if initiator_id not in self._allowed_companies or counterparty_id not in self._allowed_companies:
+            raise TenantIsolationViolationError("Both initiating and counterparty companies must be valid")
+
+        if initiator_id == counterparty_id:
+            raise DomainInvariantViolationError("Initiator and counterparty cannot be the same entity")
+
+        if total_value_cents <= 0:
+            raise DomainInvariantViolationError("Total deal value must be strictly positive")
+
+        if not sku_manifest:
+            raise DomainInvariantViolationError("SKU manifest cannot be empty")
+
+        self.verify_double_entry_invariants(initial_legs)
+
+        genesis_event = LedgerEvent(
+            event_id=f"evt-genesis-{deal_id}",
+            event_type="GENESIS_PROPOSAL",
+            company_id=initiator_id,
+            payload={"initial_value_cents": total_value_cents, "skus": list(sku_manifest)},
+        )
+
+        current_hash = self._compute_canonical_hash(
+            deal_id=deal_id,
+            initiator=initiator_id,
+            counterparty=counterparty_id,
+            state=DealState.DRAFT,
+            total_cents=total_value_cents,
+            legs=initial_legs,
+            sequence=0,
+            prev_hash=self.GENESIS_HASH,
+            event=genesis_event,
+        )
+
+        genesis_snapshot = DealSnapshot(
+            deal_id=deal_id,
+            initiating_company_id=initiator_id,
+            counterparty_company_id=counterparty_id,
+            state=DealState.DRAFT,
+            sku_manifest=tuple(sku_manifest),
+            total_value_cents=total_value_cents,
+            accounting_legs=tuple(initial_legs),
+            sequence_number=0,
+            previous_hash=self.GENESIS_HASH,
+            current_hash=current_hash,
+        )
+
+        self._deal_history[deal_id] = [genesis_snapshot]
+        return genesis_snapshot
+
+    def transition_state(
+        self,
+        deal_id: str,
+        target_state: DealState,
+        event: LedgerEvent,
+        updated_legs: Optional[Sequence[AccountingLeg]] = None,
+        updated_value_cents: Optional[int] = None,
+    ) -> DealSnapshot:
+        history = self._deal_history.get(deal_id)
+        if not history:
+            raise DomainInvariantViolationError(f"No active deal found for ID {deal_id}")
+
+        current = history[-1]
+        self.enforce_tenant_isolation(event.company_id, current)
+
+        valid_transitions: Mapping[DealState, Sequence[DealState]] = {
+            DealState.DRAFT: (DealState.PROPOSED, DealState.TERMINATED),
+            DealState.PROPOSED: (DealState.NEGOTIATING, DealState.COMMITTED, DealState.TERMINATED),
+            DealState.NEGOTIATING: (DealState.COMMITTED, DealState.TERMINATED),
+            DealState.COMMITTED: (DealState.SETTLED, DealState.TERMINATED),
+            DealState.SETTLED: (),
+            DealState.TERMINATED: (),
+        }
+
+        if target_state not in valid_transitions.get(current.state, ()):
+            raise DomainInvariantViolationError(
+                f"Illegal state transition requested: {current.state} -> {target_state}"
+            )
+
+        active_legs = tuple(updated_legs) if updated_legs is not None else current.accounting_legs
+        active_value = updated_value_cents if updated_value_cents is not None else current.total_value_cents
+
+        if active_value <= 0:
+            raise DomainInvariantViolationError("Updated deal value must be strictly positive")
+
+        self.verify_double_entry_invariants(active_legs)
+
+        next_sequence = current.sequence_number + 1
+        new_hash = self._compute_canonical_hash(
+            deal_id=deal_id,
+            initiator=current.initiating_company_id,
+            counterparty=current.counterparty_company_id,
+            state=target_state,
+            total_cents=active_value,
+            legs=active_legs,
+            sequence=next_sequence,
+            prev_hash=current.current_hash,
+            event=event,
+        )
+
+        next_snapshot = DealSnapshot(
+            deal_id=deal_id,
+            initiating_company_id=current.initiating_company_id,
+            counterparty_company_id=current.counterparty_company_id,
+            state=target_state,
+            sku_manifest=current.sku_manifest,
+            total_value_cents=active_value,
+            accounting_legs=active_legs,
+            sequence_number=next_sequence,
+            previous_hash=current.current_hash,
+            current_hash=new_hash,
+        )
+
+        history.append(next_snapshot)
+        return next_snapshot
+
+    def verify_ledger_chain(self, deal_id: str) -> bool:
+        history = self._deal_history.get(deal_id)
+        if not history:
+            raise DomainInvariantViolationError(f"No history found for deal {deal_id}")
+
+        for idx, snapshot in enumerate(history):
+            if idx == 0:
+                if snapshot.previous_hash != self.GENESIS_HASH:
+                    raise LedgerIntegrityError(f"Genesis block previous_hash corrupt: {snapshot.previous_hash}")
+            else:
+                prior = history[idx - 1]
+                if snapshot.previous_hash != prior.current_hash:
+                    raise LedgerIntegrityError(
+                        f"Hash chain broken at seq {snapshot.sequence_number}: "
+                        f"{snapshot.previous_hash} != {prior.current_hash}"
+                    )
+        return True
