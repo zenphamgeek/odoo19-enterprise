@@ -6370,6 +6370,335 @@ class PubGrubQuoteConstraintEngine:
         return True, None
 
 
+class HarnessVerificationError(Exception):
+    """Base exception for E2E Sales Harness verification failures."""
+
+
+class CRDTConvergenceError(HarnessVerificationError):
+    """Raised when CRDT replicas fail to converge to a deterministic state."""
+
+
+class MerkleIntegrityError(HarnessVerificationError):
+    """Raised when audit log Merkle proof verification detects tampering."""
+
+
+class TenantIsolationError(HarnessVerificationError):
+    """Raised when an operation violates multi-tenant company_id security rules."""
+
+
+class DependencyResolutionError(HarnessVerificationError):
+    """Raised when PubGrub solver detects unsatisfiable package constraints."""
+
+
+@dataclass(frozen=True)
+class ZceseSalesLineItem:
+    item_id: str
+    product_name: str
+    quantity: int
+    unit_price: float
+    timestamp: LamportTimestamp
+    deleted: bool = False
+
+
+class SalesOrderCRDTDocument:
+    """
+    A JSON CRDT representing an Enterprise Sales Order / Quotation (arXiv:1608.03960).
+    Supports concurrent edits to line items, discounts, and stage transitions
+    with guaranteed strong eventual consistency across distributed replicas.
+    """
+
+    def __init__(self, order_id: str, actor_id: str, company_id: int) -> None:
+        self.order_id = order_id
+        self.actor_id = actor_id
+        self.company_id = company_id
+        self.logical_clock = 0
+        self.line_items: Dict[str, ZceseSalesLineItem] = {}
+        self.discount_percent: Tuple[float, LamportTimestamp] = (
+            0.0,
+            LamportTimestamp(0, ""),
+        )
+        self.stage: Tuple[str, LamportTimestamp] = (
+            "draft",
+            LamportTimestamp(0, ""),
+        )
+
+    def _tick(self) -> LamportTimestamp:
+        self.logical_clock += 1
+        return LamportTimestamp(self.logical_clock, self.actor_id)
+
+    def set_line_item(
+        self, item_id: str, product_name: str, quantity: int, unit_price: float
+    ) -> None:
+        if quantity < 0 or unit_price < 0:
+            raise ValueError("Quantity and unit price must be non-negative.")
+        ts = self._tick()
+        new_item = ZceseSalesLineItem(
+            item_id=item_id,
+            product_name=product_name,
+            quantity=quantity,
+            unit_price=unit_price,
+            timestamp=ts,
+            deleted=False,
+        )
+        self._apply_line_item(new_item)
+
+    def remove_line_item(self, item_id: str) -> None:
+        if item_id in self.line_items:
+            existing = self.line_items[item_id]
+            ts = self._tick()
+            tombstone = ZceseSalesLineItem(
+                item_id=item_id,
+                product_name=existing.product_name,
+                quantity=0,
+                unit_price=existing.unit_price,
+                timestamp=ts,
+                deleted=True,
+            )
+            self._apply_line_item(tombstone)
+
+    def _apply_line_item(self, item: ZceseSalesLineItem) -> None:
+        self.logical_clock = max(self.logical_clock, item.timestamp.counter)
+        current = self.line_items.get(item.item_id)
+        if current is None or item.timestamp > current.timestamp:
+            self.line_items[item.item_id] = item
+
+    def set_discount(self, discount: float) -> None:
+        if not (0.0 <= discount <= 100.0):
+            raise ValueError("Discount must be between 0 and 100.")
+        ts = self._tick()
+        if ts > self.discount_percent[1]:
+            self.discount_percent = (discount, ts)
+
+    def transition_stage(self, new_stage: str) -> None:
+        ts = self._tick()
+        if ts > self.stage[1]:
+            self.stage = (new_stage, ts)
+
+    def merge(self, other: "SalesOrderCRDTDocument") -> None:
+        """Idempotent, commutative, and associative state merge across replicas."""
+        if self.order_id != other.order_id:
+            raise CRDTConvergenceError("Cannot merge CRDT documents with different order_ids.")
+        if self.company_id != other.company_id:
+            raise TenantIsolationError("Cross-tenant CRDT merge is strictly prohibited.")
+
+        self.logical_clock = max(self.logical_clock, other.logical_clock)
+
+        for item in other.line_items.values():
+            self._apply_line_item(item)
+
+        if other.discount_percent[1] > self.discount_percent[1]:
+            self.discount_percent = other.discount_percent
+
+        if other.stage[1] > self.stage[1]:
+            self.stage = other.stage
+
+    def compute_total(self) -> float:
+        subtotal = sum(
+            item.quantity * item.unit_price
+            for item in self.line_items.values()
+            if not item.deleted
+        )
+        discount_factor = (100.0 - self.discount_percent[0]) / 100.0
+        return round(subtotal * discount_factor, 2)
+
+    def export_canonical_state(self) -> Dict[str, Any]:
+        active_items = {
+            k: {
+                "product": v.product_name,
+                "qty": v.quantity,
+                "price": v.unit_price,
+                "ts": (v.timestamp.counter, v.timestamp.actor_id),
+            }
+            for k, v in sorted(self.line_items.items())
+            if not v.deleted
+        }
+        return {
+            "order_id": self.order_id,
+            "company_id": self.company_id,
+            "stage": self.stage[0],
+            "discount_percent": self.discount_percent[0],
+            "total": self.compute_total(),
+            "items": active_items,
+        }
+
+
+class SalesAuditMerkleTree:
+    """
+    Append-only cryptographic transparency log for sales workflow state transitions (arXiv:2107.05259).
+    Uses RFC 6962 domain separation prefixes (0x00 for leaves, 0x01 for internal nodes).
+    """
+
+    def __init__(self) -> None:
+        self.leaves: List[bytes] = []
+        self.events: List[Dict[str, Any]] = []
+
+    @staticmethod
+    def _hash_leaf(data: bytes) -> bytes:
+        return hashlib.sha256(b"\x00" + data).digest()
+
+    @staticmethod
+    def _hash_nodes(left: bytes, right: bytes) -> bytes:
+        return hashlib.sha256(b"\x01" + left + right).digest()
+
+    def append_event(self, event: Dict[str, Any]) -> int:
+        canonical_bytes = json.dumps(event, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        leaf_hash = self._hash_leaf(canonical_bytes)
+        self.events.append(event)
+        self.leaves.append(leaf_hash)
+        return len(self.leaves) - 1
+
+    def get_root_hash(self) -> str:
+        if not self.leaves:
+            return hashlib.sha256(b"").hexdigest()
+        return self._compute_root(self.leaves).hex()
+
+    def _compute_root(self, nodes: List[bytes]) -> bytes:
+        if len(nodes) == 1:
+            return nodes[0]
+        next_level: List[bytes] = []
+        for i in range(0, len(nodes), 2):
+            if i + 1 < len(nodes):
+                next_level.append(self._hash_nodes(nodes[i], nodes[i + 1]))
+            else:
+                next_level.append(nodes[i])
+        return self._compute_root(next_level)
+
+    def generate_inclusion_proof(self, index: int) -> List[Tuple[str, str]]:
+        if index < 0 or index >= len(self.leaves):
+            raise IndexError("Leaf index out of bounds.")
+        proof: List[Tuple[str, str]] = []
+        nodes = list(self.leaves)
+        curr_idx = index
+
+        while len(nodes) > 1:
+            next_level: List[bytes] = []
+            for i in range(0, len(nodes), 2):
+                if i + 1 < len(nodes):
+                    if i == curr_idx:
+                        proof.append(("right", nodes[i + 1].hex()))
+                        curr_idx = len(next_level)
+                    elif i + 1 == curr_idx:
+                        proof.append(("left", nodes[i].hex()))
+                        curr_idx = len(next_level)
+                    next_level.append(self._hash_nodes(nodes[i], nodes[i + 1]))
+                else:
+                    if i == curr_idx:
+                        curr_idx = len(next_level)
+                    next_level.append(nodes[i])
+            nodes = next_level
+        return proof
+
+    @classmethod
+    def verify_inclusion_proof(
+        cls, event: Dict[str, Any], proof: List[Tuple[str, str]], expected_root_hex: str
+    ) -> bool:
+        canonical_bytes = json.dumps(event, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        curr_hash = cls._hash_leaf(canonical_bytes)
+        for direction, sibling_hex in proof:
+            sibling = bytes.fromhex(sibling_hex)
+            if direction == "right":
+                curr_hash = cls._hash_nodes(curr_hash, sibling)
+            elif direction == "left":
+                curr_hash = cls._hash_nodes(sibling, curr_hash)
+            else:
+                raise MerkleIntegrityError(f"Invalid proof direction: {direction}")
+        return curr_hash.hex() == expected_root_hex
+
+
+import os
+from pathlib import Path
+
+
+@dataclass(frozen=True)
+class PackageVersion:
+    name: str
+    version: int
+    dependencies: Dict[str, Set[int]]
+
+
+class UvPubGrubCacheManager:
+    """
+    Simulates uv's PubGrub dependency solver and content-addressable hardlink cache
+    for instantaneous E2E test environment provisioning.
+    """
+
+    def __init__(self, cache_root: Path) -> None:
+        self.cache_root = cache_root
+        self.cas_dir = self.cache_root / "cas_blobs"
+        self.cas_dir.mkdir(parents=True, exist_ok=True)
+        self.registry: Dict[str, Dict[int, PackageVersion]] = {}
+
+    def register_package(
+        self, name: str, version: int, dependencies: Optional[Dict[str, Set[int]]] = None
+    ) -> None:
+        if name not in self.registry:
+            self.registry[name] = {}
+        self.registry[name][version] = PackageVersion(
+            name=name, version=version, dependencies=dependencies or {}
+        )
+        blob_content = f"pkg:{name}@{version}".encode("utf-8")
+        digest = hashlib.sha256(blob_content).hexdigest()
+        blob_path = self.cas_dir / digest
+        if not blob_path.exists():
+            blob_path.write_bytes(blob_content)
+
+    def resolve_dependencies(self, root_requirements: Dict[str, Set[int]]) -> Dict[str, int]:
+        """ Deterministic backtracking PubGrub-style constraint solver."""
+        solution: Dict[str, int] = {}
+
+        def _backtrack(pending: List[Tuple[str, Set[int]]]) -> bool:
+            if not pending:
+                return True
+            pkg_name, allowed_versions = pending[0]
+            rest = pending[1:]
+
+            if pkg_name in solution:
+                if solution[pkg_name] in allowed_versions:
+                    return _backtrack(rest)
+                return False
+
+            available = self.registry.get(pkg_name, {})
+            candidates = sorted(
+                [v for v in available.keys() if v in allowed_versions], reverse=True
+            )
+            for candidate_ver in candidates:
+                solution[pkg_name] = candidate_ver
+                pkg_obj = available[candidate_ver]
+                sub_constraints: List[Tuple[str, Set[int]]] = []
+                conflict = False
+                for dep_name, dep_allowed in pkg_obj.dependencies.items():
+                    if dep_name in solution and solution[dep_name] not in dep_allowed:
+                        conflict = True
+                        break
+                    sub_constraints.append((dep_name, dep_allowed))
+                if not conflict and _backtrack(sub_constraints + rest):
+                    return True
+                del solution[pkg_name]
+            return False
+
+        initial_queue = list(root_requirements.items())
+        if not _backtrack(initial_queue):
+            raise DependencyResolutionError(
+                f"Unsatisfiable dependency graph for requirements: {root_requirements}"
+            )
+        return solution
+
+    def materialize_ephemeral_env(self, env_name: str, resolved: Dict[str, int]) -> Path:
+        """Zero-copy environment creation using POSIX hardlinks from CAS store."""
+        env_dir = self.cache_root / "envs" / env_name
+        env_dir.mkdir(parents=True, exist_ok=True)
+        for name, ver in resolved.items():
+            blob_content = f"pkg:{name}@{ver}".encode("utf-8")
+            digest = hashlib.sha256(blob_content).hexdigest()
+            src_blob = self.cas_dir / digest
+            dst_link = env_dir / f"{name}-{ver}.whl"
+            if dst_link.exists():
+                dst_link.unlink()
+            os.link(src_blob, dst_link)
+        return env_dir
+
+
+
 
 
 
