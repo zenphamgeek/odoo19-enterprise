@@ -20,16 +20,20 @@ _logger = logging.getLogger(__name__)
 # RFC 1123 Hostname Label regex: lowercase ASCII alphanumeric with single internal hyphens, length 3 to 32
 SLUG_REGEX = re.compile(r'^[a-z0-9](?:[a-z0-9]|-(?!-)){1,30}[a-z0-9]$', re.ASCII)
 
-# Hardened reserved directory: infrastructure, standard protocols, and core Odoo HTTP routing endpoints
+# Hardened reserved directory: infrastructure, cloud orchestrators, observability, and core Odoo HTTP routing endpoints
 RESERVED_SLUGS = frozenset({
-    'admin', 'administrator', 'api', 'app', 'assets', 'auth', 'autodiscover',
-    'billing', 'blog', 'cdn', 'core', 'dashboard', 'database', 'dev', 'dns',
-    'event', 'forum', 'ftp', 'health', 'healthz', 'im_livechat', 'imap',
-    'internal', 'jsonrpc', 'login', 'logout', 'longpolling', 'mail', 'metrics',
-    'mx', 'none', 'ns1', 'ns2', 'null', 'oauth', 'onboarding', 'pop3', 'portal',
-    'prometheus', 'root', 'router', 'secure', 'shop', 'signin', 'signup',
-    'ssl', 'staging', 'static', 'status', 'system', 'test', 'undefined',
-    'vpn', 'web', 'websocket', 'www', 'xmlrpc',
+    'admin', 'administrator', 'airflow', 'alertmanager', 'api', 'app', 'argocd',
+    'assets', 'auth', 'autoconfig', 'autodiscover', 'billing', 'blog', 'caddy',
+    'cdn', 'consul', 'core', 'cpanel', 'dashboard', 'database', 'dev', 'dns',
+    'docker', 'elastic', 'elasticsearch', 'envoy', 'event', 'forum', 'ftp',
+    'git', 'github', 'gitlab', 'grafana', 'health', 'healthz', 'idp', 'im_livechat',
+    'imap', 'internal', 'jaeger', 'jsonrpc', 'k8s', 'keycloak', 'kibana',
+    'kubernetes', 'ldap', 'login', 'logout', 'loki', 'longpolling', 'mail',
+    'metrics', 'mx', 'nginx', 'none', 'ns1', 'ns2', 'null', 'oauth', 'onboarding',
+    'pop3', 'portal', 'postmaster', 'prefect', 'prometheus', 'registry', 'root',
+    'router', 'saml', 'secure', 'shop', 'signin', 'signup', 'sso', 'ssl',
+    'staging', 'static', 'status', 'system', 'tempo', 'test', 'traefik',
+    'undefined', 'vault', 'vpn', 'web', 'websocket', 'wpad', 'www', 'xmlrpc',
 })
 
 SIGNUP_TOKEN_TTL_SECONDS = 1800          # 30-minute validation window for tenant onboarding
@@ -37,6 +41,8 @@ MAX_ALLOWED_CLOCK_SKEW_SECONDS = 300     # 5-minute tolerance for distributed fl
 HMAC_ONBOARDING_CONTEXT = b"insilos:tenant:onboarding:hmac-sha256:v1"
 HMAC_LEASE_CONTEXT = b"insilos:sovereign:lease:hmac-sha256:v1"
 _CONSUMED_ONBOARDING_NONCES = set()
+_CONSUMED_ONBOARDING_NONCE_EXPIRY = {}
+MAX_IN_MEMORY_NONCE_ENTRIES = 4096
 
 
 def sanitize_and_validate_slug(raw_slug: str) -> str:
@@ -86,10 +92,61 @@ def _derive_domain_hmac_secret(env, domain_context: bytes) -> bytes:
     ).digest()
 
 
-def generate_signup_token(env, tenant_id: int, slug: str) -> str:
+def _ensure_nonce_ledger_table(cr):
+    """Ensure the persistent PostgreSQL nonce ledger table exists with proper indexes."""
+    cr.execute("""
+        CREATE TABLE IF NOT EXISTS insilos_consumed_nonce (
+            nonce VARCHAR(64) PRIMARY KEY,
+            tenant_id INTEGER NOT NULL,
+            slug VARCHAR(64) NOT NULL,
+            expiry_ts BIGINT NOT NULL,
+            consumed_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT (NOW() AT TIME ZONE 'UTC')
+        );
+        CREATE INDEX IF NOT EXISTS idx_insilos_consumed_nonce_expiry
+            ON insilos_consumed_nonce (expiry_ts);
+    """)
+
+
+def _record_consumed_nonce_persistent(cr, nonce: str, tenant_id: int, slug: str, expiry_ts: int) -> bool:
+    """Atomically record a consumed nonce in PostgreSQL.
+    Returns True if the nonce was successfully recorded (first use).
+    Returns False if the nonce was already consumed (replay detected).
+    """
+    _ensure_nonce_ledger_table(cr)
+    now_ts = int(time.time())
+    cr.execute(
+        "DELETE FROM insilos_consumed_nonce WHERE expiry_ts < %s",
+        (now_ts - MAX_ALLOWED_CLOCK_SKEW_SECONDS,),
+    )
+    cr.execute("""
+        INSERT INTO insilos_consumed_nonce (nonce, tenant_id, slug, expiry_ts, consumed_at)
+        VALUES (%s, %s, %s, %s, NOW() AT TIME ZONE 'UTC')
+        ON CONFLICT (nonce) DO NOTHING;
+    """, (nonce, tenant_id, slug, expiry_ts))
+    return cr.rowcount > 0
+
+
+def _prune_in_memory_nonces(now_ts: int):
+    """Evict expired nonces and bound in-memory fallback cache size to prevent heap DoS."""
+    cutoff = now_ts - MAX_ALLOWED_CLOCK_SKEW_SECONDS
+    expired = [n for n, exp in list(_CONSUMED_ONBOARDING_NONCE_EXPIRY.items()) if exp < cutoff]
+    for n in expired:
+        _CONSUMED_ONBOARDING_NONCE_EXPIRY.pop(n, None)
+        _CONSUMED_ONBOARDING_NONCES.discard(n)
+    if len(_CONSUMED_ONBOARDING_NONCES) > MAX_IN_MEMORY_NONCE_ENTRIES:
+        oldest = sorted(_CONSUMED_ONBOARDING_NONCE_EXPIRY.items(), key=lambda kv: kv[1])[
+            : len(_CONSUMED_ONBOARDING_NONCES) - MAX_IN_MEMORY_NONCE_ENTRIES
+        ]
+        for n, _ in oldest:
+            _CONSUMED_ONBOARDING_NONCE_EXPIRY.pop(n, None)
+            _CONSUMED_ONBOARDING_NONCES.discard(n)
+
+
+def generate_signup_token(env, tenant_id: int, slug: str, self_contained: bool = False) -> str:
     """Generate a domain-separated HMAC-SHA256 signature for secure unauthenticated confirmation routing.
     Includes a unique cryptographically secure 128-bit nonce to prevent replay attacks.
-    Format: <expiry>.<nonce>.<signature>
+    Format (default): <expiry>.<nonce>.<signature>
+    Format (self_contained=True): <tenant_id>.<clean_slug>.<expiry>.<nonce>.<signature>
     """
     if isinstance(tenant_id, bool) or not isinstance(tenant_id, int) or tenant_id <= 0:
         raise ValidationError("Tenant ID must be a positive integer.")
@@ -102,14 +159,91 @@ def generate_signup_token(env, tenant_id: int, slug: str) -> str:
 
     message = f"{tenant_id}:{clean_slug}:{expiry}:{nonce}".encode('utf-8')
     signature = hmac.new(signing_key, message, hashlib.sha256).hexdigest()
+    if self_contained:
+        return f"{tenant_id}.{clean_slug}.{expiry}.{nonce}.{signature}"
     return f"{expiry}.{nonce}.{signature}"
+
+
+def generate_self_contained_signup_token(env, tenant_id: int, slug: str) -> str:
+    """Generate a 5-part self-contained signup token encapsulating tenant_id and slug."""
+    return generate_signup_token(env, tenant_id, slug, self_contained=True)
+
+
+def validate_and_consume_signup_token(env, token: str) -> dict:
+    """Validate a self-contained 5-part signup token and atomically consume its nonce.
+    Format: <tenant_id>.<clean_slug>.<expiry>.<nonce>.<signature>
+    Returns:
+        dict: {'tenant_id': int, 'slug': str, 'expiry': int, 'nonce': str}
+    Raises:
+        AccessError: If the token is invalid, expired, tampered, or replayed.
+    """
+    if not token or not isinstance(token, str):
+        raise AccessError("Invalid onboarding confirmation token: empty or wrong type.")
+
+    parts = token.strip().split('.')
+    if len(parts) != 5:
+        raise AccessError("Invalid onboarding confirmation token: malformed envelope structure.")
+
+    raw_tenant_id, raw_slug, raw_expiry, nonce, signature = parts
+
+    try:
+        tenant_id = int(raw_tenant_id)
+        if tenant_id <= 0:
+            raise ValueError()
+    except ValueError:
+        raise AccessError("Invalid onboarding confirmation token: illegal tenant identifier.")
+
+    try:
+        clean_slug = sanitize_and_validate_slug(raw_slug)
+    except ValidationError as exc:
+        raise AccessError(f"Invalid onboarding confirmation token: {exc}")
+
+    try:
+        expiry = int(raw_expiry)
+    except ValueError:
+        raise AccessError("Invalid onboarding confirmation token: corrupt timestamp.")
+
+    now_ts = int(time.time())
+    if now_ts > expiry + MAX_ALLOWED_CLOCK_SKEW_SECONDS:
+        raise AccessError("Onboarding confirmation token has expired.")
+    if expiry > now_ts + SIGNUP_TOKEN_TTL_SECONDS + MAX_ALLOWED_CLOCK_SKEW_SECONDS:
+        raise AccessError("Onboarding confirmation token has an invalid future timestamp.")
+
+    if not re.fullmatch(r'^[a-f0-9]{32}$', nonce):
+        raise AccessError("Invalid onboarding confirmation token: illegal nonce format.")
+
+    if not re.fullmatch(r'^[a-f0-9]{64}$', signature):
+        raise AccessError("Invalid onboarding confirmation token: illegal signature format.")
+
+    signing_key = _derive_domain_hmac_secret(env, HMAC_ONBOARDING_CONTEXT)
+    expected_message = f"{tenant_id}:{clean_slug}:{expiry}:{nonce}".encode('utf-8')
+    expected_signature = hmac.new(signing_key, expected_message, hashlib.sha256).hexdigest()
+
+    if not hmac.compare_digest(signature, expected_signature):
+        raise AccessError("Onboarding confirmation token signature verification failed.")
+
+    cr = getattr(env, 'cr', None) if env is not None else None
+    if cr is None:
+        raise AccessError("Database cursor unavailable for nonce replay verification.")
+
+    is_fresh = _record_consumed_nonce_persistent(cr, nonce, tenant_id, clean_slug, expiry)
+    if not is_fresh:
+        raise AccessError("Onboarding confirmation token has already been consumed (replay rejected).")
+
+    return {
+        'tenant_id': tenant_id,
+        'slug': clean_slug,
+        'expiry': expiry,
+        'nonce': nonce,
+    }
 
 
 def verify_signup_token(env, tenant_id: int, slug: str, token: str, consume: bool = False) -> bool:
     """Verify onboarding token validity, clock drift tolerance, and cryptographic tamper resistance.
+    Supports both 3-part (<expiry>.<nonce>.<signature>) and 5-part (<tenant_id>.<slug>.<expiry>.<nonce>.<signature>).
     If consume=True, records the token nonce to enforce strictly-once consumption semantics.
     """
-    if not token or not isinstance(token, str) or token.count('.') != 2:
+    if not token or not isinstance(token, str) or token.count('.') not in (2, 4):
         _logger.warning("Rejected token with invalid envelope format for tenant_id=%s", tenant_id)
         return False
 
@@ -119,7 +253,12 @@ def verify_signup_token(env, tenant_id: int, slug: str, token: str, consume: boo
 
     try:
         clean_slug = sanitize_and_validate_slug(slug)
-        expiry_str, nonce, signature = token.split('.', 2)
+        if token.count('.') == 4:
+            tok_tid, tok_slug, expiry_str, nonce, signature = token.split('.', 4)
+            if int(tok_tid) != tenant_id or sanitize_and_validate_slug(tok_slug) != clean_slug:
+                return False
+        else:
+            expiry_str, nonce, signature = token.split('.', 2)
         expiry = int(expiry_str)
 
         if len(nonce) != 32 or not re.fullmatch(r'^[a-f0-9]{32}$', nonce):
@@ -148,21 +287,29 @@ def verify_signup_token(env, tenant_id: int, slug: str, token: str, consume: boo
             return False
 
         if consume:
-            nonce_key = f"onboarding.nonce.consumed.{nonce}"
-            already_used = nonce in _CONSUMED_ONBOARDING_NONCES
-            if not already_used and env is not None:
-                try:
-                    cp = env['ir.config_parameter'].sudo()
-                    if cp.get_param(nonce_key):
-                        already_used = True
-                    elif hasattr(cp, 'set_param'):
-                        cp.set_param(nonce_key, str(now_ts))
-                except Exception as exc:
-                    _logger.debug("In-memory nonce fallback used: %s", exc)
-            if already_used:
-                _logger.error("Replay attack detected: token nonce %s has already been consumed.", nonce)
-                return False
-            _CONSUMED_ONBOARDING_NONCES.add(nonce)
+            cr = getattr(env, 'cr', None) if env is not None else None
+            if cr is not None:
+                if not _record_consumed_nonce_persistent(cr, nonce, tenant_id, clean_slug, expiry):
+                    _logger.error("Replay attack detected via persistent ledger: nonce %s already consumed.", nonce)
+                    return False
+            else:
+                _prune_in_memory_nonces(now_ts)
+                nonce_key = f"onboarding.nonce.consumed.{nonce}"
+                already_used = nonce in _CONSUMED_ONBOARDING_NONCES
+                if not already_used and env is not None:
+                    try:
+                        cp = env['ir.config_parameter'].sudo()
+                        if cp.get_param(nonce_key):
+                            already_used = True
+                        elif hasattr(cp, 'set_param'):
+                            cp.set_param(nonce_key, str(now_ts))
+                    except Exception as exc:
+                        _logger.debug("In-memory nonce fallback used: %s", exc)
+                if already_used:
+                    _logger.error("Replay attack detected: token nonce %s has already been consumed.", nonce)
+                    return False
+                _CONSUMED_ONBOARDING_NONCES.add(nonce)
+                _CONSUMED_ONBOARDING_NONCE_EXPIRY[nonce] = expiry
 
         return True
 
