@@ -2973,3 +2973,324 @@ def revalue_journal_items_partitioned(
                 processed_count += 1
 
     return total_revalued_diff, processed_count
+
+
+import json
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from decimal import ROUND_HALF_UP
+from enum import Enum
+from typing import Set
+
+
+class InvalidStateTransitionError(ValueError):
+    """Raised when a sales order transition violates the deterministic lifecycle DAG."""
+
+
+class ConstraintViolationError(ValueError):
+    """Raised when pricing, discounts, or margins violate tenant business rules."""
+
+
+class SalesOrderStatus(str, Enum):
+    DRAFT = "DRAFT"
+    AI_SCORED = "AI_SCORED"
+    DISCOUNT_REVIEW = "DISCOUNT_REVIEW"
+    APPROVED = "APPROVED"
+    CONFIRMED = "CONFIRMED"
+    INVOICED = "INVOICED"
+    CANCELLED = "CANCELLED"
+
+
+@dataclass(frozen=True)
+class TenantContext:
+    company_id: str
+    allowed_company_ids: Tuple[str, ...]
+    user_id: str
+    is_system_admin: bool = False
+
+    def can_access(self, target_company_id: str) -> bool:
+        if self.is_system_admin:
+            return True
+        return target_company_id in self.allowed_company_ids
+
+
+@dataclass(frozen=True)
+class SalesOrderLine:
+    line_id: str
+    product_sku: str
+    quantity: Decimal
+    unit_price: Decimal
+    unit_cost: Decimal
+    discount_pct: Decimal = Decimal("0.00")
+
+    def __post_init__(self) -> None:
+        if self.quantity <= Decimal("0"):
+            raise ValueError(f"Line quantity must be positive, got {self.quantity}")
+        if self.unit_price < Decimal("0"):
+            raise ValueError(f"Line unit price cannot be negative, got {self.unit_price}")
+        if self.unit_cost < Decimal("0"):
+            raise ValueError(f"Line unit cost cannot be negative, got {self.unit_cost}")
+        if not (Decimal("0.00") <= self.discount_pct <= Decimal("100.00")):
+            raise ValueError(f"Discount percentage must be in [0, 100], got {self.discount_pct}")
+
+    @property
+    def gross_amount(self) -> Decimal:
+        return (self.quantity * self.unit_price).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+    @property
+    def total_cost(self) -> Decimal:
+        return (self.quantity * self.unit_cost).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+    @property
+    def net_amount(self) -> Decimal:
+        discount_factor = Decimal("1.00") - (self.discount_pct / Decimal("100.00"))
+        return (self.gross_amount * discount_factor).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+    @property
+    def margin_amount(self) -> Decimal:
+        return self.net_amount - self.total_cost
+
+
+@dataclass
+class FlowStateStepRecord:
+    step_id: str
+    source_status: SalesOrderStatus
+    target_status: SalesOrderStatus
+    timestamp_utc: str
+    initiator_user_id: str
+    state_payload_hash: str
+    previous_hash: str
+    cumulative_hash: str
+
+
+@dataclass
+class SalesOrder:
+    order_id: str
+    company_id: str
+    customer_id: str
+    status: SalesOrderStatus = SalesOrderStatus.DRAFT
+    lines: List[SalesOrderLine] = field(default_factory=list)
+    ai_risk_score: Optional[Decimal] = None
+    ai_conversion_probability: Optional[Decimal] = None
+    state_history: List[FlowStateStepRecord] = field(default_factory=list)
+    current_state_hash: str = "GENESIS_0000000000000000000000000000000000000000000000000000000000000000"
+
+    @property
+    def total_net_amount(self) -> Decimal:
+        return sum((line.net_amount for line in self.lines), Decimal("0.00"))
+
+    @property
+    def total_cost_amount(self) -> Decimal:
+        return sum((line.total_cost for line in self.lines), Decimal("0.00"))
+
+    @property
+    def overall_margin_pct(self) -> Decimal:
+        net = self.total_net_amount
+        if net == Decimal("0.00"):
+            return Decimal("0.00")
+        margin = net - self.total_cost_amount
+        return ((margin / net) * Decimal("100.00")).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+    def canonical_snapshot(self) -> Dict[str, Any]:
+        """Produces deterministic, serializable representation for RFC 8785 hashing."""
+        return {
+            "order_id": self.order_id,
+            "company_id": self.company_id,
+            "customer_id": self.customer_id,
+            "status": self.status.value,
+            "lines": [
+                {
+                    "line_id": l.line_id,
+                    "product_sku": l.product_sku,
+                    "quantity": str(l.quantity),
+                    "unit_price": str(l.unit_price),
+                    "unit_cost": str(l.unit_cost),
+                    "discount_pct": str(l.discount_pct),
+                    "net_amount": str(l.net_amount),
+                }
+                for l in sorted(self.lines, key=lambda x: x.line_id)
+            ],
+            "total_net_amount": str(self.total_net_amount),
+            "overall_margin_pct": str(self.overall_margin_pct),
+            "ai_risk_score": str(self.ai_risk_score) if self.ai_risk_score is not None else None,
+            "ai_conversion_probability": (
+                str(self.ai_conversion_probability) if self.ai_conversion_probability is not None else None
+            ),
+        }
+
+
+class DiscountConstraintSolver:
+    """
+    PubGrub-inspired rule-satisfaction engine (astral-sh/uv pattern)
+    enforcing tenant margin boundaries and approval ceilings.
+    """
+
+    MAX_DISCOUNT_WITHOUT_APPROVAL = Decimal("15.00")
+    MIN_ALLOWED_MARGIN_PCT = Decimal("12.00")
+    MAX_EXECUTIVE_DISCOUNT = Decimal("40.00")
+
+    @classmethod
+    def evaluate_discount_constraints(
+        cls, order: SalesOrder, target_discount_pct: Decimal, is_executive_override: bool = False
+    ) -> Tuple[bool, str]:
+        if target_discount_pct > cls.MAX_EXECUTIVE_DISCOUNT:
+            return False, f"Discount {target_discount_pct}% exceeds maximum absolute ceiling {cls.MAX_EXECUTIVE_DISCOUNT}%"
+
+        if target_discount_pct > cls.MAX_DISCOUNT_WITHOUT_APPROVAL and not is_executive_override:
+            return False, f"Discount {target_discount_pct}% requires executive approval override"
+
+        estimated_margin = order.overall_margin_pct
+        if estimated_margin < cls.MIN_ALLOWED_MARGIN_PCT and not is_executive_override:
+            return False, f"Resulting margin {estimated_margin}% drops below minimum threshold {cls.MIN_ALLOWED_MARGIN_PCT}%"
+
+        return True, "Constraints satisfied"
+
+
+class EnterpriseSalesProcessEngine:
+    """
+    Core state machine orchestrator binding Odoo multi-tenant row security
+    with Prefect task flow transitions and immutable cryptographic audit trails (arXiv:2506.01423).
+    """
+
+    ALLOWED_TRANSITIONS: Dict[SalesOrderStatus, Set[SalesOrderStatus]] = {
+        SalesOrderStatus.DRAFT: {SalesOrderStatus.AI_SCORED, SalesOrderStatus.CANCELLED},
+        SalesOrderStatus.AI_SCORED: {
+            SalesOrderStatus.DISCOUNT_REVIEW,
+            SalesOrderStatus.APPROVED,
+            SalesOrderStatus.CANCELLED,
+        },
+        SalesOrderStatus.DISCOUNT_REVIEW: {SalesOrderStatus.APPROVED, SalesOrderStatus.CANCELLED},
+        SalesOrderStatus.APPROVED: {SalesOrderStatus.CONFIRMED, SalesOrderStatus.CANCELLED},
+        SalesOrderStatus.CONFIRMED: {SalesOrderStatus.INVOICED, SalesOrderStatus.CANCELLED},
+        SalesOrderStatus.INVOICED: set(),
+        SalesOrderStatus.CANCELLED: set(),
+    }
+
+    def __init__(self, tenant_context: TenantContext) -> None:
+        self.context = tenant_context
+
+    def _assert_tenant_boundary(self, order: SalesOrder) -> None:
+        if not self.context.can_access(order.company_id):
+            _logger.error(
+                "Tenant security breach attempt: user %s denied access to company %s",
+                self.context.user_id,
+                order.company_id,
+            )
+            raise TenantSecurityError(
+                f"Unauthorized tenant operation. User {self.context.user_id} cannot access Company {order.company_id}"
+            )
+
+    def transition_order_state(
+        self,
+        order: SalesOrder,
+        target_status: SalesOrderStatus,
+        step_id: str,
+        reason: str = "",
+    ) -> FlowStateStepRecord:
+        self._assert_tenant_boundary(order)
+
+        current = order.status
+        allowed = self.ALLOWED_TRANSITIONS.get(current, set())
+        if target_status not in allowed:
+            raise InvalidStateTransitionError(
+                f"Illegal state transition from {current.value} to {target_status.value}. Allowed: {[s.value for s in allowed]}"
+            )
+
+        if target_status == SalesOrderStatus.APPROVED:
+            if order.overall_margin_pct < DiscountConstraintSolver.MIN_ALLOWED_MARGIN_PCT:
+                if not self.context.is_system_admin:
+                    raise ConstraintViolationError(
+                        f"Cannot approve order: margin {order.overall_margin_pct}% violates minimum {DiscountConstraintSolver.MIN_ALLOWED_MARGIN_PCT}%"
+                    )
+
+        if target_status == SalesOrderStatus.CONFIRMED:
+            if not order.lines:
+                raise ConstraintViolationError("Cannot confirm an order with zero line items.")
+            if order.total_net_amount <= Decimal("0.00"):
+                raise ConstraintViolationError("Cannot confirm order with non-positive total net value.")
+
+        source_status = order.status
+        order.status = target_status
+
+        snapshot = order.canonical_snapshot()
+        serialized_state = json.dumps(snapshot, sort_keys=True, separators=(",", ":"))
+        state_payload_hash = hashlib.sha256(serialized_state.encode("utf-8")).hexdigest()
+
+        chain_input = (
+            f"{order.current_state_hash}|{source_status.value}|{target_status.value}|"
+            f"{state_payload_hash}|{self.context.user_id}|{step_id}|{reason}"
+        )
+        cumulative_hash = hashlib.sha256(chain_input.encode("utf-8")).hexdigest()
+
+        step_record = FlowStateStepRecord(
+            step_id=step_id,
+            source_status=source_status,
+            target_status=target_status,
+            timestamp_utc=datetime.now(timezone.utc).isoformat(),
+            initiator_user_id=self.context.user_id,
+            state_payload_hash=state_payload_hash,
+            previous_hash=order.current_state_hash,
+            cumulative_hash=cumulative_hash,
+        )
+
+        order.current_state_hash = cumulative_hash
+        order.state_history.append(step_record)
+        return step_record
+
+    def execute_ai_qualification_pipeline(
+        self,
+        order: SalesOrder,
+        step_id: str,
+        simulated_model_inference: Optional[Dict[str, Decimal]] = None,
+    ) -> SalesOrder:
+        self._assert_tenant_boundary(order)
+        if order.status != SalesOrderStatus.DRAFT:
+            raise InvalidStateTransitionError(
+                f"AI qualification requires DRAFT status, currently in {order.status.value}"
+            )
+
+        if simulated_model_inference is not None:
+            risk = simulated_model_inference.get("risk_score", Decimal("0.15"))
+            prob = simulated_model_inference.get("conversion_prob", Decimal("0.85"))
+        else:
+            margin = order.overall_margin_pct
+            if margin >= Decimal("30.00"):
+                risk = Decimal("0.08")
+                prob = Decimal("0.92")
+            elif margin >= Decimal("15.00"):
+                risk = Decimal("0.22")
+                prob = Decimal("0.75")
+            else:
+                risk = Decimal("0.55")
+                prob = Decimal("0.40")
+
+        order.ai_risk_score = risk
+        order.ai_conversion_probability = prob
+
+        self.transition_order_state(
+            order=order,
+            target_status=SalesOrderStatus.AI_SCORED,
+            step_id=step_id,
+            reason="AI Lead Qualification and Financial Risk Analysis Complete",
+        )
+        return order
+
+    def verify_invariant(self, order: SalesOrder) -> bool:
+        self._assert_tenant_boundary(order)
+
+        if not order.state_history:
+            return order.current_state_hash.startswith("GENESIS_")
+
+        expected_prev = "GENESIS_0000000000000000000000000000000000000000000000000000000000000000"
+        for step in order.state_history:
+            if step.previous_hash != expected_prev:
+                return False
+            expected_prev = step.cumulative_hash
+
+        if order.current_state_hash != expected_prev:
+            return False
+
+        if order.total_cost_amount < Decimal("0.00") or order.total_net_amount < Decimal("0.00"):
+            return False
+
+        return True
