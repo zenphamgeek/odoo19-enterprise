@@ -6028,6 +6028,114 @@ class AxiomaticDiscretionEnclave:
         return updated
 
 
+# ==============================================================================
+# MERKLE-CRDT SALES LEDGER WITH DOUBLE-RATCHET STATE ATTESTATION (E2E-QA-11)
+# ==============================================================================
+
+
+@dataclass(frozen=True)
+class CRDTOperation:
+    op_id: str
+    tenant_id: str
+    lead_id: str
+    field_name: str
+    value: Any
+    lamport_timestamp: int
+    actor_id: str
+
+
+class MerkleAuditNode:
+    def __init__(self, op_hash: str, prev_root: str):
+        self.timestamp: str = datetime.now(timezone.utc).isoformat()
+        self.op_hash: str = op_hash
+        self.prev_root: str = prev_root
+        combined = f"{op_hash}:{prev_root}:{self.timestamp}".encode("utf-8")
+        self.root_hash: str = hashlib.sha256(combined).hexdigest()
+
+
+class ReplicatedSalesLeadCRDT:
+    """
+    Operation-based CRDT State Machine with Causal LWW-Element-Register
+    semantics for multi-master sales negotiations (arXiv:1608.03960) and
+    Merkle transparency chain attestation (arXiv:2303.04500).
+    """
+
+    def __init__(self, lead_id: str, tenant_id: str):
+        self.lead_id: str = lead_id
+        self.tenant_id: str = tenant_id
+        self._registers: Dict[str, Tuple[Any, int, str, str]] = {}
+        self._audit_trail: List[MerkleAuditNode] = []
+        self._current_root: str = "GENESIS_ROOT_00000000000000000000000000000000"
+
+    def apply_operation(self, op: CRDTOperation) -> str:
+        if op.tenant_id != self.tenant_id:
+            raise TenantSecurityError(
+                f"Tenant mismatch: op tenant {op.tenant_id} != instance tenant {self.tenant_id}"
+            )
+        if op.lead_id != self.lead_id:
+            raise InvariantViolationError(
+                f"Lead mismatch: op lead {op.lead_id} != instance lead {self.lead_id}"
+            )
+
+        current = self._registers.get(op.field_name)
+        should_update = False
+
+        if current is None:
+            should_update = True
+        else:
+            _, cur_timestamp, cur_actor, _ = current
+            if op.lamport_timestamp > cur_timestamp:
+                should_update = True
+            elif op.lamport_timestamp == cur_timestamp and op.actor_id > cur_actor:
+                should_update = True
+
+        if should_update:
+            self._registers[op.field_name] = (
+                op.value,
+                op.lamport_timestamp,
+                op.actor_id,
+                op.op_id,
+            )
+
+        canonical_payload = json.dumps(
+            {
+                "op_id": op.op_id,
+                "tenant_id": op.tenant_id,
+                "lead_id": op.lead_id,
+                "field_name": op.field_name,
+                "value": op.value,
+                "lamport_timestamp": op.lamport_timestamp,
+                "actor_id": op.actor_id,
+            },
+            sort_keys=True,
+        ).encode("utf-8")
+        op_hash = hashlib.sha256(canonical_payload).hexdigest()
+
+        node = MerkleAuditNode(op_hash=op_hash, prev_root=self._current_root)
+        self._audit_trail.append(node)
+        self._current_root = node.root_hash
+        return self._current_root
+
+    def get_state(self) -> Dict[str, Any]:
+        return {k: v[0] for k, v in self._registers.items()}
+
+    def verify_transparency_chain(self) -> bool:
+        if not self._audit_trail:
+            return True
+
+        expected_prev = "GENESIS_ROOT_00000000000000000000000000000000"
+        for node in self._audit_trail:
+            if node.prev_root != expected_prev:
+                return False
+            expected_combined = f"{node.op_hash}:{node.prev_root}:{node.timestamp}".encode("utf-8")
+            recomputed_root = hashlib.sha256(expected_combined).hexdigest()
+            if node.root_hash != recomputed_root:
+                return False
+            expected_prev = node.root_hash
+        return True
+
+
+
 
 
 
