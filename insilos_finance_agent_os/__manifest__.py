@@ -1,7 +1,7 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Finance Agent OS',
-    'version': '1.0',
+    'version': '26.0.1.0.0',
     'category': 'Accounting/Accounting',
     'summary': 'Agent skills, capability gateway and decision packets over existing finance models',
     'description': """

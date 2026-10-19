@@ -1,7 +1,7 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Market Terminal',
-    'version': '1.0.0',
+    'version': '26.0.1.0.0',
     'category': 'Accounting/Treasury',
     'summary': 'Real-Time Market Intelligence Terminal with ERP Treasury Decision Overlays',
     'description': """

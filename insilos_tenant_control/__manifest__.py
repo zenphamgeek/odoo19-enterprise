@@ -1,6 +1,6 @@
 {
     'name': 'Tenant Control',
-    'version': '1.0',
+    'version': '26.0.1.0.0',
     'category': 'Services',
     'summary': 'Multi-Tenant SaaS Provisioning & Template Release Control Plane',
     'author': 'Innoria',
