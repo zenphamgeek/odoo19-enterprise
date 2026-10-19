@@ -5302,6 +5302,10 @@ class LamportTimestamp:
     counter: int
     actor_id: str
 
+    @property
+    def node_id(self) -> str:
+        return self.actor_id
+
     def increment(self, actor: str) -> "LamportTimestamp":
         return LamportTimestamp(counter=self.counter + 1, actor_id=actor)
 
@@ -7336,3 +7340,266 @@ class PrefectSalesFlowOrchestrator:
 
         self.completed_keys[idempotency_key] = ctx
         return ctx
+
+
+@dataclass
+class CRDTRowMutation:
+    """Single operation mutating a sales order line."""
+
+    op_id: str
+    line_id: str
+    product_id: str
+    quantity: float
+    price_unit: float
+    discount: float
+    timestamp: LamportTimestamp
+    is_deleted: bool = False
+
+
+class BoundedSalesQuoteCRDT:
+    """
+    Conflict-Free Replicated JSON Data Type specialized for Odoo sales quote lines.
+    Applies Last-Write-Wins (LWW) element registers indexed by unique line keys.
+    """
+
+    def __init__(self, order_id: str, company_id: int) -> None:
+        self.order_id = order_id
+        self.company_id = company_id
+        self.current_clock = 0
+        self.lines: Dict[str, CRDTRowMutation] = {}
+        self.operation_log: List[CRDTRowMutation] = []
+        self.max_log_size = 100
+
+    def create_or_update_line(
+        self,
+        node_id: str,
+        line_id: str,
+        product_id: str,
+        quantity: float,
+        price_unit: float,
+        discount: float,
+    ) -> CRDTRowMutation:
+        if quantity < 0:
+            raise ValueError(f"Quantity must be non-negative, got {quantity}")
+        if price_unit < 0:
+            raise ValueError(f"Unit price must be non-negative, got {price_unit}")
+        if not (0.0 <= discount <= 100.0):
+            raise ValueError(f"Discount must be between 0 and 100, got {discount}")
+
+        self.current_clock += 1
+        ts = LamportTimestamp(counter=self.current_clock, actor_id=node_id)
+        op_id = hashlib.sha256(
+            f"{self.order_id}:{line_id}:{ts.counter}:{ts.node_id}".encode("utf-8")
+        ).hexdigest()[:16]
+
+        mutation = CRDTRowMutation(
+            op_id=op_id,
+            line_id=line_id,
+            product_id=product_id,
+            quantity=quantity,
+            price_unit=price_unit,
+            discount=discount,
+            timestamp=ts,
+            is_deleted=False,
+        )
+        self.apply_mutation(mutation)
+        return mutation
+
+    def delete_line(self, node_id: str, line_id: str) -> Optional[CRDTRowMutation]:
+        if line_id not in self.lines or self.lines[line_id].is_deleted:
+            return None
+
+        self.current_clock += 1
+        ts = LamportTimestamp(counter=self.current_clock, actor_id=node_id)
+        existing = self.lines[line_id]
+        op_id = hashlib.sha256(
+            f"{self.order_id}:{line_id}:delete:{ts.counter}:{ts.node_id}".encode("utf-8")
+        ).hexdigest()[:16]
+
+        mutation = CRDTRowMutation(
+            op_id=op_id,
+            line_id=line_id,
+            product_id=existing.product_id,
+            quantity=existing.quantity,
+            price_unit=existing.price_unit,
+            discount=existing.discount,
+            timestamp=ts,
+            is_deleted=True,
+        )
+        self.apply_mutation(mutation)
+        return mutation
+
+    def apply_mutation(self, mutation: CRDTRowMutation) -> bool:
+        self.current_clock = max(self.current_clock, mutation.timestamp.counter)
+
+        target = self.lines.get(mutation.line_id)
+        if target is None or target.timestamp < mutation.timestamp:
+            self.lines[mutation.line_id] = mutation
+            self.operation_log.append(mutation)
+            self._compact_log_if_needed()
+            return True
+        return False
+
+    def _compact_log_if_needed(self) -> None:
+        if len(self.operation_log) > self.max_log_size:
+            active_op_ids = {m.op_id for m in self.lines.values()}
+            self.operation_log = [
+                m for m in self.operation_log if m.op_id in active_op_ids
+            ]
+
+    def compute_subtotals(self, tax_rate_percent: float = 10.0) -> Dict[str, Decimal]:
+        tax_multiplier = Decimal(str(tax_rate_percent)) / Decimal("100.0")
+        subtotal_untaxed = Decimal("0.00")
+        total_tax = Decimal("0.00")
+
+        for line in self.lines.values():
+            if line.is_deleted:
+                continue
+
+            qty = Decimal(str(line.quantity))
+            price = Decimal(str(line.price_unit))
+            disc = Decimal(str(line.discount))
+
+            undiscounted_line = (qty * price).quantize(
+                Decimal("0.01"), rounding=ROUND_HALF_UP
+            )
+            discount_amount = (undiscounted_line * (disc / Decimal("100.0"))).quantize(
+                Decimal("0.01"), rounding=ROUND_HALF_UP
+            )
+            line_subtotal = undiscounted_line - discount_amount
+            line_tax = (line_subtotal * tax_multiplier).quantize(
+                Decimal("0.01"), rounding=ROUND_HALF_UP
+            )
+
+            subtotal_untaxed += line_subtotal
+            total_tax += line_tax
+
+        total_amount = subtotal_untaxed + total_tax
+        return {
+            "amount_untaxed": subtotal_untaxed,
+            "amount_tax": total_tax,
+            "amount_total": total_amount,
+        }
+
+    def canonical_json(self) -> str:
+        active_lines = []
+        for line_id in sorted(self.lines.keys()):
+            line = self.lines[line_id]
+            if not line.is_deleted:
+                active_lines.append(
+                    {
+                        "line_id": line.line_id,
+                        "product_id": line.product_id,
+                        "quantity": line.quantity,
+                        "price_unit": line.price_unit,
+                        "discount": line.discount,
+                        "clock": line.timestamp.counter,
+                        "node_id": line.timestamp.node_id,
+                    }
+                )
+
+        state = {
+            "company_id": self.company_id,
+            "order_id": self.order_id,
+            "lines": active_lines,
+        }
+        return json.dumps(state, sort_keys=True, separators=(",", ":"))
+
+
+class MerkleTransparencyLedger:
+    """
+    Append-only Merkle Hash Tree recording sales order state transitions.
+    Guarantees non-repudiation and cryptographic auditability for pricing exceptions.
+    """
+
+    def __init__(self, genesis_salt: str = "insilos_sovereign_sales_v1") -> None:
+        self.genesis_hash = hashlib.sha256(genesis_salt.encode("utf-8")).hexdigest()
+        self.leaves: List[str] = []
+        self.transition_history: List[Dict[str, Any]] = []
+        self.current_root = self.genesis_hash
+
+    def append_transition(self, actor: str, action: str, state_json: str) -> str:
+        payload_hash = hashlib.sha256(state_json.encode("utf-8")).hexdigest()
+        transition_record = {
+            "index": len(self.leaves),
+            "actor": actor,
+            "action": action,
+            "payload_hash": payload_hash,
+            "timestamp_epoch": time.time(),
+        }
+        leaf_content = json.dumps(
+            transition_record, sort_keys=True, separators=(",", ":")
+        )
+        leaf_hash = hashlib.sha256(leaf_content.encode("utf-8")).hexdigest()
+
+        self.leaves.append(leaf_hash)
+        self.transition_history.append(transition_record)
+        self.current_root = hashlib.sha256(
+            f"{self.current_root}:{leaf_hash}".encode("utf-8")
+        ).hexdigest()
+        return self.current_root
+
+    def verify_chain_integrity(self) -> bool:
+        computed_root = self.genesis_hash
+        for record, recorded_leaf in zip(self.transition_history, self.leaves):
+            reconstructed_content = json.dumps(
+                record, sort_keys=True, separators=(",", ":")
+            )
+            expected_leaf = hashlib.sha256(
+                reconstructed_content.encode("utf-8")
+            ).hexdigest()
+            if expected_leaf != recorded_leaf:
+                return False
+            computed_root = hashlib.sha256(
+                f"{computed_root}:{expected_leaf}".encode("utf-8")
+            ).hexdigest()
+
+        return computed_root == self.current_root
+
+
+class SalesWorkflowSupervisor:
+    """
+    Supervises the transition of sales orders through Odoo stages
+    (draft -> sent -> sale) while enforcing multi-tenant rules and margin gates.
+    """
+
+    MIN_ALLOWED_MARGIN_PERCENT = Decimal("15.00")
+
+    def __init__(self, tenant_company_id: int) -> None:
+        self.tenant_company_id = tenant_company_id
+
+    def validate_tenant_isolation(self, quote: BoundedSalesQuoteCRDT) -> bool:
+        if quote.company_id != self.tenant_company_id:
+            raise PermissionError(
+                f"Tenant Isolation Violation: Active Company {self.tenant_company_id} "
+                f"attempted to access Quote Company {quote.company_id}"
+            )
+        return True
+
+    def validate_pricing_constraints(
+        self, quote: BoundedSalesQuoteCRDT, product_costs: Dict[str, Decimal]
+    ) -> Tuple[bool, Decimal]:
+        totals = quote.compute_subtotals(tax_rate_percent=10.0)
+        total_untaxed = totals["amount_untaxed"]
+
+        if total_untaxed == Decimal("0.00"):
+            return False, Decimal("0.00")
+
+        total_cost = Decimal("0.00")
+        for line in quote.lines.values():
+            if line.is_deleted:
+                continue
+            cost = product_costs.get(line.product_id, Decimal("0.00"))
+            total_cost += cost * Decimal(str(line.quantity))
+
+        if total_cost > total_untaxed:
+            margin_percent = Decimal("-100.00")
+        else:
+            margin = total_untaxed - total_cost
+            margin_percent = (margin / total_untaxed) * Decimal("100.00")
+            margin_percent = margin_percent.quantize(
+                Decimal("0.01"), rounding=ROUND_HALF_UP
+            )
+
+        is_valid = margin_percent >= self.MIN_ALLOWED_MARGIN_PERCENT
+        return is_valid, margin_percent
