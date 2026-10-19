@@ -4570,9 +4570,11 @@ class DomainSecurityError(Exception):
 @dataclass(frozen=True)
 class TenantSecurityContext:
     tenant_id: str
-    company_id: int
-    minimum_margin_floor: decimal.Decimal
-    allowed_agent_roles: Tuple[str, ...]
+    company_id: Any = ""
+    minimum_margin_floor: decimal.Decimal = decimal.Decimal("0.00")
+    allowed_agent_roles: Tuple[str, ...] = ()
+    user_id: str = ""
+    is_active: bool = True
 
     def validate_access(self, requesting_company_id: int, agent_role: str) -> None:
         if requesting_company_id != self.company_id:

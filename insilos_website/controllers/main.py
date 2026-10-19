@@ -1362,7 +1362,7 @@ class InsilosWebsite(http.Controller):
                     values["featured_products"] = []
                 return request.render("innokafe_website.homepage", values)
 
-        if "innoria" in host or "innoria" in website_name:
+        if "innoria" in host or "innoria" in website_name or "innoria" in website_domain or request.env.cr.dbname == "innoria_prod":
             if request.env["ir.ui.view"].sudo().search([("key", "=", "insilos_website.innoria_homepage_template")], limit=1):
                 return request.render("insilos_website.innoria_homepage_template", self._base_values())
         return request.render("insilos_website.insilos_homepage", self._base_values())
