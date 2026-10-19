@@ -2278,18 +2278,22 @@ body:has(#innoria_main_nav) {
     }
 
     .hero-main-title {
-        font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+        font-size: clamp(1.95rem, 3.25vw, 2.95rem);
         font-weight: 800;
-        line-height: 1.15;
+        line-height: 1.24;
         letter-spacing: -0.02em;
         color: #FFFFFF;
+        text-wrap: balance;
     }
 
     .hero-gradient-text {
-        background: var(--hero-gradient, linear-gradient(135deg, #0ABBDB 0%, #00F0FF 100%));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
+        color: var(--hero-accent, #38BDF8) !important;
+        background: transparent !important;
+        -webkit-text-fill-color: currentColor !important;
+        display: block;
+        font-size: clamp(1.35rem, 2.15vw, 1.95rem);
+        line-height: 1.32;
+        text-wrap: balance;
     }
 
     .hero-lead-desc {

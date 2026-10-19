@@ -193,7 +193,7 @@
         }
     }
 
-    /* Breakthrough 3: LOTO Live Reactor Topology Circuit */
+    /* Breakthrough 3: LOTO Live 3D Digital Twin Anatomy & Reactor Topology Circuit */
     .loto-circuit-container {
         background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.95) 0%, rgba(3, 7, 18, 0.98) 100%);
         border: 1px solid rgba(56, 189, 248, 0.2);
@@ -203,6 +203,120 @@
         overflow: hidden;
         margin-bottom: 1.5rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(56, 189, 248, 0.05);
+
+        .loto-3d-anatomy-stage {
+            position: relative;
+            min-height: 290px;
+
+            .loto-3d-hud-card {
+                position: absolute;
+                z-index: 4;
+                background: rgba(7, 14, 28, 0.88);
+                border: 1px solid rgba(16, 185, 129, 0.42);
+                border-radius: 8px;
+                padding: 8px 12px;
+                backdrop-filter: blur(10px);
+                width: max-content;
+                max-width: 265px;
+                overflow: visible;
+                transition: all 0.25s ease;
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+
+                .hud-source-tag {
+                    font-size: 0.66rem;
+                    font-weight: 700;
+                    letter-spacing: 0.04em;
+                    color: #94A3B8;
+                    margin-bottom: 3px;
+                    white-space: nowrap;
+                }
+
+                .hud-lock-pill {
+                    display: inline-block;
+                    font-size: 0.76rem;
+                    font-weight: 700;
+                    padding: 2px 8px;
+                    border-radius: 4px;
+                    margin-bottom: 2px;
+                    white-space: nowrap;
+
+                    &.is-safe {
+                        background: rgba(6, 78, 59, 0.85);
+                        color: #A7F3D0;
+                        border: 1px solid #10B981;
+                    }
+
+                    &.is-hazard {
+                        background: rgba(127, 29, 29, 0.9);
+                        color: #FDA4AF;
+                        border: 1px solid #EF4444;
+                    }
+                }
+
+                .hud-sub-text {
+                    font-size: 0.68rem;
+                    color: #6EE7B7;
+                    white-space: nowrap;
+                }
+
+                &.is-hazard-interactive {
+                    cursor: pointer;
+                    border-color: rgba(239, 68, 68, 0.65);
+                    box-shadow: 0 0 18px rgba(239, 68, 68, 0.28);
+
+                    .hud-source-tag {
+                        color: #FDA4AF;
+                    }
+                    .hud-sub-text {
+                        color: #FCA5A5;
+                    }
+
+                    &:hover {
+                        transform: translateY(-2px);
+                        border-color: #38BDF8;
+                    }
+                }
+
+                &.is-safe-locked {
+                    cursor: pointer;
+                    border-color: rgba(16, 185, 129, 0.65);
+                    box-shadow: 0 0 16px rgba(16, 185, 129, 0.22);
+                }
+
+                &.hud-top-left {
+                    top: 12px;
+                    left: 12px;
+                }
+                &.hud-top-right {
+                    top: 12px;
+                    right: 12px;
+                    text-align: right;
+                }
+                &.hud-bottom-left {
+                    bottom: 12px;
+                    left: 12px;
+                }
+                &.hud-bottom-right {
+                    bottom: 12px;
+                    right: 12px;
+                    text-align: right;
+                }
+            }
+
+            @media (max-width: 767.98px) {
+                .loto-3d-hud-card {
+                    position: relative;
+                    top: auto !important;
+                    bottom: auto !important;
+                    left: auto !important;
+                    right: auto !important;
+                    text-align: left !important;
+                    width: 100%;
+                    max-width: 100%;
+                    margin-bottom: 6px;
+                }
+            }
+        }
 
         .loto-feeder-line {
             transition: stroke 0.4s ease, stroke-dasharray 0.4s ease, filter 0.4s ease;
@@ -224,8 +338,7 @@
             cursor: pointer;
             transition: transform 0.2s ease, filter 0.2s ease;
             &:hover {
-                transform: scale(1.04);
-                filter: brightness(1.2);
+                filter: brightness(1.18);
             }
         }
     }

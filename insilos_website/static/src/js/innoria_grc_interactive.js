@@ -320,22 +320,42 @@
         var ptwCountdownBadge = section.querySelector('#ptwCountdownBadge');
         var ptwBilateralStamps = section.querySelector('#ptwBilateralStamps');
 
-        // SVG Circuit Topology Elements
+        // SVG & 3D HUD Circuit Topology Elements
         var lineFeeder4 = section.querySelector('#lineFeeder4');
         var svgNode4 = section.querySelector('#svgNode4');
         var svgNode4Rect = section.querySelector('#svgNode4Rect');
         var svgNode4Title = section.querySelector('#svgNode4Title');
         var svgNode4Sub = section.querySelector('#svgNode4Sub');
         var labelFeeder4Source = section.querySelector('#labelFeeder4Source');
+        var hudNode4 = section.querySelector('#hudNode4');
+        var hudFeeder4Source = section.querySelector('#hudFeeder4Source');
+        var hudNode4Title = section.querySelector('#hudNode4Title');
+        var hudNode4Sub = section.querySelector('#hudNode4Sub');
         var vesselStatusFrame = section.querySelector('#vesselStatusFrame');
         var vesselHazardWarning = section.querySelector('#vesselHazardWarning');
         var topologyOverallStatus = section.querySelector('#topologyOverallStatus');
         var gasValLel = section.querySelector('#gasValLel');
         var gasValPress = section.querySelector('#gasValPress');
+        var loto3dCanvas = section.querySelector('#loto3dCanvas');
+        var camModeBtns = section.querySelectorAll('.loto-3d-cam-btn');
 
         var ptwCountdownTimer = null;
+        var loto3dState = {
+            point4Locked: false,
+            yaw: 0.48,
+            pitch: 0.36,
+            targetYaw: 0.48,
+            targetPitch: 0.36,
+            xrayMode: false,
+            dragging: false,
+            lastX: 0,
+            lastY: 0,
+            tick: 0,
+            valve4ScreenPos: { x: 0, y: 0, r: 28 }
+        };
 
         function updateSvgTopologyState(point4Locked) {
+            loto3dState.point4Locked = !!point4Locked;
             if (point4Locked) {
                 if (lineFeeder4) {
                     lineFeeder4.classList.remove('feeder-hazard-pulse');
@@ -349,16 +369,32 @@
                     svgNode4Rect.removeAttribute('filter');
                 }
                 if (svgNode4Title) {
-                    svgNode4Title.textContent = '🔒 V-109 (L-8824)';
+                    svgNode4Title.textContent = '🔒 [LOCKED] V-109 (L-8824)';
                     svgNode4Title.setAttribute('fill', '#A7F3D0');
                 }
                 if (svgNode4Sub) {
-                    svgNode4Sub.textContent = 'Khí Trơ: ĐÃ KHÓA';
+                    svgNode4Sub.textContent = 'Khí Trơ N2: ĐÃ KHÓA CÔ LẬP';
                     svgNode4Sub.setAttribute('fill', '#6EE7B7');
                 }
                 if (labelFeeder4Source) {
                     labelFeeder4Source.textContent = 'KHÍ TRƠ N2 ĐÃ CÔ LẬP KHÓA HÃM';
                     labelFeeder4Source.setAttribute('fill', '#10B981');
+                }
+                if (hudNode4) {
+                    hudNode4.classList.remove('is-hazard-interactive');
+                    hudNode4.classList.add('is-safe-locked');
+                }
+                if (hudFeeder4Source) {
+                    hudFeeder4Source.textContent = 'KHÍ TRƠ N2 ĐÃ CÔ LẬP KHÓA HÃM';
+                    hudFeeder4Source.style.color = '#6EE7B7';
+                }
+                if (hudNode4Title) {
+                    hudNode4Title.className = 'hud-lock-pill is-safe';
+                    hudNode4Title.textContent = '🔒 [LOCKED] V-109 (#L-8824)';
+                }
+                if (hudNode4Sub) {
+                    hudNode4Sub.textContent = 'Van Khí Trơ N2: Đã Khóa An Toàn';
+                    hudNode4Sub.style.color = '#6EE7B7';
                 }
                 if (vesselStatusFrame) {
                     vesselStatusFrame.setAttribute('stroke', '#10B981');
@@ -368,7 +404,7 @@
                     vesselHazardWarning.setAttribute('fill', '#34D399');
                 }
                 if (topologyOverallStatus) {
-                    topologyOverallStatus.className = 'badge px-2 py-1 font-monospace';
+                    topologyOverallStatus.className = 'badge px-2 py-1';
                     topologyOverallStatus.style.background = 'rgba(16, 185, 129, 0.2)';
                     topologyOverallStatus.style.color = '#6EE7B7';
                     topologyOverallStatus.style.border = '1px solid #10B981';
@@ -376,11 +412,11 @@
                 }
                 if (gasValLel) {
                     gasValLel.textContent = '0.0% LEL';
-                    gasValLel.className = 'fw-bold font-monospace text-success';
+                    gasValLel.className = 'fw-bold text-success';
                 }
                 if (gasValPress) {
                     gasValPress.textContent = '0.00 bar';
-                    gasValPress.className = 'fw-bold font-monospace text-success';
+                    gasValPress.className = 'fw-bold text-success';
                 }
             } else {
                 if (lineFeeder4) {
@@ -406,6 +442,22 @@
                     labelFeeder4Source.textContent = 'KHÍ TRƠ N2 ÁP SUẤT CAO 10 BAR';
                     labelFeeder4Source.setAttribute('fill', '#EF4444');
                 }
+                if (hudNode4) {
+                    hudNode4.classList.remove('is-safe-locked');
+                    hudNode4.classList.add('is-hazard-interactive');
+                }
+                if (hudFeeder4Source) {
+                    hudFeeder4Source.textContent = 'KHÍ TRƠ N2 ÁP SUẤT CAO 10 BAR';
+                    hudFeeder4Source.style.color = '#FDA4AF';
+                }
+                if (hudNode4Title) {
+                    hudNode4Title.className = 'hud-lock-pill is-hazard';
+                    hudNode4Title.textContent = '⚠️ V-109 (CHƯA KHÓA)';
+                }
+                if (hudNode4Sub) {
+                    hudNode4Sub.textContent = 'Bấm Để Gắn Khóa LOTO #L-8824';
+                    hudNode4Sub.style.color = '#FCA5A5';
+                }
                 if (vesselStatusFrame) {
                     vesselStatusFrame.setAttribute('stroke', '#EF4444');
                 }
@@ -414,7 +466,7 @@
                     vesselHazardWarning.setAttribute('fill', '#EF4444');
                 }
                 if (topologyOverallStatus) {
-                    topologyOverallStatus.className = 'badge px-2 py-1 font-monospace';
+                    topologyOverallStatus.className = 'badge px-2 py-1';
                     topologyOverallStatus.style.background = 'rgba(239, 68, 68, 0.2)';
                     topologyOverallStatus.style.color = '#FDA4AF';
                     topologyOverallStatus.style.border = '1px solid #EF4444';
@@ -422,11 +474,11 @@
                 }
                 if (gasValLel) {
                     gasValLel.textContent = '1.4% LEL';
-                    gasValLel.className = 'fw-bold font-monospace text-warning';
+                    gasValLel.className = 'fw-bold text-warning';
                 }
                 if (gasValPress) {
                     gasValPress.textContent = '0.35 bar';
-                    gasValPress.className = 'fw-bold font-monospace text-danger';
+                    gasValPress.className = 'fw-bold text-danger';
                 }
             }
         }
@@ -511,6 +563,13 @@
             checkLotoCompletion();
         }
 
+        function triggerPoint4Toggle() {
+            var pt4 = section.querySelector('.loto-point-item[data-point-id="4"]');
+            if (pt4) {
+                togglePointItem(pt4);
+            }
+        }
+
         lotoPoints.forEach(function (pt) {
             var toggleBtn = pt.querySelector('.btn-loto-toggle');
             if (toggleBtn) {
@@ -520,14 +579,321 @@
             }
         });
 
-        // Click directly on SVG Node 4 to toggle Point 4
+        // Click directly on SVG Node 4 or 3D HUD Node 4 to toggle Point 4
         if (svgNode4) {
-            svgNode4.addEventListener('click', function () {
-                var pt4 = section.querySelector('.loto-point-item[data-point-id="4"]');
-                if (pt4) {
-                    togglePointItem(pt4);
+            svgNode4.addEventListener('click', triggerPoint4Toggle);
+        }
+        if (hudNode4) {
+            hudNode4.addEventListener('click', triggerPoint4Toggle);
+        }
+
+        // Interactive 3D Digital Twin Anatomy Canvas Engine for Reactor R-201
+        if (loto3dCanvas && loto3dCanvas.getContext) {
+            var ctx3d = loto3dCanvas.getContext('2d');
+
+            camModeBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var mode = btn.getAttribute('data-cam-mode');
+                    camModeBtns.forEach(function (b) {
+                        b.classList.remove('active');
+                        b.style.background = 'rgba(15, 23, 42, 0.8)';
+                        b.style.color = '#94A3B8';
+                        b.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                    });
+                    btn.classList.add('active');
+                    btn.style.background = 'rgba(56, 189, 248, 0.18)';
+                    btn.style.color = '#38BDF8';
+                    btn.style.borderColor = 'rgba(56, 189, 248, 0.4)';
+
+                    if (mode === 'iso') {
+                        loto3dState.targetYaw = 0.48;
+                        loto3dState.targetPitch = 0.36;
+                        loto3dState.xrayMode = false;
+                    } else if (mode === 'xray') {
+                        loto3dState.targetYaw = -0.35;
+                        loto3dState.targetPitch = 0.22;
+                        loto3dState.xrayMode = true;
+                    } else if (mode === 'top') {
+                        loto3dState.targetYaw = 0.0;
+                        loto3dState.targetPitch = 1.18;
+                        loto3dState.xrayMode = false;
+                    }
+                });
+            });
+
+            loto3dCanvas.addEventListener('mousedown', function (e) {
+                loto3dState.dragging = true;
+                loto3dState.lastX = e.clientX;
+                loto3dState.lastY = e.clientY;
+                loto3dCanvas.style.cursor = 'grabbing';
+            });
+            window.addEventListener('mousemove', function (e) {
+                if (!loto3dState.dragging) return;
+                var dx = e.clientX - loto3dState.lastX;
+                var dy = e.clientY - loto3dState.lastY;
+                loto3dState.lastX = e.clientX;
+                loto3dState.lastY = e.clientY;
+                loto3dState.targetYaw += dx * 0.008;
+                loto3dState.targetPitch = Math.max(0.08, Math.min(1.35, loto3dState.targetPitch + dy * 0.006));
+            });
+            window.addEventListener('mouseup', function () {
+                if (loto3dState.dragging) {
+                    loto3dState.dragging = false;
+                    loto3dCanvas.style.cursor = 'grab';
                 }
             });
+            loto3dCanvas.addEventListener('click', function (e) {
+                var rect = loto3dCanvas.getBoundingClientRect();
+                var scaleX = loto3dCanvas.width / Math.max(rect.width, 1);
+                var scaleY = loto3dCanvas.height / Math.max(rect.height, 1);
+                var cx = (e.clientX - rect.left) * scaleX;
+                var cy = (e.clientY - rect.top) * scaleY;
+                var dx = cx - loto3dState.valve4ScreenPos.x;
+                var dy = cy - loto3dState.valve4ScreenPos.y;
+                if (Math.sqrt(dx * dx + dy * dy) <= loto3dState.valve4ScreenPos.r) {
+                    triggerPoint4Toggle();
+                }
+            });
+
+            function project3D(x, y, z, w, h, yaw, pitch) {
+                var cosY = Math.cos(yaw), sinY = Math.sin(yaw);
+                var x1 = x * cosY - z * sinY;
+                var z1 = x * sinY + z * cosY;
+                var cosP = Math.cos(pitch), sinP = Math.sin(pitch);
+                var y2 = y * cosP - z1 * sinP;
+                var z2 = y * sinP + z1 * cosP;
+                var fov = 620;
+                var scale = fov / Math.max(fov + z2 + 240, 120);
+                return {
+                    x: w * 0.5 + x1 * scale,
+                    y: h * 0.52 + y2 * scale,
+                    scale: scale,
+                    z: z2
+                };
+            }
+
+            function renderLoto3dFrame() {
+                loto3dState.tick += 1;
+                if (!loto3dState.dragging && !loto3dState.xrayMode) {
+                    loto3dState.targetYaw += 0.0022;
+                }
+                loto3dState.yaw += (loto3dState.targetYaw - loto3dState.yaw) * 0.08;
+                loto3dState.pitch += (loto3dState.targetPitch - loto3dState.pitch) * 0.08;
+
+                var w = loto3dCanvas.width;
+                var h = loto3dCanvas.height;
+                var yaw = loto3dState.yaw;
+                var pitch = loto3dState.pitch;
+                var isSafe = loto3dState.point4Locked;
+                ctx3d.clearRect(0, 0, w, h);
+
+                // 1. 3D Isometric Blueprint Floor Grid
+                ctx3d.lineWidth = 1;
+                ctx3d.strokeStyle = 'rgba(56, 189, 248, 0.08)';
+                for (var g = -240; g <= 240; g += 48) {
+                    var pA = project3D(g, 96, -180, w, h, yaw, pitch);
+                    var pB = project3D(g, 96, 180, w, h, yaw, pitch);
+                    ctx3d.beginPath();
+                    ctx3d.moveTo(pA.x, pA.y);
+                    ctx3d.lineTo(pB.x, pB.y);
+                    ctx3d.stroke();
+
+                    var pC = project3D(-240, 96, g * 0.75, w, h, yaw, pitch);
+                    var pD = project3D(240, 96, g * 0.75, w, h, yaw, pitch);
+                    ctx3d.beginPath();
+                    ctx3d.moveTo(pC.x, pC.y);
+                    ctx3d.lineTo(pD.x, pD.y);
+                    ctx3d.stroke();
+                }
+
+                // 2. 4 3D L-Shaped Industrial Pipe Manifolds & Isolation Valves
+                var pipes = [
+                    {
+                        id: 1,
+                        label: 'V-101',
+                        locked: true,
+                        pts: [[-290, -56, -90], [-145, -56, -45], [-68, -36, 0]],
+                        valveIdx: 1
+                    },
+                    {
+                        id: 2,
+                        label: 'CB-201',
+                        locked: true,
+                        pts: [[290, -56, -90], [145, -56, -45], [68, -36, 0]],
+                        valveIdx: 1
+                    },
+                    {
+                        id: 3,
+                        label: 'V-105',
+                        locked: true,
+                        pts: [[-290, 56, 90], [-145, 56, 45], [-68, 42, 0]],
+                        valveIdx: 1
+                    },
+                    {
+                        id: 4,
+                        label: 'V-109',
+                        locked: isSafe,
+                        pts: [[290, 56, 90], [145, 56, 45], [68, 42, 0]],
+                        valveIdx: 1
+                    }
+                ];
+
+                pipes.forEach(function (pipe) {
+                    var projPts = pipe.pts.map(function (pt) {
+                        return project3D(pt[0], pt[1], pt[2], w, h, yaw, pitch);
+                    });
+
+                    // Outer pipe casing
+                    ctx3d.beginPath();
+                    ctx3d.moveTo(projPts[0].x, projPts[0].y);
+                    ctx3d.lineTo(projPts[1].x, projPts[1].y);
+                    ctx3d.lineTo(projPts[2].x, projPts[2].y);
+                    ctx3d.lineCap = 'round';
+                    ctx3d.lineJoin = 'round';
+                    ctx3d.lineWidth = 9;
+                    ctx3d.strokeStyle = pipe.locked ? 'rgba(16, 185, 129, 0.25)' : 'rgba(239, 68, 68, 0.35)';
+                    ctx3d.stroke();
+
+                    // Inner core pipe
+                    ctx3d.lineWidth = 3.5;
+                    ctx3d.strokeStyle = pipe.locked ? '#10B981' : '#EF4444';
+                    ctx3d.stroke();
+
+                    // If unlocked (Feeder 4 hazard), stream pressurized N2 gas particles into the reactor
+                    if (!pipe.locked) {
+                        for (var k = 0; k < 5; k++) {
+                            var frac = ((loto3dState.tick * 0.025 + k * 0.2) % 1);
+                            var segX, segY;
+                            if (frac < 0.5) {
+                                var t1 = frac * 2;
+                                segX = projPts[0].x + (projPts[1].x - projPts[0].x) * t1;
+                                segY = projPts[0].y + (projPts[1].y - projPts[0].y) * t1;
+                            } else {
+                                var t2 = (frac - 0.5) * 2;
+                                segX = projPts[1].x + (projPts[2].x - projPts[1].x) * t2;
+                                segY = projPts[1].y + (projPts[2].y - projPts[1].y) * t2;
+                            }
+                            ctx3d.beginPath();
+                            ctx3d.arc(segX, segY, 3.8, 0, Math.PI * 2);
+                            ctx3d.fillStyle = '#FDA4AF';
+                            ctx3d.fill();
+                        }
+                    }
+
+                    // 3D Isolation Valve Ring at elbow
+                    var vPt = projPts[pipe.valveIdx];
+                    if (pipe.id === 4) {
+                        loto3dState.valve4ScreenPos = { x: vPt.x, y: vPt.y, r: 28 };
+                    }
+                    ctx3d.beginPath();
+                    ctx3d.arc(vPt.x, vPt.y, pipe.id === 4 && !pipe.locked ? 12 + Math.sin(loto3dState.tick * 0.12) * 2.5 : 10, 0, Math.PI * 2);
+                    ctx3d.fillStyle = pipe.locked ? '#064E3B' : '#7F1D1D';
+                    ctx3d.fill();
+                    ctx3d.lineWidth = 2.2;
+                    ctx3d.strokeStyle = pipe.locked ? '#34D399' : '#FCA5A5';
+                    ctx3d.stroke();
+
+                    // Valve label pill right above 3D elbow
+                    ctx3d.font = '700 10px Poppins, sans-serif';
+                    ctx3d.textAlign = 'center';
+                    ctx3d.fillStyle = pipe.locked ? '#A7F3D0' : '#FDA4AF';
+                    ctx3d.fillText((pipe.locked ? '🔒 ' : '⚠️ ') + pipe.label, vPt.x, vPt.y - 15);
+                });
+
+                // 3. 3D Cylindrical Reactor Vessel R-201 (Wireframe Rings + Vertical Ribs + Internal Agitator)
+                var radius = 68;
+                var ringsY = [-64, -32, 0, 32, 64];
+                var segs = 24;
+
+                // Vertical structural ribs
+                for (var r = 0; r < 12; r++) {
+                    var ang = (r / 12) * Math.PI * 2;
+                    if (loto3dState.xrayMode && Math.sin(ang + yaw) > 0.25) continue;
+                    var topP = project3D(Math.cos(ang) * radius, -64, Math.sin(ang) * radius, w, h, yaw, pitch);
+                    var botP = project3D(Math.cos(ang) * radius, 64, Math.sin(ang) * radius, w, h, yaw, pitch);
+                    ctx3d.beginPath();
+                    ctx3d.moveTo(topP.x, topP.y);
+                    ctx3d.lineTo(botP.x, botP.y);
+                    ctx3d.lineWidth = 1.2;
+                    ctx3d.strokeStyle = isSafe ? 'rgba(56, 189, 248, 0.26)' : 'rgba(248, 113, 113, 0.25)';
+                    ctx3d.stroke();
+                }
+
+                // Horizontal containment rings
+                ringsY.forEach(function (ry, idx) {
+                    ctx3d.beginPath();
+                    for (var s = 0; s <= segs; s++) {
+                        var a = (s / segs) * Math.PI * 2;
+                        var p = project3D(Math.cos(a) * radius, ry, Math.sin(a) * radius, w, h, yaw, pitch);
+                        if (s === 0) ctx3d.moveTo(p.x, p.y);
+                        else ctx3d.lineTo(p.x, p.y);
+                    }
+                    ctx3d.lineWidth = (idx === 0 || idx === ringsY.length - 1) ? 2.2 : 1.2;
+                    ctx3d.strokeStyle = isSafe
+                        ? (idx === 2 ? 'rgba(16, 185, 129, 0.65)' : 'rgba(56, 189, 248, 0.42)')
+                        : (idx === 2 ? 'rgba(239, 68, 68, 0.7)' : 'rgba(56, 189, 248, 0.35)');
+                    ctx3d.stroke();
+                });
+
+                // 4. Internal 3D Agitator Shaft & Twin Pitched-Blade Impellers
+                var shaftTop = project3D(0, -88, 0, w, h, yaw, pitch);
+                var shaftBot = project3D(0, 52, 0, w, h, yaw, pitch);
+                ctx3d.beginPath();
+                ctx3d.moveTo(shaftTop.x, shaftTop.y);
+                ctx3d.lineTo(shaftBot.x, shaftBot.y);
+                ctx3d.lineWidth = 3;
+                ctx3d.strokeStyle = '#94A3B8';
+                ctx3d.stroke();
+
+                // Top 45kW Agitator Motor Housing
+                ctx3d.fillStyle = '#0F172A';
+                ctx3d.strokeStyle = '#38BDF8';
+                ctx3d.lineWidth = 1.8;
+                ctx3d.beginPath();
+                ctx3d.roundRect(shaftTop.x - 20, shaftTop.y - 16, 40, 18, 4);
+                ctx3d.fill();
+                ctx3d.stroke();
+
+                // Rotating 3D Turbine Blades (slows to complete stop when all 4 points locked)
+                var spinAngle = isSafe ? 0.6 : loto3dState.tick * 0.06;
+                [10, 42].forEach(function (impY, impIdx) {
+                    var bladeRadius = impIdx === 0 ? 34 : 44;
+                    for (var b = 0; b < 4; b++) {
+                        var ba = spinAngle + (b * Math.PI * 0.5);
+                        var bStart = project3D(0, impY, 0, w, h, yaw, pitch);
+                        var bEnd = project3D(Math.cos(ba) * bladeRadius, impY, Math.sin(ba) * bladeRadius, w, h, yaw, pitch);
+                        ctx3d.beginPath();
+                        ctx3d.moveTo(bStart.x, bStart.y);
+                        ctx3d.lineTo(bEnd.x, bEnd.y);
+                        ctx3d.lineWidth = 3;
+                        ctx3d.strokeStyle = isSafe ? '#34D399' : '#38BDF8';
+                        ctx3d.stroke();
+                    }
+                });
+
+                // 5. Center 3D Reactor Core Status Readout Tag
+                var coreCenter = project3D(0, -6, 0, w, h, yaw, pitch);
+                var tagW = 186, tagH = 38;
+                ctx3d.fillStyle = 'rgba(7, 14, 28, 0.9)';
+                ctx3d.strokeStyle = isSafe ? '#10B981' : '#EF4444';
+                ctx3d.lineWidth = 1.6;
+                ctx3d.beginPath();
+                ctx3d.roundRect(coreCenter.x - tagW / 2, coreCenter.y - tagH / 2, tagW, tagH, 6);
+                ctx3d.fill();
+                ctx3d.stroke();
+
+                ctx3d.font = '700 10px Poppins, sans-serif';
+                ctx3d.textAlign = 'center';
+                ctx3d.fillStyle = '#F8FAFC';
+                ctx3d.fillText('REACTOR R-201 DIGITAL TWIN', coreCenter.x, coreCenter.y - 4);
+                ctx3d.font = '700 9.5px Poppins, sans-serif';
+                ctx3d.fillStyle = isSafe ? '#34D399' : '#FDA4AF';
+                ctx3d.fillText(isSafe ? '🛡️ ZERO ENERGY VERIFIED' : '⛔ ÁP SUẤT DƯ N2: 0.35 BAR', coreCenter.x, coreCenter.y + 11);
+
+                requestAnimationFrame(renderLoto3dFrame);
+            }
+
+            requestAnimationFrame(renderLoto3dFrame);
         }
 
         if (btnSignPtw) {
