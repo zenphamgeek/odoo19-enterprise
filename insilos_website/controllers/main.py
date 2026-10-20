@@ -1803,7 +1803,7 @@ class InsilosWebsite(http.Controller):
     def contactus(self, **kwargs):
         host = (request.httprequest.host or "").lower()
         website_name = (request.website.name or "").lower() if getattr(request, "website", None) else ""
-        if "innoria" in host or "innoria" in website_name:
+        if "innokafe" not in host and "innokafe" not in website_name:
             if request.env["ir.ui.view"].sudo().search([("key", "=", "insilos_website.innoria_contactus")], limit=1):
                 return request.render("insilos_website.innoria_contactus", self._base_values())
         return request.render("website.contactus", self._base_values())

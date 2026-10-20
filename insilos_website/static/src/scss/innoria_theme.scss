@@ -4355,4 +4355,124 @@ html, body, #wrapwrap,
             color: var(--cds-link-dark) !important;
         }
     }
+
+    /* 6. Innoria SOTA Enterprise UI, Split-Pane & Form Design Standard (SOP-UI-SOTA-01 / ADR-20261020-015) */
+    .innoria-sota-workspace,
+    .al2c-brand-workspace {
+        --cds-interactive: #005F73 !important;
+        --cds-button-primary: #005F73 !important;
+        --cds-button-primary-hover: #003333 !important;
+        --cds-button-primary-active: #002626 !important;
+        --cds-focus: #0ABBDB !important;
+        --cds-link-primary: #005F73 !important;
+    }
+
+    .al2c-pill-teal-dark {
+        display: inline-flex !important;
+        align-items: center !important;
+        background: linear-gradient(90deg, #005F73 0%, #003333 100%) !important;
+        background-color: #005F73 !important;
+        color: #ffffff !important;
+        border: 1px solid #003333 !important;
+        border-radius: 2px !important;
+        font-size: 9.5px !important;
+        font-weight: 700 !important;
+        padding: 3px 8px !important;
+        letter-spacing: 0.04em !important;
+        line-height: 1.2 !important;
+    }
+
+    .al2c-pill-cyan-soft {
+        display: inline-flex !important;
+        align-items: center !important;
+        background: #E6F8FB !important;
+        background-color: #E6F8FB !important;
+        color: #004D5A !important;
+        border: 1px solid #8CE0F0 !important;
+        border-radius: 2px !important;
+        font-size: 9.5px !important;
+        font-weight: 700 !important;
+        padding: 3px 8px !important;
+        letter-spacing: 0.03em !important;
+        line-height: 1.2 !important;
+    }
+
+    .al2c-pill-orange-soft {
+        display: inline-flex !important;
+        align-items: center !important;
+        background: #FFF4E5 !important;
+        background-color: #FFF4E5 !important;
+        color: #B45309 !important;
+        border: 1px solid #FF8000 !important;
+        border-radius: 2px !important;
+        font-size: 9.5px !important;
+        font-weight: 700 !important;
+        padding: 3px 8px !important;
+        letter-spacing: 0.03em !important;
+        line-height: 1.2 !important;
+    }
+
+    .al2c-logo-square-frame {
+        width: 78px !important;
+        height: 78px !important;
+        min-width: 78px !important;
+        border: 1px solid #d1e8ed !important;
+        border-bottom: 3px solid #0ABBDB !important;
+        background: #ffffff !important;
+        border-radius: 2px !important;
+        padding: 6px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+
+        img {
+            max-height: 64px !important;
+            max-width: 64px !important;
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain !important;
+        }
+    }
+
+    .innoria-sota-pane-teal {
+        background: #ffffff !important;
+        border: 1px solid #e0e0e0 !important;
+        border-top: 3px solid #005F73 !important;
+        border-radius: 2px !important;
+        box-shadow: none !important;
+    }
+
+    .innoria-sota-pane-orange {
+        background: #ffffff !important;
+        border: 1px solid #e0e0e0 !important;
+        border-top: 3px solid #FF8000 !important;
+        border-radius: 2px !important;
+        box-shadow: none !important;
+    }
+
+    .innoria-sota-form {
+        .form-control,
+        .form-select {
+            border-radius: 0px !important;
+            border: 1px solid #cbd5e1 !important;
+            box-shadow: none !important;
+            font-size: 12.5px !important;
+            font-family: var(--cds-font-sans) !important;
+            color: #161616 !important;
+            background-color: #ffffff !important;
+
+            &:focus {
+                border-color: #0ABBDB !important;
+                outline: 1px solid #0ABBDB !important;
+                box-shadow: none !important;
+            }
+        }
+
+        input.form-control,
+        select.form-select {
+            height: 38px !important;
+        }
+    }
 }
+

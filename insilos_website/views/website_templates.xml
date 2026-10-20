@@ -1167,8 +1167,8 @@
             <t t-set="is_innoria" t-value="not ((website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <t t-set="base_options" t-value="{'widget': 'image'}"/>
             <a data-name="Navbar Logo" href="/" t-attf-class="navbar-brand logo py-0 d-flex align-items-center me-xl-4 me-3 #{_link_class}">
-                <t t-if="is_innoria and not editable">
-                    <img src="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA" class="navbar-brand-logo" width="138" height="38"/>
+                <t t-if="is_innoria">
+                    <img src="/insilos_website/static/src/img/innoria/logo_innoria_horizontal_white.svg" data-brand-light="/insilos_website/static/src/img/innoria/logo_innoria_header.svg" alt="INNORIA" class="navbar-brand-logo" width="138" height="38"/>
                 </t>
                 <t t-else="">
                     <span
