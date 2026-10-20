@@ -197,9 +197,9 @@
             this.renderer.outputEncoding = THREE.sRGBEncoding;
         }
 
-        // Background color based on theme
+        // Keep WebGL canvas transparent so Hero video/poster layers shine through cleanly
         var clearColor = this.themeMode === 'midnight_space' ? BRAND_PALETTE.darkSpace : BRAND_PALETTE.canvasBg;
-        var clearAlpha = this.themeMode === 'midnight_space' ? 1.0 : 0.0;
+        var clearAlpha = 0.0;
         this.renderer.setClearColor(clearColor, clearAlpha);
     };
 

@@ -86,8 +86,9 @@
     ];
 
     function InnoriaHeroInteractiveStage(container) {
-        if (!container || container.__innoria_hero_stage_initialized) return;
+        if (!container || container.__innoria_hero_stage_initialized || container.__innoria_hero_slider_initialized) return;
         container.__innoria_hero_stage_initialized = true;
+        container.__innoria_hero_slider_initialized = true;
 
         this.container = container;
         this.videoLayers = Array.prototype.slice.call(container.querySelectorAll('.video-slide-layer'));
