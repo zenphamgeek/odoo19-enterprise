@@ -1,12 +1,20 @@
+import base64
+import json
+import logging
 import os
 import re
 import time
 from html import escape
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-from odoo import http
+from odoo import _, http
 from odoo.http import request
+from odoo.tools import html_escape
 
 from .industry_registry import INDUSTRY_101_REGISTRY
+
+_logger = logging.getLogger(__name__)
+MAX_ATTACHMENT_SIZE_BYTES = 25 * 1024 * 1024
 
 
 INDUSTRIES = {
@@ -1761,12 +1769,12 @@ class InsilosWebsite(http.Controller):
             ],
         )
 
-    @http.route("/resources", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/resources", "/vi/resources", "/en/resources"], type="http", auth="public", website=True, sitemap=True)
     def resources(self, **kwargs):
         return request.render("insilos_website.insilos_resources_page", self._base_values())
 
     @http.route(
-        ["/resources/<string:article>", "/resources/<path:article>"],
+        ["/resources/<string:article>", "/resources/<path:article>", "/en/resources/<string:article>", "/en/resources/<path:article>"],
         type="http",
         auth="public",
         website=True,
@@ -1791,7 +1799,7 @@ class InsilosWebsite(http.Controller):
             self._base_values(article=article_data, article_key=article),
         )
 
-    @http.route("/pricing", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/pricing", "/vi/pricing", "/en/pricing"], type="http", auth="public", website=True, sitemap=True)
     def pricing(self, **kwargs):
         return request.render("insilos_website.insilos_pricing_page", self._base_values())
 
@@ -1805,36 +1813,100 @@ class InsilosWebsite(http.Controller):
         website_name = (request.website.name or "").lower() if getattr(request, "website", None) else ""
         if "innokafe" not in host and "innokafe" not in website_name:
             if request.env["ir.ui.view"].sudo().search([("key", "=", "insilos_website.innoria_contactus")], limit=1):
-                return request.render("insilos_website.innoria_contactus", self._base_values())
-        return request.render("website.contactus", self._base_values())
+                return request.render("insilos_website.innoria_contactus", self._base_values(**kwargs))
+        return request.render("website.contactus", self._base_values(**kwargs))
 
-    @http.route("/media-credits", type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/media-credits", "/en/media-credits"], type="http", auth="public", website=True, sitemap=True)
     def media_credits(self, **kwargs):
         return request.render("insilos_website.insilos_media_credits", self._base_values())
 
-    @http.route(["/trust", "/vi/trust"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/trust", "/vi/trust", "/en/trust"], type="http", auth="public", website=True, sitemap=True)
     def trust(self, **kwargs):
         return request.render("insilos_website.insilos_trust_page", self._base_values(**kwargs))
 
-    @http.route(["/compliance", "/vi/compliance"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/compliance", "/vi/compliance", "/en/compliance"], type="http", auth="public", website=True, sitemap=True)
     def compliance(self, **kwargs):
         return request.render("insilos_website.insilos_compliance_page", self._base_values(**kwargs))
 
-    @http.route(["/sandbox", "/vi/sandbox"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/sandbox", "/vi/sandbox", "/en/sandbox"], type="http", auth="public", website=True, sitemap=True)
     def sandbox(self, **kwargs):
         return request.render("insilos_website.insilos_sandbox_page", self._base_values(**kwargs))
 
-    @http.route(["/privacy", "/privacy-policy", "/vi/privacy", "/vi/privacy-policy"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/privacy", "/privacy-policy", "/vi/privacy", "/vi/privacy-policy", "/en/privacy", "/en/privacy-policy"], type="http", auth="public", website=True, sitemap=True)
     def privacy(self, **kwargs):
         return request.render("insilos_website.insilos_privacy_page", self._base_values(**kwargs))
 
+    def _extract_uploaded_quote_files(self, post=None):
+        """Extract uploaded quote/RFP attachments from multipart/form-data or JSON base64."""
+        httprequest = request.httprequest
+        uploaded_files = []
+        raw_files = (
+            httprequest.files.getlist("quote_attachments")
+            + httprequest.files.getlist("attachment")
+            + httprequest.files.getlist("attachments")
+        )
+        for file_obj in raw_files:
+            filename = (getattr(file_obj, "filename", None) or "").strip()
+            if not filename:
+                continue
+            try:
+                content = file_obj.read(MAX_ATTACHMENT_SIZE_BYTES)
+                if not content:
+                    continue
+                mimetype = getattr(file_obj, "content_type", None) or "application/octet-stream"
+                b64_datas = base64.b64encode(content).decode("ascii")
+                uploaded_files.append({
+                    "name": os.path.basename(filename)[:200],
+                    "datas": b64_datas,
+                    "mimetype": mimetype,
+                    "size": len(content),
+                })
+            except Exception as exc:
+                _logger.warning("Error reading uploaded quote file %s: %s", filename, exc)
+
+        raw_attachments_json = (post or {}).get("attachments_json")
+        if raw_attachments_json:
+            parsed_attachments = []
+            if isinstance(raw_attachments_json, str):
+                try:
+                    parsed_attachments = json.loads(raw_attachments_json)
+                except Exception as exc:
+                    _logger.warning("Failed parsing attachments_json: %s", exc)
+            elif isinstance(raw_attachments_json, list):
+                parsed_attachments = raw_attachments_json
+
+            for item in parsed_attachments:
+                if not isinstance(item, dict):
+                    continue
+                file_name = os.path.basename((item.get("name") or item.get("filename") or "").strip())[:200]
+                b64_raw = item.get("data") or item.get("datas") or ""
+                file_type = item.get("type") or item.get("mimetype") or "application/octet-stream"
+                if not file_name or not b64_raw:
+                    continue
+                if isinstance(b64_raw, str) and "," in b64_raw and b64_raw.startswith("data:"):
+                    b64_raw = b64_raw.split(",", 1)[1]
+                try:
+                    decoded_bytes = base64.b64decode(b64_raw)
+                    if not decoded_bytes or len(decoded_bytes) > MAX_ATTACHMENT_SIZE_BYTES:
+                        continue
+                    uploaded_files.append({
+                        "name": file_name,
+                        "datas": base64.b64encode(decoded_bytes).decode("ascii"),
+                        "mimetype": file_type,
+                        "size": len(decoded_bytes),
+                    })
+                except Exception as exc:
+                    _logger.warning("Failed decoding base64 attachment %s: %s", file_name, exc)
+
+        return uploaded_files
+
     @http.route(
-        "/request-demo",
+        ["/request-demo", "/vi/request-demo", "/en/request-demo"],
         type="http",
         auth="public",
         website=True,
         methods=["GET", "POST"],
-        csrf=True,
+        csrf=False,
         sitemap=True,
         readonly=False,
     )
@@ -1861,10 +1933,6 @@ class InsilosWebsite(http.Controller):
             if form_data["website_url"]:
                 return request.redirect("/thank-you")
 
-            last_submit = float(request.session.get("insilos_demo_last_submit", 0) or 0)
-            if time.time() - last_submit < 20:
-                errors["general"] = "Yêu cầu vừa được gửi. Vui lòng đợi một chút trước khi gửi lại."
-
             if len(form_data["name"]) < 2:
                 errors["name"] = "Vui lòng nhập họ và tên."
             if not EMAIL_RE.match(form_data["email"]):
@@ -1882,9 +1950,10 @@ class InsilosWebsite(http.Controller):
             if form_data["project_timeline"] and form_data["project_timeline"] not in dict(PROJECT_TIMELINE_SELECTIONS):
                 errors["project_timeline"] = "Tiến độ dự kiến không hợp lệ."
             if not form_data["consent_decree13"]:
-                errors["consent"] = "Cần xác nhận đồng ý xử lý dữ liệu theo Nghị định 13/2023/NĐ-CP để Insilos có thể liên hệ."
+                errors["consent"] = "Cần xác nhận đồng ý xử lý dữ liệu theo Nghị định 13/2023/NĐ-CP để tiếp nhận tư vấn."
 
             if not errors:
+                uploaded_files = self._extract_uploaded_quote_files(post)
                 current_website = request.env["website"].get_current_website(fallback=True)
                 website_id = current_website.id if current_website else False
                 record = request.env["insilos.demo.request"].sudo().create(
@@ -1907,10 +1976,20 @@ class InsilosWebsite(http.Controller):
                         "language_code": request.env.lang or "",
                     }
                 )
-                self._queue_notification(record)
+                att_ids = []
+                for f_item in uploaded_files:
+                    att = request.env["ir.attachment"].sudo().create({
+                        "name": f_item["name"],
+                        "datas": f_item["datas"],
+                        "mimetype": f_item["mimetype"],
+                        "res_model": "insilos.demo.request",
+                        "res_id": record.id,
+                    })
+                    att_ids.append(att.id)
+                self._queue_notification(record, attachment_ids=att_ids)
                 request.session["insilos_demo_last_submit"] = time.time()
                 request.session["insilos_demo_request_id"] = record.id
-                return request.redirect("/thank-you")
+                return request.redirect(f"/thank-you?priority={'1' if att_ids else '0'}&files={len(att_ids)}")
 
         return request.render(
             "insilos_website.insilos_request_demo_page",
@@ -1925,39 +2004,44 @@ class InsilosWebsite(http.Controller):
             ),
         )
 
-    def _queue_notification(self, record):
-        current_website = request.env["website"].get_current_website(fallback=True)
-        company = current_website.company_id if current_website and current_website.company_id else request.env.company
-        email_to = company.email
-        if not email_to:
-            return
+    def _queue_notification(self, record, attachment_ids=None):
+        current_website = request.env["website"].sudo().get_current_website(fallback=True)
+        company = (current_website.company_id if current_website and current_website.company_id else request.env.company).sudo()
+        email_to = "tham.mai@inno.ai.vn"
+        if company.email and company.email != email_to:
+            email_to = f"{email_to}, {company.email}"
+        has_files = bool(attachment_ids)
+        priority_badge = "[FAST-TRACK PRIORITY < 2H · FILE ATTACHED]" if has_files else "[INNORIA DEMO & QUOTE]"
         body = "".join(
             [
-                "<h2>Yêu cầu demo mới từ website Insilos</h2>",
+                f"<h2>{priority_badge} Yêu cầu Demo &amp; Báo giá từ {escape(record.company)}</h2>",
                 f"<p><strong>Họ tên:</strong> {escape(record.name)}</p>",
                 f"<p><strong>Email:</strong> {escape(record.email)}</p>",
+                f"<p><strong>Số điện thoại:</strong> {escape(record.phone or '')}</p>",
                 f"<p><strong>Doanh nghiệp:</strong> {escape(record.company)}</p>",
                 f"<p><strong>Ngành:</strong> {escape(dict(record._fields['industry'].selection).get(record.industry, record.industry))}</p>",
                 f"<p><strong>Use case:</strong> {escape(dict(record._fields['use_case'].selection).get(record.use_case, record.use_case))}</p>",
+                f"<p><strong>Tài liệu đính kèm:</strong> {len(attachment_ids or [])} tệp tin</p>",
                 f"<p><strong>Nhu cầu:</strong><br/>{escape(record.message or '').replace(chr(10), '<br/>')}</p>",
             ]
         )
-        request.env["mail.mail"].sudo().create(
-            {
-                "subject": f"[Insilos] Yêu cầu demo — {record.company}",
-                "body_html": body,
-                "email_from": company.partner_id.email_formatted or email_to,
-                "email_to": email_to,
-                "reply_to": record.email,
-                "auto_delete": True,
-            }
-        )
+        mail_vals = {
+            "subject": f"{priority_badge} Yêu cầu báo giá & demo — {record.company}",
+            "body_html": body,
+            "email_from": (company.partner_id.sudo().email_formatted if company and company.partner_id else None) or "contact@innoria.com",
+            "email_to": email_to,
+            "reply_to": record.email,
+            "auto_delete": False,
+        }
+        if attachment_ids:
+            mail_vals["attachment_ids"] = [(6, 0, attachment_ids)]
+        request.env["mail.mail"].sudo().create(mail_vals)
 
-    @http.route("/thank-you", type="http", auth="public", website=True, sitemap=False)
+    @http.route(["/thank-you", "/en/thank-you", "/vi/thank-you"], type="http", auth="public", website=True, sitemap=False)
     def thank_you(self, **kwargs):
-        return request.render("insilos_website.insilos_thank_you_page", self._base_values())
+        return request.render("insilos_website.insilos_thank_you_page", self._base_values(**kwargs))
 
-    @http.route(["/showcase-3d", "/vi/showcase-3d", "/solutions/industrial-showcase"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/showcase-3d", "/vi/showcase-3d", "/en/showcase-3d", "/solutions/industrial-showcase"], type="http", auth="public", website=True, sitemap=True)
     def showcase_3d(self, **kwargs):
         submitted = bool(kwargs.get("submitted"))
         now = time.time()
@@ -1987,7 +2071,7 @@ class InsilosWebsite(http.Controller):
                 pass
         return response
 
-    @http.route(["/interactive-3d", "/vi/interactive-3d"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/interactive-3d", "/vi/interactive-3d", "/en/interactive-3d"], type="http", auth="public", website=True, sitemap=True)
     def interactive_3d(self, **kwargs):
         values = self._base_values()
         return request.render("insilos_website.insilos_interactive_3d_page", values)
@@ -2016,7 +2100,6 @@ class InsilosWebsite(http.Controller):
             "tag_ids": [(4, tag.id)],
         })
 
-        # Sync participants for marketing automation campaign if running
         campaign = request.env["marketing.campaign"].sudo().search([
             ("name", "ilike", "3D Showcase"),
             ("state", "=", "running")
@@ -2028,3 +2111,309 @@ class InsilosWebsite(http.Controller):
                 pass
 
         return request.redirect("/showcase-3d?submitted=1")
+
+    @http.route(
+        [
+            "/innoria/quote/submit",
+            "/contactus/submit",
+            "/en/innoria/quote/submit",
+            "/en/contactus/submit",
+            "/vi/innoria/quote/submit",
+            "/vi/contactus/submit",
+            "/website/form/",
+        ],
+        type="http",
+        auth="public",
+        methods=["POST"],
+        website=True,
+        csrf=False,
+        readonly=False,
+    )
+    def submit_quote_request(self, **post):
+        """Handle executive quote, architecture advisory, and priority RFP file attachment requests.
+
+        Processes submissions from /contactus, #innoria_contact_section, /request-demo,
+        OWL AI Concierge dialogs, and Customer Portal (/my/software-portal, /my/quotes).
+        Automatically upgrades CRM Lead to Priority 3★ (FAST-TRACK SLA < 2H) when files are attached.
+        """
+        httprequest = request.httprequest
+        if not post and httprequest.content_type and "application/json" in httprequest.content_type:
+            try:
+                json_payload = httprequest.get_json(silent=True) or {}
+                if isinstance(json_payload, dict):
+                    post.update(json_payload)
+            except Exception as exc:
+                _logger.warning("Failed parsing JSON quote submission payload: %s", exc)
+
+        contact_name = (
+            post.get("contact_name")
+            or post.get("name")
+            or ""
+        ).strip()[:120] or "Khách hàng Doanh nghiệp"
+
+        email_from = (
+            post.get("email_from")
+            or post.get("email")
+            or post.get("contact_email")
+            or ""
+        ).strip()[:254]
+
+        phone = (
+            post.get("phone")
+            or post.get("contact_phone")
+            or ""
+        ).strip()[:64]
+
+        partner_name = (
+            post.get("partner_name")
+            or post.get("company")
+            or post.get("company_name")
+            or ""
+        ).strip()[:160] or contact_name
+
+        solution_interest = (
+            post.get("x_solution_interest")
+            or post.get("solution_interest")
+            or post.get("product_interest")
+            or post.get("use_case")
+            or ""
+        ).strip()[:200] or "Executive Architecture Advisory"
+
+        target_timeline = (
+            post.get("x_target_timeline")
+            or post.get("target_timeline")
+            or post.get("project_timeline")
+            or ""
+        ).strip()[:120] or "Immediate: 0-30 days"
+
+        description = (
+            post.get("description")
+            or post.get("message")
+            or post.get("notes")
+            or ""
+        ).strip()[:8000]
+
+        return_url = (post.get("return_url") or "/contactus").strip()
+
+        # 2. Extract Uploaded Files (Multipart + Base64 JSON)
+        uploaded_files = self._extract_uploaded_quote_files(post)
+        has_files = len(uploaded_files) > 0
+
+        # 3. Priority SLA Determination: Attaching RFP/SRS/BoQ upgrades to 3-star Fast-Track SLA (< 2h)
+        if has_files:
+            priority = "3"
+            sla_badge = "FAST-TRACK PRIORITY (< 2H SLA - FILE ATTACHED)"
+            fit_score = 95.0
+            qual_state = "qualified"
+            tag_names = [
+                "Innoria Quote Request",
+                "Fast-Track Priority (< 2h SLA)",
+                "RFP / File Attached",
+            ]
+        else:
+            priority = "2"
+            sla_badge = "STANDARD EXECUTIVE SLA (< 24H)"
+            fit_score = 82.0
+            qual_state = "qualified"
+            tag_names = [
+                "Innoria Quote Request",
+                "Executive Advisory",
+            ]
+
+        CrmTag = request.env["crm.tag"].sudo()
+        tag_ids = []
+        for t_name in tag_names:
+            tag = CrmTag.search([("name", "=", t_name)], limit=1)
+            if not tag:
+                tag = CrmTag.create({"name": t_name, "color": 1 if has_files else 4})
+            tag_ids.append(tag.id)
+
+        file_names_list = ", ".join(f["name"] for f in uploaded_files) if has_files else "Không đính kèm file"
+        full_description = "\n".join([
+            f"[{sla_badge}]",
+            f"• Doanh nghiệp / Tổ chức: {partner_name}",
+            f"• Người liên hệ: {contact_name}",
+            f"• Email: {email_from} | Điện thoại: {phone}",
+            f"• Giải pháp quan tâm: {solution_interest}",
+            f"• Tiến độ triển khai mục tiêu: {target_timeline}",
+            f"• Tài liệu đính kèm ({len(uploaded_files)} file): {file_names_list}",
+            "",
+            "--- MÔ TẢ DỰ ÁN & YÊU CẦU BÁO GIÁ KỸ THUẬT ---",
+            description or "Yêu cầu gửi báo giá và tham vấn kiến trúc trực tiếp.",
+        ])
+
+        CrmLead = request.env["crm.lead"].sudo()
+        lead_prefix = "[FAST-TRACK PRIORITY]" if has_files else "[QUOTE REQUEST]"
+        lead_vals = {
+            "name": f"{lead_prefix} {partner_name} — {solution_interest}",
+            "contact_name": contact_name,
+            "email_from": email_from,
+            "phone": phone,
+            "partner_name": partner_name,
+            "description": full_description,
+            "type": "opportunity",
+            "priority": priority,
+            "tag_ids": [(6, 0, tag_ids)],
+        }
+        if "al2c_qualification_state" in CrmLead._fields:
+            lead_vals["al2c_qualification_state"] = qual_state
+        if "al2c_sentiment" in CrmLead._fields:
+            lead_vals["al2c_sentiment"] = "positive"
+        if "al2c_bant_need" in CrmLead._fields:
+            lead_vals["al2c_bant_need"] = f"Báo giá {solution_interest} ({target_timeline})"
+
+        lead = CrmLead.create(lead_vals)
+
+        # 4. Create ir.attachment records linked to crm.lead
+        attachment_ids = []
+        IrAttachment = request.env["ir.attachment"].sudo()
+        for f_item in uploaded_files:
+            att = IrAttachment.create({
+                "name": f_item["name"],
+                "datas": f_item["datas"],
+                "mimetype": f_item["mimetype"],
+                "res_model": "crm.lead",
+                "res_id": lead.id,
+                "description": f"Priority Quote Request Attachment from {partner_name} ({contact_name})",
+            })
+            attachment_ids.append(att.id)
+
+        # 5. Post structured chatter message with attachments
+        chatter_accent_color = "#FF8000" if has_files else "#005F73"
+        try:
+            lead.message_post(
+                body=(
+                    f"<div style='border-left: 4px solid {chatter_accent_color}; padding-left: 12px;'>"
+                    f"<b>📋 Hồ Sơ Yêu Cầu Báo Giá Doanh Nghiệp ({html_escape(sla_badge)})</b><br/>"
+                    f"• <b>Doanh nghiệp:</b> {html_escape(partner_name)}<br/>"
+                    f"• <b>Người đại diện:</b> {html_escape(contact_name)} ({html_escape(email_from)} | {html_escape(phone)})<br/>"
+                    f"• <b>Giải pháp:</b> {html_escape(solution_interest)} | <b>Tiến độ:</b> {html_escape(target_timeline)}<br/>"
+                    f"• <b>Mức độ ưu tiên:</b> <code>Priority {priority}★</code> | <b>Fit Score:</b> {fit_score:.0f}/100<br/>"
+                    f"• <b>Tài liệu đính kèm ({len(uploaded_files)} file):</b> {html_escape(file_names_list)}<br/>"
+                    f"• <b>Nội dung yêu cầu:</b> {html_escape(description)}"
+                    f"</div>"
+                ),
+                message_type="comment",
+                subtype_xmlid="mail.mt_comment",
+                attachment_ids=attachment_ids,
+            )
+        except Exception as exc:
+            _logger.warning("Failed posting chatter message on lead %s: %s", lead.id, exc)
+
+        # 6. Queue immediate notification email to tham.mai@inno.ai.vn with attachments
+        current_website = request.env["website"].sudo().get_current_website(fallback=True)
+        company = (current_website.company_id if current_website and current_website.company_id else request.env.company).sudo()
+        sender_email = (company.partner_id.sudo().email_formatted if company and company.partner_id else None) or "contact@innoria.com"
+        recipients = ["tham.mai@inno.ai.vn"]
+        if company and company.email and company.email not in recipients:
+            recipients.append(company.email)
+        email_to_str = ", ".join(recipients)
+
+        email_html = f"""
+<div style="font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 680px; margin: 0 auto; border: 1px solid #e0e0e0; border-top: 4px solid {chatter_accent_color}; background: #ffffff;">
+    <div style="padding: 20px 24px; background: #003333; color: #ffffff;">
+        <div style="font-size: 11px; font-weight: 700; color: #0ABBDB; letter-spacing: 0.08em; text-transform: uppercase;">INNORIA EXECUTIVE QUOTE &amp; ARCHITECTURE DESK</div>
+        <h2 style="margin: 6px 0 0; font-size: 18px; color: #ffffff;">{html_escape(sla_badge)}</h2>
+    </div>
+    <div style="padding: 24px;">
+        <div style="padding: 12px 16px; background: {'#FFF4E5' if has_files else '#E6F8FB'}; border-left: 4px solid {chatter_accent_color}; margin-bottom: 18px; font-size: 13px; color: #161616;">
+            <strong>Mã Hồ Sơ CRM: #{lead.id}</strong> &nbsp;|&nbsp;
+            <strong>Ưu tiên: {priority}★</strong> &nbsp;|&nbsp;
+            <strong>Điểm phù hợp: {fit_score:.0f}/100</strong> &nbsp;|&nbsp;
+            <strong>Tệp đính kèm: {len(uploaded_files)} file ({html_escape(file_names_list)})</strong>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 16px;">
+            <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 8px 0; color: #525252; width: 170px;">Doanh nghiệp / Tổ chức:</td><td style="font-weight: 700; color: #003333;">{html_escape(partner_name)}</td></tr>
+            <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 8px 0; color: #525252;">Người liên hệ:</td><td style="font-weight: 600; color: #161616;">{html_escape(contact_name)}</td></tr>
+            <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 8px 0; color: #525252;">Email doanh nghiệp:</td><td style="font-weight: 600; color: #005F73;">{html_escape(email_from)}</td></tr>
+            <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 8px 0; color: #525252;">Số điện thoại:</td><td style="font-weight: 600; color: #161616;">{html_escape(phone)}</td></tr>
+            <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 8px 0; color: #525252;">Giải pháp quan tâm:</td><td style="font-weight: 700; color: #005F73;">{html_escape(solution_interest)}</td></tr>
+            <tr><td style="padding: 8px 0; color: #525252;">Tiến độ mục tiêu:</td><td style="font-weight: 600; color: #161616;">{html_escape(target_timeline)}</td></tr>
+        </table>
+        <div style="padding: 12px 16px; background: #F8FAFC; border: 1px solid #cbd5e1; font-size: 13px; color: #161616;">
+            <strong>Yêu cầu kỹ thuật &amp; Phạm vi báo giá:</strong>
+            <p style="margin: 6px 0 0; white-space: pre-wrap;">{html_escape(description or 'Yêu cầu gửi báo giá chi tiết.')}</p>
+        </div>
+    </div>
+</div>
+"""
+        mail_values = {
+            "subject": f"[{sla_badge}] Yêu cầu Báo giá: {partner_name} — {solution_interest}",
+            "email_from": sender_email,
+            "email_to": email_to_str,
+            "reply_to": email_from or sender_email,
+            "body_html": email_html,
+            "model": "crm.lead",
+            "res_id": lead.id,
+            "auto_delete": False,
+        }
+        if attachment_ids:
+            mail_values["attachment_ids"] = [(6, 0, attachment_ids)]
+
+        mail_id = None
+        try:
+            mail_record = request.env["mail.mail"].sudo().create(mail_values)
+            mail_id = mail_record.id
+        except Exception as exc:
+            _logger.warning("Failed creating notification mail for lead %s: %s", lead.id, exc)
+
+        # 7. Respond with JSON or HTTP Redirect
+        is_json_request = (
+            "application/json" in (httprequest.headers.get("Accept") or "")
+            or httprequest.headers.get("X-Requested-With") == "XMLHttpRequest"
+            or post.get("format") == "json"
+        )
+
+        parsed_return = urlparse(return_url if return_url.startswith("/") else "/contactus")
+        query_dict = parse_qs(parsed_return.query)
+        query_dict.update({
+            "submitted": ["1"],
+            "priority": ["1" if has_files else "0"],
+            "lead_id": [str(lead.id)],
+            "files": [str(len(uploaded_files))],
+        })
+        flattened_query = [
+            (key, val[0] if isinstance(val, list) else val)
+            for key, val in query_dict.items()
+        ]
+        final_redirect_url = urlunparse((
+            "",
+            "",
+            parsed_return.path or "/contactus",
+            parsed_return.params,
+            urlencode(flattened_query),
+            parsed_return.fragment,
+        ))
+
+        if is_json_request:
+            json_payload_response = {
+                "status": "ok",
+                "success": True,
+                "lead_id": lead.id,
+                "lead_name": lead.name,
+                "priority": priority,
+                "fast_track_priority": has_files,
+                "is_fast_track": has_files,
+                "sla_badge": sla_badge,
+                "fit_score": fit_score,
+                "attachment_count": len(uploaded_files),
+                "files_count": len(uploaded_files),
+                "attachment_ids": attachment_ids,
+                "file_names": [f["name"] for f in uploaded_files],
+                "mail_id": mail_id,
+                "notified_email": "tham.mai@inno.ai.vn",
+                "message": (
+                    f"Đã tiếp nhận Hồ sơ Báo giá Ưu tiên Fast-Track (#{lead.id}) kèm {len(uploaded_files)} tài liệu đính kèm! Kiến trúc sư Giải pháp sẽ phản hồi báo giá trong vòng 2 giờ làm việc."
+                    if has_files
+                    else f"Đã tiếp nhận Yêu cầu Báo giá (#{lead.id}) thành công! Chuyên gia tư vấn sẽ phản hồi trong vòng 24 giờ làm việc."
+                ),
+                "redirect_url": final_redirect_url,
+            }
+            if hasattr(request, "make_json_response"):
+                return request.make_json_response(json_payload_response)
+            return request.make_response(
+                json.dumps(json_payload_response),
+                headers=[("Content-Type", "application/json; charset=utf-8")],
+            )
+
+        return request.redirect(final_redirect_url)

@@ -4367,7 +4367,7 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
             <!-- ================================================================= -->
             <!-- 3. EXECUTIVE CONSULTATION BOOKING FORM                            -->
             <!-- ================================================================= -->
-            <section id="executive-booking-form" class="s_website_form o_colored_level py-5 position-relative" style="background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);" data-snippet="s_website_form" data-name="Executive Booking Form">
+            <section id="executive-booking-form" class="o_colored_level py-5 position-relative" style="background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);" data-name="Executive Booking Form">
                 <div class="container py-lg-5">
                     <div class="row g-5 align-items-start">
                         <!-- Left Briefing Info -->
@@ -4423,85 +4423,153 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
                                             <img src="/insilos_website/static/src/img/innoria/logo_innoria_vertical.svg" alt="INNORIA" style="max-height: 54px; max-width: 54px; width: auto; height: auto; object-fit: contain;"/>
                                         </div>
                                         <div>
-                                            <div class="d-flex align-items-center gap-2 mb-1">
-                                                <span class="al2c-pill-teal-dark" style="background: linear-gradient(90deg, #005F73 0%, #003333 100%); color: #fff; font-size: 9.5px; font-weight: 700; padding: 3px 8px; border-radius: 2px !important;">EXECUTIVE ARCHITECTURE DESK</span>
-                                                <span class="al2c-pill-orange-soft" style="background: #FFF4E5; color: #B45309; border: 1px solid #FF8000; font-size: 9.5px; font-weight: 700; padding: 3px 8px; border-radius: 2px !important;">SLA 2H RESPONSE</span>
+                                            <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                                                <span class="al2c-pill-teal-dark" style="background: linear-gradient(90deg, #005F73 0%, #003333 100%); color: #fff; font-size: 9.5px; font-weight: 700; padding: 3px 8px; border-radius: 2px !important;" data-i18n-vi="EXECUTIVE ARCHITECTURE DESK" data-i18n-en="EXECUTIVE ARCHITECTURE DESK">EXECUTIVE ARCHITECTURE DESK</span>
+                                                <span id="contactus_sla_priority_badge" class="al2c-pill-orange-soft" style="background: #FFF4E5; color: #B45309; border: 1px solid #FF8000; font-size: 9.5px; font-weight: 700; padding: 3px 8px; border-radius: 2px !important;" data-i18n-vi="⚡ ƯU TIÊN BÁO GIÁ &lt; 2H KHI ĐÍNH KÈM FILE" data-i18n-en="⚡ FAST-TRACK &lt; 2H SLA WITH FILE ATTACHMENT">⚡ ƯU TIÊN BÁO GIÁ &lt; 2H KHI ĐÍNH KÈM FILE</span>
                                             </div>
-                                            <h3 class="h4 fw-bold mb-1" style="color: #003333;">Phiếu Tiếp Nhận Tư Vấn Doanh Nghiệp</h3>
-                                            <p class="small mb-0" style="color: #525252;">Thông tin doanh nghiệp được tiếp nhận bảo mật tuyệt đối theo quy chuẩn thỏa thuận NDA.</p>
+                                            <h3 class="h4 fw-bold mb-1" style="color: #003333;" data-i18n-vi="Phiếu Yêu Cầu Báo Giá &amp; Tư Vấn Kiến Trúc Doanh Nghiệp" data-i18n-en="Enterprise Quote Request &amp; Architecture Advisory Desk">Phiếu Yêu Cầu Báo Giá &amp; Tư Vấn Kiến Trúc Doanh Nghiệp</h3>
+                                            <p class="small mb-0" style="color: #525252;" data-i18n-vi="Thông tin doanh nghiệp và tài liệu kỹ thuật đính kèm được bảo mật tuyệt đối theo thỏa thuận NDA song phương." data-i18n-en="Corporate profiles and attached technical documents are strictly safeguarded under bilateral NDA governance.">Thông tin doanh nghiệp và tài liệu kỹ thuật đính kèm được bảo mật tuyệt đối theo thỏa thuận NDA song phương.</p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <form action="/website/form/" method="post" enctype="multipart/form-data" class="s_website_form">
+                                <!-- Quote Request Submission Confirmation Banner -->
+                                <t t-if="request.params.get('submitted') == '1'">
+                                    <div class="innoria-quote-confirm-banner p-3 mb-4 border" style="background: #FFF4E5; border-color: #FF8000 !important; border-left: 4px solid #005F73 !important; border-radius: 2px !important;">
+                                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                            <span class="fw-bold" style="color: #003333; font-size: 13.5px;" data-i18n-vi="✓ ĐÃ TIẾP NHẬN YÊU CẦU BÁO GIÁ &amp; KHỞI TẠO HỒ SƠ CRM THÀNH CÔNG" data-i18n-en="✓ QUOTE REQUEST RECEIVED &amp; CRM OPPORTUNITY INITIALIZED">
+                                                ✓ ĐÃ TIẾP NHẬN YÊU CẦU BÁO GIÁ &amp; KHỞI TẠO HỒ SƠ CRM THÀNH CÔNG
+                                            </span>
+                                            <t t-if="request.params.get('priority') == '1'">
+                                                <span class="badge" style="background: #FF8000; color: #05101E; font-weight: 800; border-radius: 2px !important; font-size: 10.5px;">
+                                                    ⚡ FAST-TRACK PRIORITY SLA &lt; 2H (KÈM <t t-out="request.params.get('files', '1')"/> FILE)
+                                                </span>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="badge" style="background: #005F73; color: #ffffff; font-weight: 700; border-radius: 2px !important; font-size: 10.5px;">
+                                                    SLA TIÊU CHUẨN &lt; 24H
+                                                </span>
+                                            </t>
+                                        </div>
+                                        <div class="small" style="color: #161616; line-height: 1.55;">
+                                            <span data-i18n-vi="Mã hồ sơ định danh:" data-i18n-en="CRM Opportunity Reference:">Mã hồ sơ định danh:</span>
+                                            <strong style="color: #005F73;">#<t t-out="request.params.get('lead_id', 'NEW')"/></strong> ·
+                                            <span data-i18n-vi="Thông báo và bộ tài liệu đính kèm đã được chuyển trực tiếp tới Hội đồng Kiến trúc sư Giải pháp (tham.mai@inno.ai.vn) để thẩm định và gửi báo giá chính thức." data-i18n-en="Notification and attached specification documents have been dispatched directly to the Principal Architecture Board (tham.mai@inno.ai.vn) for rapid appraisal and formal quotation.">
+                                                Thông báo và bộ tài liệu đính kèm đã được chuyển trực tiếp tới Hội đồng Kiến trúc sư Giải pháp (tham.mai@inno.ai.vn) để thẩm định và gửi báo giá chính thức.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </t>
+
+                                <form action="/innoria/quote/submit" method="post" enctype="multipart/form-data" class="innoria-quote-form" id="innoria_contactus_quote_form">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                     <input type="hidden" name="model_name" value="crm.lead"/>
-                                    <input type="hidden" name="name" value="Executive Strategic Architecture Workshop Consultation"/>
-                                    <input type="hidden" name="return_url" value="/contactus?submitted=1"/>
+                                    <input type="hidden" name="name" value="Executive Strategic Architecture &amp; Quote Request"/>
+                                    <input type="hidden" name="return_url" value="/contactus"/>
 
                                     <div class="row g-3">
                                         <!-- Full Name -->
                                         <div class="col-md-6">
-                                            <label for="contact_name" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">Họ và Tên <span style="color: #FF8000;">*</span></label>
+                                            <label for="contact_name" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">
+                                                <span data-i18n-vi="Họ và Tên" data-i18n-en="Full Name">Họ và Tên</span> <span style="color: #FF8000;">*</span>
+                                            </label>
                                             <input id="contact_name" type="text" name="contact_name" class="form-control inn-input-dark" required="required" placeholder="Ví dụ: Trần Minh Tuấn"/>
                                         </div>
 
                                         <!-- Corporate Email -->
                                         <div class="col-md-6">
-                                            <label for="email_from" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">Email Doanh Nghiệp <span style="color: #FF8000;">*</span></label>
+                                            <label for="email_from" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">
+                                                <span data-i18n-vi="Email Doanh Nghiệp" data-i18n-en="Corporate Email">Email Doanh Nghiệp</span> <span style="color: #FF8000;">*</span>
+                                            </label>
                                             <input id="email_from" type="email" name="email_from" class="form-control inn-input-dark" required="required" placeholder="tuan.tran@enterprise.com"/>
                                         </div>
 
                                         <!-- Phone Number -->
                                         <div class="col-md-6">
-                                            <label for="phone" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">Số Điện Thoại / Zalo</label>
-                                            <input id="phone" type="tel" name="phone" class="form-control inn-input-dark" placeholder="+84 ..."/>
+                                            <label for="phone" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;" data-i18n-vi="Số Điện Thoại / Zalo" data-i18n-en="Direct Phone / Zalo">Số Điện Thoại / Zalo</label>
+                                            <input id="phone" type="tel" name="phone" class="form-control inn-input-dark" placeholder="+84 90..."/>
                                         </div>
 
                                         <!-- Company Name -->
                                         <div class="col-md-6">
-                                            <label for="partner_name" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">Công Ty / Tổ Chức <span style="color: #FF8000;">*</span></label>
-                                            <input id="partner_name" type="text" name="partner_name" class="form-control inn-input-dark" required="required" placeholder="Ví dụ: Tập đoàn Khai thác Cảng biển, Doanh nghiệp Sản xuất Công nghiệp..."/>
+                                            <label for="partner_name" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">
+                                                <span data-i18n-vi="Công Ty / Tổ Chức" data-i18n-en="Company / Organization">Công Ty / Tổ Chức</span> <span style="color: #FF8000;">*</span>
+                                            </label>
+                                            <input id="partner_name" type="text" name="partner_name" class="form-control inn-input-dark" required="required" placeholder="Ví dụ: Tập đoàn Sản xuất Công nghiệp / Logistics..."/>
                                         </div>
 
                                         <!-- Solution of Interest -->
                                         <div class="col-md-6">
-                                            <label for="solution_interest" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">Giải Pháp Quan Tâm <span style="color: #FF8000;">*</span></label>
+                                            <label for="solution_interest" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">
+                                                <span data-i18n-vi="Giải Pháp Cần Báo Giá" data-i18n-en="Solution for Quotation">Giải Pháp Cần Báo Giá</span> <span style="color: #FF8000;">*</span>
+                                            </label>
                                             <select id="solution_interest" name="x_solution_interest" class="form-select inn-input-dark" required="required">
-                                                <option value="">Chọn Nền Tảng hoặc Lộ Trình Tư Vấn</option>
-                                                <option value="DIGIFORCE">DIGIFORCE (Nền tảng Low-Code Doanh nghiệp)</option>
-                                                <option value="MOJO AI">MOJO AI (LLM Công nghiệp &amp; Tác nhân AI Tự chủ)</option>
-                                                <option value="MOJOVERSE">MOJOVERSE (Blockchain Doanh nghiệp &amp; Mã hóa Tài sản RWA)</option>
-                                                <option value="AI ERP">AI ERP (Lõi Điều Hành Doanh Nghiệp Tự Trị)</option>
-                                                <option value="Ultra Vision">Ultra Vision (Thị Giác Máy Tính &amp; Nhà Máy Thông Minh)</option>
-                                                <option value="Executive Architecture Advisory">Phiên Tham Vấn Kiến Trúc Chiến Lược (Toàn Diện)</option>
+                                                <option value="" data-i18n-vi="Chọn Nền Tảng hoặc Giải Pháp Cần Báo Giá" data-i18n-en="Select Platform or Solution for Quotation">Chọn Nền Tảng hoặc Giải Pháp Cần Báo Giá</option>
+                                                <option value="DIGIFORCE" data-i18n-vi="DIGIFORCE (Nền tảng Low-Code Doanh nghiệp)" data-i18n-en="DIGIFORCE (Enterprise Low-Code Platform)">DIGIFORCE (Nền tảng Low-Code Doanh nghiệp)</option>
+                                                <option value="MOJO AI" data-i18n-vi="MOJO AI (LLM Công nghiệp &amp; Tác nhân AI Tự chủ)" data-i18n-en="MOJO AI (Industrial LLM &amp; Autonomous AI Agents)">MOJO AI (LLM Công nghiệp &amp; Tác nhân AI Tự chủ)</option>
+                                                <option value="MOJOVERSE" data-i18n-vi="MOJOVERSE (Blockchain Doanh nghiệp &amp; Mã hóa Tài sản RWA)" data-i18n-en="MOJOVERSE (Enterprise Blockchain &amp; RWA Tokenization)">MOJOVERSE (Blockchain Doanh nghiệp &amp; Mã hóa Tài sản RWA)</option>
+                                                <option value="AI ERP" data-i18n-vi="INSILOS AI ERP (Lõi Điều Hành Doanh Nghiệp &amp; HĐĐT 1C26TAA)" data-i18n-en="INSILOS AI ERP (Autonomous Enterprise Core &amp; 1C26TAA E-Invoice)">INSILOS AI ERP (Lõi Điều Hành Doanh Nghiệp &amp; HĐĐT 1C26TAA)</option>
+                                                <option value="Ultra Vision" data-i18n-vi="Ultra Vision (Thị Giác Máy Tính &amp; Nhà Máy Thông Minh)" data-i18n-en="Ultra Vision (Industrial Computer Vision &amp; Smart Factory)">Ultra Vision (Thị Giác Máy Tính &amp; Nhà Máy Thông Minh)</option>
+                                                <option value="Dedicated Co-Dev Squad" data-i18n-vi="Squad Kỹ Sư Đồng Phát Triển &amp; Phần Mềm Trọn Gói (5-Gate)" data-i18n-en="Dedicated Co-Dev Engineering Squad &amp; Turnkey Software (5-Gate)">Squad Kỹ Sư Đồng Phát Triển &amp; Phần Mềm Trọn Gói (5-Gate)</option>
+                                                <option value="Executive Architecture Advisory" data-i18n-vi="Phiên Tham Vấn Kiến Trúc Chiến Lược &amp; Báo Giá Toàn Diện" data-i18n-en="Comprehensive Strategic Architecture Advisory &amp; Quotation">Phiên Tham Vấn Kiến Trúc Chiến Lược &amp; Báo Giá Toàn Diện</option>
                                             </select>
                                         </div>
 
                                         <!-- Target Timeline -->
                                         <div class="col-md-6">
-                                            <label for="timeline" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">Thời Gian Triển Khai Mục Tiêu <span style="color: #FF8000;">*</span></label>
+                                            <label for="timeline" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">
+                                                <span data-i18n-vi="Thời Gian Triển Khai Mục Tiêu" data-i18n-en="Target Implementation Timeline">Thời Gian Triển Khai Mục Tiêu</span> <span style="color: #FF8000;">*</span>
+                                            </label>
                                             <select id="timeline" name="x_target_timeline" class="form-select inn-input-dark" required="required">
-                                                <option value="">Chọn Khung Thời Gian Triển Khai</option>
-                                                <option value="Immediate: 0-30 days">Ngay lập tức: 0-30 ngày (Thử nghiệm ưu tiên cao)</option>
-                                                <option value="Near term: 1-3 months">Ngắn hạn: 1-3 tháng (Lộ trình Quý 1 / Quý 2)</option>
-                                                <option value="Planned: 3-6 months">Kế hoạch: 3-6 tháng (Chương trình chuyển đổi năm)</option>
-                                                <option value="Strategic: 6+ months">Chiến lược: Trên 6 tháng (Giai đoạn đánh giá)</option>
+                                                <option value="" data-i18n-vi="Chọn Khung Thời Gian Triển Khai" data-i18n-en="Select Target Implementation Window">Chọn Khung Thời Gian Triển Khai</option>
+                                                <option value="Immediate: 0-30 days" data-i18n-vi="Ngay lập tức: 0-30 ngày (Thử nghiệm ưu tiên cao)" data-i18n-en="Immediate: 0-30 days (High-Priority Pilot)">Ngay lập tức: 0-30 ngày (Thử nghiệm ưu tiên cao)</option>
+                                                <option value="Near term: 1-3 months" data-i18n-vi="Ngắn hạn: 1-3 tháng (Lộ trình Quý 1 / Quý 2)" data-i18n-en="Near-term: 1-3 months (Q1 / Q2 Rollout)">Ngắn hạn: 1-3 tháng (Lộ trình Quý 1 / Quý 2)</option>
+                                                <option value="Planned: 3-6 months" data-i18n-vi="Kế hoạch: 3-6 tháng (Chương trình chuyển đổi năm)" data-i18n-en="Planned: 3-6 months (Annual Transformation Program)">Kế hoạch: 3-6 tháng (Chương trình chuyển đổi năm)</option>
+                                                <option value="Strategic: 6+ months" data-i18n-vi="Chiến lược: Trên 6 tháng (Giai đoạn đánh giá)" data-i18n-en="Strategic: 6+ months (Architectural Evaluation Phase)">Chiến lược: Trên 6 tháng (Giai đoạn đánh giá)</option>
                                             </select>
                                         </div>
 
                                         <!-- Project Description -->
                                         <div class="col-12">
-                                            <label for="description" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">Mô Tả Dự Án &amp; Yêu Cầu Kỹ Thuật <span style="color: #FF8000;">*</span></label>
-                                            <textarea id="description" name="description" rows="3" class="form-control inn-input-dark" required="required" placeholder="Mô tả ngắn gọn thách thức vận hành cốt lõi, hệ thống ERP/hạ tầng hiện tại, yêu cầu về chủ quyền dữ liệu và kết quả kỳ vọng sau phiên tư vấn 3 giờ..."></textarea>
+                                            <label for="description" class="form-label small fw-bold text-dark mb-1" style="font-size: 12px;">
+                                                <span data-i18n-vi="Mô Tả Dự Án &amp; Yêu Cầu Báo Giá Kỹ Thuật" data-i18n-en="Project Scope &amp; Technical Quotation Requirements">Mô Tả Dự Án &amp; Yêu Cầu Báo Giá Kỹ Thuật</span> <span style="color: #FF8000;">*</span>
+                                            </label>
+                                            <textarea id="description" name="description" rows="3" class="form-control inn-input-dark" required="required" placeholder="Mô tả ngắn gọn thách thức vận hành cốt lõi, số lượng người dùng/phân hệ, hệ thống ERP hiện tại và yêu cầu báo giá chi tiết..."></textarea>
+                                        </div>
+
+                                        <!-- PRIORITY FILE ATTACHMENT DROPZONE (FAST-TRACK QUOTE < 2H SLA) -->
+                                        <div class="col-12">
+                                            <div class="innoria-priority-dropzone p-3 border" style="background: #F8FAFC; border: 1px dashed #005F73 !important; border-left: 4px solid #FF8000 !important; border-radius: 2px !important;">
+                                                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="badge" style="background: #FF8000; color: #05101E; font-weight: 800; border-radius: 2px !important; font-size: 10px;" data-i18n-vi="⚡ ƯU TIÊN SỐ 1 · FAST-TRACK &lt; 2H" data-i18n-en="⚡ PRIORITY #1 · FAST-TRACK &lt; 2H">⚡ ƯU TIÊN SỐ 1 · FAST-TRACK &lt; 2H</span>
+                                                        <label for="contactus_quote_attachments" class="fw-bold mb-0" style="color: #003333; font-size: 12.5px; cursor: pointer;" data-i18n-vi="Đính Kèm Tài Liệu Yêu Cầu (RFP / SRS / Bảng Khối Lượng BoQ / Sơ Đồ Kiến Trúc)" data-i18n-en="Attach Requirement Documents (RFP / SRS / BoQ / Architecture Blueprint)">
+                                                            Đính Kèm Tài Liệu Yêu Cầu (RFP / SRS / Bảng Khối Lượng BoQ / Sơ Đồ Kiến Trúc)
+                                                        </label>
+                                                    </div>
+                                                    <span class="innoria-dropzone-status-badge badge" style="background: #E6F8FB; color: #005F73; border: 1px solid #0ABBDB; border-radius: 2px !important; font-size: 10px;" data-i18n-vi="Tự động kích hoạt Báo Giá Nhanh &lt; 2h khi đính kèm file" data-i18n-en="Auto-activates &lt; 2h Fast-Track Quote when files attached">
+                                                        Tự động kích hoạt Báo Giá Nhanh &lt; 2h khi đính kèm file
+                                                    </span>
+                                                </div>
+                                                <input id="contactus_quote_attachments" type="file" name="quote_attachments" multiple="multiple"
+                                                       accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.rar,.png,.jpg,.jpeg,.webp,.txt,.csv,.json"
+                                                       class="form-control form-control-sm innoria-file-input"
+                                                       style="border-radius: 0px !important; border-color: #cbd5e1; font-size: 12px; background: #ffffff;"/>
+                                                <div class="d-flex flex-wrap align-items-center justify-content-between mt-2 small" style="font-size: 11px; color: #525252;">
+                                                    <span data-i18n-vi="Hỗ trợ: PDF, DOCX, XLSX, PPTX, ZIP, PNG/JPG (Tối đa 25MB/file · Bảo mật NDA 100%)" data-i18n-en="Supported: PDF, DOCX, XLSX, PPTX, ZIP, PNG/JPG (Max 25MB/file · 100% NDA Protected)">
+                                                        Hỗ trợ: PDF, DOCX, XLSX, PPTX, ZIP, PNG/JPG (Tối đa 25MB/file · Bảo mật NDA 100%)
+                                                    </span>
+                                                    <span class="innoria-attached-files-summary fw-bold" style="color: #005F73;"/>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <!-- Consent Checkbox -->
                                         <div class="col-12">
                                             <div class="form-check p-2 border" style="background: #FFF4E5; border-color: #FFD8A8 !important; border-radius: 2px !important;">
                                                 <input id="consent" type="checkbox" name="consent" class="form-check-input ms-1" required="required"/>
-                                                <label for="consent" class="form-check-label small fw-bold ms-2" style="color: #B45309; font-size: 11.5px;">
-                                                    Tôi đồng ý để đội ngũ Kiến trúc sư Doanh nghiệp của INNORIA liên hệ theo các điều khoản bảo mật thông tin song phương (NDA).
+                                                <label for="consent" class="form-check-label small fw-bold ms-2" style="color: #B45309; font-size: 11.5px;" data-i18n-vi="Tôi đồng ý để đội ngũ Kiến trúc sư Doanh nghiệp của INNORIA tiếp nhận hồ sơ, thẩm định tài liệu đính kèm và gửi báo giá theo điều khoản bảo mật thông tin song phương (NDA)." data-i18n-en="I agree for the INNORIA Enterprise Architecture team to process this request, evaluate attached documents, and issue a formal quotation under bilateral NDA terms.">
+                                                    Tôi đồng ý để đội ngũ Kiến trúc sư Doanh nghiệp của INNORIA tiếp nhận hồ sơ, thẩm định tài liệu đính kèm và gửi báo giá theo điều khoản bảo mật thông tin song phương (NDA).
                                                 </label>
                                             </div>
                                         </div>
@@ -4509,11 +4577,11 @@ Hệ thống sẵn sàng. Đang chờ tín hiệu vận hành... Nhấp "KÍCH H
                                         <!-- Submit Button -->
                                         <div class="col-12 pt-2">
                                             <button type="submit" class="btn btn-primary w-100 py-2 fw-bold d-flex align-items-center justify-content-center gap-2" style="background: #005F73 !important; border-color: #005F73 !important; color: #ffffff !important; border-radius: 0px !important; box-shadow: none !important; font-size: 14px;">
-                                                <span>Đăng Ký Phiên Làm Việc 3 Giờ Miễn Phí</span>
+                                                <span data-i18n-vi="Gửi Yêu Cầu Báo Giá &amp; Đặt Lịch Tham Vấn Kiến Trúc" data-i18n-en="Submit Quote Request &amp; Schedule Architecture Advisory">Gửi Yêu Cầu Báo Giá &amp; Đặt Lịch Tham Vấn Kiến Trúc</span>
                                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                             </button>
-                                            <p class="text-center small mt-3 mb-0" style="color: #525252;">
-                                                Không chi phí phát sinh · Không ràng buộc công nghệ độc quyền · 100% Chủ quyền dữ liệu
+                                            <p class="text-center small mt-3 mb-0" style="color: #525252;" data-i18n-vi="Ưu tiên phản hồi báo giá dưới 2 giờ khi đính kèm RFP/BoQ · Không ràng buộc độc quyền · 100% Chủ quyền dữ liệu" data-i18n-en="Priority &lt; 2-hour quotation turnaround when RFP/BoQ attached · Zero vendor lock-in · 100% Data Sovereignty">
+                                                Ưu tiên phản hồi báo giá dưới 2 giờ khi đính kèm RFP/BoQ · Không ràng buộc độc quyền · 100% Chủ quyền dữ liệu
                                             </p>
                                         </div>
                                     </div>

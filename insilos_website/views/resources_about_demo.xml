@@ -3574,7 +3574,7 @@
                                         </div>
 
                                         <t t-if="errors.get('general')"><div class="alert alert-danger" role="alert"><t t-out="errors['general']"/></div></t>
-                                        <form action="/request-demo" method="post">
+                                        <form action="/request-demo" method="post" enctype="multipart/form-data">
                                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                             <div class="d-none" aria-hidden="true"><label>Website<input type="text" name="website_url" tabindex="-1" autocomplete="off"/></label></div>
                                             
@@ -3582,34 +3582,34 @@
                                             <div class="ins-step-pane active" data-step="1">
                                                 <div class="row g-3">
                                                     <div class="col-12 mb-1">
-                                                        <h4 class="h6 fw-bold text-cyan mb-0 text-uppercase">BƯỚC 1: THÔNG TIN DOANH NGHIỆP &amp; LIÊN HỆ</h4>
+                                                        <h4 class="h6 fw-bold text-cyan mb-0 text-uppercase" data-i18n-vi="BƯỚC 1: THÔNG TIN DOANH NGHIỆP &amp; LIÊN HỆ" data-i18n-en="STEP 1: ENTERPRISE PROFILE &amp; CONTACT">BƯỚC 1: THÔNG TIN DOANH NGHIỆP &amp; LIÊN HỆ</h4>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label class="form-label fw-bold" for="demo-name">Họ và tên *</label>
+                                                        <label class="form-label fw-bold" for="demo-name" data-i18n-vi="Họ và tên *" data-i18n-en="Full Name *">Họ và tên *</label>
                                                         <input id="demo-name" type="text" name="name" autocomplete="name" minlength="2" maxlength="120" t-att-value="form_data.get('name', '')" t-attf-class="form-control rounded-pill px-3 #{errors.get('name') and 'is-invalid' or ''}" required="required"/>
                                                         <small t-if="errors.get('name')" class="invalid-feedback d-block"><t t-out="errors['name']"/></small>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label class="form-label fw-bold" for="demo-email">Email công việc *</label>
+                                                        <label class="form-label fw-bold" for="demo-email" data-i18n-vi="Email công việc *" data-i18n-en="Work Email *">Email công việc *</label>
                                                         <input id="demo-email" type="email" name="email" autocomplete="email" maxlength="254" t-att-value="form_data.get('email', '')" t-attf-class="form-control rounded-pill px-3 #{errors.get('email') and 'is-invalid' or ''}" required="required"/>
                                                         <small t-if="errors.get('email')" class="invalid-feedback d-block"><t t-out="errors['email']"/></small>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label class="form-label fw-bold" for="demo-company">Tên doanh nghiệp *</label>
+                                                        <label class="form-label fw-bold" for="demo-company" data-i18n-vi="Tên doanh nghiệp *" data-i18n-en="Company Name *">Tên doanh nghiệp *</label>
                                                         <input id="demo-company" type="text" name="company" autocomplete="organization" minlength="2" maxlength="160" t-att-value="form_data.get('company', '')" t-attf-class="form-control rounded-pill px-3 #{errors.get('company') and 'is-invalid' or ''}" required="required"/>
                                                         <small t-if="errors.get('company')" class="invalid-feedback d-block"><t t-out="errors['company']"/></small>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label class="form-label fw-bold" for="demo-title">Chức danh</label>
+                                                        <label class="form-label fw-bold" for="demo-title" data-i18n-vi="Chức danh" data-i18n-en="Job Title">Chức danh</label>
                                                         <input id="demo-title" type="text" name="job_title" class="form-control rounded-1 px-3" autocomplete="organization-title" maxlength="120" t-att-value="form_data.get('job_title', '')"/>
                                                     </div>
                                                     <div class="col-md-12">
-                                                        <label class="form-label fw-bold" for="demo-phone">Số điện thoại</label>
+                                                        <label class="form-label fw-bold" for="demo-phone" data-i18n-vi="Số điện thoại" data-i18n-en="Phone Number">Số điện thoại</label>
                                                         <input id="demo-phone" type="tel" name="phone" class="form-control rounded-1 px-3" autocomplete="tel" maxlength="64" t-att-value="form_data.get('phone', '')"/>
                                                     </div>
                                                     <div class="col-12 pt-2">
                                                         <button type="button" class="btn btn-primary rounded-1 w-100 py-3 fw-bold ins-step-btn-next" data-next="2">
-                                                            <span>Tiếp Theo: Trọng Tâm Vận Hành (Bước 2/3)</span>
+                                                            <span data-i18n-vi="Tiếp Theo: Trọng Tâm Vận Hành (Bước 2/3)" data-i18n-en="Next: Operational Focus (Step 2/3)">Tiếp Theo: Trọng Tâm Vận Hành (Bước 2/3)</span>
                                                             <svg class="ph-duotone ph-arrow-right ph-sm ms-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                                         </button>
                                                     </div>
@@ -3620,10 +3620,10 @@
                                             <div class="ins-step-pane d-none" data-step="2">
                                                 <div class="row g-3">
                                                     <div class="col-12 mb-1">
-                                                        <h4 class="h6 fw-bold text-mint mb-0 text-uppercase">BƯỚC 2: TRỌNG TÂM VẬN HÀNH &amp; HỆ THỐNG HIỆN HỮU</h4>
+                                                        <h4 class="h6 fw-bold text-mint mb-0 text-uppercase" data-i18n-vi="BƯỚC 2: TRỌNG TÂM VẬN HÀNH &amp; HỆ THỐNG HIỆN HỮU" data-i18n-en="STEP 2: OPERATIONAL FOCUS &amp; EXISTING SYSTEMS">BƯỚC 2: TRỌNG TÂM VẬN HÀNH &amp; HỆ THỐNG HIỆN HỮU</h4>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label class="form-label fw-bold" for="demo-industry">Ngành *</label>
+                                                        <label class="form-label fw-bold" for="demo-industry" data-i18n-vi="Ngành *" data-i18n-en="Industry *">Ngành *</label>
                                                         <select id="demo-industry" name="industry" t-attf-class="form-select rounded-pill px-3 #{errors.get('industry') and 'is-invalid' or ''}" required="required">
                                                             <t t-foreach="industry_selections" t-as="option">
                                                                 <option t-att-value="option[0]" t-att-selected="form_data.get('industry') == option[0] and 'selected' or None"><t t-out="option[1]"/></option>
@@ -3632,7 +3632,7 @@
                                                         <small t-if="errors.get('industry')" class="invalid-feedback d-block"><t t-out="errors['industry']"/></small>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label class="form-label fw-bold" for="demo-use-case">Use case ưu tiên *</label>
+                                                        <label class="form-label fw-bold" for="demo-use-case" data-i18n-vi="Use case ưu tiên *" data-i18n-en="Priority Use Case *">Use case ưu tiên *</label>
                                                         <select id="demo-use-case" name="use_case" t-attf-class="form-select rounded-pill px-3 #{errors.get('use_case') and 'is-invalid' or ''}" required="required">
                                                             <t t-foreach="use_case_selections" t-as="option">
                                                                 <option t-att-value="option[0]" t-att-selected="form_data.get('use_case') == option[0] and 'selected' or None"><t t-out="option[1]"/></option>
@@ -3641,7 +3641,7 @@
                                                         <small t-if="errors.get('use_case')" class="invalid-feedback d-block"><t t-out="errors['use_case']"/></small>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label class="form-label fw-bold" for="demo-size">Quy mô nhân sự</label>
+                                                        <label class="form-label fw-bold" for="demo-size" data-i18n-vi="Quy mô nhân sự" data-i18n-en="Company Size">Quy mô nhân sự</label>
                                                         <select id="demo-size" name="company_size" t-attf-class="form-select rounded-pill px-3 #{errors.get('company_size') and 'is-invalid' or ''}">
                                                             <t t-foreach="company_size_selections" t-as="option">
                                                                 <option t-att-value="option[0]" t-att-selected="form_data.get('company_size') == option[0] and 'selected' or None"><t t-out="option[1]"/></option>
@@ -3649,7 +3649,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label class="form-label fw-bold" for="demo-core-erp">Hệ thống Core ERP</label>
+                                                        <label class="form-label fw-bold" for="demo-core-erp" data-i18n-vi="Hệ thống Core ERP" data-i18n-en="Core ERP System">Hệ thống Core ERP</label>
                                                         <select id="demo-core-erp" name="core_erp" t-attf-class="form-select rounded-pill px-3 #{errors.get('core_erp') and 'is-invalid' or ''}">
                                                             <t t-foreach="core_erp_selections" t-as="option">
                                                                 <option t-att-value="option[0]" t-att-selected="form_data.get('core_erp') == option[0] and 'selected' or None"><t t-out="option[1]"/></option>
@@ -3658,7 +3658,7 @@
                                                         <small t-if="errors.get('core_erp')" class="invalid-feedback d-block"><t t-out="errors['core_erp']"/></small>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label class="form-label fw-bold" for="demo-timeline">Tiến độ triển khai</label>
+                                                        <label class="form-label fw-bold" for="demo-timeline" data-i18n-vi="Tiến độ triển khai" data-i18n-en="Deployment Timeline">Tiến độ triển khai</label>
                                                         <select id="demo-timeline" name="project_timeline" t-attf-class="form-select rounded-pill px-3 #{errors.get('project_timeline') and 'is-invalid' or ''}">
                                                             <t t-foreach="project_timeline_selections" t-as="option">
                                                                 <option t-att-value="option[0]" t-att-selected="form_data.get('project_timeline') == option[0] and 'selected' or None"><t t-out="option[1]"/></option>
@@ -3667,9 +3667,9 @@
                                                         <small t-if="errors.get('project_timeline')" class="invalid-feedback d-block"><t t-out="errors['project_timeline']"/></small>
                                                     </div>
                                                     <div class="col-12 pt-2 d-flex gap-2">
-                                                        <button type="button" class="btn btn-outline-secondary rounded-1 px-4 py-2 ins-step-btn-prev" data-prev="1">Quay Lại</button>
+                                                        <button type="button" class="btn btn-outline-secondary rounded-1 px-4 py-2 ins-step-btn-prev" data-prev="1" data-i18n-vi="Quay Lại" data-i18n-en="Back">Quay Lại</button>
                                                         <button type="button" class="btn btn-primary rounded-1 flex-grow-1 py-3 fw-bold ins-step-btn-next" data-next="3">
-                                                            <span>Tiếp Theo: Đặt Lịch 1-1 (Bước 3/3)</span>
+                                                            <span data-i18n-vi="Tiếp Theo: Đặt Lịch 1-1 &amp; Đính Kèm Hồ Sơ (Bước 3/3)" data-i18n-en="Next: 1-on-1 Scheduling &amp; File Upload (Step 3/3)">Tiếp Theo: Đặt Lịch 1-1 &amp; Đính Kèm Hồ Sơ (Bước 3/3)</span>
                                                             <svg class="ph-duotone ph-arrow-right ph-sm ms-1"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
                                                         </button>
                                                     </div>
@@ -3680,11 +3680,25 @@
                                             <div class="ins-step-pane d-none" data-step="3">
                                                 <div class="row g-3">
                                                     <div class="col-12 mb-1">
-                                                        <h4 class="h6 fw-bold text-warning mb-0 text-uppercase">BƯỚC 3: BỐI CẢNH DỰ ÁN &amp; XÁC NHẬN ĐẶT LỊCH</h4>
+                                                        <h4 class="h6 fw-bold text-warning mb-0 text-uppercase" data-i18n-vi="BƯỚC 3: BỐI CẢNH DỰ ÁN, ĐÍNH KÈM TÀI LIỆU &amp; XÁC NHẬN" data-i18n-en="STEP 3: PROJECT CONTEXT, PRIORITY FILE ATTACHMENT &amp; CONFIRMATION">BƯỚC 3: BỐI CẢNH DỰ ÁN, ĐÍNH KÈM TÀI LIỆU &amp; XÁC NHẬN</h4>
                                                     </div>
                                                     <div class="col-12">
-                                                        <label class="form-label fw-bold" for="demo-message">Bối cảnh hoặc bài toán cần giải quyết</label>
-                                                        <textarea id="demo-message" name="message" class="form-control rounded-2 p-3" rows="4" maxlength="5000" placeholder="Ví dụ: Tự động hóa bóc tách B/L và C/O, giảm downtime turbine gió, tăng tốc điều tra sai lệch mẻ thuốc, mở rộng Clean Core Legacy ERP..."><t t-out="form_data.get('message', '')"/></textarea>
+                                                        <label class="form-label fw-bold" for="demo-message" data-i18n-vi="Bối cảnh hoặc bài toán cần giải quyết" data-i18n-en="Project Context or Business Challenge">Bối cảnh hoặc bài toán cần giải quyết</label>
+                                                        <textarea id="demo-message" name="message" class="form-control rounded-2 p-3" rows="3" maxlength="5000" placeholder="Ví dụ: Tự động hóa bóc tách B/L và C/O, giảm downtime turbine gió, tăng tốc điều tra sai lệch mẻ thuốc, mở rộng Clean Core Legacy ERP..."><t t-out="form_data.get('message', '')"/></textarea>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="p-3 rounded-1 innoria-priority-dropzone" style="background: rgba(255, 128, 0, 0.08); border: 1px dashed #FF8000; border-left: 4px solid #FF8000;">
+                                                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-1">
+                                                                <label class="form-label fw-bold mb-0" for="demo_quote_attachments" style="font-size: 0.84rem; cursor: pointer;">
+                                                                    <span data-i18n-vi="📎 Đính Kèm Hồ Sơ Yêu Cầu Báo Giá (RFP / SRS / BoQ / Sơ Đồ Kiến Trúc)" data-i18n-en="📎 Attach Quote Request Documents (RFP / SRS / BoQ / Architecture Specs)">📎 Đính Kèm Hồ Sơ Yêu Cầu Báo Giá (RFP / SRS / BoQ / Sơ Đồ Kiến Trúc)</span>
+                                                                </label>
+                                                                <span class="px-2 py-1 fw-bold innoria-dropzone-status-badge" style="background: #FF8000; color: #FFFFFF; font-size: 0.7rem; border-radius: 2px;" data-i18n-vi="⚡ ƯU TIÊN PHẢN HỒI NHANH (&lt; 2 GIỜ)" data-i18n-en="⚡ FAST-TRACK PRIORITY (&lt; 2H SLA)">
+                                                                    ⚡ ƯU TIÊN PHẢN HỒI NHANH (&lt; 2 GIỜ)
+                                                                </span>
+                                                            </div>
+                                                            <input id="demo_quote_attachments" type="file" name="quote_attachments" multiple="multiple" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.png,.jpg,.jpeg,.webp,.txt,.csv,.json" class="form-control form-control-sm innoria-file-input"/>
+                                                            <div class="innoria-attached-files-summary mt-1 d-none small fw-semibold text-success"/>
+                                                        </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-check">
@@ -3696,11 +3710,11 @@
                                                         <small t-if="errors.get('consent')" class="invalid-feedback d-block"><t t-out="errors['consent']"/></small>
                                                     </div>
                                                     <div class="col-12 pt-2 d-flex gap-2">
-                                                        <button type="button" class="btn btn-outline-secondary rounded-1 px-4 py-2 ins-step-btn-prev" data-prev="2">Quay Lại</button>
-                                                        <button type="submit" class="btn btn-primary btn-lg rounded-1 flex-grow-1 py-3 fw-bold shadow">Gửi Yêu Cầu Demo &amp; Khảo Sát</button>
+                                                        <button type="button" class="btn btn-outline-secondary rounded-1 px-4 py-2 ins-step-btn-prev" data-prev="2" data-i18n-vi="Quay Lại" data-i18n-en="Back">Quay Lại</button>
+                                                        <button type="submit" class="btn btn-primary btn-lg rounded-1 flex-grow-1 py-3 fw-bold shadow" data-i18n-vi="Gửi Yêu Cầu Demo &amp; Nhận Báo Giá" data-i18n-en="Submit Demo &amp; Quote Request">Gửi Yêu Cầu Demo &amp; Nhận Báo Giá</button>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="small text-muted text-center mt-2 mb-0">Cam kết bảo mật dữ liệu doanh nghiệp. Không chia sẻ cho bên thứ ba. Tuân thủ tuyệt đối Nghị định 13/2023/NĐ-CP.</p>
+                                                        <p class="small text-muted text-center mt-2 mb-0" data-i18n-vi="Cam kết bảo mật dữ liệu doanh nghiệp. Không chia sẻ cho bên thứ ba. Tuân thủ tuyệt đối Nghị định 13/2023/NĐ-CP." data-i18n-en="Enterprise data confidentiality guaranteed. Zero third-party sharing. Strict compliance with Decree 13/2023/ND-CP.">Cam kết bảo mật dữ liệu doanh nghiệp. Không chia sẻ cho bên thứ ba. Tuân thủ tuyệt đối Nghị định 13/2023/NĐ-CP.</p>
                                                     </div>
                                                 </div>
                                             </div>

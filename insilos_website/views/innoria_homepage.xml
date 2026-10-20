@@ -769,7 +769,7 @@
 
                     <!-- Background Video &amp; 3D Interactive Stage with Smooth Crossfade Layers -->
                     <div class="hero-video-stage position-absolute top-0 start-0 w-100 h-100 overflow-hidden" id="heroVideoStage" style="z-index: 0;">
-                        <!-- Interactive 3D WebGL Sovereign Stage Nền Tảng Thiết Kế Toàn Cầus Viewport -->
+                        <!-- Interactive 3D WebGL Sovereign Stage Canvas Viewport -->
                         <div class="innoria-hero-3d-viewport position-absolute inset-0 w-100 h-100"
                              id="heroInteractive3DStage"
                              data-3d-scene="sovereign_core"
@@ -777,7 +777,7 @@
                              data-dpr-clamp="2.0"
                              data-fps-budget="60"
                              style="z-index: 1; pointer-events: none; opacity: 0.95;">
-                            <canvas class="innoria-webgl-canvas w-100 h-100" id="heroInteractiveNền Tảng Thiết Kế Toàn Cầus" style="display: block; width: 100%; height: 100%;"/>
+                            <canvas class="innoria-webgl-canvas w-100 h-100" id="heroInteractiveCanvas" style="display: block; width: 100%; height: 100%;"/>
                         </div>
 
                         <!-- Video Backdrop Layers (Pristine Ambient Loops - Zero HUD Text Collision) -->
@@ -1192,9 +1192,9 @@
                             <span class="text-uppercase fw-bold" style="color: #00F0FF; letter-spacing: 0.12em;">HẠ TẦNG TIN CẬY · ĐƯỢC VẬN HÀNH BỞI CÁC TẬP ĐOÀN TÀI CHÍNH &amp; CÔNG NGHIỆP TRỌNG YẾU</span>
                             <div class="d-inline-flex align-items-center gap-3 px-3 py-1 rounded-1 mt-1" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); font-size: 0.76rem; color: #94A3B8;">
                                 <span class="d-inline-block rounded-circle" style="width: 6px; height: 6px; background: #10B981; box-shadow: none;"/>
-                                <span>&gt; 2.4 Tỷ Giao Dịch Bảo Chứng Mật Mã</span>
+                                <span>100 Quy Tắc Fit-to-Standard (Class A/B/C)</span>
                                 <span class="text-white-50">·</span>
-                                <span>18M+ Lệnh Tự Hành Hoàn Tất</span>
+                                <span>7,886 Tài Liệu Data Room 9 Tầng Bảo Chứng SHA-256</span>
                                 <span class="text-white-50">·</span>
                                 <span>99.999% Five-Nines Uptime SLA</span>
                             </div>
@@ -1797,21 +1797,21 @@
                                         </div>
                                     </div>
 
-                                    <!-- Interactive 3D WebGL / Canvas Digital Twin Viewport + Auto-Sizing Corner HUD Callouts -->
-                                    <div class="loto-3d-anatomy-stage position-relative w-100 mb-3 rounded-3 overflow-hidden" id="loto3dAnatomyStage" style="min-height: 290px; background: radial-gradient(ellipse at 50% 50%, rgba(14, 30, 56, 0.92) 0%, rgba(2, 6, 23, 0.98) 100%); border: 1px solid rgba(56, 189, 248, 0.22);">
-                                        <canvas id="loto3dCanvas" width="1040" height="290" class="w-100 d-block" style="height: 290px; cursor: grab;" aria-label="3D Digital Twin Anatomy of Reactor R-201"></canvas>
+                                    <!-- Interactive 3D WebGL PBR / Volumetric CAD Digital Twin Viewport + Corner HUD Callouts -->
+                                    <div class="loto-3d-anatomy-stage position-relative w-100 mb-3 rounded-3 overflow-hidden" id="loto3dAnatomyStage" style="min-height: 380px; background: radial-gradient(ellipse at 50% 48%, rgba(15, 35, 68, 0.96) 0%, rgba(6, 13, 28, 0.99) 65%, rgba(2, 6, 23, 1) 100%); border: 1px solid rgba(56, 189, 248, 0.28);">
+                                        <canvas id="loto3dCanvas" width="1080" height="380" class="w-100 d-block" style="height: 380px; cursor: grab;" aria-label="3D Digital Twin Anatomy of Reactor R-201"></canvas>
 
                                         <!-- Top-Center 3D Viewport Interaction Hint -->
-                                        <div class="position-absolute top-0 start-50 translate-middle-x mt-2 px-3 py-1 rounded-pill d-none d-md-inline-flex align-items-center gap-2" style="background: rgba(2, 6, 23, 0.78); border: 1px solid rgba(56, 189, 248, 0.28); pointer-events: none; font-size: 0.68rem; color: #94A3B8;">
-                                            <span style="color: #38BDF8;">● LIVE 3D ANATOMY</span>
-                                            <span>Kéo chuột xoay 360° · Bấm vào Van #04 (V-109) để gắn khóa LOTO</span>
+                                        <div class="position-absolute top-0 start-50 translate-middle-x mt-2 px-3 py-1 rounded-1 d-none d-md-inline-flex align-items-center gap-2" style="background: rgba(2, 6, 23, 0.86); border: 1px solid rgba(56, 189, 248, 0.35); pointer-events: none; font-size: 0.7rem; color: #CBD5E1;">
+                                            <span style="color: #38BDF8; font-weight: 700;">● 3D PBR DIGITAL TWIN</span>
+                                            <span>Kéo xoay 360° · Bấm trực tiếp vào Van #04 (V-109) trên mô hình 3D để khóa cô lập LOTO</span>
                                         </div>
 
-                                        <!-- 4 Non-Overlapping Corner HUD Callout Cards (Auto-Sizing, Zero Text Overflow) -->
+                                        <!-- 4 Non-Overlapping Corner HUD Callout Cards -->
                                         <div class="loto-3d-hud-card hud-top-left" data-hud-point="1">
                                             <div class="hud-source-tag">NGUỒN CẤP AXIT ĐẬM ĐẶC</div>
                                             <div class="hud-lock-pill is-safe">🔒 [LOCKED] V-101 (#L-8821)</div>
-                                            <div class="hud-sub-text">Van Axit Chính: Đã Khóa Cơ Học</div>
+                                            <div class="hud-sub-text">Van Bi Axit 3": Đã Khóa Cơ Học</div>
                                         </div>
 
                                         <div class="loto-3d-hud-card hud-top-right" data-hud-point="2">
@@ -1831,100 +1831,6 @@
                                             <div class="hud-lock-pill is-hazard" id="hudNode4Title">⚠️ V-109 (CHƯA KHÓA)</div>
                                             <div class="hud-sub-text" id="hudNode4Sub">Bấm Để Gắn Khóa LOTO #L-8824</div>
                                         </div>
-                                    </div>
-
-                                    <!-- Synchronized Wide Single-Line Schematic (viewBox 1120x250 - Wide 220px Nodes, Zero Text Overflow) -->
-                                    <div class="position-relative w-100" style="min-height: 210px; overflow-x: auto;">
-                                        <svg viewBox="0 0 1120 250" class="w-100 h-auto" style="min-width: 780px;" id="svgLotoTopology">
-                                            <defs>
-                                                <linearGradient id="gradVessel" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                    <stop offset="0%" stop-color="#0F172A" stop-opacity="0.96"/>
-                                                    <stop offset="100%" stop-color="#020617" stop-opacity="0.99"/>
-                                                </linearGradient>
-                                                <filter id="glowSafe" x="-20%" y="-20%" width="140%" height="140%">
-                                                    <feGaussianBlur stdDeviation="3" result="blur"/>
-                                                    <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                                                </filter>
-                                                <filter id="glowHazard" x="-20%" y="-20%" width="140%" height="140%">
-                                                    <feGaussianBlur stdDeviation="4" result="blur"/>
-                                                    <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                                                </filter>
-                                            </defs>
-
-                                            <!-- Blueprint Grid Lines -->
-                                            <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
-                                                <line x1="0" y1="62" x2="1120" y2="62"/>
-                                                <line x1="0" y1="125" x2="1120" y2="125"/>
-                                                <line x1="0" y1="188" x2="1120" y2="188"/>
-                                                <line x1="280" y1="0" x2="280" y2="250"/>
-                                                <line x1="560" y1="0" x2="560" y2="250"/>
-                                                <line x1="840" y1="0" x2="840" y2="250"/>
-                                            </g>
-
-                                            <!-- Outer Feeder Source Labels (Positioned cleanly above outer pipe stubs - ZERO overlap with nodes) -->
-                                            <text x="24" y="26" fill="#94A3B8" font-size="10.5" font-weight="600">NGUỒN CẤP AXIT ĐẬM ĐẶC</text>
-                                            <text x="24" y="150" fill="#94A3B8" font-size="10.5" font-weight="600">ĐƯỜNG XẢ CẶN VÀ NƯỚC RỬA</text>
-                                            <text x="1096" y="26" text-anchor="end" fill="#94A3B8" font-size="10.5" font-weight="600">NGUỒN ĐIỆN ĐỘNG CƠ 380V/45kW</text>
-                                            <text x="1096" y="150" text-anchor="end" fill="#EF4444" font-size="10.5" font-weight="700" id="labelFeeder4Source">KHÍ TRƠ N2 ÁP SUẤT CAO 10 BAR</text>
-
-                                            <!-- FEEDER 1: Top-Left Acid Line (V-101) -> Locked Safe -->
-                                            <path d="M 24 62 L 430 62 L 465 92" fill="none" stroke="#10B981" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" id="lineFeeder1" class="loto-feeder-line feeder-isolated-safe"/>
-                                            <!-- FEEDER 2: Top-Right 380V Power Busbar (CB-201) -> Locked Safe -->
-                                            <path d="M 1096 62 L 690 62 L 655 92" fill="none" stroke="#10B981" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" id="lineFeeder2" class="loto-feeder-line feeder-isolated-safe"/>
-                                            <!-- FEEDER 3: Bottom-Left Sludge Discharge (V-105) -> Locked Safe -->
-                                            <path d="M 465 158 L 430 188 L 24 188" fill="none" stroke="#10B981" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" id="lineFeeder3" class="loto-feeder-line feeder-isolated-safe"/>
-                                            <!-- FEEDER 4: Bottom-Right High-Pressure N2 Inert Gas (V-109) -> Currently Hazardous Pulse -->
-                                            <path d="M 1096 188 L 690 188 L 655 158" fill="none" stroke="#EF4444" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" id="lineFeeder4" class="loto-feeder-line feeder-hazard-pulse" filter="url(#glowHazard)"/>
-
-                                            <!-- CENTER VESSEL: Reactor R-201 (Wide 190px Vessel Chamber - Zero Text Clipping) -->
-                                            <g id="vesselGroup" transform="translate(465, 22)">
-                                                <!-- Tank Body -->
-                                                <rect x="0" y="26" width="190" height="162" rx="22" fill="url(#gradVessel)" stroke="#38BDF8" stroke-width="2" id="vesselBody"/>
-                                                <!-- Agitator Motor on Top -->
-                                                <rect x="68" y="4" width="54" height="22" rx="5" fill="#1E293B" stroke="#38BDF8" stroke-width="1.5"/>
-                                                <line x1="95" y1="26" x2="95" y2="146" stroke="#94A3B8" stroke-width="2.5" stroke-dasharray="4 3"/>
-                                                <!-- Impeller Blades -->
-                                                <line x1="62" y1="146" x2="128" y2="146" stroke="#38BDF8" stroke-width="3"/>
-                                                <ellipse cx="95" cy="146" rx="33" ry="7" fill="none" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 3"/>
-
-                                                <!-- Reactor Chamber Readout Badge (166px wide x 50px high) -->
-                                                <rect x="12" y="64" width="166" height="50" rx="8" fill="#0B1324" stroke="#EF4444" stroke-width="1.5" id="vesselStatusFrame"/>
-                                                <text x="95" y="85" text-anchor="middle" fill="#FDA4AF" font-size="10.5" font-weight="700" id="vesselStatusText">BỒN PHẢN ỨNG R-201</text>
-                                                <text x="95" y="104" text-anchor="middle" fill="#EF4444" font-size="10" font-weight="700" id="vesselHazardWarning">⛔ CÒN NĂNG LƯỢNG N2</text>
-
-                                                <!-- Manhole Entry Port -->
-                                                <rect x="55" y="162" width="80" height="18" rx="9" fill="#1E293B" stroke="#475569" stroke-width="1.2"/>
-                                                <text x="95" y="174" text-anchor="middle" fill="#CBD5E1" font-size="8.5" font-weight="600">MANHOLE R-201</text>
-                                            </g>
-
-                                            <!-- NODE 1: V-101 (Locked - 220px wide x 48px high) -->
-                                            <g class="loto-svg-node" id="svgNode1" transform="translate(185, 38)">
-                                                <rect x="0" y="0" width="220" height="48" rx="8" fill="#064E3B" stroke="#10B981" stroke-width="1.5"/>
-                                                <text x="110" y="20" text-anchor="middle" fill="#A7F3D0" font-size="11" font-weight="700">[LOCKED] V-101 (L-8821)</text>
-                                                <text x="110" y="37" text-anchor="middle" fill="#6EE7B7" font-size="9.5" font-weight="500">Van Axit: ĐÃ KHÓA CÔ LẬP</text>
-                                            </g>
-
-                                            <!-- NODE 2: CB-201 (Locked - 220px wide x 48px high) -->
-                                            <g class="loto-svg-node" id="svgNode2" transform="translate(715, 38)">
-                                                <rect x="0" y="0" width="220" height="48" rx="8" fill="#064E3B" stroke="#10B981" stroke-width="1.5"/>
-                                                <text x="110" y="20" text-anchor="middle" fill="#A7F3D0" font-size="11" font-weight="700">[LOCKED] CB-201 (L-8822)</text>
-                                                <text x="110" y="37" text-anchor="middle" fill="#6EE7B7" font-size="9.5" font-weight="500">Aptomat: NGẮT NGUỒN 380V</text>
-                                            </g>
-
-                                            <!-- NODE 3: V-105 (Locked - 220px wide x 48px high) -->
-                                            <g class="loto-svg-node" id="svgNode3" transform="translate(185, 164)">
-                                                <rect x="0" y="0" width="220" height="48" rx="8" fill="#064E3B" stroke="#10B981" stroke-width="1.5"/>
-                                                <text x="110" y="20" text-anchor="middle" fill="#A7F3D0" font-size="11" font-weight="700">[LOCKED] V-105 (L-8823)</text>
-                                                <text x="110" y="37" text-anchor="middle" fill="#6EE7B7" font-size="9.5" font-weight="500">Van Xả: ĐÃ XẢ ÁP HOÀN TOÀN</text>
-                                            </g>
-
-                                            <!-- NODE 4: V-109 (Interactive Toggle: Unlocked -> Click to Lock - 220px wide x 48px high) -->
-                                            <g class="loto-svg-node" id="svgNode4" transform="translate(715, 164)">
-                                                <rect x="0" y="0" width="220" height="48" rx="8" fill="#7F1D1D" stroke="#EF4444" stroke-width="2" id="svgNode4Rect" filter="url(#glowHazard)"/>
-                                                <text x="110" y="20" text-anchor="middle" fill="#FDA4AF" font-size="11" font-weight="700" id="svgNode4Title">⚠️ V-109 (CHƯA KHÓA)</text>
-                                                <text x="110" y="37" text-anchor="middle" fill="#FCA5A5" font-size="9.5" font-weight="500" id="svgNode4Sub">Bấm Để Gắn Khóa LOTO</text>
-                                            </g>
-                                        </svg>
                                     </div>
 
                                     <!-- Live Confined Space Atmosphere Monitor Strip -->
@@ -2176,7 +2082,7 @@
                                         <span class="text-white fw-bold">Vận Chuyển Container Cảng Cửa Ngõ Phía Nam (VNCLI) ➔ Los Angeles (USLAX)</span>
                                     </div>
                                     <div class="text-secondary small">
-                                        Hãng Tàu: Hãng Tàu Quốc Tế Hàng Đầu Line · Tàu: MAERSK MC-KINNEY MOLLER · 2x40' HC (<code class="text-info">MSKU4918230</code>, <code class="text-info">MSKU5019284</code>)
+                                        Tuyến Vận Tải: Tuyến Container Viễn Dương Quốc Tế · Tàu: M/V PACIFIC SOVEREIGN · 2x40' HC (<code class="text-info">CONT4918230</code>, <code class="text-info">CONT5019284</code>)
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-sm rounded-1 px-3 py-2 fw-semibold d-inline-flex align-items-center gap-1" id="btnDisputeDem" style="border: 1px solid #F59E0B !important; color: #F59E0B !important; background: transparent;">
@@ -2211,7 +2117,7 @@
                                         <tr>
                                             <td>
                                                 <span class="text-white fw-bold">Phí Xếp Dỡ Tại Cảng (THC)</span><br/>
-                                                <span class="x-small text-secondary">Terminal Handling Port Cat Lai</span>
+                                                <span class="x-small text-secondary">Terminal Handling - Cảng Container Cửa Ngõ Phía Nam</span>
                                             </td>
                                             <td><span class="text-info">4,850,000 VND / cntr</span></td>
                                             <td><span class="text-info">4,850,000 VND / cntr</span></td>
@@ -2249,11 +2155,11 @@
                             <!-- Dispute Notice Box (Collapsible) -->
                             <div class="p-3 rounded-3 bg-dark bg-opacity-80 border border-secondary border-opacity-50 d-none" id="disputeNoticeBox">
                                 <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-secondary border-opacity-25">
-                                    <span class="text-warning fw-bold">VĂN BẢN KHÁNG NGHỊ CHI PHÍ CƯỚC HÃNG TÀU · DISPUTE NOTICE</span>
-                                    <span class="badge bg-warning bg-opacity-25 text-warning border border-secondary">Hợp Đồng Khung: #CONTRACT-MSK-2026-V1</span>
+                                    <span class="text-warning fw-bold">VĂN BẢN KHÁNG NGHỊ CHI PHÍ CƯỚC VẬN TẢI · DISPUTE NOTICE</span>
+                                    <span class="badge bg-warning bg-opacity-25 text-warning border border-secondary">Hợp Đồng Khung: #CONTRACT-OCEAN-2026-V1</span>
                                 </div>
                                 <p class="small text-secondary mb-2">
-                                    Kính gửi Hãng tàu Hãng Tàu Quốc Tế Hàng Đầu Line: Căn cứ Điều khoản 14.2 Phụ lục Biểu phí Miễn phí DEM/DET ký ngày 01/01/2026, lô hàng B/L #MSKU8841920 được hưởng trọn vẹn <strong>14 ngày miễn phí lưu bãi/lưu vỏ</strong> tại Cảng Cảng Container Quốc Tế Trọng Điểm. Container MSKU4918230 được kéo hạ bãi vào ngày thứ 13 kể từ ngày dỡ tàu. Do đó, khoản thu 4,600,000 VND tiền phạt phát sinh ngày 15-16 là không phù hợp với thỏa thuận.
+                                    Kính gửi Đơn vị Vận tải Container Quốc tế: Căn cứ Điều khoản 14.2 Phụ lục Biểu phí Miễn phí DEM/DET ký ngày 01/01/2026, lô hàng B/L #BL8841920 được hưởng trọn vẹn <strong>14 ngày miễn phí lưu bãi/lưu vỏ</strong> tại Cảng Container Quốc Tế Trọng Điểm. Container CONT4918230 được kéo hạ bãi vào ngày thứ 13 kể từ ngày dỡ tàu. Do đó, khoản thu 4,600,000 VND tiền phạt phát sinh ngày 15-16 là không phù hợp với thỏa thuận.
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center pt-2 text-white small">
                                     <span>Trạng thái: <strong>Đã xuất PDF &amp; đính kèm lịch sử GPS kéo container từ depot</strong></span>
@@ -2836,84 +2742,84 @@
                                     <!-- Rail 01: AI &amp; Autonomous Agents (Mojo AIaaS) -->
                                     <div class="service-rail-item active" data-rail-index="0" data-service-code="ai">
                                         <div class="rail-header">
-                                            <span class="rail-badge">01 · DỊCH VỤ AI &amp; TÁC TỬ TỰ CHỦ (MOJO AIaaS)</span>
+                                            <span class="rail-badge">01 · DỊCH VỤ AI &amp; 4-LAYER SOP-RAG (MOJO AIaaS)</span>
                                             <span class="rail-status">
                                                 <span class="rail-status-dot"/>
-                                                <span>Active Gateway</span>
+                                                <span>Hybrid RRF k=60</span>
                                             </span>
                                         </div>
-                                        <div class="rail-title">Dịch Vụ AI &amp; Tác Tử Tự Chủ (Mojo AIaaS)</div>
+                                        <div class="rail-title">Dịch Vụ AI &amp; 4-Layer Grounded SOP-RAG (Mojo AIaaS)</div>
                                         <div class="rail-desc">
-                                            Tích hợp mô hình AI chuyên sâu, Grounded RAG triệt tiêu ảo giác và công nhân bóc tách chứng từ tự động qua API bảo mật cao.
+                                            Truy xuất kết hợp Hybrid RRF (BM25 + Dense Vector, k=60) trên 20 quy trình KMS &amp; 160 phân đoạn SOP, kiểm định Entailment &gt;= 0.85 kèm trích dẫn mật mã SHA-256. Hoàn vốn 4.3 tháng (ROI 5.25x).
                                         </div>
                                         <div class="rail-chips">
-                                            <span class="chip">Grounded RAG</span>
-                                            <span class="chip">Agent Swarm</span>
-                                            <span class="chip">API Guard 11.4ms</span>
-                                            <span class="chip">Vision IDP</span>
+                                            <span class="chip">Hybrid RRF k=60</span>
+                                            <span class="chip">Entailment &gt;= 0.85</span>
+                                            <span class="chip">160 Chunks / 20 KMS</span>
+                                            <span class="chip">ROI 5.25x (4.3 Tháng)</span>
                                         </div>
                                     </div>
 
                                     <!-- Rail 02: Digital Transformation &amp; Clean-Core ERP -->
                                     <div class="service-rail-item" data-rail-index="1" data-service-code="erp">
                                         <div class="rail-header">
-                                            <span class="rail-badge" style="color: #42E6C3;">02 · CHUYỂN ĐỔI SỐ &amp; LÕI ERP TỰ HÀNH (CLEAN-CORE DX)</span>
+                                            <span class="rail-badge" style="color: #42E6C3;">02 · CLEAN-CORE ERP &amp; BÁO GIÁ CPQ &lt; 5 PHÚT (AL2C)</span>
                                             <span class="rail-status">
                                                 <span class="rail-status-dot" style="background: #42E6C3;"/>
-                                                <span>Autonomous ERP</span>
+                                                <span>100 FTS Class A/B/C</span>
                                             </span>
                                         </div>
-                                        <div class="rail-title">Chuyển Đổi Số &amp; Lõi ERP Tự Hành (Clean-Core DX)</div>
+                                        <div class="rail-title">Chuyển Đổi Số Clean-Core ERP &amp; Chu Trình AL2C 7 Bước</div>
                                         <div class="rail-desc">
-                                            Chuẩn hóa kế toán VAS (TT 200), tự động hóa Lead-to-Cash, đối soát công nợ và phát hành Hóa đơn điện tử Nghị định 70/2025/NĐ-CP.
+                                            Chuẩn hóa 100 danh mục Fit-to-Standard (68 Class A, 24 Class B, 8 Class C), kế toán VAS TT 200, Hóa đơn điện tử 2 bước 1C26TAA (NĐ 70/2025/NĐ-CP) và động cơ báo giá CPQ &lt; 5 phút.
                                         </div>
                                         <div class="rail-chips">
-                                            <span class="chip">VAS TT 200</span>
-                                            <span class="chip">HĐĐT NĐ 70/2025</span>
-                                            <span class="chip">Lead-to-Cash</span>
-                                            <span class="chip">Paperless 100%</span>
+                                            <span class="chip">100 FTS Items</span>
+                                            <span class="chip">HĐĐT 1C26TAA 2 Bước</span>
+                                            <span class="chip">Rapid CPQ &lt; 5m</span>
+                                            <span class="chip">ROI 4.07x - 4.51x</span>
                                         </div>
                                     </div>
 
-                                    <!-- Rail 03: Turnkey Software Package -->
+                                    <!-- Rail 03: Turnkey Software Package &amp; Sovereign Data Room -->
                                     <div class="service-rail-item" data-rail-index="2" data-service-code="sw_turnkey">
                                         <div class="rail-header">
-                                            <span class="rail-badge" style="color: #8B5CF6;">03 · PHÁT TRIỂN PHẦN MỀM TRỌN GÓI (TURNKEY PACKAGE)</span>
+                                            <span class="rail-badge" style="color: #8B5CF6;">03 · PHẦN MỀM TRỌN GÓI &amp; DATA ROOM 9 TẦNG</span>
                                             <span class="rail-status">
                                                 <span class="rail-status-dot" style="background: #8B5CF6;"/>
-                                                <span>Legacy ERP Activate 5-Gate</span>
+                                                <span>7,886 Docs · 11 RBAC</span>
                                             </span>
                                         </div>
-                                        <div class="rail-title">Phát Triển Phần Mềm Trọn Gói (Turnkey Package)</div>
+                                        <div class="rail-title">Phát Triển Phần Mềm Trọn Gói &amp; Sovereign Data Room</div>
                                         <div class="rail-desc">
-                                            Thiết kế và xây dựng hệ thống phần mềm chuyên biệt theo chuẩn Legacy ERP Activate 5-Gate, kiến trúc Cloud-Native Kubernetes và bàn giao 100% mã nguồn.
+                                            Kiến trúc Cloud-Native Kubernetes kết hợp Kho dữ liệu doanh nghiệp 9 tầng (978 thư mục, 7,886 tài liệu thực chứng, 11 cấu hình phân quyền RBAC và 28 biểu mẫu quản trị song ngữ).
                                         </div>
                                         <div class="rail-chips">
-                                            <span class="chip">Legacy ERP Activate 5-Gate</span>
-                                            <span class="chip">Kubernetes Pods</span>
-                                            <span class="chip">100% Source IP</span>
-                                            <span class="chip">Zero Downtime</span>
+                                            <span class="chip">9-Level Data Room</span>
+                                            <span class="chip">11 RBAC Profiles</span>
+                                            <span class="chip">28 Biểu Mẫu Song Ngữ</span>
+                                            <span class="chip">ROI 5.20x (4.1 Tháng)</span>
                                         </div>
                                     </div>
 
-                                    <!-- Rail 04: Co-Engineering Squad -->
+                                    <!-- Rail 04: Co-Engineering Squad &amp; B2B Customer Portal -->
                                     <div class="service-rail-item" data-rail-index="3" data-service-code="sw_squad">
                                         <div class="rail-header">
-                                            <span class="rail-badge" style="color: #F59E0B;">04 · ĐỘI NGŨ KỸ SƯ ĐỒNG PHÁT TRIỂN (CO-ENGINEERING SQUAD)</span>
+                                            <span class="rail-badge" style="color: #F59E0B;">04 · BIỆT ĐỘI KỸ SƯ CO-ENGINEERING &amp; PORTAL (/my)</span>
                                             <span class="rail-status">
                                                 <span class="rail-status-dot" style="background: #F59E0B;"/>
-                                                <span>TT 13/2020 Squad</span>
+                                                <span>SHA-256 Timesheet</span>
                                             </span>
                                         </div>
-                                        <div class="rail-title">Đội Ngũ Kỹ Sư Đồng Phát Triển (Co-Engineering Squad)</div>
+                                        <div class="rail-title">Đội Ngũ Kỹ Sư Đồng Phát Triển &amp; Cổng Khách Hàng (/my)</div>
                                         <div class="rail-desc">
-                                            Cử biệt đội kỹ sư phần mềm cấp cao tham gia đồng phát triển dự án theo quy trình 7 bước Thông tư 13/2020/TT-BTTTT, bảo mật ISO/IEC 27001 &amp; 27701.
+                                            Vận hành biệt đội kỹ sư theo quy trình 7 bước TT 13/2020/TT-BTTTT (thuế KCT Luật 48/2024/QH15), nghiệm thu Timesheet song phương (100% chuẩn / 150% OT) niêm phong SHA-256 trên cổng /my.
                                         </div>
                                         <div class="rail-chips">
-                                            <span class="chip">TT 13/2020 (7 Bước)</span>
+                                            <span class="chip">Portal /my Tự Phục Vụ</span>
+                                            <span class="chip">SHA-256 Timesheet</span>
                                             <span class="chip">ISO 27001 &amp; 27701</span>
-                                            <span class="chip">CMMI Level 5</span>
-                                            <span class="chip">Dedicated Squad</span>
+                                            <span class="chip">ROI 4.06x (3.4 Tháng)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -3043,7 +2949,7 @@
                                         </div>
 
                                         <div class="mt-3 small text-muted text-center">
-                                            <span>✓ Đã triển khai thành công tại: Tổng Công Ty Tổng Công Ty Khai Thác Cảng, Tập Đoàn Luyện Kim Trọng Điểm, Thiết Bị Nâng Hạ Công Nghiệp</span>
+                                            <span>✓ Đã kiểm chứng trên 5 Archetype Doanh nghiệp: Hoàn vốn 3.4 - 6.2 tháng · Tỷ suất ROI 3 năm đạt 4.06x - 5.25x · Báo giá CPQ &lt; 5 phút</span>
                                         </div>
                                     </div>
 
@@ -3330,29 +3236,66 @@
                 <t t-call="insilos_website.s_insilos_cctv_ai_camera"/>
 
                 <!-- ========================================================= -->
-                <!-- 8. PROOF NUMBERS SECTION (Hardware &amp; Platform Benchmarks) -->
+                <!-- 8. PROOF NUMBERS &amp; 5-ARCHETYPE ROI ENGINE (SOP-DGM-15)    -->
                 <!-- ========================================================= -->
                 <section class="s_numbers o_colored_level py-5 position-relative border-top border-bottom"
                          data-snippet="s_numbers"
                          data-name="Innoria Proof Numbers"
                          style="background: #070B14; border-color: rgba(255, 255, 255, 0.05) !important;">
                     <div class="container py-3">
-                        <div class="row text-center g-4">
+                        <div class="row text-center g-4 mb-4 pb-3 border-bottom border-secondary border-opacity-25">
                             <div class="col-6 col-lg-3">
-                                <div class="display-4 fw-bold text-white mb-1">18+ Năm</div>
-                                <div class="text-secondary small text-uppercase fw-semibold">Kỹ Nghệ Hệ Thống Doanh Nghiệp</div>
+                                <div class="display-4 fw-bold text-white mb-1">4.06x-5.25x</div>
+                                <div class="text-secondary small text-uppercase fw-semibold">Tỷ Suất ROI Định Lượng 3 Năm (SOP-DGM-15)</div>
                             </div>
                             <div class="col-6 col-lg-3">
-                                <div class="display-4 fw-bold mb-1" style="color: #00F2FE;">99.999%</div>
-                                <div class="text-secondary small text-uppercase fw-semibold">Five-Nines High Availability SLA</div>
+                                <div class="display-4 fw-bold mb-1" style="color: #00F2FE;">&lt; 5 Phút</div>
+                                <div class="text-secondary small text-uppercase fw-semibold">Báo Giá Rapid CPQ &amp; 100 Quy Tắc FTS</div>
                             </div>
                             <div class="col-6 col-lg-3">
-                                <div class="display-4 fw-bold text-aurora-mint mb-1">&lt; 12ms</div>
-                                <div class="text-secondary small text-uppercase fw-semibold">Độ Trễ Suy Luận Tại Biên (Edge)</div>
+                                <div class="display-4 fw-bold text-aurora-mint mb-1">7,886</div>
+                                <div class="text-secondary small text-uppercase fw-semibold">Tài Liệu Data Room 9 Tầng · 11 RBAC</div>
                             </div>
                             <div class="col-6 col-lg-3">
-                                <div class="display-4 fw-bold mb-1" style="color: #F43F5E;">-50%</div>
-                                <div class="text-secondary small text-uppercase fw-semibold">Tiết Kiệm Chi Phí TCO Toàn Vòng Đời</div>
+                                <div class="display-4 fw-bold mb-1" style="color: #F43F5E;">3.4-6.2 Tháng</div>
+                                <div class="text-secondary small text-uppercase fw-semibold">Chu Kỳ Hoàn Vốn Thực Nghiệm (Payback)</div>
+                            </div>
+                        </div>
+                        <div class="row g-3 text-start">
+                            <div class="col-md-4 col-lg">
+                                <div class="p-3 h-100" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 2px;">
+                                    <div class="small fw-bold mb-1" style="color: #F59E0B;">01 · CO-ENGINEERING SQUAD</div>
+                                    <div class="text-white fw-bold small mb-1">ROI 4.06x · Hoàn vốn 3.4 tháng</div>
+                                    <div class="text-secondary" style="font-size: 0.76rem;">Gói 384M VNĐ → Lợi ích ròng 1,176M VNĐ. Nghiệm thu Timesheet song phương (100% chuẩn / 150% OT) ký số SHA-256 trên cổng /my.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg">
+                                <div class="p-3 h-100" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 2px;">
+                                    <div class="small fw-bold mb-1" style="color: #00F2FE;">02 · THUẾ, HĐĐT 1C26TAA &amp; LƯƠNG</div>
+                                    <div class="text-white fw-bold small mb-1">ROI 4.51x · Hoàn vốn 4.8 tháng</div>
+                                    <div class="text-secondary" style="font-size: 0.76rem;">Gói 165M VNĐ → Lợi ích ròng 579M VNĐ. Kế toán VAS TT 200, HĐĐT 2 bước NĐ 70/2025/NĐ-CP và BHXH 8% / BHYT 1.5% / BHTN 1%.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg">
+                                <div class="p-3 h-100" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 2px;">
+                                    <div class="small fw-bold mb-1" style="color: #42E6C3;">03 · CLEAN-CORE ERP TỰ HÀNH</div>
+                                    <div class="text-white fw-bold small mb-1">ROI 4.07x · Hoàn vốn 6.2 tháng</div>
+                                    <div class="text-secondary" style="font-size: 0.76rem;">Gói 450M VNĐ → Lợi ích ròng 1,380M VNĐ. Hợp nhất Lead-to-Cash (O2C), Procure-to-Pay (P2P), WMS/MES và Data Room 9 tầng.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg">
+                                <div class="p-3 h-100" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 2px;">
+                                    <div class="small fw-bold mb-1" style="color: #8B5CF6;">04 · GRC, EHS &amp; BẢO MẬT DỮ LIỆU</div>
+                                    <div class="text-white fw-bold small mb-1">ROI 5.20x · Hoàn vốn 4.1 tháng</div>
+                                    <div class="text-secondary" style="font-size: 0.76rem;">Gói 225M VNĐ → Lợi ích ròng 945M VNĐ. Tuân thủ ISO/IEC 27001:2022, ISO/IEC 27701, Nghị định 13/2023/NĐ-CP và rào cản e-PTW/LOTO.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg">
+                                <div class="p-3 h-100" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 2px;">
+                                    <div class="small fw-bold mb-1" style="color: #10B981;">05 · MOJO AI &amp; GROUNDED SOP-RAG</div>
+                                    <div class="text-white fw-bold small mb-1">ROI 5.25x · Hoàn vốn 4.3 tháng</div>
+                                    <div class="text-secondary" style="font-size: 0.76rem;">Gói 180M VNĐ → Lợi ích ròng 765M VNĐ. Hybrid RRF (k=60) trên 20 quy trình KMS &amp; 160 phân đoạn SOP, Entailment &gt;= 0.85.</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -3371,43 +3314,82 @@
                             <div class="col-lg-6">
                                 <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-1 mb-3 ins-badge-aurora" style="background-color: #42E6C3 !important; color: #05101E !important;">
                                     <span class="d-inline-block rounded-circle bg-dark" style="width: 7px; height: 7px;"/>
-                                    <span>Hội Đồng Kiến Trúc Sư Trưởng</span>
+                                    <span data-i18n-vi="Hội Đồng Kiến Trúc Sư Trưởng" data-i18n-en="Principal Solutions Architecture Council">Hội Đồng Kiến Trúc Sư Trưởng</span>
                                 </div>
-                                <h2 class="display-5 fw-bold text-white mb-3">
-                                    Khởi Tạo Đánh Giá Kiến Trúc Cấp Điều Hành (180 Phút)
+                                <h2 class="display-5 fw-bold text-white mb-3" data-i18n-vi="Khởi Tạo Đánh Giá Kiến Trúc &amp; Yêu Cầu Báo Giá Cấp Điều Hành (180 Phút)" data-i18n-en="Initiate Executive Architecture Review &amp; Custom Quote Request (180 Minutes)">
+                                    Khởi Tạo Đánh Giá Kiến Trúc &amp; Yêu Cầu Báo Giá Cấp Điều Hành (180 Phút)
                                 </h2>
-                                <p class="lead fs-5 mb-4 text-secondary">
-                                    Phiên thẩm định kỹ thuật chuyên sâu trực tiếp cùng Giám Đốc Công Nghệ &amp; Kiến Trúc Sư Trưởng Innoria: Phân tích kiến trúc hiện hữu, đánh giá nợ công nghệ và xác lập bản thiết kế kiến trúc mục tiêu khả thi trong 72 giờ.
+                                <p class="lead fs-5 mb-4 text-secondary" data-i18n-vi="Phiên thẩm định kỹ thuật chuyên sâu trực tiếp cùng Giám Đốc Công Nghệ &amp; Kiến Trúc Sư Trưởng Innoria: Phân tích kiến trúc hiện hữu, bóc tách dự toán chi phí và xác lập bản thiết kế mục tiêu khả thi trong 72 giờ." data-i18n-en="In-depth technical evaluation directly with Innoria's CTO &amp; Chief Solutions Architect: Assess current architecture, break down project cost estimation, and deliver an actionable target blueprint within 72 hours.">
+                                    Phiên thẩm định kỹ thuật chuyên sâu trực tiếp cùng Giám Đốc Công Nghệ &amp; Kiến Trúc Sư Trưởng Innoria: Phân tích kiến trúc hiện hữu, bóc tách dự toán chi phí và xác lập bản thiết kế mục tiêu khả thi trong 72 giờ.
                                 </p>
                                 <ul class="list-unstyled text-secondary small d-flex flex-column gap-2 mb-0">
-                                    <li class="d-flex align-items-center gap-2"><svg class="ph-duotone ph-check-circle text-innoria-cyan" style="width: 1.25rem; height: 1.25rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>Tham vấn kiến trúc 1:1 trực tiếp cùng CTO &amp; Solution Architect</li>
-                                    <li class="d-flex align-items-center gap-2"><svg class="ph-duotone ph-check-circle text-innoria-cyan" style="width: 1.25rem; height: 1.25rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>Báo cáo phân tích TCO 3 năm và phương án tự chủ dữ liệu</li>
-                                    <li class="d-flex align-items-center gap-2"><svg class="ph-duotone ph-check-circle text-innoria-cyan" style="width: 1.25rem; height: 1.25rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg>Ký kết thỏa thuận bảo mật NDA song phương tự động</li>
+                                    <li class="d-flex align-items-center gap-2"><svg class="ph-duotone ph-check-circle text-innoria-cyan" style="width: 1.25rem; height: 1.25rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg><span data-i18n-vi="Tham vấn kiến trúc 1:1 trực tiếp cùng CTO &amp; Solution Architect" data-i18n-en="1-on-1 architecture consultation directly with CTO &amp; Solution Architect">Tham vấn kiến trúc 1:1 trực tiếp cùng CTO &amp; Solution Architect</span></li>
+                                    <li class="d-flex align-items-center gap-2"><svg class="ph-duotone ph-check-circle text-innoria-cyan" style="width: 1.25rem; height: 1.25rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg><span data-i18n-vi="Đính kèm hồ sơ dự án (RFP/SRS/BoQ) nhận Báo Giá Ưu Tiên trong 2 giờ" data-i18n-en="Attach project dossiers (RFP/SRS/BoQ) for Fast-Track Priority Quote within 2 hours">Đính kèm hồ sơ dự án (RFP/SRS/BoQ) nhận Báo Giá Ưu Tiên trong 2 giờ</span></li>
+                                    <li class="d-flex align-items-center gap-2"><svg class="ph-duotone ph-check-circle text-innoria-cyan" style="width: 1.25rem; height: 1.25rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg><span data-i18n-vi="Ký kết thỏa thuận bảo mật NDA song phương tự động" data-i18n-en="Automated bilateral Non-Disclosure Agreement (NDA) execution">Ký kết thỏa thuận bảo mật NDA song phương tự động</span></li>
                                 </ul>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="ins-spatial-layer ins-spatial-layer--elevated p-4 p-md-5 rounded-2 shadow-lg">
-                                    <h4 class="text-white fw-bold mb-4">Phiếu Đăng Ký Đánh Giá Kiến Trúc</h4>
-                                    <form action="/website/form/" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-3">
-                                        <div>
-                                            <label class="form-label text-white-50 small fw-semibold mb-1">Họ và tên &amp; Chức danh điều hành *</label>
-                                            <input type="text" class="form-control bg-dark bg-opacity-50 text-white border border-white-10 rounded-3" placeholder="Ví dụ: Trần Văn Nam - CTO / CIO" required="required"/>
+                                    <h4 class="text-white fw-bold mb-3" data-i18n-vi="Phiếu Yêu Cầu Báo Giá &amp; Đánh Giá Kiến Trúc" data-i18n-en="Executive Quote Request &amp; Architecture Assessment">Phiếu Yêu Cầu Báo Giá &amp; Đánh Giá Kiến Trúc</h4>
+                                    <t t-if="request.params.get('submitted') == '1'">
+                                        <div class="p-3 mb-3" style="background: rgba(10, 187, 219, 0.14); border: 1px solid #0ABBDB; border-left: 4px solid #42E6C3; border-radius: 2px;" role="alert">
+                                            <div class="fw-bold text-white mb-1" data-i18n-vi="✓ Đã Tiếp Nhận Yêu Cầu Báo Giá &amp; Hồ Sơ Dự Án Thành Công!" data-i18n-en="✓ Quote Request &amp; Project Dossier Successfully Received!">
+                                                ✓ Đã Tiếp Nhận Yêu Cầu Báo Giá &amp; Hồ Sơ Dự Án Thành Công!
+                                            </div>
+                                            <div class="small" style="color: #E2E8F0;">
+                                                <t t-if="request.params.get('lead_id')">
+                                                    <span>Mã hồ sơ CRM: </span><strong style="color: #42E6C3;">#<t t-out="request.params.get('lead_id')"/></strong><span> · </span>
+                                                </t>
+                                                <t t-if="request.params.get('priority') == '1'">
+                                                    <span class="px-2 py-1 fw-bold" style="background: #FFF4E5; color: #B45309; border: 1px solid #FF8000; font-size: 0.72rem;" data-i18n-vi="⚡ ƯU TIÊN CAO (SLA &lt; 2 GIỜ · ĐÃ ĐÍNH KÈM FILE)" data-i18n-en="⚡ FAST-TRACK PRIORITY (SLA &lt; 2H · FILE ATTACHED)">
+                                                        ⚡ ƯU TIÊN CAO (SLA &lt; 2 GIỜ · ĐÃ ĐÍNH KÈM FILE)
+                                                    </span>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <form action="/innoria/quote/submit" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-3 innoria-quote-request-form">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="return_url" value="/#innoria_contact_section"/>
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <label class="form-label text-white-50 small fw-semibold mb-1" data-i18n-vi="Họ và tên &amp; Chức danh điều hành *" data-i18n-en="Full Name &amp; Executive Title *">Họ và tên &amp; Chức danh điều hành *</label>
+                                                <input type="text" name="contact_name" class="form-control bg-dark bg-opacity-50 text-white border border-white-10 rounded-1" placeholder="Ví dụ: Trần Văn Nam - CTO / CIO" data-i18n-placeholder-vi="Ví dụ: Trần Văn Nam - CTO / CIO" data-i18n-placeholder-en="e.g., Alex Tran - CTO / CIO" required="required"/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label text-white-50 small fw-semibold mb-1" data-i18n-vi="Tên doanh nghiệp / Tổ chức" data-i18n-en="Company / Organization Name">Tên doanh nghiệp / Tổ chức</label>
+                                                <input type="text" name="partner_name" class="form-control bg-dark bg-opacity-50 text-white border border-white-10 rounded-1" placeholder="Tên công ty hoặc tập đoàn" data-i18n-placeholder-vi="Tên công ty hoặc tập đoàn" data-i18n-placeholder-en="Company or Enterprise Group"/>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <label class="form-label text-white-50 small fw-semibold mb-1" data-i18n-vi="Email doanh nghiệp chính thức *" data-i18n-en="Official Corporate Email *">Email doanh nghiệp chính thức *</label>
+                                                <input type="email" name="email_from" class="form-control bg-dark bg-opacity-50 text-white border border-white-10 rounded-1" placeholder="name@enterprise.com" required="required"/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label text-white-50 small fw-semibold mb-1" data-i18n-vi="Số điện thoại liên hệ trực tiếp *" data-i18n-en="Direct Contact Phone *">Số điện thoại liên hệ trực tiếp *</label>
+                                                <input type="tel" name="phone" class="form-control bg-dark bg-opacity-50 text-white border border-white-10 rounded-1" placeholder="0901 234 567" required="required"/>
+                                            </div>
                                         </div>
                                         <div>
-                                            <label class="form-label text-white-50 small fw-semibold mb-1">Email doanh nghiệp chính thức *</label>
-                                            <input type="email" class="form-control bg-dark bg-opacity-50 text-white border border-white-10 rounded-3" placeholder="name@enterprise.com" required="required"/>
+                                            <label class="form-label text-white-50 small fw-semibold mb-1" data-i18n-vi="Hiện trạng hạ tầng &amp; Điểm nghẽn cấp bách cần giải quyết" data-i18n-en="Current Infrastructure &amp; Critical Bottlenecks to Resolve">Hiện trạng hạ tầng &amp; Điểm nghẽn cấp bách cần giải quyết</label>
+                                            <textarea name="description" class="form-control bg-dark bg-opacity-50 text-white border border-white-10 rounded-1" rows="2" placeholder="Ví dụ: Hạ tầng On-Premise/Cloud hiện tại, chi phí ERP Legacy quá cao, độ trễ sản xuất xưởng CNC, nhu cầu tự chủ dữ liệu Air-Gapped..." data-i18n-placeholder-vi="Ví dụ: Hạ tầng On-Premise/Cloud hiện tại, chi phí ERP Legacy quá cao, độ trễ sản xuất xưởng CNC, nhu cầu tự chủ dữ liệu Air-Gapped..." data-i18n-placeholder-en="e.g., Current On-Premise/Cloud setup, high Legacy ERP costs, CNC shopfloor latency, Air-Gapped data sovereignty needs..."></textarea>
                                         </div>
-                                        <div>
-                                            <label class="form-label text-white-50 small fw-semibold mb-1">Số điện thoại liên hệ trực tiếp *</label>
-                                            <input type="tel" class="form-control bg-dark bg-opacity-50 text-white border border-white-10 rounded-3" placeholder="0901 234 567" required="required"/>
+                                        <div class="p-3 rounded-1 innoria-priority-dropzone" style="background: rgba(255, 128, 0, 0.1); border: 1px dashed #FF8000; border-left: 4px solid #FF8000;">
+                                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-1">
+                                                <label class="form-label fw-bold mb-0 text-white" for="home_quote_attachments" style="font-size: 0.82rem; cursor: pointer;">
+                                                    <span data-i18n-vi="📎 Đính Kèm Tài Liệu Dự Án (RFP / SRS / BoQ / Sơ Đồ Kiến Trúc)" data-i18n-en="📎 Attach Project Documents (RFP / SRS / BoQ / Architecture Specs)">📎 Đính Kèm Tài Liệu Dự Án (RFP / SRS / BoQ / Sơ Đồ Kiến Trúc)</span>
+                                                </label>
+                                                <span class="px-2 py-1 fw-bold innoria-dropzone-status-badge" style="background: #FF8000; color: #FFFFFF; font-size: 0.68rem; border-radius: 2px;" data-i18n-vi="⚡ ƯU TIÊN BÁO GIÁ NHANH (&lt; 2 GIỜ)" data-i18n-en="⚡ FAST-TRACK QUOTE PRIORITY (&lt; 2H SLA)">
+                                                    ⚡ ƯU TIÊN BÁO GIÁ NHANH (&lt; 2 GIỜ)
+                                                </span>
+                                            </div>
+                                            <input id="home_quote_attachments" type="file" name="quote_attachments" multiple="multiple" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.png,.jpg,.jpeg,.webp,.txt,.csv,.json" class="form-control form-control-sm bg-dark text-white border-secondary innoria-file-input"/>
+                                            <div class="innoria-attached-files-summary mt-1 d-none small fw-semibold" style="color: #42E6C3;"/>
                                         </div>
-                                        <div>
-                                            <label class="form-label text-white-50 small fw-semibold mb-1">Hiện trạng hạ tầng &amp; Điểm nghẽn cấp bách cần giải quyết</label>
-                                            <textarea class="form-control bg-dark bg-opacity-50 text-white border border-white-10 rounded-3" rows="3" placeholder="Ví dụ: Hạ tầng On-Premise/Cloud hiện tại, chi phí ERP Legacy ERP quá cao, độ trễ sản xuất xưởng CNC, nhu cầu tự chủ dữ liệu Air-Gapped..."></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-1 mt-2 shadow-sm d-inline-flex align-items-center justify-content-center gap-2">
-                                            <span>Gửi Hồ Sơ Cho Hội Đồng Kiến Trúc Sư</span>
+                                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-1 mt-1 shadow-sm d-inline-flex align-items-center justify-content-center gap-2">
+                                            <span data-i18n-vi="Gửi Yêu Cầu Báo Giá &amp; Đánh Giá Kiến Trúc" data-i18n-en="Submit Quote Request &amp; Architecture Review">Gửi Yêu Cầu Báo Giá &amp; Đánh Giá Kiến Trúc</span>
                                             <svg class="ph-duotone ph-paper-plane-tilt" style="width: 1.15rem; height: 1.15rem;"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-paper-plane-tilt"/></svg>
                                         </button>
                                     </form>
