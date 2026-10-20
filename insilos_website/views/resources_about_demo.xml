@@ -3687,23 +3687,23 @@
                                                         <textarea id="demo-message" name="message" class="form-control rounded-2 p-3" rows="3" maxlength="5000" placeholder="Ví dụ: Tự động hóa bóc tách B/L và C/O, giảm downtime turbine gió, tăng tốc điều tra sai lệch mẻ thuốc, mở rộng Clean Core Legacy ERP..."><t t-out="form_data.get('message', '')"/></textarea>
                                                     </div>
                                                     <div class="col-12">
-                                                        <div class="p-3 rounded-1 innoria-priority-dropzone" style="background: rgba(255, 128, 0, 0.08); border: 1px dashed #FF8000; border-left: 4px solid #FF8000;">
-                                                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-1">
-                                                                <label class="form-label fw-bold mb-0" for="demo_quote_attachments" style="font-size: 0.84rem; cursor: pointer;">
+                                                        <div class="p-3 rounded-1 innoria-priority-dropzone text-start" style="background: rgba(255, 128, 0, 0.08); border: 1px dashed #FF8000; border-left: 4px solid #FF8000; text-align: left !important;">
+                                                            <div class="innoria-dropzone-header-row d-flex flex-wrap align-items-center justify-content-between gap-2 mb-1 w-100">
+                                                                <label class="form-label fw-bold mb-0 innoria-col-left text-start" for="demo_quote_attachments" style="font-size: 0.84rem; cursor: pointer; text-align: left !important;">
                                                                     <span data-i18n-vi="📎 Đính Kèm Hồ Sơ Yêu Cầu Báo Giá (RFP / SRS / BoQ / Sơ Đồ Kiến Trúc)" data-i18n-en="📎 Attach Quote Request Documents (RFP / SRS / BoQ / Architecture Specs)">📎 Đính Kèm Hồ Sơ Yêu Cầu Báo Giá (RFP / SRS / BoQ / Sơ Đồ Kiến Trúc)</span>
                                                                 </label>
-                                                                <span class="px-2 py-1 fw-bold innoria-dropzone-status-badge" style="background: #FF8000; color: #FFFFFF; font-size: 0.7rem; border-radius: 2px;" data-i18n-vi="⚡ ƯU TIÊN PHẢN HỒI NHANH (&lt; 2 GIỜ)" data-i18n-en="⚡ FAST-TRACK PRIORITY (&lt; 2H SLA)">
+                                                                <span class="px-2 py-1 fw-bold innoria-dropzone-status-badge innoria-col-right text-end ms-auto" style="background: #FF8000; color: #FFFFFF; font-size: 0.7rem; border-radius: 2px; text-align: right !important; margin-left: auto !important;" data-i18n-vi="⚡ ƯU TIÊN PHẢN HỒI NHANH (&lt; 2 GIỜ)" data-i18n-en="⚡ FAST-TRACK PRIORITY (&lt; 2H SLA)">
                                                                     ⚡ ƯU TIÊN PHẢN HỒI NHANH (&lt; 2 GIỜ)
                                                                 </span>
                                                             </div>
                                                             <input id="demo_quote_attachments" type="file" name="quote_attachments" multiple="multiple" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.png,.jpg,.jpeg,.webp,.txt,.csv,.json" class="form-control form-control-sm innoria-file-input"/>
-                                                            <div class="innoria-attached-files-summary mt-1 d-none small fw-semibold text-success"/>
+                                                            <div class="innoria-attached-files-summary mt-1 d-none small fw-semibold text-success text-end ms-auto" style="text-align: right !important;"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="demo-consent" name="consent" t-att-checked="(form_data.get('consent') or form_data.get('consent_decree13')) and 'checked' or None" required="required"/>
-                                                            <label class="form-check-label text-muted small" for="demo-consent">
+                                                        <div class="form-check innoria-sota-check-row" style="display: flex !important; flex-direction: row !important; align-items: flex-start !important; gap: 10px !important; padding-left: 0 !important; text-align: left !important;">
+                                                            <input class="form-check-input" type="checkbox" id="demo-consent" name="consent" t-att-checked="(form_data.get('consent') or form_data.get('consent_decree13')) and 'checked' or None" required="required" style="float: none !important; margin: 3px 0 0 0 !important; flex: 0 0 16px !important; width: 16px !important; height: 16px !important;"/>
+                                                            <label class="form-check-label text-muted small" for="demo-consent" style="display: block !important; flex: 1 1 0% !important; min-width: 0 !important; margin: 0 !important; text-align: left !important; line-height: 1.45 !important;">
                                                                 Tôi xác nhận đã đọc, hiểu rõ và đồng ý với <a href="/privacy" target="_blank" class="text-orange text-decoration-underline fw-semibold">Chính Sách Bảo Vệ Dữ Liệu Cá Nhân</a> theo Nghị định 13/2023/NĐ-CP của Insilos Sovereign AI, đồng ý để Insilos xử lý dữ liệu và liên hệ tư vấn. *
                                                             </label>
                                                         </div>

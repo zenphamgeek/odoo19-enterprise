@@ -4433,27 +4433,47 @@ html, body, #wrapwrap,
         line-height: 1.2 !important;
     }
 
+    .innoria-sota-header-lockup {
+        display: flex !important;
+        align-items: stretch !important;
+        justify-content: space-between !important;
+        gap: 1rem !important;
+    }
+
     .al2c-logo-square-frame {
-        width: 78px !important;
-        height: 78px !important;
-        min-width: 78px !important;
+        align-self: stretch !important;
+        width: 108px !important;
+        min-width: 108px !important;
+        height: auto !important;
+        min-height: 108px !important;
         border: 1px solid #d1e8ed !important;
         border-bottom: 3px solid #0ABBDB !important;
         background: #ffffff !important;
         border-radius: 2px !important;
-        padding: 6px !important;
-        display: inline-flex !important;
+        padding: 8px !important;
+        display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         flex-shrink: 0 !important;
 
         img {
-            max-height: 64px !important;
-            max-width: 64px !important;
+            height: 100% !important;
+            max-height: 100px !important;
             width: auto !important;
-            height: auto !important;
+            max-width: 92px !important;
             object-fit: contain !important;
         }
+    }
+
+    .innoria-col-left {
+        text-align: left !important;
+        justify-content: flex-start !important;
+    }
+
+    .innoria-col-right {
+        text-align: right !important;
+        justify-content: flex-end !important;
+        margin-left: auto !important;
     }
 
     .innoria-sota-pane-teal {
@@ -4470,6 +4490,63 @@ html, body, #wrapwrap,
         border-top: 3px solid #FF8000 !important;
         border-radius: 2px !important;
         box-shadow: none !important;
+    }
+
+    .innoria-priority-dropzone {
+        .innoria-dropzone-header-row,
+        .innoria-dropzone-footer-row {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 0.5rem !important;
+            width: 100% !important;
+
+            > :first-child {
+                text-align: left !important;
+                justify-content: flex-start !important;
+            }
+
+            > :last-child {
+                text-align: right !important;
+                justify-content: flex-end !important;
+                margin-left: auto !important;
+            }
+        }
+    }
+
+    .innoria-sota-form,
+    .innoria-sota-workspace,
+    .al2c-brand-workspace {
+        .form-check,
+        .innoria-sota-check-row {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            gap: 0.65rem !important;
+            padding-left: 0.75rem !important;
+            text-align: left !important;
+
+            .form-check-input {
+                float: none !important;
+                margin: 0.2rem 0 0 0 !important;
+                flex: 0 0 16px !important;
+                width: 16px !important;
+                height: 16px !important;
+                cursor: pointer !important;
+            }
+
+            .form-check-label {
+                display: block !important;
+                flex: 1 1 0% !important;
+                min-width: 0 !important;
+                margin: 0 !important;
+                text-align: left !important;
+                line-height: 1.45 !important;
+                cursor: pointer !important;
+            }
+        }
     }
 
     .innoria-sota-form {
@@ -4490,7 +4567,7 @@ html, body, #wrapwrap,
             }
         }
 
-        input.form-control,
+        input.form-control:not([type="file"]),
         select.form-select {
             height: 38px !important;
         }
