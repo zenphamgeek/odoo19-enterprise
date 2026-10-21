@@ -675,65 +675,332 @@
             function renderLoto3dFrame() {
                 loto3dState.tick += 1;
                 if (!loto3dState.dragging && !loto3dState.xrayMode) {
-                    loto3dState.targetYaw += 0.0022;
+                    loto3dState.targetYaw += 0.0024;
                 }
-                loto3dState.yaw += (loto3dState.targetYaw - loto3dState.yaw) * 0.08;
-                loto3dState.pitch += (loto3dState.targetPitch - loto3dState.pitch) * 0.08;
+                loto3dState.yaw += (loto3dState.targetYaw - loto3dState.yaw) * 0.085;
+                loto3dState.pitch += (loto3dState.targetPitch - loto3dState.pitch) * 0.085;
 
                 var w = loto3dCanvas.width;
                 var h = loto3dCanvas.height;
                 var yaw = loto3dState.yaw;
                 var pitch = loto3dState.pitch;
                 var isSafe = loto3dState.point4Locked;
+                var isXray = loto3dState.xrayMode;
                 ctx3d.clearRect(0, 0, w, h);
 
-                // 1. 3D Isometric Blueprint Floor Grid
+                // 0. Subtle Volumetric Ambient Glow Behind Reactor Core
+                var center3D = project3D(0, 0, 0, w, h, yaw, pitch);
+                var ambientGrad = ctx3d.createRadialGradient(center3D.x, center3D.y, 12, center3D.x, center3D.y, 230);
+                if (isSafe) {
+                    ambientGrad.addColorStop(0, 'rgba(16, 185, 129, 0.20)');
+                    ambientGrad.addColorStop(0.5, 'rgba(56, 189, 248, 0.08)');
+                    ambientGrad.addColorStop(1, 'rgba(4, 9, 20, 0)');
+                } else {
+                    ambientGrad.addColorStop(0, 'rgba(239, 68, 68, 0.22)');
+                    ambientGrad.addColorStop(0.5, 'rgba(56, 189, 248, 0.08)');
+                    ambientGrad.addColorStop(1, 'rgba(4, 9, 20, 0)');
+                }
+                ctx3d.fillStyle = ambientGrad;
+                ctx3d.fillRect(0, 0, w, h);
+
+                // 1. 3D Isometric Blueprint Floor Grid + Circular Containment Pad
                 ctx3d.lineWidth = 1;
-                ctx3d.strokeStyle = 'rgba(56, 189, 248, 0.08)';
-                for (var g = -240; g <= 240; g += 48) {
-                    var pA = project3D(g, 96, -180, w, h, yaw, pitch);
-                    var pB = project3D(g, 96, 180, w, h, yaw, pitch);
+                ctx3d.strokeStyle = 'rgba(56, 189, 248, 0.09)';
+                for (var g = -280; g <= 280; g += 40) {
+                    var pA = project3D(g, 102, -200, w, h, yaw, pitch);
+                    var pB = project3D(g, 102, 200, w, h, yaw, pitch);
                     ctx3d.beginPath();
                     ctx3d.moveTo(pA.x, pA.y);
                     ctx3d.lineTo(pB.x, pB.y);
                     ctx3d.stroke();
 
-                    var pC = project3D(-240, 96, g * 0.75, w, h, yaw, pitch);
-                    var pD = project3D(240, 96, g * 0.75, w, h, yaw, pitch);
+                    var pC = project3D(-280, 102, g * 0.72, w, h, yaw, pitch);
+                    var pD = project3D(280, 102, g * 0.72, w, h, yaw, pitch);
                     ctx3d.beginPath();
                     ctx3d.moveTo(pC.x, pC.y);
                     ctx3d.lineTo(pD.x, pD.y);
                     ctx3d.stroke();
                 }
 
-                // 2. 4 3D L-Shaped Industrial Pipe Manifolds & Isolation Valves
+                // Circular Floor Containment Pad & Shadow beneath Reactor R-201
+                ctx3d.beginPath();
+                for (var sPad = 0; sPad <= 36; sPad++) {
+                    var aPad = (sPad / 36) * Math.PI * 2;
+                    var ptPad = project3D(Math.cos(aPad) * 105, 102, Math.sin(aPad) * 105, w, h, yaw, pitch);
+                    if (sPad === 0) ctx3d.moveTo(ptPad.x, ptPad.y);
+                    else ctx3d.lineTo(ptPad.x, ptPad.y);
+                }
+                ctx3d.fillStyle = 'rgba(2, 6, 23, 0.65)';
+                ctx3d.fill();
+                ctx3d.lineWidth = 1.5;
+                ctx3d.strokeStyle = isSafe ? 'rgba(16, 185, 129, 0.35)' : 'rgba(239, 68, 68, 0.40)';
+                ctx3d.stroke();
+
+                // 2. 4 Structural Steel Support Legs Anchored to Floor Pad
+                var legAngles = [Math.PI * 0.25, Math.PI * 0.75, Math.PI * 1.25, Math.PI * 1.75];
+                legAngles.forEach(function (la) {
+                    var legTop = project3D(Math.cos(la) * 64, 58, Math.sin(la) * 64, w, h, yaw, pitch);
+                    var legBot = project3D(Math.cos(la) * 76, 102, Math.sin(la) * 76, w, h, yaw, pitch);
+                    ctx3d.beginPath();
+                    ctx3d.moveTo(legTop.x, legTop.y);
+                    ctx3d.lineTo(legBot.x, legBot.y);
+                    ctx3d.lineWidth = 6;
+                    ctx3d.lineCap = 'round';
+                    ctx3d.strokeStyle = '#1E293B';
+                    ctx3d.stroke();
+                    ctx3d.lineWidth = 2;
+                    ctx3d.strokeStyle = '#64748B';
+                    ctx3d.stroke();
+                });
+
+                // 3. Volumetric 3D Shaded Cylindrical Vessel Shell & Elliptical Domes (PBR Metallic Shading)
+                var radius = 74;
+                var topY = -66;
+                var botY = 66;
+                var leftEdge = project3D(-radius, 0, 0, w, h, yaw, pitch);
+                var rightEdge = project3D(radius, 0, 0, w, h, yaw, pitch);
+                var topCenter = project3D(0, topY, 0, w, h, yaw, pitch);
+                var botCenter = project3D(0, botY, 0, w, h, yaw, pitch);
+                var rx = Math.abs(rightEdge.x - leftEdge.x) * 0.5;
+                var ryTop = Math.max(14, rx * Math.sin(Math.max(0.18, pitch)) * 0.52);
+                var ryBot = Math.max(16, rx * Math.sin(Math.max(0.18, pitch)) * 0.55);
+
+                // Cylindrical Metallic PBR Gradient (Back-to-Front Pass)
+                var shellGrad = ctx3d.createLinearGradient(topCenter.x - rx, 0, topCenter.x + rx, 0);
+                var alphaShell = isXray ? 0.26 : 0.84;
+                shellGrad.addColorStop(0.0, 'rgba(8, 17, 34, ' + alphaShell + ')');
+                shellGrad.addColorStop(0.22, 'rgba(23, 49, 82, ' + alphaShell + ')');
+                shellGrad.addColorStop(0.38, 'rgba(56, 189, 248, ' + (isXray ? 0.22 : 0.48) + ')');
+                shellGrad.addColorStop(0.52, 'rgba(15, 35, 62, ' + alphaShell + ')');
+                shellGrad.addColorStop(0.82, 'rgba(10, 22, 42, ' + alphaShell + ')');
+                shellGrad.addColorStop(1.0, 'rgba(30, 64, 105, ' + alphaShell + ')');
+
+                ctx3d.save();
+                ctx3d.beginPath();
+                ctx3d.ellipse(topCenter.x, topCenter.y, rx, ryTop, 0, Math.PI, 0, false);
+                ctx3d.lineTo(botCenter.x + rx, botCenter.y);
+                ctx3d.ellipse(botCenter.x, botCenter.y, rx, ryBot, 0, 0, Math.PI, false);
+                ctx3d.closePath();
+                ctx3d.fillStyle = shellGrad;
+                ctx3d.fill();
+                ctx3d.lineWidth = 2;
+                ctx3d.strokeStyle = isSafe ? 'rgba(56, 189, 248, 0.65)' : 'rgba(248, 113, 113, 0.72)';
+                ctx3d.stroke();
+                ctx3d.restore();
+
+                // 4. Internal Volumetric Chemical Liquid Column & Animated Meniscus Wave
+                var liqTopY = 6 + Math.sin(loto3dState.tick * 0.05) * 2.5;
+                var liqTopCenter = project3D(0, liqTopY, 0, w, h, yaw, pitch);
+                var rxLiq = rx * 0.91;
+                var ryLiq = ryTop * 0.88;
+                var liqGrad = ctx3d.createLinearGradient(liqTopCenter.x - rxLiq, liqTopCenter.y, liqTopCenter.x + rxLiq, botCenter.y);
+                if (isSafe) {
+                    liqGrad.addColorStop(0, 'rgba(16, 185, 129, 0.42)');
+                    liqGrad.addColorStop(0.5, 'rgba(6, 182, 212, 0.52)');
+                    liqGrad.addColorStop(1, 'rgba(4, 120, 87, 0.68)');
+                } else {
+                    liqGrad.addColorStop(0, 'rgba(245, 158, 11, 0.48)');
+                    liqGrad.addColorStop(0.5, 'rgba(239, 68, 68, 0.56)');
+                    liqGrad.addColorStop(1, 'rgba(153, 27, 27, 0.74)');
+                }
+                ctx3d.beginPath();
+                ctx3d.ellipse(liqTopCenter.x, liqTopCenter.y, rxLiq, ryLiq, 0, Math.PI, 0, false);
+                ctx3d.lineTo(botCenter.x + rxLiq, botCenter.y - 3);
+                ctx3d.ellipse(botCenter.x, botCenter.y - 3, rxLiq, ryBot * 0.88, 0, 0, Math.PI, false);
+                ctx3d.closePath();
+                ctx3d.fillStyle = liqGrad;
+                ctx3d.fill();
+
+                // Liquid Top Meniscus Surface Ring
+                ctx3d.beginPath();
+                ctx3d.ellipse(liqTopCenter.x, liqTopCenter.y, rxLiq, ryLiq, 0, 0, Math.PI * 2);
+                ctx3d.fillStyle = isSafe ? 'rgba(52, 211, 153, 0.32)' : 'rgba(251, 113, 133, 0.38)';
+                ctx3d.fill();
+                ctx3d.lineWidth = 1.4;
+                ctx3d.strokeStyle = isSafe ? '#34D399' : '#FB7185';
+                ctx3d.stroke();
+
+                // Rising Micro-Bubbles inside Chemical Liquid
+                for (var bIdx = 0; bIdx < 8; bIdx++) {
+                    var bPhase = ((loto3dState.tick * (isSafe ? 0.008 : 0.028) + bIdx * 0.13) % 1);
+                    var bY = botY - 8 - bPhase * (botY - liqTopY - 10);
+                    var bAng = bIdx * 1.7 + loto3dState.tick * 0.02;
+                    var bRad = 16 + (bIdx % 3) * 14;
+                    var bPt = project3D(Math.cos(bAng) * bRad, bY, Math.sin(bAng) * bRad, w, h, yaw, pitch);
+                    ctx3d.beginPath();
+                    ctx3d.arc(bPt.x, bPt.y, 2.2 + (bIdx % 2), 0, Math.PI * 2);
+                    ctx3d.fillStyle = isSafe ? 'rgba(167, 243, 208, 0.65)' : 'rgba(254, 205, 211, 0.80)';
+                    ctx3d.fill();
+                }
+
+                // 5. Internal Brushed Stainless Steel Helical Cooling Coil
+                ctx3d.beginPath();
+                var coilSteps = 44;
+                for (var cStep = 0; cStep <= coilSteps; cStep++) {
+                    var cFrac = cStep / coilSteps;
+                    var cAngle = cFrac * Math.PI * 6 + yaw;
+                    var cY = -36 + cFrac * 86;
+                    var cPt = project3D(Math.cos(cAngle) * 52, cY, Math.sin(cAngle) * 52, w, h, yaw, pitch);
+                    if (cStep === 0) ctx3d.moveTo(cPt.x, cPt.y);
+                    else ctx3d.lineTo(cPt.x, cPt.y);
+                }
+                ctx3d.lineWidth = 3.2;
+                ctx3d.strokeStyle = 'rgba(148, 163, 184, 0.42)';
+                ctx3d.stroke();
+                ctx3d.lineWidth = 1.2;
+                ctx3d.strokeStyle = 'rgba(226, 232, 240, 0.68)';
+                ctx3d.stroke();
+
+                // 6. Central Agitator Shaft & Dual 6-Blade Rushton Turbine Impellers
+                var shaftTop = project3D(0, -96, 0, w, h, yaw, pitch);
+                var shaftBot = project3D(0, 54, 0, w, h, yaw, pitch);
+                ctx3d.beginPath();
+                ctx3d.moveTo(shaftTop.x, shaftTop.y);
+                ctx3d.lineTo(shaftBot.x, shaftBot.y);
+                ctx3d.lineWidth = 6;
+                ctx3d.strokeStyle = '#334155';
+                ctx3d.stroke();
+                ctx3d.lineWidth = 2.2;
+                ctx3d.strokeStyle = '#E2E8F0';
+                ctx3d.stroke();
+
+                var spinAngle = isSafe ? 0.65 : loto3dState.tick * 0.075;
+                [-8, 34].forEach(function (impY, impIdx) {
+                    var bladeRadius = impIdx === 0 ? 38 : 48;
+                    var hubPt = project3D(0, impY, 0, w, h, yaw, pitch);
+                    for (var b = 0; b < 6; b++) {
+                        var ba = spinAngle + (b * Math.PI / 3);
+                        var tip1 = project3D(Math.cos(ba - 0.16) * bladeRadius, impY - 4, Math.sin(ba - 0.16) * bladeRadius, w, h, yaw, pitch);
+                        var tip2 = project3D(Math.cos(ba + 0.16) * bladeRadius, impY + 4, Math.sin(ba + 0.16) * bladeRadius, w, h, yaw, pitch);
+                        ctx3d.beginPath();
+                        ctx3d.moveTo(hubPt.x, hubPt.y);
+                        ctx3d.lineTo(tip1.x, tip1.y);
+                        ctx3d.lineTo(tip2.x, tip2.y);
+                        ctx3d.closePath();
+                        ctx3d.fillStyle = isSafe ? 'rgba(52, 211, 153, 0.55)' : 'rgba(56, 189, 248, 0.62)';
+                        ctx3d.fill();
+                        ctx3d.lineWidth = 1.2;
+                        ctx3d.strokeStyle = isSafe ? '#6EE7B7' : '#7DD3FC';
+                        ctx3d.stroke();
+                    }
+                    // Center Turbine Hub Ring
+                    ctx3d.beginPath();
+                    ctx3d.arc(hubPt.x, hubPt.y, 6, 0, Math.PI * 2);
+                    ctx3d.fillStyle = '#0F172A';
+                    ctx3d.fill();
+                    ctx3d.lineWidth = 2;
+                    ctx3d.strokeStyle = '#38BDF8';
+                    ctx3d.stroke();
+                });
+
+                // 7. 5 Bolted Flange Rings with 3D Hex Bolt Rivets & Vertical Longitudinal Ribs
+                for (var r = 0; r < 12; r++) {
+                    var ang = (r / 12) * Math.PI * 2;
+                    if (isXray && Math.sin(ang + yaw) > 0.15) continue;
+                    var topP = project3D(Math.cos(ang) * radius, topY, Math.sin(ang) * radius, w, h, yaw, pitch);
+                    var botP = project3D(Math.cos(ang) * radius, botY, Math.sin(ang) * radius, w, h, yaw, pitch);
+                    ctx3d.beginPath();
+                    ctx3d.moveTo(topP.x, topP.y);
+                    ctx3d.lineTo(botP.x, botP.y);
+                    ctx3d.lineWidth = 1.1;
+                    ctx3d.strokeStyle = isSafe ? 'rgba(56, 189, 248, 0.22)' : 'rgba(248, 113, 113, 0.24)';
+                    ctx3d.stroke();
+                }
+
+                var ringsY = [-66, -33, 0, 33, 66];
+                ringsY.forEach(function (ry, idx) {
+                    var isMainFlange = (idx === 0 || idx === 2 || idx === ringsY.length - 1);
+                    ctx3d.beginPath();
+                    for (var s = 0; s <= 32; s++) {
+                        var a = (s / 32) * Math.PI * 2;
+                        var p = project3D(Math.cos(a) * (radius + (isMainFlange ? 3 : 0)), ry, Math.sin(a) * (radius + (isMainFlange ? 3 : 0)), w, h, yaw, pitch);
+                        if (s === 0) ctx3d.moveTo(p.x, p.y);
+                        else ctx3d.lineTo(p.x, p.y);
+                    }
+                    ctx3d.lineWidth = isMainFlange ? 3.2 : 1.5;
+                    ctx3d.strokeStyle = isSafe
+                        ? (idx === 2 ? 'rgba(16, 185, 129, 0.78)' : 'rgba(56, 189, 248, 0.52)')
+                        : (idx === 2 ? 'rgba(239, 68, 68, 0.82)' : 'rgba(56, 189, 248, 0.45)');
+                    ctx3d.stroke();
+
+                    // 3D Hex Bolt Rivets along main flanges
+                    if (isMainFlange) {
+                        for (var bRiv = 0; bRiv < 12; bRiv++) {
+                            var bAng = (bRiv / 12) * Math.PI * 2;
+                            var bPt = project3D(Math.cos(bAng) * (radius + 3), ry, Math.sin(bAng) * (radius + 3), w, h, yaw, pitch);
+                            if (bPt.z < 20) {
+                                ctx3d.beginPath();
+                                ctx3d.arc(bPt.x, bPt.y, 2.1, 0, Math.PI * 2);
+                                ctx3d.fillStyle = '#E2E8F0';
+                                ctx3d.fill();
+                            }
+                        }
+                    }
+                });
+
+                // Top 45kW Explosion-Proof Motor Housing & Cooling Fins
+                var motorW = 46, motorH = 26;
+                var motorGrad = ctx3d.createLinearGradient(shaftTop.x - motorW / 2, shaftTop.y - motorH, shaftTop.x + motorW / 2, shaftTop.y);
+                motorGrad.addColorStop(0, '#0F172A');
+                motorGrad.addColorStop(0.5, '#334155');
+                motorGrad.addColorStop(1, '#0F172A');
+                ctx3d.fillStyle = motorGrad;
+                ctx3d.strokeStyle = '#38BDF8';
+                ctx3d.lineWidth = 1.8;
+                ctx3d.beginPath();
+                ctx3d.roundRect(shaftTop.x - motorW / 2, shaftTop.y - motorH, motorW, motorH, 5);
+                ctx3d.fill();
+                ctx3d.stroke();
+                // Cooling fins on motor
+                for (var f = -14; f <= 14; f += 7) {
+                    ctx3d.beginPath();
+                    ctx3d.moveTo(shaftTop.x + f, shaftTop.y - motorH + 4);
+                    ctx3d.lineTo(shaftTop.x + f, shaftTop.y - 4);
+                    ctx3d.lineWidth = 1.2;
+                    ctx3d.strokeStyle = 'rgba(148, 163, 184, 0.55)';
+                    ctx3d.stroke();
+                }
+
+                // 8. 4 3-Pass Volumetric Pipe Manifolds, Flanged Nozzles & Valve Handwheels
                 var pipes = [
                     {
                         id: 1,
-                        label: 'V-101',
+                        label: 'V-101 · HƠI NÓNG',
                         locked: true,
-                        pts: [[-290, -56, -90], [-145, -56, -45], [-68, -36, 0]],
+                        pts: [[-330, -64, -75], [-195, -64, -38], [-74, -36, 0]],
+                        hudAnchor: [165, 58],
+                        pillDx: -16,
+                        pillDy: -34,
                         valveIdx: 1
                     },
                     {
                         id: 2,
-                        label: 'CB-201',
+                        label: 'CB-201 · MOTOR 45KW',
                         locked: true,
-                        pts: [[290, -56, -90], [145, -56, -45], [68, -36, 0]],
+                        pts: [[330, -64, -75], [195, -64, -38], [74, -36, 0]],
+                        hudAnchor: [w - 165, 58],
+                        pillDx: 16,
+                        pillDy: -34,
                         valveIdx: 1
                     },
                     {
                         id: 3,
-                        label: 'V-105',
+                        label: 'V-105 · AXIT H2SO4',
                         locked: true,
-                        pts: [[-290, 56, 90], [-145, 56, 45], [-68, 42, 0]],
+                        pts: [[-330, 52, 75], [-195, 52, 38], [-74, 36, 0]],
+                        hudAnchor: [165, h - 58],
+                        pillDx: -48,
+                        pillDy: 16,
                         valveIdx: 1
                     },
                     {
                         id: 4,
-                        label: 'V-109',
+                        label: 'V-109 · XẢ ÁP N2',
                         locked: isSafe,
-                        pts: [[290, 56, 90], [145, 56, 45], [68, 42, 0]],
+                        pts: [[330, 52, 75], [195, 52, 38], [74, 36, 0]],
+                        hudAnchor: [w - 165, h - 58],
+                        pillDx: 48,
+                        pillDy: 16,
                         valveIdx: 1
                     }
                 ];
@@ -743,26 +1010,40 @@
                         return project3D(pt[0], pt[1], pt[2], w, h, yaw, pitch);
                     });
 
-                    // Outer pipe casing
+                    // Pass 1: Outer Pipe Shadow Casing
                     ctx3d.beginPath();
                     ctx3d.moveTo(projPts[0].x, projPts[0].y);
                     ctx3d.lineTo(projPts[1].x, projPts[1].y);
                     ctx3d.lineTo(projPts[2].x, projPts[2].y);
                     ctx3d.lineCap = 'round';
                     ctx3d.lineJoin = 'round';
-                    ctx3d.lineWidth = 9;
-                    ctx3d.strokeStyle = pipe.locked ? 'rgba(16, 185, 129, 0.25)' : 'rgba(239, 68, 68, 0.35)';
+                    ctx3d.lineWidth = 14;
+                    ctx3d.strokeStyle = 'rgba(15, 23, 42, 0.92)';
                     ctx3d.stroke();
 
-                    // Inner core pipe
-                    ctx3d.lineWidth = 3.5;
+                    // Pass 2: Metallic Pipe Body
+                    ctx3d.lineWidth = 10;
+                    ctx3d.strokeStyle = pipe.locked ? 'rgba(16, 185, 129, 0.38)' : 'rgba(239, 68, 68, 0.52)';
+                    ctx3d.stroke();
+
+                    // Pass 3: Anisotropic Specular Core Highlight
+                    ctx3d.lineWidth = 3.6;
+                    ctx3d.strokeStyle = pipe.locked ? '#34D399' : '#FB7185';
+                    ctx3d.stroke();
+
+                    // Vessel Nozzle Collar Ring at projPts[2]
+                    ctx3d.beginPath();
+                    ctx3d.arc(projPts[2].x, projPts[2].y, 7, 0, Math.PI * 2);
+                    ctx3d.fillStyle = '#1E293B';
+                    ctx3d.fill();
+                    ctx3d.lineWidth = 2;
                     ctx3d.strokeStyle = pipe.locked ? '#10B981' : '#EF4444';
                     ctx3d.stroke();
 
                     // If unlocked (Feeder 4 hazard), stream pressurized N2 gas particles into the reactor
                     if (!pipe.locked) {
-                        for (var k = 0; k < 5; k++) {
-                            var frac = ((loto3dState.tick * 0.025 + k * 0.2) % 1);
+                        for (var k = 0; k < 6; k++) {
+                            var frac = ((loto3dState.tick * 0.028 + k * 0.166) % 1);
                             var segX, segY;
                             if (frac < 0.5) {
                                 var t1 = frac * 2;
@@ -774,121 +1055,96 @@
                                 segY = projPts[1].y + (projPts[2].y - projPts[1].y) * t2;
                             }
                             ctx3d.beginPath();
-                            ctx3d.arc(segX, segY, 3.8, 0, Math.PI * 2);
-                            ctx3d.fillStyle = '#FDA4AF';
+                            ctx3d.arc(segX, segY, 4.2, 0, Math.PI * 2);
+                            ctx3d.fillStyle = '#FFE4E6';
                             ctx3d.fill();
                         }
                     }
 
-                    // 3D Isolation Valve Ring at elbow
+                    // 3D Isolation Valve & Spoke Handwheel at elbow
                     var vPt = projPts[pipe.valveIdx];
                     if (pipe.id === 4) {
-                        loto3dState.valve4ScreenPos = { x: vPt.x, y: vPt.y, r: 28 };
+                        loto3dState.valve4ScreenPos = { x: vPt.x, y: vPt.y, r: 34 };
+                        if (!pipe.locked) {
+                            var pulseR = 16 + ((loto3dState.tick * 0.45) % 18);
+                            ctx3d.beginPath();
+                            ctx3d.arc(vPt.x, vPt.y, pulseR, 0, Math.PI * 2);
+                            ctx3d.lineWidth = 1.8;
+                            ctx3d.strokeStyle = 'rgba(251, 113, 133, ' + Math.max(0, 1 - (pulseR - 16) / 18) + ')';
+                            ctx3d.stroke();
+                        }
                     }
+
+                    // Subtle Leader Callout Line to HUD Corner Card
+                    ctx3d.save();
+                    ctx3d.setLineDash([3, 4]);
                     ctx3d.beginPath();
-                    ctx3d.arc(vPt.x, vPt.y, pipe.id === 4 && !pipe.locked ? 12 + Math.sin(loto3dState.tick * 0.12) * 2.5 : 10, 0, Math.PI * 2);
-                    ctx3d.fillStyle = pipe.locked ? '#064E3B' : '#7F1D1D';
+                    ctx3d.moveTo(vPt.x, vPt.y);
+                    ctx3d.lineTo(pipe.hudAnchor[0], pipe.hudAnchor[1]);
+                    ctx3d.lineWidth = 1.1;
+                    ctx3d.strokeStyle = pipe.locked ? 'rgba(52, 211, 153, 0.28)' : 'rgba(251, 113, 133, 0.45)';
+                    ctx3d.stroke();
+                    ctx3d.restore();
+
+                    // Valve Body & Handwheel Rim
+                    var vRadius = pipe.id === 4 && !pipe.locked ? 14 + Math.sin(loto3dState.tick * 0.14) * 2 : 12;
+                    ctx3d.beginPath();
+                    ctx3d.arc(vPt.x, vPt.y, vRadius, 0, Math.PI * 2);
+                    ctx3d.fillStyle = pipe.locked ? '#064E3B' : '#881337';
                     ctx3d.fill();
-                    ctx3d.lineWidth = 2.2;
-                    ctx3d.strokeStyle = pipe.locked ? '#34D399' : '#FCA5A5';
+                    ctx3d.lineWidth = 2.6;
+                    ctx3d.strokeStyle = pipe.locked ? '#34D399' : '#FDA4AF';
                     ctx3d.stroke();
 
-                    // Valve label pill right above 3D elbow
-                    ctx3d.font = '700 10px Poppins, sans-serif';
-                    ctx3d.textAlign = 'center';
-                    ctx3d.fillStyle = pipe.locked ? '#A7F3D0' : '#FDA4AF';
-                    ctx3d.fillText((pipe.locked ? '🔒 ' : '⚠️ ') + pipe.label, vPt.x, vPt.y - 15);
-                });
-
-                // 3. 3D Cylindrical Reactor Vessel R-201 (Wireframe Rings + Vertical Ribs + Internal Agitator)
-                var radius = 68;
-                var ringsY = [-64, -32, 0, 32, 64];
-                var segs = 24;
-
-                // Vertical structural ribs
-                for (var r = 0; r < 12; r++) {
-                    var ang = (r / 12) * Math.PI * 2;
-                    if (loto3dState.xrayMode && Math.sin(ang + yaw) > 0.25) continue;
-                    var topP = project3D(Math.cos(ang) * radius, -64, Math.sin(ang) * radius, w, h, yaw, pitch);
-                    var botP = project3D(Math.cos(ang) * radius, 64, Math.sin(ang) * radius, w, h, yaw, pitch);
-                    ctx3d.beginPath();
-                    ctx3d.moveTo(topP.x, topP.y);
-                    ctx3d.lineTo(botP.x, botP.y);
-                    ctx3d.lineWidth = 1.2;
-                    ctx3d.strokeStyle = isSafe ? 'rgba(56, 189, 248, 0.26)' : 'rgba(248, 113, 113, 0.25)';
-                    ctx3d.stroke();
-                }
-
-                // Horizontal containment rings
-                ringsY.forEach(function (ry, idx) {
-                    ctx3d.beginPath();
-                    for (var s = 0; s <= segs; s++) {
-                        var a = (s / segs) * Math.PI * 2;
-                        var p = project3D(Math.cos(a) * radius, ry, Math.sin(a) * radius, w, h, yaw, pitch);
-                        if (s === 0) ctx3d.moveTo(p.x, p.y);
-                        else ctx3d.lineTo(p.x, p.y);
-                    }
-                    ctx3d.lineWidth = (idx === 0 || idx === ringsY.length - 1) ? 2.2 : 1.2;
-                    ctx3d.strokeStyle = isSafe
-                        ? (idx === 2 ? 'rgba(16, 185, 129, 0.65)' : 'rgba(56, 189, 248, 0.42)')
-                        : (idx === 2 ? 'rgba(239, 68, 68, 0.7)' : 'rgba(56, 189, 248, 0.35)');
-                    ctx3d.stroke();
-                });
-
-                // 4. Internal 3D Agitator Shaft & Twin Pitched-Blade Impellers
-                var shaftTop = project3D(0, -88, 0, w, h, yaw, pitch);
-                var shaftBot = project3D(0, 52, 0, w, h, yaw, pitch);
-                ctx3d.beginPath();
-                ctx3d.moveTo(shaftTop.x, shaftTop.y);
-                ctx3d.lineTo(shaftBot.x, shaftBot.y);
-                ctx3d.lineWidth = 3;
-                ctx3d.strokeStyle = '#94A3B8';
-                ctx3d.stroke();
-
-                // Top 45kW Agitator Motor Housing
-                ctx3d.fillStyle = '#0F172A';
-                ctx3d.strokeStyle = '#38BDF8';
-                ctx3d.lineWidth = 1.8;
-                ctx3d.beginPath();
-                ctx3d.roundRect(shaftTop.x - 20, shaftTop.y - 16, 40, 18, 4);
-                ctx3d.fill();
-                ctx3d.stroke();
-
-                // Rotating 3D Turbine Blades (slows to complete stop when all 4 points locked)
-                var spinAngle = isSafe ? 0.6 : loto3dState.tick * 0.06;
-                [10, 42].forEach(function (impY, impIdx) {
-                    var bladeRadius = impIdx === 0 ? 34 : 44;
-                    for (var b = 0; b < 4; b++) {
-                        var ba = spinAngle + (b * Math.PI * 0.5);
-                        var bStart = project3D(0, impY, 0, w, h, yaw, pitch);
-                        var bEnd = project3D(Math.cos(ba) * bladeRadius, impY, Math.sin(ba) * bladeRadius, w, h, yaw, pitch);
+                    // Valve Handwheel Spokes
+                    for (var sp = 0; sp < 4; sp++) {
+                        var spA = (sp * Math.PI * 0.5) + (pipe.locked ? 0 : loto3dState.tick * 0.04);
                         ctx3d.beginPath();
-                        ctx3d.moveTo(bStart.x, bStart.y);
-                        ctx3d.lineTo(bEnd.x, bEnd.y);
-                        ctx3d.lineWidth = 3;
-                        ctx3d.strokeStyle = isSafe ? '#34D399' : '#38BDF8';
+                        ctx3d.moveTo(vPt.x - Math.cos(spA) * (vRadius - 3), vPt.y - Math.sin(spA) * (vRadius - 3));
+                        ctx3d.lineTo(vPt.x + Math.cos(spA) * (vRadius - 3), vPt.y + Math.sin(spA) * (vRadius - 3));
+                        ctx3d.lineWidth = 1.6;
+                        ctx3d.strokeStyle = pipe.locked ? '#A7F3D0' : '#FFE4E6';
                         ctx3d.stroke();
                     }
+
+                    // High-Contrast Valve Label Pill (offset outward so zero overlap)
+                    var pillText = (pipe.locked ? '🔒 ' : '⚠️ ') + pipe.label;
+                    ctx3d.font = '700 10px Poppins, sans-serif';
+                    var pillW = Math.max(114, ctx3d.measureText(pillText).width + 16);
+                    var pillH = 20;
+                    var pillX = vPt.x + (pipe.pillDx || 0) - pillW / 2;
+                    var pillY = vPt.y + pipe.pillDy;
+                    ctx3d.fillStyle = 'rgba(7, 14, 28, 0.92)';
+                    ctx3d.strokeStyle = pipe.locked ? 'rgba(52, 211, 153, 0.65)' : 'rgba(251, 113, 133, 0.85)';
+                    ctx3d.lineWidth = 1.2;
+                    ctx3d.beginPath();
+                    ctx3d.roundRect(pillX, pillY, pillW, pillH, 4);
+                    ctx3d.fill();
+                    ctx3d.stroke();
+                    ctx3d.textAlign = 'center';
+                    ctx3d.fillStyle = pipe.locked ? '#A7F3D0' : '#FFE4E6';
+                    ctx3d.fillText(pillText, pillX + pillW / 2, pillY + 13.5);
                 });
 
-                // 5. Center 3D Reactor Core Status Readout Tag
-                var coreCenter = project3D(0, -6, 0, w, h, yaw, pitch);
-                var tagW = 186, tagH = 38;
-                ctx3d.fillStyle = 'rgba(7, 14, 28, 0.9)';
+                // 9. Bottom-Center Docked 3D Reactor Core Status Readout Tag (Unobstructed Vessel View)
+                var tagCenterX = w * 0.5;
+                var tagCenterY = h - 32;
+                var tagW = 296, tagH = 46;
+                ctx3d.fillStyle = 'rgba(6, 12, 24, 0.94)';
                 ctx3d.strokeStyle = isSafe ? '#10B981' : '#EF4444';
                 ctx3d.lineWidth = 1.6;
                 ctx3d.beginPath();
-                ctx3d.roundRect(coreCenter.x - tagW / 2, coreCenter.y - tagH / 2, tagW, tagH, 6);
+                ctx3d.roundRect(tagCenterX - tagW / 2, tagCenterY - tagH / 2, tagW, tagH, 6);
                 ctx3d.fill();
                 ctx3d.stroke();
 
                 ctx3d.font = '700 10px Poppins, sans-serif';
                 ctx3d.textAlign = 'center';
                 ctx3d.fillStyle = '#F8FAFC';
-                ctx3d.fillText('REACTOR R-201 DIGITAL TWIN', coreCenter.x, coreCenter.y - 4);
+                ctx3d.fillText('BỒN PHẢN ỨNG R-201 · DIGITAL TWIN · ' + (isSafe ? 'RPM: 0 · 28.4°C' : 'RPM: 145 · 64.2°C'), tagCenterX, tagCenterY - 5);
                 ctx3d.font = '700 9.5px Poppins, sans-serif';
                 ctx3d.fillStyle = isSafe ? '#34D399' : '#FDA4AF';
-                ctx3d.fillText(isSafe ? '🛡️ ZERO ENERGY VERIFIED' : '⛔ ÁP SUẤT DƯ N2: 0.35 BAR', coreCenter.x, coreCenter.y + 11);
+                ctx3d.fillText(isSafe ? '🛡️ ZERO ENERGY VERIFIED · ÁP SUẤT 0.00 BAR (AN TOÀN MỞ BỒN)' : '⛔ ÁP SUẤT DƯ N2: 0.35 BAR · CẤM MỞ MANHOLE R-201', tagCenterX, tagCenterY + 11);
 
                 requestAnimationFrame(renderLoto3dFrame);
             }

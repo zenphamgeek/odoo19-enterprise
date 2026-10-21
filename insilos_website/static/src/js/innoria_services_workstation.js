@@ -241,8 +241,8 @@
                 lead: 'VP of Infrastructure (Ex-AWS Principal Engineer)'
             },
             hcm: {
-                headcount: '55 Enterprise Solution & SAP Consultants',
-                focus: 'SAP/Odoo Core ERP, Nghị định 70/2025 (1C26TAA) & Thông tư 13/2020 Compliance',
+                headcount: '55 Enterprise Solution & ERP Consultants',
+                focus: 'Enterprise Core ERP, Nghị định 70/2025 (1C26TAA) & Thông tư 13/2020 Compliance',
                 lead: 'Chief Solutions Architect (18+ Years Enterprise)'
             }
         };

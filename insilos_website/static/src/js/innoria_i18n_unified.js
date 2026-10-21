@@ -1168,16 +1168,21 @@
                             .join(", ");
                         if (summaryEl) {
                             summaryEl.classList.remove("d-none");
-                            summaryEl.textContent = isEn
-                                ? `✓ Attached ${files.length} file(s) (${names} · ${totalKb} KB) — Fast-Track Priority Quote (< 2h SLA) Activated!`
-                                : `✓ Đã đính kèm ${files.length} tệp (${names} · ${totalKb} KB) — Đã kích hoạt Báo Giá Ưu Tiên (< 2 giờ)!`;
+                            summaryEl.classList.add("d-inline-flex", "align-items-center", "justify-content-end", "gap-1", "w-100");
+                            const summaryText = isEn
+                                ? `Attached ${files.length} file(s) (${names} · ${totalKb} KB) — Fast-Track Priority Quote (< 2h SLA) Activated!`
+                                : `Đã đính kèm ${files.length} tệp (${names} · ${totalKb} KB) — Đã kích hoạt Báo Giá Ưu Tiên (< 2 giờ)!`;
+                            summaryEl.innerHTML = `<svg class="ph-duotone ph-check-circle" style="width:13px;height:13px;flex-shrink:0;" aria-hidden="true"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg><span></span>`;
+                            summaryEl.querySelector("span").textContent = summaryText;
                         }
                         if (badgeEl) {
                             badgeEl.style.background = "#005F73";
                             badgeEl.style.color = "#FFFFFF";
-                            badgeEl.textContent = isEn
-                                ? `✓ PRIORITY ACTIVE (${files.length} FILE${files.length > 1 ? "S" : ""})`
-                                : `✓ ĐÃ KÍCH HOẠT ƯU TIÊN (${files.length} FILE)`;
+                            const badgeText = isEn
+                                ? `PRIORITY ACTIVE (${files.length} FILE${files.length > 1 ? "S" : ""})`
+                                : `ĐÃ KÍCH HOẠT ƯU TIÊN (${files.length} FILE)`;
+                            badgeEl.innerHTML = `<svg class="ph-duotone ph-check-circle" style="width:12px;height:12px;flex-shrink:0;" aria-hidden="true"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-check-circle"/></svg><span></span>`;
+                            badgeEl.querySelector("span").textContent = badgeText;
                         }
                     } else {
                         if (summaryEl) {
@@ -1187,9 +1192,11 @@
                         if (badgeEl) {
                             badgeEl.style.background = "#FF8000";
                             badgeEl.style.color = "#FFFFFF";
-                            badgeEl.textContent = isEn
-                                ? "⚡ FAST-TRACK PRIORITY (< 2H SLA)"
-                                : "⚡ ƯU TIÊN BÁO GIÁ NHANH (< 2 GIỜ)";
+                            const badgeText = isEn
+                                ? "FAST-TRACK PRIORITY (< 2H SLA)"
+                                : "ƯU TIÊN BÁO GIÁ NHANH (< 2 GIỜ)";
+                            badgeEl.innerHTML = `<svg class="ph-duotone ph-lightning" style="width:12px;height:12px;flex-shrink:0;" aria-hidden="true"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-lightning"/></svg><span></span>`;
+                            badgeEl.querySelector("span").textContent = badgeText;
                         }
                     }
                 });
