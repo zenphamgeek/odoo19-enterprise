@@ -5,11 +5,11 @@ from odoo.exceptions import ValidationError
 from odoo.tools.bank_account_number import validate_iban
 
 
-def _is_iban_valid(iban):
+def _is_iban_valid(iban, env=None):
     if iban is None:
         return False
     try:
-        validate_iban(iban)
+        validate_iban(env, iban)
         return True
     except ValidationError:
         pass
@@ -22,4 +22,4 @@ class HrEmployee(models.Model):
     def _get_invalid_iban_employee_ids(self, employees_data=False):
         if not employees_data:
             employees_data = self._get_account_holder_employees_data()
-        return [employee['id'] for employee in employees_data if not _is_iban_valid(employee['acc_number'])]
+        return [employee['id'] for employee in employees_data if not _is_iban_valid(employee['acc_number'], self.env)]

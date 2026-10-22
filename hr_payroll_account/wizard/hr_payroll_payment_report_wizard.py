@@ -3,11 +3,11 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools.bank_account_number import validate_iban
 
 
-def _is_iban_valid(iban):
+def _is_iban_valid(iban, env=None):
     if iban is None:
         return False
     try:
-        validate_iban(iban)
+        validate_iban(env, iban)
         return True
     except ValidationError:
         pass
@@ -23,7 +23,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         payslips = self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0)
         employees = payslips.employee_id
 
-        invalid_iban_employee_ids = employees.filtered(lambda e: any((ba.acc_type == 'iban' and not _is_iban_valid(ba.acc_number)) for ba in e.bank_account_ids))
+        invalid_iban_employee_ids = employees.filtered(lambda e: any((ba.acc_type == 'iban' and not _is_iban_valid(ba.acc_number, self.env)) for ba in e.bank_account_ids))
         if invalid_iban_employee_ids:
             raise UserError(_(
                 'Invalid IBAN for the following employees:\n%s',
