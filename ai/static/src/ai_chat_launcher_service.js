@@ -76,7 +76,7 @@ export const aiChatLauncherService = {
                 let frontEndRecordInfo;
                 // if the component calling the AI has access to record info, we pass it straight to the AI
                 if (['html_field_record', 'html_field_text_select', 'chatter_ai_button'].includes(callerComponentName)) {
-                    frontEndRecordInfo = this.recordDataToContextJSON(originalRecordData, originalRecordFields);
+                    frontEndRecordInfo = this.recordDataToContextJSON(originalRecordData, originalRecordFields || {});
                 }
                 // make the insert button target the component that called the AI
                 services['mail.store'].aiInsertButtonTarget = aiChatSourceId;
@@ -86,7 +86,7 @@ export const aiChatLauncherService = {
                     'create_ai_draft_channel',
                     [
                         callerComponentName,
-                        channelTitle,
+                        channelTitle || "Insilos AI Copilot",
                         recordModel,
                         recordId,
                         frontEndRecordInfo,
@@ -96,11 +96,14 @@ export const aiChatLauncherService = {
 
                 const payload = { ...data };
                 if (payload["party.master"]) {
-                    // Isolated mapping: Never overwrite standard res.partner ID namespace
-                    payload["party.master"] = payload["party.master"].map((rec) => ({
-                        ...rec,
-                        _source_model: "party.master",
-                    }));
+                    // Map physical table party.master into logical res.partner for mail.store insertion
+                    payload["res.partner"] = [
+                        ...(payload["res.partner"] || []),
+                        ...payload["party.master"].map((rec) => ({
+                            ...rec,
+                            _source_model: "party.master",
+                        })),
+                    ];
                 }
                 services['mail.store'].insert(payload);
                 const thread = await services['mail.store'].Thread.getOrFetch({
@@ -129,12 +132,16 @@ export const aiChatLauncherService = {
              * @returns {String} String JSON representation of the record
              */
             recordDataToContextJSON(recordData, fieldsInfo) {
+                if (!recordData) {
+                    return "{}";
+                }
+                const safeFields = fieldsInfo || {};
                 const result = {};
 
                 for (const fieldName in recordData) {
                     if (!recordData.hasOwnProperty(fieldName)) continue;
                     const fieldValue = recordData[fieldName];
-                    const fieldInfo = fieldsInfo[fieldName] || {};
+                    const fieldInfo = safeFields[fieldName] || {};
                     // Skip binary fields entirely - there is no easy way of placing them in the context
                     if (fieldInfo.type === 'binary') {
                         continue;

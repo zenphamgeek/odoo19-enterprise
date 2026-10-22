@@ -1282,6 +1282,43 @@
                 </div>
             </div>
 
+            <!-- Pinned Favorites Apps to Top -->
+            <div t-if="favoriteApps.length &amp;&amp; displayedApps.length" class="o_home_menu_favorites_section mt-4 mb-3">
+                <div class="d-flex align-items-center justify-content-between mb-2 px-1">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa fa-star text-warning"/>
+                        <span class="o_fav_header_title fw-bold text-uppercase">Ứng dụng Yêu thích (Favorites)</span>
+                        <span class="o_fav_header_count badge rounded-pill" t-out="favoriteApps.length"/>
+                    </div>
+                    <span class="o_fav_header_hint text-muted small">
+                        <i class="fa fa-thumb-tack me-1"/>Ghim trên đầu trang
+                    </span>
+                </div>
+                <div class="o_home_menu_favorites_bar d-flex flex-wrap gap-2">
+                    <div t-foreach="favoriteApps" t-as="favApp" t-key="'fav_' + favApp.id" class="o_fav_app_tile position-relative">
+                        <a role="option"
+                            class="o_fav_app_btn d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-decoration-none"
+                            t-att-href="favApp.href"
+                            t-att-title="favApp.label or favApp.name"
+                            t-on-click.prevent="() => this._onAppClick(favApp)">
+                            <div class="o_fav_app_icon d-flex align-items-center justify-content-center">
+                                <img t-if="favApp.webIconData" class="rounded-1" t-attf-src="{{favApp.webIconData}}" style="width: 22px; height: 22px; object-fit: contain;"/>
+                                <div t-else="" class="rounded-1 d-flex align-items-center justify-content-center"
+                                    t-attf-style="width: 22px; height: 22px; background-color: {{favApp.webIcon.backgroundColor}};">
+                                    <i t-attf-class="{{favApp.webIcon.iconClass}}" t-attf-style="color: {{favApp.webIcon.color}}; font-size: 13px;"/>
+                                </div>
+                            </div>
+                            <span class="o_fav_app_label fw-semibold text-truncate" t-out="favApp.label or favApp.name"/>
+                        </a>
+                        <button type="button" class="btn btn-link o_fav_unpin_btn p-0 position-absolute"
+                            t-on-click.stop.prevent="(ev) => this.toggleFavoriteApp(favApp, ev)"
+                            title="Bỏ ghim khỏi Yêu thích">
+                            <i class="fa fa-times-circle"/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div t-if="displayedApps.length" role="listbox" class="o_apps user-select-none mt-4 mx-0">
                 <div t-foreach="displayedApps" t-as="app" t-key="app.id" class="o_draggable mb-3">
                     <t t-set="sapAcronym" t-value="
@@ -1305,12 +1342,19 @@
                     <a t-att-id="'result_app_' + app_index"
                         role="option"
                         t-att-aria-selected="state.focusedIndex === app_index ? 'true' : 'false'"
-                        class="o_app o_menuitem d-flex flex-column rounded-3 justify-content-start align-items-center p-1 p-md-2"
+                        class="o_app o_menuitem d-flex flex-column rounded-3 justify-content-start align-items-center p-1 p-md-2 position-relative"
                         t-att-class="{o_focused: state.focusedIndex === app_index}"
                         t-att-data-menu-xmlid="app.xmlid"
                         t-att-href="app.href"
                         t-on-click.prevent="() => this._onAppClick(app)"
                         >
+                        <!-- Star Favorite Button -->
+                        <button type="button" class="btn btn-link o_app_fav_star_btn p-0 position-absolute"
+                            t-att-class="{ 'o_is_favorite': isFavoriteApp(app) }"
+                            t-on-click.stop.prevent="(ev) => this.toggleFavoriteApp(app, ev)"
+                            t-att-title="isFavoriteApp(app) ? 'Bỏ ghim khỏi Yêu thích' : 'Ghim lên đầu trang (Yêu thích)'">
+                            <i class="fa" t-att-class="isFavoriteApp(app) ? 'fa-star text-warning' : 'fa-star-o'"/>
+                        </button>
                         <span t-if="sapAcronym" class="o_sap_pill badge" t-attf-class="o_sap_pill_{{sapAcronym ? sapAcronym.toLowerCase().replace('/', '_') : ''}}" t-out="sapAcronym"/>
                         <div class="o_app_icon_wrapper position-relative d-flex justify-content-center align-items-center">
                             <img t-if="app.webIconData" class="o_app_icon rounded-3"

@@ -32,7 +32,7 @@ patch(FormController.prototype, {
             }
             const recordModel = this.model?.root?.resModel;
             const recordId = this.model?.root?.resId;
-            const channelTitle = typeof this.displayName === "function" ? this.displayName() : (this.model?.root?.data?.display_name || "AI Assistant");
+            const channelTitle = typeof this.displayName === "function" ? this.displayName() : (this.model?.root?.data?.display_name || "Insilos AI Copilot");
 
             // Allowlist projection: Exclude passwords, hashes, financial accounts, and tokens
             const rawData = this.model?.root?.data || {};
@@ -44,14 +44,21 @@ patch(FormController.prototype, {
                 }
             }
 
-            this.aiChatLauncher.launchAIChat({
+            await this.aiChatLauncher.launchAIChat({
                 callerComponentName: callerComponentName || "chatter_ai_button",
-                channelTitle,
+                channelTitle: channelTitle || "Insilos AI Copilot",
                 recordModel,
                 recordId,
                 originalRecordData: safeRecordData,
-                originalRecordFields: undefined,
+                originalRecordFields: this.model?.root?.fields || {},
                 aiChatSourceId: recordId,
+            });
+        } catch (err) {
+            console.error("[Insilos AI Copilot] Error in openAiChat:", err);
+            // Fallback: launch general AI chat without crashing
+            await this.aiChatLauncher.launchAIChat({
+                callerComponentName: "systray_ai_button",
+                channelTitle: "Insilos AI Copilot",
             });
         } finally {
             this._aiChatDispatching = false;

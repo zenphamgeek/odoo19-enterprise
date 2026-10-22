@@ -63,6 +63,37 @@
             border-color: var(--insilos-border-subtle);
         }
     }
+
+    .o_home_menu .o_home_menu_favorites_section {
+        background-color: rgba(15, 23, 42, 0.72) !important;
+        background: rgba(15, 23, 42, 0.72) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+
+        .o_fav_header_title {
+            color: #f8fafc !important;
+        }
+
+        .o_fav_header_count {
+            background-color: rgba(245, 158, 11, 0.25) !important;
+            color: #fbbf24 !important;
+        }
+
+        .o_fav_app_tile .o_fav_app_btn {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            color: #f1f5f9 !important;
+
+            &:hover {
+                background-color: rgba(255, 128, 0, 0.16) !important;
+                border-color: rgba(255, 128, 0, 0.6) !important;
+                color: #ff9800 !important;
+                box-shadow: 0 4px 16px rgba(255, 128, 0, 0.2) !important;
+            }
+        }
+    }
 }
 
 html[data-theme="light"] body:not(.o_dark_mode) {
@@ -87,6 +118,23 @@ html[data-theme="light"] body:not(.o_dark_mode) {
             background-color: var(--insilos-bg-card) !important;
             border-color: var(--insilos-border-subtle) !important;
             color: var(--insilos-text-primary) !important;
+        }
+
+        .o_home_menu .o_home_menu_favorites_section {
+            background-color: var(--insilos-bg-card) !important;
+            background: var(--insilos-bg-card) !important;
+            border-color: var(--insilos-border-subtle) !important;
+            box-shadow: var(--insilos-shadow-sm) !important;
+
+            .o_fav_header_title {
+                color: var(--insilos-text-primary) !important;
+            }
+
+            .o_fav_app_tile .o_fav_app_btn {
+                background-color: var(--insilos-bg-surface) !important;
+                border-color: var(--insilos-border-subtle) !important;
+                color: var(--insilos-text-primary) !important;
+            }
         }
     }
 }

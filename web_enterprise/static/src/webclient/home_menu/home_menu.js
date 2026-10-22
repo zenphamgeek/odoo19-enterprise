@@ -1,4 +1,5 @@
 import { hasTouch, isIosApp, isMacOS } from "@web/core/browser/feature_detection";
+import { browser } from "@web/core/browser/browser";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 import { rpc } from "@web/core/network/rpc";
 import { user } from "@web/core/user";
@@ -97,9 +98,27 @@ export class HomeMenu extends Component {
         this.subscription = useService("enterprise_subscription");
         this.ui = useService("ui");
         this.action = useService("action");
+        const savedFavorites = (() => {
+            try {
+                const raw = browser.localStorage.getItem("insilos_home_menu_favorites");
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        })();
+        const defaultFavorites = [
+            "crm.crm_menu_root",
+            "sale.sale_menu_root",
+            "account.menu_finance",
+            "mail.menu_root_discuss",
+            "stock.menu_stock_root",
+        ];
+        const initialFavorites = Array.isArray(savedFavorites) && savedFavorites.length ? savedFavorites : defaultFavorites;
+
         this.state = proxy({
             focusedIndex: null,
             isIosApp: isIosApp(),
+            favoriteAppXmlids: initialFavorites,
             empDashboard: {
                 loading: true,
                 expanded: true,
@@ -210,6 +229,57 @@ export class HomeMenu extends Component {
      */
     get displayedApps() {
         return this.props.apps;
+    }
+
+    /**
+     * @returns {Object[]} Pinned favorite applications for quick access at the top
+     */
+    get favoriteApps() {
+        if (!this.props.apps || !this.state.favoriteAppXmlids) {
+            return [];
+        }
+        const favSet = new Set(this.state.favoriteAppXmlids);
+        return this.props.apps.filter((app) => app.xmlid && favSet.has(app.xmlid));
+    }
+
+    /**
+     * Check if an app is marked as favorite
+     * @param {Object} app
+     * @returns {boolean}
+     */
+    isFavoriteApp(app) {
+        if (!app || !app.xmlid || !this.state.favoriteAppXmlids) {
+            return false;
+        }
+        return this.state.favoriteAppXmlids.includes(app.xmlid);
+    }
+
+    /**
+     * Toggle favorite status of an app
+     * @param {Object} app
+     * @param {Event} [ev]
+     */
+    toggleFavoriteApp(app, ev) {
+        if (ev) {
+            ev.stopPropagation();
+            ev.preventDefault();
+        }
+        if (!app || !app.xmlid) {
+            return;
+        }
+        const xmlid = app.xmlid;
+        let nextFavorites = [...(this.state.favoriteAppXmlids || [])];
+        if (nextFavorites.includes(xmlid)) {
+            nextFavorites = nextFavorites.filter((id) => id !== xmlid);
+        } else {
+            nextFavorites.push(xmlid);
+        }
+        this.state.favoriteAppXmlids = nextFavorites;
+        try {
+            browser.localStorage.setItem("insilos_home_menu_favorites", JSON.stringify(nextFavorites));
+        } catch (e) {
+            console.warn("[HomeMenu] Failed to save favorites in localStorage:", e);
+        }
     }
 
     /**

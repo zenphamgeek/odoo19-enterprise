@@ -393,7 +393,7 @@ class ResPartner(models.Model):
                         ELSE 'no_action_needed' END as followup_status
             FROM (
           SELECT partner.id,
-                 {self.env.cr.mogrify(ResPartner._field_to_sql('partner', 'followup_next_action_date')).decode(self.env.cr.connection.encoding)} AS followup_next_action_date,
+                 MAX({self.env.cr.mogrify(ResPartner._field_to_sql('partner', 'followup_next_action_date')).decode(self.env.cr.connection.encoding)}) AS followup_next_action_date,
                  MAX(COALESCE(next_ful.delay, ful.delay)) as followup_delay,
                  SUM(aml.balance) as balance
             FROM {partner_table} partner
@@ -414,7 +414,7 @@ class ResPartner(models.Model):
              AND aml.reconciled IS NOT TRUE
              AND aml.company_id = ANY(%(company_ids)s)
              {"" if partner_ids is None else "AND aml.partner_id IN %(partner_ids)s"}
-        GROUP BY partner.id, partner.followup_next_action_date
+        GROUP BY partner.id
             ) partner
             LEFT JOIN account_followup_followup_line ful ON ful.delay = partner.followup_delay AND ful.company_id = %(company_id)s
             -- Get the followup status data

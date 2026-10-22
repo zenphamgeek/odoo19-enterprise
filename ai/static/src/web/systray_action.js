@@ -85,6 +85,7 @@ export default class SystrayAction extends Component {
             if (!handled) {
                 await this.aiChatLauncher.launchAIChat({
                     callerComponentName: "systray_ai_button",
+                    channelTitle: "Insilos AI Copilot",
                 });
             }
         } finally {

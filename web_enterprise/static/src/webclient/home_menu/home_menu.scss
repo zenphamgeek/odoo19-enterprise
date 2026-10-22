@@ -679,5 +679,113 @@
     }
 }
 
+// ============================================================================
+// Insilos Enterprise: Pinned Favorites Apps to Top
+// ============================================================================
+.o_home_menu {
+    .o_home_menu_favorites_section {
+        background: var(--insilos-bg-card, #ffffff);
+        border: 1px solid var(--insilos-border-subtle, rgba(0, 0, 0, 0.08));
+        border-radius: 12px;
+        padding: 14px 18px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        margin-bottom: 20px;
+
+        .o_fav_header_title {
+            font-size: 0.82rem;
+            letter-spacing: 0.05em;
+            color: var(--insilos-text-primary, #1e293b);
+        }
+
+        .o_fav_header_count {
+            background-color: rgba(245, 158, 11, 0.16);
+            color: #d97706;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+        }
+
+        .o_fav_header_hint {
+            font-size: 0.75rem;
+            color: var(--insilos-text-secondary, #64748b);
+        }
+
+        .o_home_menu_favorites_bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .o_fav_app_tile {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+
+            .o_fav_app_btn {
+                background: var(--insilos-bg-surface, #f8fafc);
+                border: 1px solid var(--insilos-border-subtle, rgba(0, 0, 0, 0.08));
+                color: var(--insilos-text-primary, #0f172a);
+                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+                max-width: 220px;
+                padding-right: 28px !important;
+
+                &:hover {
+                    background: var(--insilos-bg-hover, rgba(255, 128, 0, 0.08));
+                    border-color: rgba(255, 128, 0, 0.45);
+                    transform: translateY(-1px);
+                    box-shadow: 0 4px 12px rgba(255, 128, 0, 0.12);
+                }
+
+                .o_fav_app_label {
+                    font-size: 0.82rem;
+                    line-height: 1.2;
+                }
+            }
+
+            .o_fav_unpin_btn {
+                right: 7px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--insilos-text-secondary, #94a3b8);
+                opacity: 0.45;
+                transition: opacity 0.2s ease, color 0.2s ease;
+                font-size: 13px;
+                line-height: 1;
+
+                &:hover {
+                    opacity: 1;
+                    color: #ef4444;
+                }
+            }
+        }
+    }
+
+    // App Card Star Pin Button
+    .o_app_fav_star_btn {
+        top: 6px;
+        right: 6px;
+        z-index: 3;
+        opacity: 0;
+        transition: opacity 0.2s ease, transform 0.15s ease;
+        font-size: 14px;
+        line-height: 1;
+        color: var(--insilos-text-secondary, #94a3b8);
+
+        &.o_is_favorite {
+            opacity: 1 !important;
+            color: #f59e0b !important;
+        }
+
+        &:hover {
+            transform: scale(1.2);
+            color: #f59e0b !important;
+        }
+    }
+
+    .o_app:hover .o_app_fav_star_btn {
+        opacity: 0.85;
+    }
+}
+
 
 
