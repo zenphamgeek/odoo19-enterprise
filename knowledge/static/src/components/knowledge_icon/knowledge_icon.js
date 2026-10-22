@@ -25,7 +25,8 @@ export default class KnowledgeIcon extends Component {
     }
 
     get icon() {
-        return this.props.record.data.icon || (this.props.fallbackDefaultIcon && "📄");
+        const val = typeof this.props.record?.data?.icon === "function" ? this.props.record.data.icon() : this.props.record?.data?.icon;
+        return val || (this.props.fallbackDefaultIcon && "📄");
     }
 
     async selectRandomIcon() {

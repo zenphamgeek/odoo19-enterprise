@@ -6,7 +6,15 @@ from odoo.addons.esg.controllers.esg_dashboard import EsgDashboard
 class EsgProjectDashboard(EsgDashboard):
 
     def _get_initiatives_section_data(self):
-        esg_project = request.env.ref('esg_project.esg_project_project_0')
+        esg_project = request.env.ref('esg_project.esg_project_project_0', raise_if_not_found=False)
+        if not esg_project:
+            esg_project = request.env['project.project'].search([('name', 'ilike', 'ESG')], limit=1)
+        if not esg_project:
+            return {
+                'project_id': False,
+                'tasks_per_stage_label': [],
+                'tasks_total_count': 0,
+            }
         esg_stages = request.env['project.task.type'].search(
             domain=[('project_ids', 'in', esg_project.ids)],
             order='sequence',
