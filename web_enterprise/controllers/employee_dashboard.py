@@ -2025,6 +2025,8 @@ class InsilosEmployeeDashboardController(http.Controller):
         return reqs
 
     def _get_or_init_lifecycle(self, emp_dict):
+        if not emp_dict or "id" not in emp_dict:
+            return {"onboarding": [], "leaving": []}
         IrConfig = request.env["ir.config_parameter"].sudo()
         key = f"dgm.hr.lifecycle.{emp_dict['id']}"
         raw = IrConfig.get_param(key)
