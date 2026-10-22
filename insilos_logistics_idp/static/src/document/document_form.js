@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 import { Component, onWillStart, useExternalListener, xml } from '@odoo/owl';
 import { download } from '@web/core/network/download';
 import { registry } from '@web/core/registry';

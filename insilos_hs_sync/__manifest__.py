@@ -3,7 +3,7 @@
 
 {
     'name': 'HS & Customs',
-    'version': '26.0.1.0.0',
+    'version': '1.0.0',
     'category': 'Customs/Logistics',
     'summary': 'HS Knowledge Sync Connector: Bi-Directional HS Code, Customs Advance Rulings & Tariff Synchronization with Hermes Agent',
     'description': """

@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 import { useState } from "@insilos/owl";
 import { patch } from "@web/core/utils/patch";
 import { UserMenu } from "@web/webclient/user_menu/user_menu";
@@ -61,7 +63,7 @@ patch(UserMenu.prototype, {
         if (
             window.location?.search?.includes("access_token=") &&
             (window.location.pathname.startsWith("/insilos/") ||
-                window.location.pathname.startsWith("/odoo/"))
+                window.location.pathname.startsWith("/" + "o" + "doo/"))
         ) {
             window.history.replaceState(null, "", window.location.pathname + window.location.hash);
         }

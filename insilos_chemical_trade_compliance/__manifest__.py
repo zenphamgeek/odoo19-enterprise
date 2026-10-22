@@ -3,7 +3,7 @@
 
 {
     'name': 'Chemical Trade',
-    'version': '26.0.1.0.2',
+    'version': '1.0.2',
     'category': 'Logistics/Compliance',
     'summary': 'Chemical Trade Compliance, Regulatory Determination, NSW Dossier & Permit Quota — Luật Hóa chất 69/2025/QH15',
     'description': """

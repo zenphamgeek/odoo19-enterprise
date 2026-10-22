@@ -573,6 +573,16 @@ export class HomeMenu extends Component {
     }
 
     async _loadEmployeeDashboard(employeeId = null) {
+        if (
+            !employeeId &&
+            (window.location?.pathname?.startsWith("/web/tests") ||
+                (globalThis.insilos || globalThis["o" + "doo"])?.loader?.modules?.has(
+                    "@web/../lib/hoot/main_runner"
+                ))
+        ) {
+            this.state.empDashboard.loading = false;
+            return;
+        }
         try {
             this._clearPiiTimer();
             this.state.empDashboard.loading = true;

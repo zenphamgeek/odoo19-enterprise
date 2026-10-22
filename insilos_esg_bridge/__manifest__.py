@@ -3,7 +3,7 @@
 
 {
     'name': 'ESG Intelligence',
-    'version': '26.0.1.0.1',
+    'version': '1.0.1',
     'category': 'ESG/Operations',
     'summary': 'Cross-App ESG & Sustainability Intelligence: CEMS IoT Emissions, Freight Carbon (Scope 3 Cat 4), Chemical Footprint & CBAM Advisor',
     'description': """

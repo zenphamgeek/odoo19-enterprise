@@ -350,9 +350,9 @@ def _enrich_workflow(wf_block):
 CANONICAL_SKILL_TRACKS = [
     {
         "code": "SKL-ERP-OWL3",
-        "name": "Odoo 20 & OWL 3 Reactive Architecture",
+        "name": "Insilos 20 & OWL 3 Reactive Architecture",
         "domain": "erp_owl",
-        "domain_label": "Odoo 20 & OWL 3 Architecture",
+        "domain_label": "Insilos 20 & OWL 3 Architecture",
         "target_level": "L4",
         "mandatory_for_swe": True,
         "training_hours": 40,
@@ -442,7 +442,7 @@ CANONICAL_EMPLOYEE_KPI_PROFILES = {
         "kpi_delivery_score": 97.5,
         "kpi_quality_score": 99.0,
         "kpi_work_eval_score": 96.5,
-        "okr_key_results_met": "6/6 KR Kiến trúc Lõi Odoo 20, OWL 3 & AI Fleet",
+        "okr_key_results_met": "6/6 KR Kiến trúc Lõi Insilos 20, OWL 3 & AI Fleet",
         "sprint_velocity_pct": 98.5,
         "code_review_pass_rate": 99.2,
         "prod_defect_escape_rate": 0.1,
@@ -2015,7 +2015,7 @@ class InsilosEmployeeDashboardController(http.Controller):
                 "som_target_vnd_billion": 240.0,
                 "cagr_pct": 19.8,
                 "primary_competitors": "SAP B1/S4HANA, Oracle NetSuite, Base.vn, MISA AMIS",
-                "innoria_moat_proposition": "Clean-Core Odoo 20, Tích hợp Gốc Hóa đơn Điện tử NĐ 70 (1C26TAA), BHXH TZ0857G & Xuất lương VCB DigiBiz",
+                "innoria_moat_proposition": "Clean-Core Insilos 20, Tích hợp Gốc Hóa đơn Điện tử NĐ 70 (1C26TAA), BHXH TZ0857G & Xuất lương VCB DigiBiz",
                 "win_rate_benchmark_pct": 48.0,
                 "recommended_pricing_anchor_vnd": 250000000.0,
                 "grounding_verified": True,
@@ -3338,7 +3338,7 @@ class InsilosEmployeeDashboardController(http.Controller):
 
     @http.route("/insilos/employee_dashboard/run_autonomous_marketing_scan", type="jsonrpc", auth="user", readonly=False)
     def run_autonomous_marketing_scan(self, employee_id=None, domain=None, **kwargs):
-        from odoo.addons.insilos_al2c.controllers.radar_security import (
+        from insilos.addons.insilos_al2c.controllers.radar_security import (
             MerkleWitnessGate,
             SafeDomainASTValidator,
             TenantSecurityBarrier,

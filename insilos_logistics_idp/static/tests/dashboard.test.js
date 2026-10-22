@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 import { expect, test } from '@odoo/hoot';
 import { animationFrame, Deferred, mockDate } from '@odoo/hoot-mock';
 import {

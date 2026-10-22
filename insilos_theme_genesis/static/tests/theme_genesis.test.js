@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 import { expect, test } from "@insilos/hoot";
 import { animationFrame } from "@insilos/hoot-mock";
 import { contains, mountWithCleanup, assignDialogTestEnv } from "@web/../tests/web_test_helpers";
@@ -129,6 +131,15 @@ test("@insilos_theme_genesis/design_tokens/sovereign dark mode tokens architectu
 test("@insilos_theme_genesis/runtime_error_reporting/POST https://report.insilos.com/api/v1/runtime-report dispatches error and updates UI", async () => {
     assignDialogTestEnv();
 
+    const prevInsilos = window.insilos;
+    window.insilos = {
+        ...(prevInsilos || {}),
+        session_info: {
+            ...(prevInsilos?.session_info || {}),
+            allow_external_telemetry: true,
+        },
+    };
+
     const fetchCalls = [];
     const origFetch = browser.fetch;
     const mockFetch = async (url, options) => {
@@ -166,7 +177,7 @@ test("@insilos_theme_genesis/runtime_error_reporting/POST https://report.insilos
         await animationFrame();
 
         expect(".o_insilos_share_error_btn").toHaveCount(1);
-        expect(".o_insilos_share_error_btn").toHaveText("⚡ Báo lỗi cho Insilos Support");
+        expect(".o_insilos_share_error_btn").toHaveText("⚡ Send Incident Report");
 
         await contains(".o_insilos_share_error_btn").click();
         await animationFrame();
@@ -184,9 +195,10 @@ test("@insilos_theme_genesis/runtime_error_reporting/POST https://report.insilos
         expect(sentPayload.message).toBe("Critical UI Rendering Failure");
 
         // Assert UI confirmation reflecting incident code from report.insilos.com
-        expect(".o_insilos_share_error_btn").toHaveText("Đã báo cáo (INC-2026-99123)");
+        expect(".o_insilos_share_error_btn").toHaveText("Đã gửi báo cáo (INC-2026-99123)");
         expect(".o_insilos_share_error_btn .fa-check").toHaveCount(1);
     } finally {
+        window.insilos = prevInsilos;
         Object.defineProperty(browser, "fetch", { value: origFetch, configurable: true, writable: true });
     }
 });

@@ -86,7 +86,11 @@
     ];
 
     function InnoriaHeroInteractiveStage(container) {
-        if (!container || container.__innoria_hero_stage_initialized || container.__innoria_hero_slider_initialized) return;
+        if (!container || container.__innoria_hero_interactive_stage_mounted) return;
+        if (window.innoriaHeroSlider && window.innoriaHeroSlider.rafId) {
+            cancelAnimationFrame(window.innoriaHeroSlider.rafId);
+        }
+        container.__innoria_hero_interactive_stage_mounted = true;
         container.__innoria_hero_stage_initialized = true;
         container.__innoria_hero_slider_initialized = true;
 
@@ -900,6 +904,35 @@
             this.hudCounter.textContent = currStr + ' / ' + totalStr;
         }
 
+        // 6b. Sync 3D Cockpit Deck (#ins_3d_cockpit_deck) Cards & Animated SVG Signal Bus
+        var layerNumStr = String(targetIdx + 1);
+        var cockpitDeck = this.container.querySelector('#ins_3d_cockpit_deck, .ins-cloud-cockpit');
+        if (cockpitDeck) {
+            cockpitDeck.setAttribute('data-active-layer', layerNumStr);
+            var cockpitCards = cockpitDeck.querySelectorAll('.ins-cockpit-card');
+            cockpitCards.forEach(function (card) {
+                var cardLayer = card.getAttribute('data-layer');
+                var cardSlide = card.getAttribute('data-slide-target');
+                var isMatch = (cardSlide !== null && parseInt(cardSlide, 10) === targetIdx) || (cardLayer === layerNumStr);
+                card.classList.toggle('ins-act-highlight', isMatch);
+                card.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+            });
+
+            var branches = cockpitDeck.querySelectorAll('.ins-bus-branch');
+            var taps = cockpitDeck.querySelectorAll('.ins-bus-tap');
+            var docks = cockpitDeck.querySelectorAll('.ins-bus-dock');
+            branches.forEach(function (b) { b.classList.remove('active'); });
+            taps.forEach(function (t) { t.classList.remove('active'); });
+            docks.forEach(function (d) { d.classList.remove('active'); });
+
+            var activeBranch = cockpitDeck.querySelector('.ins-bus-branch-' + layerNumStr);
+            var activeTap = cockpitDeck.querySelector('.ins-bus-tap-' + layerNumStr);
+            var activeDock = cockpitDeck.querySelector('.ins-bus-dock-' + layerNumStr);
+            if (activeBranch) activeBranch.classList.add('active');
+            if (activeTap) activeTap.classList.add('active');
+            if (activeDock) activeDock.classList.add('active');
+        }
+
         // 7. Kinetic 3D Camera LERP Transition & Controller Integration
         // Check if InnoriaHero3DManager / SovereignCoreController is active
         var activeController = null;
@@ -910,13 +943,14 @@
             if (mgr && mgr.activeController) activeController = mgr.activeController;
         }
 
-        if (activeController && activeController.satelliteNodes && activeController.satelliteNodes.length > targetIdx) {
-            var targetPod = activeController.satelliteNodes[targetIdx];
-            if (targetPod && targetPod.userData && targetPod.userData.nodeData) {
-                activeController.selectNode(targetPod, targetPod.userData.nodeData);
-            }
+        if (activeController) {
             if (typeof activeController.selectChapter === 'function') {
                 activeController.selectChapter(targetIdx);
+            } else if (activeController.satelliteNodes && activeController.satelliteNodes.length > targetIdx) {
+                var targetPod = activeController.satelliteNodes[targetIdx];
+                if (targetPod && targetPod.userData && targetPod.userData.nodeData) {
+                    activeController.selectNode(targetPod, targetPod.userData.nodeData);
+                }
             }
         }
         if (this.threeEngine) {
@@ -1048,6 +1082,73 @@
             });
         });
 
+        // 3D Cockpit Deck Layer Cards & Isometric/Exploded Toggles & 60 FPS Gyroscope Parallax
+        var cockpitViewport = this.container.querySelector('.ins-3d-cockpit-viewport');
+        var cockpitDeck = this.container.querySelector('#ins_3d_cockpit_deck, .ins-cloud-cockpit');
+        if (cockpitDeck) {
+            var cockpitCards = cockpitDeck.querySelectorAll('.ins-cockpit-card');
+            cockpitCards.forEach(function (card) {
+                var handleCardActivate = function (e) {
+                    var slideTarget = card.getAttribute('data-slide-target');
+                    var layerTarget = card.getAttribute('data-layer');
+                    var targetIdx = slideTarget !== null ? parseInt(slideTarget, 10) : (parseInt(layerTarget, 10) - 1);
+                    if (!isNaN(targetIdx)) {
+                        self.switchMode(targetIdx);
+                    }
+                };
+                card.addEventListener('click', handleCardActivate);
+                card.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleCardActivate(e);
+                    }
+                });
+            });
+
+            var btnIso = this.container.querySelector('.ins-btn-3d-isometric, #btn_mode_isometric');
+            var btnExp = this.container.querySelector('.ins-btn-3d-exploded, #btn_mode_exploded');
+            if (btnIso && btnExp) {
+                btnIso.addEventListener('click', function () {
+                    cockpitDeck.classList.remove('ins-exploded-mode');
+                    btnIso.classList.add('active');
+                    btnExp.classList.remove('active');
+                });
+                btnExp.addEventListener('click', function () {
+                    cockpitDeck.classList.add('ins-exploded-mode');
+                    btnExp.classList.add('active');
+                    btnIso.classList.remove('active');
+                });
+            }
+
+            if (cockpitViewport) {
+                var tiltRafPending = false;
+                var latestTiltX = '0deg';
+                var latestTiltY = '0deg';
+                cockpitViewport.addEventListener('mousemove', function (e) {
+                    if (window.innerWidth < 992) return;
+                    var rect = cockpitViewport.getBoundingClientRect();
+                    var normX = (e.clientX - rect.left) / rect.width - 0.5;
+                    var normY = (e.clientY - rect.top) / rect.height - 0.5;
+                    latestTiltX = (-normY * 12).toFixed(2) + 'deg';
+                    latestTiltY = (normX * 14).toFixed(2) + 'deg';
+                    if (!tiltRafPending) {
+                        tiltRafPending = true;
+                        requestAnimationFrame(function () {
+                            cockpitDeck.style.setProperty('--tilt-x', latestTiltX);
+                            cockpitDeck.style.setProperty('--tilt-y', latestTiltY);
+                            tiltRafPending = false;
+                        });
+                    }
+                }, { passive: true });
+
+                cockpitViewport.addEventListener('mouseleave', function () {
+                    tiltRafPending = false;
+                    cockpitDeck.style.setProperty('--tilt-x', '0deg');
+                    cockpitDeck.style.setProperty('--tilt-y', '0deg');
+                });
+            }
+        }
+
         // HUD Controls
         if (this.prevBtn) {
             this.prevBtn.addEventListener('click', function (e) {
@@ -1121,7 +1222,7 @@
     // Auto-Mount on DOM Ready
     function autoInitHeroInteractiveStage() {
         var heroEl = document.querySelector('#innoria_hero_cover, .innoria-hero-slider-section, .innoria-hero-interactive-stage');
-        if (heroEl && !heroEl.__innoria_hero_stage_initialized) {
+        if (heroEl && !heroEl.__innoria_hero_interactive_stage_mounted) {
             var instance = new InnoriaHeroInteractiveStage(heroEl);
             window.innoriaHeroInteractiveStage = instance;
             window.innoriaHeroSlider = instance;

@@ -1065,6 +1065,7 @@ STATIC_PAGE_PATHS = {
     "/",
     "/platform",
     "/solutions",
+    "/insilos-erp",
     "/industries",
     "/resources",
     "/pricing",
@@ -1387,17 +1388,11 @@ class InsilosWebsite(http.Controller):
     def blockchain(self, **kwargs):
         return request.render("insilos_website.innoria_blockchain_page", self._base_values())
 
-    @http.route(["/solutions", "/erp-combine-with-ai", "/vi/solutions", "/vi/erp-combine-with-ai", "/insilos", "/vi/insilos", "/insilos-erp", "/vi/insilos-erp", "/en/solutions", "/en/erp-combine-with-ai", "/en/insilos", "/en/insilos-erp"], type="http", auth="public", website=True, sitemap=True)
+    @http.route(["/solutions", "/erp-combine-with-ai", "/vi/solutions", "/vi/erp-combine-with-ai", "/insilos-erp", "/vi/insilos-erp", "/en/solutions", "/en/erp-combine-with-ai", "/en/insilos-erp"], type="http", auth="public", website=True, sitemap=True)
     def solutions(self, **kwargs):
-        curr_path = request.httprequest.path.rstrip('/')
-        if curr_path in ('/insilos', '/vi/insilos', '/en/insilos', '/insilos-erp', '/vi/insilos-erp', '/en/insilos-erp'):
-            if request.session.uid and request.env.user and not request.env.user._is_public() and request.env.user._is_internal():
-                from odoo.addons.web.controllers.home import Home
-                return Home().web_client(**kwargs)
-
         values = self._base_values()
         if "main_object" not in values:
-            page = request.env["website.page"].sudo().search([("url", "in", ["/insilos", "/solutions"])], limit=1)
+            page = request.env["website.page"].sudo().search([("url", "in", ["/insilos-erp", "/solutions"])], limit=1)
             if page:
                 values["main_object"] = page
         return request.render("insilos_website.insilos_solutions_page", values)

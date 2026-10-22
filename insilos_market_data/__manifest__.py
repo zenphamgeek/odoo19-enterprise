@@ -1,7 +1,7 @@
 # Part of Insilos. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Market Data',
-    'version': '26.0.1.0.0',
+    'version': '1.0.0',
     'category': 'Accounting/Treasury',
     'summary': 'Provider-Agnostic Financial Market Data Access & Instrument Symbol Mapping',
     'description': """

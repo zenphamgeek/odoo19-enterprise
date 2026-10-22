@@ -155,7 +155,7 @@
                 compliance: 'Circular 78/2021/TT-BTC & Decree 123/2020/ND-CP',
                 integration: 'Direct SAP RFC / EDI / REST Microservices Gateway'
             },
-            deepLink: '/insilos'
+            deepLink: '/insilos-erp'
         }
     ];
 

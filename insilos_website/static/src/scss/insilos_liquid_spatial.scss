@@ -1665,7 +1665,14 @@ html, body, #wrapwrap, main#wrap {
     height: 100% !important;
     overflow: hidden !important;
     max-width: 100vw !important;
-    z-index: 0 !important;
+    z-index: 1 !important;
+}
+
+.innoria-hero-3d-viewport,
+#heroInteractive3DStage {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 .video-slide-layer {
@@ -1683,7 +1690,7 @@ html, body, #wrapwrap, main#wrap {
     z-index: 1 !important;
 
     &.active {
-        opacity: 1 !important;
+        opacity: 0.72 !important;
         visibility: visible !important;
         transform: scale(1.0) !important;
         z-index: 2 !important;

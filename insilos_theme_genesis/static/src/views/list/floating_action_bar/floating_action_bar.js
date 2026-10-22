@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 import { Component } from "@insilos/owl";
 
 export class FloatingBatchActionBar extends Component {

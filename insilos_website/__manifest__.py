@@ -1,7 +1,7 @@
 {
     "name": "Corporate Website",
     "summary": "Intelligent Operations Corporate Website, QWeb/OWL Showcases & Demo Request Portal",
-    "version": "26.0.3.0.0",
+    "version": "3.0.0",
     "category": "Website/Website",
     "author": "Insilos",
     "website": "https://insilos.ai",
@@ -70,6 +70,10 @@
         ],
         "web.odoo_ui_icons": [
             "insilos_website/static/src/scss/odoo_ui_icons_patch.scss",
+        ],
+        "web.assets_unit_tests": [
+            "insilos_website/static/src/js/innoria_i18n_unified.js",
+            "insilos_website/static/tests/**/*.test.js",
         ],
     },
     "images": ["static/description/banner.png"],

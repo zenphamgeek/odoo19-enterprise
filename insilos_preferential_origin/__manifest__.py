@@ -1,6 +1,6 @@
 {
     'name': 'FTA Origin',
-    'version': '26.0.1.0.0',
+    'version': '1.0.0',
     'category': 'Customs/Logistics',
     'summary': 'Preferential Origin Decision Support, Deterministic FTA Rules & MRP Sourcing Recommendations',
     'author': 'Insilos Core Team',

@@ -2030,7 +2030,7 @@
         <xpath expr="//a[hasclass('btn_cta')]" position="replace">
             <t t-set="is_innoria" t-value="not ((website or getattr(request, 'website', None)) and ('innokafe' in ((website or getattr(request, 'website', None)).domain or '') or 'innokafe' in ((website or getattr(request, 'website', None)).name or '').lower()))"/>
             <a t-if="is_innoria" href="/contactus" class="oe_unremovable btn btn_cta ins-btn-lux ins-btn-lux-primary btn-innoria-nav rounded-1 px-3 py-2 d-inline-flex align-items-center gap-2">
-                <span class="nav-cta-text">Tham Vấn Kiến Trúc 3 Giờ</span>
+                <span class="nav-cta-text" data-i18n-vi="Liên hệ" data-i18n-en="Contact us">Liên hệ</span>
                 <svg class="ph-duotone ph-arrow-right ph-sm" width="16" height="16"><use href="/insilos_website/static/src/icons/phosphor-duotone.svg#ph-arrow-right"/></svg>
             </a>
             <a t-else="" href="/request-demo" class="oe_unremovable btn btn_cta btn-primary rounded-1 px-3 py-2 d-inline-flex align-items-center gap-2">
@@ -2099,7 +2099,7 @@
                                             <span>ZENCODE-ENT OS</span>
                                             <span class="ins-label-lux ins-label-lux-mint">Zero-Tele</span>
                                         </a>
-                                        <a href="/insilos" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
+                                        <a href="/insilos-erp" class="ins-mobile-menu-link text-white text-decoration-none d-flex align-items-center justify-content-between py-1">
                                             <span>INSILOS Platform</span>
                                             <span class="ins-label-lux ins-label-lux-cyan">ERP VAS 200</span>
                                         </a>

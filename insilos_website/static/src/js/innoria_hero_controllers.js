@@ -273,16 +273,16 @@
                 compliance: 'Circular 78/2021/TT-BTC & Decree 123/2020/ND-CP',
                 integration: 'Direct SAP RFC / EDI / REST Microservices Gateway'
             },
-            deepLink: '/insilos'
+            deepLink: '/insilos-erp'
         }
     ];
 
     function SovereignCoreController(manager) {
         BaseHeroSceneController.call(this, manager, 'sovereign_core', 'The Sovereign Core');
         this.currentMode = 'topology';
-        this.defaultCameraPos = new THREE.Vector3(0, 3.5, 15.0);
-        this.stackCameraPos = new THREE.Vector3(0, 3.8, 15.6);
-        this.controlsTarget = new THREE.Vector3(0, 0, 0);
+        this.defaultCameraPos = new THREE.Vector3(0, 3.4, 14.2);
+        this.stackCameraPos = new THREE.Vector3(0, 3.8, 14.8);
+        this.controlsTarget = new THREE.Vector3(0, 0.1, 0);
 
         this.logoGroup = null;
         this.logoCurve = null;
@@ -1200,7 +1200,11 @@
 
     SovereignCoreController.prototype.onInteract = function (event) {
         if (!event) return;
+        var origTarget = event.originalEvent && event.originalEvent.target;
+        var isUiControl = origTarget && origTarget.closest && origTarget.closest('button, a, .ins-3d-cockpit-viewport, .ins-cloud-cockpit, .ins-cockpit-card, .ins-cockpit-header, .ins-cockpit-footer, .hero-product-tab-btn, .hero-scene-switcher-nav, .hero-bottom-hud, .innoria-topology-hud');
+
         if (event.type === 'pointer_down') {
+            if (isUiControl) return;
             this.orbitState.isDragging = true;
             this.orbitState.prevX = event.clientX || 0;
             this.orbitState.prevY = event.clientY || 0;
@@ -1217,6 +1221,7 @@
         }
         if (event.type === 'click' || event.type === 'pointer_up') {
             this.orbitState.isDragging = false;
+            if (isUiControl) return;
         }
 
         if (!this.camera || !this.interactiveObjects.length) return;
@@ -1250,21 +1255,22 @@
         this.fromMorphState = this.toMorphState;
         this.toMorphState = chapterIdx;
         this.morphProgress = 0.0;
+        this.hideHUD();
 
-        var fovs = [55, 40, 35, 45];
+        var fovs = [55, 42, 38, 46];
         this.targetFov = fovs[chapterIdx] || 45;
 
         var camPositions = [
-            new THREE.Vector3(0.0, 3.5, 15.0),
-            new THREE.Vector3(3.8, 2.0, 11.5),
-            new THREE.Vector3(0.0, 4.5, 14.0),
-            new THREE.Vector3(-3.0, -1.5, 12.0)
+            new THREE.Vector3(0.0, 3.4, 14.2),
+            new THREE.Vector3(3.2, 2.0, 11.6),
+            new THREE.Vector3(0.0, 4.4, 13.6),
+            new THREE.Vector3(-2.6, -1.2, 12.0)
         ];
         var targets = [
-            new THREE.Vector3(0.0, 0.0, 0.0),
+            new THREE.Vector3(0.0, 0.1, 0.0),
             new THREE.Vector3(0.0, 0.2, 0.0),
             new THREE.Vector3(0.0, 0.0, 0.0),
-            new THREE.Vector3(-0.5, -0.2, 0.0)
+            new THREE.Vector3(-0.3, -0.1, 0.0)
         ];
 
         this._startCameraLerp(camPositions[chapterIdx], targets[chapterIdx]);
@@ -1277,11 +1283,11 @@
             if (chapterIdx === 3) this.wireframeMorphProgress = 0.0;
         }
 
-        if (this.satelliteNodes && this.satelliteNodes.length > chapterIdx) {
-            var pod = this.satelliteNodes[chapterIdx];
-            if (pod && pod.userData && pod.userData.nodeData) {
-                this.showHUD(pod.userData.nodeData);
-            }
+        if (this.satelliteNodes && this.satelliteNodes.length) {
+            this.satelliteNodes.forEach(function (pod, idx) {
+                var s = (idx === chapterIdx) ? 1.18 : 1.0;
+                pod.scale.set(s, s, s);
+            });
         }
     };
     SovereignCoreController.prototype.setChapter = SovereignCoreController.prototype.selectChapter;
@@ -1411,7 +1417,7 @@
             hud = document.createElement('aside');
             hud.id = 'innoriaTopologyHUD';
             hud.className = 'innoria-topology-hud card position-absolute p-4 shadow-lg';
-            hud.style.cssText = 'display:none;top:1.5rem;right:1.5rem;max-width:440px;width:calc(100% - 3rem);background:rgba(7,11,20,0.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(10,187,219,0.35);border-radius:14px;color:#FFFFFF;z-index:1000;box-shadow:0 16px 40px rgba(0,0,0,0.75),0 0 24px rgba(10,187,219,0.25);font-family:system-ui,-apple-system,sans-serif;';
+            hud.style.cssText = 'display:none;top:5.5rem;right:1.5rem;max-width:380px;width:calc(100% - 3rem);background:rgba(7,11,20,0.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(10,187,219,0.35);border-radius:14px;color:#FFFFFF;z-index:1000;box-shadow:0 16px 40px rgba(0,0,0,0.75),0 0 24px rgba(10,187,219,0.25);font-family:system-ui,-apple-system,sans-serif;';
             container.style.position = 'relative';
             container.appendChild(hud);
         }
@@ -2538,7 +2544,7 @@
 
     function autoMount() {
         var heroEl = document.querySelector('#innoria_hero_cover, .innoria-hero-slider-section');
-        if (heroEl && !heroEl.__innoria_hero_slider_initialized) {
+        if (heroEl && !heroEl.__innoria_hero_slider_initialized && !heroEl.querySelector('#heroInteractive3DStage')) {
             window.innoriaHeroSlider = new InnoriaHeroVideoSlider(heroEl);
         }
     }

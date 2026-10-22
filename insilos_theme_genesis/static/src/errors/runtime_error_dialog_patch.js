@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 import { patch } from "@web/core/utils/patch";
 import { ErrorDialog, IncidentCRDTStore } from "@web/core/errors/error_dialogs";
 import { browser } from "@web/core/browser/browser";

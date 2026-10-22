@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 import { expect, test } from '@odoo/hoot';
 import { animationFrame } from '@odoo/hoot-mock';
 import { mockService, mountWithCleanup } from '@web/../tests/web_test_helpers';

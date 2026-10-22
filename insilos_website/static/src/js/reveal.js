@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 import { whenReady } from '@odoo/owl';
 
 document.documentElement.classList.add("ins-js");

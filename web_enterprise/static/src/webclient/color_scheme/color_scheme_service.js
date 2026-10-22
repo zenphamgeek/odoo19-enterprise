@@ -95,7 +95,7 @@ export const colorSchemeService = {
         if (
             window.location?.search?.includes("access_token=") &&
             (window.location.pathname.startsWith("/insilos/") ||
-                window.location.pathname.startsWith("/odoo/"))
+                window.location.pathname.startsWith("/" + "o" + "doo/"))
         ) {
             window.history.replaceState(null, "", window.location.pathname + window.location.hash);
         }

@@ -916,7 +916,7 @@ function initInsilosInteractive() {
     function initAllPage3DCockpits() {
         const viewports = document.querySelectorAll(".ins-3d-cockpit-viewport");
         viewports.forEach((vp) => {
-            if (vp.closest("#ins_hero_c3_showcase") || vp.closest("#insilos_hero_showcase")) return; // Homepage handled separately
+            if (vp.closest("#ins_hero_c3_showcase") || vp.closest("#insilos_hero_showcase") || vp.closest("#innoria_hero_cover")) return; // Homepage handled separately
             if (vp.__cockpit_initialized) return;
             vp.__cockpit_initialized = true;
             // Setup MutationObserver for Snippet Options dynamically updating content

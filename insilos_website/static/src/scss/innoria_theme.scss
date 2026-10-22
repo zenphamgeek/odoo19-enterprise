@@ -897,7 +897,9 @@ body:has(#innoria_main_nav) {
     .service-rails-wrapper {
         display: flex;
         flex-direction: column;
-        gap: 0.85rem;
+        justify-content: space-between;
+        height: 100%;
+        gap: 0.55rem;
     }
 
     .service-rail-item {
@@ -905,13 +907,16 @@ body:has(#innoria_main_nav) {
         border: 1px solid rgba(255, 255, 255, 0.05);
         border-left: 3px solid rgba(255, 255, 255, 0.12);
         border-radius: 0.85rem;
-        padding: 1.25rem 1.4rem;
+        padding: 0.8rem 1.1rem;
         cursor: pointer;
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         text-align: left;
         position: relative;
         text-decoration: none;
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1 1 auto;
 
         &:hover {
             background: rgba(0, 242, 254, 0.04);
@@ -946,7 +951,7 @@ body:has(#innoria_main_nav) {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
 
         .rail-badge {
@@ -980,18 +985,18 @@ body:has(#innoria_main_nav) {
         }
 
         .rail-title {
-            font-size: 1.15rem;
+            font-size: 1.04rem;
             font-weight: 700;
             color: #E2E8F0;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.25rem;
             transition: color 0.2s ease;
         }
 
         .rail-desc {
-            font-size: 0.85rem;
-            line-height: 1.45;
+            font-size: 0.8rem;
+            line-height: 1.38;
             color: #94A3B8;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.45rem;
         }
 
         .rail-chips {
@@ -1015,7 +1020,7 @@ body:has(#innoria_main_nav) {
         background: rgba(11, 17, 32, 0.75);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 1.25rem;
-        padding: 1.75rem;
+        padding: 1.15rem 1.45rem;
         backdrop-filter: blur(16px);
         height: 100%;
         display: flex;
@@ -1042,9 +1047,331 @@ body:has(#innoria_main_nav) {
         opacity: 0;
 
         &.active {
-            display: block;
+            display: flex !important;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1 1 auto;
+            gap: 0.45rem;
             opacity: 1 !important;
         }
+    }
+
+    /* 4-Mode 3D Isometric Cutaway CAD & Pipeline Sequencer Stage inside .services-interactive-sandbox */
+    .sandbox-anatomy-stage {
+        background: rgba(6, 11, 22, 0.92);
+        border: 1px solid rgba(0, 242, 254, 0.25);
+        border-radius: 0.65rem;
+        padding: 0.5rem 0.68rem 0.55rem;
+        position: relative;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+        &[data-rig-state="legacy"] {
+            border-color: rgba(245, 158, 11, 0.55);
+
+            .iso-conduit-pulse {
+                stroke: #F59E0B !important;
+                stroke-dasharray: 4 12 !important;
+                animation-duration: 3.2s !important;
+            }
+
+            .iso-packet-dot {
+                fill: #F59E0B !important;
+            }
+
+            .iso-part-node polygon {
+                stroke: #F59E0B !important;
+            }
+
+            .inspector-badge {
+                color: #F59E0B !important;
+                border-color: rgba(245, 158, 11, 0.45) !important;
+                background: rgba(245, 158, 11, 0.12) !important;
+            }
+        }
+
+        &[data-rig-burst="true"] {
+            border-color: #42E6C3;
+            box-shadow: inset 0 0 22px rgba(66, 230, 195, 0.12);
+
+            .iso-conduit-pulse {
+                stroke: #42E6C3 !important;
+                stroke-width: 3px !important;
+                animation-duration: 0.45s !important;
+            }
+
+            .iso-part-node {
+                transform: translate(0, -10px) !important;
+            }
+        }
+
+        &[data-rig-xray="true"] {
+            border-color: #38BDF8;
+
+            .iso-sublayer-l3 polygon {
+                fill: rgba(0, 242, 254, 0.03) !important;
+                stroke-dasharray: 3 2 !important;
+            }
+
+            .iso-sublayer-l2 polygon {
+                fill: rgba(56, 189, 248, 0.14) !important;
+                stroke: #00F2FE !important;
+                stroke-width: 1.4px !important;
+            }
+
+            .iso-pin-guide {
+                opacity: 0.95 !important;
+                stroke-width: 1.3px !important;
+            }
+        }
+
+        &[data-rig-playing="true"] {
+            border-color: #00F2FE;
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.15);
+        }
+
+        .sandbox-anatomy-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.35rem;
+            flex-wrap: nowrap;
+            margin-bottom: 0.35rem;
+        }
+
+        .sandbox-part-pills {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 0.22rem;
+            min-width: 0;
+        }
+
+        .sandbox-part-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            color: #CBD5E1;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.64rem;
+            font-weight: 600;
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+
+            &:hover {
+                border-color: #00F2FE;
+                color: #FFFFFF;
+            }
+
+            &.active {
+                background: rgba(0, 242, 254, 0.18);
+                border-color: #00F2FE;
+                color: #00F2FE;
+            }
+        }
+
+        .sandbox-rig-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.24rem;
+            flex-shrink: 0;
+        }
+
+        .sandbox-play-btn,
+        .sandbox-xray-btn,
+        .sandbox-explode-btn {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 0.15rem 0.42rem;
+            border-radius: 3px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .sandbox-play-btn {
+            background: rgba(0, 242, 254, 0.14);
+            border: 1px solid rgba(0, 242, 254, 0.48);
+            color: #00F2FE;
+
+            &:hover,
+            &.active {
+                background: #00F2FE;
+                color: #060B16;
+            }
+        }
+
+        .sandbox-xray-btn {
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: #7DD3FC;
+
+            &:hover,
+            &.active {
+                background: #38BDF8;
+                color: #060B16;
+            }
+        }
+
+        .sandbox-explode-btn {
+            background: rgba(66, 230, 195, 0.1);
+            border: 1px solid rgba(66, 230, 195, 0.4);
+            color: #42E6C3;
+
+            &:hover,
+            &.active {
+                background: #42E6C3;
+                color: #060B16;
+            }
+        }
+
+        .sandbox-iso-svg {
+            width: 100%;
+            height: 178px;
+            display: block;
+            overflow: visible;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            .iso-conduit-pulse {
+                animation: isoConduitFlow 1.3s linear infinite;
+            }
+
+            .iso-packet-dot {
+                animation: isoPacketPulse 1.5s ease-in-out infinite;
+            }
+
+            .iso-part-node {
+                cursor: pointer;
+                transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+
+                .iso-sublayer {
+                    transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+                }
+
+                .iso-pin-guide {
+                    transition: opacity 0.25s ease;
+                }
+
+                &:hover {
+                    transform: translate(0, -4px);
+
+                    .iso-sublayer-l2 {
+                        transform: translate(0, -4px);
+                    }
+
+                    .iso-sublayer-l3 {
+                        transform: translate(0, -9px);
+                    }
+                }
+
+                &.is-lifted {
+                    transform: translate(0, -6px);
+
+                    .iso-sublayer-l1 {
+                        transform: translate(0, 4px);
+                    }
+
+                    .iso-sublayer-l2 {
+                        transform: translate(0, -5px);
+                    }
+
+                    .iso-sublayer-l3 {
+                        transform: translate(0, -14px);
+                    }
+
+                    .iso-pin-guide {
+                        opacity: 0.92;
+                    }
+                }
+
+                &.is-highlighted {
+                    filter: drop-shadow(0 6px 14px rgba(0, 242, 254, 0.34));
+
+                    .iso-callout-box {
+                        stroke-width: 1.3px;
+                        fill: rgba(6, 18, 34, 0.98);
+                    }
+                }
+            }
+        }
+
+        .sandbox-anatomy-inspector {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding-top: 0.32rem;
+            margin-top: 0.15rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            .inspector-badge {
+                flex-shrink: 0;
+                font-size: 0.65rem;
+                font-weight: 700;
+                color: #00F2FE;
+                background: rgba(0, 242, 254, 0.12);
+                border: 1px solid rgba(0, 242, 254, 0.35);
+                padding: 0.11rem 0.42rem;
+                border-radius: 3px;
+            }
+
+            .inspector-spec {
+                font-size: 0.7rem;
+                color: #E2E8F0;
+                text-align: right;
+                margin-left: auto;
+            }
+        }
+
+        .sandbox-cad-layers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.35rem;
+            margin-top: 0.35rem;
+            padding-top: 0.32rem;
+            border-top: 1px dashed rgba(148, 163, 184, 0.18);
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            .cad-layer-cell,
+            .cad-layer-chip {
+                background: rgba(15, 23, 42, 0.78);
+                border: 1px solid rgba(148, 163, 184, 0.18);
+                border-radius: 3px;
+                padding: 0.2rem 0.38rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.06rem;
+                min-width: 0;
+            }
+
+            .cad-layer-tag {
+                font-size: 0.58rem;
+                font-weight: 700;
+                color: #38BDF8;
+                letter-spacing: 0.02em;
+            }
+
+            .cad-layer-val {
+                font-size: 0.64rem;
+                font-weight: 600;
+                color: #F1F5F9;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    @keyframes isoConduitFlow {
+        from { stroke-dashoffset: 32; }
+        to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes isoPacketPulse {
+        0%, 100% { opacity: 0.45; transform: scale(0.92); }
+        50% { opacity: 1; transform: scale(1.18); }
     }
 
     .aiaas-flow-track {
@@ -1341,17 +1668,18 @@ body:has(#innoria_main_nav) {
     }
 
     .btn-innoria-cyan {
-        background: linear-gradient(135deg, #00F2FE 0%, #42E6C3 100%) !important;
+        background: #0ABBDB !important;
+        background-color: #0ABBDB !important;
         color: #070B14 !important;
         font-weight: 700 !important;
-        border: none !important;
-        box-shadow: 0 4px 14px rgba(0, 242, 254, 0.35);
+        border: 1px solid #00F2FE !important;
+        box-shadow: none !important;
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
         &:hover {
-            background: linear-gradient(135deg, #42E6C3 0%, #00F2FE 100%) !important;
+            background: #00F2FE !important;
+            background-color: #00F2FE !important;
             color: #070B14 !important;
-            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.55);
             transform: translateY(-1px);
         }
     }
@@ -2194,7 +2522,27 @@ body:has(#innoria_main_nav) {
         width: 100%;
         height: 100%;
         overflow: hidden;
-        z-index: 0;
+        z-index: 1;
+    }
+
+    .innoria-hero-3d-viewport,
+    #heroInteractive3DStage {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 4 !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+
+        canvas,
+        .innoria-webgl-canvas,
+        #heroInteractiveCanvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+            pointer-events: auto !important;
+        }
     }
 
     .video-slide-layer {
@@ -2207,7 +2555,7 @@ body:has(#innoria_main_nav) {
         background-size: cover;
         background-repeat: no-repeat;
         opacity: 0;
-        filter: brightness(1.18) contrast(1.05) saturate(1.10);
+        filter: brightness(1.05) contrast(1.05) saturate(1.10);
         transform: scale(1.05);
         transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 8s cubic-bezier(0.1, 1, 0.1, 1);
         pointer-events: none;
@@ -2227,19 +2575,26 @@ body:has(#innoria_main_nav) {
         }
 
         &.active {
-            opacity: 1;
+            opacity: 0.72;
             transform: scale(1.0);
             z-index: 2;
         }
     }
 
-    /* Ambient Cinematic Dark Mask & Grid (Reduced Opacity & Brighter Luminous Slate-Navy Tint) */
+    .innoria-hero-3d-viewport,
+    #heroInteractive3DStage {
+        display: none !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    /* Ambient Cinematic Dark Mask & Grid (Clean High-Contrast Backdrop like insilos.com) */
     .hero-cinematic-mask {
         position: absolute;
         inset: 0;
         background: 
-            radial-gradient(ellipse at 50% 42%, rgba(8, 18, 36, 0.34) 0%, rgba(9, 20, 38, 0.24) 55%, rgba(8, 15, 30, 0.48) 100%),
-            linear-gradient(to bottom, rgba(10, 25, 47, 0.16) 0%, rgba(9, 19, 36, 0.26) 68%, rgba(8, 15, 28, 0.56) 100%);
+            radial-gradient(ellipse at 50% 42%, rgba(7, 14, 28, 0.62) 0%, rgba(8, 16, 32, 0.56) 55%, rgba(6, 12, 24, 0.78) 100%),
+            linear-gradient(to bottom, rgba(7, 15, 30, 0.45) 0%, rgba(7, 15, 30, 0.58) 68%, rgba(6, 12, 24, 0.85) 100%);
         z-index: 3;
         pointer-events: none;
     }
@@ -2247,20 +2602,128 @@ body:has(#innoria_main_nav) {
     .hero-grid-pattern {
         position: absolute;
         inset: 0;
-        background-size: 40px 40px;
+        background-size: 48px 48px;
         background-image: 
-            linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
         z-index: 3;
         pointer-events: none;
     }
-
-
 
     /* Content Stage */
     .hero-content-stage {
         position: relative;
         z-index: 5;
+        pointer-events: auto;
+
+        .hero-slide-content,
+        .hero-slide-item,
+        .ins-3d-cockpit-viewport,
+        .ins-cloud-cockpit,
+        .ins-cockpit-card,
+        .ins-3d-mode-toggles,
+        .hero-product-nav-bar,
+        .hero-scene-switcher-nav,
+        .hero-bottom-hud,
+        a,
+        button,
+        .hero-interactive-tab,
+        .hud-ctrl-btn,
+        .hero-badge-pill {
+            pointer-events: auto;
+        }
+    }
+
+    /* 3D Cockpit Header & Footer inside Innoria Hero */
+    .ins-3d-cockpit-viewport {
+        min-height: 460px;
+        padding: 0.5rem 0.5rem 0.5rem 1.25rem;
+
+        @media (max-width: 991.98px) {
+            padding: 0.5rem 0;
+            min-height: auto;
+        }
+    }
+
+    .ins-cockpit-header {
+        position: relative;
+        z-index: 35;
+        transform: translateZ(120px);
+        margin-bottom: 1.65rem !important;
+        background: rgba(11, 22, 42, 0.88);
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        border-radius: 0.5rem;
+        backdrop-filter: blur(12px);
+
+        .ins-cockpit-header-title {
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            color: #F8FAFC;
+        }
+
+        .ins-3d-mode-toggles .btn {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: #CBD5E1;
+            border-color: rgba(148, 163, 184, 0.35);
+            background: rgba(15, 23, 42, 0.75);
+
+            &.active,
+            &:hover {
+                color: #070B14 !important;
+                background: #00F0FF !important;
+                border-color: #00F0FF !important;
+            }
+        }
+    }
+
+    .ins-cloud-cockpit {
+        @media (min-width: 992px) {
+            .ins-cockpit-card {
+                &[data-layer="1"] { transform: translateZ(48px) translateY(4px) !important; }
+                &[data-layer="2"] { transform: translateZ(36px) translateY(4px) !important; }
+                &[data-layer="3"] { transform: translateZ(24px) translateY(4px) !important; }
+                &[data-layer="4"] { transform: translateZ(12px) translateY(4px) !important; }
+
+                &.ins-act-highlight {
+                    animation: none !important;
+                    &[data-layer="1"] { transform: translateZ(66px) translateY(2px) !important; }
+                    &[data-layer="2"] { transform: translateZ(56px) translateY(2px) !important; }
+                    &[data-layer="3"] { transform: translateZ(46px) translateY(2px) !important; }
+                    &[data-layer="4"] { transform: translateZ(36px) translateY(2px) !important; }
+                }
+            }
+
+            &.ins-exploded-mode {
+                .ins-cockpit-card {
+                    &[data-layer="1"] { transform: translateZ(64px) translateY(-2px) !important; }
+                    &[data-layer="2"] { transform: translateZ(46px) translateY(4px) !important; }
+                    &[data-layer="3"] { transform: translateZ(28px) translateY(10px) !important; }
+                    &[data-layer="4"] { transform: translateZ(10px) translateY(16px) !important; }
+
+                    &.ins-act-highlight {
+                        animation: none !important;
+                        &[data-layer="1"] { transform: translateZ(82px) translateY(-4px) !important; }
+                        &[data-layer="2"] { transform: translateZ(66px) translateY(2px) !important; }
+                        &[data-layer="3"] { transform: translateZ(48px) translateY(8px) !important; }
+                        &[data-layer="4"] { transform: translateZ(30px) translateY(14px) !important; }
+                    }
+                }
+            }
+        }
+    }
+
+    .ins-cockpit-footer {
+        position: relative;
+        z-index: 35;
+        transform: translateZ(60px);
+        margin-top: 1.35rem !important;
+        background: rgba(11, 22, 42, 0.84);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 0.5rem;
+        backdrop-filter: blur(12px);
+        font-size: 0.75rem;
     }
 
     .hero-slide-item {
@@ -2295,7 +2758,7 @@ body:has(#innoria_main_nav) {
     }
 
     .hero-main-title {
-        font-size: clamp(1.95rem, 3.25vw, 2.95rem);
+        font-size: clamp(1.65rem, 2.35vw, 2.35rem);
         font-weight: 800;
         line-height: 1.24;
         letter-spacing: -0.02em;
@@ -2309,7 +2772,7 @@ body:has(#innoria_main_nav) {
         background: transparent !important;
         -webkit-text-fill-color: currentColor !important;
         display: block;
-        font-size: clamp(1.35rem, 2.15vw, 1.95rem);
+        font-size: clamp(1.15rem, 1.65vw, 1.55rem);
         line-height: 1.32;
         filter: drop-shadow(0 2px 10px rgba(4, 10, 22, 0.85));
         text-shadow: 0 2px 14px rgba(4, 10, 22, 0.85) !important;
@@ -2317,12 +2780,12 @@ body:has(#innoria_main_nav) {
     }
 
     .hero-lead-desc {
-        font-size: clamp(1rem, 1.3vw, 1.25rem);
-        line-height: 1.6;
+        font-size: clamp(0.95rem, 1.08vw, 1.08rem);
+        line-height: 1.58;
         color: #F8FAFC !important;
         text-shadow: 0 2px 12px rgba(4, 10, 22, 0.92), 0 1px 3px rgba(4, 10, 22, 0.98) !important;
-        max-width: 920px;
-        margin: 0 auto;
+        max-width: 100%;
+        margin: 0;
     }
 
     /* Interactive Feature Chips */
@@ -2330,22 +2793,22 @@ body:has(#innoria_main_nav) {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 24px;
-        margin-bottom: 28px;
+        justify-content: flex-start;
+        gap: 8px;
+        margin-top: 16px;
+        margin-bottom: 20px;
     }
 
     .hero-feature-chip {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        border-radius: 10px;
-        background: rgba(14, 27, 50, 0.62);
-        border: 1px solid rgba(148, 163, 184, 0.24);
+        gap: 7px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        background: rgba(14, 27, 50, 0.68);
+        border: 1px solid rgba(148, 163, 184, 0.26);
         color: #F1F5F9;
-        font-size: 0.88rem;
+        font-size: 0.82rem;
         font-weight: 600;
         backdrop-filter: blur(12px);
         transition: all 0.25s ease;
@@ -2375,11 +2838,12 @@ body:has(#innoria_main_nav) {
         border: 1px solid rgba(255, 255, 255, 0.25);
         color: #070B14 !important;
         font-weight: 800;
-        padding: 14px 34px;
+        padding: 12px 24px;
+        font-size: 0.92rem;
         border-radius: 9999px;
         display: inline-flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         text-decoration: none;
         animation: haloPulse 2.8s infinite ease-in-out;
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2426,7 +2890,8 @@ body:has(#innoria_main_nav) {
         border: none;
         color: #070B14 !important;
         font-weight: 800;
-        padding: 14px 32px;
+        padding: 12px 24px;
+        font-size: 0.92rem;
         border-radius: 9999px;
         display: inline-flex;
         align-items: center;
@@ -2447,7 +2912,8 @@ body:has(#innoria_main_nav) {
         border: 1px solid var(--hero-accent, #0ABBDB);
         color: var(--hero-accent, #0ABBDB);
         font-weight: 700;
-        padding: 14px 28px;
+        padding: 12px 22px;
+        font-size: 0.92rem;
         border-radius: 9999px;
         display: inline-flex;
         align-items: center;
@@ -2463,24 +2929,24 @@ body:has(#innoria_main_nav) {
         }
     }
 
-    /* 4 Live Metric Tiles */
+    /* 4 Live Metric Tiles (2x2 Grid inside Left Column) */
     .hero-metrics-deck {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-        margin-top: 36px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 22px;
 
-        @media (max-width: 768px) {
-            grid-template-columns: repeat(2, 1fr);
+        @media (max-width: 576px) {
+            grid-template-columns: 1fr;
         }
     }
 
     .hero-metric-tile {
-        background: rgba(14, 27, 50, 0.64);
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        border-radius: 16px;
-        padding: 16px 20px;
-        text-align: center;
+        background: rgba(14, 27, 50, 0.68);
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        border-radius: 12px;
+        padding: 11px 16px;
+        text-align: left;
         backdrop-filter: blur(12px);
         transition: all 0.3s ease;
 
@@ -2491,7 +2957,7 @@ body:has(#innoria_main_nav) {
         }
 
         .metric-title {
-            font-size: 0.75rem;
+            font-size: 0.70rem;
             font-weight: 600;
             color: #CBD5E1;
             text-transform: uppercase;
@@ -2499,10 +2965,10 @@ body:has(#innoria_main_nav) {
         }
 
         .metric-stat {
-            font-size: 1.45rem;
+            font-size: 1.18rem;
             font-weight: 800;
             color: #FFFFFF;
-            margin-top: 4px;
+            margin-top: 2px;
         }
     }
 
@@ -4571,6 +5037,256 @@ html, body, #wrapwrap,
         select.form-select {
             height: 38px !important;
         }
+    }
+}
+
+/* ==========================================================================
+   PDCA GLOBAL HOOK TITLE, SCSS & WCAG AAA CONTRAST GOVERNANCE (Patch 42)
+   ========================================================================== */
+#wrapwrap {
+    h1, .h1, .display-1, .display-2, .display-3, .display-4, .display-5, .display-6,
+    h2, .h2, .grc-headline, .hero-main-title, .section-title, .df-title {
+        text-wrap: balance;
+    }
+
+    p.lead, .hero-lead-desc, .grc-lead, .df-subtitle {
+        text-wrap: pretty;
+    }
+
+    /* 1. Homepage (/) Cockpit Badges, Logistics Segment & CCTV Status Pill */
+    .ins-cockpit-card .ins-cockpit-badge {
+        background-color: rgba(15, 23, 42, 0.92) !important;
+        color: #38BDF8 !important;
+        border: 1px solid rgba(56, 189, 248, 0.45) !important;
+
+        &.text-warning {
+            color: #FBBF24 !important;
+            border-color: rgba(251, 191, 36, 0.45) !important;
+        }
+        &.text-mint {
+            color: #34D399 !important;
+            border-color: rgba(52, 211, 153, 0.45) !important;
+        }
+    }
+
+    .inn-btn-badge {
+        background-color: #064E3B !important;
+        color: #ECFDF5 !important;
+        border: 1px solid #047857 !important;
+    }
+
+    .inn-segment-text {
+        color: #FFFFFF !important;
+    }
+
+    .inn-bar-segment:not(.bar--fob):not(#barMfnDuty) .inn-segment-text {
+        color: #05101E !important;
+        font-weight: 800 !important;
+    }
+
+    .s_innoria_3d_architecture_deck .main-title .accent,
+    h2.main-title span.accent {
+        background: transparent !important;
+        background-color: transparent !important;
+        color: #0284C7 !important;
+        -webkit-text-fill-color: #0284C7 !important;
+    }
+
+    .al2c-service-card-price {
+        color: #047857 !important;
+    }
+
+    .al2c-entailment-badge,
+    .al2c-entailment-badge span,
+    .al2c-entailment-badge strong {
+        color: #065F46 !important;
+    }
+
+    .cadence-badge {
+        -webkit-text-fill-color: #38BDF8 !important;
+        color: #38BDF8 !important;
+        background: none !important;
+    }
+
+    .ins-cctv-ai-status,
+    .ins-cctv-ai-status span {
+        background-color: rgba(6, 78, 59, 0.92) !important;
+        color: #6EE7B7 !important;
+    }
+
+    .innoria-dropzone-status-badge,
+    .innoria-dropzone-status-badge span {
+        background-color: #9A3412 !important;
+        color: #FFFFFF !important;
+    }
+
+    /* 2. /platform Light Surface .text-secondary (Fixes Odoo #F0CDA8 beige leak on white/slate-50) */
+    .mojo-platform-root {
+        #engagement-models,
+        #sector-solutions,
+        #multimodal-studio {
+            .text-secondary {
+                color: #475569 !important;
+            }
+            .text-warning {
+                color: #B45309 !important;
+            }
+            .text-success {
+                color: #15803D !important;
+            }
+            .text-info {
+                color: #0369A1 !important;
+            }
+            .mojo-tier-aaas {
+                color: #0369A1 !important;
+            }
+            .mojo-tier-dx {
+                color: #C2410C !important;
+            }
+            .mojo-tier-platform {
+                color: #6D28D9 !important;
+            }
+        }
+
+        #telemetry-hud {
+            .mojo-hud-shell,
+            .mojo-hud-gauge,
+            .mojo-stream-box {
+                color: #F8FAFC !important;
+                .text-secondary {
+                    color: #CBD5E1 !important;
+                }
+                .text-muted {
+                    color: #94A3B8 !important;
+                }
+                .text-warning {
+                    color: #FBBF24 !important;
+                }
+                .text-success {
+                    color: #34D399 !important;
+                }
+                .text-info {
+                    color: #38BDF8 !important;
+                }
+            }
+        }
+
+        #sector-solutions span[style*="#0ABBDB"] {
+            color: #0369A1 !important;
+        }
+        #sector-solutions span[style*="#FF8000"] {
+            color: #C2410C !important;
+        }
+    }
+
+    /* 3. /no-code-platform (/digiforce) Table Header & Hero Span Contrast */
+    .df-page {
+        .df-compare {
+            background-color: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+
+            table, td {
+                background-color: #FFFFFF !important;
+                color: #0F172A !important;
+            }
+            th {
+                background-color: #F8FAFC !important;
+                color: #0F172A !important;
+                border-bottom: 2px solid #E2E8F0 !important;
+
+                &.old {
+                    color: #BE123C !important;
+                }
+                &.new {
+                    color: #0369A1 !important;
+                }
+            }
+        }
+
+        section[data-name="Digiforce Hero"] h1 span {
+            color: #0284C7 !important;
+        }
+    }
+
+    /* 4. /blockchain & /solutions Dark Sections (#070B14, #0B1220, #0A0F1D) Text-Muted & List Items */
+    section[style*="#070B14"],
+    section[style*="#0B1220"],
+    section[style*="#0A0F1D"],
+    section[style*="#050811"],
+    section[style*="#070C18"] {
+        p.text-muted:not(.card *),
+        span.text-muted:not(.card *),
+        ul.text-muted li,
+        .text-muted:not(.card *) {
+            color: #CBD5E1 !important;
+        }
+    }
+
+    span.badge[style*="#FDA4AF"] {
+        background-color: #881337 !important;
+        color: #FFE4E6 !important;
+        border-color: rgba(251, 113, 133, 0.5) !important;
+    }
+
+    /* 5. /industries Dark Buttons & YOLO Defect Status Pill */
+    #vertical-command-stage .btn-outline-primary,
+    #vertical-command-stage .btn-outline-primary span {
+        background-color: #0284C7 !important;
+        border-color: #38BDF8 !important;
+        color: #FFFFFF !important;
+    }
+
+    #innoria_yolo_simulator_section {
+        button span,
+        .btn span {
+            color: #FFFFFF !important;
+        }
+
+        .ins-yolo-scenario-btn.is-active,
+        .ins-yolo-scenario-btn.active {
+            background-color: #0284C7 !important;
+            border-color: #38BDF8 !important;
+            color: #FFFFFF !important;
+
+            span, strong, small, div {
+                color: #FFFFFF !important;
+            }
+        }
+
+        .ins-yolo-status-pill.is-defect {
+            background-color: #7F1D1D !important;
+            border-color: #EF4444 !important;
+
+            .ins-yolo-status-text {
+                color: #FEE2E2 !important;
+            }
+        }
+    }
+
+    /* 6. /contactus Light Blueprint Card Labels & Required Asterisks */
+    .inn-blueprint-card {
+        .ins-label-lux-blue {
+            color: #0369A1 !important;
+            background-color: #E0F2FE !important;
+        }
+        .ins-label-lux-amber {
+            color: #B45309 !important;
+            background-color: #FEF3C7 !important;
+        }
+        .ins-label-lux-cyan {
+            color: #0E7490 !important;
+            background-color: #CFFAFE !important;
+        }
+        .ins-label-lux-mint {
+            color: #047857 !important;
+            background-color: #D1FAE5 !important;
+        }
+    }
+
+    #executive-booking-form label span[style*="#FF8000"],
+    section[data-name="Executive FAQ & Checklist"] span[style*="#FF8000"],
+    section[data-name="Executive FAQ & Checklist"] span[style*="--inn-orange"] {
+        color: #C2410C !important;
     }
 }
 

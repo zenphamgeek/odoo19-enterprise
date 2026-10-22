@@ -30,7 +30,9 @@
         "Tài Nguyên": "Resources",
         "Bảng Giá": "Pricing",
         "Liên Hệ": "Contact",
-        "Đăng Nhập": "Sign In",
+        "Liên hệ": "Contact us",
+        "Đăng Nhập": "Sign in",
+        "Đăng nhập": "Sign in",
         "Đăng Xuất": "Sign Out",
         "Tài khoản": "Account",
         "Hồ sơ & Cổng Portal": "Profile & Customer Portal",
@@ -353,7 +355,9 @@
         "Permit to Work & EHS Số": "Digital Permit to Work & EHS",
         "Chứng Nhận Xuất Xứ Số (e-CO)": "Digital Certificate of Origin (e-CO)",
         "Lịch Sử Phát Triển & Năng Lực 18 Năm": "18-Year Engineering Heritage & Capability",
-        "KẾT NỐI": "CONTACT US",
+        "KẾT NỐI": "CONNECT",
+        "Liên hệ": "Contact us",
+        "Đăng nhập": "Sign in",
         "Mã số DN (Tax ID): INNORIA-GROUP": "Enterprise Tax ID: INNORIA-GROUP",
         "45 đường số 3, KDC Trung Sơn, Xã Bình Hưng, Huyện Bình Chánh, TP. Hồ Chí Minh": "45 Street 3, Trung Son Residential Area, Binh Hung Commune, Binh Chanh District, Ho Chi Minh City",
         "Bản quyền © 2026 INNORIA | Hạ Tầng Công Nghệ Cấp Chủ Quyền Cho Doanh Nghiệp": "Copyright © 2026 INNORIA | Sovereign Enterprise Technology Infrastructure",
@@ -1385,6 +1389,9 @@
 
     const engine = new InnoriaI18nEngine();
     window.InnoriaI18nFramework = engine;
+    window.innoriaI18n = engine;
+    window.INNORIA_SEMANTIC_PHRASES = INNORIA_SEMANTIC_PHRASES;
+    window.INNORIA_REVERSE_PHRASES = INNORIA_REVERSE_PHRASES;
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", engine.boundInit);

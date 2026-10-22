@@ -3,7 +3,7 @@
 
 {
     'name': 'HSE & Compliance',
-    'version': '26.0.1.0.3',
+    'version': '1.0.3',
     'category': 'Operations/HSE',
     'summary': 'HSE Knowledge & Compliance Suite: Legal Register, Chemical SDS 16-Section, QCVN 05A:2020/BCT (TT 19/2024/TT-BCT) & Webhook Sync',
     'description': """

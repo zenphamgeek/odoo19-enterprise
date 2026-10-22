@@ -3,7 +3,7 @@
     'name': 'Genesis Theme',
     'summary': 'Genesis Enterprise Website Theme & Responsive QWeb Layout System',
     'category': 'Theme/Corporate',
-    'version': '26.0.1.0.0',
+    'version': '1.0.0',
     'license': 'LGPL-3',
     'author': 'Insilos Web Designer',
     'depends': ['website', 'web', 'base_setup'],

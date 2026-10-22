@@ -2,7 +2,7 @@
 
 {
     'name': 'Industry Showcase',
-    'version': '26.0.1.0.0',
+    'version': '1.0.0',
     'category': 'Website/Website',
     'summary': '101 Industry-Specific Product Landing Pages & Conversion Showcases',
     'description': """

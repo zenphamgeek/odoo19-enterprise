@@ -3,7 +3,7 @@
 
 {
     'name': 'Pub/Sub Gateway',
-    'version': '26.0.2.3.0',
+    'version': '2.3.0',
     'category': 'Productivity/Integrations',
     'summary': 'Google Cloud Pub/Sub & Hermes AI Bi-Directional Event Bus Bridge Gateway',
     'description': """

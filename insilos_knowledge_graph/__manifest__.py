@@ -1,6 +1,6 @@
 {
     'name': 'Knowledge Graph',
-    'version': '26.0.1.1.0',
+    'version': '1.1.0',
     'category': 'Productivity/Knowledge',
     'summary': 'Enterprise Knowledge Graph & Rebuildable Cross-Domain Relationship Projection',
     'author': 'Insilos Core Team',

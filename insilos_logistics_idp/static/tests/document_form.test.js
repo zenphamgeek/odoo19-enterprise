@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 import { expect, test } from '@odoo/hoot';
 import { registry } from '@web/core/registry';
 import { FormRenderer } from '@web/views/form/form_renderer';
